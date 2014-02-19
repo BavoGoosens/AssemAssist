@@ -90,7 +90,7 @@ public class Car {
 
 	/**
 	 * A method that sets the color of this car to the given color.
-	 * @param this.color = color
+	 * @param color
 	 */
 	private void setColor(Component color) {
 		this.color = color;

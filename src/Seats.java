@@ -1,4 +1,4 @@
 
-public class Seats {
+public class Seats extends Component {
 
 }

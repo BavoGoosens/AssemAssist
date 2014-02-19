@@ -1,4 +1,4 @@
 
-public class Gearbox {
+public class Gearbox extends Component {
 
 }
