@@ -246,8 +246,8 @@ public class Car {
 	 * A method that sets the airco of this car to the given airco.
 	 * @param this.airco = airco
 	 */
-	private void setAirco(Component airco) {
-		this.airco = airco;
+	private void setAirco(Component airco) throws IllegalArgumentException{
+		if (!canHaveAsArico(airco)this.airco = airco;
 	}
 
 	/**
