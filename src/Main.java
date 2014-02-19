@@ -1,8 +1,4 @@
 /**
- * 
- */
-
-/**
  * @author r0304675
  *
  */
@@ -15,5 +11,4 @@ public class Main {
 		// TODO Auto-generated method stub
 		System.out.println("Sander");
 	}
-
 }
