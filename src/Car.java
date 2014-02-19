@@ -252,7 +252,7 @@ public class Car {
 	 *         !canHaveAsAirco(airco)
 	 */
 	private void setAirco(Component airco) throws IllegalArgumentException{
-		if (!canHaveAsArico(airco)) throw new IllegalArgumentException();
+		if (!canHaveAsAirco(airco)) throw new IllegalArgumentException();
 		this.airco = airco;
 	}
 
@@ -263,7 +263,7 @@ public class Car {
 	 *         the airco of the car.
 	 * @return True if the given airco is an enum type AIRCO and is different from the null-object
 	 */
-	private boolean canHaveAsArico(Component airco) {
+	private boolean canHaveAsAirco(Component airco) {
 		return (airco != null && airco.getType() == Component.Type.AIRCO);
 	}
 
