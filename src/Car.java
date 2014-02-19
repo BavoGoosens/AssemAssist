@@ -100,7 +100,7 @@ public class Car {
 	 * @return True if the given body is an instance of Body and is different from the null-object
 	 */
 	private boolean canHaveAsBody(Component body) {
-		return (body != null && body.getType() == Type.ENGINE);
+		return (body != null && body.getType() == Component.Type.ENGINE);
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class Car {
 	 * @return True if the given color is an instance of Color and is different from the null-object
 	 */		  
 	private boolean canHaveAsColor(Component color) {
-		return (color != null && color.getType() == Type.COLOR);
+		return (color != null && color.getType() == Component.Type.COLOR);
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class Car {
 	 * @return  True if the given engine is an enum type ENGINE and is different from the null-object
 	 */
 	private boolean canHaveAsEngine(Component engine) {
-		return (engine != null && engine.getType() == type.ENGINE);
+		return (engine != null && engine.getType() == Component.Type.ENGINE);
 	}
 
 	/**
@@ -198,7 +198,7 @@ public class Car {
 	 * @return True if the given gearbox is an enum type GEARBOX and is different from the null-object
 	 */
 	private boolean canHaveAsGearbox(Component gearbox) {
-		return (gearbox != null && gearbox.getType() == type.GEARBOX);
+		return (gearbox != null && gearbox.getType() == Component.Type.GEARBOX);
 	}
 
 	/**
@@ -231,7 +231,7 @@ public class Car {
 	 * @return True if the given seats is an enum type SEATS and is different from the null-object
 	 */
 	private boolean canHaveAsSeats(Component seats) {
-		return (seats != null && seats.getType() == Type.SEATS);
+		return (seats != null && seats.getType() == Component.Type.SEATS);
 	}
 
 	/**
