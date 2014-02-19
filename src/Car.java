@@ -236,6 +236,7 @@ public class Car {
 
 	/**
 	 * A method that returns the airco of this car.
+	 * 
 	 * @return this.airco
 	 */
 	private Component getAirco() {
@@ -244,14 +245,31 @@ public class Car {
 
 	/**
 	 * A method that sets the airco of this car to the given airco.
-	 * @param this.airco = airco
+	 * 
+	 * @param  airco
+	 *         The airco of the car.
+	 * @throws IllegalArgumentException
+	 *         !canHaveAsAirco(airco)
 	 */
 	private void setAirco(Component airco) throws IllegalArgumentException{
-		if (!canHaveAsArico(airco)this.airco = airco;
+		if (!canHaveAsArico(airco)) throw new IllegalArgumentException();
+		this.airco = airco;
+	}
+
+	/**
+	 * A method that checks if the given airco can be the wheels of the airco.
+	 * 
+	 * @param  airco
+	 *         the airco of the car.
+	 * @return True if the given airco is an enum type AIRCO and is different from the null-object
+	 */
+	private boolean canHaveAsArico(Component airco) {
+		return (airco != null && airco.getType() == Component.Type.AIRCO);
 	}
 
 	/**
 	 * A method that returns the wheels of this car.
+	 * 
 	 * @return this.wheels
 	 */
 	private Component getWheels() {
@@ -260,10 +278,25 @@ public class Car {
 
 	/**
 	 * A method that sets the wheels of this car to the given wheels.
-	 * @param this.wheels = wheels
+	 * 
+	 * @param   wheels
+	 *          the wheels of the car.
+	 * @throws  IllegalArgumentException
+	 *          !canHaveAsWheels(wheels)
 	 */
-	private void setWheels(Component wheels) {
+	private void setWheels(Component wheels) throws IllegalArgumentException {
+		if (!canHaveAsWheels(wheels)) throw new IllegalArgumentException();
 		this.wheels = wheels;
 	}
-
+    
+	/**
+	 * A method that checks if the given wheels can be the wheels of the car.
+	 * 
+	 * @param   wheels
+	 *          the wheels of the car.
+	 * @return  True if the given wheels is an enum type WHEELS and is different from the null-object
+	 */
+	private boolean canHaveAsWheels(Component wheels) {
+		return (wheels != null && wheels.getType() == Component.Type.WHEELS);
+	}
 }
