@@ -61,8 +61,11 @@ public class Car {
 
 	/**
 	 * A method that sets the body of this car to the given body.
-	 * @param body
-	 * 		  The body of the car.
+	 * @param  body
+	 * 		   The body of the car.
+	 * @throws IllegalArgumentException
+	 *         The car cannot accept the given body.
+	 *         if (!canHaveAsBody)
 	 */
 	private void setBody(Component body) throws IllegalArgumentException{
 		if (!canHaveAsBody(body)) throw new IllegalArgumentException();
@@ -73,8 +76,7 @@ public class Car {
 	 * A method that checks if the given body can be a body of the car. 
 	 * @param  body
 	 * 	       The body of the car.
-	 * @return If the given body is an instance of Body and is different from the null-object
-	 * 		   then the body of this object can be set to the given body.
+	 * @return True if the given body is an instance of Body and is different from the null-object
 	 */
 	private boolean canHaveAsBody(Component body) {
 		return (body != null && body instanceof Body);
@@ -88,12 +90,27 @@ public class Car {
 		return color;
 	}
 
-	/**
+    /**
 	 * A method that sets the color of this car to the given color.
-	 * @param color
-	 */
-	private void setColor(Component color) {
+     * @param  color
+     * 	       The color of this car
+     * @throws IllegalArgumentException
+     *         The car cannot accept the given color.
+     *         if (!canHaveAsColor)
+     */
+	private void setColor(Component color) throws IllegalArgumentException {
+		if(!canHaveAsColor(color)) throw new IllegalArgumentException();
 		this.color = color;
+	}
+
+	/**
+	 * A method that checks if the given color van be a color for the car.
+	 * @param  color
+	 * 		   The color of the car.
+	 * @return True if the given color is an instance of Color and is different from the null-object
+	 */		  
+	private boolean canHaveAsColor(Component color) {
+		return (color != null && color instanceof Color);
 	}
 
 	/**
@@ -104,12 +121,26 @@ public class Car {
 		return engine;
 	}
 
-	/**
-	 * A method that sets the engine of this car to the given engine.
-	 * @param this.engine = engine
-	 */
-	private void setEngine(Component engine) {
+    /**
+     * A method that sets the engine of the car to the given engine.
+     * @param  engine
+     *         the engine of the car.
+     * @throws IllegalArgumentException
+     *         !canHaveAsEngine(engine)
+     */
+	private void setEngine(Component engine) throws IllegalArgumentException {
+		if (!canHaveAsEngine(engine)) throw new IllegalArgumentException();
 		this.engine = engine;
+	}
+
+	/**
+	 * A method that checks if the engine of the car can be the given engine.
+	 * @param   engine
+	 *          
+	 * @return
+	 */
+	private boolean canHaveAsEngine(Component engine) {
+		return (engine != null && engine instanceof Engine);
 	}
 
 	/**
