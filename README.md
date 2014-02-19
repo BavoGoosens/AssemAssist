@@ -7,7 +7,7 @@ import project into eclipse
 	get Egit
 	import via egit
 	edit .project file replace buildSpec/natures with this 
-		<buildSpec>
+		"<buildSpec>
         		<buildCommand>
         		<name>org.eclipse.jdt.core.javabuilder</name>
         		<arguments>
@@ -16,5 +16,5 @@ import project into eclipse
 		</buildSpec>
 		<natures>
     		<nature>org.eclipse.jdt.core.javanature</nature>
-		</natures>
+		</natures>"
 	
