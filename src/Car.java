@@ -67,6 +67,7 @@ public class Car {
 		this.setEngine(engine);
 		this.setGearbox(gearbox);
 		this.setSeats(seats);
+		this.setAirco(airco);
 		this.setWheels(wheels);
 	}
 	
@@ -100,7 +101,7 @@ public class Car {
 	 * @return True if the given body is an instance of Body and is different from the null-object
 	 */
 	private boolean canHaveAsBody(Component body) {
-		return (body != null && body.getType() == Component.Type.ENGINE);
+		return (body != null && body.getType() == Component.Type.BODY);
 	}
 
 	/**
