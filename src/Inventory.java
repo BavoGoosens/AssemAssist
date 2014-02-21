@@ -1,53 +1,74 @@
 import java.util.HashMap;
 
 /**
- * A class that represents an inventory for an factory
+ * A class that represents an inventory for a factory
  * 
  * @author team 10
  *
  */
 public class Inventory {
 
-	
+
 	/**
 	 * A Map that contains all the components of an inventory
 	 */
 	private HashMap<Component,Integer> components;
 
-	
+
+	/**
+	 * A Constructor that creates a new inventory list.
+	 * 
+	 */
 	public Inventory() {
 		this.components = new HashMap<Component,Integer>();
 	}
-	
+
 	/**
 	 * A method to add an component to the inventory.
 	 * 
 	 * @param   component
 	 *          An component of the inventory. 
-	 * @throws  IllegalArgumentException
-	 * 			!canHaveAsComponent(component)
 	 */         
-	public void addComponent(Component component) throws IllegalArgumentException {
-		if(!canHaveAsComponent(component)) 
-			throw new IllegalArgumentException();
-		else if (this.getComponents().containsKey(component))
+	public void addComponent(Component component) {
+		if (this.getComponents().containsKey(component))
 			updateListAdd(component);
 		else 
 			this.getComponents().put(component,1);
 	}
-	
-	private boolean canHaveAsComponent(Component component) {
-		return (component != null); // al gedaan in Component dus hier hoeft geen check eig?
-	}
-	
+
+	/**
+	 * A method that updates the Amount of components in an inventory list. 
+	 * 
+	 * @param   component
+	 *          A component of the inventory list.
+	 */
 	private void updateListAdd(Component component){
 		int temp = this.getComponents().get(component);
+		this.getComponents().remove(component);
 		temp++;
 		this.getComponents().put(component,temp);
 	}
-	
+
+	/**
+	 * A method that removes an component of the inventory list.
+	 * 
+	 * @param   component
+	 *          the component that is removed from the inventory list.
+	 */
 	public void removeComponent(Component component) {
-		
+		if (this.getComponents().containsKey(component)){
+			if ( this.getComponents().get(component) > 1) 
+				updateListRemove(component);
+			else
+				this.getComponents().remove(component);
+		}
+	}
+
+	private void updateListRemove(Component component) {
+		int temp = this.getComponents().get(component);
+		this.getComponents().remove(component);
+		temp--;
+		this.getComponents().put(component,temp);
 	}
 
 	/**
@@ -57,6 +78,5 @@ public class Inventory {
 	 */
 	private HashMap<Component,Integer> getComponents() {
 		return this.components;
-	}
-		
+	}	
 }
