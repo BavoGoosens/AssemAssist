@@ -43,10 +43,7 @@ public class Inventory {
 	 *          A component of the inventory list.
 	 */
 	private void updateListAdd(Component component){
-		int temp = this.getComponents().get(component);
-		this.getComponents().remove(component);
-		temp++;
-		this.getComponents().put(component,temp);
+		this.getComponents().put(component, this.getComponents().get(component) + 1);
 	}
 
 	/**
@@ -65,10 +62,7 @@ public class Inventory {
 	}
 
 	private void updateListRemove(Component component) {
-		int temp = this.getComponents().get(component);
-		this.getComponents().remove(component);
-		temp--;
-		this.getComponents().put(component,temp);
+		this.getComponents().put(component, this.getComponents().get(component) - 1);
 	}
 
 	/**
