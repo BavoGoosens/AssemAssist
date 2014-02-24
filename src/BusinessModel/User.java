@@ -5,14 +5,8 @@ package BusinessModel;
  * @author Team 10
  *
  */
-public class User {
+public abstract class User {
 
-	/**
-	 * This enumeration determines the different users of the system.
-	 */
-	public enum UserType {
-		GARAGEHOLDER, MANAGER, MECHANIC
-	}
 
 	/**
 	 * A variable which represents the first name of the User.
@@ -33,12 +27,7 @@ public class User {
 	 * A variable which represents the password of the User.
 	 */
 	private String password;
-	
-	/**
-	 * A variable which represents the usertype of the User.
-	 */
-	private final UserType usertype;
-	
+
 	/**
 	 * The constructor for a specific user of the system.
 	 * 
@@ -53,12 +42,11 @@ public class User {
 	 * @param usertype
 	 * 		  the specific type of User.
 	 */
-	public User (String firstname, String lastname, String username, String password, UserType usertype ){
+	public User (String firstname, String lastname, String username, String password){
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.setUsername(username);
 		this.setPassword(password);
-		this.usertype = usertype;
 	}
 	
 	/**
@@ -121,16 +109,6 @@ public class User {
 		return lastname;
 	}
 
-	/**
-	 * This method returns usertype for this User.
-	 * 
-	 * @return UserType 
-	 * 		   the usertype of this User.
-	 */
-	public UserType getUsertype() {
-		return usertype;
-	}
-	
 	/**
 	 * This method lets the User update his/her username and password.
 	 * 
