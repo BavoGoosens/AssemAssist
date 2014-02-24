@@ -1,7 +1,11 @@
+package Test;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import BusinessModel.Car;
+import BusinessModel.Component;
 
 
 public class Testing {

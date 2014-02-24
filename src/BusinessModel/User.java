@@ -1,3 +1,4 @@
+package BusinessModel;
 /**
  * A class representing a User of the system.
  * 
