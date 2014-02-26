@@ -5,7 +5,7 @@ package Component;
  * @author Team 10
  *
  */
-public abstract class Component {
+public class Component {
 	
 	/**
 	 * A variable that contains the name of the component.

@@ -39,8 +39,10 @@ public class GarageHolder extends User {
 	}
 	
 	/**
+	 * A method to remove an order from the list of orders for this garage holder.
 	 * 
-	 * @param order
+	 * @param   order
+	 * 			the order that needs to be removed.
 	 */
 	public void removeOrder(Order order){
 		this.getOrders().remove(order);

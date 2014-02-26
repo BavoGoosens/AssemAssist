@@ -13,6 +13,11 @@ public class Order {
 	private Car car;
 	
 	/**
+	 * A variable that represents the order is completed or not.
+	 */
+	private boolean completed;
+	
+	/**
 	 * The constructor for an order
 	 * 
 	 * @param car
@@ -20,6 +25,7 @@ public class Order {
 	 */
 	public Order( Car car){
 		setCar(car);
+		this.getCompleted() = false;
 	}
 	
 	/**
@@ -41,5 +47,12 @@ public class Order {
 		this.car = car;
 	}
 
-
+	/**
+	 * a method to see if the order is completed or not.
+	 * 
+	 * @return   this.completed
+	 */
+	public boolean getCompleted(){
+		return this.completed;
+	}
 }

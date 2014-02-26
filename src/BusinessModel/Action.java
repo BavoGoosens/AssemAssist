@@ -1,7 +1,7 @@
 package BusinessModel;
-
 import Component.Component;
 import java.util.ArrayList;
+
 /**
  * A class representing an action.
  * 
@@ -47,7 +47,7 @@ public class Action {
 	 * @return	this.description
 	 */
 	public String getDescription() {
-		return this.description;
+		return this.description1;
 	}
 	
 	/**
@@ -66,7 +66,7 @@ public class Action {
 	 * 			The description of the action
 	 */
 	private void setDescription(String description) {
-		this.description = description;
+		this.description1 = description;
 	}
 	
 	/**
@@ -152,7 +152,7 @@ public class Action {
 	 * @return	this.description
 	 */
 	public String getDescription() {
-		return this.description;
+		return this.description1;
 	}
 
 	/**
@@ -171,7 +171,7 @@ public class Action {
 	 * 			The description of the action
 	 */
 	private void setDescription(String description) {
-		this.description = description;
+		this.description1 = description;
 	}
 
 	/**
