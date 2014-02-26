@@ -82,7 +82,7 @@ public class Action {
 		if (components == null){
 			throw new IllegalArgumentException();
 		} 
-		else{
+		else {
 			this.components = components;
 		}
 	}
