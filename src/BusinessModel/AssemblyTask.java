@@ -51,5 +51,4 @@ public class AssemblyTask {
 	private ArrayList<Action> getActions() {
 		return this.actions;
 	}
-	
 }

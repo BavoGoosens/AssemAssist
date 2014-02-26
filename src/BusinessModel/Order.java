@@ -25,7 +25,7 @@ public class Order {
 	 */
 	public Order( Car car){
 		setCar(car);
-		this.getCompleted() = false;
+		this.completed = false;
 	}
 	
 	/**
