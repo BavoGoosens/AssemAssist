@@ -127,4 +127,16 @@ public abstract class User {
 			this.setPassword(newpassword);
 		} 
 	}
+	
+	/**
+	 * This method is used to authenticate a user.
+	 * 
+	 * @param uname the username to be authenticated.
+	 * @param pwd the password to be authenticated.
+	 * @return boolean 
+	 * 		   True if the supplied username and password are correct otherwise False.
+	 */
+	public boolean authenticate(String uname, String pwd){
+		return (this.getUsername().equals(uname) && this.getPassword().equals(pwd));
+	}
 }
