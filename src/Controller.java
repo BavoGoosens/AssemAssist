@@ -3,7 +3,12 @@ import java.util.HashMap;
 import BusinessModel.User;
 import UserInterface.UserInterFace;
 
-
+/**
+ * This class is the main controller instance. 
+ * It handles all the communication between the user interface and the business logic layer.
+ * @author BatCave
+ *
+ */
 public class Controller {
 	
 	private HashMap<String,User> system_users = new HashMap<String,User>();
