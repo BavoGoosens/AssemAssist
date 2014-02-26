@@ -17,11 +17,11 @@ public class Testing {
 	public void setUp() throws Exception {
 		body = new Component("sedan",1000);
 		color = new Component("red",1000);
-		engine = new Component("standard 2l 4 cilinders",1000,Component.Type.ENGINE);
-		gearbox = new Component("6 speed manual",1000,Component.Type.GEARBOX);
-		seats = new Component("leather black",1000,Component.Type.SEATS);
-		airco = new Component("manual",1000,Component.Type.AIRCO);
-		wheels = new Component("comfort",1000,Component.Type.WHEELS);
+		engine = new Component("standard 2l 4 cilinders",1000);
+		gearbox = new Component("6 speed manual",1000);
+		seats = new Component("leather black",1000);
+		airco = new Component("manual",1000);
+		wheels = new Component("comfort",1000);
 		car1 = new Car(body,color,engine,gearbox,seats,airco,wheels);
 		
 		// test voor body
@@ -81,13 +81,13 @@ public class Testing {
 
 		//assertEauals(Component.Type.BODY,body.getType());
 
-		try {body = new Component(null,1000,Component.Type.BODY);}
+		try {body = new Component(null,1000);}
 		catch (IllegalArgumentException e) {}
 		
-		try {body = new Component("sedan",-1,Component.Type.BODY);}
+		try {body = new Component("sedan",-1);}
 		catch (IllegalArgumentException e) {}
 		
-		try {body = new Component("sedan",1000,null);}
+		try {body = new Component("sedan",1000);}
 		catch (IllegalArgumentException e) {}
 
 		//assertEquals("BODY: sedan ("+1000+" euro)",body.toString());
