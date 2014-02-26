@@ -1,6 +1,5 @@
-
 /**
- * @author r0304675
+ * @author Team 10
  *
  */
 public class Main {
@@ -11,6 +10,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		Controller ctrl = new Controller();
+		ctrl.run();
 	}
 }
