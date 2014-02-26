@@ -82,6 +82,17 @@ public class Action {
 	}
 	
 	/**
+	 * This method returns the object at the given index.
+	 * 
+	 * @param	index
+	 * 			The index
+	 * @return	this.getComponents().get(index)
+	 */
+	public Component getComponentAddIndex(int index) {
+		return this.getComponents().get(index);
+	}
+	
+	/**
 	 * This method adds a component to the action.
 	 * 
 	 * @param	component
