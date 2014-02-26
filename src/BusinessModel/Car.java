@@ -1,4 +1,7 @@
 package BusinessModel;
+
+import Component.*;
+
 /**
  * A class representing a car.
  * 
@@ -102,7 +105,7 @@ public class Car {
 	 * @return True if the given body is an instance of Body and is different from the null-object
 	 */
 	private boolean canHaveAsBody(Component body) {
-		return (body != null && body.getType() == Component.Type.BODY);
+		return (body != null && body instanceof Body);
 	}
 
 	/**
@@ -135,7 +138,7 @@ public class Car {
 	 * @return True if the given color is an instance of Color and is different from the null-object
 	 */		  
 	private boolean canHaveAsColor(Component color) {
-		return (color != null && color.getType() == Component.Type.COLOR);
+		return (color != null && color instanceof Color);
 	}
 
 	/**
@@ -167,7 +170,7 @@ public class Car {
 	 * @return  True if the given engine is an enum type ENGINE and is different from the null-object
 	 */
 	private boolean canHaveAsEngine(Component engine) {
-		return (engine != null && engine.getType() == Component.Type.ENGINE);
+		return (engine != null && engine instanceof Engine);
 	}
 
 	/**
@@ -200,7 +203,7 @@ public class Car {
 	 * @return True if the given gearbox is an enum type GEARBOX and is different from the null-object
 	 */
 	private boolean canHaveAsGearbox(Component gearbox) {
-		return (gearbox != null && gearbox.getType() == Component.Type.GEARBOX);
+		return (gearbox != null && gearbox instanceof Gearbox);
 	}
 
 	/**
@@ -233,7 +236,7 @@ public class Car {
 	 * @return True if the given seats is an enum type SEATS and is different from the null-object
 	 */
 	private boolean canHaveAsSeats(Component seats) {
-		return (seats != null && seats.getType() == Component.Type.SEATS);
+		return (seats != null && seats instanceof Seats);
 	}
 
 	/**
@@ -266,7 +269,7 @@ public class Car {
 	 * @return True if the given airco is an enum type AIRCO and is different from the null-object
 	 */
 	private boolean canHaveAsAirco(Component airco) {
-		return (airco != null && airco.getType() == Component.Type.AIRCO);
+		return (airco != null && airco instanceof Airco);
 	}
 
 	/**
@@ -299,6 +302,6 @@ public class Car {
 	 * @return  True if the given wheels is an enum type WHEELS and is different from the null-object
 	 */
 	private boolean canHaveAsWheels(Component wheels) {
-		return (wheels != null && wheels.getType() == Component.Type.WHEELS);
+		return (wheels != null && wheels instanceof Wheels);
 	}
 }

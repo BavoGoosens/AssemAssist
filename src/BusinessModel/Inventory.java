@@ -1,6 +1,8 @@
 package BusinessModel;
 import java.util.HashMap;
 
+import Component.Component;
+
 /**
  * A class that represents an inventory for a factory
  * 

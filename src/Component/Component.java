@@ -1,18 +1,11 @@
-package BusinessModel;
+package Component;
 /**
  * A class representing a component.
  * 
  * @author Team 10
  *
  */
-public class Component {
-	
-	/**
-	 * Enumeration of different types of components.
-	 */
-	public enum Type {
-		AIRCO, BODY, COLOR, ENGINE, GEARBOX, SEATS, WHEELS;
-	}
+public abstract class Component {
 	
 	/**
 	 * A variable that contains the name of the component.
@@ -23,12 +16,7 @@ public class Component {
 	 * A variable that contains the price of the component.
 	 */
 	private double price;
-	
-	/**
-	 * A variable containing the type of the component.
-	 */
-	private Type type;
-	
+
 	/**
 	 * This method constructs the component.
 	 * 
@@ -39,10 +27,9 @@ public class Component {
 	 * @param 	type
 	 * 			The type of the component.
 	 */
-	public Component(String name, double price, Type type) {
+	public Component(String name, double price) {
 		this.setName(name);
 		this.setPrice(price);
-		this.setType(type);
 	}
 	
 	/**
@@ -84,32 +71,12 @@ public class Component {
 		if (price < 0) throw new IllegalArgumentException(); // prijs = 0 bij pakketvoordeel?
 		this.price = price;
 	}
-	
-	/**
-	 * This method returns the type of the component.
-	 * @return this.type
-	 */
-	public Type getType() {
-		return this.type;
-	}
-	
-	/**
-	 * This method sets the type of the component.
-	 * @param 	type
-	 * 			The type of the component.
-	 * @throws 	IllegalArgumentException
-	 * 			type == null
-	 */
-	private void setType(Type type) throws IllegalArgumentException {
-		if (type == null) throw new IllegalArgumentException();
-		this.type = type;
-	}
-	
+
 	/**
 	 * This method returns a string representation of the component.
 	 */
 	public String toString() {
-		return this.type.toString()+": "+this.name+" ("+this.price+" euro)";
+		return ": "+this.name+" ("+this.price+" euro)";
 	}
 }
 
