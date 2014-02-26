@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import BusinessModel.Car;
-import BusinessModel.Component;
+import Component.Component;
 
 
 public class Testing {
@@ -15,8 +15,8 @@ public class Testing {
 
 	@Before @Test
 	public void setUp() throws Exception {
-		body = new Component("sedan",1000,Component.Type.BODY);
-		color = new Component("red",1000,Component.Type.COLOR);
+		body = new Component("sedan",1000);
+		color = new Component("red",1000);
 		engine = new Component("standard 2l 4 cilinders",1000,Component.Type.ENGINE);
 		gearbox = new Component("6 speed manual",1000,Component.Type.GEARBOX);
 		seats = new Component("leather black",1000,Component.Type.SEATS);
