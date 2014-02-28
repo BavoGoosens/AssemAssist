@@ -91,8 +91,8 @@ public class Controller {
 	}
 
 	private void orderOverview(User user){
-		String finished_orders = this.ps.getFinishedOrders(user);
-		String future_orders = this.ps.getFutureOrders(user);
+		String finished_orders = this.ps.getCompletedOrders(user);
+		String future_orders = this.ps.getPendingOrders(user);
 		ui.displayString("Your completed orders: \n \n "+ finished_orders);
 		ui.displayString("Your pending orders: \n \n" + future_orders);
 	}

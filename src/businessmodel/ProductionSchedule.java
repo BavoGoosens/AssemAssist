@@ -2,12 +2,12 @@ package businessmodel;
 
 public class ProductionSchedule {
 
-	public String getFinishedOrders(User current_user) {
+	public String getCompletedOrders(User current_user) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String getFutureOrders(User current_user) {
+	public String getPendingOrders(User current_user) {
 		// TODO Auto-generated method stub
 		return null;
 	}
