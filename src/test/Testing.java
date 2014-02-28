@@ -1,11 +1,12 @@
-package Test;
+package test;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import BusinessModel.Car;
-import Component.Component;
+import component.Component;
+
+import businessmodel.Car;
 
 
 public class Testing {

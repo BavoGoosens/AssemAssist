@@ -1,4 +1,4 @@
-package Component;
+package component;
 
 /**
  * A class that represents the wheels of a car.

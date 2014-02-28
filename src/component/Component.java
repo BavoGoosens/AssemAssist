@@ -1,4 +1,4 @@
-package Component;
+package component;
 /**
  * A class representing a component.
  * 

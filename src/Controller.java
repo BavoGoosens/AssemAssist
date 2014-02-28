@@ -1,7 +1,7 @@
 import java.util.HashMap;
 
-import BusinessModel.User;
-import UserInterface.UserInterFace;
+import ui.UserInterFace;
+import businessmodel.User;
 
 /**
  * This class is the main controller instance. 

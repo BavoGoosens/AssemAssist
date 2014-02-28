@@ -1,4 +1,4 @@
-package BusinessModel;
+package businessmodel;
 
 public class ProductionSchedule {
 

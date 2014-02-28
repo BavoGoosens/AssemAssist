@@ -1,4 +1,4 @@
-package BusinessModel;
+package businessmodel;
 
 import java.util.ArrayList;
 

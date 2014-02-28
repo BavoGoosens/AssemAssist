@@ -1,6 +1,6 @@
-package BusinessModel;
+package businessmodel;
 
-import Component.*;
+import component.*;
 
 /**
  * A class representing a car.

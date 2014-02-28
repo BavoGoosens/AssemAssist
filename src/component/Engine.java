@@ -1,4 +1,4 @@
-package Component;
+package component;
 
 /**
  * A class that represents the engine of a car.

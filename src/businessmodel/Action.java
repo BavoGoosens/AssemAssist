@@ -1,7 +1,8 @@
-package BusinessModel;
+package businessmodel;
 
-import Component.*;
 import java.util.ArrayList;
+
+import component.*;
 
 /**
  * A class representing an action.

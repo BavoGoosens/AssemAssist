@@ -1,4 +1,4 @@
-package BusinessModel;
+package businessmodel;
 
 /**
  * A class that represents a manager.

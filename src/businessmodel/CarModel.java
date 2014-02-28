@@ -1,7 +1,8 @@
-package BusinessModel;
+package businessmodel;
 
 import java.util.ArrayList;
-import Component.*;
+
+import component.*;
 
 public class CarModel {
 	
