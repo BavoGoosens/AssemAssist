@@ -75,7 +75,7 @@ public class Testing {
 		catch (IllegalArgumentException e) {}
 	}
 
-	@Test   // todo test voor getType + toString
+	@Test   // TODO: test voor getType + toString
 	public void testComponent() throws Exception {
 		assertEquals("sedan",body.getName());
 		assertEquals(1000,body.getPrice(),0);
@@ -94,7 +94,7 @@ public class Testing {
 		//assertEquals("BODY: sedan ("+1000+" euro)",body.toString());
 	}
 
-	@Test  // testen voor de klasse Car
+	@Test  // TODO: testen voor de klasse Car
 	public void testCar() throws Exception {
 
 	}

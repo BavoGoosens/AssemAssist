@@ -1,7 +1,8 @@
-import java.util.HashMap;
-
 import ui.UserInterFace;
+import businessmodel.Inventory;
+import businessmodel.ProductionSchedule;
 import businessmodel.User;
+import businessmodel.UserManagement;
 
 /**
  * This class is the main controller instance. 
@@ -11,31 +12,49 @@ import businessmodel.User;
  */
 public class Controller {
 	
-	private HashMap<String,User> system_users = new HashMap<String,User>();
-	
 	private UserInterFace ui = new UserInterFace();
 	
+	private UserManagement um = new UserManagement();
+	
+	private ProductionSchedule ps = new ProductionSchedule();
+	
+	private Inventory in = new Inventory();
+	
 	public void run(){
-		User current_user;
+		User current_user = null;
 		boolean auth = false;
 		while (auth == false) {
 			String[] login = ui.loginPrompt();
-			current_user = getUser(login[0]);
-			if (current_user == null ) {
+			if (! um.isUserInSystem(login[0]) ) {
 				ui.displayString("We could not find you in the System \n \n");
 			} else {
-				auth = current_user.authenticate(login[0],login[1]);
+				auth = um.authenticate(login[0],login[1]);
+				if (auth) current_user = um.getUser(login[0]); 
 			}
+		}
+		if (um.canPlaceOrder(current_user)){
+			orderNewCar(current_user);
+		}else if( um.isMechanic(current_user)){
+			performAssemblyTask(current_user);
+		}else{
+			advanceAssemblyLine();
 		}
 		
 	}
 
-	private User getUser(String uname) {
-		return this.system_users.get(uname);
+	private void advanceAssemblyLine() {
+		// TODO Auto-generated method stub
+		
 	}
 
-	private void setSystemUsers(HashMap<String,User> system_users) {
-		this.system_users = system_users;
+	private void performAssemblyTask(User current_user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void orderNewCar(User current_user) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
