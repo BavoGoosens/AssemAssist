@@ -2,6 +2,8 @@ package businessmodel;
 
 import component.*;
 
+import java.util.ArrayList;
+
 /**
  * A class representing a car.
  * 
@@ -12,76 +14,47 @@ import component.*;
 public class Car {
 
 	/**
-	 * A variable that specifies the body of the car.
+	 * A list that holds all the components of a car.
 	 */
-	private Component body;
+	private ArrayList<Component> components;
 	
 	/**
-	 * A variable that specifies the color of the car.
+	 * A constructor to create a new car.
+	 * @param   components
+	 *          the components of this new car.
 	 */
-	private Component color;
-	
-	/**
-	 * A variable that specifies the engine of the car.
-	 */
-	private Component engine;
-	
-	/**
-	 * A variable that specifies the gearbox of the car.
-	 */
-	private Component gearbox;
-	
-	/**
-	 * A variable that specifies the seats of the car.
-	 */
-	private Component seats;
-	
-	/**
-	 * A variable that specifies the airco of the car.
-	 */
-	private Component airco;
-	
-	/**
-	 * A variable that specifies the wheels of the car.
-	 */
-	private Component wheels;
+	public Car(ArrayList<Component> components){
+		setComponents(components);
+	}
 
 	/**
-	 * A method that constructs a new car.
-	 * 
-	 * @param body
-	 *        the body of the car.
-	 * @param color
-	 *        the color of the car.
-	 * @param engine
-	 *        the engine of the car.
-	 * @param gearbox
-	 *        the gearbox of the car.
-	 * @param seats
-	 *        the seats of the car.
-	 * @param airco
-	 *        the airco of the car.
-	 * @param wheels
-	 *        the wheels of the car.
+	 * A method to set the components of this car to the given components.
+	 * @param   components
+	 *          the new components of this car.
 	 */
-	public Car(Component body, Component color,Component engine,Component gearbox, Component seats, Component airco, Component wheels) 
-	{
-		this.setBody(body);
-		this.setColor(color);
-		this.setEngine(engine);
-		this.setGearbox(gearbox);
-		this.setSeats(seats);
-		this.setAirco(airco);
-		this.setWheels(wheels);
+	private void setComponents(ArrayList<Component> components) {
+		this.components = components;
 	}
 	
+	/**
+	 * A method to get the components of a car.
+	 *
+	 * @return  this.components
+	 */
+	public ArrayList<Component> getComponents(){
+		return this.components;
+	}
+	
+	
+	private Component 
+
 	/**
 	 * A method that returns the body of this car.
 	 * 
 	 * @return this.body
 	 */
 	private Component getBody() {
-		return body;
+		return ;
 	}
 
 	/**
