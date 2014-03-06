@@ -2,14 +2,17 @@ import ui.UserInterFace;
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Catalogus;
+import businessmodel.GarageHolder;
 import businessmodel.Inventory;
+import businessmodel.Mechanic;
 import businessmodel.ProductionSchedule;
 import businessmodel.User;
 import businessmodel.UserManagement;
 
 /**
  * This class is the main controller instance. 
- * It handles all the communication between the user interface and the business logic layer.
+ * It handles the communication between the user interface and the business logic layer and responds to user events.
+ * 
  * @author BatCave
  *
  */
@@ -25,7 +28,20 @@ public class Controller {
 	}
 	
 	public void run(){
-		cmc.login(this.ui.loginPrompt()[0];
+		String[] res;
+		boolean login = false;
+		while (login == false) {
+			res = this.ui.loginPrompt();
+			login = cmc.login(res[0], res[1]);
+		}
+		User cu = cmc.getUser(res[0]);
+		if (cu instanceof GarageHolder){
+			this.orderNewCar(cu);
+		} else if( cu instanceof Mechanic){
+			this.performAssemblyTask(cu);
+		} else {
+			this.advanceAssemblyLine();
+		}
 	}
 
 
@@ -40,13 +56,8 @@ public class Controller {
 	}
 
 	private void orderNewCar(User current_user) {
-		this.orderOverview(current_user);
-		String help = "to place a new order enter: order <CR> "
-				+ "\n to quit enter: quit <CR> "
-				+ "\n to view your order overview enter: overview <CR> \n >"
-				+ "to see the list of available commands enter: help <CR>";
-		this.ui.displayString(help);
 		while (true) {
+			String response = ui.displayOrderOverview(cmc.getCompletedOrders(current_user), cmc.getPendingOrders(current_user));
 			String response = ui.getInput();
 			if (response.equals("quit")){
 				// go back to login screen
@@ -65,7 +76,7 @@ public class Controller {
 
 				}
 			} else if (response.equals("help")) {
-				this.ui.displayString(help);
+				this.ui.displayOrderHelp();
 			} else {
 				this.orderOverview(current_user);
 			}

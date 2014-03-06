@@ -1,6 +1,9 @@
 package ui;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import businessmodel.Order;
 
 /**
  * This class provides a console user interface for the AssemAssist System.
@@ -36,6 +39,17 @@ public class UserInterFace {
 		System.out.println("We could not find you in the System \n \n");
 	}
 	
+	public void displayOrderOverview(ArrayList<Order> completed, ArrayList<Order> pending){
+		this.displayString("These are your completed orders: \n");
+		for (Order ord : completed){
+			this.displayString(ord.toString()+ "\n");
+		}
+		this.displayString("\n These are your completed orders: \n");
+		for (Order ord : pending){
+			this.displayString(ord.toString() + "\n");
+		}
+
+	}
 	/**
 	 * This method prints out the possible commands when a user wants to place an order.
 	 */
