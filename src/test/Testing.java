@@ -98,4 +98,8 @@ public class Testing {
 	public void testCar() throws Exception {
 
 	}
+	
+	public void ranDomTest() {
+		
+	}
 }
