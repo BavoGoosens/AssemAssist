@@ -2,7 +2,7 @@ package ui;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
+import control.Controller;
 import businessmodel.Order;
 
 /**
@@ -12,11 +12,13 @@ import businessmodel.Order;
  *
  */
 public class UserInterFace {
-	
-/**
+
+	/**
 	 * A variable which holds the scanner to read the input to the system.
 	 */
 	private Scanner scan = new Scanner(System.in);
+
+	private Controller control;
 	
 	/**
 	 * This method asks the current User for their login information.
@@ -34,11 +36,11 @@ public class UserInterFace {
 		result[1] = this.scan.next();
 		return result;
 	}
-	
+
 	public void badLogin(){
 		System.out.println("We could not find you in the System \n \n");
 	}
-	
+
 	public void displayOrderOverview(ArrayList<Order> completed, ArrayList<Order> pending){
 		this.displayString("These are your completed orders: \n");
 		for (Order ord : completed){
@@ -60,7 +62,7 @@ public class UserInterFace {
 				+ "to see the list of available commands enter: help <CR>";
 		this.displayString(help);
 	}
-	
+
 	/**
 	 * This method prints out the string supplied by the caller.
 	 * 
@@ -70,7 +72,7 @@ public class UserInterFace {
 	public void displayString( String str){
 		System.out.print(str);
 	}
-	
+
 	/**
 	 * This method returns the input the User supplied via the console.
 	 * 
@@ -80,7 +82,7 @@ public class UserInterFace {
 	public String getInput(){
 		return this.scan.next();
 	}
-	
-	
+
+
 
 }

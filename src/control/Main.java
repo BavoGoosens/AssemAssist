@@ -1,3 +1,4 @@
+package control;
 import ui.UserInterFace;
 import businessmodel.CarManufacturingCompany;
 
@@ -16,6 +17,6 @@ public class Main {
 		CarManufacturingCompany cmc = new CarManufacturingCompany();
 		UserInterFace ui = new UserInterFace();
 		Controller ctrl = new Controller(cmc, ui);
-		ctrl.run();
+		;
 	}
 }

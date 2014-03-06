@@ -1,3 +1,4 @@
+package control;
 import ui.UserInterFace;
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
@@ -5,7 +6,6 @@ import businessmodel.Catalogus;
 import businessmodel.GarageHolder;
 import businessmodel.Inventory;
 import businessmodel.Mechanic;
-import businessmodel.ProductionSchedule;
 import businessmodel.User;
 import businessmodel.UserManagement;
 
