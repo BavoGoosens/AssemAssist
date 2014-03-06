@@ -14,8 +14,14 @@ public class CarModel {
 	 */
 	private String carmodel;
 	
-	public CarModel(String carmodel){
+	/**
+	 * 
+	 */
+	private CarModelSpecification cms;
+
+	public CarModel(String carmodel,CarModelSpecification cms){
 		setCarmodel(carmodel);
+		setCarModelSpecification(cms);
 	}
 	
 	public String getCarmodel() {
@@ -24,6 +30,13 @@ public class CarModel {
 
 	private void setCarmodel(String carmodel) {
 		this.carmodel = carmodel;
+	}	
+	
+	public CarModelSpecification getCms() {
+		return cms;
 	}
 
+	private void setCarModelSpecification(CarModelSpecification cms) {
+		this.cms = cms;
+	}
 }
