@@ -19,11 +19,6 @@ public class Order {
 	private Car car;
 
 	/**
-	 * A variable that represents the order is completed or not.
-	 */
-	private boolean completed;
-
-	/**
 	 * A variable that represents an user.
 	 */
 	private User user;
@@ -47,7 +42,6 @@ public class Order {
 	public Order(User user, ArrayList<Component> components, Date deliverydate){
 		setUser(user);
 		this.car = new Car(components);
-		setCompleted(false);
 		setDate(deliverydate);
 	}
 
@@ -73,10 +67,14 @@ public class Order {
 	/**
 	 * a method to see if the order is completed or not.
 	 * 
-	 * @return   this.completed
+	 * @return   True if and only if all the components of the car of this order are completed.
 	 */
-	public boolean getCompleted(){
-		return this.completed;
+	public boolean isCompleted(){
+		Boolean completed = true;
+		for(Component component: this.car.getComponents())
+			if(component.isCompleted() == false)
+				completed = false;
+		return completed;
 	}
 
 	/**
@@ -90,7 +88,9 @@ public class Order {
 
 	/**
 	 * A method to set the delivery date to the given delivery date.
-	 * @param deliverydate
+	 * 
+	 * @param   deliverydate
+	 *          the delivery date of this order.
 	 */
 	private void setDate(Date deliverydate) {
 		this.deliverydate = deliverydate;
@@ -98,17 +98,10 @@ public class Order {
 
 	/**
 	 * A method to get the user that placed this order.
+	 * 
 	 * @return   this.user
 	 */
 	public User getUser() {
 		return this.user;
-	}
-
-	/**
-	 * A method to see of this order is completed.
-	 * @param completed
-	 */
-	private void setCompleted(boolean completed) {
-		this.completed = completed;
 	}
 }

@@ -157,6 +157,6 @@ public class Testing {
 		assertEquals(order.getCar().getComponents(),this.components);
 		assertEquals(order.getUser(),this.mechanic);
 		assertEquals(order.getDate(),this.date);
-		assertEquals(order.getCompleted(),false);
+		assertEquals(order.isCompleted(),false);
 	}
 }

@@ -1,4 +1,5 @@
 package component;
+
 /**
  * A class representing a component.
  * 
@@ -6,16 +7,21 @@ package component;
  *
  */
 public class Component {
-	
+
 	/**
 	 * A variable that contains the name of the component.
 	 */
 	private String name;
-	
+
 	/**
 	 * A variable that contains the price of the component.
 	 */
 	private double price;
+
+	/** 
+	 * A variable that represents the order is completed or not.
+	 */
+	private boolean completed;
 
 	/**
 	 * This method constructs the component.
@@ -30,8 +36,9 @@ public class Component {
 	public Component(String name, double price) {
 		this.setName(name);
 		this.setPrice(price);
+		this.setCompleted(false);
 	}
-	
+
 	/**
 	 * This method returns the name of the component.
 	 * @return this.body
@@ -39,7 +46,7 @@ public class Component {
 	public String getName() {
 		return this.name;
 	}
-	
+
 	/**
 	 * This method sets the name of the component.
 	 * @param 	name
@@ -51,7 +58,7 @@ public class Component {
 		if (name == null) throw new IllegalArgumentException();
 		this.name = name;
 	}
-	
+
 	/**
 	 * This method returns the price of the component.
 	 * @return this.price
@@ -59,7 +66,7 @@ public class Component {
 	public double getPrice() {
 		return this.price;
 	}
-	
+
 	/**
 	 * This method sets the price for the component.
 	 * @param 	price
@@ -73,10 +80,22 @@ public class Component {
 	}
 
 	/**
-	 * This method returns a string representation of the component.
+	 * A method to see if an component is completed or not.
+	 * 
+	 * @return   this.completed
 	 */
-	public String toString() {
-		return ": "+this.name+" ("+this.price+" euro)";
+	public boolean isCompleted() {
+		return this.completed;
+	}
+
+	/**
+	 * A method to set the completed boolean of this class to the given boolean.
+	 *   
+	 * @param   completed
+	 *          the new boolean value for the variable completed.
+	 */
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
 	}
 }
 
