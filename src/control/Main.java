@@ -14,9 +14,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		CarManufacturingCompany cmc = new CarManufacturingCompany();
-		UserInterFace ui = new UserInterFace();
-		Controller ctrl = new Controller(cmc, ui);
-		;
+		Controller ctrl = new Controller();
+		ctrl.run();
 	}
 }
