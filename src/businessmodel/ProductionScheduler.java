@@ -1,6 +1,6 @@
 package businessmodel;
 
-public class ProductionSchedule {
+public class ProductionScheduler {
 
 	public String getCompletedOrders(User current_user) {
 		// TODO Auto-generated method stub

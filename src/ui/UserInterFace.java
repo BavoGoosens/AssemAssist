@@ -10,7 +10,7 @@ import java.util.Scanner;
  */
 public class UserInterFace {
 	
-	/**
+/**
 	 * A variable which holds the scanner to read the input to the system.
 	 */
 	private Scanner scan = new Scanner(System.in);
@@ -30,6 +30,21 @@ public class UserInterFace {
 		System.out.print("Password: ");
 		result[1] = this.scan.next();
 		return result;
+	}
+	
+	public void badLogin(){
+		System.out.println("We could not find you in the System \n \n");
+	}
+	
+	/**
+	 * This method prints out the possible commands when a user wants to place an order.
+	 */
+	public void displayOrderHelp(){
+		String help = "to place a new order enter: order <CR> "
+				+ "\n to quit enter: quit <CR> "
+				+ "\n to view your order overview enter: overview <CR> \n >"
+				+ "to see the list of available commands enter: help <CR>";
+		this.displayString(help);
 	}
 	
 	/**

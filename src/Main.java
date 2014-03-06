@@ -1,16 +1,21 @@
+import ui.UserInterFace;
+import businessmodel.CarManufacturingCompany;
+
+
 /**
  * @author Team 10
  *
  */
 public class Main {
 
-	private int henk;
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Controller ctrl = new Controller();
+		CarManufacturingCompany cmc = new CarManufacturingCompany();
+		UserInterFace ui = new UserInterFace();
+		Controller ctrl = new Controller(cmc, ui);
 		ctrl.run();
 	}
 }

@@ -1,4 +1,5 @@
 import ui.UserInterFace;
+import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Catalogus;
 import businessmodel.Inventory;
@@ -14,37 +15,19 @@ import businessmodel.UserManagement;
  */
 public class Controller {
 
-	private UserInterFace ui = new UserInterFace();
+	private UserInterFace ui;
 
-	private UserManagement um = new UserManagement();
+	private CarManufacturingCompany cmc; 
 
-	private ProductionSchedule ps = new ProductionSchedule();
-
-	private Inventory in = new Inventory();
-
-	private Catalogus ca = new Catalogus();
-
-	public void run(){
-		User current_user = null;
-		boolean auth = false;
-		while (auth == false) {
-			String[] login = ui.loginPrompt();
-			if (! um.isUserInSystem(login[0]) ) {
-				ui.displayString("We could not find you in the System \n \n");
-			} else {
-				auth = um.authenticate(login[0],login[1]);
-				if (auth) current_user = um.getUser(login[0]); 
-			}
-		}
-		if (um.canPlaceOrder(current_user)){
-			orderNewCar(current_user);
-		}else if( um.isMechanic(current_user)){
-			performAssemblyTask(current_user);
-		}else{
-			advanceAssemblyLine();
-		}
-
+	public Controller(CarManufacturingCompany cmc, UserInterFace ui){
+		this.cmc = cmc;
+		this.ui = ui;
 	}
+	
+	public void run(){
+		cmc.login(this.ui.loginPrompt()[0];
+	}
+
 
 	private void advanceAssemblyLine() {
 		// TODO Auto-generated method stub
@@ -79,7 +62,7 @@ public class Controller {
 				} else if (response.matches("\\d")){
 					int res = Integer.parseInt(response);
 					CarModel cm = this.ca.getCarModel(res);
-					
+
 				}
 			} else if (response.equals("help")) {
 				this.ui.displayString(help);
