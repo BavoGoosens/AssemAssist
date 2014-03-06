@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @author   SWOP team 10
  *
  */
-public class OrderManagement {
+public class OrderManager {
 
 	/**
 	 * A list that holds all the orders of a car manufacturing company.
@@ -26,7 +26,7 @@ public class OrderManagement {
 	 * @param    carmodels
 	 *           the car models that an car manufacturing company offers.
 	 */
-	public OrderManagement(ArrayList<CarModel> carmodels){
+	public OrderManager(ArrayList<CarModel> carmodels){
 		this.orders = new ArrayList<Order>();
 		setCarmodels(carmodels);
 	}
@@ -100,10 +100,38 @@ public class OrderManagement {
 	 * 
 	 * @return the pending orders of this order manager.
 	 */
-	public ArrayList<Order> getPedingOrders(){
+	public ArrayList<Order> getPendingOrders(){
 		ArrayList<Order> pendingorders = new ArrayList<Order>();
 		for (Order order: this.getOrders()){
 			if (order.getCompleted() == false)
+				pendingorders.add(order);
+		}
+		return pendingorders;
+	}
+	
+	/**
+	 * A method to get the completed orders of a given user of this order manager.
+	 * 
+	 * @return  the completed orders of a given user of this order manager.
+	 */
+	public ArrayList<Order> getCompletedOrders(User user){
+		ArrayList<Order> completedorders = new ArrayList<Order>();
+		for (Order order: this.getOrders()){
+			if (order.getCompleted() == true && order.getUser() == user)
+				completedorders.add(order);
+		}
+		return completedorders;
+	}
+
+	/**
+	 * A method to get the pending orders of a given user of this order manager.
+	 * 
+	 * @return the pending orders of a given user this order manager.
+	 */
+	public ArrayList<Order> getPendingOrders(User user){
+		ArrayList<Order> pendingorders = new ArrayList<Order>();
+		for (Order order: this.getOrders()){
+			if (order.getCompleted() == false && order.getUser() == user)
 				pendingorders.add(order);
 		}
 		return pendingorders;

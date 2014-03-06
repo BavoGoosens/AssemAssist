@@ -6,7 +6,7 @@ public class CarManufacturingCompany {
 	
 	private Inventory inv;
 	
-	private OrderManagement om;
+	private OrderManager om;
 	
 	private ProductionScheduler ps;
 	

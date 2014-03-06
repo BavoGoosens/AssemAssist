@@ -3,6 +3,7 @@ package businessmodel;
 import component.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A class representing a car.
@@ -14,9 +15,9 @@ import java.util.ArrayList;
 public class Car {
 
 	/**
-	 * A list that holds all the components of a car.
+	 * A list that holds all the components of a car and specifies for each component if it is completed.
 	 */
-	private ArrayList<Component> components;
+	private HashMap<Component,Boolean> components;
 
 	/**
 	 * A constructor to create a new car.
@@ -28,12 +29,14 @@ public class Car {
 	}
 
 	/**
-	 * A method to set the components of this car to the given components.
+	 * A method to set the components of this car to the given components .
 	 * @param   components
 	 *          the new components of this car.
 	 */
 	private void setComponents(ArrayList<Component> components) {
-		this.components = components;
+		for(Component component: components){
+			this.components.put(component,false);
+		}
 	}
 
 	/**
@@ -41,7 +44,7 @@ public class Car {
 	 *
 	 * @return  this.components
 	 */
-	public ArrayList<Component> getComponents(){
+	public HashMap<Component,Boolean> getComponents(){
 		return this.components;
 	}
 
@@ -52,24 +55,21 @@ public class Car {
 	 *          the component that you want to add.
 	 */
 	public void addComponent(Component component) {
-		this.getComponents().add(component);
+		this.getComponents().put(component,false);
 	}
-	
+
 	/**
 	 * A method to remove a component from a car.
 	 * @param   component
 	 *         the component that you want to remove.
 	 */
 	public void removeComponent(Component component) {
-		if( this.getComponents().contains(component))
+		if (this.getComponents().containsKey(component))
 			this.getComponents().remove(component);
 	}
-	
-//	public Component getComponent(Object object){
-//		Component component1;
-//		for (Component component: getComponents()){
-//			if (component.getClass() == object.getClass())
-//				component1 = component;
-//		}
-//	}
+
+	public ArrayList<Component> getCompletedComponents(){
+		ArrayList<Component> completedcomponents = new ArrayList<Component>();
+		return completedcomponents;
+	}
 }

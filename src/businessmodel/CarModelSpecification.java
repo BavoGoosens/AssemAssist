@@ -141,14 +141,6 @@ public class CarModelSpecification {
 		this.wheels = wheels;
 	}
 
-	//public Car getCarWithIndices(int bodyIndex, int colorIndex, int engineIndex,
-	//							int gearboxIndex, int seatsIndex, int aircoIndex, int wheelsIndex) {
-	//	return new Car(this.getBodies().get(bodyIndex), this.getColors().get(colorIndex),
-	//					this.getEngines().get(engineIndex), this.getGearboxes().get(gearboxIndex),
-	//					this.getSeats().get(seatsIndex), this.getAircos().get(aircoIndex),
-	//					this.getWheels().get(wheelsIndex));
-	//}
-
 }
 
 

@@ -35,7 +35,7 @@ public class Testing {
 	private CarModelSpecification cms;
 	private CarModel audiA6;
 	private ArrayList<CarModel> carmodels;
-	private OrderManagement ordermanager;
+	private OrderManager ordermanager;
 
 
 	@Before @Test
@@ -69,7 +69,19 @@ public class Testing {
 		aircos = new ArrayList<Airco>();
 		wheelss = new ArrayList<Wheels>();
 
-		try {cms = new CarModelSpecification(bodies,colors,engines,gearboxes,seatss,aircos,wheelss);} 
+		try {cms = new CarModelSpecification(null,colors,engines,gearboxes,seatss,aircos,wheelss);} 
+		catch (IllegalArgumentException e) {}
+		try {cms = new CarModelSpecification(bodies,null,engines,gearboxes,seatss,aircos,wheelss);} 
+		catch (IllegalArgumentException e) {}
+		try {cms = new CarModelSpecification(bodies,colors,null,gearboxes,seatss,aircos,wheelss);} 
+		catch (IllegalArgumentException e) {}
+		try {cms = new CarModelSpecification(bodies,colors,engines,null,seatss,aircos,wheelss);} 
+		catch (IllegalArgumentException e) {}
+		try {cms = new CarModelSpecification(bodies,colors,engines,gearboxes,null,aircos,wheelss);} 
+		catch (IllegalArgumentException e) {}
+		try {cms = new CarModelSpecification(bodies,colors,engines,gearboxes,seatss,null,wheelss);} 
+		catch (IllegalArgumentException e) {}
+		try {cms = new CarModelSpecification(bodies,colors,engines,gearboxes,seatss,aircos,null);} 
 		catch (IllegalArgumentException e) {}
 
 		bodies.add(body2);
@@ -91,7 +103,7 @@ public class Testing {
 		audiA6 = new CarModel("Audi A6",cms);
 		carmodels = new ArrayList<CarModel>();
 		carmodels.add(audiA6);
-		ordermanager = new OrderManagement(carmodels);
+		ordermanager = new OrderManager(carmodels);
 		ordermanager.addOrder(order);
 	}
 
@@ -137,5 +149,14 @@ public class Testing {
 		assertEquals(cms.getGearboxes(),this.gearboxes);
 		assertEquals(cms.getSeats(),this.seatss);
 		assertEquals(cms.getWheels(),this.wheelss);
+	}
+	
+	// A test method for the class Order.
+	@Test
+	public void testOrder(){
+		assertEquals(order.getCar().getComponents(),this.components);
+		assertEquals(order.getUser(),this.mechanic);
+		assertEquals(order.getDate(),this.date);
+		assertEquals(order.getCompleted(),false);
 	}
 }
