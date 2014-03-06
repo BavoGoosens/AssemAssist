@@ -20,7 +20,23 @@ public class Testing {
 	private Seats seats; private Seats seats2;
 	private Airco airco; private Airco airco2;
 	private Wheels wheels; private Wheels wheels2;
-	ArrayList<Component> components;
+	private Mechanic mechanic;
+	private Date date;
+	private Order order;
+	private ArrayList<Component> components;
+	private ArrayList<Body> bodies;
+	private ArrayList<Color> colors;
+	private ArrayList<Engine> engines;
+	private ArrayList<Airco> aircos;
+	private ArrayList<Gearbox> gearboxes;
+	private ArrayList<Wheels> wheelss;
+	private ArrayList<Seats> seatss;
+
+	private CarModelSpecification cms;
+	private CarModel audiA6;
+	private ArrayList<CarModel> carmodels;
+	private OrderManagement ordermanager;
+
 
 	@Before @Test
 	public void setUp() throws Exception {
@@ -40,109 +56,86 @@ public class Testing {
 		wheels2 = new Wheels("comfort",1000);
 		this.components = new ArrayList<Component>();
 		car1 = new Car(components);
-		
-//		// test voor body
-//		try {car1 = new Car(null,color,engine,gearbox,seats,airco,wheels);}
-//		catch (IllegalArgumentException e) {}
-//
-//		try {car1 = new Car(color,color,engine,gearbox,seats,airco,wheels);}
-//		catch (IllegalArgumentException e) {}
-//		
-//		// test voor color
-//		try {car1 = new Car(body,null,engine,gearbox,seats,airco,wheels);}
-//		catch (IllegalArgumentException e) {}
-//		
-//		try {car1 = new Car(body,body,engine,gearbox,seats,airco,wheels);}
-//		catch (IllegalArgumentException e) {}
-//
-//		// test voor engine
-//		try {car1 = new Car(body,color,null,gearbox,seats,airco,wheels);}
-//		catch (IllegalArgumentException e) {}
-//
-//		try {car1 = new Car(body,color,body,gearbox,seats,airco,wheels);}
-//		catch (IllegalArgumentException e) {}		
-//
-//		// test voor gearbox
-//		try {car1 = new Car(body,color,engine,null,seats,airco,wheels);}
-//		catch (IllegalArgumentException e) {}
-//
-//		try {car1 = new Car(body,color,engine,body,seats,airco,wheels);}
-//		catch (IllegalArgumentException e) {}		
-//		
-//		// test voor seats
-//		try {car1 = new Car(body,color,engine,gearbox,null,airco,wheels);}
-//		catch (IllegalArgumentException e) {}
-//
-//		try {car1 = new Car(body,color,engine,gearbox,body,airco,wheels);}
-//		catch (IllegalArgumentException e) {}
-//		
-//		// test voor airco
-//		try {car1 = new Car(body,color,engine,gearbox,seats,null,wheels);}
-//		catch (IllegalArgumentException e) {}
-//
-//		try {car1 = new Car(body,color,engine,gearbox,seats,body,wheels);}
-//		catch (IllegalArgumentException e) {}
-//		
-//		// test voor body
-//		try {car1 = new Car(body,color,engine,gearbox,seats,airco,null);}
-//		catch (IllegalArgumentException e) {}
-//
-//		try {car1 = new Car(body,color,engine,gearbox,seats,airco,body);}
-//		catch (IllegalArgumentException e) {}
-		}
+		mechanic = new Mechanic("Sander","Geijsen","HENK","DE POTVIS");
+		date = new Date();
+		order = new Order(mechanic, this.components,date);
 
-	@Test   // TODO: test voor getType + toString
+
+		bodies = new ArrayList<Body>();
+		colors = new ArrayList<Color>();
+		engines = new ArrayList<Engine>();
+		gearboxes = new ArrayList<Gearbox>();
+		seatss = new ArrayList<Seats>();
+		aircos = new ArrayList<Airco>();
+		wheelss = new ArrayList<Wheels>();
+
+		try {cms = new CarModelSpecification(bodies,colors,engines,gearboxes,seatss,aircos,wheelss);} 
+		catch (IllegalArgumentException e) {}
+
+		bodies.add(body2);
+		bodies.add(body);
+		colors.add(color);
+		colors.add(color2);
+		engines.add(engine);
+		engines.add(engine2);
+		gearboxes.add(gearbox);
+		gearboxes.add(gearbox2);
+		seatss.add(seats);
+		seatss.add(seats2);
+		aircos.add(airco);
+		aircos.add(airco2);
+		wheelss.add(wheels);
+		wheelss.add(wheels2);
+
+		cms = new CarModelSpecification(bodies,colors,engines,gearboxes,seatss,aircos,wheelss);
+		audiA6 = new CarModel("Audi A6",cms);
+		carmodels = new ArrayList<CarModel>();
+		carmodels.add(audiA6);
+		ordermanager = new OrderManagement(carmodels);
+		ordermanager.addOrder(order);
+	}
+
+	// A test method for the class Component
+	@Test
 	public void testComponent() throws Exception {
 		assertEquals("sedan",body.getName());
 		assertEquals(1000,body.getPrice(),0);
 
 		try {body = new Body(null,1000);}
 		catch (IllegalArgumentException e) {}
-		
+
 		try {body = new Body("sedan",-1);}
 		catch (IllegalArgumentException e) {}
-		
+
 		try {body = new Body("sedan",1000);}
 		catch (IllegalArgumentException e) {}
-	}
+	}	
 
-	@Test  // TODO:
-	public void testCar() throws Exception {
-
-	}
-	
+	// A test method for the class Car.
 	@Test
-	public void randomTest() {
-		Mechanic mechanic = new Mechanic("Sander","Geijsen","HENK","DE POTVIS");
-		Date date = new Date();
-		Order order = new Order(mechanic, this.components,date);
-		ArrayList<Body> bodies = new ArrayList<Body>();
-		bodies.add(body2);
-		bodies.add(body);
-		ArrayList<Color> colors = new ArrayList<Color>();
-		colors.add(color);
-		colors.add(color2);
-		ArrayList<Engine> engines = new ArrayList<Engine>();
-		engines.add(engine);
-		engines.add(engine2);
-		ArrayList<Gearbox> gearboxes = new ArrayList<Gearbox>();
-		gearboxes.add(gearbox);
-		gearboxes.add(gearbox2);
-		ArrayList<Seats> seatss = new ArrayList<Seats>();
-		seatss.add(seats);
-		seatss.add(seats2);
-		ArrayList<Airco> aircos = new ArrayList<Airco>();
-		aircos.add(airco);
-		aircos.add(airco2);
-		ArrayList<Wheels> wheelss = new ArrayList<Wheels>();
-		wheelss.add(wheels);
-		wheelss.add(wheels2);
-	
-		CarModelSpecification cms = new CarModelSpecification(bodies,colors,engines,gearboxes,seatss,aircos,wheelss);
-		CarModel audiA6 = new CarModel("Audi A6",cms);
-		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
-		carmodels.add(audiA6);
-		OrderManagement ordermanager = new OrderManagement(carmodels);
-		ordermanager.addOrder(order);
+	public void CarTest(){
+		assertEquals(this.components,car1.getComponents());
+		Body bodytest = new Body("test",500);
+		car1.removeComponent(bodytest);
+		car1.addComponent(bodytest);
+		car1.removeComponent(bodytest);
+	}
+	// A test method to test the class CarModel.
+	@Test
+	public void CarModelTest(){
+		assertEquals("Audi A6",this.audiA6.getCarmodel());
+		assertEquals(this.cms,audiA6.getCarModelSpecification());
+	}
+
+	// A test method to test the class CarModelSpecification.
+	@Test
+	public void testCarModelSpecification(){
+		assertEquals(cms.getBodies(),this.bodies);
+		assertEquals(cms.getColors(),this.colors);
+		assertEquals(cms.getEngines(),this.engines);
+		assertEquals(cms.getAircos(),this.aircos);
+		assertEquals(cms.getGearboxes(),this.gearboxes);
+		assertEquals(cms.getSeats(),this.seatss);
+		assertEquals(cms.getWheels(),this.wheelss);
 	}
 }

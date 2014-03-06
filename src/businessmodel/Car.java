@@ -45,6 +45,26 @@ public class Car {
 		return this.components;
 	}
 
+	/**
+	 * A method to add a component to the components of a car.
+	 * 
+	 * @param   component
+	 *          the component that you want to add.
+	 */
+	public void addComponent(Component component) {
+		this.getComponents().add(component);
+	}
+	
+	/**
+	 * A method to remove a component from a car.
+	 * @param   component
+	 *         the component that you want to remove.
+	 */
+	public void removeComponent(Component component) {
+		if( this.getComponents().contains(component))
+			this.getComponents().remove(component);
+	}
+	
 //	public Component getComponent(Object object){
 //		Component component1;
 //		for (Component component: getComponents()){
