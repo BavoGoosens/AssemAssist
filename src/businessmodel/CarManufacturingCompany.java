@@ -5,19 +5,22 @@ import java.util.ArrayList;
 import control.Controller;
 
 public class CarManufacturingCompany {
-	
+
 	private UserManagement um = new UserManagement();
-	
+
 	private Inventory inv;
-	
+
 	private OrderManager om;
-	
+
 	private ProductionScheduler ps;
-	
+
 	private Controller control;
-	
-	public CarManufacturingCompany(Controller control){
+
+	public CarManufacturingCompany(Controller control ,UserManagement um, ProductionScheduler ps, OrderManager om, Inventory inv){
 		this.control = control;
+		this.um = um;
+		this.ps = ps;
+		this.om = om;
 	}
 	public boolean login(String username, String password) {
 		return this.um.authenticate(username, password);		
@@ -28,11 +31,19 @@ public class CarManufacturingCompany {
 	}
 
 	public ArrayList<Order> getCompletedOrders(User user) {
-		return om.getCompletedOrders(user);
+		try{
+			return om.getCompletedOrders(user);
+		}catch (NullPointerException e){
+			return null;		
+		}
 	}
 
 	public ArrayList<Order> getPendingOrders(User user) {
-		return om.getPendingOrders(user);
+		try {
+			return om.getPendingOrders(user);
+		}catch (NullPointerException e){
+			return null;
+		}
 	}
 	public boolean canPlaceOrder(User currentuser) {
 		return this.um.canPlaceOrder(currentuser);
@@ -43,7 +54,13 @@ public class CarManufacturingCompany {
 		}
 		return null;
 	}
-	
-	
+	public boolean canPerformAssemblyTask(User currentuser) {
+		return this.um.isMechanic(currentuser);
+	}
+	public boolean canAdvanceAssemblyLine(User currentuser) {
+		return this.um.canControlAssemblyLine(currentuser);
+	}
+
+
 
 }

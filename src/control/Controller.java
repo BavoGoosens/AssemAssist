@@ -1,17 +1,22 @@
 package control;
 import java.util.ArrayList;
+import java.util.Date;
 
 import ui.UserInterFace;
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
+import businessmodel.Inventory;
 import businessmodel.Order;
+import businessmodel.OrderManager;
+import businessmodel.ProductionScheduler;
 import businessmodel.User;
+import businessmodel.UserManagement;
 
 /**
  * This class is the main controller instance. 
  * It handles the communication between the user interface and the business logic layer and responds to user events.
  * 
- * @author BatCave
+ * @author Team 10
  *
  */
 public class Controller {
@@ -20,8 +25,8 @@ public class Controller {
 
 	private CarManufacturingCompany cmc; 
 
-	public Controller(){
-		this.cmc = new CarManufacturingCompany(this);
+	public Controller(UserManagement um, ProductionScheduler ps, OrderManager om, Inventory inv){
+		this.cmc = new CarManufacturingCompany(this, um, ps, om, inv);
 		this.ui = new UserInterFace(this);
 	}
 	
@@ -51,6 +56,24 @@ public class Controller {
 
 	public ArrayList<CarModel> getAvailableCarModels(User currentuser) {
 		return this.cmc.getAvailableCarModels(currentuser);		
+	}
+
+	public boolean canPerformAssemblyTask(User currentuser) {
+		return this.cmc.canPerformAssemblyTask(currentuser);
+	}
+
+	public boolean canAdvanceAssemblyLine(User currentuser) {
+		return this.cmc.canAdvanceAssemblyLine(currentuser);
+	}
+
+	public void placeOrder(Order order) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Date getCompletionTimeEstimate() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

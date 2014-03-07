@@ -1,10 +1,10 @@
 package ui;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 import component.Component;
-
 import control.Controller;
 import businessmodel.CarModel;
 import businessmodel.Order;
@@ -50,9 +50,12 @@ public class UserInterFace {
 				this.badLogin();
 			}
 		}
-		this.order(currentuser);
-		this.performAssemblyTask(currentuser);
-		this.advance(currentuser);	
+		if (this.control.canPlaceOrder(currentuser))
+			this.order(currentuser);
+		if (this.control.canPerformAssemblyTask(currentuser))
+			this.performAssemblyTask(currentuser);
+		if (this.control.canAdvanceAssemblyLine(currentuser))
+			this.advance(currentuser);	
 	}
 
 	private void advance(User currentuser) {
@@ -63,54 +66,85 @@ public class UserInterFace {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	public void order(User currentuser){
+		this.displayOrderOverview(currentuser);
 		while(true){
-			if (this.control.canPlaceOrder(currentuser)){
-				this.displayOrderOverview(currentuser);
-				this.displayOrderHelp();
-				String response = this.getInput();
-				if (response.equalsIgnoreCase("quit"))
-					break;
-				if (response.equalsIgnoreCase("order")){
-					ArrayList<CarModel> cml = this.control.getAvailableCarModels(currentuser);
-					CarModel cm = this.chooseCarModel(cml);
-					if (cm == null)
-						continue;
-					ArrayList<Component> carparts = this.chooseCar(cm);
-					Order order = new Order(currentuser,carparts, null);
-					this.control.placeOrder(order);
-				}
-				if (response.equalsIgnoreCase("help")){
-					this.displayOrderHelp();
-				}
-				if (response.equalsIgnoreCase("overview"))
+			this.displayOrderHelp();
+			String response = this.getInput();
+			if (response.equalsIgnoreCase("quit"))
+				break;
+			if (response.equalsIgnoreCase("order")){
+				ArrayList<CarModel> cml = this.control.getAvailableCarModels(currentuser);
+				CarModel cm = this.chooseCarModel(cml);
+				if (cm == null)
 					continue;
+				ArrayList<Component> carparts = this.chooseCar(cm);
+				Order order = new Order(currentuser,carparts);
+				Date datum = this.control.getCompletionTimeEstimate();
+				this.displayString(order.toString() + "\n" +
+						"It will be finished around this time: " + datum.toString() + "\n" + 
+						"Is this the order you wish to place? (yes/no)" );
+				String answer = this.getInput();
+				if (answer.equalsIgnoreCase("yes")){
+					this.control.placeOrder(order);
+					this.displayString("\n Your order has been placed. We will let you know when it's finished.");
+				}else{
+					this.displayString("Ya fakin cunt ya r wastin oyur time");
+				}
+			}
+			if (response.equalsIgnoreCase("help"))
+				continue;
+ 			if (response.equalsIgnoreCase("overview"))
+				this.displayOrderOverview(currentuser);
+			else{
+				this.badInput();
 			}
 		}
 		this.login();
 	}
 
 	private ArrayList<Component> chooseCar(CarModel cm) {
-		ArrayList<ArrayList<Component>> possibleparts =  cm.getPosibilities();
+		ArrayList<Component[]> possibleparts =  cm.getPossibilities();
 		ArrayList<Component> parts = new ArrayList<Component>();
-		for(ArrayList<Component> choices : possibleparts){
-			this.displayString("Enter the number of the" + choices.get(0).getClass() + "part you would like to order");
-			int count = 1;
-			for(Component comp : choices){
-				this.displayString(Integer.toString(count) + ") " + comp.toString());
-				count ++;
+		for(Component[] choices : possibleparts){
+			String type = "";
+			String choice = "";
+			for(int i = 0 ; i< choices.length; i ++){
+				type = choices[i].getClass().getName();
+				choice = choice + "\n" + Integer.toString(i + 1) + ") " + choices[i].toString();
 			}
-			String response = this.getInput();
-			
+			Component part = null;;
+			type = type.split("\\.")[1];
+			while (true){
+				String output = "\n Please choose the " + type + " part you wish to order \n" + choice + "\n";
+				this.displayString(output);
+				String response = this.getInput();
+				if (response.matches("\\d")){
+					int res = Integer.parseInt(response) - 1;
+					if (res <= choices.length){
+						part = choices[res];
+						break;
+					}
+				}
+				if (response.equalsIgnoreCase("cancel"))
+					break;
+			}
+			// the user wants to cancel
+			if (part == null)
+				break;
+			// part has been chosen add to list
+			parts.add(part);
 		}
+		return parts;
 	}
-	
+
 	private CarModel chooseCarModel(ArrayList<CarModel> cml) {
-		this.displayString("Enter the number of the car model you wish to order or enter cancel to abort: \n");
+		this.displayString("\n > Enter the number of the car model you wish to order \n"
+				+ " > Enter cancel to abort: \n");
 		int count = 1;
 		for(CarModel cm : cml){
-			this.displayString(Integer.toString(count) + ") " + cm.toString());
+			this.displayString(Integer.toString(count) + ") " + cm.getCarmodel() + "\n >>");
 			count ++;
 		}
 		String response = this.getInput();
@@ -123,35 +157,50 @@ public class UserInterFace {
 			//user entered a valid number
 			if (res <= cml.size())
 				return cml.get(res - 1);	
-		}
+		} 
+		this.badInput();
 		return chooseCarModel(cml);	
+	}
+
+	public void badInput(){
+		this.displayString("\n You entered something wrong. Try again! \n");
 	}
 	
 	public void badLogin(){
-		System.out.println("We could not find you in the System \n \n");
+		this.displayString("We could not find you in the System \n \n");
 	}
 
 	public void displayOrderOverview(User currentuser){
 		ArrayList<Order> completed = this.control.getCompletedOrders(currentuser);
 		ArrayList<Order> pending = this.control.getPendingOrders(currentuser);
-		this.displayString("These are your completed orders: \n");
-		for (Order ord : completed){
-			this.displayString(ord.toString()+ "\n");
+		if (completed != null & completed.size() > 0){
+			this.displayString("These are your completed orders: \n");
+			for (Order ord : completed){
+				this.displayString(ord.toString()+ "\n");
+			}
+		}else{
+			this.displayString("\n There are no completed orders for you");
 		}
-		this.displayString("\n These are your completed orders: \n");
-		for (Order ord : pending){
-			this.displayString(ord.toString() + "\n");
+		if (pending != null  & pending.size() > 0){
+			this.displayString("\n These are your completed orders: \n");
+			for (Order ord : pending){
+				this.displayString(ord.toString() + "\n");
+			}
+		}else{
+			this.displayString("\n There are no pending orders for you");
 		}
 
 	}
+
 	/**
 	 * This method prints out the possible commands when a user wants to place an order.
 	 */
 	public void displayOrderHelp(){
-		String help = "to place a new order enter: order <CR> "
-				+ "\n to quit enter: quit <CR> "
-				+ "\n to view your order overview enter: overview <CR> \n >"
-				+ "to see the list of available commands enter: help <CR>";
+		String help = "\n > to place a new order enter: order <CR> "
+				+ "\n > to quit enter: quit <CR> "
+				+ "\n > to view your order overview enter: overview <CR>"
+				+ "\n > to see the list of available commands enter: help <CR>" +
+				"\n >>";
 		this.displayString(help);
 	}
 

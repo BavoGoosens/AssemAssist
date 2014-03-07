@@ -62,11 +62,15 @@ public class CarModel {
 
 	/**
 	 * A method to set the car model specification of this car model to the given car model specification.
-	 * @param   cms
+	 * @param   cmss
 	 *          the new car model specification of this car model.
 	 */
 	private void setCarModelSpecification(CarModelSpecification cms) {
 		this.cms = cms;
+	}
+	
+	public ArrayList<Component[]> getPossibilities(){
+		return this.cms.getPosibilities();
 	}
 	
 	@Override
