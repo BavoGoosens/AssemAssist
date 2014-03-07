@@ -166,6 +166,8 @@ public class Testing {
 		System.out.println(this.order.toString());
 		System.out.println(this.mechanic.toString());
 		System.out.println(this.ordermanager.toString());
-		
+		assertEquals(this.cms.getPosibilities().get(0)[0].getClass(),cms.getBodies().get(0).getClass());
 	}
+	
+	
 }

@@ -255,49 +255,6 @@ public class CarModelSpecification {
 		return posibilities;
 	}
 	
-	public ArrayList<ArrayList<Component>> getPossibilities2(){
-		this.posibilities =  new ArrayList<ArrayList<Component>>();
-		ArrayList<Component> test = new ArrayList<Component>();
-		
-		posibilities.add(test);
-		for(int i = 1; i< this.getBodies().size() -1; i ++) {
-			this.posibilities.get(0).add(this.getBodies().get(i));
-		}
-		
-		posibilities.add(test);
-		for(int i = 1; i< this.getColors().size() -1; i ++) {
-			this.posibilities.get(1).add(this.getColors().get(i));
-		}
-		
-		posibilities.add(test);
-		for(int i = 1; i< this.getEngines().size() -1; i ++) {
-			this.posibilities.get(2).add(this.getEngines().get(i));
-		}
-		
-		posibilities.add(test);
-		for(int i = 1; i< this.getAircos().size() -1; i ++) {
-			this.posibilities.get(3).add(this.getAircos().get(i));
-		}
-		
-		posibilities.add(test);
-		for(int i = 1; i< this.getWheels().size() -1; i ++) {
-			this.posibilities.get(4).add(this.getWheels().get(i));
-		}
-		
-		posibilities.add(test);
-		for(int i = 1; i< this.getSeats().size() -1; i ++) {
-			this.posibilities.get(5).add(this.getSeats().get(i));
-		}
-		
-		posibilities.add(test);
-		for(int i = 1; i< this.getGearboxes().size() -1; i ++) {
-			this.posibilities.get(6).add(this.getGearboxes().get(i));
-		}
-		
-		
-		return posibilities;
-	}
-	
 	@Override
 	public String toString() {
 		return "bodies= " + bodies.toString() + ", colors= " + colors.toString()
