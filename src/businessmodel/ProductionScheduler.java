@@ -7,7 +7,5 @@ public class ProductionScheduler {
 	public ProductionScheduler(CarManufacturingCompany cmc) {
 		this.cmc = cmc;
 	}
-	
-	
 
 }
