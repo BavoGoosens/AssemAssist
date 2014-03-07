@@ -12,7 +12,7 @@ public class AssemblyLine {
 	private final WorkPost accessoiresPost;
 	
 	/**
-	 * This method constructs a new assembly line with an empty list of work posts.
+	 * This method constructs a new assembly line with fixed work posts.
 	 */
 	public AssemblyLine() {
 		this.carBodyPost = new WorkPost("car body post");
@@ -20,18 +20,34 @@ public class AssemblyLine {
 		this.accessoiresPost = new WorkPost("accessoires post");
 	}
 	
+	/**
+	 * This method returns the car body work post.
+	 * @return The car body work post of the assembly line.
+	 */
 	public WorkPost getCarBodyPost() {
 		return this.carBodyPost;
 	}
 	
+	/**
+	 * This method returns the drive train work post.
+	 * @return The car body work post of the assembly line.
+	 */
 	public WorkPost getDriveTrainPost() {
 		return this.driveTrainPost;
 	}
 	
+	/**
+	 * This method returns the accessoires work post.
+	 * @return The car body work post of the assembly line.
+	 */
 	public WorkPost getAccessoiresPost() {
 		return this.accessoiresPost;
 	}
 	
+	/**
+	 * This method returns all the current tasks at the assembly line.
+	 * @return	For every work post at the assembly line, return the current task.
+	 */
 	public ArrayList<AssemblyTask> getAllCurrentTasks() {
 		ArrayList<AssemblyTask> currentTasks = new ArrayList<AssemblyTask>();
 		currentTasks.add(this.getCarBodyPost().getCurrentTask());
@@ -40,6 +56,10 @@ public class AssemblyLine {
 		return currentTasks;
 	}
 	
+	/**
+	 * This method checks whether all the current tasks at the assembly line are completed.
+	 * @return	True if all the current tasks at the assembly line are completed.
+	 */
 	public boolean allCurrentTasksAreCompleted() {
 		for (AssemblyTask task: this.getAllCurrentTasks()) {
 			if (!task.isCompleted()) return false;
@@ -47,6 +67,10 @@ public class AssemblyLine {
 		return true;
 	}
 	
+	/**
+	 * This method checks whether the assembly line can move forward.
+	 * @return	True if the assembly line can move forward.
+	 */
 	public boolean canMoveForward() {
 		return this.allCurrentTasksAreCompleted();
 	}
