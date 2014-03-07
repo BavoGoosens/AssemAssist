@@ -61,6 +61,7 @@ public class CarManufacturingCompany {
 		return this.um.canControlAssemblyLine(currentuser);
 	}
 
-
-
+	public OrderManager getOrderManager(){
+		return this.om;
+	}
 }

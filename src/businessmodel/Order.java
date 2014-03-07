@@ -45,13 +45,26 @@ public class Order {
 	}
 
 	/**
-	 * A method to set the user of this order to the given user.
-	 * 
+	 * A method to set the user of this order to the given order.
 	 * @param   user
 	 *          the new user of this order.
+	 * @throws  IllegalArgumentException
+	 * 			!canHaveAsUser(user)
 	 */
-	private void setUser(User user) {
+	private void setUser(User user) throws IllegalArgumentException {
+		if (!canHaveAsUser(user)) 
+			throw new IllegalArgumentException();
 		this.user = user;
+	}
+
+	/**
+	 * A method to check if this order can have the given user.
+	 * @param   user
+	 *          the new user of this order.
+	 * @return  true if user is instanceof garage holder
+	 */
+	private boolean canHaveAsUser(User user) {
+		return (user instanceof GarageHolder);		
 	}
 
 	/**
@@ -85,14 +98,13 @@ public class Order {
 		return this.deliverydate;
 	}
 
-	// aanpassen naar protected!!
 	/**
 	 * A method to set the delivery date to the given delivery date.
 	 * 
 	 * @param   deliverydate
 	 *          the delivery date of this order.
 	 */
-	public void setDate(Date deliverydate) {
+	protected void setDate(Date deliverydate) {
 		this.deliverydate = deliverydate;
 	}
 

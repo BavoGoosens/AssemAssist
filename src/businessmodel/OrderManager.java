@@ -1,6 +1,7 @@
 package businessmodel;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * A class that represents an order manager.
@@ -14,7 +15,7 @@ public class OrderManager {
 	/**
 	 * A list that holds all the orders of a car manufacturing company.
 	 */
-	ArrayList<Order> orders;
+	LinkedList<Order> orders;
 
 	/**
 	 * A list that holds all the car models of a car manufacturing company.
@@ -28,7 +29,7 @@ public class OrderManager {
 	 *           the car models that an car manufacturing company offers.
 	 */
 	public OrderManager(ArrayList<CarModel> carmodels){
-		this.orders = new ArrayList<Order>();
+		this.orders = new LinkedList<Order>();
 		setCarmodels(carmodels);
 	}
 
@@ -37,7 +38,7 @@ public class OrderManager {
 	 * 
 	 * @return   this.orders.
 	 */
-	public ArrayList<Order> getOrders() {
+	public LinkedList<Order> getOrders() {
 		return this.orders;
 	}
 
@@ -101,8 +102,8 @@ public class OrderManager {
 	 * 
 	 * @return the pending orders of this order manager.
 	 */
-	public ArrayList<Order> getPendingOrders(){
-		ArrayList<Order> pendingorders = new ArrayList<Order>();
+	public LinkedList<Order> getPendingOrders(){
+		LinkedList<Order> pendingorders = new LinkedList<Order>();
 		for (Order order: this.getOrders()){
 			if (order.isCompleted() == false)
 				pendingorders.add(order);
@@ -143,4 +144,11 @@ public class OrderManager {
 	public String toString() {
 		return "orders= " + orders.toString() + ", carmodels= " + carmodels.toString();
 	}
+
+	// nog te implementeren
+//	public void updateEstimatedTime() {
+//		for(Order order: this.getPendingOrders()){
+//			order.setDate(order.getDate().);
+//		}
+//	}
 }

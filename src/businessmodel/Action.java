@@ -23,6 +23,11 @@ public class Action {
 	private ArrayList<Component> components = new ArrayList<Component>();
 	
 	/**
+	 * A variable that specifies if this assembly task is completed.
+	 */
+	private boolean completed; 
+	
+	/**
 	 * This method constructs a new action with a given description.
 	 * @param 	description
 	 * 			The description of the action
@@ -119,6 +124,14 @@ public class Action {
 	 */
 	public void removeComponent(Component component) {
 		this.getComponents().remove(component);
+	}
+	
+	public boolean isCompleted() {
+		return completed;
+	}
+
+	protected void setCompleted(boolean completed) {
+		this.completed = completed;
 	}
 
 }

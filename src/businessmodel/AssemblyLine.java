@@ -5,74 +5,73 @@ import java.util.ArrayList;
 public class AssemblyLine {
 	
 	
-	private final WorkPost carBodyPost;
+	private WorkPost carbodypost;
 	
-	private final WorkPost driveTrainPost;
+	private WorkPost drivetrainpost;
 	
-	private final WorkPost accessoiresPost;
+	private WorkPost accessoriespost;
+	/**
+	 * List of work posts at the assembly line.
+	 */
+	private ArrayList<WorkPost> workposts;
 	
 	/**
-	 * This method constructs a new assembly line with fixed work posts.
+	 * This method constructs a new assembly line with an empty list of work posts.
 	 */
 	public AssemblyLine() {
-		this.carBodyPost = new WorkPost("car body post");
-		this.driveTrainPost = new WorkPost("drive train post");
-		this.accessoiresPost = new WorkPost("accessoires post");
+		this.carbodypost = new WorkPost("car body post");
+		this.drivetrainpost = new WorkPost("drive train post");
+		this.accessoriespost = new WorkPost("accessories post");
 	}
 	
 	/**
-	 * This method returns the car body work post.
-	 * @return The car body work post of the assembly line.
+	 * This method constructs a new assembly line with the given list of work posts.
+	 * @param	workposts
+	 * 			The list of work posts at the assembly line.
 	 */
-	public WorkPost getCarBodyPost() {
-		return this.carBodyPost;
+	public AssemblyLine(ArrayList<WorkPost> workposts) {
+		this.setWorkposts(workposts);
 	}
 	
 	/**
-	 * This method returns the drive train work post.
-	 * @return The car body work post of the assembly line.
+	 * This method returns the list of work posts at the assembly line.
+	 * @return	this.workposts
 	 */
-	public WorkPost getDriveTrainPost() {
-		return this.driveTrainPost;
+	public ArrayList<WorkPost> getWorkposts() {
+		return this.workposts;
 	}
 	
 	/**
-	 * This method returns the accessoires work post.
-	 * @return The car body work post of the assembly line.
+	 * This method sets the work posts at the assembly line.
+	 * @param 	workposts
+	 * 			The list of work posts that needs to be set at the assembly line.
+	 * @throws 	IllegalArgumentException
+	 * 			workposts == null
 	 */
-	public WorkPost getAccessoiresPost() {
-		return this.accessoiresPost;
+	public void setWorkposts(ArrayList<WorkPost> workposts) throws IllegalArgumentException {
+		if (workposts == null) throw new IllegalArgumentException();
+		this.workposts = workposts;
 	}
 	
 	/**
-	 * This method returns all the current tasks at the assembly line.
-	 * @return	For every work post at the assembly line, return the current task.
+	 * This method adds a given work post to the assembly line.
+	 * @param 	workpost
+	 * 			The work posts that needs to be added at the assembly line.
+	 * @throws 	IllegalArgumentException
+	 * 			workpost == null
 	 */
-	public ArrayList<AssemblyTask> getAllCurrentTasks() {
-		ArrayList<AssemblyTask> currentTasks = new ArrayList<AssemblyTask>();
-		currentTasks.add(this.getCarBodyPost().getCurrentTask());
-		currentTasks.add(this.getDriveTrainPost().getCurrentTask());
-		currentTasks.add(this.getAccessoiresPost().getCurrentTask());
-		return currentTasks;
+	public void addWorkpost(WorkPost workpost) throws IllegalArgumentException {
+		if (workpost == null) throw new IllegalArgumentException();
+		this.getWorkposts().add(workpost);
 	}
 	
 	/**
-	 * This method checks whether all the current tasks at the assembly line are completed.
-	 * @return	True if all the current tasks at the assembly line are completed.
+	 * This method removes a given work post from the assembly line.
+	 * @param 	workpost
+	 * 			The work post that needs to be removed.
 	 */
-	public boolean allCurrentTasksAreCompleted() {
-		for (AssemblyTask task: this.getAllCurrentTasks()) {
-			if (!task.isCompleted()) return false;
-		}
-		return true;
-	}
-	
-	/**
-	 * This method checks whether the assembly line can move forward.
-	 * @return	True if the assembly line can move forward.
-	 */
-	public boolean canMoveForward() {
-		return this.allCurrentTasksAreCompleted();
+	public void removeWorkpost(WorkPost workpost) {
+		this.getWorkposts().remove(workpost);
 	}
 
 }

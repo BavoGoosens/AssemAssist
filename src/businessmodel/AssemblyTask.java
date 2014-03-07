@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class AssemblyTask {
 
 	/**
-	 * A variable that holds the individual actions of a assembly task
+	 * A variable that holds the indiviudal actions of a assembly task
 	 */
 	private ArrayList<Action> actions;
 	
@@ -26,14 +26,7 @@ public class AssemblyTask {
 	 */
 	public AssemblyTask(ArrayList<Action> actions){
 		this.setActions(actions);
-		this.completed = false;
-	}
-	
-	/**
-	 * A constructor for the assembly task.
-	 */
-	public AssemblyTask() {
-		this.setActions(new ArrayList<Action>());
+		setCompleted(false);
 	}
 	
 	/**
@@ -64,29 +57,25 @@ public class AssemblyTask {
 	private ArrayList<Action> getActions() {
 		return this.actions;
 	}
-	
+
 	/**
-	 * This method returns whether the assembly task is completed.
-	 * @return	True if the assembly task is completed.
+	 * A method to check if this assembly task is completed.
+	 * 
+	 * @return true if all actions of this assembly task are completed.
 	 */
-	public boolean isCompleted() {
+	public boolean isCompleted(){
+		boolean completed = true;
+		for(Action action: this.getActions())
+			if (action.isCompleted() == false)
+				completed = false;
 		return completed;
 	}
 	
 	/**
-	 * This method completes the assembly task.
+	 * A method to set the actions of this assembly task to the given assembly task.
+	 * @param actions
 	 */
-	public void complete() {
-		this.completed = true;
-	}
-	
-	/**
-	 * This method sets the actions for the assembly task.
-	 * @param 	actions
-	 * 			The actions of the assembly task.
-	 */
-	private void setActions(ArrayList<Action> actions) throws IllegalArgumentException {
-		if (actions == null) throw new IllegalArgumentException();
+	private void setActions(ArrayList<Action> actions) {
 		this.actions = actions;
 	}
 	
