@@ -1,15 +1,13 @@
 package businessmodel;
 
 public class ProductionScheduler {
-
-	public String getCompletedOrders(User current_user) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	private CarManufacturingCompany cmc;
+	
+	public ProductionScheduler(CarManufacturingCompany cmc) {
+		this.cmc = cmc;
 	}
-
-	public String getPendingOrders(User current_user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+	
 
 }
