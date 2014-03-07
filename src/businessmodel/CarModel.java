@@ -1,5 +1,9 @@
 package businessmodel;
 
+import java.util.ArrayList;
+
+import component.Component;
+
 /**
  * This car represents a car model. 
  * 

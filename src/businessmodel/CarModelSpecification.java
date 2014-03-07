@@ -231,6 +231,21 @@ public class CarModelSpecification {
 		if (wheels == null) throw new IllegalArgumentException();
 		this.wheels = wheels;
 	}
+	
+	/**
+	 * A method to get all the possibilities for a car.
+	 * @return all the components of a car.
+	 */
+	public ArrayList<ArrayList<Object>> getPosibilities(){
+		ArrayList<ArrayList<Object>> posibilities=  new ArrayList<ArrayList<Object>>();
+		posibilities.add(this.getBodies());
+		posibilities.add(this.getColors());
+		posibilities.add(this.getAircos());
+		posibilities.add(this.getEngines());
+		posibilities.add(this.getGearboxes());
+		posibilities.add(this.getSeats());
+		posibilities.add(this.getWheels());	
+	}
 }
 
 

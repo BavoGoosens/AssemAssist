@@ -5,6 +5,7 @@ import java.util.ArrayList;
 /**
  * A class that represents an order manager.
  * This class handles all the orders for a car manufacturing company.
+ * 
  * @author   SWOP team 10
  *
  */
@@ -89,7 +90,7 @@ public class OrderManager {
 	public ArrayList<Order> getCompletedOrders(){
 		ArrayList<Order> completedorders = new ArrayList<Order>();
 		for (Order order: this.getOrders()){
-			if (order.getCompleted() == true)
+			if (order.isCompleted() == true)
 				completedorders.add(order);
 		}
 		return completedorders;
@@ -103,7 +104,7 @@ public class OrderManager {
 	public ArrayList<Order> getPendingOrders(){
 		ArrayList<Order> pendingorders = new ArrayList<Order>();
 		for (Order order: this.getOrders()){
-			if (order.getCompleted() == false)
+			if (order.isCompleted() == false)
 				pendingorders.add(order);
 		}
 		return pendingorders;
@@ -117,7 +118,7 @@ public class OrderManager {
 	public ArrayList<Order> getCompletedOrders(User user){
 		ArrayList<Order> completedorders = new ArrayList<Order>();
 		for (Order order: this.getOrders()){
-			if (order.getCompleted() == true && order.getUser() == user)
+			if (order.isCompleted() == true && order.getUser() == user)
 				completedorders.add(order);
 		}
 		return completedorders;
@@ -131,7 +132,7 @@ public class OrderManager {
 	public ArrayList<Order> getPendingOrders(User user){
 		ArrayList<Order> pendingorders = new ArrayList<Order>();
 		for (Order order: this.getOrders()){
-			if (order.getCompleted() == false && order.getUser() == user)
+			if (order.isCompleted() == false && order.getUser() == user)
 				pendingorders.add(order);
 		}
 		return pendingorders;
