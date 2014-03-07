@@ -63,7 +63,28 @@ public class UserInterFace {
 
 	}
 	private void performAssemblyTask(User currentuser) {
-		// TODO Auto-generated method stub
+		ArrayList<WorkPost> workposts = this.control.getWorkingStations();
+		WorkPost currentworkpost = null;
+		while (true){
+			this.displayString(" > Hello " + currentuser.getFirstname() + 
+					"please enter workpost number \n" );
+			int count = 1;
+			for(WorkPost w : workposts){
+				this.displayString(" " + Integer.toString(count) + ") " + w.toString() + "\n");
+			}
+			this.displayString(" >> ");
+			String response = this.getInput();
+			if (response.matches("\\d*")){
+				int res = Integer.parseInt(response) - 1;
+				if (res < workposts.size()){
+					currentworkpost = workposts.get(res);
+					break;
+				}else {
+					this.badInput();
+				}
+			}else 
+				this.badInput();
+		}
 
 	}
 
