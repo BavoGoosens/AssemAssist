@@ -14,13 +14,19 @@ public class AssemblyTask {
 	private ArrayList<Action> actions;
 	
 	/**
+	 * A variable that specifies if this assembly task is completed.
+	 */
+	private boolean completed; 
+	
+	/**
 	 * A constructor for the class assembly task.
 	 * 
 	 * @param   actions
 	 *          the actions that are part of this assembly process.
 	 */
 	public AssemblyTask(ArrayList<Action> actions){
-		this.actions = actions;
+		this.setActions(actions);
+		setCompleted(false);
 	}
 	
 	/**
@@ -51,4 +57,17 @@ public class AssemblyTask {
 	private ArrayList<Action> getActions() {
 		return this.actions;
 	}
+	
+	public boolean isCompleted() {
+		return completed;
+	}
+
+	protected void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
+
+	private void setActions(ArrayList<Action> actions) {
+		this.actions = actions;
+	}
+	
 }

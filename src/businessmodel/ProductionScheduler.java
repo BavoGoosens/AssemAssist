@@ -2,10 +2,12 @@ package businessmodel;
 
 public class ProductionScheduler {
 	
-	private CarManufacturingCompany cmc;
+	private AssemblyLine assemblyline = new AssemblyLine();
 	
-	public ProductionScheduler(CarManufacturingCompany cmc) {
-		this.cmc = cmc;
+	public ProductionScheduler() {
+		
 	}
-
+	
+	
+	
 }

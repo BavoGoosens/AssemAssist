@@ -1,8 +1,6 @@
 package businessmodel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import component.*;
 
@@ -14,8 +12,6 @@ import component.*;
  *
  */
 public class CarModelSpecification {
-
-	private ArrayList<ArrayList<Component>> posibilities;
 	
 	/**
 	 * A list with all the available body types.

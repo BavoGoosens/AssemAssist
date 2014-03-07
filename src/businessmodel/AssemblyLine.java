@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 public class AssemblyLine {
 	
+	
+	private WorkPost carbodypost;
+	
+	private WorkPost drivetrainpost;
+	
+	private WorkPost accessoriespost;
 	/**
 	 * List of work posts at the assembly line.
 	 */
@@ -13,7 +19,8 @@ public class AssemblyLine {
 	 * This method constructs a new assembly line with an empty list of work posts.
 	 */
 	public AssemblyLine() {
-		this(new ArrayList<WorkPost>());
+		carbodypost = new WorkPost("carbodypost");
+		
 	}
 	
 	/**
