@@ -92,7 +92,7 @@ public class UserInterFace {
 					String answer = this.getInput();
 					if (answer.equalsIgnoreCase("yes")){
 						this.control.placeOrder(order);
-						this.displayString("\n Your order has been placed. We will let you know when it's finished.");
+						this.displayString("\n Your order has been placed. We will let you know when it's finished. \n");
 						answered = true;
 					}else if (answer.equalsIgnoreCase("no")){
 						this.displayString(" Allright please enter your new order or quit the system \n");
@@ -194,7 +194,7 @@ public class UserInterFace {
 			this.displayString("\n There are no completed orders for you");
 		}
 		if (pending != null  & pending.size() > 0){
-			this.displayString("\n These are your completed orders: \n");
+			this.displayString("\n These are your pending orders: \n");
 			for (Order ord : pending){
 				this.displayString(ord.toString() + "\n");
 			}

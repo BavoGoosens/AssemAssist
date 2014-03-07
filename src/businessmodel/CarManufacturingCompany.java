@@ -64,4 +64,8 @@ public class CarManufacturingCompany {
 	public OrderManager getOrderManager(){
 		return this.om;
 	}
+	
+	public void placeOrder(Order order){
+		this.om.addOrder(order);
+	}
 }

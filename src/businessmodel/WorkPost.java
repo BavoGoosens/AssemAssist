@@ -107,5 +107,14 @@ public class WorkPost {
 	public AssemblyTask getCurrentTask() {
 		return this.getTasks().get(0);
 	}
+	
+	public boolean isCompleted(){
+		boolean temp = true;
+		for(AssemblyTask task: this.getTasks()){
+			if(task.isCompleted() == false)
+				temp = false;
+		}
+		return temp;
+	}
 
 }

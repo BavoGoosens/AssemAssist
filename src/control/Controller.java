@@ -29,7 +29,7 @@ public class Controller {
 		this.cmc = new CarManufacturingCompany(this, um, ps, om, inv);
 		this.ui = new UserInterFace(this);
 	}
-	
+
 	public void run(){
 		this.ui.login();
 	}
@@ -67,8 +67,7 @@ public class Controller {
 	}
 
 	public void placeOrder(Order order) {
-		// TODO Auto-generated method stub
-		
+		this.cmc.placeOrder(order);
 	}
 
 	public Date getCompletionTimeEstimate() {

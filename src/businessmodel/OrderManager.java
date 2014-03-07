@@ -1,6 +1,9 @@
 package businessmodel;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 /**
@@ -13,9 +16,12 @@ import java.util.LinkedList;
 public class OrderManager {
 
 	/**
-	 * A list that holds all the orders of a car manufacturing company.
+	 * A list that holds all the completed orders of a car manufacturing company.
 	 */
-	LinkedList<Order> orders;
+	LinkedList<Order> completedorders;
+
+
+	LinkedList<Order> pendingorders;
 
 	/**
 	 * A list that holds all the car models of a car manufacturing company.
@@ -29,17 +35,22 @@ public class OrderManager {
 	 *           the car models that an car manufacturing company offers.
 	 */
 	public OrderManager(ArrayList<CarModel> carmodels){
-		this.orders = new LinkedList<Order>();
+		this.pendingorders = new LinkedList<Order>();
+		this.completedorders = new LinkedList<Order>();
 		setCarmodels(carmodels);
 	}
 
 	/**
 	 * A method to get the orders of this order manager.
 	 * 
-	 * @return   this.orders.
+	 * @return All the orders of this order manager.
 	 */
 	public LinkedList<Order> getOrders() {
-		return this.orders;
+		LinkedList<Order> temp = this.getPendingOrders();
+		for(Order order: this.getCompletedOrders()){
+			temp.add(order);
+		}
+		return temp;
 	}
 
 	/**
@@ -69,7 +80,7 @@ public class OrderManager {
 	 *          the order that needs to be added.
 	 */
 	public void addOrder(Order order){
-		this.getOrders().add(order);
+		this.getPendingOrders().add(order);
 	}
 
 	/**
@@ -78,23 +89,18 @@ public class OrderManager {
 	 * @param    order
 	 * 			 the order that needs to be removed.
 	 */
-	public void deleteOrder(Order order){
-		this.getOrders().remove(order);
+	public void CompleteOrder(Order order){
+		this.getPendingOrders().remove(order);
+		this.getCompletedOrders().add(order);
 	}
 
-	// @return aanpassen
 	/**
 	 * A method to get the completed orders of this order manager.
 	 * 
 	 * @return  the completed orders of this order manager.
 	 */
-	public ArrayList<Order> getCompletedOrders(){
-		ArrayList<Order> completedorders = new ArrayList<Order>();
-		for (Order order: this.getOrders()){
-			if (order.isCompleted() == true)
-				completedorders.add(order);
-		}
-		return completedorders;
+	public LinkedList<Order> getCompletedOrders(){
+		return this.completedorders;
 	}
 
 	/**
@@ -103,14 +109,9 @@ public class OrderManager {
 	 * @return the pending orders of this order manager.
 	 */
 	public LinkedList<Order> getPendingOrders(){
-		LinkedList<Order> pendingorders = new LinkedList<Order>();
-		for (Order order: this.getOrders()){
-			if (order.isCompleted() == false)
-				pendingorders.add(order);
-		}
-		return pendingorders;
+		return this.pendingorders;
 	}
-	
+
 	/**
 	 * A method to get the completed orders of a given user of this order manager.
 	 * 
@@ -118,8 +119,8 @@ public class OrderManager {
 	 */
 	public ArrayList<Order> getCompletedOrders(User user){
 		ArrayList<Order> completedorders = new ArrayList<Order>();
-		for (Order order: this.getOrders()){
-			if (order.isCompleted() == true && order.getUser() == user)
+		for (Order order: this.getCompletedOrders()){
+			if (order.getUser() == user)
 				completedorders.add(order);
 		}
 		return completedorders;
@@ -132,23 +133,43 @@ public class OrderManager {
 	 */
 	public ArrayList<Order> getPendingOrders(User user){
 		ArrayList<Order> pendingorders = new ArrayList<Order>();
-		for (Order order: this.getOrders()){
-			if (order.isCompleted() == false && order.getUser() == user)
+		for (Order order: this.getPendingOrders()){
+			if (order.getUser() == user)
 				pendingorders.add(order);
 		}
 		return pendingorders;
 	}
-	
+
 
 	@Override
 	public String toString() {
-		return "orders= " + orders.toString() + ", carmodels= " + carmodels.toString();
+		return "orders= " + this.getOrders().toString() + ", carmodels= " + carmodels.toString();
 	}
 
-	// nog te implementeren
-//	public void updateEstimatedTime() {
-//		for(Order order: this.getPendingOrders()){
-//			order.setDate(order.getDate().);
-//		}
-//	}
+	/**
+	 * A method to update the completion time of the pending orders.
+	 * @param index
+	 */
+	public void updateEstimatedTime(int index) {
+		if(index == 60){
+			for(Order order: this.getPendingOrders()){
+				Calendar time = order.getDate();
+				order.getDate().set(time.get(Calendar.YEAR),
+						time.get(Calendar.MONTH),
+						time.get(Calendar.DAY_OF_MONTH),
+						time.get(Calendar.HOUR+1),
+						time.get(Calendar.MINUTE));
+			}	
+		}
+		if(index == -60){
+			for(Order order: this.getPendingOrders()){
+				Calendar time = order.getDate();
+				order.getDate().set(time.get(Calendar.YEAR),
+						time.get(Calendar.MONTH),
+						time.get(Calendar.DAY_OF_MONTH),
+						time.get(Calendar.HOUR-1),
+						time.get(Calendar.MINUTE));
+			}	
+		}
+	}
 }

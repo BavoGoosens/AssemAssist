@@ -17,33 +17,62 @@ public class ProductionScheduler {
 	
 	private LinkedList<Order> dayorders;
 
+	/**
+	 * 
+	 * @param assemblyline
+	 * @param cms
+	 */
 	private void setAssemblyline(AssemblyLine assemblyline, CarManufacturingCompany cms) {
 		this.assemblyline = assemblyline;
 		this.cms = cms;
 	}
-
+	/**
+	 * 
+	 * @return
+	 */
 	private AssemblyLine getAssemblyline() {
 		return assemblyline;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private LinkedList<Order> getDayorders() {
 		return dayorders;
 	}
 
+	/**
+	 * 
+	 */
 	public ProductionScheduler() {		
 		dayorders = new LinkedList<Order>();
 	}
 
-
+	/**
+	 * A method to see if the assembly line can advance.
+	 * @return
+	 */
 	public ArrayList<Order> canAdvance(){
 		ArrayList<Order> notcompleted = new ArrayList<Order>();
-		for(int i = 0; i < 1; i++){
-			if(this.getDayorders().get(i).isCompleted() == false)
+		for(WorkPost wp: this.getAssemblyline().getWorkposts()){
+			if(wp.isCompleted() == false)
 				notcompleted.add(this.getDayorders().get(i));
 		}
 		return notcompleted;
 	}
 	
+	/**
+	 * 
+	 */
+	public void advance(){
+		this.cms.getOrderManager().getOrders().add(this.getDayorders().getFirst());
+		this.updateDaySchedule();
+	}
+	
+	/**
+	 * 
+	 */
 	private void makeDaySchedule(){
 		int temp = daytime;
 		for(int i = 0 ; i < temp; i++){
@@ -53,28 +82,81 @@ public class ProductionScheduler {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	private void updateDaySchedule(){
-		if (overlaytime > 60){
-			this.overlaytime -= 60;
+		if (this.getOverlaytime() > 60 && (this.getDaytime()-this.getCurrenttime()>3)){
+			this.setOverlaytime(this.getOverlaytime()-60);
 			addDayOrder();
 			this.cms.getOrderManager().updateEstimatedTime();
 		}
-		if (overlaytime < -60) {
+		if (overlaytime < -60 && (this.getDaytime()-this.getCurrenttime() > 2)) {
 			this.overlaytime += 60;
 			removeLastOrderOfDay();
 			this.cms.getOrderManager().updateEstimatedTime();
 		}
 	}
 
+	/**
+	 * 
+	 */
 	private void removeLastOrderOfDay() {
 		Order temp = this.getDayorders().get(this.getDayorders().size()-1);
 		this.cms.getOrderManager().getOrders().addFirst(temp);
 		this.getDayorders().remove(this.getDayorders().size()-1);
-
 	}
 
+	/**
+	 * 
+	 */
 	private void addDayOrder() {
 		this.getDayorders().add(this.cms.getOrderManager().getPendingOrders().getFirst());
 		this.cms.getOrderManager().getPendingOrders().removeFirst();
+	}
+	
+
+	private CarManufacturingCompany getCms() {
+		return cms;
+	}
+
+	private void setCms(CarManufacturingCompany cms) {
+		this.cms = cms;
+	}
+
+	private int getOverlaytime() {
+		return overlaytime;
+	}
+
+	private void setOverlaytime(int overlaytime) {
+		this.overlaytime = overlaytime;
+	}
+
+	private int getCurrenttime() {
+		return currenttime;
+	}
+
+	private void setCurrenttime(int currenttime) {
+		this.currenttime = currenttime;
+	}
+
+	private int getDaytime() {
+		return daytime;
+	}
+
+	private void setDaytime(int daytime) {
+		this.daytime = daytime;
+	}
+
+	private void setAssemblyline(AssemblyLine assemblyline) {
+		this.assemblyline = assemblyline;
+	}
+
+	private void setDayorders(LinkedList<Order> dayorders) {
+		this.dayorders = dayorders;
+	}
+	
+	private LinkedList<Order> getAllOrders(){
+		return this.cms.getOrderManager().getOrders();
 	}
 }
