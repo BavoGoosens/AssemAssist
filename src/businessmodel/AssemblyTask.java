@@ -30,6 +30,13 @@ public class AssemblyTask {
 	}
 	
 	/**
+	 * A constructor for the assembly task.
+	 */
+	public AssemblyTask() {
+		this.setActions(new ArrayList<Action>());
+	}
+	
+	/**
 	 * A method that adds an action to an assembly task.
 	 * 
 	 * @param   action
@@ -58,15 +65,28 @@ public class AssemblyTask {
 		return this.actions;
 	}
 	
+	/**
+	 * This method returns whether the assembly task is completed.
+	 * @return	True if the assembly task is completed.
+	 */
 	public boolean isCompleted() {
 		return completed;
 	}
-
-	protected void setCompleted() {
+	
+	/**
+	 * This method completes the assembly task.
+	 */
+	public void complete() {
 		this.completed = true;
 	}
-
-	private void setActions(ArrayList<Action> actions) {
+	
+	/**
+	 * This method sets the actions for the assembly task.
+	 * @param 	actions
+	 * 			The actions of the assembly task.
+	 */
+	private void setActions(ArrayList<Action> actions) throws IllegalArgumentException {
+		if (actions == null) throw new IllegalArgumentException();
 		this.actions = actions;
 	}
 	
