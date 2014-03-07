@@ -119,8 +119,7 @@ public class Order {
 	
 	@Override
 	public String toString() {
-		return "Car: " + this.car.toString() + ", user= " + this.user.toString() + ", deliverydate= "
-				+ this.deliverydate.toGMTString() + " , Completed: " + this.isCompleted();
+		return "Car: " + this.car.toString() + ", user= " + this.user.toString();
 	}
 
 }

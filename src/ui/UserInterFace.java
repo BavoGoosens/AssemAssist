@@ -80,22 +80,32 @@ public class UserInterFace {
 				if (cm == null)
 					continue;
 				ArrayList<Component> carparts = this.chooseCar(cm);
+				if (carparts == null | carparts.isEmpty())
+					continue;					
 				Order order = new Order(currentuser,carparts);
 				Date datum = this.control.getCompletionTimeEstimate();
-				this.displayString(order.toString() + "\n" +
-						"It will be finished around this time: " + datum.toString() + "\n" + 
-						"Is this the order you wish to place? (yes/no)" );
-				String answer = this.getInput();
-				if (answer.equalsIgnoreCase("yes")){
-					this.control.placeOrder(order);
-					this.displayString("\n Your order has been placed. We will let you know when it's finished.");
-				}else{
-					this.displayString("Ya fakin cunt ya r wastin oyur time");
+				boolean answered = false;
+				while (answered == false){
+					this.displayString(order.toString() + "\n" +
+							" > It will be finished around this time: " + datum.toString() + "\n" + 
+							" > Is this the order you wish to place? (yes/no) \n >>" );
+					String answer = this.getInput();
+					if (answer.equalsIgnoreCase("yes")){
+						this.control.placeOrder(order);
+						this.displayString("\n Your order has been placed. We will let you know when it's finished.");
+						answered = true;
+					}else if (answer.equalsIgnoreCase("no")){
+						this.displayString(" Allright please enter your new order or quit the system \n");
+						answered = true;
+					} else{
+						this.badInput();
+					}
 				}
+				continue;
 			}
 			if (response.equalsIgnoreCase("help"))
 				continue;
- 			if (response.equalsIgnoreCase("overview"))
+			if (response.equalsIgnoreCase("overview"))
 				this.displayOrderOverview(currentuser);
 			else{
 				this.badInput();
@@ -112,19 +122,21 @@ public class UserInterFace {
 			String choice = "";
 			for(int i = 0 ; i< choices.length; i ++){
 				type = choices[i].getClass().getName();
-				choice = choice + "\n" + Integer.toString(i + 1) + ") " + choices[i].toString();
+				choice = choice + "\n" + " " + Integer.toString(i + 1) + ") " + choices[i].toString();
 			}
 			Component part = null;;
 			type = type.split("\\.")[1];
 			while (true){
-				String output = "\n Please choose the " + type + " part you wish to order \n" + choice + "\n";
+				String output = "\n > Please enter the number of the " + type + " part you wish to order" + choice + "\n >>";
 				this.displayString(output);
 				String response = this.getInput();
 				if (response.matches("\\d")){
 					int res = Integer.parseInt(response) - 1;
-					if (res <= choices.length){
+					if (res < choices.length){
 						part = choices[res];
 						break;
+					} else {
+						this.badInput();
 					}
 				}
 				if (response.equalsIgnoreCase("cancel"))
@@ -144,7 +156,7 @@ public class UserInterFace {
 				+ " > Enter cancel to abort: \n");
 		int count = 1;
 		for(CarModel cm : cml){
-			this.displayString(Integer.toString(count) + ") " + cm.getCarmodel() + "\n >>");
+			this.displayString(" " + Integer.toString(count) + ") " + cm.getCarmodel() + "\n >>");
 			count ++;
 		}
 		String response = this.getInput();
@@ -165,7 +177,7 @@ public class UserInterFace {
 	public void badInput(){
 		this.displayString("\n You entered something wrong. Try again! \n");
 	}
-	
+
 	public void badLogin(){
 		this.displayString("We could not find you in the System \n \n");
 	}
@@ -210,7 +222,7 @@ public class UserInterFace {
 	 * @param str
 	 * 		  String that needs to be printed to the console.
 	 */
-	public void displayString( String str){
+	public void displayString(String str){
 		System.out.print(str);
 	}
 

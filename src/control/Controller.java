@@ -73,7 +73,7 @@ public class Controller {
 
 	public Date getCompletionTimeEstimate() {
 		// TODO Auto-generated method stub
-		
+		return new Date();
 	}
 
 }
