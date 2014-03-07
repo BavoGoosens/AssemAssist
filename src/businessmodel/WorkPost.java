@@ -10,6 +10,7 @@ public class WorkPost {
 	private String name;
 	/**
 	 * The tasks that are pending at the work post
+	 * The first element of the list is the current task
 	 */
 	private ArrayList<AssemblyTask> tasks;
 	
@@ -97,6 +98,14 @@ public class WorkPost {
 	 */
 	public void removeTask(AssemblyTask task) {
 		this.getTasks().remove(task);
+	}
+	
+	/**
+	 * This method returns the current task at the work post.
+	 * @return	The first element of the list of tasks at the work post.
+	 */
+	public AssemblyTask getCurrentTask() {
+		return this.getTasks().get(0);
 	}
 
 }

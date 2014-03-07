@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class AssemblyTask {
 
 	/**
-	 * A variable that holds the indiviudal actions of a assembly task
+	 * A variable that holds the individual actions of a assembly task
 	 */
 	private ArrayList<Action> actions;
 	
@@ -26,7 +26,7 @@ public class AssemblyTask {
 	 */
 	public AssemblyTask(ArrayList<Action> actions){
 		this.setActions(actions);
-		setCompleted(false);
+		this.completed = false;
 	}
 	
 	/**
@@ -62,8 +62,8 @@ public class AssemblyTask {
 		return completed;
 	}
 
-	protected void setCompleted(boolean completed) {
-		this.completed = completed;
+	protected void setCompleted() {
+		this.completed = true;
 	}
 
 	private void setActions(ArrayList<Action> actions) {
