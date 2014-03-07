@@ -1,6 +1,8 @@
 package businessmodel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import component.*;
 
@@ -13,6 +15,8 @@ import component.*;
  */
 public class CarModelSpecification {
 
+	private ArrayList<ArrayList<Component>> posibilities;
+	
 	/**
 	 * A list with all the available body types.
 	 */
@@ -233,18 +237,73 @@ public class CarModelSpecification {
 	}
 	
 	/**
-	 * A method to get all the possibilities for a car.
-	 * @return all the components of a car.
+	 * A method to get all the components of this car model specification.
+	 * 
+	 * @return all the components
 	 */
-	public ArrayList<ArrayList<Object>> getPosibilities(){
-		ArrayList<ArrayList<Object>> posibilities=  new ArrayList<ArrayList<Object>>();
-		posibilities.add(this.getBodies());
-		posibilities.add(this.getColors());
-		posibilities.add(this.getAircos());
-		posibilities.add(this.getEngines());
-		posibilities.add(this.getGearboxes());
-		posibilities.add(this.getSeats());
-		posibilities.add(this.getWheels());	
+	public ArrayList<Component[]> getPosibilities(){
+		ArrayList<Component[]> posibilities=  new ArrayList<Component[]>();
+		
+		posibilities.add(this.getBodies().toArray(new Component[this.getBodies().size()]));
+		posibilities.add(this.getColors().toArray(new Component[this.getColors().size()]));
+		posibilities.add(this.getEngines().toArray(new Component[this.getEngines().size()]));
+		posibilities.add(this.getSeats().toArray(new Component[this.getSeats().size()]));
+		posibilities.add(this.getWheels().toArray(new Component[this.getWheels().size()]));
+		posibilities.add(this.getGearboxes().toArray(new Component[this.getGearboxes().size()]));
+		posibilities.add(this.getAircos().toArray(new Component[this.getAircos().size()]));
+		
+		return posibilities;
+	}
+	
+	public ArrayList<ArrayList<Component>> getPossibilities2(){
+		this.posibilities =  new ArrayList<ArrayList<Component>>();
+		ArrayList<Component> test = new ArrayList<Component>();
+		
+		posibilities.add(test);
+		for(int i = 1; i< this.getBodies().size() -1; i ++) {
+			this.posibilities.get(0).add(this.getBodies().get(i));
+		}
+		
+		posibilities.add(test);
+		for(int i = 1; i< this.getColors().size() -1; i ++) {
+			this.posibilities.get(1).add(this.getColors().get(i));
+		}
+		
+		posibilities.add(test);
+		for(int i = 1; i< this.getEngines().size() -1; i ++) {
+			this.posibilities.get(2).add(this.getEngines().get(i));
+		}
+		
+		posibilities.add(test);
+		for(int i = 1; i< this.getAircos().size() -1; i ++) {
+			this.posibilities.get(3).add(this.getAircos().get(i));
+		}
+		
+		posibilities.add(test);
+		for(int i = 1; i< this.getWheels().size() -1; i ++) {
+			this.posibilities.get(4).add(this.getWheels().get(i));
+		}
+		
+		posibilities.add(test);
+		for(int i = 1; i< this.getSeats().size() -1; i ++) {
+			this.posibilities.get(5).add(this.getSeats().get(i));
+		}
+		
+		posibilities.add(test);
+		for(int i = 1; i< this.getGearboxes().size() -1; i ++) {
+			this.posibilities.get(6).add(this.getGearboxes().get(i));
+		}
+		
+		
+		return posibilities;
+	}
+	
+	@Override
+	public String toString() {
+		return "bodies= " + bodies.toString() + ", colors= " + colors.toString()
+				+ ", engines=  " + engines.toString() + ", gearboxes= " + gearboxes.toString()
+				+ ", seats= " + seats.toString() + ", aircos= " + aircos.toString() + ", wheels= "
+				+ wheels.toString();
 	}
 }
 

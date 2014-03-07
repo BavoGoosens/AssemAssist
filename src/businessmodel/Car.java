@@ -66,4 +66,10 @@ public class Car {
 		if( this.getComponents().contains(component))
 			this.getComponents().remove(component);
 	}
+	
+	@Override
+	public String toString() {
+		return "components= " + components.toString();
+	}
+
 }

@@ -22,7 +22,7 @@ public class OrderManager {
 	ArrayList<CarModel> carmodels;
 
 	/**
-	 * A constructor for the clas OrderManager.
+	 * A constructor for the class OrderManager.
 	 * 
 	 * @param    carmodels
 	 *           the car models that an car manufacturing company offers.
@@ -136,5 +136,11 @@ public class OrderManager {
 				pendingorders.add(order);
 		}
 		return pendingorders;
+	}
+	
+
+	@Override
+	public String toString() {
+		return "orders= " + orders.toString() + ", carmodels= " + carmodels.toString();
 	}
 }

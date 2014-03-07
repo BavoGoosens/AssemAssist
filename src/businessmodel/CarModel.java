@@ -68,4 +68,10 @@ public class CarModel {
 	private void setCarModelSpecification(CarModelSpecification cms) {
 		this.cms = cms;
 	}
+	
+	@Override
+	public String toString() {
+		return "carmodel= " + carmodel + ", cms= " + cms.toString();
+	}
+
 }

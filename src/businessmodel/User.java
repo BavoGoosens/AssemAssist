@@ -6,8 +6,7 @@ package businessmodel;
  *
  */
 public abstract class User {
-
-
+	
 	/**
 	 * A variable which represents the first name of the User.
 	 */
@@ -110,14 +109,14 @@ public abstract class User {
 	}
 
 	/**
-	 * This method lets the User update his/her username and password.
+	 * This method lets the User update his/her user name and password.
 	 * 
 	 * @param loginusername
-	 * 		  the current username.
+	 * 		  the current user name.
 	 * @param loginpassword
 	 * 		  the current password.
 	 * @param newusername
-	 * 		  the new username.
+	 * 		  the new user name.
 	 * @param newpassword
 	 * 		  the new password.
 	 */
@@ -131,12 +130,20 @@ public abstract class User {
 	/**
 	 * This method is used to authenticate a user.
 	 * 
-	 * @param uname the username to be authenticated.
+	 * @param uname the user name to be authenticated.
 	 * @param pwd the password to be authenticated.
 	 * @return boolean 
-	 * 		   True if the supplied username and password are correct otherwise False.
+	 * 		   True if the supplied user name and password are correct otherwise False.
 	 */
 	public boolean authenticate(String uname, String pwd){
 		return (this.getUsername().equals(uname) && this.getPassword().equals(pwd));
+	}
+	
+
+
+	@Override
+	public String toString() {
+		return "firstname= " + firstname + ", lastname= " + lastname
+				+ ", username= " + username;
 	}
 }

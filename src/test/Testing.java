@@ -58,7 +58,8 @@ public class Testing {
 		car1 = new Car(components);
 		mechanic = new Mechanic("Sander","Geijsen","HENK","DE POTVIS");
 		date = new Date();
-		order = new Order(mechanic, this.components,date);
+		order = new Order(mechanic, this.components);
+		order.setDate(date);;
 
 
 		bodies = new ArrayList<Body>();
@@ -158,5 +159,13 @@ public class Testing {
 		assertEquals(order.getUser(),this.mechanic);
 		assertEquals(order.getDate(),this.date);
 		assertEquals(order.isCompleted(),false);
+	}
+	
+	@Test
+	public void testShit(){
+		System.out.println(this.order.toString());
+		System.out.println(this.mechanic.toString());
+		System.out.println(this.ordermanager.toString());
+		
 	}
 }

@@ -39,10 +39,9 @@ public class Order {
 	 * @param   deliverydate
 	 *          the delivery date of the new order.
 	 */
-	public Order(User user, ArrayList<Component> components, Date deliverydate){
+	public Order(User user, ArrayList<Component> components){
 		setUser(user);
 		this.car = new Car(components);
-		setDate(deliverydate);
 	}
 
 	/**
@@ -86,13 +85,14 @@ public class Order {
 		return this.deliverydate;
 	}
 
+	// aanpassen naar protected!!
 	/**
 	 * A method to set the delivery date to the given delivery date.
 	 * 
 	 * @param   deliverydate
 	 *          the delivery date of this order.
 	 */
-	private void setDate(Date deliverydate) {
+	public void setDate(Date deliverydate) {
 		this.deliverydate = deliverydate;
 	}
 
@@ -104,4 +104,11 @@ public class Order {
 	public User getUser() {
 		return this.user;
 	}
+	
+	@Override
+	public String toString() {
+		return "Car: " + this.car.toString() + ", user= " + this.user.toString() + ", deliverydate= "
+				+ this.deliverydate.toGMTString() + " , Completed: " + this.isCompleted();
+	}
+
 }

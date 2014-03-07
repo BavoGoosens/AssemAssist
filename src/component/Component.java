@@ -6,7 +6,7 @@ package component;
  * @author Team 10
  *
  */
-public abstract class Component {
+public class Component {
 
 	/**
 	 * A variable that contains the name of the component.
@@ -96,6 +96,12 @@ public abstract class Component {
 	 */
 	public void setCompleted(boolean completed) {
 		this.completed = completed;
+	}
+	
+	@Override
+	public String toString() {
+		return "name= " + name + ", price= " + price + ", completed= "
+				+ completed;
 	}
 }
 
