@@ -100,8 +100,7 @@ public class Component {
 	
 	@Override
 	public String toString() {
-		return "name= " + name + ", price= " + price + ", completed= "
-				+ completed;
+		return "name= " + name + ", price= " + price;
 	}
 }
 
