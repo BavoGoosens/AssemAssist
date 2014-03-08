@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class AssemblyTask {
 
 	/**
-	 * A variable that holds the indiviudal actions of a assembly task
+	 * A variable that holds the individual actions of a assembly task
 	 */
 	private ArrayList<Action> actions;
 	

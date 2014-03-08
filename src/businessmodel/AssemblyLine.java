@@ -89,4 +89,22 @@ public class AssemblyLine {
 		return true;
 	}
 
+	/**
+	 * This method advances the Assembly Line. 
+	 * It adds the supplied order to the first work post and moves the rest forward. 
+	 * If the last WorkPost was working on an Order. That order is finished and is returned.
+	 * 
+	 * @param p 
+	 * 		  The Order that is added at the front of the line.
+	 * @return Order
+	 * 		   A finished order if the last WorkPost was working on an Order. 
+	 */
+	public Order advance(Order p) {
+		Order shift = p;
+		for (WorkPost wp : this.getWorkposts()){
+			shift = wp.moveAlong(shift);
+		}
+		return shift;
+	}
+
 }

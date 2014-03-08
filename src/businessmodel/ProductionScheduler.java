@@ -61,7 +61,8 @@ public class ProductionScheduler {
 	 */
 	public void advance(){
 		if (this.getAssemblyline().canAdvance()){
-			
+			Order p = this.dayorders.getFirst();
+			Order finished = this.getAssemblyline().advance(p);
 		}
 		this.cms.getOrderManager().getOrders().add(this.getDayorders().getFirst());
 		this.updateDaySchedule();
