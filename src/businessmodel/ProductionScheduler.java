@@ -19,6 +19,13 @@ public class ProductionScheduler {
 
 	/**
 	 * 
+	 */
+	public ProductionScheduler() {		
+		dayorders = new LinkedList<Order>();
+	}
+	
+	/**
+	 * 
 	 * @param assemblyline
 	 * @param cms
 	 */
@@ -26,46 +33,36 @@ public class ProductionScheduler {
 		this.assemblyline = assemblyline;
 		this.cms = cms;
 	}
+	
 	/**
+	 * This method returns the assembly line that this production scheduler uses.
 	 * 
-	 * @return
+	 * @return AssemblyLine
+	 * 		   The Assembly line that this production scheduler uses.
 	 */
 	private AssemblyLine getAssemblyline() {
 		return assemblyline;
 	}
 
 	/**
+	 * This method returns the list of orders that will probably be finished today. 
+	 * There might be delays or speedups that cause the list to shrink of grow.
 	 * 
-	 * @return
+	 * @return LinkedList<Order>
+	 * 		   A LinkedList with all the pending orders for today.
+	 * 
 	 */
 	private LinkedList<Order> getDayorders() {
 		return dayorders;
 	}
-
-	/**
-	 * 
-	 */
-	public ProductionScheduler() {		
-		dayorders = new LinkedList<Order>();
-	}
-
-	/**
-	 * A method to see if the assembly line can advance.
-	 * @return
-	 */
-	public ArrayList<Order> canAdvance(){
-		ArrayList<Order> notcompleted = new ArrayList<Order>();
-		for(WorkPost wp: this.getAssemblyline().getWorkposts()){
-			if(wp.isCompleted() == false)
-				notcompleted.add(this.getDayorders().get(i));
-		}
-		return notcompleted;
-	}
 	
 	/**
-	 * 
+	 * This method advances the assembly line if possible.
 	 */
 	public void advance(){
+		if (this.getAssemblyline().canAdvance()){
+			
+		}
 		this.cms.getOrderManager().getOrders().add(this.getDayorders().getFirst());
 		this.updateDaySchedule();
 	}

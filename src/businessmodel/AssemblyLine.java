@@ -74,4 +74,19 @@ public class AssemblyLine {
 		this.getWorkposts().remove(workpost);
 	}
 
+	/**
+	 * This method checks whether the assembly line can move forward.
+	 * 
+	 * @return boolean
+	 * 		   true is the assembly line can move forward. false otherwise.
+	 */
+	public boolean canAdvance() {
+		for(WorkPost wp : this.getWorkposts()){
+			boolean ready = wp.isCompleted();
+			if (ready == false)
+				return false;
+		}
+		return true;
+	}
+
 }
