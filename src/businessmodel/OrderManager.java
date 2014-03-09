@@ -20,13 +20,17 @@ public class OrderManager {
 	 */
 	LinkedList<Order> completedorders;
 
-
+	/**
+	 * A list that holds all the pending orders for a car manufacturing company.
+	 */
 	LinkedList<Order> pendingorders;
 
 	/**
 	 * A list that holds all the car models of a car manufacturing company.
 	 */
 	ArrayList<CarModel> carmodels;
+	
+	ProductionScheduler production = new ProductionScheduler(this);
 
 	/**
 	 * A constructor for the class OrderManager.
@@ -171,5 +175,10 @@ public class OrderManager {
 						time.get(Calendar.MINUTE));
 			}	
 		}
+	}
+
+	public void finishedOrder(Order finished) {
+		// TODO Auto-generated method stub
+		
 	}
 }

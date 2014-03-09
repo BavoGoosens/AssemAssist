@@ -1,23 +1,25 @@
 package businessmodel;
+import component.Component;
 import java.util.ArrayList;
 
 /**
  * A class that represents an assembly task
+ * 
  * @author SWOP team 10 2013-2014
  *
  */
 public class AssemblyTask {
 
 	/**
-	 * A variable that holds the individual actions of a assembly task
+	 * A variable that holds the individual actions of an assembly task
 	 */
 	private ArrayList<Action> actions;
-	
+
 	/**
 	 * A variable that specifies if this assembly task is completed.
 	 */
 	private boolean completed; 
-	
+
 	/**
 	 * A constructor for the class assembly task.
 	 * 
@@ -26,9 +28,43 @@ public class AssemblyTask {
 	 */
 	public AssemblyTask(ArrayList<Action> actions){
 		this.setActions(actions);
-		setCompleted(false);
+		this.setCompleted(false);
 	}
-	
+
+	/**
+	 * This method sets the completion status to the supplied value.
+	 * 
+	 * @param b
+	 * 		  A boolean indicating whether the AssemblyTask is completed or not.
+	 */
+	// currently public since AssemblyTasks are performed as a whole.
+	public void setCompleted(boolean b) {
+		this.completed = b;		
+	}
+
+	/**
+	 * This method updates the assembly task's completion status.
+	 */
+	private void updateCompleted(){
+		for(Action action: this.getActions())
+			if (action.isCompleted() == false)
+				this.setCompleted(false);
+	}
+
+	/**
+	 * This method returns the component(s) this AssemblyTask is handling.
+	 * 
+	 * @return Component
+	 * 		   The Component this task is handling
+	 */
+	public ArrayList<Component> getComponents() {
+		ArrayList<Component> parts = new ArrayList<Component>();
+		for( Action act : this.getActions()){
+			parts.addAll(act.getComponents());
+		}
+		return parts;
+	}
+
 	/**
 	 * A method that adds an action to an assembly task.
 	 * 
@@ -38,7 +74,7 @@ public class AssemblyTask {
 	public void addAction(Action action){
 		this.getActions().add(action);
 	}
-	
+
 	/**
 	 * A method that removes an action to an assembly task.
 	 * 
@@ -48,7 +84,7 @@ public class AssemblyTask {
 	public void removeAction(Action action){
 		this.getActions().remove(action);
 	}
-	
+
 	/**
 	 * A method to get the actions of an assembly task.
 	 * 
@@ -64,13 +100,10 @@ public class AssemblyTask {
 	 * @return true if all actions of this assembly task are completed.
 	 */
 	public boolean isCompleted(){
-		boolean completed = true;
-		for(Action action: this.getActions())
-			if (action.isCompleted() == false)
-				completed = false;
-		return completed;
+		this.updateCompleted();
+		return this.completed;
 	}
-	
+
 	/**
 	 * A method to set the actions of this assembly task to the given assembly task.
 	 * @param actions
@@ -79,9 +112,4 @@ public class AssemblyTask {
 		this.actions = actions;
 	}
 
-	public Object getComponent() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 }

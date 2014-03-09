@@ -210,11 +210,12 @@ public class WorkPost {
 	 * @return ArrayList<AssemblyTask>
 	 *         A list of AssemblyTasks that need to be carried out to install (some of) the components.
 	 */
+	//TODO
 	private ArrayList<AssemblyTask> possibleAssemblyTasks(
 			ArrayList<Component> carparts) {
 		ArrayList<AssemblyTask> result = new ArrayList<AssemblyTask>();
 		for(AssemblyTask task :this.getResponsibletasks()){
-			if (carparts.contains(task.getComponent()))
+			if (carparts.contains(task.getComponents()))
 				result.add(task);
 		}
 		return result;
