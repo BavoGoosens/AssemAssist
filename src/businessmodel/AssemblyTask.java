@@ -78,5 +78,10 @@ public class AssemblyTask {
 	private void setActions(ArrayList<Action> actions) {
 		this.actions = actions;
 	}
+
+	public Object getComponent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
