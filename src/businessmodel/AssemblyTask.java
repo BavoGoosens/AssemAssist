@@ -9,6 +9,10 @@ import java.util.ArrayList;
 public class AssemblyTask {
 
 	/**
+	 * A variable that holds the the name of a assembly task
+	 */
+	private String name;
+	/**
 	 * A variable that holds the indiviudal actions of a assembly task
 	 */
 	private ArrayList<Action> actions;
@@ -23,12 +27,26 @@ public class AssemblyTask {
 	 * 
 	 * @param   actions
 	 *          the actions that are part of this assembly process.
+	 *          
+	 * @param   name
+	 *          the name of this assembly process.
 	 */
-	public AssemblyTask(ArrayList<Action> actions){
+	public AssemblyTask(String name, ArrayList<Action> actions){
+		this.setName(name);
 		this.setActions(actions);
-		setCompleted(false);
+//		setCompleted(false);
 	}
 	
+	/**
+	 * A method to set the name
+	 * @param   name
+	 *          the name of this assembly process.
+	 */
+	private void setName(String name) {
+		this.name = name;
+		
+	}
+
 	/**
 	 * A method that adds an action to an assembly task.
 	 * 
@@ -54,9 +72,19 @@ public class AssemblyTask {
 	 * 
 	 * @return  this.actions
 	 */
-	private ArrayList<Action> getActions() {
+	public ArrayList<Action> getActions() {
 		return this.actions;
 	}
+	
+	/**
+	 * A method to get the name of an assembly task.
+	 * 
+	 * @return  this.name
+	 */
+	private String getName() {
+		return this.name;
+	}
+
 
 	/**
 	 * A method to check if this assembly task is completed.
@@ -77,6 +105,12 @@ public class AssemblyTask {
 	 */
 	private void setActions(ArrayList<Action> actions) {
 		this.actions = actions;
+	}
+	
+	@Override
+	public String toString(){
+		
+		return this.getName();
 	}
 	
 }

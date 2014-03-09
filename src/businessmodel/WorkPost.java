@@ -116,5 +116,10 @@ public class WorkPost {
 		}
 		return temp;
 	}
+	
+	@Override
+	public String toString(){
+		return this.getName();
+	}
 
 }

@@ -130,7 +130,7 @@ public class Action {
 		return completed;
 	}
 
-	protected void setCompleted(boolean completed) {
+	public void setCompleted(boolean completed) {
 		this.completed = completed;
 	}
 
