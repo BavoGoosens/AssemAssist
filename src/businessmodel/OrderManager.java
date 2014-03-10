@@ -20,13 +20,17 @@ public class OrderManager {
 	 */
 	LinkedList<Order> completedorders;
 
-
+	/**
+	 * A list that holds all the pending orders for a car manufacturing company.
+	 */
 	LinkedList<Order> pendingorders;
 
 	/**
 	 * A list that holds all the car models of a car manufacturing company.
 	 */
 	ArrayList<CarModel> carmodels;
+	
+	ProductionScheduler production = new ProductionScheduler(this);
 
 	/**
 	 * A constructor for the class OrderManager.
@@ -171,5 +175,16 @@ public class OrderManager {
 						time.get(Calendar.MINUTE));
 			}	
 		}
+	}
+
+	/**
+	 * A method that moves a finished order from the pending list to the finished list.
+	 * 
+	 * @param finished 
+	 * 		  The Order that needs to be moved.
+	 */
+	public void finishedOrder(Order finished) {
+		this.getPendingOrders().remove(finished);
+		this.getCompletedOrders().add(finished);
 	}
 }

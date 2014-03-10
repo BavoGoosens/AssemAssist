@@ -12,14 +12,11 @@ public class CarManufacturingCompany {
 
 	private OrderManager om;
 
-	private ProductionScheduler ps;
-
 	private Controller control;
 
-	public CarManufacturingCompany(Controller control ,UserManagement um, ProductionScheduler ps, OrderManager om, Inventory inv){
+	public CarManufacturingCompany(Controller control ,UserManagement um, OrderManager om, Inventory inv){
 		this.control = control;
 		this.um = um;
-		this.ps = ps;
 		this.om = om;
 	}
 	public boolean login(String username, String password) {

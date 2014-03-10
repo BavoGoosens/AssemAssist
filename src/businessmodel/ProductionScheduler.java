@@ -5,43 +5,45 @@ import java.util.LinkedList;
 
 public class ProductionScheduler {
 
-	private CarManufacturingCompany cms;
-
 	private int overlaytime = 0;
 
 	private int currenttime = 0;
 
-	private int daytime = 16;
+	private int daytime = 16*60;
 
-	private AssemblyLine assemblyline = new AssemblyLine();
+	private AssemblyLine assemblyline;
 	
 	private LinkedList<Order> dayorders;
+	
+	private OrderManager ordermanager;
 
 	/**
-	 * 
+	 * A method that construct a ProductionScheduler.
 	 */
-	public ProductionScheduler() {		
+	public ProductionScheduler(OrderManager ordermanager) {	
+		this.setOrderManager(ordermanager);
+		this.setAssemblyline( new AssemblyLine());
 		dayorders = new LinkedList<Order>();
 	}
-	
+
 	/**
+	 * A method that returns the OrderManager for this ProductionScheduler.
 	 * 
-	 * @param assemblyline
-	 * @param cms
+	 * @return OrderManager
+	 * 		   The OrderManager that supplies and manages the orders for this ProductionScheduler.
 	 */
-	private void setAssemblyline(AssemblyLine assemblyline, CarManufacturingCompany cms) {
-		this.assemblyline = assemblyline;
-		this.cms = cms;
+	private OrderManager getOrderManager() {
+		return ordermanager;
 	}
-	
+
 	/**
-	 * This method returns the assembly line that this production scheduler uses.
-	 * 
-	 * @return AssemblyLine
-	 * 		   The Assembly line that this production scheduler uses.
+	 *  A method that sets the OrderManager for this ProductionScheduler.
+	 *  
+	 * @param ordermanager
+	 * 		  The OrderManager that supplies and manages the orders for this ProductionScheduler.
 	 */
-	private AssemblyLine getAssemblyline() {
-		return assemblyline;
+	private void setOrderManager(OrderManager ordermanager) {
+		this.ordermanager = ordermanager;
 	}
 
 	/**
@@ -60,21 +62,23 @@ public class ProductionScheduler {
 	 * This method advances the assembly line if possible.
 	 */
 	public void advance(){
+		Order finished = null; 
 		if (this.getAssemblyline().canAdvance()){
 			Order p = this.dayorders.getFirst();
-			Order finished = this.getAssemblyline().advance(p);
+			finished = this.getAssemblyline().advance(p);
 		}
-		this.cms.getOrderManager().getOrders().add(this.getDayorders().getFirst());
+		this.getOrderManager().finishedOrder(finished);
+		this.getOrderManager().getOrders().add(this.getDayorders().getFirst());
 		this.updateDaySchedule();
 	}
 	
 	/**
-	 * 
+	 * This method constructs a day schedule.
 	 */
 	private void makeDaySchedule(){
 		int temp = daytime;
 		for(int i = 0 ; i < temp; i++){
-			if(this.cms.getOrderManager().getPendingOrders().size() <= 0)
+			if(this.getOrderManager().getPendingOrders().size() <= 0)
 				break;		
 			addDayOrder();
 		}
@@ -87,12 +91,12 @@ public class ProductionScheduler {
 		if (this.getOverlaytime() > 60 && (this.getDaytime()-this.getCurrenttime()>3)){
 			this.setOverlaytime(this.getOverlaytime()-60);
 			addDayOrder();
-			this.cms.getOrderManager().updateEstimatedTime();
+			this.getOrderManager().updateEstimatedTime();
 		}
 		if (overlaytime < -60 && (this.getDaytime()-this.getCurrenttime() > 2)) {
 			this.overlaytime += 60;
 			removeLastOrderOfDay();
-			this.cms.getOrderManager().updateEstimatedTime();
+			this.getOrderManager().updateEstimatedTime();
 		}
 	}
 
@@ -101,7 +105,7 @@ public class ProductionScheduler {
 	 */
 	private void removeLastOrderOfDay() {
 		Order temp = this.getDayorders().get(this.getDayorders().size()-1);
-		this.cms.getOrderManager().getOrders().addFirst(temp);
+		this.getOrderManager().getOrders().addFirst(temp);
 		this.getDayorders().remove(this.getDayorders().size()-1);
 	}
 
@@ -109,17 +113,8 @@ public class ProductionScheduler {
 	 * 
 	 */
 	private void addDayOrder() {
-		this.getDayorders().add(this.cms.getOrderManager().getPendingOrders().getFirst());
-		this.cms.getOrderManager().getPendingOrders().removeFirst();
-	}
-	
-
-	private CarManufacturingCompany getCms() {
-		return cms;
-	}
-
-	private void setCms(CarManufacturingCompany cms) {
-		this.cms = cms;
+		this.getDayorders().add(this.getOrderManager().getPendingOrders().getFirst());
+		this.getOrderManager().getPendingOrders().removeFirst();
 	}
 
 	private int getOverlaytime() {
@@ -145,7 +140,17 @@ public class ProductionScheduler {
 	private void setDaytime(int daytime) {
 		this.daytime = daytime;
 	}
-
+	
+	/**
+	 * This method returns the assembly line that this production scheduler uses.
+	 * 
+	 * @return AssemblyLine
+	 * 		   The Assembly line that this production scheduler uses.
+	 */
+	private AssemblyLine getAssemblyline() {
+		return assemblyline;
+	}
+	
 	private void setAssemblyline(AssemblyLine assemblyline) {
 		this.assemblyline = assemblyline;
 	}
@@ -155,6 +160,6 @@ public class ProductionScheduler {
 	}
 	
 	private LinkedList<Order> getAllOrders(){
-		return this.cms.getOrderManager().getOrders();
+		return this.getOrderManager().getOrders();
 	}
 }
