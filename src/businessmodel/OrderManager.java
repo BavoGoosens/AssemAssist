@@ -177,8 +177,14 @@ public class OrderManager {
 		}
 	}
 
+	/**
+	 * A method that moves a finished order from the pending list to the finished list.
+	 * 
+	 * @param finished 
+	 * 		  The Order that needs to be moved.
+	 */
 	public void finishedOrder(Order finished) {
-		// TODO Auto-generated method stub
-		
+		this.getPendingOrders().remove(finished);
+		this.getCompletedOrders().add(finished);
 	}
 }
