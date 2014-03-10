@@ -1,19 +1,36 @@
 package businessmodel;
 
+import component.Component;
 import java.util.ArrayList;
 
+/**
+ * A class that represents work posts in a factory.
+ * 
+ * @author Team 10
+ *
+ */
 public class WorkPost {
-	
+
 	/**
 	 * The name of the work post
 	 */
 	private String name;
+
 	/**
-	 * The tasks that are pending at the work post
-	 * The first element of the list is the current task
+	 * The tasks this WorkPost can handle.
 	 */
-	private ArrayList<AssemblyTask> tasks;
-	
+	private ArrayList<AssemblyTask> responsibletasks;
+
+	/**
+	 * The tasks that are pending at the work post.
+	 */
+	private ArrayList<AssemblyTask> pendingtasks;
+
+	/**
+	 * The order the working post is currently handling.
+	 */
+	private Order order_in_process = null;
+
 	/**
 	 * This method constructs a new work post with a given name.
 	 * 
@@ -22,9 +39,9 @@ public class WorkPost {
 	 */
 	public WorkPost(String name) {
 		this.setName(name);
-		this.tasks = new ArrayList<AssemblyTask>();
+		this.pendingtasks = new ArrayList<AssemblyTask>();
 	}
-	
+
 	/**
 	 * This method constructs a new work post with a given name and given assembly tasks.
 	 * 
@@ -35,9 +52,9 @@ public class WorkPost {
 	 */
 	public WorkPost(String name, ArrayList<AssemblyTask> tasks) {
 		this(name);
-		this.setTasks(tasks);
+		this.setResponsibletasks(tasks);
 	}
-	
+
 	/**
 	 * This method returns the name of the work post.
 	 * @return	this.name
@@ -45,20 +62,13 @@ public class WorkPost {
 	public String getName() {
 		return this.name;
 	}
-	
-	/**
-	 * This method returns the tasks that are pending at the work post.
-	 * @return	this.tasks
-	 */
-	public ArrayList<AssemblyTask> getTasks() {
-		return this.tasks;
-	}
-	
+
 	/**
 	 * This method sets the name of the work post.
 	 * 
 	 * @param	name
 	 * 			The name of the work post
+	 * 
 	 * @throws 	IllegalArgumentException
 	 * 			name == null
 	 */
@@ -66,55 +76,148 @@ public class WorkPost {
 		if (name == null) throw new IllegalArgumentException();
 		this.name = name;
 	}
-	
+
+	/**
+	 * This method returns the tasks that are pending at the work post.
+	 * 
+	 * @return	this.tasks
+	 */
+	public ArrayList<AssemblyTask> getPendingTasks() {
+		return this.pendingtasks;
+	}
+
 	/**
 	 * This method sets the tasks that are pending at the work post.
 	 * 
 	 * @param	tasks
 	 * 			The task that are pending at the work post.
+	 * 
 	 * @throws 	IllegalArgumentException
 	 * 			tasks == null
 	 */
-	private void setTasks(ArrayList<AssemblyTask> tasks) throws IllegalArgumentException {
+	private void setPendingTasks(ArrayList<AssemblyTask> tasks) throws IllegalArgumentException {
 		if (tasks == null) throw new IllegalArgumentException();
-		this.tasks = tasks;
+		this.pendingtasks = tasks;
 	}
-	
+
 	/**
 	 * This method adds a task at the work post.
 	 * 
 	 * @param 	task
 	 * 			The task that needs to be added
 	 */
-	public void addTask(AssemblyTask task) {
-		this.getTasks().add(task);
+	public void addPendingTask(AssemblyTask task) {
+		this.getPendingTasks().add(task);
 	}
-	
+
 	/**
 	 * This method removes a task at the work post.
 	 * 
 	 * @param	task
 	 * 			The task that needs to be removed
 	 */
-	public void removeTask(AssemblyTask task) {
-		this.getTasks().remove(task);
+	public void removePendingTask(AssemblyTask task) {
+		this.getPendingTasks().remove(task);
 	}
-	
+
 	/**
-	 * This method returns the current task at the work post.
-	 * @return	The first element of the list of tasks at the work post.
+	 * This method returns the list of AssemblyTasks this WorkPost is responsible for.
+	 * 
+	 * @return ArrayList<AssemblyTask>
+	 * 		   An ArrayList with all the AssemblyTasks this WorkPost is responsible for.
 	 */
-	public AssemblyTask getCurrentTask() {
-		return this.getTasks().get(0);
+	public ArrayList<AssemblyTask> getResponsibletasks() {
+		return responsibletasks;
 	}
-	
+
+	/**
+	 * This method sets the list of AssemblyTasks this WorkPost is responsible for.
+	 * 
+	 * @param responsibletasks
+	 * 		  An ArrayList with all the AssemblyTasks this WorkPost is responsible for.
+	 */
+	public void setResponsibletasks(ArrayList<AssemblyTask> responsibletasks) {
+		this.responsibletasks = responsibletasks;
+	}
+
+	/**
+	 * This method returns the Order the Work Post is working on.
+	 * 
+	 * @return Order
+	 * 		   The Order the WorkPost is working on.
+	 */
+	private Order getOrder() {
+		return order_in_process;
+	}
+
+	/**
+	 * This method sets the Order the Work Post is working on.
+	 * 
+	 * @param order_in_process
+	 *        The Order the WorkPost is working on.
+	 */
+	private void setOrder(Order order_in_process) {
+		this.order_in_process = order_in_process;
+	}
+
+	/**
+	 * This method checks whether all the pending AssemblyTasks are completed.
+	 * 
+	 * @return boolean
+	 * 		   true if all tasks have been completed. false otherwise.
+	 */
 	public boolean isCompleted(){
-		boolean temp = true;
-		for(AssemblyTask task: this.getTasks()){
+		for(AssemblyTask task: this.getPendingTasks()){
 			if(task.isCompleted() == false)
-				temp = false;
+				return false;
 		}
-		return temp;
+		return true;
+	}
+
+	/**
+	 * This method returns the order that this WorkPost was handling. 
+	 * It also adds the next order and updates the tasks that need to be carried out.
+	 * 
+	 * @param neworder
+	 * 		  The Order that will be added.
+	 * @return Order
+	 * 		   The finished order (for this WorkPost).
+	 */
+	public Order moveAlong(Order neworder) {
+		Order finished = this.getOrder();
+		this.setOrder(neworder);
+		this.refreshAssemblyTasks();
+		return finished;
+	}
+
+	/**
+	 * This method refreshes the pending tasks that need to be done for the current order. 
+	 */
+	private void refreshAssemblyTasks() {
+		Order currentOrder = this.getOrder();
+		ArrayList<Component> carparts = currentOrder.getCar().getComponents();
+		ArrayList<AssemblyTask> newPendingTasks = this.possibleAssemblyTasks(carparts);
+		this.setPendingTasks(newPendingTasks);
+	}
+
+	/**
+	 * This method constructs the list of AssemblyTasks that this WorkPost can carry out 
+	 * based on the orders car components.
+	 * 
+	 * @param carparts
+	 * 		  A list of components that need to be installed.$
+	 * 
+	 * @return ArrayList<AssemblyTask>
+	 *         A list of AssemblyTasks that need to be carried out to install (some of) the components.
+	 */
+	private ArrayList<AssemblyTask> possibleAssemblyTasks(
+			ArrayList<Component> carparts) {
+		ArrayList<AssemblyTask> result = new ArrayList<AssemblyTask>();
+		for(AssemblyTask task :this.getResponsibletasks()){
+			if (carparts.contains(task.getComponent()))
+				result.add(task);
+		}
+		return result;
 	}
 	
 	@Override

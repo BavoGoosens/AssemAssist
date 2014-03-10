@@ -6,9 +6,12 @@ import java.util.Scanner;
 
 import component.Component;
 import control.Controller;
+import businessmodel.Action;
+import businessmodel.AssemblyTask;
 import businessmodel.CarModel;
 import businessmodel.Order;
 import businessmodel.User;
+import businessmodel.WorkPost;
 
 /**
  * This class provides a console user interface for the AssemAssist System.
@@ -62,28 +65,95 @@ public class UserInterFace {
 		// TODO Auto-generated method stub
 
 	}
+	
+	/**
+	 * This method interacts with the mechanic about the tasks that have to be performed.
+	 * 
+	 * @param currentuser
+	 * 		  The current user.
+	 */
 	private void performAssemblyTask(User currentuser) {
+		
 		ArrayList<WorkPost> workposts = this.control.getWorkingStations();
 		WorkPost currentworkpost = null;
+		AssemblyTask task = null;
+		
 		while (true){
-			this.displayString(" > Hello " + currentuser.getFirstname() + 
-					"please enter workpost number \n" );
+			
+			this.displayString(" > Hello " + currentuser.getFirstname() + " please enter workpost number \n" );
 			int count = 1;
-			for(WorkPost w : workposts){
-				this.displayString(" " + Integer.toString(count) + ") " + w.toString() + "\n");
-			}
+			
+			for(WorkPost w : workposts)
+				this.displayString(" " + Integer.toString(count++) + ") " + w.toString() + "\n");
+			
 			this.displayString(" >> ");
 			String response = this.getInput();
 			if (response.matches("\\d*")){
 				int res = Integer.parseInt(response) - 1;
 				if (res < workposts.size()){
 					currentworkpost = workposts.get(res);
-					break;
-				}else {
+				}else{
 					this.badInput();
+					continue;
 				}
-			}else 
+			}else{
 				this.badInput();
+				continue;
+			}
+			innerloop:
+			while(true){
+				count = 1;
+				if (currentworkpost.getPendingTasks().size() == 0)
+					break innerloop;
+				
+				for(AssemblyTask Atask : currentworkpost.getPendingTasks())
+					this.displayString(" " + Integer.toString(count++) + ") " + Atask.toString() + "\n");
+					
+				count = 1;
+				this.displayString(" >> ");
+				response = this.getInput();
+				if (response.matches("\\d*")){
+					int res = Integer.parseInt(response) - 1;
+					task = currentworkpost.getPendingTasks().get(res);
+					if (res < currentworkpost.getPendingTasks().size()){
+						this.displayString(" " +"List of actions to perform \n");
+						for(Action action : task.getActions())
+							this.displayString(" --> "  + action.getDescription() + "\n");
+						this.displayString(" " +"if finished, type 'done' \n");
+					}else{
+						this.badInput();
+						continue;
+					}
+				}else{
+					this.badInput();
+					continue;
+				}
+					
+				this.displayString(" >> ");
+				response = this.getInput();
+				if (!response.equals("done")){
+					this.badInput();
+					continue;
+				}
+				
+				for(Action action : task.getActions())
+					action.setCompleted(true);
+				currentworkpost.removePendingTask(task);
+				
+				this.displayString(" Do you want to continue working? yes/no \n");
+				this.displayString(" >> ");
+				response = this.getInput();
+				if (response.equals("yes"))
+					continue;
+				else if (response.equals("no"))
+					break;
+				else
+					this.badInput();
+				
+			}
+			
+			this.displayString(" all done! \n");
+			break;
 		}
 
 	}
@@ -195,14 +265,21 @@ public class UserInterFace {
 		return chooseCarModel(cml);	
 	}
 
+	/**
+	 * This method prints out when a bad input is given.
+	 */
 	public void badInput(){
 		this.displayString("\n You entered something wrong. Try again! \n");
 	}
 
+	/**
+	 * This method prints out when a bad login is given.
+	 */
 	public void badLogin(){
 		this.displayString("We could not find you in the System \n \n");
 	}
 
+	
 	public void displayOrderOverview(User currentuser){
 		ArrayList<Order> completed = this.control.getCompletedOrders(currentuser);
 		ArrayList<Order> pending = this.control.getPendingOrders(currentuser);

@@ -74,4 +74,37 @@ public class AssemblyLine {
 		this.getWorkposts().remove(workpost);
 	}
 
+	/**
+	 * This method checks whether the assembly line can move forward.
+	 * 
+	 * @return boolean
+	 * 		   true is the assembly line can move forward. false otherwise.
+	 */
+	public boolean canAdvance() {
+		for(WorkPost wp : this.getWorkposts()){
+			boolean ready = wp.isCompleted();
+			if (ready == false)
+				return false;
+		}
+		return true;
+	}
+
+	/**
+	 * This method advances the Assembly Line. 
+	 * It adds the supplied order to the first work post and moves the rest forward. 
+	 * If the last WorkPost was working on an Order. That order is finished and is returned.
+	 * 
+	 * @param p 
+	 * 		  The Order that is added at the front of the line.
+	 * @return Order
+	 * 		   A finished order if the last WorkPost was working on an Order. 
+	 */
+	public Order advance(Order p) {
+		Order shift = p;
+		for (WorkPost wp : this.getWorkposts()){
+			shift = wp.moveAlong(shift);
+		}
+		return shift;
+	}
+
 }

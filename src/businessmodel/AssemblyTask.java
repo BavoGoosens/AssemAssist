@@ -12,8 +12,9 @@ public class AssemblyTask {
 	 * A variable that holds the the name of a assembly task
 	 */
 	private String name;
+	
 	/**
-	 * A variable that holds the indiviudal actions of a assembly task
+	 * A variable that holds the individual actions of a assembly task
 	 */
 	private ArrayList<Action> actions;
 	
@@ -105,6 +106,11 @@ public class AssemblyTask {
 	 */
 	private void setActions(ArrayList<Action> actions) {
 		this.actions = actions;
+	}
+
+	public Object getComponent() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	@Override

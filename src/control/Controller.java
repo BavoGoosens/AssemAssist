@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import ui.UserInterFace;
+import businessmodel.Action;
+import businessmodel.AssemblyTask;
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Inventory;
@@ -11,6 +13,7 @@ import businessmodel.OrderManager;
 import businessmodel.ProductionScheduler;
 import businessmodel.User;
 import businessmodel.UserManagement;
+import businessmodel.WorkPost;
 
 /**
  * This class is the main controller instance. 
@@ -71,8 +74,37 @@ public class Controller {
 	}
 
 	public Date getCompletionTimeEstimate() {
-		// TODO Auto-generated method stub
 		return new Date();
+	}
+
+	public ArrayList<WorkPost> getWorkingStations() {
+		ArrayList<WorkPost> workPostList = new ArrayList<WorkPost>();
+		WorkPost w = new WorkPost("Car body post");
+		WorkPost w2 = new WorkPost("Drivetrain post");
+		WorkPost w3 = new WorkPost("Accessoires post");
+
+		ArrayList<Action> actions = new ArrayList<Action>();
+		actions.add(new Action("take paint"));
+		actions.add(new Action("paint"));
+		actions.add(new Action("get rid of paint"));
+		
+		ArrayList<Action> actions2 = new ArrayList<Action>();
+		actions2.add(new Action("get body"));
+		actions2.add(new Action("put body on"));
+		
+		ArrayList<Action> actions3 = new ArrayList<Action>();
+		actions3.add(new Action("get engine"));
+		actions3.add(new Action("install engine"));
+		
+		w.addPendingTask(new AssemblyTask("painting car blue", actions));
+		w.addPendingTask(new AssemblyTask("install body", actions2));
+		
+		w2.addPendingTask(new AssemblyTask("install engine", actions3));
+		
+		workPostList.add(w);
+		workPostList.add(w2);
+		workPostList.add(w3);
+		return workPostList;
 	}
 
 }

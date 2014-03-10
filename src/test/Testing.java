@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import component.*;
+import control.Controller;
 import businessmodel.*;
 
 public class Testing {
@@ -151,6 +152,16 @@ public class Testing {
 		assertEquals(cms.getSeats(),this.seatss);
 		assertEquals(cms.getWheels(),this.wheelss);
 	}
+	
+	@Test
+	public void testUI(){
+		Controller ctrl = new Controller();
+		ctrl.run();
+		System.out.println("HENK");
+		System.out.println("DE POTVIS");
+		
+	}
+	
 	
 	// A test method for the class Order.
 	@Test

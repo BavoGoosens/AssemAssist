@@ -111,7 +111,7 @@ public class Main {
 		wheelss.add(wheels2);
 
 		GarageHolder garageholder = new GarageHolder("Bavo","Goosens","BBB", "BBB");
-		Mechanic mechanic = new Mechanic("Sander","Geijsen","HENK","DE POTVIS");
+		Mechanic mechanic = new Mechanic("Sander","Geijsen","HENK","DEPOTVIS");
 		Manager manager = new Manager("Jef", "Vermeulen", "JV", "JV");
 		HashMap<String, User> map = new HashMap<String, User>();
 		map.put("HENK", mechanic);
