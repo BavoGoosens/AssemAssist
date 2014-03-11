@@ -33,7 +33,7 @@ public class OrderManager {
 	/**
 	 * A production scheduler this Order Manager uses.
 	 */
-	ProductionScheduler production = new ProductionScheduler(this);
+	ProductionScheduler production;
 
 	/**
 	 * A constructor for the class OrderManager.
@@ -44,18 +44,20 @@ public class OrderManager {
 	public OrderManager(ArrayList<CarModel> carmodels){
 		this.pendingorders = new LinkedList<Order>();
 		this.completedorders = new LinkedList<Order>();
-		setCarmodels(carmodels);
+		this.setProductionManager(new ProductionScheduler(this));
+		this.setCarmodels(carmodels);
 	}
 
+	// TODO: Check whether it can be scheduled directly. 
 	public void placeOrder(Order order){
 		this.addOrder(order);
 	}
+	
 	/**
 	 * A method to get the orders of this order manager.
 	 * 
 	 * @return All the orders of this order manager.
 	 */
-	//TODO
 	public LinkedList<Order> getOrders() {
 		LinkedList<Order> temp = this.getPendingOrders();
 		for(Order order: this.getCompletedOrders()){
@@ -144,6 +146,9 @@ public class OrderManager {
 	 */
 	public ArrayList<Order> getPendingOrders(User user){
 		ArrayList<Order> pendingorders = new ArrayList<Order>();
+		// The scheduled orders for today
+		pendingorders.addAll(this.getProductionManager().getScheduledOrders());
+		// The pending orders
 		for (Order order: this.getPendingOrders()){
 			if (order.getUser() == user)
 				pendingorders.add(order);
@@ -151,6 +156,14 @@ public class OrderManager {
 		return pendingorders;
 	}
 
+
+	public ProductionScheduler getProductionManager() {
+		return production;
+	}
+
+	public void setProductionManager(ProductionScheduler production) {
+		this.production = production;
+	}
 
 	@Override
 	public String toString() {
@@ -191,7 +204,6 @@ public class OrderManager {
 	 * 		  The Order that needs to be moved.
 	 */
 	public void finishedOrder(Order finished) {
-		this.getPendingOrders().remove(finished);
 		this.getCompletedOrders().add(finished);
 	}
 

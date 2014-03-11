@@ -146,7 +146,7 @@ public class WorkPost {
 	 * @return Order
 	 * 		   The Order the WorkPost is working on.
 	 */
-	private Order getOrder() {
+	protected Order getOrder() {
 		return order_in_process;
 	}
 

@@ -1,29 +1,24 @@
 package businessmodel;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class AssemblyLine {
-	
-	
-	private WorkPost carbodypost;
-	
-	private WorkPost drivetrainpost;
-	
-	private WorkPost accessoriespost;
+
 	/**
 	 * List of work posts at the assembly line.
 	 */
 	private ArrayList<WorkPost> workposts;
-	
+
 	/**
 	 * This method constructs a new assembly line with an empty list of work posts.
 	 */
 	public AssemblyLine() {
-		this.carbodypost = new WorkPost("car body post");
-		this.drivetrainpost = new WorkPost("drive train post");
-		this.accessoriespost = new WorkPost("accessories post");
+		this.getWorkposts().add(new WorkPost("car body post"));
+		this.getWorkposts().add(new WorkPost("drive train post"));
+		this.getWorkposts().add(new WorkPost("accessories post"));
 	}
-	
+
 	/**
 	 * This method constructs a new assembly line with the given list of work posts.
 	 * @param	workposts
@@ -32,7 +27,7 @@ public class AssemblyLine {
 	public AssemblyLine(ArrayList<WorkPost> workposts) {
 		this.setWorkposts(workposts);
 	}
-	
+
 	/**
 	 * This method returns the list of work posts at the assembly line.
 	 * @return	this.workposts
@@ -40,7 +35,7 @@ public class AssemblyLine {
 	public ArrayList<WorkPost> getWorkposts() {
 		return this.workposts;
 	}
-	
+
 	/**
 	 * This method sets the work posts at the assembly line.
 	 * @param 	workposts
@@ -52,7 +47,7 @@ public class AssemblyLine {
 		if (workposts == null) throw new IllegalArgumentException();
 		this.workposts = workposts;
 	}
-	
+
 	/**
 	 * This method adds a given work post to the assembly line.
 	 * @param 	workpost
@@ -64,7 +59,7 @@ public class AssemblyLine {
 		if (workpost == null) throw new IllegalArgumentException();
 		this.getWorkposts().add(workpost);
 	}
-	
+
 	/**
 	 * This method removes a given work post from the assembly line.
 	 * @param 	workpost
@@ -87,7 +82,7 @@ public class AssemblyLine {
 				return false;
 		}
 		return true;
-	}
+	}		
 
 	/**
 	 * This method advances the Assembly Line. 
@@ -101,10 +96,23 @@ public class AssemblyLine {
 	 */
 	public Order advance(Order p) {
 		Order shift = p;
-		for (WorkPost wp : this.getWorkposts()){
+		for (WorkPost wp : this.getWorkposts())
 			shift = wp.moveAlong(shift);
-		}
 		return shift;
+	}
+	
+	/**
+	 * A method that returns the all the orders that are on the assembly line.
+	 * 
+	 * @return LinkedList<Order>
+	 * 		   A list with all the orders that are on the assembly line.
+	 */
+	protected LinkedList<Order> getWorkPostOrders(){
+		LinkedList<Order> orders = new LinkedList<Order>();
+		for(WorkPost wp: this.getWorkposts()){
+			orders.add(wp.getOrder());
+		}
+		return orders;
 	}
 
 }
