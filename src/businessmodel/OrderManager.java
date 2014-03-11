@@ -52,7 +52,12 @@ public class OrderManager {
 		this.setCarmodels(carmodels);
 	}
 
-	// TODO: Check whether it can be scheduled directly. 
+	/**
+	 * A method that adds a new Order.
+	 * 
+	 * @param order
+	 * 		  An Order that needs to be added.
+	 */
 	public void placeOrder(Order order){
 		this.addOrder(order);
 	}

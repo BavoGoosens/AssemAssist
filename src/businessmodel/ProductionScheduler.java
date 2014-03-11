@@ -1,8 +1,6 @@
 package businessmodel;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
 
 /**
@@ -13,6 +11,11 @@ import java.util.LinkedList;
  */
 public class ProductionScheduler {
 
+	/**
+	 * A variable that holds todays date and current time. 
+	 */
+	private Calendar today;
+	
 	/**
 	 * The current delay of the production scheduler in minutes of this day.
 	 */
@@ -42,6 +45,7 @@ public class ProductionScheduler {
 	 * A method that construct a ProductionScheduler.
 	 */
 	public ProductionScheduler(OrderManager ordermanager, Calendar start) {	
+		this.setToday(start);
 		this.setAvailableTime(14*60);
 		this.setOrderManager(ordermanager);
 		this.setAssemblyline(new AssemblyLine());
@@ -170,6 +174,14 @@ public class ProductionScheduler {
 
 	private void setAssemblyline(AssemblyLine assemblyline) {
 		this.assemblyline = assemblyline;
+	}
+
+	public Calendar getToday() {
+		return today;
+	}
+
+	public void setToday(Calendar today) {
+		this.today = today;
 	}
 
 	private void setDayorders(LinkedList<Order> dayorders) {
