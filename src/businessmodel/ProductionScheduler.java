@@ -1,20 +1,40 @@
 package businessmodel;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
-
+/**
+ * A class that is responsible for scheduling in orders.
+ * 
+ * @author Team 10
+ *
+ */
 public class ProductionScheduler {
 
-	private int overlaytime = 0;
+	/**
+	 * The current delay of the production scheduler in minutes.
+	 */
+	private int delay = 0;
+	
+	/**
+	 * The number of hours this Scheduler can use today.
+	 */
+	private int daytime = 16;
 
-	private int currenttime = 0;
-
-	private int daytime = 16*60;
-
+	/**
+	 * The AssemblyLine for this Scheduler.
+	 */
 	private AssemblyLine assemblyline;
 	
+	/**
+	 * The Orders the Scheduler will try to handle today.
+	 */
 	private LinkedList<Order> dayorders;
 	
+	/**
+	 * The OrderManager that supplies and manages the orders for this Scheduler.
+	 */
 	private OrderManager ordermanager;
 
 	/**
@@ -22,7 +42,7 @@ public class ProductionScheduler {
 	 */
 	public ProductionScheduler(OrderManager ordermanager) {	
 		this.setOrderManager(ordermanager);
-		this.setAssemblyline( new AssemblyLine());
+		this.setAssemblyline(new AssemblyLine());
 		dayorders = new LinkedList<Order>();
 	}
 
@@ -68,7 +88,6 @@ public class ProductionScheduler {
 			finished = this.getAssemblyline().advance(p);
 		}
 		this.getOrderManager().finishedOrder(finished);
-		this.getOrderManager().getOrders().add(this.getDayorders().getFirst());
 		this.updateDaySchedule();
 	}
 	
@@ -76,12 +95,7 @@ public class ProductionScheduler {
 	 * This method constructs a day schedule.
 	 */
 	private void makeDaySchedule(){
-		int temp = daytime;
-		for(int i = 0 ; i < temp; i++){
-			if(this.getOrderManager().getPendingOrders().size() <= 0)
-				break;		
-			addDayOrder();
-		}
+		this.getOrderManager().getNbOrders(this.getDaytime() - 2);
 	}
 
 	/**
@@ -93,8 +107,8 @@ public class ProductionScheduler {
 			addDayOrder();
 			this.getOrderManager().updateEstimatedTime();
 		}
-		if (overlaytime < -60 && (this.getDaytime()-this.getCurrenttime() > 2)) {
-			this.overlaytime += 60;
+		if (delay < -60 && (this.getDaytime()-this.getCurrenttime() > 2)) {
+			this.delay += 60;
 			removeLastOrderOfDay();
 			this.getOrderManager().updateEstimatedTime();
 		}
@@ -118,19 +132,11 @@ public class ProductionScheduler {
 	}
 
 	private int getOverlaytime() {
-		return overlaytime;
+		return delay;
 	}
 
 	private void setOverlaytime(int overlaytime) {
-		this.overlaytime = overlaytime;
-	}
-
-	private int getCurrenttime() {
-		return currenttime;
-	}
-
-	private void setCurrenttime(int currenttime) {
-		this.currenttime = currenttime;
+		this.delay = overlaytime;
 	}
 
 	private int getDaytime() {

@@ -30,6 +30,9 @@ public class OrderManager {
 	 */
 	ArrayList<CarModel> carmodels;
 	
+	/**
+	 * A production scheduler this Order Manager uses.
+	 */
 	ProductionScheduler production = new ProductionScheduler(this);
 
 	/**
@@ -44,11 +47,15 @@ public class OrderManager {
 		setCarmodels(carmodels);
 	}
 
+	public void placeOrder(Order order){
+		this.addOrder(order);
+	}
 	/**
 	 * A method to get the orders of this order manager.
 	 * 
 	 * @return All the orders of this order manager.
 	 */
+	//TODO
 	public LinkedList<Order> getOrders() {
 		LinkedList<Order> temp = this.getPendingOrders();
 		for(Order order: this.getCompletedOrders()){
@@ -186,5 +193,25 @@ public class OrderManager {
 	public void finishedOrder(Order finished) {
 		this.getPendingOrders().remove(finished);
 		this.getCompletedOrders().add(finished);
+	}
+
+	/**
+	 * This method returns the number of specified pending orders if possible.
+	 * 
+	 * @param nb
+	 * 		  The number of orders 
+	 * 
+	 * @return LinkedList<Order>
+	 * 		   A list with the requested orders.
+	 */
+	public LinkedList<Order> getNbOrders(int nb) {
+		LinkedList<Order> res = new LinkedList<Order>();
+		for (int i = 0 ; i < nb - 1; i++){
+			Order tmp = this.getPendingOrders().element();
+			if (tmp == null)
+				break;
+			res.add(tmp);
+		}
+		return res;
 	}
 }
