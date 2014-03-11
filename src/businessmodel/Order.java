@@ -106,7 +106,7 @@ public class Order {
 	 * @param   deliverydate
 	 *          the delivery date of this order.
 	 */
-	protected void setDate(Calendar deliverydate) {
+	public void setDate(Calendar deliverydate) {
 		this.deliverydate = deliverydate;
 	}
 
