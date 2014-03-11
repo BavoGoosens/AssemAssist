@@ -58,7 +58,7 @@ public class ProductionScheduler {
 	 * @return OrderManager
 	 * 		   The OrderManager that supplies and manages the orders for this ProductionScheduler.
 	 */
-	private OrderManager getOrderManager() {
+	public OrderManager getOrderManager() {
 		return ordermanager;
 	}
 
@@ -87,7 +87,7 @@ public class ProductionScheduler {
 	/**
 	 * This method advances the assembly line if possible.
 	 */
-	protected void advance(int time){
+	public void advance(int time){
 		Order finished = null; 
 		if (this.getAssemblyline().canAdvance() && !this.getDayorders().isEmpty() ){
 			Order p = this.getDayorders().poll();
@@ -143,7 +143,7 @@ public class ProductionScheduler {
 		this.getOrderManager().getPendingOrders().addFirst(temp);
 	}
 
-	private int getDelayTime() {
+	public int getDelayTime() {
 		return delay;
 	}
 
@@ -151,7 +151,7 @@ public class ProductionScheduler {
 		this.delay = overlaytime;
 	}
 
-	private int getAvailableTime() {
+	public int getAvailableTime() {
 		return availableTime;
 	}
 

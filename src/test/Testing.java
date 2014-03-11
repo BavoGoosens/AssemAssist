@@ -2,6 +2,7 @@ package test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Before;
@@ -22,6 +23,7 @@ public class Testing {
 	private Airco airco; private Airco airco2;
 	private Wheels wheels; private Wheels wheels2;
 	private Mechanic mechanic;
+	private GarageHolder garageholder;
 	private Date date;
 	private Order order;
 	private ArrayList<Component> components;
@@ -37,6 +39,8 @@ public class Testing {
 	private CarModel audiA6;
 	private ArrayList<CarModel> carmodels;
 	private OrderManager ordermanager;
+	private ProductionScheduler prodsched;
+	private Calendar calendar;
 
 
 	@Before @Test
@@ -58,11 +62,11 @@ public class Testing {
 		this.components = new ArrayList<Component>();
 		car1 = new Car(components);
 		mechanic = new Mechanic("Sander","Geijsen","HENK","DE POTVIS");
+		garageholder = new GarageHolder("Sander","Geijsen","HENK","DE POTVIS");
 		date = new Date();
-		order = new Order(mechanic, this.components);
-		order.setDate(date);;
-
-
+		
+		order = new Order(garageholder, this.components);
+		order.setDate(calendar);
 		bodies = new ArrayList<Body>();
 		colors = new ArrayList<Color>();
 		engines = new ArrayList<Engine>();
@@ -107,6 +111,7 @@ public class Testing {
 		carmodels.add(audiA6);
 		ordermanager = new OrderManager(carmodels);
 		ordermanager.addOrder(order);
+		prodsched = new ProductionScheduler(ordermanager,calendar);
 	}
 
 	// A test method for the class Component
@@ -153,14 +158,14 @@ public class Testing {
 		assertEquals(cms.getWheels(),this.wheelss);
 	}
 	
-	@Test
-	public void testUI(){
-		Controller ctrl = new Controller();
-		ctrl.run();
-		System.out.println("HENK");
-		System.out.println("DE POTVIS");
-		
-	}
+//	@Test
+//	public void testUI(){
+//		Controller ctrl = new Controller();
+//		ctrl.run();
+//		System.out.println("HENK");
+//		System.out.println("DE POTVIS");
+//		
+//	}
 	
 	
 	// A test method for the class Order.
@@ -180,5 +185,13 @@ public class Testing {
 		assertEquals(this.cms.getPosibilities().get(0)[0].getClass(),cms.getBodies().get(0).getClass());
 	}
 	
-	
+	// A test method for the class production Scheduler.
+	@Test
+	public void testProductionScheduler(){
+		assertEquals(this.prodsched.getOrderManager(),ordermanager);
+		ordermanager.addOrder(order);
+		this.prodsched.advance(50);
+		assertEquals(this.prodsched.getAvailableTime(),790);
+		assertEquals(this.prodsched.getDelayTime(),-10);
+	}
 }
