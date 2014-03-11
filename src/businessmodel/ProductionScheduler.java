@@ -15,7 +15,7 @@ public class ProductionScheduler {
 	 * A variable that holds todays date and current time. 
 	 */
 	private Calendar today;
-	
+
 	/**
 	 * The current delay of the production scheduler in minutes of this day.
 	 */
@@ -119,22 +119,19 @@ public class ProductionScheduler {
 		this.setDayorders(day);
 	}
 
-	private void updateDaySchedule(int time){
+	public void updateDaySchedule(int time){
 		this.setAvailableTime(this.getAvailableTime() - time);
 		this.setDelayTime(this.getDelayTime() + (time - 60)); 
-		this.checkToAddOrder();
+		if (this.checkToAddOrder())
+			addDayOrder();
+		removeLastOrderOfDay();
 	}
 
-	private void checkToAddOrder() {
-		int temp = this.getAvailableTime() - 60 *this.getDayorders().size();
-		if (temp/60 > 1){
-			this.setDelayTime(this.getDelayTime()-60);
-			addDayOrder();
-		}
-		if (temp/60 < -1) {
-			this.setDelayTime(this.getDelayTime()+60);
-			removeLastOrderOfDay();
-		}
+	public boolean checkToAddOrder() {
+		int temp = this.getAvailableTime() - 60 * this.getDayorders().size();
+		if (temp/60 > 1)
+			return true;
+		return false;
 	}
 
 	private void addDayOrder() {
@@ -187,7 +184,7 @@ public class ProductionScheduler {
 	private void setDayorders(LinkedList<Order> dayorders) {
 		this.dayorders = dayorders;
 	}
-	
+
 	protected LinkedList<Order> getScheduledOrders(){
 		LinkedList<Order> temp = this.getScheduledOrders();
 		temp.addAll(this.getAssemblyline().getWorkPostOrders());
