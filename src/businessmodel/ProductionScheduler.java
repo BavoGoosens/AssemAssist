@@ -41,7 +41,7 @@ public class ProductionScheduler {
 	/**
 	 * A method that construct a ProductionScheduler.
 	 */
-	public ProductionScheduler(OrderManager ordermanager) {	
+	public ProductionScheduler(OrderManager ordermanager, Calendar start) {	
 		this.setAvailableTime(14*60);
 		this.setOrderManager(ordermanager);
 		this.setAssemblyline(new AssemblyLine());

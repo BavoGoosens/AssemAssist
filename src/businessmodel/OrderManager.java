@@ -44,7 +44,11 @@ public class OrderManager {
 	public OrderManager(ArrayList<CarModel> carmodels){
 		this.pendingorders = new LinkedList<Order>();
 		this.completedorders = new LinkedList<Order>();
-		this.setProductionManager(new ProductionScheduler(this));
+		Calendar start = Calendar.getInstance();
+		start.set(Calendar.HOUR_OF_DAY, 8);
+		start.set(Calendar.MINUTE,0);
+		start.set(Calendar.SECOND,0);
+		this.setProductionManager(new ProductionScheduler(this, start));
 		this.setCarmodels(carmodels);
 	}
 
@@ -181,7 +185,7 @@ public class OrderManager {
 				order.getDate().set(time.get(Calendar.YEAR),
 						time.get(Calendar.MONTH),
 						time.get(Calendar.DAY_OF_MONTH),
-						time.get(Calendar.HOUR+1),
+						time.get(Calendar.HOUR_OF_DAY+1),
 						time.get(Calendar.MINUTE));
 			}	
 		}
@@ -191,7 +195,7 @@ public class OrderManager {
 				order.getDate().set(time.get(Calendar.YEAR),
 						time.get(Calendar.MONTH),
 						time.get(Calendar.DAY_OF_MONTH),
-						time.get(Calendar.HOUR-1),
+						time.get(Calendar.HOUR_OF_DAY-1),
 						time.get(Calendar.MINUTE));
 			}	
 		}
