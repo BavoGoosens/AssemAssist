@@ -126,9 +126,15 @@ public class ProductionScheduler {
 			addDayOrder();
 		removeLastOrderOfDay();
 	}
+	
+	public void update(){
+		if (this.checkToAddOrder())
+			addDayOrder();
+	}
 
 	public boolean checkToAddOrder() {
-		int temp = this.getAvailableTime() - 60 * this.getDayorders().size();
+		// temp holds the amount of minutes there is left to finish an Order.
+		int temp = this.getAvailableTime() - (60 * this.getDayorders().size()) - (2 * 60);
 		if (temp/60 > 1)
 			return true;
 		return false;

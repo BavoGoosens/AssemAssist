@@ -60,7 +60,7 @@ public class OrderManager {
 	 */
 	public void placeOrder(Order order){
 		this.addOrder(order);
-		this.getProductionManager();
+		this.getProductionManager().update();
 	}
 	
 	/**
