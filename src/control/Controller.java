@@ -78,33 +78,33 @@ public class Controller {
 	}
 
 	public ArrayList<WorkPost> getWorkingStations() {
-		ArrayList<WorkPost> workPostList = new ArrayList<WorkPost>();
-		WorkPost w = new WorkPost("Car body post");
-		WorkPost w2 = new WorkPost("Drivetrain post");
-		WorkPost w3 = new WorkPost("Accessoires post");
-
-		ArrayList<Action> actions = new ArrayList<Action>();
-		actions.add(new Action("take paint"));
-		actions.add(new Action("paint"));
-		actions.add(new Action("get rid of paint"));
-		
-		ArrayList<Action> actions2 = new ArrayList<Action>();
-		actions2.add(new Action("get body"));
-		actions2.add(new Action("put body on"));
-		
-		ArrayList<Action> actions3 = new ArrayList<Action>();
-		actions3.add(new Action("get engine"));
-		actions3.add(new Action("install engine"));
-		
-		w.addPendingTask(new AssemblyTask("painting car blue", actions));
-		w.addPendingTask(new AssemblyTask("install body", actions2));
-		
-		w2.addPendingTask(new AssemblyTask("install engine", actions3));
-		
-		workPostList.add(w);
-		workPostList.add(w2);
-		workPostList.add(w3);
-		return workPostList;
+//		ArrayList<WorkPost> workPostList = new ArrayList<WorkPost>();
+//		WorkPost w = new WorkPost("Car body post");
+//		WorkPost w2 = new WorkPost("Drivetrain post");
+//		WorkPost w3 = new WorkPost("Accessoires post");
+//
+//		ArrayList<Action> actions = new ArrayList<Action>();
+//		actions.add(new Action("take paint"));
+//		actions.add(new Action("paint"));
+//		actions.add(new Action("get rid of paint"));
+//		
+//		ArrayList<Action> actions2 = new ArrayList<Action>();
+//		actions2.add(new Action("get body"));
+//		actions2.add(new Action("put body on"));
+//		
+//		ArrayList<Action> actions3 = new ArrayList<Action>();
+//		actions3.add(new Action("get engine"));
+//		actions3.add(new Action("install engine"));
+//		
+//		w.addPendingTask(new AssemblyTask("painting car blue", actions));
+//		w.addPendingTask(new AssemblyTask("install body", actions2));
+//		
+//		w2.addPendingTask(new AssemblyTask("install engine", actions3));
+//		
+//		workPostList.add(w);
+//		workPostList.add(w2);
+//		workPostList.add(w3);
+		return this.cmc.getOrderManager().getProductionScheduler().getAssemblyline().getWorkPosts();
 	}
 
 }
