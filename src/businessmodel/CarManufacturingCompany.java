@@ -57,6 +57,10 @@ public class CarManufacturingCompany {
 	public boolean canAdvanceAssemblyLine(User currentuser) {
 		return this.um.canControlAssemblyLine(currentuser);
 	}
+	
+	public void advanceAssemblyLine(int time) {
+		this.om.getProductionScheduler().advance(time);
+	}
 
 	public OrderManager getOrderManager(){
 		return this.om;

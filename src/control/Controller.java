@@ -68,6 +68,10 @@ public class Controller {
 	public boolean canAdvanceAssemblyLine(User currentuser) {
 		return this.cmc.canAdvanceAssemblyLine(currentuser);
 	}
+	
+	public void advanceAssemblyLine(int time) {
+		this.cmc.advanceAssemblyLine(time);
+	}
 
 	public void placeOrder(Order order) {
 		this.cmc.placeOrder(order);

@@ -62,8 +62,16 @@ public class UserInterFace {
 	}
 
 	private void advance(User currentuser) {
-		// TODO Auto-generated method stub
-
+		this.displayString(" < Hello " + currentuser.getFirstname() + "! Are you sure you"
+				+ "want to move the assembly line? (yes/no)\n");
+		this.displayString(">>");
+		String response = this.getInput();
+		if (response.equalsIgnoreCase("yes")) {
+			this.displayString("Please enter the time that was spent during the current phase.\n");
+			response = this.getInput();
+			int time = Integer.parseInt(response);
+			this.control.advanceAssemblyLine(time);
+		}
 	}
 	
 	/**
