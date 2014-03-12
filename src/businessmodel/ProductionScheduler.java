@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 
+import component.*;
+
 /**
  * A class that is responsible for scheduling in orders for an individual day.
  * 
@@ -71,6 +73,7 @@ public class ProductionScheduler {
 			if (this.getAvailableTime() == 0)
 				this.startNewDay();
 		}
+		
 	}
 
 	/**
@@ -281,6 +284,15 @@ public class ProductionScheduler {
 		Action action5 = new Action("Install seats");
 		Action action6 = new Action("Install Airco");
 		Action action7 = new Action("Mount Wheels");
+		action1.addComponent(new Body());
+		action2.addComponent(new Color());
+		action3.addComponent(component);
+		action4.addComponent(component);
+		action5.addComponent(component);
+		action6.addComponent(component);
+		action7.addComponent(component);
+
+
 		ArrayList<Action> actions = new ArrayList<Action>();
 		actions.add(action1);
 		actions.add(action2);

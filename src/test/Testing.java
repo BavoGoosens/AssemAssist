@@ -214,22 +214,23 @@ public class Testing {
 		assertEquals(testassembly.getWorkPosts().get(1).getOrder(),order1);
 		assertEquals(testassembly.getWorkPosts().get(2).getOrder(),order2);
 	}
+	
 
 	// A test method for the class production Scheduler.
-	@Test
-	public void testProductionScheduler(){
-		ProductionScheduler prodsched = ordermanager.getProductionScheduler();
-		ordermanager.placeOrder(order1);
-		ordermanager.placeOrder(order2);
-		ordermanager.placeOrder(order3);
-		ordermanager.placeOrder(order4);
-		prodsched.advance(50);
-		assertEquals(prodsched.getAvailableTime(),790);
-		assertEquals(prodsched.getDelayTime(),-10);
-		prodsched.advance(90);
-		assertEquals(prodsched.getAvailableTime(),700);
-		prodsched.advance(60);
-		prodsched.advance(90);
-		assertEquals(prodsched.getDelayTime(),20);
-	}
+//	@Test
+//	public void testProductionScheduler(){
+//		ProductionScheduler prodsched = ordermanager.getProductionScheduler();
+//		ordermanager.placeOrder(order1);
+//		ordermanager.placeOrder(order2);
+//		ordermanager.placeOrder(order3);
+//		ordermanager.placeOrder(order4);
+//		prodsched.advance(50);
+//		assertEquals(prodsched.getAvailableTime(),790);
+//		assertEquals(prodsched.getDelayTime(),-10);
+//		prodsched.advance(90);
+//		assertEquals(prodsched.getAvailableTime(),700);
+//		prodsched.advance(60);
+//		prodsched.advance(90);
+//		assertEquals(prodsched.getDelayTime(),20);
+//	}
 }
