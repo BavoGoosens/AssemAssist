@@ -15,7 +15,20 @@ public class UserManagement {
 	 */
 	private HashMap<String,User> system_users = new HashMap<String,User>();
 	
-	public UserManagement(){}
+	/**
+	 * A constructor to make an User manager. Two mechanics, one manager and one garageholder will be created.
+	 */
+	public UserManagement(){
+		GarageHolder garageholder = new GarageHolder("Bouwe","Ceunen","Bouwe2014", "henk");
+		Mechanic mechanic1 = new Mechanic("Sander","Geijsen","Sander2014","henk");
+		Mechanic mechanic2 = new Mechanic("Michiel", "Vandendriesche","Michiel2014", "henk");
+		Manager manager = new Manager("Bavo", "Goosens", "Bavo2014", "henk");
+		system_users = new HashMap<String, User>();
+		system_users.put("Bouwe2014", mechanic1);
+		system_users.put("Sander2014", mechanic2);
+		system_users.put("Sander2014", garageholder);
+		system_users.put("Bavo2014", manager);
+	}
 	
 	/**
 	 * This method constructs the UserManagement object and populates the list of users.
