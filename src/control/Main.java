@@ -67,57 +67,6 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// create some components
-		Body body = new Body("sedan",1000);
-		Body body2 = new Body("sedan",1000);
-		ArrayList<Body> bodies = new ArrayList<Body>();
-		bodies.add(body2);
-		bodies.add(body);
-		
-		Color color = new Color("red",1000);
-		Color color2 = new Color("red",1000);
-		ArrayList<Color> colors = new ArrayList<Color>();
-		colors.add(color);
-		colors.add(color2);
-		
-		Engine engine = new Engine("standard 2l 4 cilinders",1000);
-		Engine engine2 = new Engine("standard 2l 4 cilinders",1000);
-		ArrayList<Engine> engines = new ArrayList<Engine>();
-		engines.add(engine);
-		engines.add(engine2);
-		
-		Gearbox gearbox = new Gearbox("6 speed manual",1000);
-		Gearbox gearbox2 = new Gearbox("5 speed manual",1000);
-		ArrayList<Gearbox> gearboxes = new ArrayList<Gearbox>();
-		gearboxes.add(gearbox);
-		gearboxes.add(gearbox2);
-		
-		Seats seats = new Seats("leather black",1000);
-		Seats seats2 = new Seats("leather black",1000);
-		ArrayList<Seats> seatss = new ArrayList<Seats>();
-		seatss.add(seats);
-		seatss.add(seats2);
-		
-		Airco airco = new Airco("manual",1000);
-		Airco airco2 = new Airco("manual",1000);
-		ArrayList<Airco> aircos = new ArrayList<Airco>();
-		aircos.add(airco);
-		aircos.add(airco2);
-		
-		Wheels wheels = new Wheels("comfort",1000);
-		Wheels wheels2 = new Wheels("comfort",1000);
-		ArrayList<Wheels> wheelss = new ArrayList<Wheels>();
-		wheelss.add(wheels);
-		wheelss.add(wheels2);
-
-		GarageHolder garageholder = new GarageHolder("Bavo","Goosens","BBB", "BBB");
-		Mechanic mechanic = new Mechanic("Sander","Geijsen","HENK","DEPOTVIS");
-		Manager manager = new Manager("Jef", "Vermeulen", "JV", "JV");
-		HashMap<String, User> map = new HashMap<String, User>();
-		map.put("HENK", mechanic);
-		map.put("BBB", garageholder);
-		map.put("JV", manager);
-		UserManagement um = new UserManagement(map);		
 		
 		CarModelSpecification cms = new CarModelSpecification(bodies,colors,engines,gearboxes,seatss,aircos,wheelss);
 		CarModel audiA6 = new CarModel("Audi A6",cms);
