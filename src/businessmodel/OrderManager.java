@@ -103,8 +103,8 @@ public class OrderManager {
 	private void setCarmodels(Inventory inventory){
 		CarModelSpecification spec1 = new CarModelSpecification(this.getInventory().bodytypes,
 				this.getInventory().colortypes,this.getInventory().enginetypes,
-				this.getInventory().gearboxtypes,this.getInventory().aircotypes,
-				this.getInventory().seattypes,this.getInventory().wheeltypes);
+				this.getInventory().gearboxtypes,this.getInventory().seattypes,
+				this.getInventory().aircotypes,this.getInventory().wheeltypes);
 		CarModel carmodel1 = new CarModel("Audi A8",spec1);
 		CarModel carmodel2 = new CarModel("Audi TT",spec1);
 		CarModel carmodel3 = new CarModel("Audi R8",spec1);
@@ -162,9 +162,7 @@ public class OrderManager {
 	 */
 	public ArrayList<Order> getPendingOrders(User user){
 		ArrayList<Order> pendingorders = new ArrayList<Order>();
-		// The scheduled orders for today
 		pendingorders.addAll(this.getProductionScheduler().getScheduledOrders());
-		// The pending orders
 		for (Order order: this.getPendingOrders()){
 			if (order.getUser() == user)
 				pendingorders.add(order);
@@ -191,7 +189,12 @@ public class OrderManager {
 	 * @param index
 	 */
 	public void updateEstimatedTime(){
-
+		Calendar temp;
+		for(Order order: this.getProductionScheduler().getDayorders()){
+			temp = (Calendar) order.getDate().clone();
+			temp.add(Calendar.HOUR_OF_DAY, 1);
+			order.setDate(temp);
+		}
 	}
 
 	/**

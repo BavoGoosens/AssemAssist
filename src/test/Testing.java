@@ -112,7 +112,7 @@ public class Testing {
 		audiA6 = new CarModel("Audi A6",cms);
 		carmodels = new ArrayList<CarModel>();
 		carmodels.add(audiA6);
-		ordermanager = new OrderManager(carmodels);
+		ordermanager = new OrderManager();
 		ordermanager.addOrder(order);
 
 		actie = new Action("Henk");

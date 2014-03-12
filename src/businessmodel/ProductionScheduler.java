@@ -1,5 +1,6 @@
 package businessmodel;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 
@@ -48,8 +49,28 @@ public class ProductionScheduler {
 		this.setToday(start);
 		this.setAvailableTime(14*60);
 		this.setOrderManager(ordermanager);
-		this.setAssemblyline(new AssemblyLine());
+		ArrayList<Action> actions = this.makeActions();
+		this.setAssemblyline(new AssemblyLine(actions));
 		this.setDayOrders(new LinkedList<Order>());
+	}
+
+	private ArrayList<Action> makeActions() {
+		Action action1 = new Action("Paint car");
+		Action action2 = new Action("Assembly Car Body");
+		Action action3 = new Action("Insert engine");
+		Action action4 = new Action("Insert gearbox");
+		Action action5 = new Action("Install seats");
+		Action action6 = new Action("Install Airco");
+		Action action7 = new Action("Mount Wheels");
+		ArrayList<Action> actions = new ArrayList<Action>();
+		actions.add(action1);
+		actions.add(action2);
+		actions.add(action3);
+		actions.add(action4);
+		actions.add(action5);
+		actions.add(action6);
+		actions.add(action7);
+		return actions;
 	}
 
 	/**
