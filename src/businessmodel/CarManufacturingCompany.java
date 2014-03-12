@@ -67,6 +67,6 @@ public class CarManufacturingCompany {
 	}
 	
 	public void placeOrder(Order order){
-		this.om.addOrder(order);
+		this.om.placeOrder(order);
 	}
 }

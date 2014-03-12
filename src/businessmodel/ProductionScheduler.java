@@ -284,13 +284,13 @@ public class ProductionScheduler {
 		Action action5 = new Action("Install seats");
 		Action action6 = new Action("Install Airco");
 		Action action7 = new Action("Mount Wheels");
-		action1.addComponent(new Body());
-		action2.addComponent(new Color());
-		action3.addComponent(component);
-		action4.addComponent(component);
-		action5.addComponent(component);
-		action6.addComponent(component);
-		action7.addComponent(component);
+		action1.addComponent(new Color("blue",50));
+		action2.addComponent(new Body("sedan", 50));
+		action3.addComponent(new Engine("standard 2l 4 cilinders", 50));
+		action4.addComponent(new Gearbox("6 speed manual", 1000));
+		action5.addComponent(new Seats("leather black", 1000));
+		action6.addComponent(new Airco("manual climate control",1000));
+		action7.addComponent(new Wheels("comfort",1000));
 
 
 		ArrayList<Action> actions = new ArrayList<Action>();

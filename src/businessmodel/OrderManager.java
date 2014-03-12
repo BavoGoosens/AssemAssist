@@ -67,7 +67,6 @@ public class OrderManager {
 	 * 		  An Order that needs to be added.
 	 */
 	public void placeOrder(Order order){
-		
 		this.addOrder(order);
 		boolean added = this.getProductionScheduler().update();
 		if (added == false){

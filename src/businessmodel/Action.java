@@ -20,7 +20,7 @@ public class Action {
 	/**
 	 * The list of components needed for the action
 	 */
-	private ArrayList<Component> components = new ArrayList<Component>();
+	private ArrayList<String> component_types = new ArrayList<String>();
 
 	/**
 	 * A variable that specifies if this assembly task is completed.
@@ -46,7 +46,11 @@ public class Action {
 	 */
 	public Action(String descr, ArrayList<Component> comp) {
 		this(descr);
-		this.setComponents(comp);
+		ArrayList<String> types = new ArrayList<String>();
+		for (Component cp : comp ){
+			types.add(cp.getClass().getName());
+		}
+		this.setComponents(types);
 	}
 
 	/**
@@ -61,8 +65,8 @@ public class Action {
 	 * This method returns the list of components needed for the action.
 	 * @return	this.components
 	 */
-	public ArrayList<Component> getComponents() {
-		return this.components;
+	public ArrayList<String> getComponents() {
+		return this.component_types;
 	}
 
 	/**
@@ -84,12 +88,12 @@ public class Action {
 	 * @throws 	IllegalArgumentException
 	 * 			components == null
 	 */
-	private void setComponents(ArrayList<Component> components) throws IllegalArgumentException {
+	private void setComponents(ArrayList<String> components) throws IllegalArgumentException {
 		if (components == null){
 			throw new IllegalArgumentException();
 		} 
 		else {
-			this.components = components;
+			this.component_types = components;
 		}
 	}
 
@@ -100,8 +104,8 @@ public class Action {
 	 * 			The component that needs to be added.
 	 */
 	public void addComponent(Component component) {
-		if (!this.getComponents().contains(component)) {
-			this.getComponents().add(component);
+		if (!this.getComponents().contains(component.getClass().getName())) {
+			this.getComponents().add(component.getClass().getName());
 		}
 	}
 
@@ -115,26 +119,26 @@ public class Action {
 		this.getComponents().remove(component);
 	}
 
-	/**
-	 * A method to check is this action is completed.
-	 * @return true if all the components are completed.
-	 */
-	public boolean isCompleted() {
-		boolean ready = true;
-		for(Component component: this.getComponents()){
-			if(component.isCompleted() == false)
-				ready = false;
-		}
-		return ready;
-	}
-
-	/**
-	 * A method to set this method to completed.
-	 * @param true or false
-	 */
-	public void setCompleted(boolean completed) {
-		for(Component component: this.getComponents()){
-			component.setCompleted(true);
-		}	
-	}
+//	/**
+//	 * A method to check is this action is completed.
+//	 * @return true if all the components are completed.
+//	 */
+//	public boolean isCompleted() {
+//		boolean ready = true;
+//		for(String type: this.getComponents()){
+//			if(component.isCompleted() == false)
+//				ready = false;
+//		}
+//		return ready;
+//	}
+//
+//	/**
+//	 * A method to set this method to completed.
+//	 * @param true or false
+//	 */
+//	public void setCompleted(boolean completed) {
+//		for(Component component: this.getComponents()){
+//			component.setCompleted(true);
+//		}	
+//	}
 }

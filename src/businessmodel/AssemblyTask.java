@@ -48,7 +48,7 @@ public class AssemblyTask {
 	public ArrayList<Component> getComponents() {
 		ArrayList<Component> parts = new ArrayList<Component>();
 		for( Action act : this.getActions()){
-			parts.addAll(act.getComponents());
+			//parts.addAll(act.getComponents());
 		}
 		return parts;
 	}
@@ -105,9 +105,7 @@ public class AssemblyTask {
 	 * A method to set this assembly task to completed.
 	 */
 	public void completeAssemblytask(){
-		for(Action action:this.getActions()){
-			action.setCompleted(true);
-		}
+		this.completed = true;
 	}
 	
 	/**
@@ -116,11 +114,7 @@ public class AssemblyTask {
 	 * @return true if all actions of this assembly task are completed.
 	 */
 	public boolean isCompleted(){
-		for(Action action:this.getActions()){
-			if(action.isCompleted() == false)
-				return false;
-		}
-		return true;
+		return this.completed;
 	}
 
 	/**

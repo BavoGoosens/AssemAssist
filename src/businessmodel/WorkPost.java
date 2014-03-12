@@ -184,9 +184,11 @@ public class WorkPost {
 	 */
 	private void refreshAssemblyTasks() {
 		Order currentOrder = this.getOrder();
-		ArrayList<Component> carparts = currentOrder.getCar().getComponents();
-		ArrayList<AssemblyTask> newPendingTasks = this.possibleAssemblyTasks(carparts);
-		this.setPendingTasks(newPendingTasks);
+		if (currentOrder != null ){
+			ArrayList<Component> carparts = currentOrder.getCar().getComponents();
+			ArrayList<AssemblyTask> newPendingTasks = this.possibleAssemblyTasks(carparts);
+			this.setPendingTasks(newPendingTasks);
+		}
 	}
 
 	/**
@@ -204,7 +206,7 @@ public class WorkPost {
 		for(AssemblyTask task :this.getResponsibletasks()){
 			for(Action action: task.getActions()){
 				for(Component component: carparts){
-					if(action.getComponents().contains(component))
+					if(action.getComponents().contains(component.getClass().getName()))
 						result.add(task);	
 				}		
 			}

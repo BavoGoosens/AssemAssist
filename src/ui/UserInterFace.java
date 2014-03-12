@@ -62,16 +62,25 @@ public class UserInterFace {
 	}
 
 	private void advance(User currentuser) {
-		this.displayString(" < Hello " + currentuser.getFirstname() + "! Are you sure you"
-				+ "want to move the assembly line? (yes/no)\n");
-		this.displayString(">>");
-		String response = this.getInput();
-		if (response.equalsIgnoreCase("yes")) {
-			this.displayString("Please enter the time that was spent during the current phase.\n");
-			response = this.getInput();
-			int time = Integer.parseInt(response);
-			this.control.advanceAssemblyLine(time);
+		while (true) {
+			this.displayString(" > Hello " + currentuser.getFirstname() + "! Do you "
+					+ "want to move the assembly line forward? (yes/no)\n");
+			this.displayString(">> ");
+			String response = this.getInput();
+			if (response.equalsIgnoreCase("yes")) {
+				this.displayString("Please enter the time that was spent during the current phase.\n");
+				response = this.getInput();
+				try {
+					int time = Integer.parseInt(response);
+					this.control.advanceAssemblyLine(time);
+				} catch (NumberFormatException e) {
+					this.badInput();
+				}
+			} else if (response.equalsIgnoreCase("no")) {
+				break;
+			}
 		}
+		this.login();
 	}
 	
 	/**
@@ -89,6 +98,7 @@ public class UserInterFace {
 		while (true){
 			
 			this.displayString(" > Hello " + currentuser.getFirstname() + " please enter workpost number \n" );
+			this.displayString(" > To quit: enter \"Quit\"\n");
 			int count = 1;
 			
 			for(WorkPost w : workposts)
@@ -96,6 +106,9 @@ public class UserInterFace {
 			
 			this.displayString(" >> ");
 			String response = this.getInput();
+			if (response.equalsIgnoreCase("Quit")) {
+				break;
+			}
 			if (response.matches("\\d*")){
 				int res = Integer.parseInt(response) - 1;
 				if (res < workposts.size()){
@@ -144,8 +157,7 @@ public class UserInterFace {
 					continue;
 				}
 				
-				for(Action action : task.getActions())
-					action.setCompleted(true);
+				task.completeAssemblytask();
 				currentworkpost.removePendingTask(task);
 				
 				this.displayString(" Do you want to continue working? yes/no \n");
@@ -160,10 +172,9 @@ public class UserInterFace {
 				
 			}
 			
-			this.displayString(" all done! \n");
-			break;
+			this.displayString("All done! \n");
 		}
-
+		this.login();
 	}
 
 	public void order(User currentuser){
