@@ -176,7 +176,7 @@ public class WorkPost {
 	
 	public void setNewOrder(Order order){
 		this.setOrder(order);
-	//	this.refreshAssemblyTasks();
+		this.refreshAssemblyTasks();
 	}
 
 	/**
