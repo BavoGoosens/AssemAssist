@@ -195,7 +195,7 @@ public class Testing {
 	// A test method for the class production Scheduler.
 	@Test
 	public void testProductionScheduler(){
-		ProductionScheduler prodsched = ordermanager.getProductionManager();
+		ProductionScheduler prodsched = ordermanager.getProductionScheduler();
 		assertEquals(prodsched.getOrderManager(),ordermanager);
 		prodsched.makeDaySchedule();
 		ordermanager.addOrder(order);

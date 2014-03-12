@@ -49,7 +49,7 @@ public class ProductionScheduler {
 		this.setAvailableTime(14*60);
 		this.setOrderManager(ordermanager);
 		this.setAssemblyline(new AssemblyLine());
-		dayorders = new LinkedList<Order>();
+		this.setDayOrders(new LinkedList<Order>());
 	}
 
 	/**
@@ -90,13 +90,16 @@ public class ProductionScheduler {
 	public void advance(int time){
 		Order finished = null; 
 		if (this.getAssemblyline().canAdvance()){
-			Order p = this.getDayorders().poll();
+			Order p = this.getDayorders().peek();
 			finished = this.getAssemblyline().advance(p);
 		}
-		this.getOrderManager().finishedOrder(finished);
-		this.updateDaySchedule(time);
-		if (this.getAvailableTime() == 0)
-			this.startNewDay();
+		if (finished != null){
+			this.getOrderManager().finishedOrder(finished);
+			this.getDayorders().remove(finished);
+			this.updateDaySchedule(time);
+			if (this.getAvailableTime() == 0)
+				this.startNewDay();
+		}
 	}
 
 	/**
@@ -116,7 +119,7 @@ public class ProductionScheduler {
 	 */
 	public void makeDaySchedule(){
 		LinkedList<Order> day = this.getOrderManager().getNbOrders(this.getAvailableTime()/60 - 2);
-		this.setDayorders(day);
+		this.setDayOrders(day);
 	}
 
 	public void updateDaySchedule(int time){
@@ -129,11 +132,17 @@ public class ProductionScheduler {
 
 	/**
 	 * This method checks whether there is an Order ready 
+	 * 
+	 * @return boolean
+	 * 		   A boolean which is true when the update was successful.
+	 * 		   The boolean is false when there is no more time today.
 	 */
-	public void update(){
+	public boolean update(){
 		if (this.checkToAddOrder()){
 			addDayOrder();
-		}
+			return true;
+		} else 
+			return false;
 	}
 
 	/**
@@ -145,7 +154,7 @@ public class ProductionScheduler {
 	public boolean checkToAddOrder() {
 		// temp holds the amount of minutes there is left to finish an Order.
 		int temp = this.getAvailableTime() - (60 * this.getDayorders().size()) - (2 * 60);
-		if (temp/60 > 1)
+		if (temp/60 >= 1)
 			return true;
 		return false;
 	}
@@ -213,7 +222,7 @@ public class ProductionScheduler {
 		this.today = today;
 	}
 
-	private void setDayorders(LinkedList<Order> dayorders) {
+	private void setDayOrders(LinkedList<Order> dayorders) {
 		this.dayorders = dayorders;
 	}
 
