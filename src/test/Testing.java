@@ -35,6 +35,10 @@ public class Testing {
 	private ArrayList<Wheels> wheelss;
 	private ArrayList<Seats> seatss;
 
+	Action actie;
+	ArrayList<Action> acties;
+	AssemblyTask assem;
+	ArrayList<AssemblyTask> tasks;
 	private CarModelSpecification cms;
 	private CarModel audiA6;
 	private ArrayList<CarModel> carmodels;
@@ -63,7 +67,7 @@ public class Testing {
 		mechanic = new Mechanic("Sander","Geijsen","HENK","DE POTVIS");
 		garageholder = new GarageHolder("Sander","Geijsen","HENK","DE POTVIS");
 		date = new Date();
-		
+
 		order = new Order(garageholder, this.components);
 		order.setDate(calendar);
 		bodies = new ArrayList<Body>();
@@ -110,6 +114,11 @@ public class Testing {
 		carmodels.add(audiA6);
 		ordermanager = new OrderManager(carmodels);
 		ordermanager.addOrder(order);
+
+		actie = new Action("Henk");
+		acties = new ArrayList<Action>();
+		assem = new AssemblyTask("Assembly task",acties);
+		tasks = new ArrayList<AssemblyTask>();
 	}
 
 	// A test method for the class Component
@@ -155,17 +164,17 @@ public class Testing {
 		assertEquals(cms.getSeats(),this.seatss);
 		assertEquals(cms.getWheels(),this.wheelss);
 	}
-	
-//	@Test
-//	public void testUI(){
-//		Controller ctrl = new Controller();
-//		ctrl.run();
-//		System.out.println("HENK");
-//		System.out.println("DE POTVIS");
-//		
-//	}
-	
-	
+
+	//	@Test
+	//	public void testUI(){
+	//		Controller ctrl = new Controller();
+	//		ctrl.run();
+	//		System.out.println("HENK");
+	//		System.out.println("DE POTVIS");
+	//		
+	//	}
+
+
 	// A test method for the class Order.
 	@Test
 	public void testOrder(){
@@ -174,16 +183,22 @@ public class Testing {
 		assertEquals(order.getDate(),this.date);
 		assertEquals(order.isCompleted(),false);
 	}
-	
+
 	@Test
 	public void testWorkPost(){
-		Action actie = new Action("Henk");
-		ArrayList<Action> acties = new ArrayList<Action>();
-		AssemblyTask assem = new AssemblyTask("Assembly task",acties);
-		ArrayList<AssemblyTask> tasks = new ArrayList<AssemblyTask>();
-		WorkPost wp = new WorkPost("Test",tasks);	
+		WorkPost wp = new WorkPost("Test",tasks);
+		wp.setOrder(order);
+		wp.moveAlong(order);
+
 	}
-	
+
+	@Test
+	public void testAssemblyLine(){
+		AssemblyLine assem1 = new AssemblyLine();
+		assem1.getWorkposts().get(0).setOrder(order);
+		assem1.advance(order);
+	}
+
 	@Test
 	public void testShit(){
 		System.out.println(this.order.toString());
@@ -191,7 +206,7 @@ public class Testing {
 		System.out.println(this.ordermanager.toString());
 		assertEquals(this.cms.getPosibilities().get(0)[0].getClass(),cms.getBodies().get(0).getClass());
 	}
-	
+
 	// A test method for the class production Scheduler.
 	@Test
 	public void testProductionScheduler(){
