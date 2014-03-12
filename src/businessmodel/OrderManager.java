@@ -48,7 +48,7 @@ public class OrderManager {
 		start.set(Calendar.HOUR_OF_DAY, 8);
 		start.set(Calendar.MINUTE,0);
 		start.set(Calendar.SECOND,0);
-		this.setProductionManager(new ProductionScheduler(this, start));
+		this.setProductionScheduler(new ProductionScheduler(this, start));
 		this.setCarmodels(carmodels);
 	}
 
@@ -60,7 +60,10 @@ public class OrderManager {
 	 */
 	public void placeOrder(Order order){
 		this.addOrder(order);
-		this.getProductionManager().update();
+		boolean added = this.getProductionScheduler().update();
+		if (added == false){
+			this.updateEstimatedTime();
+		}
 	}
 	
 	/**
@@ -157,7 +160,7 @@ public class OrderManager {
 	public ArrayList<Order> getPendingOrders(User user){
 		ArrayList<Order> pendingorders = new ArrayList<Order>();
 		// The scheduled orders for today
-		pendingorders.addAll(this.getProductionManager().getScheduledOrders());
+		pendingorders.addAll(this.getProductionScheduler().getScheduledOrders());
 		// The pending orders
 		for (Order order: this.getPendingOrders()){
 			if (order.getUser() == user)
@@ -167,11 +170,11 @@ public class OrderManager {
 	}
 
 
-	public ProductionScheduler getProductionManager() {
+	public ProductionScheduler getProductionScheduler() {
 		return production;
 	}
 
-	public void setProductionManager(ProductionScheduler production) {
+	public void setProductionScheduler(ProductionScheduler production) {
 		this.production = production;
 	}
 
@@ -184,27 +187,8 @@ public class OrderManager {
 	 * A method to update the completion time of the pending orders.
 	 * @param index
 	 */
-	public void updateEstimatedTime(int index) {
-		if(index == 60){
-			for(Order order: this.getPendingOrders()){
-				Calendar time = order.getDate();
-				order.getDate().set(time.get(Calendar.YEAR),
-						time.get(Calendar.MONTH),
-						time.get(Calendar.DAY_OF_MONTH),
-						time.get(Calendar.HOUR_OF_DAY+1),
-						time.get(Calendar.MINUTE));
-			}	
-		}
-		if(index == -60){
-			for(Order order: this.getPendingOrders()){
-				Calendar time = order.getDate();
-				order.getDate().set(time.get(Calendar.YEAR),
-						time.get(Calendar.MONTH),
-						time.get(Calendar.DAY_OF_MONTH),
-						time.get(Calendar.HOUR_OF_DAY-1),
-						time.get(Calendar.MINUTE));
-			}	
-		}
+	public void updateEstimatedTime(){
+		
 	}
 
 	/**
