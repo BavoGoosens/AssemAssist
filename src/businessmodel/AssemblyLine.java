@@ -70,9 +70,10 @@ public class AssemblyLine {
 	 */
 	protected LinkedList<Order> getWorkPostOrders(){
 		LinkedList<Order> orders = new LinkedList<Order>();
-		for(WorkPost wp: this.getWorkPosts()){
-			orders.add(wp.getOrder());
-		}
+		for(WorkPost wp: this.getWorkPosts())
+			if (wp.getOrder() != null)
+				orders.add(wp.getOrder());
+		
 		return orders;
 	}
 

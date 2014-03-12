@@ -29,7 +29,7 @@ public class WorkPost {
 	/**
 	 * The order the working post is currently handling.
 	 */
-	private Order order_in_process = null;
+	private Order order_in_process ;
 
 	/**
 	 * This method constructs a new work post with a given name.

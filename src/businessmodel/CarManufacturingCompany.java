@@ -14,10 +14,10 @@ public class CarManufacturingCompany {
 
 	private Controller control;
 
-	public CarManufacturingCompany(Controller control ,UserManagement um, OrderManager om, Inventory inv){
+	public CarManufacturingCompany(Controller control){
 		this.control = control;
-		this.um = um;
-		this.om = om;
+		this.um = new UserManagement();
+		this.om = new OrderManager();
 	}
 	public boolean login(String username, String password) {
 		return this.um.authenticate(username, password);		
@@ -56,6 +56,10 @@ public class CarManufacturingCompany {
 	}
 	public boolean canAdvanceAssemblyLine(User currentuser) {
 		return this.um.canControlAssemblyLine(currentuser);
+	}
+	
+	public void advanceAssemblyLine(int time) {
+		this.om.getProductionScheduler().advance(time);
 	}
 
 	public OrderManager getOrderManager(){
