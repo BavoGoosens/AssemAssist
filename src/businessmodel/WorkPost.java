@@ -156,7 +156,7 @@ public class WorkPost {
 	 * @param order_in_process
 	 *        The Order the WorkPost is working on.
 	 */
-	private void setOrder(Order order_in_process) {
+	public void setOrder(Order order_in_process) {
 		this.order_in_process = order_in_process;
 	}
 

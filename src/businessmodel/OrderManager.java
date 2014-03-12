@@ -28,12 +28,17 @@ public class OrderManager {
 	/**
 	 * A list that holds all the car models of a car manufacturing company.
 	 */
-	ArrayList<CarModel> carmodels;
-	
+	ArrayList<CarModel> carmodels = new ArrayList<CarModel>();;
+
 	/**
 	 * A production scheduler this Order Manager uses.
 	 */
 	ProductionScheduler production;
+
+	/**
+	 * A inventory for this Order manager
+	 */
+	Inventory inventory;
 
 	/**
 	 * A constructor for the class OrderManager.
@@ -41,7 +46,7 @@ public class OrderManager {
 	 * @param    carmodels
 	 *           the car models that an car manufacturing company offers.
 	 */
-	public OrderManager(ArrayList<CarModel> carmodels){
+	public OrderManager(){
 		this.pendingorders = new LinkedList<Order>();
 		this.completedorders = new LinkedList<Order>();
 		Calendar start = Calendar.getInstance();
@@ -49,7 +54,8 @@ public class OrderManager {
 		start.set(Calendar.MINUTE,0);
 		start.set(Calendar.SECOND,0);
 		this.setProductionScheduler(new ProductionScheduler(this, start));
-		this.setCarmodels(carmodels);
+		this.inventory = new Inventory();
+		this.setCarmodels(inventory);
 	}
 
 	/**
@@ -65,7 +71,7 @@ public class OrderManager {
 			this.updateEstimatedTime();
 		}
 	}
-	
+
 	/**
 	 * A method to get the orders of this order manager.
 	 * 
@@ -94,10 +100,18 @@ public class OrderManager {
 	 * @param    carmodels
 	 *           the new car models of this order manager.
 	 */
-	private void setCarmodels(ArrayList<CarModel> carmodels){
-		this.carmodels = carmodels;
+	private void setCarmodels(Inventory inventory){
+		CarModelSpecification spec1 = new CarModelSpecification(this.getInventory().bodytypes,
+				this.getInventory().colortypes,this.getInventory().enginetypes,
+				this.getInventory().gearboxtypes,this.getInventory().aircotypes,
+				this.getInventory().seattypes,this.getInventory().wheeltypes);
+		CarModel carmodel1 = new CarModel("Audi A8",spec1);
+		CarModel carmodel2 = new CarModel("Audi TT",spec1);
+		CarModel carmodel3 = new CarModel("Audi R8",spec1);
+		this.getCarmodels().add(carmodel1);
+		this.getCarmodels().add(carmodel2);
+		this.getCarmodels().add(carmodel3);
 	}
-
 
 	/**
 	 * A method to add an order to this order manager.
@@ -107,17 +121,6 @@ public class OrderManager {
 	 */
 	public void addOrder(Order order){
 		this.getPendingOrders().add(order);
-	}
-
-	/**
-	 * A method to remove an order of this order manager.
-	 * 
-	 * @param    order
-	 * 			 the order that needs to be removed.
-	 */
-	public void CompleteOrder(Order order){
-		this.getPendingOrders().remove(order);
-		this.getCompletedOrders().add(order);
 	}
 
 	/**
@@ -188,7 +191,7 @@ public class OrderManager {
 	 * @param index
 	 */
 	public void updateEstimatedTime(){
-		
+
 	}
 
 	/**
@@ -219,5 +222,13 @@ public class OrderManager {
 			res.add(tmp);
 		}
 		return res;
+	}
+
+	/**
+	 * A method to get the inventory of this order manager.
+	 * @return the inventory of this class.
+	 */
+	private Inventory getInventory() {
+		return inventory;
 	}
 }
