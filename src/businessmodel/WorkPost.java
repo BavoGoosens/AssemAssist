@@ -173,10 +173,10 @@ public class WorkPost {
 		}
 		return true;
 	}
-	
+
 	public void setNewOrder(Order order){
 		this.setOrder(order);
-	//	this.refreshAssemblyTasks();
+		this.refreshAssemblyTasks();
 	}
 
 	/**
@@ -200,16 +200,19 @@ public class WorkPost {
 	 *         A list of AssemblyTasks that need to be carried out to install (some of) the components.
 	 */
 	//TODO
-	private ArrayList<AssemblyTask> possibleAssemblyTasks(
-			ArrayList<Component> carparts) {
+	private ArrayList<AssemblyTask> possibleAssemblyTasks(ArrayList<Component> carparts) {
 		ArrayList<AssemblyTask> result = new ArrayList<AssemblyTask>();
 		for(AssemblyTask task :this.getResponsibletasks()){
-			if (carparts.contains(task.getComponents()))
-				result.add(task);
+			for(Action action: task.getActions()){
+				for(Component component: carparts){
+					if(action.getComponents().contains(component))
+						result.add(task);	
+				}		
+			}
 		}
 		return result;
 	}
-	
+
 	@Override
 	public String toString(){
 		return this.getName();

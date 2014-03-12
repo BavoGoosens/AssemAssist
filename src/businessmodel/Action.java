@@ -11,22 +11,22 @@ import component.*;
  *
  */
 public class Action {
-	
+
 	/**
 	 * The description of the action
 	 */
 	private String description;
-	
+
 	/**
 	 * The list of components needed for the action
 	 */
 	private ArrayList<Component> components = new ArrayList<Component>();
-	
+
 	/**
 	 * A variable that specifies if this assembly task is completed.
 	 */
 	private boolean completed; 
-	
+
 	/**
 	 * This method constructs a new action with a given description.
 	 * @param 	description
@@ -35,7 +35,7 @@ public class Action {
 	public Action(String descr) {
 		this.setDescription(descr);
 	}
-	
+
 	/**
 	 * This method constructs a new action with a given description and list of components.
 	 * 
@@ -48,7 +48,7 @@ public class Action {
 		this(descr);
 		this.setComponents(comp);
 	}
-	
+
 	/**
 	 * This method returns the description of the action.
 	 * @return	this.description
@@ -56,7 +56,7 @@ public class Action {
 	public String getDescription() {
 		return this.description;
 	}
-	
+
 	/**
 	 * This method returns the list of components needed for the action.
 	 * @return	this.components
@@ -64,7 +64,7 @@ public class Action {
 	public ArrayList<Component> getComponents() {
 		return this.components;
 	}
-	
+
 	/**
 	 * This method sets the description of the action.
 	 * (the description can be null)
@@ -75,7 +75,7 @@ public class Action {
 	private void setDescription(String descr) {
 		this.description = descr;
 	}
-	
+
 	/**
 	 * This method sets the components of the action.
 	 * 
@@ -92,18 +92,7 @@ public class Action {
 			this.components = components;
 		}
 	}
-	
-	/**
-	 * This method returns the object at the given index.
-	 * 
-	 * @param	index
-	 * 			The index
-	 * @return	this.getComponents().get(index)
-	 */
-	public Component getComponentAtIndex(int index) {
-		return this.getComponents().get(index);
-	}
-	
+
 	/**
 	 * This method adds a component to the action.
 	 * 
@@ -115,7 +104,7 @@ public class Action {
 			this.getComponents().add(component);
 		}
 	}
-	
+
 	/**
 	 * This method removes a component needed for the action.
 	 * 
@@ -125,13 +114,27 @@ public class Action {
 	public void removeComponent(Component component) {
 		this.getComponents().remove(component);
 	}
-	
+
+	/**
+	 * A method to check is this action is completed.
+	 * @return true if all the components are completed.
+	 */
 	public boolean isCompleted() {
-		return completed;
+		boolean ready = true;
+		for(Component component: this.getComponents()){
+			if(component.isCompleted() == false)
+				ready = false;
+		}
+		return ready;
 	}
 
+	/**
+	 * A method to set this method to completed.
+	 * @param true or false
+	 */
 	public void setCompleted(boolean completed) {
-		this.completed = completed;
+		for(Component component: this.getComponents()){
+			component.setCompleted(true);
+		}	
 	}
-
 }

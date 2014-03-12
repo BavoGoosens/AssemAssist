@@ -37,27 +37,6 @@ public class AssemblyTask {
 	public AssemblyTask(String name, ArrayList<Action> actions){
 		this.setName(name);
 		this.setActions(actions);
-		this.setCompleted(false);
-	}
-
-	/**
-	 * This method sets the completion status to the supplied value.
-	 * 
-	 * @param b
-	 * 		  A boolean indicating whether the AssemblyTask is completed or not.
-	 */
-	// currently public since AssemblyTasks are performed as a whole.
-	public void setCompleted(boolean b) {
-		this.completed = b;		
-	}
-
-	/**
-	 * This method updates the assembly task's completion status.
-	 */
-	private void updateCompleted(){
-		for(Action action: this.getActions())
-			if (action.isCompleted() == false)
-				this.setCompleted(false);
 	}
 
 	/**
@@ -122,15 +101,26 @@ public class AssemblyTask {
 		return this.name;
 	}
 
-
+	/**
+	 * A method to set this assembly task to completed.
+	 */
+	public void completeAssemblytask(){
+		for(Action action:this.getActions()){
+			action.setCompleted(true);
+		}
+	}
+	
 	/**
 	 * A method to check if this assembly task is completed.
 	 * 
 	 * @return true if all actions of this assembly task are completed.
 	 */
 	public boolean isCompleted(){
-		this.updateCompleted();
-		return this.completed;
+		for(Action action:this.getActions()){
+			if(action.isCompleted() == false)
+				return false;
+		}
+		return true;
 	}
 
 	/**

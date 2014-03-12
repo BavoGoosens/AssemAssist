@@ -39,6 +39,8 @@ public class OrderManager {
 	 * A inventory for this Order manager
 	 */
 	Inventory inventory;
+	
+	private boolean bool = true;
 
 	/**
 	 * A constructor for the class OrderManager.
@@ -65,6 +67,7 @@ public class OrderManager {
 	 * 		  An Order that needs to be added.
 	 */
 	public void placeOrder(Order order){
+		
 		this.addOrder(order);
 		boolean added = this.getProductionScheduler().update();
 		if (added == false){
@@ -191,9 +194,7 @@ public class OrderManager {
 	public void updateEstimatedTime(int time){
 		Calendar temp;
 		for(Order order: this.getPendingOrders()){
-			temp = (Calendar) order.getDate().clone();
-			temp.add(Calendar.HOUR_OF_DAY, time);
-			order.setDate(temp);
+			order.getDate().add(Calendar.MINUTE, time);
 		}
 	}
 

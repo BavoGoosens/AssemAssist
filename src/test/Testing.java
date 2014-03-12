@@ -223,7 +223,6 @@ public class Testing {
 		ordermanager.placeOrder(order2);
 		ordermanager.placeOrder(order3);
 		ordermanager.placeOrder(order4);
-		prodsched.makeDaySchedule();
 		prodsched.advance(50);
 		assertEquals(prodsched.getAvailableTime(),790);
 		assertEquals(prodsched.getDelayTime(),-10);
@@ -232,7 +231,5 @@ public class Testing {
 		prodsched.advance(60);
 		prodsched.advance(90);
 		assertEquals(prodsched.getDelayTime(),20);
-		assertEquals(order1.isCompleted(),false);
-		assertEquals(prodsched.getAvailableTime(),840);
 	}
 }
