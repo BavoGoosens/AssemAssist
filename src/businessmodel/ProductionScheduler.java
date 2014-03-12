@@ -33,7 +33,7 @@ public class ProductionScheduler {
 	private AssemblyLine assemblyline;
 
 	/**
-	 * The Orders the Scheduler will try to handle today.
+	 * The Orders the scheduler will try to handle today.
 	 */
 	private LinkedList<Order> dayorders;
 
@@ -52,25 +52,6 @@ public class ProductionScheduler {
 		ArrayList<Action> actions = this.makeActions();
 		this.setAssemblyline(new AssemblyLine(actions));
 		this.setDayOrders(new LinkedList<Order>());
-	}
-
-	private ArrayList<Action> makeActions() {
-		Action action1 = new Action("Paint car");
-		Action action2 = new Action("Assembly Car Body");
-		Action action3 = new Action("Insert engine");
-		Action action4 = new Action("Insert gearbox");
-		Action action5 = new Action("Install seats");
-		Action action6 = new Action("Install Airco");
-		Action action7 = new Action("Mount Wheels");
-		ArrayList<Action> actions = new ArrayList<Action>();
-		actions.add(action1);
-		actions.add(action2);
-		actions.add(action3);
-		actions.add(action4);
-		actions.add(action5);
-		actions.add(action6);
-		actions.add(action7);
-		return actions;
 	}
 
 	/**
@@ -109,11 +90,12 @@ public class ProductionScheduler {
 	 * This method advances the assembly line if possible.
 	 */
 	public void advance(int time){
-		Order finished = null; 
+		Order finished = null;
 		if (this.getAssemblyline().canAdvance()){
-			Order p = this.getDayorders().peek();
-			finished = this.getAssemblyline().advance(p);
+			Order neworder = this.getNextDayOrder();
+			finished = this.getAssemblyline().advance(neworder);
 		}
+		this.updateDaySchedule(time);
 		if (finished != null){
 			this.getOrderManager().finishedOrder(finished);
 			this.getDayorders().remove(finished);
@@ -121,6 +103,20 @@ public class ProductionScheduler {
 			if (this.getAvailableTime() == 0)
 				this.startNewDay();
 		}
+	}
+
+	/**
+	 * A method that returns the next unscheduled order in todays schedule.
+	 * 
+	 * @return Order
+	 * 		   null if there is no next order. Otherwise the next order in line is returned.
+	 */
+	private Order getNextDayOrder() {
+		for(Order or : this.getDayorders()){
+			if (!this.getAssemblyline().getWorkPostOrders().contains(or))
+				return or;
+		}
+		return null;
 	}
 
 	/**
@@ -141,11 +137,18 @@ public class ProductionScheduler {
 	public void makeDaySchedule(){
 		LinkedList<Order> day = this.getOrderManager().getNbOrders(this.getAvailableTime()/60 - 2);
 		this.setDayOrders(day);
+		this.getAssemblyline().getWorkPosts().get(0).setOrder(this.getDayorders().peek());
+		//update time 
+		this.getDayorders().removeFirst();
 	}
 
 	public void updateDaySchedule(int time){
+		int timediff = time - 60;
+		for(Order or : this.getDayorders()){
+			or.getDate().add(Calendar.MINUTE, timediff);
+		}
 		this.setAvailableTime(this.getAvailableTime() - time);
-		this.setDelayTime(this.getDelayTime() + (time - 60)); 
+		this.setDelayTime(this.getDelayTime() + timediff); 
 		if (this.checkToAddOrder())
 			addDayOrder();
 		removeLastOrderOfDay();
@@ -198,11 +201,13 @@ public class ProductionScheduler {
 				this.getDayorders().add(or);
 			}
 		}
+		this.getOrderManager().updateEstimatedTime(60);
 	}
 
 	private void removeLastOrderOfDay() {
 		Order temp = this.getDayorders().pollLast();
 		this.getOrderManager().getPendingOrders().addFirst(temp);
+		this.getOrderManager().updateEstimatedTime(-60);
 	}
 
 	public int getDelayTime() {
@@ -227,7 +232,7 @@ public class ProductionScheduler {
 	 * @return AssemblyLine
 	 * 		   The Assembly line that this production scheduler uses.
 	 */
-	private AssemblyLine getAssemblyline() {
+	public AssemblyLine getAssemblyline() {
 		return assemblyline;
 	}
 
@@ -251,5 +256,24 @@ public class ProductionScheduler {
 		LinkedList<Order> temp = this.getDayorders();
 		temp.addAll(this.getAssemblyline().getWorkPostOrders());
 		return temp;
+	}
+
+	private ArrayList<Action> makeActions() {
+		Action action1 = new Action("Paint car");
+		Action action2 = new Action("Assembly Car Body");
+		Action action3 = new Action("Insert engine");
+		Action action4 = new Action("Insert gearbox");
+		Action action5 = new Action("Install seats");
+		Action action6 = new Action("Install Airco");
+		Action action7 = new Action("Mount Wheels");
+		ArrayList<Action> actions = new ArrayList<Action>();
+		actions.add(action1);
+		actions.add(action2);
+		actions.add(action3);
+		actions.add(action4);
+		actions.add(action5);
+		actions.add(action6);
+		actions.add(action7);
+		return actions;
 	}
 } 

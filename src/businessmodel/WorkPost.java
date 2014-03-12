@@ -146,7 +146,7 @@ public class WorkPost {
 	 * @return Order
 	 * 		   The Order the WorkPost is working on.
 	 */
-	protected Order getOrder() {
+	public Order getOrder() {
 		return order_in_process;
 	}
 
@@ -173,23 +173,10 @@ public class WorkPost {
 		}
 		return true;
 	}
-
-	/**
-	 * This method returns the order that this WorkPost was handling. 
-	 * It also adds the next order and updates the tasks that need to be carried out.
-	 * 
-	 * @param neworder
-	 * 		  The Order that will be added.
-	 * @return Order
-	 * 		   The finished order (for this WorkPost).
-	 */
-	public Order moveAlong(Order neworder) {
-		if(this.getOrder() == null)
-			return null;
-		Order finished = this.getOrder();
-		this.setOrder(neworder);
-		this.refreshAssemblyTasks();
-		return finished;
+	
+	public void setNewOrder(Order order){
+		this.setOrder(order);
+	//	this.refreshAssemblyTasks();
 	}
 
 	/**

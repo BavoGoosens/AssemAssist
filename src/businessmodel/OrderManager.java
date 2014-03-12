@@ -68,7 +68,7 @@ public class OrderManager {
 		this.addOrder(order);
 		boolean added = this.getProductionScheduler().update();
 		if (added == false){
-			this.updateEstimatedTime();
+			this.updateEstimatedTime(0);
 		}
 	}
 
@@ -188,11 +188,11 @@ public class OrderManager {
 	 * A method to update the completion time of the pending orders.
 	 * @param index
 	 */
-	public void updateEstimatedTime(){
+	public void updateEstimatedTime(int time){
 		Calendar temp;
-		for(Order order: this.getProductionScheduler().getDayorders()){
+		for(Order order: this.getPendingOrders()){
 			temp = (Calendar) order.getDate().clone();
-			temp.add(Calendar.HOUR_OF_DAY, 1);
+			temp.add(Calendar.HOUR_OF_DAY, time);
 			order.setDate(temp);
 		}
 	}

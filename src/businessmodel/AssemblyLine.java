@@ -21,7 +21,7 @@ public class AssemblyLine {
 	 * This method returns the list of work posts at the assembly line.
 	 * @return	this.workposts
 	 */
-	public ArrayList<WorkPost> getWorkposts() {
+	public ArrayList<WorkPost> getWorkPosts() {
 		return this.workposts;
 	}
 
@@ -32,7 +32,7 @@ public class AssemblyLine {
 	 * 		   true is the assembly line can move forward. false otherwise.
 	 */
 	public boolean canAdvance() {
-		for(WorkPost wp : this.getWorkposts()){
+		for(WorkPost wp : this.getWorkPosts()){
 			boolean ready = wp.isCompleted();
 			if (ready == false)
 				return false;
@@ -50,11 +50,16 @@ public class AssemblyLine {
 	 * @return Order
 	 * 		   A finished order if the last WorkPost was working on an Order. 
 	 */
-	public Order advance(Order p) {
-		Order shift = p;
-		for (WorkPost wp : this.getWorkposts())
-			shift = wp.moveAlong(shift);
-		return shift;
+	public Order advance(Order neworder) {
+		Order temp1 = this.getWorkPosts().get(0).getOrder();
+		Order temp2 = this.getWorkPosts().get(1).getOrder();
+		Order finisched = this.getWorkPosts().get(2).getOrder();
+		
+		this.getWorkPosts().get(0).setNewOrder(neworder);
+		this.getWorkPosts().get(1).setNewOrder(temp1);
+		this.getWorkPosts().get(2).setNewOrder(temp2);
+
+		return finisched;
 	}
 	
 	/**
@@ -65,7 +70,7 @@ public class AssemblyLine {
 	 */
 	protected LinkedList<Order> getWorkPostOrders(){
 		LinkedList<Order> orders = new LinkedList<Order>();
-		for(WorkPost wp: this.getWorkposts()){
+		for(WorkPost wp: this.getWorkPosts()){
 			orders.add(wp.getOrder());
 		}
 		return orders;
@@ -110,15 +115,15 @@ public class AssemblyLine {
 		tasks2.add(assem4);
 		tasks3.add(assem5);
 		tasks3.add(assem6);
-		tasks3.add(assem7);
+		tasks3.add(assem7);;
 		
 		WorkPost wp1 = new WorkPost("car body post",tasks1);
-		WorkPost wp2 = new WorkPost("car body post",tasks2);
-		WorkPost wp3 = new WorkPost("car body post",tasks3);
+		WorkPost wp2 = new WorkPost("drive train post",tasks2);
+		WorkPost wp3 = new WorkPost("accessories post",tasks3);
 	
-		this.getWorkposts().add(wp1);
-		this.getWorkposts().add(wp2);
-		this.getWorkposts().add(wp3);
+		this.getWorkPosts().add(wp1);
+		this.getWorkPosts().add(wp2);
+		this.getWorkPosts().add(wp3);
 	}
 
 }
