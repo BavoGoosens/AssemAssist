@@ -39,7 +39,6 @@ public class Testing {
 	private CarModel audiA6;
 	private ArrayList<CarModel> carmodels;
 	private OrderManager ordermanager;
-	private ProductionScheduler prodsched;
 	private Calendar calendar;
 
 
@@ -111,7 +110,6 @@ public class Testing {
 		carmodels.add(audiA6);
 		ordermanager = new OrderManager(carmodels);
 		ordermanager.addOrder(order);
-		prodsched = new ProductionScheduler(ordermanager,calendar);
 	}
 
 	// A test method for the class Component
@@ -178,6 +176,15 @@ public class Testing {
 	}
 	
 	@Test
+	public void testWorkPost(){
+		Action actie = new Action("Henk");
+		ArrayList<Action> acties = new ArrayList<Action>();
+		AssemblyTask assem = new AssemblyTask("Assembly task",acties);
+		ArrayList<AssemblyTask> tasks = new ArrayList<AssemblyTask>();
+		WorkPost wp = new WorkPost("Test",tasks);	
+	}
+	
+	@Test
 	public void testShit(){
 		System.out.println(this.order.toString());
 		System.out.println(this.mechanic.toString());
@@ -188,10 +195,19 @@ public class Testing {
 	// A test method for the class production Scheduler.
 	@Test
 	public void testProductionScheduler(){
-		assertEquals(this.prodsched.getOrderManager(),ordermanager);
+		ProductionScheduler prodsched = ordermanager.getProductionManager();
+		assertEquals(prodsched.getOrderManager(),ordermanager);
+		prodsched.makeDaySchedule();
 		ordermanager.addOrder(order);
-		this.prodsched.advance(50);
-		assertEquals(this.prodsched.getAvailableTime(),790);
-		assertEquals(this.prodsched.getDelayTime(),-10);
+		prodsched.advance(50);
+		assertEquals(prodsched.getAvailableTime(),790);
+		assertEquals(prodsched.getDelayTime(),-10);
+		prodsched.advance(90);
+		assertEquals(prodsched.getAvailableTime(),700);
+		prodsched.advance(60);
+		prodsched.advance(90);
+		assertEquals(prodsched.getDelayTime(),20);
+		assertEquals(order.isCompleted(),false);
+		assertEquals(prodsched.getAvailableTime(),840);
 	}
 }

@@ -184,6 +184,8 @@ public class WorkPost {
 	 * 		   The finished order (for this WorkPost).
 	 */
 	public Order moveAlong(Order neworder) {
+		if(this.getOrder() == null)
+			return null;
 		Order finished = this.getOrder();
 		this.setOrder(neworder);
 		this.refreshAssemblyTasks();

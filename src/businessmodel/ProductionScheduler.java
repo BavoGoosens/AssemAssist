@@ -89,7 +89,7 @@ public class ProductionScheduler {
 	 */
 	public void advance(int time){
 		Order finished = null; 
-		if (this.getAssemblyline().canAdvance() && !this.getDayorders().isEmpty() ){
+		if (this.getAssemblyline().canAdvance()){
 			Order p = this.getDayorders().poll();
 			finished = this.getAssemblyline().advance(p);
 		}
@@ -114,7 +114,7 @@ public class ProductionScheduler {
 	/**
 	 * A method that makes a new day schedule.
 	 */
-	private void makeDaySchedule(){
+	public void makeDaySchedule(){
 		LinkedList<Order> day = this.getOrderManager().getNbOrders(this.getAvailableTime()/60 - 2);
 		this.setDayorders(day);
 	}
@@ -133,7 +133,7 @@ public class ProductionScheduler {
 			return true;
 		return false;
 	}
-
+	
 	private void addDayOrder() {
 		this.getDayorders().add(this.getOrderManager().getPendingOrders().poll());
 	}
@@ -185,8 +185,8 @@ public class ProductionScheduler {
 		this.dayorders = dayorders;
 	}
 
-	protected LinkedList<Order> getScheduledOrders(){
-		LinkedList<Order> temp = this.getScheduledOrders();
+	public LinkedList<Order> getScheduledOrders(){
+		LinkedList<Order> temp = this.getDayorders();
 		temp.addAll(this.getAssemblyline().getWorkPostOrders());
 		return temp;
 	}
