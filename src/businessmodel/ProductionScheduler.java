@@ -126,12 +126,22 @@ public class ProductionScheduler {
 			addDayOrder();
 		removeLastOrderOfDay();
 	}
-	
+
+	/**
+	 * This method checks whether there is an Order ready 
+	 */
 	public void update(){
-		if (this.checkToAddOrder())
+		if (this.checkToAddOrder()){
 			addDayOrder();
+		}
 	}
 
+	/**
+	 * A method that checks whether it is possible to schedule in an Order for today.
+	 * 
+	 * @return boolean
+	 * 		   True if the order can be scheduled. False otherwise. 
+	 */
 	public boolean checkToAddOrder() {
 		// temp holds the amount of minutes there is left to finish an Order.
 		int temp = this.getAvailableTime() - (60 * this.getDayorders().size()) - (2 * 60);
@@ -140,8 +150,24 @@ public class ProductionScheduler {
 		return false;
 	}
 
+	/**
+	 * A method that adds an order to todays production schedule.
+	 */
 	private void addDayOrder() {
-		this.getDayorders().add(this.getOrderManager().getPendingOrders().poll());
+		Order or = this.getOrderManager().getPendingOrders().poll();
+		if (or != null ){
+			if(this.getDayorders().isEmpty() || 
+					this.getAssemblyline().getWorkPostOrders().contains(this.getDayorders().peekLast())){
+				Calendar copy = (Calendar) this.getToday().clone();
+				copy.add(Calendar.HOUR_OF_DAY, 3);
+				or.setDate(copy);
+				this.getDayorders().add(or);
+			} else {
+				Calendar copy = (Calendar) this.getDayorders().peekLast().getDate().clone();
+				copy.add(Calendar.HOUR_OF_DAY, 1);
+				this.getDayorders().add(or);
+			}
+		}
 	}
 
 	private void removeLastOrderOfDay() {
