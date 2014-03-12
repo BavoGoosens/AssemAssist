@@ -28,8 +28,8 @@ public class Controller {
 
 	private CarManufacturingCompany cmc; 
 
-	public Controller(UserManagement um, ProductionScheduler ps, OrderManager om, Inventory inv){
-		this.cmc = new CarManufacturingCompany(this, um, ps, om, inv);
+	public Controller(){
+		this.cmc = new CarManufacturingCompany(this);
 		this.ui = new UserInterFace(this);
 	}
 

@@ -14,10 +14,10 @@ public class CarManufacturingCompany {
 
 	private Controller control;
 
-	public CarManufacturingCompany(Controller control ,UserManagement um, OrderManager om, Inventory inv){
+	public CarManufacturingCompany(Controller control){
 		this.control = control;
-		this.um = um;
-		this.om = om;
+		this.um = new UserManagement();
+		this.om = new OrderManager();
 	}
 	public boolean login(String username, String password) {
 		return this.um.authenticate(username, password);		

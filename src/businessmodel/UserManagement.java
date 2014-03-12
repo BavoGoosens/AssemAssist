@@ -24,9 +24,9 @@ public class UserManagement {
 		Mechanic mechanic2 = new Mechanic("Michiel", "Vandendriesche","Michiel2014", "henk");
 		Manager manager = new Manager("Bavo", "Goosens", "Bavo2014", "henk");
 		system_users = new HashMap<String, User>();
-		system_users.put("Bouwe2014", mechanic1);
-		system_users.put("Sander2014", mechanic2);
-		system_users.put("Sander2014", garageholder);
+		system_users.put("Bouwe2014", garageholder);
+		system_users.put("Sander2014", mechanic1);
+		system_users.put("Michiel2014", mechanic2);
 		system_users.put("Bavo2014", manager);
 	}
 	
