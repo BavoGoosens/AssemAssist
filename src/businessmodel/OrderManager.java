@@ -229,7 +229,7 @@ public class OrderManager {
 	public LinkedList<Order> getNbOrders(int nb) {
 		LinkedList<Order> res = new LinkedList<Order>();
 		for (int i = 0 ; i < nb - 1; i++){
-			Order tmp = this.getPendingOrders().element();
+			Order tmp = this.getPendingOrders().pollFirst();
 			if (tmp == null)
 				break;
 			res.add(tmp);

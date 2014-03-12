@@ -8,12 +8,13 @@ public class AssemblyLine {
 	/**
 	 * List of work posts at the assembly line.
 	 */
-	private ArrayList<WorkPost> workposts;
+	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
 
 	/**
 	 * This method constructs a new assembly line with an empty list of work posts.
 	 */
 	public AssemblyLine() {
+		
 		this.getWorkposts().add(new WorkPost("car body post"));
 		this.getWorkposts().add(new WorkPost("drive train post"));
 		this.getWorkposts().add(new WorkPost("accessories post"));
