@@ -182,7 +182,7 @@ public class Testing {
 	public void testOrder(){
 
 		assertEquals(orders.get(0).getCar().getComponents(),this.components);
-		assertEquals(orders.get(0).getUser(),this.mechanic);
+		assertEquals(orders.get(0).getUser(),this.garageholder);
 		assertEquals(orders.get(0).getDate(),this.date);
 		assertEquals(orders.get(0).isCompleted(),false);
 

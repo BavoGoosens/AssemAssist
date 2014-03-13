@@ -68,12 +68,48 @@ public class UserInterFace {
 			this.displayString(" >> ");
 			String response = this.getInput();
 			if (response.equalsIgnoreCase("yes")) {
-				this.displayString(" > Please enter the time that was spent during the current phase.\n");
+				
+				this.displayString(" > overview current assembly status: \n"+ '\n');
+				for(AssemblyTask as: this.control.overview()){
+					if(!as.isCompleted())
+						this.displayString("   " +as.toString()+ " : not completed"+ '\n');
+					else
+						this.displayString("   " +as.toString()+ " : completed"+ '\n');
+				}
+				
+		
+				//------------------------------------------------------------- -----
+				this.displayString("\n > overview future assembly status: \n"+ '\n');
+				for(WorkPost wp: this.control.getWorkingStations())
+					for (AssemblyTask as : wp.getPendingTasks())
+						if(!as.isCompleted())
+							this.displayString("   " +as.toString()+ " : not completed"+ '\n');
+		
+				
+				//------------------------------------------------------------------
+				this.displayString("\n > Please enter the time that was spent during the current phase.\n");
 				this.displayString(" >> ");
 				response = this.getInput();
+				
 				try {
 					int time = Integer.parseInt(response);
-					this.control.advanceAssemblyLine(time);
+					if (!this.control.canAdvanceAssemblyLine()){
+						this.displayString(" > cannot advance assemblyline because of unfinished task \n");
+						for(WorkPost wp : this.control.getWorkingStations())
+							if (!wp.isCompleted())
+								this.displayString("   "+ wp.getName());
+						this.displayString(" \n");
+						break;
+					}
+					
+					this.displayString(" > overview \n");
+					for(AssemblyTask as: this.control.overview()){
+						if(!as.isCompleted())
+							this.displayString("   " +as.toString()+ " : not completed"+ '\n');
+						else
+							this.displayString("   " +as.toString()+ " : completed"+ '\n');
+					}
+					
 				} catch (NumberFormatException e) {
 					this.badInput();
 				}
@@ -128,8 +164,10 @@ public class UserInterFace {
 				if (currentworkpost.getPendingTasks().size() == 0)
 					break;
 				
+				
 				for(AssemblyTask Atask : currentworkpost.getPendingTasks())
-					this.displayString(" " + Integer.toString(count++) + ") " + Atask.toString() + "\n");
+					if (!Atask.isCompleted())
+						this.displayString(" " + Integer.toString(count++) + ") " + Atask.toString() + "\n");
 					
 				count = 1;
 				this.displayString(" >> ");
@@ -140,7 +178,7 @@ public class UserInterFace {
 					if (res < currentworkpost.getPendingTasks().size()){
 						this.displayString(" " +"List of actions to perform \n");
 						for(Action action : task.getActions())
-							this.displayString(" --> "  + action.getDescription() + "\n");
+								this.displayString(" --> "  + action.getDescription() + "\n");
 						this.displayString(" " +"if finished, type 'done' \n");
 					}else{
 						this.badInput();
@@ -159,7 +197,7 @@ public class UserInterFace {
 				}
 				
 				task.completeAssemblytask();
-				currentworkpost.removePendingTask(task);
+				
 				
 				this.displayString(" Do you want to continue working? yes/no \n");
 				this.displayString(" >> ");
