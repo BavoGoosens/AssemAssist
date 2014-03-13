@@ -1,7 +1,7 @@
 package businessmodel;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 import component.*;
@@ -17,7 +17,7 @@ public class ProductionScheduler {
 	/**
 	 * A variable that holds todays date and current time. 
 	 */
-	private Calendar today;
+	private Date today;
 
 	/**
 	 * The current delay of the production scheduler in minutes of this day.
@@ -47,9 +47,9 @@ public class ProductionScheduler {
 	/**
 	 * A method that construct a ProductionScheduler.
 	 */
-	public ProductionScheduler(OrderManager ordermanager, Calendar start) {	
+	public ProductionScheduler(OrderManager ordermanager, Date start) {	
 		this.setToday(start);
-		this.setAvailableTime(14*60);
+		this.setAvailableTime(15*60);
 		this.setOrderManager(ordermanager);
 		ArrayList<Action> actions = this.makeActions();
 		this.setAssemblyline(new AssemblyLine(actions));
@@ -59,21 +59,39 @@ public class ProductionScheduler {
 	/**
 	 * This method advances the assembly line if possible.
 	 */
+	@SuppressWarnings("deprecation")
 	public void advance(int time){
 		Order finished = null;
 		if (this.getAssemblyline().canAdvance()){
 			Order neworder = this.getNextDayOrder();
 			finished = this.getAssemblyline().advance(neworder);
-		}
-		this.updateDaySchedule(time);
-		if (finished != null){
-			this.getOrderManager().finishedOrder(finished);
-			this.getDayorders().remove(finished);
+
 			this.updateDaySchedule(time);
-			if (this.getAvailableTime() == 0)
+			this.getToday().setMinutes(this.getToday().getMinutes()+time);
+
+			if (finished != null){
+				this.getOrderManager().finishedOrder(finished);
+				this.getDayorders().remove(finished);
+			}
+
+			if (this.getAvailableTime() <= 0)
 				this.startNewDay();
 		}
-		
+	}
+
+	@SuppressWarnings("deprecation")
+	public void updateDaySchedule(int time){
+		int timediff = time - 60;
+		for(Order or : this.getDayorders()){
+			or.getDate().setMinutes(or.getDate().getMinutes()+timediff);
+		}
+		this.setAvailableTime(this.getAvailableTime() - time);
+		this.setDelayTime(this.getDelayTime() + timediff); 
+		if (this.checkToAddOrder())
+			addDayOrder();
+		if (checkToRemoveOrder())
+			removeLastOrderOfDay();
+		this.checkDelaytime();
 	}
 
 	/**
@@ -111,18 +129,6 @@ public class ProductionScheduler {
 		this.addDayOrder();
 	}
 
-	public void updateDaySchedule(int time){
-		int timediff = time - 60;
-		for(Order or : this.getDayorders()){
-			or.getDate().add(Calendar.MINUTE, timediff);
-		}
-		this.setAvailableTime(this.getAvailableTime() - time);
-		this.setDelayTime(this.getDelayTime() + timediff); 
-		if (this.checkToAddOrder())
-			addDayOrder();
-		removeLastOrderOfDay();
-	}
-
 	/**
 	 * This method checks whether there is an Order ready 
 	 * 
@@ -151,39 +157,44 @@ public class ProductionScheduler {
 		return false;
 	}
 
+	private boolean checkToRemoveOrder(){
+		int temp = this.getAvailableTime() - (60 * this.getDayorders().size()) - (2 * 60);
+		if(temp/60 <= -1)
+			return true;
+		return false;
+	}
+
 	/**
 	 * A method that adds an order to todays production schedule.
 	 */
+	@SuppressWarnings("deprecation")
 	private void addDayOrder() {
 		Order or = this.getOrderManager().getPendingOrders().poll();
 		if (or != null ){
 			if(this.getDayorders().isEmpty() || 
 					this.getAssemblyline().getWorkPostOrders().contains(this.getDayorders().peekLast())){
-				Calendar copy = (Calendar) this.getToday().clone();
-				copy.add(Calendar.HOUR_OF_DAY, 3);
+				Date copy = (Date) this.getToday().clone();
+				copy.setHours(copy.getHours()+3);
 				or.setDate(copy);
 				this.getDayorders().add(or);
 			} else {
-				Calendar copy = (Calendar) this.getDayorders().peekLast().getDate().clone();
-				copy.add(Calendar.HOUR_OF_DAY, 1);
+				Date copy = (Date) this.getToday().clone();
+				copy.setHours(this.getDayorders().peekLast().getDate().getHours()+1);
 				or.setDate(copy);
 				this.getDayorders().add(or);
 			}
 		}
-		this.checkDelaytime();
 	}
-	
+
 	/**
 	 * A method to update the delay time.
 	 */
 	private void checkDelaytime() {
 		if (this.getDelayTime() > 60){
 			this.setDelayTime(this.getDelayTime()-60);
-			this.getOrderManager().updateEstimatedTime(-60);
 		}
 		else if (this.getDelayTime() < -60) {
 			this.setDelayTime(this.getDelayTime()+60);
-			this.getOrderManager().updateEstimatedTime(60);;		
 		}
 	}
 
@@ -193,7 +204,6 @@ public class ProductionScheduler {
 	private void removeLastOrderOfDay() {
 		Order temp = this.getDayorders().pollLast();
 		this.getOrderManager().getPendingOrders().addFirst(temp);
-		this.getOrderManager().updateEstimatedTime(-60);
 	}
 
 	public int getDelayTime() {
@@ -236,13 +246,12 @@ public class ProductionScheduler {
 		return assemblyline;
 	}
 
-	public Calendar getToday() {
+	public Date getToday() {
 		return today;
 	}
 
 	public LinkedList<Order> getScheduledOrders(){
 		LinkedList<Order> temp = this.getDayorders();
-		temp.addAll(this.getAssemblyline().getWorkPostOrders());
 		return temp;
 	}
 
@@ -268,7 +277,7 @@ public class ProductionScheduler {
 		this.assemblyline = assemblyline;
 	}
 
-	public void setToday(Calendar today) {
+	public void setToday(Date today) {
 		this.today = today;
 	}
 
@@ -292,7 +301,6 @@ public class ProductionScheduler {
 		action6.addComponent(new Airco("manual climate control",1000));
 		action7.addComponent(new Wheels("comfort",1000));
 
-
 		ArrayList<Action> actions = new ArrayList<Action>();
 		actions.add(action1);
 		actions.add(action2);
@@ -302,5 +310,23 @@ public class ProductionScheduler {
 		actions.add(action6);
 		actions.add(action7);
 		return actions;
+	}
+
+	/**
+	 * A method to get the assembly tasks of the next iteration.
+	 * 
+	 * @return A list of assembly tasks for the next iteration of the system.
+	 */
+	public ArrayList<AssemblyTask> getFutureAssemblyTasks(){
+		ArrayList<AssemblyTask> assemblytasks = new ArrayList<AssemblyTask>();
+		Order temp = this.getOrderManager().getPendingOrders().peekFirst();
+
+		for(WorkPost workpost: this.getAssemblyline().getWorkPosts()){
+			for(AssemblyTask assem: workpost.possibleAssemblyTasks(temp.getCar().getComponents())){
+				assemblytasks.add(assem);
+			}
+			temp = workpost.getOrder();
+		}
+		return assemblytasks;
 	}
 } 

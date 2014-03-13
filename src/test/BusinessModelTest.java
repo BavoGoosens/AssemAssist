@@ -22,11 +22,11 @@ public class BusinessModelTest {
 	private Airco airco; private Airco airco2;
 	private Wheels wheels; private Wheels wheels2;
 	private Car car1;
-
+	
 	private Mechanic mechanic; private GarageHolder garageholder; private Manager manager;
-
+	
 	private Date date;
-
+	
 	private ArrayList<Order> orders;
 
 	private ArrayList<Component> components;
@@ -64,7 +64,7 @@ public class BusinessModelTest {
 		seats2 = new Seats("leather black",1000);
 		airco2 = new Airco("manual",1000);
 		wheels2 = new Wheels("comfort",1000);
-
+		
 		this.components = new ArrayList<Component>();
 		this.components.add(body);
 		this.components.add(color);
@@ -73,13 +73,13 @@ public class BusinessModelTest {
 		this.components.add(seats);
 		this.components.add(airco);
 		this.components.add(wheels);
-
+		
 		car1 = new Car(components);
-
+		
 		mechanic = new Mechanic("Sander","Geijsen","Sander1","henk");
 		garageholder = new GarageHolder("Sander","Geijsen","Sander2","henk");
 		manager = new Manager("Sander","Geijsen","Sander3","henk");
-
+		
 		date = new Date();
 
 		bodies = new ArrayList<Body>();
@@ -127,10 +127,10 @@ public class BusinessModelTest {
 			temp.setDate(date);
 			this.orders.add(temp);
 		}
-
+		
 		try {Order temp = new Order(mechanic,this.components);}
 		catch (IllegalArgumentException e) {
-
+			
 		}
 
 		cms = new CarModelSpecification(bodies,colors,engines,gearboxes,seatss,aircos,wheelss);
@@ -161,7 +161,7 @@ public class BusinessModelTest {
 
 		try {body = new Body("sedan",1000);}
 		catch (IllegalArgumentException e) {}
-
+		
 	}	
 
 	// A test for the class User.
@@ -173,7 +173,7 @@ public class BusinessModelTest {
 		mechanic.authenticate("Sander7","henk");
 		mechanic.updateUser("Sander1", "henk", "Piet", "jan");
 	}
-
+	
 	// A test for the class Car.
 	@Test
 	public void CarTest(){
@@ -202,7 +202,7 @@ public class BusinessModelTest {
 		assertEquals(cms.getGearboxes(),this.gearboxes);
 		assertEquals(cms.getSeats(),this.seatss);
 		assertEquals(cms.getWheels(),this.wheelss);
-
+		
 	}
 
 	// A test for the class Order.
@@ -225,7 +225,7 @@ public class BusinessModelTest {
 		assertEquals(wp.getOrder(),orders.get(0));
 
 	}
-
+	
 	@Test
 	public void testController(){
 		Controller controller = new Controller();
@@ -238,12 +238,12 @@ public class BusinessModelTest {
 	// A test for the class Assembly line.
 	@Test
 	public void testUser(){
-
+		
 		mechanic.updateUser("Sander2014", "henk", "Sander015", "henk");
 		assertEquals(mechanic.getFirstname(), "Sander");
 		assertEquals(mechanic.getLastname(), "Geijsen");
 	}
-
+	
 	@Test
 	public void testAssemblyLine(){	
 		AssemblyLine testassembly = ordermanager.getProductionScheduler().getAssemblyline();
@@ -275,7 +275,7 @@ public class BusinessModelTest {
 			}
 			prodsched.advance(60);
 		}
-
+		
 		for(Order order:this.orders){
 			for(WorkPost wp: prodsched.getAssemblyline().getWorkPosts()){
 				if(wp.getOrder() != null){
@@ -582,6 +582,5 @@ public class BusinessModelTest {
 
 		assertEquals("carmodel= ", result);
 	}
-
+	
 }
-

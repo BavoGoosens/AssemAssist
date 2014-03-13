@@ -1,5 +1,4 @@
 package businessmodel;
-import component.Component;
 import java.util.ArrayList;
 
 /**
@@ -11,26 +10,25 @@ import java.util.ArrayList;
 public class AssemblyTask {
 
 	/**
-	 * A variable that holds the the name of a assembly task
+	 * A variable that holds the name of this assembly task
 	 */
 	private String name;
 	
 	/**
-	 * A variable that holds the individual actions of a assembly task
+	 * A variable that holds the individual actions of this assembly task
 	 */
 	private ArrayList<Action> actions;
 
 	/**
-	 * A variable that specifies if this assembly task is completed.
+	 * A variable that specifies if this assembly task has been completed.
 	 */
-	private boolean completed; 
+	private boolean completed = false; 
 
 	/**
 	 * A constructor for the class assembly task.
 	 * 
 	 * @param   actions
-	 *          the actions that are part of this assembly process.
-	 *          
+	 *          the actions that are part of this assembly process.   
 	 * @param   name
 	 *          the name of this assembly process.
 	 */
@@ -40,62 +38,32 @@ public class AssemblyTask {
 	}
 
 	/**
-	 * This method returns the component(s) this AssemblyTask is handling.
+	 * A method to set the name of this assembly task to the given name.
 	 * 
-	 * @return Component
-	 * 		   The Component this task is handling
-	 */
-	public ArrayList<Component> getComponents() {
-		ArrayList<Component> parts = new ArrayList<Component>();
-		for( Action act : this.getActions()){
-			//parts.addAll(act.getComponents());
-		}
-		return parts;
-	}
-
-	/**
-	 * A method to set the name
 	 * @param   name
-	 *          the name of this assembly process.
-	 */
-	private void setName(String name) {
+	 *          the new name of this assembly process.
+	 * @throws 	IllegalArgumentException
+	 * 			if the given name is null
+	 */			
+	private void setName(String name) throws IllegalArgumentException{
+		if(name == null) 
+			throw new IllegalArgumentException();
 		this.name = name;
-		
 	}
 
 	/**
-	 * A method that adds an action to an assembly task.
+	 * A method to get the actions of this assembly task.
 	 * 
-	 * @param   action
-	 * 			the action that is added to the list of actions of this assembly task
-	 */
-	public void addAction(Action action){
-		this.getActions().add(action);
-	}
-
-	/**
-	 * A method that removes an action to an assembly task.
-	 * 
-	 * @param   action
-	 * 			the action that is removed from the list of actions of this assembly task
-	 */
-	public void removeAction(Action action){
-		this.getActions().remove(action);
-	}
-
-	/**
-	 * A method to get the actions of an assembly task.
-	 * 
-	 * @return  this.actions
+	 * @return  the actions of this assembly task.
 	 */
 	public ArrayList<Action> getActions() {
 		return this.actions;
 	}
 	
 	/**
-	 * A method to get the name of an assembly task.
+	 * A method to get the name of this assembly task.
 	 * 
-	 * @return  this.name
+	 * @return  the name of this assembly task.
 	 */
 	private String getName() {
 		return this.name;
@@ -118,16 +86,20 @@ public class AssemblyTask {
 	}
 
 	/**
-	 * A method to set the actions of this assembly task to the given assembly task.
-	 * @param actions
+	 * A method to set the actions of this assembly task to the given actions.
+	 * 
+	 * @param 	actions
+	 * 			the new actions of this assembly task.
 	 */
 	private void setActions(ArrayList<Action> actions) {
-		this.actions = actions;
+		if (actions == null)
+			this.actions = new ArrayList<Action>();
+		else
+			this.actions = actions;
 	}
 	
 	@Override
 	public String toString(){
-		
 		return this.getName();
 	}
 }
