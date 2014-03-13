@@ -24,7 +24,7 @@ public class Testing {
 	private Car car1;
 	private Mechanic mechanic; private GarageHolder garageholder; private Manager manager;
 	private Date date;
-	private Order order1; private Order order2; private Order order3; private Order order4;
+	private Order order1; private Order order2; private Order order3; private Order order4; private Order order5; private Order order6;
 	
 	private ArrayList<Component> components;
 	private ArrayList<Body> bodies;
@@ -45,9 +45,6 @@ public class Testing {
 	private OrderManager ordermanager;
 	private Calendar calendar;
 	
-	
-
-
 	@Before @Test
 	public void setUp() throws Exception {
 		body = new Body("sedan",1000);
@@ -74,11 +71,14 @@ public class Testing {
 		order2 = new Order(garageholder, this.components);
 		order3 = new Order(garageholder, this.components);
 		order4 = new Order(garageholder, this.components);
+		order5 = new Order(garageholder, this.components);
+		order6 = new Order(garageholder, this.components);
+
 	
-		order1.setDate(calendar);
-		order2.setDate(calendar);
-		order3.setDate(calendar);
-		order4.setDate(calendar);
+		order1.setDate(date);
+		order2.setDate(date);
+		order3.setDate(date);
+		order4.setDate(date);
 		
 		bodies = new ArrayList<Body>();
 		colors = new ArrayList<Color>();
@@ -123,8 +123,7 @@ public class Testing {
 		carmodels = new ArrayList<CarModel>();
 		carmodels.add(audiA6);
 		ordermanager = new OrderManager();
-		ordermanager.addOrder(order1);
-
+		
 		action1 = new Action("Henk");
 		acties = new ArrayList<Action>();
 		assem = new AssemblyTask("Assembly task",acties);
@@ -217,20 +216,20 @@ public class Testing {
 	
 
 	// A test method for the class production Scheduler.
-//	@Test
-//	public void testProductionScheduler(){
-//		ProductionScheduler prodsched = ordermanager.getProductionScheduler();
-//		ordermanager.placeOrder(order1);
-//		ordermanager.placeOrder(order2);
-//		ordermanager.placeOrder(order3);
-//		ordermanager.placeOrder(order4);
-//		prodsched.advance(50);
-//		assertEquals(prodsched.getAvailableTime(),790);
-//		assertEquals(prodsched.getDelayTime(),-10);
-//		prodsched.advance(90);
-//		assertEquals(prodsched.getAvailableTime(),700);
-//		prodsched.advance(60);
-//		prodsched.advance(90);
-//		assertEquals(prodsched.getDelayTime(),20);
-//	}
+	@Test
+	public void testProductionScheduler(){
+		ProductionScheduler prodsched = ordermanager.getProductionScheduler();
+		ordermanager.placeOrder(order1);
+		ordermanager.placeOrder(order2);
+		ordermanager.placeOrder(order3);
+		ordermanager.placeOrder(order4);
+		ordermanager.placeOrder(order5);
+		ordermanager.placeOrder(order6);
+		prodsched.advance(30);
+		prodsched.advance(30);
+		prodsched.advance(80);
+		prodsched.advance(40);
+		prodsched.advance(60);
+		prodsched.advance(60);
+	}
 }

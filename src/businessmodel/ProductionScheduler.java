@@ -1,7 +1,7 @@
 package businessmodel;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 import component.*;
@@ -17,7 +17,7 @@ public class ProductionScheduler {
 	/**
 	 * A variable that holds todays date and current time. 
 	 */
-	private Calendar today;
+	private Date today;
 
 	/**
 	 * The current delay of the production scheduler in minutes of this day.
@@ -47,7 +47,7 @@ public class ProductionScheduler {
 	/**
 	 * A method that construct a ProductionScheduler.
 	 */
-	public ProductionScheduler(OrderManager ordermanager, Calendar start) {	
+	public ProductionScheduler(OrderManager ordermanager, Date start) {	
 		this.setToday(start);
 		this.setAvailableTime(14*60);
 		this.setOrderManager(ordermanager);
@@ -59,6 +59,7 @@ public class ProductionScheduler {
 	/**
 	 * This method advances the assembly line if possible.
 	 */
+	@SuppressWarnings("deprecation")
 	public void advance(int time){
 		Order finished = null;
 		if (this.getAssemblyline().canAdvance()){
@@ -66,14 +67,27 @@ public class ProductionScheduler {
 			finished = this.getAssemblyline().advance(neworder);
 		}
 		this.updateDaySchedule(time);
+		this.getToday().setMinutes(this.getToday().getMinutes()+time);
+		
 		if (finished != null){
 			this.getOrderManager().finishedOrder(finished);
 			this.getDayorders().remove(finished);
-			this.updateDaySchedule(time);
 			if (this.getAvailableTime() == 0)
 				this.startNewDay();
 		}
-		
+	}
+
+	@SuppressWarnings("deprecation")
+	public void updateDaySchedule(int time){
+		int timediff = time - 60;
+		for(Order or : this.getDayorders()){
+			or.getDate().setMinutes(or.getDate().getMinutes()+timediff);
+		}
+		this.setAvailableTime(this.getAvailableTime() - time);
+		this.setDelayTime(this.getDelayTime() + timediff); 
+		if (this.checkToAddOrder())
+			addDayOrder();
+		removeLastOrderOfDay();
 	}
 
 	/**
@@ -111,18 +125,6 @@ public class ProductionScheduler {
 		this.addDayOrder();
 	}
 
-	public void updateDaySchedule(int time){
-		int timediff = time - 60;
-		for(Order or : this.getDayorders()){
-			or.getDate().add(Calendar.MINUTE, timediff);
-		}
-		this.setAvailableTime(this.getAvailableTime() - time);
-		this.setDelayTime(this.getDelayTime() + timediff); 
-		if (this.checkToAddOrder())
-			addDayOrder();
-		removeLastOrderOfDay();
-	}
-
 	/**
 	 * This method checks whether there is an Order ready 
 	 * 
@@ -154,18 +156,18 @@ public class ProductionScheduler {
 	/**
 	 * A method that adds an order to todays production schedule.
 	 */
+	@SuppressWarnings("deprecation")
 	private void addDayOrder() {
 		Order or = this.getOrderManager().getPendingOrders().poll();
 		if (or != null ){
-			if(this.getDayorders().isEmpty() || 
-					this.getAssemblyline().getWorkPostOrders().contains(this.getDayorders().peekLast())){
-				Calendar copy = (Calendar) this.getToday().clone();
-				copy.add(Calendar.HOUR_OF_DAY, 3);
+			if(this.getDayorders().isEmpty()){
+				Date copy = (Date) this.getToday().clone();
+				copy.setHours(copy.getHours()+3);
 				or.setDate(copy);
 				this.getDayorders().add(or);
 			} else {
-				Calendar copy = (Calendar) this.getDayorders().peekLast().getDate().clone();
-				copy.add(Calendar.HOUR_OF_DAY, 1);
+				Date copy = (Date) this.getToday().clone();
+				copy.setHours(this.getDayorders().peekLast().getDate().getHours()+1);
 				or.setDate(copy);
 				this.getDayorders().add(or);
 			}
@@ -179,11 +181,9 @@ public class ProductionScheduler {
 	private void checkDelaytime() {
 		if (this.getDelayTime() > 60){
 			this.setDelayTime(this.getDelayTime()-60);
-			this.getOrderManager().updateEstimatedTime(-60);
 		}
 		else if (this.getDelayTime() < -60) {
 			this.setDelayTime(this.getDelayTime()+60);
-			this.getOrderManager().updateEstimatedTime(60);;		
 		}
 	}
 
@@ -193,7 +193,6 @@ public class ProductionScheduler {
 	private void removeLastOrderOfDay() {
 		Order temp = this.getDayorders().pollLast();
 		this.getOrderManager().getPendingOrders().addFirst(temp);
-		this.getOrderManager().updateEstimatedTime(-60);
 	}
 
 	public int getDelayTime() {
@@ -236,7 +235,7 @@ public class ProductionScheduler {
 		return assemblyline;
 	}
 
-	public Calendar getToday() {
+	public Date getToday() {
 		return today;
 	}
 
@@ -268,7 +267,7 @@ public class ProductionScheduler {
 		this.assemblyline = assemblyline;
 	}
 
-	public void setToday(Calendar today) {
+	public void setToday(Date today) {
 		this.today = today;
 	}
 

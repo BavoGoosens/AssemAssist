@@ -1,6 +1,5 @@
 package businessmodel;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,8 +38,8 @@ public class OrderManager {
 	 * A inventory for this Order manager
 	 */
 	Inventory inventory;
-	
-	private boolean bool = true;
+
+	private boolean firstorder = true;
 
 	/**
 	 * A constructor for the class OrderManager.
@@ -48,13 +47,14 @@ public class OrderManager {
 	 * @param    carmodels
 	 *           the car models that an car manufacturing company offers.
 	 */
+	@SuppressWarnings("deprecation")
 	public OrderManager(){
 		this.pendingorders = new LinkedList<Order>();
 		this.completedorders = new LinkedList<Order>();
-		Calendar start = Calendar.getInstance();
-		start.set(Calendar.HOUR_OF_DAY, 8);
-		start.set(Calendar.MINUTE,0);
-		start.set(Calendar.SECOND,0);
+		Date start = new Date();
+		start.setHours(8);
+		start.setMinutes(0);
+		start.setSeconds(0);
 		this.setProductionScheduler(new ProductionScheduler(this, start));
 		this.inventory = new Inventory();
 		this.setCarmodels(inventory);
@@ -67,10 +67,15 @@ public class OrderManager {
 	 * 		  An Order that needs to be added.
 	 */
 	public void placeOrder(Order order){
+
 		this.addOrder(order);
 		boolean added = this.getProductionScheduler().update();
 		if (added == false){
 			this.updateEstimatedTime(0);
+		}
+		if(this.firstorder == true){
+			this.getProductionScheduler().advance(0);
+			this.firstorder = false;
 		}
 	}
 
@@ -116,7 +121,7 @@ public class OrderManager {
 	}
 
 	/**
-	 * A method to add an order to this order manager.
+	 * A method to add an order to this order manager. It also updates iets estimated 
 	 * 
 	 * @param   order
 	 *          the order that needs to be added.
@@ -190,10 +195,11 @@ public class OrderManager {
 	 * A method to update the completion time of the pending orders.
 	 * @param index
 	 */
+	@SuppressWarnings("deprecation")
 	public void updateEstimatedTime(int time){
-		Calendar temp;
+		
 		for(Order order: this.getPendingOrders()){
-			order.getDate().add(Calendar.MINUTE, time);
+			order.getDate().setMinutes(order.getDate().getMinutes()+time);
 		}
 	}
 

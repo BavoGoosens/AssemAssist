@@ -62,7 +62,7 @@ public class Action {
 	}
 
 	/**
-	 * This method returns the list of components needed for the action.
+	 * This method returns the list of components needed for this action.
 	 * @return	this.components
 	 */
 	public ArrayList<String> getComponents() {

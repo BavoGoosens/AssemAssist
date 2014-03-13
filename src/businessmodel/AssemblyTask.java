@@ -23,7 +23,7 @@ public class AssemblyTask {
 	/**
 	 * A variable that specifies if this assembly task is completed.
 	 */
-	private boolean completed; 
+	private boolean completed = false; 
 
 	/**
 	 * A constructor for the class assembly task.
