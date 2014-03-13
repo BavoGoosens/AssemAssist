@@ -1,9 +1,7 @@
 package businessmodel;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
+import java.util.Date;
 import component.Component;
 
 /**
@@ -27,7 +25,7 @@ public class Order {
 	/**
 	 * A variable that holds the delivery date for an order.
 	 */
-	private Calendar deliverydate;
+	private Date deliverydate;
 
 	/**
 	 * A constructor for the class Order.
@@ -43,7 +41,7 @@ public class Order {
 	public Order(User user, ArrayList<Component> components){
 		setUser(user);
 		this.car = new Car(components);
-		this.deliverydate = new GregorianCalendar();	
+		this.deliverydate = new Date();	
 	}
 
 	/**
@@ -96,7 +94,7 @@ public class Order {
 	 *  
 	 * @return  this.deliverydate
 	 */
-	public Calendar getDate() {
+	public Date getDate() {
 		return this.deliverydate;
 	}
 
@@ -106,7 +104,7 @@ public class Order {
 	 * @param   deliverydate
 	 *          the delivery date of this order.
 	 */
-	public void setDate(Calendar deliverydate) {
+	public void setDate(Date deliverydate) {
 		this.deliverydate = deliverydate;
 	}
 

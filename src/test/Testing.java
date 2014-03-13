@@ -24,8 +24,8 @@ public class Testing {
 	private Car car1;
 	private Mechanic mechanic; private GarageHolder garageholder; private Manager manager;
 	private Date date;
-	private Order order1; private Order order2; private Order order3; private Order order4;
-	
+	private ArrayList<Order> orders;
+
 	private ArrayList<Component> components;
 	private ArrayList<Body> bodies;
 	private ArrayList<Color> colors;
@@ -44,9 +44,6 @@ public class Testing {
 	private ArrayList<CarModel> carmodels;
 	private OrderManager ordermanager;
 	private Calendar calendar;
-	
-	
-
 
 	@Before @Test
 	public void setUp() throws Exception {
@@ -70,16 +67,6 @@ public class Testing {
 		garageholder = new GarageHolder("Sander","Geijsen","HENK","DE POTVIS");
 		date = new Date();
 
-		order1 = new Order(garageholder, this.components);
-		order2 = new Order(garageholder, this.components);
-		order3 = new Order(garageholder, this.components);
-		order4 = new Order(garageholder, this.components);
-	
-		order1.setDate(calendar);
-		order2.setDate(calendar);
-		order3.setDate(calendar);
-		order4.setDate(calendar);
-		
 		bodies = new ArrayList<Body>();
 		colors = new ArrayList<Color>();
 		engines = new ArrayList<Engine>();
@@ -118,12 +105,27 @@ public class Testing {
 		wheelss.add(wheels);
 		wheelss.add(wheels2);
 
+		this.components.add(body);
+		this.components.add(color);
+		this.components.add(engine);
+		this.components.add(gearbox);
+		this.components.add(seats);
+		this.components.add(airco);
+		this.components.add(wheels);
+
+		orders = new ArrayList<Order>();
+
+		for(int i = 1; i< 30;i++){
+			Order temp = new Order(garageholder,this.components);
+			temp.setDate(date);
+			this.orders.add(temp);
+		}
+
 		cms = new CarModelSpecification(bodies,colors,engines,gearboxes,seatss,aircos,wheelss);
 		audiA6 = new CarModel("Audi A6",cms);
 		carmodels = new ArrayList<CarModel>();
 		carmodels.add(audiA6);
 		ordermanager = new OrderManager();
-		ordermanager.addOrder(order1);
 
 		action1 = new Action("Henk");
 		acties = new ArrayList<Action>();
@@ -175,30 +177,23 @@ public class Testing {
 		assertEquals(cms.getWheels(),this.wheelss);
 	}
 
-	//	@Test
-	//	public void testUI(){
-	//		Controller ctrl = new Controller();
-	//		ctrl.run();
-	//		System.out.println("HENK");
-	//		System.out.println("DE POTVIS");
-	//		
-	//	}
-
-
 	// A test method for the class Order.
 	@Test
 	public void testOrder(){
-		assertEquals(order1.getCar().getComponents(),this.components);
-		assertEquals(order1.getUser(),this.garageholder);
-		assertEquals(order1.isCompleted(),true);
+
+		assertEquals(orders.get(0).getCar().getComponents(),this.components);
+		assertEquals(orders.get(0).getUser(),this.mechanic);
+		assertEquals(orders.get(0).getDate(),this.date);
+		assertEquals(orders.get(0).isCompleted(),false);
+
 	}
 
 	@Test
 	public void testWorkPost(){
 		WorkPost wp = new WorkPost("Test",tasks);
-		wp.setNewOrder(order1);
-		assertEquals(wp.getOrder(),order1);
-		
+		wp.setNewOrder(orders.get(0));
+		assertEquals(wp.getOrder(),orders.get(0));
+
 	}
 	
 	@Test
@@ -223,31 +218,31 @@ public class Testing {
 	public void testAssemblyLine(){	
 		AssemblyLine testassembly = ordermanager.getProductionScheduler().getAssemblyline();
 		assertEquals(testassembly.getWorkPosts().get(0).getResponsibletasks().get(0).getActions().get(0).getDescription(),"Paint car");
-		testassembly.getWorkPosts().get(0).setNewOrder(order1);
-		testassembly.getWorkPosts().get(1).setNewOrder(order2);
-		testassembly.getWorkPosts().get(2).setNewOrder(order3);
-		testassembly.advance(order4);
-		assertEquals(testassembly.getWorkPosts().get(0).getOrder(),order4);
-		assertEquals(testassembly.getWorkPosts().get(1).getOrder(),order1);
-		assertEquals(testassembly.getWorkPosts().get(2).getOrder(),order2);
+		testassembly.getWorkPosts().get(0).setNewOrder(orders.get(0));
+		testassembly.getWorkPosts().get(1).setNewOrder(orders.get(1));
+		testassembly.getWorkPosts().get(2).setNewOrder(orders.get(2));
+		testassembly.advance(orders.get(3));
+		assertEquals(testassembly.getWorkPosts().get(0).getOrder(),orders.get(3));
+		assertEquals(testassembly.getWorkPosts().get(1).getOrder(),orders.get(0));
+		assertEquals(testassembly.getWorkPosts().get(2).getOrder(),orders.get(1));
 	}
-	
 
 	// A test method for the class production Scheduler.
-//	@Test
-//	public void testProductionScheduler(){
-//		ProductionScheduler prodsched = ordermanager.getProductionScheduler();
-//		ordermanager.placeOrder(order1);
-//		ordermanager.placeOrder(order2);
-//		ordermanager.placeOrder(order3);
-//		ordermanager.placeOrder(order4);
-//		prodsched.advance(50);
-//		assertEquals(prodsched.getAvailableTime(),790);
-//		assertEquals(prodsched.getDelayTime(),-10);
-//		prodsched.advance(90);
-//		assertEquals(prodsched.getAvailableTime(),700);
-//		prodsched.advance(60);
-//		prodsched.advance(90);
-//		assertEquals(prodsched.getDelayTime(),20);
-//	}
+	@Test
+	public void testProductionScheduler(){
+		ProductionScheduler prodsched = ordermanager.getProductionScheduler();
+		for(Order order: this.orders){
+			ordermanager.placeOrder(order);
+		}
+
+		for(Order order:this.orders){
+			for(WorkPost wp: prodsched.getAssemblyline().getWorkPosts()){
+				if(wp.getOrder() != null){
+					for(AssemblyTask task: wp.getPendingTasks())
+					task.completeAssemblytask();
+				}
+			}
+			prodsched.advance(80);
+		}
+	}
 }
