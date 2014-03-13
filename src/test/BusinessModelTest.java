@@ -208,10 +208,12 @@ public class BusinessModelTest {
 	// A test for the class Order.
 	@Test
 	public void testOrder(){
+
 		assertEquals(orders.get(0).getCar().getComponents(),this.components);
 		assertEquals(orders.get(0).getDate(),this.date);
 		assertEquals(orders.get(0).isCompleted(),false);
 		assertEquals(orders.get(0).getUser(),garageholder);
+
 	}
 
 	// A test for the class Work Post.
@@ -222,8 +224,26 @@ public class BusinessModelTest {
 		assertEquals(wp.getOrder(),orders.get(0));
 
 	}
+	
+	@Test
+	public void testController(){
+		Controller controller = new Controller();
+		assertEquals(controller.authenticate("Bouwe2014", "henk"), true);
+		assertEquals(controller.canPlaceOrder(mechanic), false);
+		assertEquals(controller.canAdvanceAssemblyLine(mechanic), false);
+		assertEquals(controller.canPerformAssemblyTask(mechanic), true);
+		
+	}
 
 	// A test for the class Assembly line.
+	@Test
+	public void testUser(){
+		
+		mechanic.updateUser("Sander2014", "henk", "Sander015", "henk");
+		assertEquals(mechanic.getFirstname(), "Sander");
+		assertEquals(mechanic.getLastname(), "Geijsen");
+	}
+	
 	@Test
 	public void testAssemblyLine(){	
 		AssemblyLine testassembly = ordermanager.getProductionScheduler().getAssemblyline();
