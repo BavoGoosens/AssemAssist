@@ -62,8 +62,11 @@ public class OrderManagerTest {
 	public void test() {
 		om.addOrder(order);
 		assertTrue(om.getPendingOrders().contains(order));
+		assertTrue(om.getPendingOrders(garageholder).contains(order));
 		om.finishedOrder(order);
 		assertTrue(om.getCompletedOrders().contains(order));
+		assertTrue(om.getCompletedOrders(garageholder).contains(order));
+		assertTrue(om.getOrders().contains(order));
 	}
 
 }

@@ -75,9 +75,11 @@ public class ProductionSchedulerTest {
 	@Test
 	public void test() {
 		ProductionScheduler prodsched = ordermanager.getProductionScheduler();
+		assertTrue(prodsched.getFutureAssemblyTasks().isEmpty());
 		for(Order order: this.orders){
 			ordermanager.placeOrder(order);
 		}
+		assertTrue(!prodsched.getFutureAssemblyTasks().isEmpty());
 		assertEquals(orders.get(0),prodsched.getScheduledOrders().get(0));
 		prodsched.advance(60);
 		for(Order order:this.orders){
@@ -108,6 +110,7 @@ public class ProductionSchedulerTest {
 			}
 			prodsched.advance(80);
 		}
+		assertTrue(prodsched.getFutureAssemblyTasks().isEmpty());
 	}
 
 }
