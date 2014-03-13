@@ -116,7 +116,7 @@ public class AssemblyLine {
 		tasks2.add(assem4);
 		tasks3.add(assem5);
 		tasks3.add(assem6);
-		tasks3.add(assem7);;
+		tasks3.add(assem7);
 		
 		WorkPost wp1 = new WorkPost("car body post",tasks1);
 		WorkPost wp2 = new WorkPost("drive train post",tasks2);

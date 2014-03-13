@@ -295,4 +295,292 @@ public class BusinessModelTest {
 			prodsched.advance(80);
 		}
 	}
+	@Test
+	public void testCarModelSpecification_1()
+		throws Exception {
+		ArrayList<Body> bodies = new ArrayList();
+		ArrayList<Color> colors = new ArrayList();
+		ArrayList<Engine> engines = new ArrayList();
+		ArrayList<Gearbox> gearboxes = new ArrayList();
+		ArrayList<Seats> seats = new ArrayList();
+		ArrayList<Airco> aircos = new ArrayList();
+		ArrayList<Wheels> wheels = new ArrayList();
+
+		CarModelSpecification result = new CarModelSpecification(bodies, colors, engines, gearboxes, seats, aircos, wheels);
+
+		assertNotNull(result);
+		assertEquals("bodies= [], colors= [], engines=  [], gearboxes= [], seats= [], aircos= [], wheels= []", result.toString());
+	}
+
+	@Test
+	public void testCarModelSpecification_2()
+		throws Exception {
+		ArrayList<Body> bodies = new ArrayList();
+		ArrayList<Color> colors = new ArrayList();
+		ArrayList<Engine> engines = new ArrayList();
+		ArrayList<Gearbox> gearboxes = new ArrayList();
+		ArrayList<Seats> seats = new ArrayList();
+		ArrayList<Airco> aircos = new ArrayList();
+		ArrayList<Wheels> wheels = new ArrayList();
+
+		CarModelSpecification result = new CarModelSpecification(bodies, colors, engines, gearboxes, seats, aircos, wheels);
+
+		assertNotNull(result);
+		assertEquals("bodies= [], colors= [], engines=  [], gearboxes= [], seats= [], aircos= [], wheels= []", result.toString());
+	}
+
+	@Test
+	public void testCarModelSpecification_3()
+		throws Exception {
+		ArrayList<Body> bodies = new ArrayList();
+		ArrayList<Color> colors = new ArrayList();
+		ArrayList<Engine> engines = new ArrayList();
+		ArrayList<Gearbox> gearboxes = new ArrayList();
+		ArrayList<Seats> seats = new ArrayList();
+		ArrayList<Airco> aircos = new ArrayList();
+		ArrayList<Wheels> wheels = new ArrayList();
+
+		CarModelSpecification result = new CarModelSpecification(bodies, colors, engines, gearboxes, seats, aircos, wheels);
+
+		assertNotNull(result);
+		assertEquals("bodies= [], colors= [], engines=  [], gearboxes= [], seats= [], aircos= [], wheels= []", result.toString());
+	}
+
+	@Test
+	public void testCarModelSpecification_4()
+		throws Exception {
+		ArrayList<Body> bodies = new ArrayList();
+		ArrayList<Color> colors = new ArrayList();
+		ArrayList<Engine> engines = new ArrayList();
+		ArrayList<Gearbox> gearboxes = new ArrayList();
+		ArrayList<Seats> seats = new ArrayList();
+		ArrayList<Airco> aircos = new ArrayList();
+		ArrayList<Wheels> wheels = new ArrayList();
+
+		CarModelSpecification result = new CarModelSpecification(bodies, colors, engines, gearboxes, seats, aircos, wheels);
+
+		assertNotNull(result);
+		assertEquals("bodies= [], colors= [], engines=  [], gearboxes= [], seats= [], aircos= [], wheels= []", result.toString());
+	}
+
+	@Test
+	public void testCarModelSpecification_5()
+		throws Exception {
+		ArrayList<Body> bodies = new ArrayList();
+		ArrayList<Color> colors = new ArrayList();
+		ArrayList<Engine> engines = new ArrayList();
+		ArrayList<Gearbox> gearboxes = new ArrayList();
+		ArrayList<Seats> seats = new ArrayList();
+		ArrayList<Airco> aircos = new ArrayList();
+		ArrayList<Wheels> wheels = new ArrayList();
+
+		CarModelSpecification result = new CarModelSpecification(bodies, colors, engines, gearboxes, seats, aircos, wheels);
+
+		assertNotNull(result);
+		assertEquals("bodies= [], colors= [], engines=  [], gearboxes= [], seats= [], aircos= [], wheels= []", result.toString());
+	}
+
+	@Test
+	public void testCarModelSpecification_6()
+		throws Exception {
+		ArrayList<Body> bodies = new ArrayList();
+		ArrayList<Color> colors = new ArrayList();
+		ArrayList<Engine> engines = new ArrayList();
+		ArrayList<Gearbox> gearboxes = new ArrayList();
+		ArrayList<Seats> seats = new ArrayList();
+		ArrayList<Airco> aircos = new ArrayList();
+		ArrayList<Wheels> wheels = new ArrayList();
+
+		CarModelSpecification result = new CarModelSpecification(bodies, colors, engines, gearboxes, seats, aircos, wheels);
+
+		assertNotNull(result);
+		assertEquals("bodies= [], colors= [], engines=  [], gearboxes= [], seats= [], aircos= [], wheels= []", result.toString());
+	}
+
+	@Test
+	public void testCarModelSpecification_7()
+		throws Exception {
+		ArrayList<Body> bodies = new ArrayList();
+		ArrayList<Color> colors = new ArrayList();
+		ArrayList<Engine> engines = new ArrayList();
+		ArrayList<Gearbox> gearboxes = new ArrayList();
+		ArrayList<Seats> seats = new ArrayList();
+		ArrayList<Airco> aircos = new ArrayList();
+		ArrayList<Wheels> wheels = new ArrayList();
+
+		CarModelSpecification result = new CarModelSpecification(bodies, colors, engines, gearboxes, seats, aircos, wheels);
+
+		assertNotNull(result);
+		assertEquals("bodies= [], colors= [], engines=  [], gearboxes= [], seats= [], aircos= [], wheels= []", result.toString());
+	}
+
+	@Test
+	public void testCarModelSpecification_8()
+		throws Exception {
+		ArrayList<Body> bodies = new ArrayList();
+		ArrayList<Color> colors = new ArrayList();
+		ArrayList<Engine> engines = new ArrayList();
+		ArrayList<Gearbox> gearboxes = new ArrayList();
+		ArrayList<Seats> seats = new ArrayList();
+		ArrayList<Airco> aircos = new ArrayList();
+		ArrayList<Wheels> wheels = new ArrayList();
+
+		CarModelSpecification result = new CarModelSpecification(bodies, colors, engines, gearboxes, seats, aircos, wheels);
+
+		assertNotNull(result);
+		assertEquals("bodies= [], colors= [], engines=  [], gearboxes= [], seats= [], aircos= [], wheels= []", result.toString());
+	}
+
+	@Test
+	public void testGetAircos_1()
+		throws Exception {
+		CarModelSpecification fixture = new CarModelSpecification(new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList());
+
+		ArrayList<Airco> result = fixture.getAircos();
+
+		assertNotNull(result);
+		assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testGetBodies_1()
+		throws Exception {
+		CarModelSpecification fixture = new CarModelSpecification(new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList());
+
+		ArrayList<Body> result = fixture.getBodies();
+
+		assertNotNull(result);
+		assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testGetColors_1()
+		throws Exception {
+		CarModelSpecification fixture = new CarModelSpecification(new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList());
+
+		ArrayList<Color> result = fixture.getColors();
+
+		assertNotNull(result);
+		assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testGetEngines_1()
+		throws Exception {
+		CarModelSpecification fixture = new CarModelSpecification(new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList());
+
+		ArrayList<Engine> result = fixture.getEngines();
+
+		assertNotNull(result);
+		assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testGetGearboxes_1()
+		throws Exception {
+		CarModelSpecification fixture = new CarModelSpecification(new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList());
+
+		ArrayList<Gearbox> result = fixture.getGearboxes();
+
+		assertNotNull(result);
+		assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testGetPosibilities_1()
+		throws Exception {
+		CarModelSpecification fixture = new CarModelSpecification(new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList());
+
+		ArrayList<Component[]> result = fixture.getPosibilities();
+
+		assertNotNull(result);
+		assertEquals(7, result.size());
+	}
+
+	@Test
+	public void testGetSeats_1()
+		throws Exception {
+		CarModelSpecification fixture = new CarModelSpecification(new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList());
+
+		ArrayList<Seats> result = fixture.getSeats();
+
+		assertNotNull(result);
+		assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testGetWheels_1()
+		throws Exception {
+		CarModelSpecification fixture = new CarModelSpecification(new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList());
+
+		ArrayList<Wheels> result = fixture.getWheels();
+
+		assertNotNull(result);
+		assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testToString_2()
+		throws Exception {
+		CarModelSpecification fixture = new CarModelSpecification(new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList());
+
+		String result = fixture.toString();
+
+		assertEquals("bodies= [], colors= [], engines=  [], gearboxes= [], seats= [], aircos= [], wheels= []", result);
+	}
+	@Test
+	public void testCarModel_1()
+		throws Exception {
+		String carmodel = "";
+		CarModelSpecification cms = new CarModelSpecification(new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList());
+
+		CarModel result = new CarModel(carmodel, cms);
+
+		assertNotNull(result);
+		assertEquals("", result.getCarmodel());
+		assertEquals("carmodel= ", result.toString());
+	}
+
+	@Test
+	public void testGetCarModelSpecification_1()
+		throws Exception {
+		CarModel fixture = new CarModel("", new CarModelSpecification(new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList()));
+
+		CarModelSpecification result = fixture.getCarModelSpecification();
+
+		assertNotNull(result);
+		assertEquals("bodies= [], colors= [], engines=  [], gearboxes= [], seats= [], aircos= [], wheels= []", result.toString());
+	}
+
+	@Test
+	public void testGetCarmodel_1()
+		throws Exception {
+		CarModel fixture = new CarModel("", new CarModelSpecification(new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList()));
+
+		String result = fixture.getCarmodel();
+
+		assertEquals("", result);
+	}
+
+	@Test
+	public void testGetPossibilities_1()
+		throws Exception {
+		CarModel fixture = new CarModel("", new CarModelSpecification(new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList()));
+
+		ArrayList<Component[]> result = fixture.getPossibilities();
+
+		assertNotNull(result);
+		assertEquals(7, result.size());
+	}
+
+	@Test
+	public void testToString_1()
+		throws Exception {
+		CarModel fixture = new CarModel("", new CarModelSpecification(new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList()));
+
+		String result = fixture.toString();
+
+		assertEquals("carmodel= ", result);
+	}
+	
 }

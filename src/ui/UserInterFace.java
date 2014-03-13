@@ -78,15 +78,16 @@ public class UserInterFace {
 				}
 				
 		
-				//------------------------------------------------------------- -----
 				this.displayString("\n > overview future assembly status: \n"+ '\n');
-				for(WorkPost wp: this.control.getWorkingStations())
-					for (AssemblyTask as : wp.getPendingTasks())
-						if(!as.isCompleted())
-							this.displayString("   " +as.toString()+ " : not completed"+ '\n');
+				for(AssemblyTask as: this.control.futureOverview()){
+					if(!as.isCompleted())
+						this.displayString("   " +as.toString()+ " : not completed"+ '\n');
+					else
+						this.displayString("   " +as.toString()+ " : completed"+ '\n');
+				}
+				
 		
 				
-				//------------------------------------------------------------------
 				this.displayString("\n > Please enter the time that was spent during the current phase.\n");
 				this.displayString(" >> ");
 				response = this.getInput();
