@@ -8,6 +8,18 @@ package businessmodel;
  */
 public class Mechanic extends User {
 
+	/**
+	 * A constructor to create a new mechanic.
+	 * 
+	 * @param 	firstname
+	 * 			the first name of the new mechanic.
+	 * @param 	lastname
+	 * 			the last name of the new mechanic.
+	 * @param 	username
+	 * 			the user name of the new mechanic.
+	 * @param 	password
+	 * 			the password of the new mechanic.
+	 */
 	public Mechanic(String firstname, String lastname, String username, String password) {
 		super(firstname,lastname,username,password);
 	}
