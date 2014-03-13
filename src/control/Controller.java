@@ -98,6 +98,12 @@ public class Controller {
 		
 		
 	}
+	
+	public ArrayList<AssemblyTask> futureOverview() {
+		return this.cmc.getOrderManager().getProductionScheduler().getFutureAssemblyTasks();
+		
+		
+	}
 
 
 }

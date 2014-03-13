@@ -317,7 +317,7 @@ public class ProductionScheduler {
 	 * 
 	 * @return A list of assembly tasks for the next iteration of the system.
 	 */
-	public ArrayList<AssemblyTask> getFutherAssemblyTasks(){
+	public ArrayList<AssemblyTask> getFutureAssemblyTasks(){
 		ArrayList<AssemblyTask> assemblytasks = new ArrayList<AssemblyTask>();
 		Order temp = this.getOrderManager().getPendingOrders().peekFirst();
 
