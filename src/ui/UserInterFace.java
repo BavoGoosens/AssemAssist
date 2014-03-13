@@ -97,8 +97,6 @@ public class UserInterFace {
 						this.displayString("   " +as.toString()+ " : completed"+ '\n');
 				}
 
-
-
 				this.displayString("\n > Please enter the time that was spent during the current phase.\n");
 				this.displayString(" >> ");
 				response = this.getInput();
@@ -113,6 +111,8 @@ public class UserInterFace {
 						this.displayString(" \n");
 						break;
 					}
+					else
+						this.control.advanceAssemblyLine(time);
 
 					this.displayString(" > overview \n");
 					for(AssemblyTask as: this.control.overview()){

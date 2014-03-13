@@ -18,7 +18,7 @@ public class Manager extends User {
 	 * @param 	username
 	 * 			the user name of the new manager.
 	 * @param 	password
-	 * 			the passwor of the new manager.
+	 * 			the password of the new manager.
 	 */
 	public Manager(String firstname, String lastname, String username, String password) {
 		super(firstname,lastname,username,password);
