@@ -319,15 +319,16 @@ public class ProductionScheduler {
 	 */
 	public ArrayList<AssemblyTask> getFutureAssemblyTasks(){
 		ArrayList<AssemblyTask> assemblytasks = new ArrayList<AssemblyTask>();
-		Order temp= this.getOrderManager().getPendingOrders().peekFirst();
+		Order temp = this.getOrderManager().getPendingOrders().peekFirst();
 
 		for(WorkPost workpost: this.getAssemblyline().getWorkPosts()){
 			if(temp != null){
 				for(AssemblyTask assem: workpost.possibleAssemblyTasks(temp.getCar().getComponents())){
 					assemblytasks.add(assem);
 				}
-				temp = workpost.getOrder();
 			}
+			temp = workpost.getOrder();
+
 		}
 		return assemblytasks;
 	}
