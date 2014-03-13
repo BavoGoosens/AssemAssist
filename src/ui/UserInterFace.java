@@ -9,6 +9,7 @@ import control.Controller;
 import businessmodel.Action;
 import businessmodel.AssemblyTask;
 import businessmodel.CarModel;
+import businessmodel.GarageHolder;
 import businessmodel.Order;
 import businessmodel.User;
 import businessmodel.WorkPost;
@@ -41,6 +42,7 @@ public class UserInterFace {
 	public void login(){
 		User currentuser;
 		while (true){
+			printUsers();
 			System.out.println("\nPlease enter your login information");
 			System.out.print("Username: ");
 			String username = this.scan.next();
@@ -61,6 +63,10 @@ public class UserInterFace {
 			this.advance(currentuser);	
 	}
 
+	private void printUsers() {
+		System.out.println("\n GarageHolder(Bouwe,Ceunen,Bouwe2014, henk");
+		
+	}
 	private void advance(User currentuser) {
 		while (true) {
 			this.displayString("\n > Hello " + currentuser.getFirstname() + "! Do you "
@@ -68,7 +74,7 @@ public class UserInterFace {
 			this.displayString(" >> ");
 			String response = this.getInput();
 			if (response.equalsIgnoreCase("yes")) {
-				
+
 				this.displayString(" > overview current assembly status: \n"+ '\n');
 				for(AssemblyTask as: this.control.overview()){
 					if(!as.isCompleted())
@@ -76,8 +82,8 @@ public class UserInterFace {
 					else
 						this.displayString("   " +as.toString()+ " : completed"+ '\n');
 				}
-				
-		
+
+
 				this.displayString("\n > overview future assembly status: \n"+ '\n');
 				for(AssemblyTask as: this.control.futureOverview()){
 					if(!as.isCompleted())
@@ -85,13 +91,13 @@ public class UserInterFace {
 					else
 						this.displayString("   " +as.toString()+ " : completed"+ '\n');
 				}
-				
-		
-				
+
+
+
 				this.displayString("\n > Please enter the time that was spent during the current phase.\n");
 				this.displayString(" >> ");
 				response = this.getInput();
-				
+
 				try {
 					int time = Integer.parseInt(response);
 					if (!this.control.canAdvanceAssemblyLine()){
@@ -102,7 +108,7 @@ public class UserInterFace {
 						this.displayString(" \n");
 						break;
 					}
-					
+
 					this.displayString(" > overview \n");
 					for(AssemblyTask as: this.control.overview()){
 						if(!as.isCompleted())
@@ -110,7 +116,7 @@ public class UserInterFace {
 						else
 							this.displayString("   " +as.toString()+ " : completed"+ '\n');
 					}
-					
+
 				} catch (NumberFormatException e) {
 					this.badInput();
 				}
@@ -120,7 +126,7 @@ public class UserInterFace {
 		}
 		this.login();
 	}
-	
+
 	/**
 	 * This method interacts with the mechanic about the tasks that have to be performed.
 	 * 
@@ -128,20 +134,20 @@ public class UserInterFace {
 	 * 		  The current user.
 	 */
 	private void performAssemblyTask(User currentuser) {
-		
+
 		ArrayList<WorkPost> workposts = this.control.getWorkingStations();
 		WorkPost currentworkpost = null;
 		AssemblyTask task = null;
-		
+
 		while (true){
-			
+
 			this.displayString("\n > Hello " + currentuser.getFirstname() + " please enter workpost number \n" );
 			this.displayString(" > To quit: enter \"Quit\"\n");
 			int count = 1;
-			
+
 			for(WorkPost w : workposts)
 				this.displayString(" " + Integer.toString(count++) + ") " + w.toString() + "\n");
-			
+
 			this.displayString(" >> ");
 			String response = this.getInput();
 			if (response.equalsIgnoreCase("quit")) {
@@ -159,27 +165,34 @@ public class UserInterFace {
 				this.badInput();
 				continue;
 			}
-			
+
 			while(true){
 				count = 1;
 				if (currentworkpost.getPendingTasks().size() == 0)
 					break;
-				
-				
-				for(AssemblyTask Atask : currentworkpost.getPendingTasks())
+
+				boolean completed = true;
+				for(AssemblyTask Atask : currentworkpost.getPendingTasks()){
+					this.displayString(" " + Integer.toString(count++) + ") " + Atask.toString() + ": completed:" +Atask.isCompleted() +"\n");
 					if (!Atask.isCompleted())
-						this.displayString(" " + Integer.toString(count++) + ") " + Atask.toString() + "\n");
-					
+						completed = false;
+				}
+
+				if (completed)
+					break;
+
 				count = 1;
 				this.displayString(" >> ");
 				response = this.getInput();
+				if (response.equalsIgnoreCase("cancel"))
+					break;
 				if (response.matches("\\d*")){
 					int res = Integer.parseInt(response) - 1;
 					task = currentworkpost.getPendingTasks().get(res);
 					if (res < currentworkpost.getPendingTasks().size()){
 						this.displayString(" " +"List of actions to perform \n");
 						for(Action action : task.getActions())
-								this.displayString(" --> "  + action.getDescription() + "\n");
+							this.displayString(" --> "  + action.getDescription() + "\n");
 						this.displayString(" " +"if finished, type 'done' \n");
 					}else{
 						this.badInput();
@@ -189,17 +202,19 @@ public class UserInterFace {
 					this.badInput();
 					continue;
 				}
-					
+
 				this.displayString(" >> ");
 				response = this.getInput();
-				if (!response.equals("done")){
+				if (response.equalsIgnoreCase("cancel")){
+					break;
+				}else if (!response.equals("done")){
 					this.badInput();
 					continue;
 				}
-				
+
 				task.completeAssemblytask();
-				
-				
+
+
 				this.displayString(" Do you want to continue working? yes/no \n");
 				this.displayString(" >> ");
 				response = this.getInput();
@@ -209,9 +224,9 @@ public class UserInterFace {
 					break;
 				else
 					this.badInput();
-				
+
 			}
-			
+
 			this.displayString("\n All done! \n");
 		}
 		this.login();
@@ -300,7 +315,7 @@ public class UserInterFace {
 		}
 		return parts;
 	}
-	
+
 	private CarModel chooseCarModel(ArrayList<CarModel> cml) {
 		this.displayString("\n > Enter the number of the car model you wish to order \n"
 				+ " > Enter cancel to abort: \n");
@@ -339,7 +354,7 @@ public class UserInterFace {
 		this.displayString("We could not find you in the System \n \n");
 	}
 
-	
+
 	public void displayOrderOverview(User currentuser){
 		ArrayList<Order> completed = this.control.getCompletedOrders(currentuser);
 		ArrayList<Order> pending = this.control.getPendingOrders(currentuser);
@@ -352,7 +367,7 @@ public class UserInterFace {
 			this.displayString("\n There are no completed orders for you");
 		}
 		if (pending != null  & pending.size() > 0){
-			this.displayString("\n These are your pending orders: \n");
+			this.displayString("\n These are your pending orders: \n" + '\n');
 			for (Order ord : pending){
 				this.displayString(ord.toString() + "\n");
 			}
