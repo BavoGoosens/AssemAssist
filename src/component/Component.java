@@ -75,7 +75,7 @@ public class Component {
 	 * 			price < 0
 	 */
 	private void setPrice(double price) throws IllegalArgumentException {
-		if (price < 0) throw new IllegalArgumentException(); // prijs = 0 bij pakketvoordeel?
+		if (price < 0) throw new IllegalArgumentException(); 
 		this.price = price;
 	}
 

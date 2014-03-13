@@ -12,7 +12,7 @@ import component.*;
 import control.Controller;
 import businessmodel.*;
 
-public class Testing {
+public class BusinessModelTest {
 
 	private Body body;	private Body body2;
 	private Color color; private Color color2;
@@ -22,8 +22,11 @@ public class Testing {
 	private Airco airco; private Airco airco2;
 	private Wheels wheels; private Wheels wheels2;
 	private Car car1;
+	
 	private Mechanic mechanic; private GarageHolder garageholder; private Manager manager;
+	
 	private Date date;
+	
 	private ArrayList<Order> orders;
 
 	private ArrayList<Component> components;
@@ -61,10 +64,22 @@ public class Testing {
 		seats2 = new Seats("leather black",1000);
 		airco2 = new Airco("manual",1000);
 		wheels2 = new Wheels("comfort",1000);
+		
 		this.components = new ArrayList<Component>();
+		this.components.add(body);
+		this.components.add(color);
+		this.components.add(engine);
+		this.components.add(gearbox);
+		this.components.add(seats);
+		this.components.add(airco);
+		this.components.add(wheels);
+		
 		car1 = new Car(components);
-		mechanic = new Mechanic("Sander","Geijsen","HENK","DE POTVIS");
-		garageholder = new GarageHolder("Sander","Geijsen","HENK","DE POTVIS");
+		
+		mechanic = new Mechanic("Sander","Geijsen","Sander1","henk");
+		garageholder = new GarageHolder("Sander","Geijsen","Sander2","henk");
+		manager = new Manager("Sander","Geijsen","Sander3","henk");
+		
 		date = new Date();
 
 		bodies = new ArrayList<Body>();
@@ -105,20 +120,17 @@ public class Testing {
 		wheelss.add(wheels);
 		wheelss.add(wheels2);
 
-		this.components.add(body);
-		this.components.add(color);
-		this.components.add(engine);
-		this.components.add(gearbox);
-		this.components.add(seats);
-		this.components.add(airco);
-		this.components.add(wheels);
-
 		orders = new ArrayList<Order>();
 
 		for(int i = 1; i< 30;i++){
 			Order temp = new Order(garageholder,this.components);
 			temp.setDate(date);
 			this.orders.add(temp);
+		}
+		
+		try {Order temp = new Order(mechanic,this.components);}
+		catch (IllegalArgumentException e) {
+			
 		}
 
 		cms = new CarModelSpecification(bodies,colors,engines,gearboxes,seatss,aircos,wheelss);
@@ -127,17 +139,19 @@ public class Testing {
 		carmodels.add(audiA6);
 		ordermanager = new OrderManager();
 
-		action1 = new Action("Henk");
+		action1 = new Action("Paint Car");
 		acties = new ArrayList<Action>();
+		acties.add(action1);
 		assem = new AssemblyTask("Assembly task",acties);
 		tasks = new ArrayList<AssemblyTask>();
 	}
 
-	// A test method for the class Component
-	@Test
+	// A test for the class Component
+	@Test 
 	public void testComponent() throws Exception {
 		assertEquals("sedan",body.getName());
 		assertEquals(1000,body.getPrice(),0);
+		assertEquals(body.toString(),"name= sedan, price= "+ body.getPrice());
 
 		try {body = new Body(null,1000);}
 		catch (IllegalArgumentException e) {}
@@ -147,9 +161,20 @@ public class Testing {
 
 		try {body = new Body("sedan",1000);}
 		catch (IllegalArgumentException e) {}
+		
 	}	
 
-	// A test method for the class Car.
+	// A test for the class User.
+	@Test
+	public void UserTest(){
+		assertEquals(mechanic.getFirstname(),"Sander");
+		assertEquals(mechanic.getLastname(),"Geijsen");
+		mechanic.authenticate("Sander1","henk");
+		mechanic.authenticate("Sander7","henk");
+		mechanic.updateUser("Sander1", "henk", "Piet", "jan");
+	}
+	
+	// A test for the class Car.
 	@Test
 	public void CarTest(){
 		assertEquals(this.components,car1.getComponents());
@@ -157,15 +182,17 @@ public class Testing {
 		car1.removeComponent(bodytest);
 		car1.addComponent(bodytest);
 		car1.removeComponent(bodytest);
+		assertEquals(car1.toString(),"components= [name= sedan, price= "+1000.0+", name= red, price= "+1000.0+", name= standard 2l 4 cilinders, price= "+1000.0+", name= 6 speed manual, price= "+1000.0+", name= leather black, price= "+1000.0+", name= manual, price= "+1000.0+", name= comfort, price= "+1000.0+"]");
 	}
-	// A test method to test the class CarModel.
+	// A test to test the class CarModel.
 	@Test
 	public void CarModelTest(){
 		assertEquals("Audi A6",this.audiA6.getCarmodel());
 		assertEquals(this.cms,audiA6.getCarModelSpecification());
+		assertEquals(audiA6.toString(),"carmodel= Audi A6");
 	}
 
-	// A test method to test the class CarModelSpecification.
+	// A test to test the class CarModelSpecification.
 	@Test
 	public void testCarModelSpecification(){
 		assertEquals(cms.getBodies(),this.bodies);
@@ -175,17 +202,19 @@ public class Testing {
 		assertEquals(cms.getGearboxes(),this.gearboxes);
 		assertEquals(cms.getSeats(),this.seatss);
 		assertEquals(cms.getWheels(),this.wheelss);
+		
 	}
 
-	// A test method for the class Order.
+	// A test for the class Order.
 	@Test
 	public void testOrder(){
 		assertEquals(orders.get(0).getCar().getComponents(),this.components);
-		assertEquals(orders.get(0).getUser(),this.mechanic);
 		assertEquals(orders.get(0).getDate(),this.date);
 		assertEquals(orders.get(0).isCompleted(),false);
+		assertEquals(orders.get(0).getUser(),garageholder);
 	}
 
+	// A test for the class Work Post.
 	@Test
 	public void testWorkPost(){
 		WorkPost wp = new WorkPost("Test",tasks);
@@ -194,6 +223,7 @@ public class Testing {
 
 	}
 
+	// A test for the class Assembly line.
 	@Test
 	public void testAssemblyLine(){	
 		AssemblyLine testassembly = ordermanager.getProductionScheduler().getAssemblyline();
@@ -207,14 +237,33 @@ public class Testing {
 		assertEquals(testassembly.getWorkPosts().get(2).getOrder(),orders.get(1));
 	}
 
-	// A test method for the class production Scheduler.
+	// A test for the class production Scheduler.
 	@Test
 	public void testProductionScheduler(){
 		ProductionScheduler prodsched = ordermanager.getProductionScheduler();
 		for(Order order: this.orders){
 			ordermanager.placeOrder(order);
 		}
-
+		assertEquals(orders.get(0),prodsched.getScheduledOrders().get(0));
+		prodsched.advance(60);
+		for(Order order:this.orders){
+			for(WorkPost wp: prodsched.getAssemblyline().getWorkPosts()){
+				if(wp.getOrder() != null){
+					for(AssemblyTask task: wp.getPendingTasks())
+					task.completeAssemblytask();
+				}
+			}
+			prodsched.advance(60);
+		}
+		for(Order order:this.orders){
+			for(WorkPost wp: prodsched.getAssemblyline().getWorkPosts()){
+				if(wp.getOrder() != null){
+					for(AssemblyTask task: wp.getPendingTasks())
+					task.completeAssemblytask();
+				}
+			}
+			prodsched.advance(40);
+		}
 		for(Order order:this.orders){
 			for(WorkPost wp: prodsched.getAssemblyline().getWorkPosts()){
 				if(wp.getOrder() != null){
