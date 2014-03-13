@@ -6,13 +6,13 @@ import java.util.ArrayList;
 /**
  * A class that represents work posts in a factory.
  * 
- * @author Team 10
+ * @author SWOP Team 10 2014
  *
  */
 public class WorkPost {
 
 	/**
-	 * The name of the work post
+	 * The name of this work post
 	 */
 	private String name;
 
@@ -73,7 +73,8 @@ public class WorkPost {
 	 * 			name == null
 	 */
 	private void setName(String name) throws IllegalArgumentException {
-		if (name == null) throw new IllegalArgumentException();
+		if (name == null) 
+			throw new IllegalArgumentException();
 		this.name = name;
 	}
 
@@ -98,26 +99,6 @@ public class WorkPost {
 	private void setPendingTasks(ArrayList<AssemblyTask> tasks) throws IllegalArgumentException {
 		if (tasks == null) throw new IllegalArgumentException();
 		this.pendingtasks = tasks;
-	}
-
-	/**
-	 * This method adds a task at the work post.
-	 * 
-	 * @param 	task
-	 * 			The task that needs to be added
-	 */
-	public void addPendingTask(AssemblyTask task) {
-		this.getPendingTasks().add(task);
-	}
-
-	/**
-	 * This method removes a task at the work post.
-	 * 
-	 * @param	task
-	 * 			The task that needs to be removed
-	 */
-	public void removePendingTask(AssemblyTask task) {
-		this.getPendingTasks().remove(task);
 	}
 
 	/**
@@ -201,7 +182,7 @@ public class WorkPost {
 	 * @return ArrayList<AssemblyTask>
 	 *         A list of AssemblyTasks that need to be carried out to install (some of) the components.
 	 */
-	private ArrayList<AssemblyTask> possibleAssemblyTasks(ArrayList<Component> carparts) {
+	protected ArrayList<AssemblyTask> possibleAssemblyTasks(ArrayList<Component> carparts) {
 		ArrayList<AssemblyTask> result = new ArrayList<AssemblyTask>();
 		for(AssemblyTask task :this.getResponsibletasks()){
 			for(Action action: task.getActions()){

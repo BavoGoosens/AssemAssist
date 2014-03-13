@@ -103,12 +103,12 @@ public class AssemblyLine {
 		actions7.add(actions.get(6));
 		
 		AssemblyTask assem1 = new AssemblyTask("Paint car",actions1);
-		AssemblyTask assem2 = new AssemblyTask("Assembly Car Body",actions1);
-		AssemblyTask assem3 = new AssemblyTask("Insert engine",actions1);
-		AssemblyTask assem4 = new AssemblyTask("Insert gearbox",actions1);
-		AssemblyTask assem5 = new AssemblyTask("Install seats",actions1);
-		AssemblyTask assem6 = new AssemblyTask("Install Airco",actions1);
-		AssemblyTask assem7 = new AssemblyTask("Mount Wheels",actions1);
+		AssemblyTask assem2 = new AssemblyTask("Assembly Car Body",actions2);
+		AssemblyTask assem3 = new AssemblyTask("Insert engine",actions3);
+		AssemblyTask assem4 = new AssemblyTask("Insert gearbox",actions4);
+		AssemblyTask assem5 = new AssemblyTask("Install seats",actions5);
+		AssemblyTask assem6 = new AssemblyTask("Install Airco",actions6);
+		AssemblyTask assem7 = new AssemblyTask("Mount Wheels",actions7);
 	
 		tasks1.add(assem1);
 		tasks1.add(assem2);
