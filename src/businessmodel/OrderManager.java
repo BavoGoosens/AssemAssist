@@ -74,7 +74,7 @@ public class OrderManager {
 			this.updateEstimatedTime(0);
 		}
 		if(this.firstorder == true){
-			this.getProductionScheduler().advance(0);
+			this.getProductionScheduler().advance(60);
 			this.firstorder = false;
 		}
 	}
