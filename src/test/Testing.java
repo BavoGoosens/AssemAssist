@@ -44,6 +44,7 @@ public class Testing {
 	private ArrayList<CarModel> carmodels;
 	private OrderManager ordermanager;
 	private Calendar calendar;
+	private UserManagement um;
 	
 	
 
@@ -69,6 +70,7 @@ public class Testing {
 		mechanic = new Mechanic("Sander","Geijsen","HENK","DE POTVIS");
 		garageholder = new GarageHolder("Sander","Geijsen","HENK","DE POTVIS");
 		date = new Date();
+		um = new UserManagement();
 
 		order1 = new Order(garageholder, this.components);
 		order2 = new Order(garageholder, this.components);
@@ -130,6 +132,17 @@ public class Testing {
 		assem = new AssemblyTask("Assembly task",acties);
 		tasks = new ArrayList<AssemblyTask>();
 	}
+	
+	@Test
+	public void testOrderManager() {
+		assertTrue(ordermanager.getPendingOrders().contains(order1));
+		assertTrue(ordermanager.getOrders().contains(order1));
+	}
+	
+	@Test
+	public void testUserManagement() {
+		assertTrue(um.authenticate("Bavo2014", "henk"));
+	}
 
 	// A test method for the class Component
 	@Test
@@ -189,7 +202,7 @@ public class Testing {
 	@Test
 	public void testOrder(){
 		assertEquals(order1.getCar().getComponents(),this.components);
-		assertEquals(order1.getUser(),this.mechanic);
+		assertEquals(order1.getUser(),this.garageholder);
 		assertEquals(order1.getDate(),this.date);
 		assertEquals(order1.isCompleted(),false);
 	}
