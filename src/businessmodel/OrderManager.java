@@ -52,7 +52,7 @@ public class OrderManager {
 		this.pendingorders = new LinkedList<Order>();
 		this.completedorders = new LinkedList<Order>();
 		Date start = new Date();
-		start.setHours(8);
+		start.setHours(6);
 		start.setMinutes(0);
 		start.setSeconds(0);
 		this.setProductionScheduler(new ProductionScheduler(this, start));
@@ -82,7 +82,8 @@ public class OrderManager {
 	/**
 	 * A method to get the orders of this order manager.
 	 * 
-	 * @return All the orders of this order manager.
+	 * @return All the order
+	}s of this order manager.
 	 */
 	public LinkedList<Order> getOrders() {
 		LinkedList<Order> temp = this.getPendingOrders();
@@ -102,7 +103,8 @@ public class OrderManager {
 	}
 
 	/**
-	 * A method to set the car models of this order manager to the given car models.
+	 * A method to set the ca
+	}r models of this order manager to the given car models.
 	 * 
 	 * @param    carmodels
 	 *           the new car models of this order manager.
@@ -197,9 +199,23 @@ public class OrderManager {
 	 */
 	@SuppressWarnings("deprecation")
 	public void updateEstimatedTime(int time){
-		
-		for(Order order: this.getPendingOrders()){
-			order.getDate().setMinutes(order.getDate().getMinutes()+time);
+		if (time == 0){
+			int day = this.production.getToday().getDay() + 1;
+			Date start = (Date) this.production.getToday().clone();
+			start.setHours(start.getHours()+8);
+			start.setDate(day);
+			start.setHours(6);
+			start.setMinutes(0);
+			start.setSeconds(0);
+			time = 60*3;
+			for(Order order: this.getPendingOrders()){
+				start.setMinutes(time);
+				order.setDate(start);
+			}
+		}else{
+			for(Order order: this.getPendingOrders()){
+				order.getDate().setMinutes(order.getDate().getMinutes()+time);
+			}
 		}
 	}
 

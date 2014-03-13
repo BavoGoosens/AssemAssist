@@ -1,8 +1,10 @@
 package businessmodel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Locale;
 
 import component.*;
 
@@ -17,7 +19,13 @@ public class ProductionScheduler {
 	/**
 	 * A variable that holds todays date and current time. 
 	 */
-	private Date today;
+	@Deprecated
+	private Date today = new Date();
+	
+	/**
+	 * A simple date format.
+	 */
+	final static SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss z", Locale.ENGLISH);
 
 	/**
 	 * The current delay of the production scheduler in minutes of this day.
@@ -49,7 +57,7 @@ public class ProductionScheduler {
 	 */
 	public ProductionScheduler(OrderManager ordermanager, Date start) {	
 		this.setToday(start);
-		this.setAvailableTime(15*60);
+		this.setAvailableTime(17*60);
 		this.setOrderManager(ordermanager);
 		ArrayList<Action> actions = this.makeActions();
 		this.setAssemblyline(new AssemblyLine(actions));
@@ -113,9 +121,9 @@ public class ProductionScheduler {
 	 */
 	private void startNewDay(){
 		if (this.getDelayTime() > 0 )
-			this.setAvailableTime(60*14 - this.getDelayTime());
+			this.setAvailableTime(60*16 - this.getDelayTime());
 		else 
-			this.setAvailableTime(60*14);
+			this.setAvailableTime(60*16);
 		this.setDelayTime(0);
 		this.makeDaySchedule();
 	}
@@ -144,7 +152,7 @@ public class ProductionScheduler {
 			return false;
 	}
 
-	/**
+	/**date
 	 * A method that checks whether it is possible to schedule in an Order for today.
 	 * 
 	 * @return boolean
@@ -178,10 +186,16 @@ public class ProductionScheduler {
 				or.setDate(copy);
 				this.getDayorders().add(or);
 			} else {
-				Date copy = (Date) this.getToday().clone();
-				copy.setHours(this.getDayorders().peekLast().getDate().getHours()+1);
-				or.setDate(copy);
+				long waut = 60*60*1000;
+				long tijd = this.getDayorders().peekLast().getDate().getTime() + waut;
+				Date wat = (Date) this.getToday().clone();
+				wat.setTime(tijd);
+				or.setDate(wat);
 				this.getDayorders().add(or);
+//				Date copy = (Date) this.getToday().clone();
+//				copy.setHours(this.getDayorders().peekLast().getDate().getHours()+1);
+//				or.setDate(copy);
+//				this.getDayorders().add(or);
 			}
 		}
 	}
