@@ -276,6 +276,7 @@ public class BusinessModelTest {
 			}
 			prodsched.advance(60);
 		}
+		
 		for(Order order:this.orders){
 			for(WorkPost wp: prodsched.getAssemblyline().getWorkPosts()){
 				if(wp.getOrder() != null){

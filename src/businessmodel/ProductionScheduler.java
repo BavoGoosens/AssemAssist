@@ -171,7 +171,8 @@ public class ProductionScheduler {
 	private void addDayOrder() {
 		Order or = this.getOrderManager().getPendingOrders().poll();
 		if (or != null ){
-			if(this.getDayorders().isEmpty()){
+			if(this.getDayorders().isEmpty() || 
+					this.getAssemblyline().getWorkPostOrders().contains(this.getDayorders().peekLast())){
 				Date copy = (Date) this.getToday().clone();
 				copy.setHours(copy.getHours()+3);
 				or.setDate(copy);
@@ -251,7 +252,6 @@ public class ProductionScheduler {
 
 	public LinkedList<Order> getScheduledOrders(){
 		LinkedList<Order> temp = this.getDayorders();
-		temp.addAll(this.getAssemblyline().getWorkPostOrders());
 		return temp;
 	}
 
