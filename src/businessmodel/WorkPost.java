@@ -182,7 +182,7 @@ public class WorkPost {
 	 * @return ArrayList<AssemblyTask>
 	 *         A list of AssemblyTasks that need to be carried out to install (some of) the components.
 	 */
-	private ArrayList<AssemblyTask> possibleAssemblyTasks(ArrayList<Component> carparts) {
+	protected ArrayList<AssemblyTask> possibleAssemblyTasks(ArrayList<Component> carparts) {
 		ArrayList<AssemblyTask> result = new ArrayList<AssemblyTask>();
 		for(AssemblyTask task :this.getResponsibletasks()){
 			for(Action action: task.getActions()){

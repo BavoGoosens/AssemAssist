@@ -156,7 +156,7 @@ public class ProductionScheduler {
 			return true;
 		return false;
 	}
-	
+
 	private boolean checkToRemoveOrder(){
 		int temp = this.getAvailableTime() - (60 * this.getDayorders().size()) - (2 * 60);
 		if(temp/60 <= -1)
@@ -310,5 +310,23 @@ public class ProductionScheduler {
 		actions.add(action6);
 		actions.add(action7);
 		return actions;
+	}
+
+	/**
+	 * A method to get the assembly tasks of the next iteration.
+	 * 
+	 * @return A list of assembly tasks for the next iteration of the system.
+	 */
+	public ArrayList<AssemblyTask> getFutherAssemblyTasks(){
+		ArrayList<AssemblyTask> assemblytasks = new ArrayList<AssemblyTask>();
+		Order temp = this.getOrderManager().getPendingOrders().peekFirst();
+
+		for(WorkPost workpost: this.getAssemblyline().getWorkPosts()){
+			for(AssemblyTask assem: workpost.possibleAssemblyTasks(temp.getCar().getComponents())){
+				assemblytasks.add(assem);
+			}
+			temp = workpost.getOrder();
+		}
+		return assemblytasks;
 	}
 } 
