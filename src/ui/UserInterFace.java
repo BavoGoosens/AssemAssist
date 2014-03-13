@@ -64,9 +64,14 @@ public class UserInterFace {
 	}
 
 	private void printUsers() {
-		System.out.println("\n GarageHolder(Bouwe,Ceunen,Bouwe2014, henk");
-		
+		System.out.println('\n');
+		System.out.println("GarageHolder(Bouwe,Ceunen) inlogdata: Bouwe2014, henk");
+		System.out.println("Mechanic(Sander,Geijsen) inlogdata: Sander2014, henk");
+		System.out.println("Mechanic(Michiel,Vandendriessche) inlogdata: Michiel2014, henk");
+		System.out.println("Manager(Bavo,Goosens) inlogdata: Bavo2014, henk");
+		System.out.println('\n');
 	}
+	
 	private void advance(User currentuser) {
 		while (true) {
 			this.displayString("\n > Hello " + currentuser.getFirstname() + "! Do you "
