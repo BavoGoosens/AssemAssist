@@ -189,9 +189,8 @@ public class Testing {
 	@Test
 	public void testOrder(){
 		assertEquals(order1.getCar().getComponents(),this.components);
-		assertEquals(order1.getUser(),this.mechanic);
-		assertEquals(order1.getDate(),this.date);
-		assertEquals(order1.isCompleted(),false);
+		assertEquals(order1.getUser(),this.garageholder);
+		assertEquals(order1.isCompleted(),true);
 	}
 
 	@Test
@@ -201,7 +200,25 @@ public class Testing {
 		assertEquals(wp.getOrder(),order1);
 		
 	}
+	
+	@Test
+	public void testController(){
+		Controller controller = new Controller();
+		assertEquals(controller.authenticate("Bouwe2014", "henk"), true);
+		assertEquals(controller.canPlaceOrder(mechanic), false);
+		assertEquals(controller.canAdvanceAssemblyLine(mechanic), false);
+		assertEquals(controller.canPerformAssemblyTask(mechanic), true);
+		
+	}
 
+	@Test
+	public void testUser(){
+		
+		mechanic.updateUser("Sander2014", "henk", "Sander015", "henk");
+		assertEquals(mechanic.getFirstname(), "Sander");
+		assertEquals(mechanic.getLastname(), "Geijsen");
+	}
+	
 	@Test
 	public void testAssemblyLine(){	
 		AssemblyLine testassembly = ordermanager.getProductionScheduler().getAssemblyline();
