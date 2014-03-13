@@ -68,9 +68,8 @@ public class Action {
 	 * @throws  IllegalArgumentException
 	 * 			if component equals null or the component class name already belongs to this action.
 	 */
-	protected void addComponent(Component component) throws IllegalArgumentException {
-		if (!this.getComponents().contains(component.getClass().getName()) && component != null) 
-			throw new IllegalArgumentException();
-		this.getComponents().add(component.getClass().getName());
+	protected void addComponent(Component component) {
+		if (this.getComponents().contains(component.getClass().getName())) 
+			this.getComponents().add(component.getClass().getName());
 	}
 }
