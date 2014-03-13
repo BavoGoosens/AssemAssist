@@ -43,7 +43,7 @@ public class UserInterFace {
 		User currentuser;
 		while (true){
 			printUsers();
-			System.out.println("\nPlease enter your login information");
+			System.out.println("Please enter your login information");
 			System.out.print("Username: ");
 			String username = this.scan.next();
 			System.out.print("Password: ");
