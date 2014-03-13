@@ -69,7 +69,7 @@ public class Action {
 	 * 			if component equals null or the component class name already belongs to this action.
 	 */
 	protected void addComponent(Component component) {
-		if (this.getComponents().contains(component.getClass().getName())) 
+		if (!this.getComponents().contains(component.getClass().getName())) 
 			this.getComponents().add(component.getClass().getName());
 	}
 }
