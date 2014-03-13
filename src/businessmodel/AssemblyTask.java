@@ -2,20 +2,20 @@ package businessmodel;
 import java.util.ArrayList;
 
 /**
- * A class that represents an assembly task
+ * A class that represents an assembly task.
  * 
- * @author SWOP team 10 2013-2014
+ * @author SWOP team 10 2014
  *
  */
 public class AssemblyTask {
 
 	/**
-	 * A variable that holds the name of this assembly task
+	 * A variable that holds the name of this assembly task.
 	 */
 	private String name;
 	
 	/**
-	 * A variable that holds the individual actions of this assembly task
+	 * A variable that holds the individual actions of this assembly task.
 	 */
 	private ArrayList<Action> actions;
 
@@ -41,7 +41,7 @@ public class AssemblyTask {
 	 * A method to set the name of this assembly task to the given name.
 	 * 
 	 * @param   name
-	 *          the new name of this assembly process.
+	 *          the new name of this assembly task.
 	 * @throws 	IllegalArgumentException
 	 * 			if the given name is null
 	 */			

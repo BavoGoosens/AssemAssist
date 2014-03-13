@@ -65,8 +65,6 @@ public class Action {
 	 * 
 	 * @param	component
 	 * 			The component that needs to be added.
-	 * @throws  IllegalArgumentException
-	 * 			if component equals null or the component class name already belongs to this action.
 	 */
 	protected void addComponent(Component component) {
 		if (!this.getComponents().contains(component.getClass().getName())) 

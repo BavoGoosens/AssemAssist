@@ -233,7 +233,6 @@ public class BusinessModelTest {
 		assertEquals(controller.canPlaceOrder(mechanic), false);
 		assertEquals(controller.canAdvanceAssemblyLine(mechanic), false);
 		assertEquals(controller.canPerformAssemblyTask(mechanic), true);
-		
 	}
 
 	// A test for the class Assembly line.
