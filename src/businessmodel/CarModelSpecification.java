@@ -29,7 +29,7 @@ public class CarModelSpecification {
 	private ArrayList<Engine> engines;
 
 	/**
-	 * A list of available gearboxes.
+	 * A list of available gear boxes.
 	 */
 	private ArrayList<Gearbox> gearboxes;
 
@@ -81,7 +81,7 @@ public class CarModelSpecification {
 	/**
 	 * A method to get the different bodies for a car model.
 	 * 
-	 * @return this.bodies
+	 * @return the bodies of this car model specification
 	 */
 	public ArrayList<Body> getBodies() {
 		return this.bodies;
@@ -90,7 +90,7 @@ public class CarModelSpecification {
 	/**
 	 * A method to get the different colors for a car model.
 	 * 
-	 * @return this.colors
+	 * @return the colors of this car mode specification.
 	 */
 	public ArrayList<Color> getColors() {
 		return this.colors;
@@ -99,7 +99,7 @@ public class CarModelSpecification {
 	/**
 	 * A method to get the different engines of a car model.
 	 * 
-	 * @return this.engines
+	 * @return the engines of this car model specification.
 	 */
 	public ArrayList<Engine> getEngines() {
 		return this.engines;
@@ -108,7 +108,7 @@ public class CarModelSpecification {
 	/**
 	 * A method to get the different gear boxes of a car model.
 	 * 
-	 * @return this.gearboxes
+	 * @return the gear boxes of this car model specification.
 	 */
 	public ArrayList<Gearbox> getGearboxes() {
 		return this.gearboxes;
@@ -117,7 +117,7 @@ public class CarModelSpecification {
 	/**
 	 * A method to get the different seats of a car model.
 	 * 
-	 * @return this.seats
+	 * @return the seats of this car model specification.
 	 */
 	public ArrayList<Seats> getSeats() {
 		return this.seats;
@@ -126,7 +126,7 @@ public class CarModelSpecification {
 	/**
 	 * A method to get the different aircos of a car model.
 	 * 
-	 * @return this.aircos
+	 * @return the aircos of this car model specification.
 	 */
 	public ArrayList<Airco> getAircos() {
 		return this.aircos;
@@ -135,7 +135,7 @@ public class CarModelSpecification {
 	/**
 	 * A method to get the different wheels of a car model.
 	 * 
-	 * @return this.wheels
+	 * @return the wheels od this car model specification.
 	 */
 	public ArrayList<Wheels> getWheels() {
 		return this.wheels;
@@ -235,7 +235,7 @@ public class CarModelSpecification {
 	/**
 	 * A method to get all the components of this car model specification.
 	 * 
-	 * @return all the components
+	 * @return A list of list of all the components of a car model specification
 	 */
 	public ArrayList<Component[]> getPosibilities(){
 		ArrayList<Component[]> posibilities=  new ArrayList<Component[]>();

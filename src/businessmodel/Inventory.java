@@ -14,32 +14,52 @@ import component.Seats;
 import component.Wheels;
 
 /**
- * A class that represents an inventory for a factory
+ * A class that represents an inventory for a factory. Here we holds all the different component.
  * 
- * @author team 10
+ * @author SWOP team 10 2014
  *
  */
 public class Inventory {
 
+	/**
+	 * A list that holds all the bodies of the inventory.
+	 */
 	public ArrayList <Body> bodytypes = new ArrayList<Body>();
 	
+	/**
+	 * A list that holds all the engines of the inventory,
+	 */
 	public ArrayList <Engine> enginetypes = new ArrayList<Engine>();
 	
+	/**
+	 * A list that holds all the aircos of the inventory.
+	 */
 	public ArrayList <Airco> aircotypes = new ArrayList<Airco>();
 
+	/**
+	 * A list that holds all the colors of the inventory.
+	 */
 	public ArrayList <Color> colortypes = new ArrayList<Color>();
 
+	/**
+	 * A list that holds all the gear boxes of the inventory.
+	 */
 	public ArrayList <Gearbox> gearboxtypes = new ArrayList<Gearbox>();
 
+	/**
+	 * A list that holds all the seats types of the inventory.
+	 */
 	public ArrayList <Seats> seattypes = new ArrayList<Seats>();
 
+	/**
+	 * A list that holds all the wheel types of the inventory.
+	 */
 	public ArrayList <Wheels> wheeltypes = new ArrayList<Wheels>();
 
 	/**
 	 * A Constructor that creates a new inventory list.
 	 */
 	public Inventory() {
-		// body type 1 
 		Body body1 = new Body("sedan",50);
 		Body body2 = new Body("break",50);
 		this.bodytypes.add(body1);

@@ -7,18 +7,18 @@ import component.Component;
 /**
  * This car represents a car model. 
  * 
- * @author SWOP Team 10
+ * @author SWOP Team 10 2014
  *
  */
 public class CarModel {
 
 	/**
-	 * a variable that describes the model of the car. for example an Audi A6
+	 * A variable that describes the model of the car.
 	 */
 	private String carmodel;
 	
 	/**
-	 * a variable the specifies the CarMoelSpecification of this car.
+	 * A variable the specifies the CarMoelSpecification of this car.
 	 */
 	private CarModelSpecification cms;
 
@@ -37,7 +37,8 @@ public class CarModel {
 	
 	/**
 	 * A method to get the car model.
-	 * @return   this.carmodel
+	 * 
+	 * @return   the name of this car model.
 	 */
 	public String getCarmodel() {
 		return this.carmodel;
@@ -45,6 +46,7 @@ public class CarModel {
 
 	/**
 	 * A method to set name the car model to the given name.
+	 * 
 	 * @param    carmodel
 	 *           the new name of this car model.
 	 */
@@ -54,7 +56,8 @@ public class CarModel {
 	
 	/**
 	 * A method to get the car model specification of this car model.
-	 * @return   this.cms
+	 * 
+	 * @return   the car manufacturing company of this car model.
 	 */
 	public CarModelSpecification getCarModelSpecification() {
 		return cms;
@@ -62,13 +65,24 @@ public class CarModel {
 
 	/**
 	 * A method to set the car model specification of this car model to the given car model specification.
+	 * 
 	 * @param   cmss
 	 *          the new car model specification of this car model.
+	 * @throws 	IllegalArgumentException
+	 * 			if cms == null
 	 */
-	private void setCarModelSpecification(CarModelSpecification cms) {
+	private void setCarModelSpecification(CarModelSpecification cms) throws IllegalArgumentException {
+		if(cms == null){
+			throw new IllegalArgumentException();
+		}
 		this.cms = cms;
 	}
 	
+	/**
+	 * A method that return a list of all the possible components ordered by type. 
+	 * 
+	 * @return	List of  list of components, ordered by type.
+	 */
 	public ArrayList<Component[]> getPossibilities(){
 		return this.cms.getPosibilities();
 	}
