@@ -3,6 +3,12 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ * A class that represents an assembly line. It holds 3 work post.
+ * 
+ * @author 	SWOP team 10 2014
+ *
+ */
 public class AssemblyLine {
 
 	/**
@@ -45,28 +51,28 @@ public class AssemblyLine {
 	 * It adds the supplied order to the first work post and moves the rest forward. 
 	 * If the last WorkPost was working on an Order. That order is finished and is returned.
 	 * 
-	 * @param p 
-	 * 		  The Order that is added at the front of the line.
-	 * @return Order
-	 * 		   A finished order if the last WorkPost was working on an Order. 
+	 * @param 	neworder 
+	 * 		  	The Order that is added at the front of the line.
+	 * @return 	finished
+	 * 		   	A finished order if the last WorkPost was working on an Order. 
 	 */
 	public Order advance(Order neworder) {
 		Order temp1 = this.getWorkPosts().get(0).getOrder();
 		Order temp2 = this.getWorkPosts().get(1).getOrder();
-		Order finisched = this.getWorkPosts().get(2).getOrder();
+		Order finished = this.getWorkPosts().get(2).getOrder();
 		
 		this.getWorkPosts().get(0).setNewOrder(neworder);
 		this.getWorkPosts().get(1).setNewOrder(temp1);
 		this.getWorkPosts().get(2).setNewOrder(temp2);
 
-		return finisched;
+		return finished;
 	}
 	
 	/**
-	 * A method that returns the all the orders that are on the assembly line.
+	 * A method that returns all the orders that are on the assembly line.
 	 * 
-	 * @return LinkedList<Order>
-	 * 		   A list with all the orders that are on the assembly line.
+	 * @return  LinkedList<Order>
+	 * 		    A list with all the orders that are on the assembly line.
 	 */
 	protected LinkedList<Order> getWorkPostOrders(){
 		LinkedList<Order> orders = new LinkedList<Order>();
@@ -79,6 +85,7 @@ public class AssemblyLine {
 
 	/**
 	 * A method to generate all the responsible assembly tasks of a work post.
+	 * 
 	 * @param   actions
 	 *          the actions of all the work posts.
 	 */

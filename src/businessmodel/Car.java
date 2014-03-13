@@ -7,10 +7,9 @@ import java.util.ArrayList;
 /**
  * A class representing a car.
  * 
- * @author team 10
+ * @author SWOP team 10 2014
  *
  */
-
 public class Car {
 
 	/**
@@ -20,6 +19,7 @@ public class Car {
 
 	/**
 	 * A constructor to create a new car.
+	 * 
 	 * @param   components
 	 *          the components of this new car.
 	 */
@@ -32,13 +32,17 @@ public class Car {
 	 * 
 	 * @param   components
 	 *          the new components of this car.
+	 * @throws 	IllegalArgumentException
+	 * 			if components is null
 	 */
-	private void setComponents(ArrayList<Component> components) {
+	private void setComponents(ArrayList<Component> components) throws IllegalArgumentException {
+		if(components == null)
+			throw new IllegalArgumentException();
 		this.components = components;
 	}
 
 	/**
-	 * A method to get the components of a car.
+	 * A method to get the components of this car.
 	 *
 	 * @return  this.components
 	 */
@@ -47,7 +51,7 @@ public class Car {
 	}
 
 	/**
-	 * A method to add a component to the components of a car.
+	 * A method to add a component to the components of this car.
 	 * 
 	 * @param   component
 	 *          the component that you want to add.
@@ -57,7 +61,7 @@ public class Car {
 	}
 	
 	/**
-	 * A method to remove a component from a car.
+	 * A method to remove a component from this car.
 	 * 
 	 * @param   component
 	 *          the component that you want to remove.
