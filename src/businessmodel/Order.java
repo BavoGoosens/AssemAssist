@@ -7,13 +7,13 @@ import component.Component;
 /**
  * A class representing a specific car order
  * 
- * @author SWOP Team 10
+ * @author SWOP Team 10 2014
  *
  */
 public class Order {
 
 	/**
-	 * A variable that contains the specific car being ordered
+	 * A variable that contains the specific car being ordered.
 	 */
 	private Car car;
 
@@ -29,7 +29,6 @@ public class Order {
 
 	/**
 	 * A constructor for the class Order.
-	 * A new car is created with the given components.
 	 * 
 	 * @param   user
 	 *          the user that makes the new order.
@@ -46,6 +45,7 @@ public class Order {
 
 	/**
 	 * A method to set the user of this order to the given order.
+	 * 
 	 * @param   user
 	 *          the new user of this order.
 	 * @throws  IllegalArgumentException
@@ -59,6 +59,7 @@ public class Order {
 
 	/**
 	 * A method to check if this order can have the given user.
+	 * 
 	 * @param   user
 	 *          the new user of this order.
 	 * @return  true if user is instanceof garage holder
@@ -103,8 +104,12 @@ public class Order {
 	 * 
 	 * @param   deliverydate
 	 *          the delivery date of this order.
+	 * @throws 	IllegalArgumentException
+	 * 			delivery == null
 	 */
-	public void setDate(Date deliverydate) {
+	public void setDate(Date deliverydate) throws IllegalArgumentException {
+		if(deliverydate == null)
+			throw new IllegalArgumentException();
 		this.deliverydate = deliverydate;
 	}
 

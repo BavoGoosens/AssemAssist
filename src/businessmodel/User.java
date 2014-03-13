@@ -18,7 +18,7 @@ public abstract class User {
 	private final String lastname;
 	
 	/**
-	 * A variable which represents the  username of the User.
+	 * A variable which represents the  user name of the User.
 	 */
 	private String username;
 	
@@ -35,7 +35,7 @@ public abstract class User {
 	 * @param lastname
 	 * 		  the last name of the User.
 	 * @param username
-	 * 		  the username of the User.
+	 * 		  the user name of the User.
 	 * @param password
 	 * 		  the password of the User.
 	 * @param usertype

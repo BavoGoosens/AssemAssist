@@ -10,11 +10,17 @@ import java.util.ArrayList;
 public class GarageHolder extends User {
 
 	/**
-	 * A list that holds all the orders of this garage holder.
+	 * A constructor to create a new garage holder.
+	 * 
+	 * @param 	firstname
+	 * 			the first name of the new garage holder.
+	 * @param 	lastname
+	 * 			the last name of the new garage holder.
+	 * @param 	username
+	 * 			the user name for the new garage holder.
+	 * @param 	password
+	 * 			the password fot his garage holder.
 	 */
-	public ArrayList<Order> orders; 
-	
-	
 	public GarageHolder(String firstname, String lastname, String username, String password) {
 		super(firstname,lastname,username,password);
 	}
