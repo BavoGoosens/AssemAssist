@@ -1,20 +1,17 @@
 package businessmodel;
-import java.util.ArrayList;
-import java.util.HashMap;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+import java.util.ArrayList;
 
 import component.Airco;
 import component.Body;
 import component.Color;
-import component.Component;
 import component.Engine;
 import component.Gearbox;
 import component.Seats;
 import component.Wheels;
 
 /**
- * A class that represents an inventory for a factory. Here we holds all the different component.
+ * A class that represents an inventory for a factory. Here we hold all the different component.
  * 
  * @author SWOP team 10 2014
  *

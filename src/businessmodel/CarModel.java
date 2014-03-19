@@ -18,7 +18,7 @@ public class CarModel {
 	private String carmodel;
 	
 	/**
-	 * A variable the specifies the CarMoelSpecification of this car.
+	 * A variable the specifies the CarModelSpecification of this car.
 	 */
 	private CarModelSpecification cms;
 
@@ -38,7 +38,8 @@ public class CarModel {
 	/**
 	 * A method to get the car model.
 	 * 
-	 * @return   the name of this car model.
+	 * @return  String
+	 * 			the name of this car model.
 	 */
 	public String getCarmodel() {
 		return this.carmodel;
@@ -57,7 +58,8 @@ public class CarModel {
 	/**
 	 * A method to get the car model specification of this car model.
 	 * 
-	 * @return   the car manufacturing company of this car model.
+	 * @return  CarModelSpecification 
+	 * 			the car manufacturing company of this car model.
 	 */
 	public CarModelSpecification getCarModelSpecification() {
 		return cms;

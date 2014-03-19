@@ -48,7 +48,7 @@ public class WorkPost {
 	 * @param	name
 	 * 			The name of the work post
 	 * @param 	tasks
-	 * 			The tasks that are pending at the work post
+	 * 			The tasks this work post is responsible for.
 	 */
 	public WorkPost(String name, ArrayList<AssemblyTask> tasks) {
 		this(name);
@@ -57,7 +57,9 @@ public class WorkPost {
 
 	/**
 	 * This method returns the name of the work post.
-	 * @return	this.name
+	 * 
+	 * @return	String 
+	 * 			this.name
 	 */
 	public String getName() {
 		return this.name;
@@ -81,7 +83,8 @@ public class WorkPost {
 	/**
 	 * This method returns the tasks that are pending at the work post.
 	 * 
-	 * @return	this.tasks
+	 * @return	ArrayList<AssemblyTask>
+	 * 			this.tasks
 	 */
 	public ArrayList<AssemblyTask> getPendingTasks() {
 		return this.pendingtasks;
@@ -155,6 +158,12 @@ public class WorkPost {
 		return true;
 	}
 
+	/**
+	 * This method sets the order the work post is working on.
+	 * 
+	 * @param   Order
+	 * 			The order that this work post needs to start working on.
+	 */
 	public void setNewOrder(Order order){
 		this.setOrder(order);
 		this.refreshAssemblyTasks();

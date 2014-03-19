@@ -21,7 +21,7 @@ public class Car {
 	 * A constructor to create a new car.
 	 * 
 	 * @param   components
-	 *          the components of this new car.
+	 *          An ArrayList with all the components of this new car.
 	 */
 	public Car(ArrayList<Component> components){
 		setComponents(components);
@@ -44,7 +44,8 @@ public class Car {
 	/**
 	 * A method to get the components of this car.
 	 *
-	 * @return  this.components
+	 * @return  ArrayList<Component>
+	 * 			this.components
 	 */
 	public ArrayList<Component> getComponents(){
 		return this.components;

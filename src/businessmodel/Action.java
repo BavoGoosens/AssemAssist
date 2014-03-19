@@ -35,7 +35,7 @@ public class Action {
 	/**
 	 * This method returns the description of the action.
 	 * 
-	 * @return	the discription of this action.
+	 * @return	the description of this action.
 	 */
 	public String getDescription() {
 		return this.description;

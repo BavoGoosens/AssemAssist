@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
+import org.joda.time.DateTime;
+
 
 /**
  * A class that represents an order manager.
@@ -17,28 +19,32 @@ public class OrderManager {
 	/**
 	 * A list that holds all the completed orders of a car manufacturing company.
 	 */
-	LinkedList<Order> completedorders;
+	private LinkedList<Order> completedorders;
 
 	/**
 	 * A list that holds all the pending orders for a car manufacturing company.
 	 */
-	LinkedList<Order> pendingorders;
+	private LinkedList<Order> pendingorders;
 
 	/**
 	 * A list that holds all the car models of a car manufacturing company.
 	 */
-	ArrayList<CarModel> carmodels = new ArrayList<CarModel>();;
+	private ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
 
 	/**
 	 * A production scheduler this Order Manager uses.
 	 */
-	ProductionScheduler production;
+	private ProductionScheduler production;
 
 	/**
-	 * A inventory for this Order manager
+	 * An inventory for this Order manager
 	 */
-	Inventory inventory;
+	private Inventory inventory;
 
+	/**
+	 * A boolean that indicates if this is the first order that 
+	 * has been entered in the system.
+	 */
 	private boolean firstorder = true;
 
 	/**
@@ -47,14 +53,10 @@ public class OrderManager {
 	 * @param    carmodels
 	 *           the car models that an car manufacturing company offers.
 	 */
-	@SuppressWarnings("deprecation")
 	public OrderManager(){
 		this.pendingorders = new LinkedList<Order>();
 		this.completedorders = new LinkedList<Order>();
-		Date start = new Date();
-		start.setHours(6);
-		start.setMinutes(0);
-		start.setSeconds(0);
+		DateTime start = new DateTime().withHourOfDay(6).withMinuteOfHour(0).withSecondOfMinute(0);
 		this.setProductionScheduler(new ProductionScheduler(this, start));
 		this.inventory = new Inventory();
 		this.setCarmodels(inventory);
@@ -82,8 +84,8 @@ public class OrderManager {
 	/**
 	 * A method to get the orders of this order manager.
 	 * 
-	 * @return All the order
-	}s of this order manager.
+	 * @return 	LinkedList<Order>
+	 * 			All the orders of this order manager.
 	 */
 	public LinkedList<Order> getOrders() {
 		LinkedList<Order> temp = this.getPendingOrders();
@@ -96,15 +98,15 @@ public class OrderManager {
 	/**
 	 * A method to get the car models of this order manager.
 	 * 
-	 * @return   this.carmodels
+	 * @return  ArrayList<CarModel> 
+	 * 			this.carmodels
 	 */
 	public ArrayList<CarModel> getCarmodels() {
 		return carmodels;
 	}
 
 	/**
-	 * A method to set the ca
-	}r models of this order manager to the given car models.
+	 * A method to set the car models of this order manager to the given car models.
 	 * 
 	 * @param    carmodels
 	 *           the new car models of this order manager.
@@ -123,7 +125,7 @@ public class OrderManager {
 	}
 
 	/**
-	 * A method to add an order to this order manager. It also updates iets estimated 
+	 * A method to add an order to this order manager.
 	 * 
 	 * @param   order
 	 *          the order that needs to be added.
@@ -167,11 +169,12 @@ public class OrderManager {
 	/**
 	 * A method to get the pending orders of a given user of this order manager.
 	 * 
-	 * @return the pending orders of a given user this order manager.
+	 * @return 	ArrayList<Order>
+	 * 			the pending orders of a given user managed by this order manager.
 	 */
 	public ArrayList<Order> getPendingOrders(User user){
 		ArrayList<Order> pendingorders = new ArrayList<Order>();
-		pendingorders.addAll(this.getProductionScheduler().getScheduledOrders());
+		pendingorders.addAll(this.getProductionScheduler().getDayorders());
 		for (Order order: this.getPendingOrders()){
 			if (order.getUser() == user)
 				pendingorders.add(order);
@@ -179,11 +182,22 @@ public class OrderManager {
 		return pendingorders;
 	}
 
-
+	/**
+	 * A method that returns the production scheduler for this OrderManager.
+	 * 
+	 * @return	ProductionScheduler
+	 * 			A production scheduler this OrderManager uses.
+	 */
 	public ProductionScheduler getProductionScheduler() {
 		return production;
 	}
 
+	/**
+	 * A method that sets the production scheduler for this OrderManager.
+	 * 
+	 * @param 	production
+	 * 			The ProductionScheduler this OrderManager uses.
+	 */
 	public void setProductionScheduler(ProductionScheduler production) {
 		this.production = production;
 	}
@@ -197,7 +211,7 @@ public class OrderManager {
 	 * A method to update the completion time of the pending orders.
 	 * @param index
 	 */
-	@SuppressWarnings("deprecation")
+	// TODO: Make this better and use jodatime 
 	public void updateEstimatedTime(int time){
 		if (time == 0){
 			int day = this.production.getToday().getDay() + 1;

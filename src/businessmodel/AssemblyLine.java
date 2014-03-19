@@ -3,8 +3,16 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import component.Airco;
+import component.Body;
+import component.Color;
+import component.Engine;
+import component.Gearbox;
+import component.Seats;
+import component.Wheels;
+
 /**
- * A class that represents an assembly line. It holds 3 work post.
+ * A class that represents an assembly line. It currently holds 3 work post.
  * 
  * @author 	SWOP team 10 2014
  *
@@ -19,13 +27,15 @@ public class AssemblyLine {
 	/**
 	 * A constructor for the class AssemblyLine.
 	 */
-	public AssemblyLine(ArrayList<Action> actions) {
-		this.generateWorkPosts(actions);
+	public AssemblyLine() {
+		this.generateWorkPosts();
 	}
 
 	/**
 	 * This method returns the list of work posts at the assembly line.
-	 * @return	this.workposts
+	 * 
+	 * @return	ArrayList<WorkPost>
+	 * 			this.workposts
 	 */
 	public ArrayList<WorkPost> getWorkPosts() {
 		return this.workposts;
@@ -53,7 +63,8 @@ public class AssemblyLine {
 	 * 
 	 * @param 	neworder 
 	 * 		  	The Order that is added at the front of the line.
-	 * @return 	finished
+	 * 
+	 * @return 	Order
 	 * 		   	A finished order if the last WorkPost was working on an Order. 
 	 */
 	public Order advance(Order neworder) {
@@ -89,7 +100,31 @@ public class AssemblyLine {
 	 * @param   actions
 	 *          the actions of all the work posts.
 	 */
-	private void generateWorkPosts(ArrayList<Action> actions) {
+	private void generateWorkPosts() {
+		Action action1 = new Action("Paint car");
+		Action action2 = new Action("Assembly Car Body");
+		Action action3 = new Action("Insert engine");
+		Action action4 = new Action("Insert gearbox");
+		Action action5 = new Action("Install seats");
+		Action action6 = new Action("Install Airco");
+		Action action7 = new Action("Mount Wheels");
+		action1.addComponent(new Color("blue",50));
+		action2.addComponent(new Body("sedan", 50));
+		action3.addComponent(new Engine("standard 2l 4 cilinders", 50));
+		action4.addComponent(new Gearbox("6 speed manual", 1000));
+		action5.addComponent(new Seats("leather black", 1000));
+		action6.addComponent(new Airco("manual climate control",1000));
+		action7.addComponent(new Wheels("comfort",1000));
+
+		ArrayList<Action> actions = new ArrayList<Action>();
+		actions.add(action1);
+		actions.add(action2);
+		actions.add(action3);
+		actions.add(action4);
+		actions.add(action5);
+		actions.add(action6);
+		actions.add(action7);
+
 		ArrayList<AssemblyTask> tasks1 = new ArrayList<AssemblyTask>();
 		ArrayList<AssemblyTask> tasks2 = new ArrayList<AssemblyTask>();
 		ArrayList<AssemblyTask> tasks3 = new ArrayList<AssemblyTask>();

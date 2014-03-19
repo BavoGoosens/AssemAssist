@@ -33,8 +33,8 @@ public class UserManagement {
 	/**
 	 * This method constructs the UserManagement object and populates the list of users.
 	 * 
-	 * @param map
-	 * 		  A HashMap with all the known system users.
+	 * @param 	map
+	 * 		  	A HashMap with all the known system users.
 	 */
 	public UserManagement(HashMap<String,User> map){
 		this.setSystemUsers(map);
@@ -43,10 +43,10 @@ public class UserManagement {
 	/**
 	 * This method returns a User object given the user's username.
 	 * 
-	 * @param uname the username of the user.
+	 * @param 	uname the username of the user.
 	 * 
-	 * @return User
-	 * 		   If the User is in the system return the User object.
+	 * @return 	User
+	 * 		   	If the User is in the system return the User object.
 	 * 
 	 */
 	public User getUser(String uname){
@@ -56,8 +56,8 @@ public class UserManagement {
 	/**
 	 * This method returns all the known users.
 	 * 
-	 * @return HashMap<String, User>
-	 * 		   A HashMap with all the system users.
+	 * @return	HashMap<String, User>
+	 * 			A HashMap with all the system users.
 	 */
 	private HashMap<String, User> getSystemUsers(){
 		return this.system_users;
@@ -66,8 +66,8 @@ public class UserManagement {
 	/**
 	 * This method populates the HashMap with users.
 	 * 
-	 * @param system_users
-	 * 		  A HashMap with all the system users.
+	 * @param 	system_users
+	 * 		  	A HashMap with all the system users.
 	 */
 	private void setSystemUsers(HashMap<String,User> system_users) {
 		this.system_users = system_users;
@@ -76,12 +76,14 @@ public class UserManagement {
 	/**
 	 * This method checks if the provided username and password are correct.
 	 * 
-	 * @param uname The username of the User.
+	 * @param	uname 
+	 * 			The username of the User.
 	 * 
-	 * @param pwd   The password of the User.
+	 * @param	pwd   
+	 * 			The password of the User.
 	 * 
-	 * @return boolean
-	 * 		   true if the provided information is correct. false otherwise.
+	 * @return 	boolean
+	 * 		  	true if the provided information is correct. false otherwise.
 	 */
 	public boolean authenticate(String uname, String pwd){
 		if (this.isUserInSystem(uname)){
@@ -93,15 +95,26 @@ public class UserManagement {
 	/**
 	 * This method checks if the provided username is known to the system.
 	 * 
-	 * @param uname The username to be checked
+	 * @param 	uname 
+	 * 			The username to be checked
 	 * 
-	 * @return boolean 
-	 * 		   true if the user is found in the system. false otherwise.
+	 * @return 	boolean 
+	 * 		   	true if the user is found in the system. false otherwise.
 	 */
 	public boolean isUserInSystem(String uname){
 		return this.getSystemUsers().containsKey(uname);
 	}
 
+	/**
+	 * A method that checks whether the given user is allowed to place an order.
+	 * 
+	 * @param 	user
+	 * 			The user who wants to place an Order.
+	 * 
+	 * @return	boolean
+	 * 			True if the user can place an Order.
+	 * 			False otherwise.
+	 */
 	public boolean canPlaceOrder(User user){
 		try{
 			if (user instanceof GarageHolder) return true;
@@ -111,6 +124,16 @@ public class UserManagement {
 		return false;
 	}
 
+	/**
+	 * A method that checks whether the given user can control the assembly line.
+	 * 
+	 * @param 	user
+	 * 			The user who wants to control an assembly line.
+	 * 
+	 * @return	boolean
+	 * 			True if the user can control an assembly line.
+	 * 			False otherwise.
+	 */
 	public boolean canControlAssemblyLine(User user){
 		try{
 			if (user instanceof Manager) return true;
@@ -120,6 +143,16 @@ public class UserManagement {
 		return false;
 	}
 
+	/**
+	 * A method that checks whether a given user is a mechanic.
+	 * 
+	 * @param 	user
+	 * 			The user that wants to perform work as a mechanic.
+	 * 
+	 * @return	boolean
+	 * 			True if the user is a mechanic.
+	 * 			False otherwise.
+	 */
 	public boolean isMechanic(User user){
 		try{
 			if (user instanceof Mechanic) return true;

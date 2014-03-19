@@ -54,7 +54,8 @@ public class AssemblyTask {
 	/**
 	 * A method to get the actions of this assembly task.
 	 * 
-	 * @return  the actions of this assembly task.
+	 * @return  ArrayList<Action>
+	 * 			the actions of this assembly task.
 	 */
 	public ArrayList<Action> getActions() {
 		return this.actions;
@@ -63,7 +64,8 @@ public class AssemblyTask {
 	/**
 	 * A method to get the name of this assembly task.
 	 * 
-	 * @return  the name of this assembly task.
+	 * @return  String
+	 * 			the name of this assembly task.
 	 */
 	private String getName() {
 		return this.name;
@@ -79,7 +81,8 @@ public class AssemblyTask {
 	/**
 	 * A method to check if this assembly task is completed.
 	 * 
-	 * @return true if all actions of this assembly task are completed.
+	 * @return  boolean
+	 * 			true if all actions of this assembly task are completed.
 	 */
 	public boolean isCompleted(){
 		return this.completed;
@@ -101,5 +104,19 @@ public class AssemblyTask {
 	@Override
 	public String toString(){
 		return this.getName();
+	}
+	
+	/**
+	 * This method returns a string with the name of the assembly task and all the actions that need to be performed.
+	 * 
+	 * @return  String
+	 * 			A string with on the first line the name of the assembly task and starting on the third line all the actions.
+	 */
+	public String toCompleteString(){
+		String result = this.getName() + "\n Actions: \n";
+		for( Action act : this.getActions()){
+			result += act.getDescription();
+		}
+		return result;
 	}
 }

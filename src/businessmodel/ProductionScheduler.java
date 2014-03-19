@@ -2,14 +2,12 @@ package businessmodel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.Locale;
-
-import component.*;
+import org.joda.time.DateTime;
 
 /**
- * A class that is responsible for scheduling in orders for an individual day.
+ * A class that is responsible for scheduling orders for an individual day.
  * 
  * @author Team 10
  *
@@ -19,9 +17,8 @@ public class ProductionScheduler {
 	/**
 	 * A variable that holds todays date and current time. 
 	 */
-	@Deprecated
-	private Date today = new Date();
-	
+	private DateTime today;
+
 	/**
 	 * A simple date format.
 	 */
@@ -33,7 +30,7 @@ public class ProductionScheduler {
 	private int delay = 0;
 
 	/**
-	 * The number of hours this Scheduler can use today.
+	 * The number of minutes this Scheduler can use today.
 	 */
 	private int availableTime;
 
@@ -54,20 +51,27 @@ public class ProductionScheduler {
 
 	/**
 	 * A method that construct a ProductionScheduler.
+	 * 
+	 * @param	OrderManager
+	 * 			The order manager from which this production scheduler can get it's orders.
+	 * 
+	 * @param	DateTime
+	 * 			The date and time when this scheduler starts.
 	 */
-	public ProductionScheduler(OrderManager ordermanager, Date start) {	
+	public ProductionScheduler(OrderManager ordermanager, DateTime start) {	
 		this.setToday(start);
 		this.setAvailableTime(17*60);
 		this.setOrderManager(ordermanager);
-		ArrayList<Action> actions = this.makeActions();
-		this.setAssemblyline(new AssemblyLine(actions));
+		this.setAssemblyline(new AssemblyLine());
 		this.setDayOrders(new LinkedList<Order>());
 	}
 
 	/**
 	 * This method advances the assembly line if possible.
+	 * 
+	 * @param 	int time
+	 * 			An integer representing the time spent during this stage (in minutes). 
 	 */
-	@SuppressWarnings("deprecation")
 	public void advance(int time){
 		Order finished = null;
 		if (this.getAssemblyline().canAdvance()){
@@ -75,7 +79,7 @@ public class ProductionScheduler {
 			finished = this.getAssemblyline().advance(neworder);
 
 			this.updateDaySchedule(time);
-			this.getToday().setMinutes(this.getToday().getMinutes()+time);
+			this.setToday(this.getToday().plusMinutes(time));
 
 			if (finished != null){
 				this.getOrderManager().finishedOrder(finished);
@@ -85,56 +89,6 @@ public class ProductionScheduler {
 			if (this.getAvailableTime() <= 0)
 				this.startNewDay();
 		}
-	}
-
-	@SuppressWarnings("deprecation")
-	public void updateDaySchedule(int time){
-		int timediff = time - 60;
-		for(Order or : this.getDayorders()){
-			or.getDate().setMinutes(or.getDate().getMinutes()+timediff);
-		}
-		this.setAvailableTime(this.getAvailableTime() - time);
-		this.setDelayTime(this.getDelayTime() + timediff); 
-		if (this.checkToAddOrder())
-			addDayOrder();
-		if (checkToRemoveOrder())
-			removeLastOrderOfDay();
-		this.checkDelaytime();
-	}
-
-	/**
-	 * A method that returns the next unscheduled order in todays schedule.
-	 * 
-	 * @return Order
-	 * 		   null if there is no next order. Otherwise the next order in line is returned.
-	 */
-	private Order getNextDayOrder() {
-		for(Order or : this.getDayorders()){
-			if (!this.getAssemblyline().getWorkPostOrders().contains(or))
-				return or;
-		}
-		return null;
-	}
-
-	/**
-	 * A method that starts a new day.
-	 */
-	private void startNewDay(){
-		if (this.getDelayTime() > 0 )
-			this.setAvailableTime(60*16 - this.getDelayTime());
-		else 
-			this.setAvailableTime(60*16);
-		this.setDelayTime(0);
-		this.makeDaySchedule();
-	}
-
-	/**
-	 * A method that makes a new day schedule.
-	 */
-	public void makeDaySchedule(){
-		LinkedList<Order> day = this.getOrderManager().getNbOrders(this.getAvailableTime()/60 - 2);
-		this.setDayOrders(day);
-		this.addDayOrder();
 	}
 
 	/**
@@ -152,52 +106,95 @@ public class ProductionScheduler {
 			return false;
 	}
 
-	/**date
+	/**
+	 * This method updates the day schedule. 
+	 * It calculates the delay and checks if new orders can be fetched or if orders have to be rescheduled.
+	 * 
+	 * @param 	time
+	 * 			The time spent during this phase.	
+	 */
+	public void updateDaySchedule(int time){
+		int timediff = time - 60;
+		for(Order or : this.getDayorders()){
+			or.setDate(or.getDate().plusMinutes(timediff));
+		}
+		this.setAvailableTime(this.getAvailableTime() - time);
+		this.setDelayTime(this.getDelayTime() + timediff); 
+		if (this.checkToAddOrder())
+			addDayOrder();
+		if (checkToRemoveOrder())
+			removeLastOrderOfDay();
+		this.checkDelaytime();
+	}
+
+	/**
+	 * A method that adds an order to todays production schedule.
+	 */
+	private void addDayOrder() {
+		Order or = this.getOrderManager().getPendingOrders().poll();
+		if (or != null ){
+			if(this.getDayorders().isEmpty() || 
+					this.getAssemblyline().getWorkPostOrders().contains(this.getDayorders().peekLast())){
+				or.setDate(this.getToday().plusHours(3));
+				this.getDayorders().add(or);
+			} else {
+				or.setDate(this.getDayorders().peekLast().getDate().plusMinutes(60));
+				this.getDayorders().add(or);
+				//				Date copy = (Date) this.getToday().clone();
+				//				copy.setHours(this.getDayorders().peekLast().getDate().getHours()+1);
+				//				or.setDate(copy);
+				//				this.getDayorders().add(or);
+			}
+		}
+	}
+
+	/**
+	 * A method that starts a new day.
+	 */
+	private void startNewDay(){
+		if (this.getDelayTime() > 0 )
+			this.setAvailableTime(60*16 - this.getDelayTime());
+		else 
+			this.setAvailableTime(60*16);
+		this.setDelayTime(0);
+		DateTime tommorow = this.getToday().plusDays(1).withHourOfDay(6);
+		this.setToday(tommorow);
+		this.makeDaySchedule();
+	}
+
+	/**
+	 * A method that makes a new day schedule.
+	 */
+	public void makeDaySchedule(){
+		LinkedList<Order> day = this.getOrderManager().getNbOrders(this.getAvailableTime()/60 - 2);
+		this.setDayOrders(day);
+		this.addDayOrder();
+	}
+
+	/**
 	 * A method that checks whether it is possible to schedule in an Order for today.
 	 * 
 	 * @return boolean
 	 * 		   True if the order can be scheduled. False otherwise. 
 	 */
-	public boolean checkToAddOrder() {
+	private boolean checkToAddOrder() {
 		int temp = this.getAvailableTime() - (60 * this.getDayorders().size()) - (2 * 60);
 		if (temp/60 >= 1)
 			return true;
 		return false;
 	}
 
+	/**
+	 * A method that checks whether it is necessary to move an Order from today to a later date and time.
+	 * 
+	 * @return boolean
+	 * 		   True if the order can be scheduled. False otherwise. 
+	 */
 	private boolean checkToRemoveOrder(){
 		int temp = this.getAvailableTime() - (60 * this.getDayorders().size()) - (2 * 60);
 		if(temp/60 <= -1)
 			return true;
 		return false;
-	}
-
-	/**
-	 * A method that adds an order to todays production schedule.
-	 */
-	@SuppressWarnings("deprecation")
-	private void addDayOrder() {
-		Order or = this.getOrderManager().getPendingOrders().poll();
-		if (or != null ){
-			if(this.getDayorders().isEmpty() || 
-					this.getAssemblyline().getWorkPostOrders().contains(this.getDayorders().peekLast())){
-				Date copy = (Date) this.getToday().clone();
-				copy.setHours(copy.getHours()+3);
-				or.setDate(copy);
-				this.getDayorders().add(or);
-			} else {
-				long waut = 60*60*1000;
-				long tijd = this.getDayorders().peekLast().getDate().getTime() + waut;
-				Date wat = (Date) this.getToday().clone();
-				wat.setTime(tijd);
-				or.setDate(wat);
-				this.getDayorders().add(or);
-//				Date copy = (Date) this.getToday().clone();
-//				copy.setHours(this.getDayorders().peekLast().getDate().getHours()+1);
-//				or.setDate(copy);
-//				this.getDayorders().add(or);
-			}
-		}
 	}
 
 	/**
@@ -213,6 +210,20 @@ public class ProductionScheduler {
 	}
 
 	/**
+	 * A method that returns the next unassigned order in todays schedule.
+	 * 
+	 * @return Order
+	 * 		   null if there is no next order. Otherwise the next order in line is returned.
+	 */
+	private Order getNextDayOrder() {
+		for(Order or : this.getDayorders()){
+			if (!this.getAssemblyline().getWorkPostOrders().contains(or))
+				return or;
+		}
+		return null;
+	}
+
+	/**
 	 * A method to remove the last order of this day.
 	 */
 	private void removeLastOrderOfDay() {
@@ -220,110 +231,126 @@ public class ProductionScheduler {
 		this.getOrderManager().getPendingOrders().addFirst(temp);
 	}
 
-	public int getDelayTime() {
-		return delay;
-	}
-
 	/**
 	 * A method that returns the OrderManager for this ProductionScheduler.
 	 * 
-	 * @return OrderManager
-	 * 		   The OrderManager that supplies and manages the orders for this ProductionScheduler.
+	 * @return 	OrderManager
+	 * 		   	The OrderManager that supplies and manages the orders for this ProductionScheduler.
 	 */
 	public OrderManager getOrderManager() {
-		return ordermanager;
+		return this.ordermanager;
+	}
+
+	/**
+	 *  A method that sets the OrderManager for this ProductionScheduler.
+	 *  
+	 * @param 	ordermanager
+	 * 		  	The OrderManager that supplies and manages the orders for this ProductionScheduler.
+	 */
+	private void setOrderManager(OrderManager ordermanager) {
+		this.ordermanager = ordermanager;
 	}
 
 	/**
 	 * This method returns the list of orders that will probably be finished today. 
 	 * There might be delays or speedups that cause the list to shrink of grow.
 	 * 
-	 * @return LinkedList<Order>
-	 * 		   A LinkedList with all the pending orders for today.
+	 * @return 	LinkedList<Order>
+	 * 		   	A LinkedList with all the pending orders for today.
 	 * 
 	 */
 	protected LinkedList<Order> getDayorders() {
-		return dayorders;
-	}
-
-	public int getAvailableTime() {
-		return availableTime;
+		return this.dayorders;
 	}
 
 	/**
-	 * This method returns the assembly line that this production scheduler uses.
+	 * A method that sets the list of orders that will be finished today.
 	 * 
-	 * @return AssemblyLine
-	 * 		   The Assembly line that this production scheduler uses.
+	 * @param 	dayorders
+	 * 			A LinkedList<Order> that will be scheduled and finished today.
 	 */
-	public AssemblyLine getAssemblyline() {
-		return assemblyline;
-	}
-
-	public Date getToday() {
-		return today;
-	}
-
-	public LinkedList<Order> getScheduledOrders(){
-		LinkedList<Order> temp = this.getDayorders();
-		return temp;
-	}
-
-	/**
-	 *  A method that sets the OrderManager for this ProductionScheduler.
-	 *  
-	 * @param ordermanager
-	 * 		  The OrderManager that supplies and manages the orders for this ProductionScheduler.
-	 */
-	private void setOrderManager(OrderManager ordermanager) {
-		this.ordermanager = ordermanager;
-	}
-
-	private void setDelayTime(int overlaytime) {
-		this.delay = overlaytime;
-	}
-
-	private void setAvailableTime(int daytime) {
-		this.availableTime = daytime;
-	}
-
-	private void setAssemblyline(AssemblyLine assemblyline) {
-		this.assemblyline = assemblyline;
-	}
-
-	public void setToday(Date today) {
-		this.today = today;
-	}
-
 	private void setDayOrders(LinkedList<Order> dayorders) {
 		this.dayorders = dayorders;
 	}
 
-	private ArrayList<Action> makeActions() {
-		Action action1 = new Action("Paint car");
-		Action action2 = new Action("Assembly Car Body");
-		Action action3 = new Action("Insert engine");
-		Action action4 = new Action("Insert gearbox");
-		Action action5 = new Action("Install seats");
-		Action action6 = new Action("Install Airco");
-		Action action7 = new Action("Mount Wheels");
-		action1.addComponent(new Color("blue",50));
-		action2.addComponent(new Body("sedan", 50));
-		action3.addComponent(new Engine("standard 2l 4 cilinders", 50));
-		action4.addComponent(new Gearbox("6 speed manual", 1000));
-		action5.addComponent(new Seats("leather black", 1000));
-		action6.addComponent(new Airco("manual climate control",1000));
-		action7.addComponent(new Wheels("comfort",1000));
+	/**
+	 * A method that returns the number of minutes that can be spend today on the assembly line.
+	 *
+	 * @return	int 
+	 * 			The amount of available minutes this scheduler has left.
+	 */
+	public int getAvailableTime() {
+		return this.availableTime;
+	}
 
-		ArrayList<Action> actions = new ArrayList<Action>();
-		actions.add(action1);
-		actions.add(action2);
-		actions.add(action3);
-		actions.add(action4);
-		actions.add(action5);
-		actions.add(action6);
-		actions.add(action7);
-		return actions;
+	/**
+	 * A method that sets the available minutes the scheduler can fill.
+	 * 
+	 * @param 	daytime
+	 * 			An integer with the number of available minutes.
+	 */
+	private void setAvailableTime(int daytime) {
+		this.availableTime = daytime;
+	}
+
+	/**Date
+	 * This method returns the assembly line that this production scheduler uses.
+	 * 
+	 * @return 	AssemblyLine
+	 * 		   	The Assembly line that this production scheduler uses.
+	 */
+	public AssemblyLine getAssemblyline() {
+		return this.assemblyline;
+	}
+
+	/**
+	 * This method sets the assembly line that this production scheduler uses.
+	 * 
+	 * @param	AssemblyLine
+	 * 		   	The Assembly line that this production scheduler uses.
+	 */
+	private void setAssemblyline(AssemblyLine assemblyline) {
+		this.assemblyline = assemblyline;
+	}
+
+	/**
+	 * This method returns the start date and time for this production scheduler.
+	 * 
+	 * @return 	DateTime
+	 * 			The start date and time for this scheduler
+	 */
+	public DateTime getToday() {
+		return this.today;
+	}
+
+	/**
+	 * This method sets the start date and time for this production scheduler.
+	 * 
+	 * @param 	today
+	 * 			The start date and time for this scheduler
+	 */
+	public void setToday(DateTime today) {
+		this.today = today;
+	}
+
+	/**
+	 * A method that returns the amount of delay for this scheduler in minutes.
+	 * 
+	 * @return	int
+	 * 			An integer equal to the amount of delay in minutes for this scheduler.
+	 */			
+	public int getDelayTime() {
+		return this.delay;
+	}
+
+	/**
+	 * A method that sets the amount of delay for this scheduler in minutes.
+	 * 
+	 * @param	overlaytime
+	 * 			An integer equal to the amount of delay in minutes for this scheduler.
+	 */		
+	private void setDelayTime(int overlaytime) {
+		this.delay = overlaytime;
 	}
 
 	/**
@@ -331,6 +358,7 @@ public class ProductionScheduler {
 	 * 
 	 * @return A list of assembly tasks for the next iteration of the system.
 	 */
+	//TODO: aanpassen waar deze juist staat
 	public ArrayList<AssemblyTask> getFutureAssemblyTasks(){
 		ArrayList<AssemblyTask> assemblytasks = new ArrayList<AssemblyTask>();
 		Order temp = this.getOrderManager().getPendingOrders().peekFirst();

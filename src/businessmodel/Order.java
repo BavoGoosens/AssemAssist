@@ -1,7 +1,8 @@
 package businessmodel;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Locale;
+import org.joda.time.DateTime;
 import component.Component;
 
 /**
@@ -25,7 +26,7 @@ public class Order {
 	/**
 	 * A variable that holds the delivery date for an order.
 	 */
-	private Date deliverydate;
+	private DateTime deliverydate;
 
 	/**
 	 * A constructor for the class Order.
@@ -40,7 +41,7 @@ public class Order {
 	public Order(User user, ArrayList<Component> components){
 		setUser(user);
 		this.car = new Car(components);
-		this.deliverydate = new Date();	
+		this.deliverydate = new DateTime();	
 	}
 
 	/**
@@ -62,7 +63,8 @@ public class Order {
 	 * 
 	 * @param   user
 	 *          the new user of this order.
-	 * @return  true if user is instanceof garage holder
+	 * @return  boolean
+	 * 			true if user is instanceof garage holder
 	 */
 	private boolean canHaveAsUser(User user) {
 		return (user instanceof GarageHolder);		
@@ -71,31 +73,34 @@ public class Order {
 	/**
 	 * This method returns the new car for this order.
 	 * 
-	 * @return this.car
+	 * @return 	Car
+	 * 			this.car
 	 */
 	public Car getCar() {
 		return car;
 	}
 
-	/**
-	 * a method to see if the order is completed or not.
-	 * 
-	 * @return   True if and only if all the components of the car of this order are completed.
-	 */
-	public boolean isCompleted(){
-		Boolean completed = true;
-		for(Component component: this.car.getComponents())
-			if(component.isCompleted() == false)
-				completed = false;
-		return completed;
-	}
+//	/**
+//	 * a method to see if the order is completed or not.
+//	 * 
+//	 * @return	boolean
+//	 * 			True if and only if all the components of the car of this order are completed.
+//	 */
+//	public boolean isCompleted(){
+//		Boolean completed = true;
+//		for(Component component: this.car.getComponents())
+//			if(component.isCompleted() == false)
+//				completed = false;
+//		return completed;
+//	}
 
 	/**
 	 * A variable to get the delivery date.
 	 *  
-	 * @return  this.deliverydate
+	 * @return  DateTime
+	 * 			this.deliverydate
 	 */
-	public Date getDate() {
+	public DateTime getDate() {
 		return this.deliverydate;
 	}
 
@@ -107,7 +112,7 @@ public class Order {
 	 * @throws 	IllegalArgumentException
 	 * 			delivery == null
 	 */
-	public void setDate(Date deliverydate) throws IllegalArgumentException {
+	public void setDate(DateTime deliverydate) throws IllegalArgumentException {
 		if(deliverydate == null)
 			throw new IllegalArgumentException();
 		this.deliverydate = deliverydate;
@@ -116,7 +121,8 @@ public class Order {
 	/**
 	 * A method to get the user that placed this order.
 	 * 
-	 * @return   this.user
+	 * @return  User
+	 * 			this.user
 	 */
 	public User getUser() {
 		return this.user;
@@ -124,7 +130,7 @@ public class Order {
 	
 	@Override
 	public String toString() {
-		return "user: " + this.user.toString() + ", delivery date= " + this.deliverydate.toString();
+		return "user: " + this.user.toString() + ", delivery date= " + this.deliverydate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
 	}
 
 }

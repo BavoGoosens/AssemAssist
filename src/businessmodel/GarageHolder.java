@@ -1,5 +1,4 @@
 package businessmodel;
-import java.util.ArrayList;
 
 /**
  * A class that represents a garage holder.
@@ -19,7 +18,7 @@ public class GarageHolder extends User {
 	 * @param 	username
 	 * 			the user name for the new garage holder.
 	 * @param 	password
-	 * 			the password fot his garage holder.
+	 * 			the password for his garage holder.
 	 */
 	public GarageHolder(String firstname, String lastname, String username, String password) {
 		super(firstname,lastname,username,password);
