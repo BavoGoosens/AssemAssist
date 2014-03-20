@@ -20,11 +20,6 @@ public class ProductionScheduler {
 	private DateTime today;
 
 	/**
-	 * A simple date format.
-	 */
-	final static SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss z", Locale.ENGLISH);
-
-	/**
 	 * The current delay of the production scheduler in minutes of this day.
 	 */
 	private int delay = 0;
@@ -140,10 +135,6 @@ public class ProductionScheduler {
 			} else {
 				or.setDate(this.getDayorders().peekLast().getDate().plusMinutes(60));
 				this.getDayorders().add(or);
-				//				Date copy = (Date) this.getToday().clone();
-				//				copy.setHours(this.getDayorders().peekLast().getDate().getHours()+1);
-				//				or.setDate(copy);
-				//				this.getDayorders().add(or);
 			}
 		}
 	}
