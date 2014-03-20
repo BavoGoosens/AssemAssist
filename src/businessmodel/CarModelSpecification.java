@@ -16,68 +16,68 @@ public class CarModelSpecification {
 	/**
 	 * A list with all the available body types.
 	 */
-	private ArrayList<Body> bodies;
+	private ArrayList<Body> bodies = new ArrayList<Body>();
 
 	/**
 	 * A list of available colors for this model.
 	 */
-	private ArrayList<Color> colors;
+	private ArrayList<Color> colors = new ArrayList<Color>();
 
 	/**
 	 * A list of available engines for this car model.
 	 */
-	private ArrayList<Engine> engines;
+	private ArrayList<Engine> engines = new ArrayList<Engine>();
 
 	/**
 	 * A list of available gear boxes.
 	 */
-	private ArrayList<Gearbox> gearboxes;
+	private ArrayList<Gearbox> gearboxes = new ArrayList<Gearbox>();
 
 	/**
 	 * A list of available seats.
 	 */
-	private ArrayList<Seats> seats;
+	private ArrayList<Seats> seats = new ArrayList<Seats>();
 
 	/**
 	 * A list of available airco installations.
 	 */
-	private ArrayList<Airco> aircos;
+	private ArrayList<Airco> aircos = new ArrayList<Airco>();
 
 	/**
 	 * A list of available wheel types.
 	 */
-	private ArrayList<Wheels> wheels;
+	private ArrayList<Wheels> wheels = new ArrayList<Wheels>();
 
 	/**
-	 * This method constructs the car model.
+	 * This method constructs the car model specification.
 	 * 
-	 * @param bodies The list of available car bodies.
-	 * 
-	 * @param colors The list of available car colors.
-	 * 
-	 * @param engines The list of available car engines.
-	 * 
-	 * @param gearboxes The list of available car gearboxes.
-	 * 
-	 * @param seats The list of available car seats.
-	 * 
-	 * @param aircos The list of available car aircos.
-	 * 
-	 * @param wheels The list of available car wheels.
+	 * @param 	parts 
+	 * 			The list of components this specification consists of.
 	 */
-	public CarModelSpecification(ArrayList<Body> bodies, ArrayList<Color> colors,
-			ArrayList<Engine> engines, ArrayList<Gearbox> gearboxes,
-			ArrayList<Seats> seats, ArrayList<Airco> aircos,
-			ArrayList<Wheels> wheels) {
-		this.setBodies(bodies);
-		this.setColors(colors);
-		this.setEngines(engines);
-		this.setGearboxes(gearboxes);
-		this.setSeats(seats);
-		this.setAircos(aircos);
-		this.setWheels(wheels);
+	public CarModelSpecification(ArrayList<Component> parts) {
+		this.setComponents(parts);
 	}
 	
+	private void setComponents(ArrayList<Component> parts) {
+		for (Component part : parts){
+			if (part instanceof Body)
+				this.getBodies().add((Body) part);
+			if (part instanceof Engine)
+				this.getEngines().add((Engine) part);
+			if (part instanceof Wheels)
+				this.getWheels().add((Wheels) part);
+			if (part instanceof Airco)
+				this.getAircos().add((Airco) part);
+			if (part instanceof Seats)
+				this.getSeats().add((Seats) part);
+			if (part instanceof Gearbox)
+				this.getGearboxes().add((Gearbox) part);
+			if (part instanceof Color)
+				this.getColors().add((Color) part);
+		}
+		
+	}
+
 	/**
 	 * A method to get the different bodies for a car model.
 	 * 

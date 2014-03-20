@@ -1,0 +1,37 @@
+Checking project in /home/batman/git/AssemAssist
+
+1 Warning: encapsulation: potential incoming leak of internal state: collection parameter responsibletasks of public method setResponsibletasks in businessmodel.WorkPost is directly assigned to field responsibletasks
+
+1 Error: encapsulation: outgoing leak of internal state: public method getComponents in businessmodel.Car directly returns the collection stored in field components
+2 Error: encapsulation: outgoing leak of internal state: public method getWorkPosts in businessmodel.AssemblyLine directly returns the collection stored in field workposts
+3 Error: encapsulation: outgoing leak of internal state: public method getActions in businessmodel.AssemblyTask directly returns the collection stored in field actions
+4 Error: encapsulation: outgoing leak of internal state: public method getComponents in businessmodel.Action directly returns the collection stored in field component_types
+5 Error: encapsulation: outgoing leak of internal state: public method getPendingTasks in businessmodel.WorkPost directly returns the collection stored in field pendingtasks
+6 Error: encapsulation: outgoing leak of internal state: public method getResponsibletasks in businessmodel.WorkPost directly returns the collection stored in field responsibletasks
+7 Error: encapsulation: outgoing leak of internal state: public method getCarmodels in businessmodel.OrderManager directly returns the collection stored in field carmodels
+8 Error: encapsulation: outgoing leak of internal state: public method getCompletedOrders in businessmodel.OrderManager directly returns the collection stored in field completedorders
+9 Error: encapsulation: outgoing leak of internal state: public method getPendingOrders in businessmodel.OrderManager directly returns the collection stored in field pendingorders
+10 Error: encapsulation: outgoing leak of internal state: public method getBodies in businessmodel.CarModelSpecification directly returns the collection stored in field bodies
+11 Error: encapsulation: outgoing leak of internal state: public method getColors in businessmodel.CarModelSpecification directly returns the collection stored in field colors
+12 Error: encapsulation: outgoing leak of internal state: public method getEngines in businessmodel.CarModelSpecification directly returns the collection stored in field engines
+13 Error: encapsulation: outgoing leak of internal state: public method getGearboxes in businessmodel.CarModelSpecification directly returns the collection stored in field gearboxes
+14 Error: encapsulation: outgoing leak of internal state: public method getSeats in businessmodel.CarModelSpecification directly returns the collection stored in field seats
+15 Error: encapsulation: outgoing leak of internal state: public method getAircos in businessmodel.CarModelSpecification directly returns the collection stored in field aircos
+16 Error: encapsulation: outgoing leak of internal state: public method getWheels in businessmodel.CarModelSpecification directly returns the collection stored in field wheels
+
+1 Error: encapsulation: non-final member variable enginetypes in class businessmodel.Inventory is public.
+2 Error: encapsulation: non-final member variable bodytypes in class businessmodel.Inventory is public.
+3 Error: encapsulation: non-final member variable aircotypes in class businessmodel.Inventory is public.
+4 Error: encapsulation: non-final member variable colortypes in class businessmodel.Inventory is public.
+5 Error: encapsulation: non-final member variable gearboxtypes in class businessmodel.Inventory is public.
+6 Error: encapsulation: non-final member variable seattypes in class businessmodel.Inventory is public.
+7 Error: encapsulation: non-final member variable wheeltypes in class businessmodel.Inventory is public.
+
+1 Warning: encapsulation: unchecked assignment to internal state: parameter firstname of public method User in businessmodel.User is assigned to field firstname without being referenced in the statements before the assignment.
+2 Warning: encapsulation: unchecked assignment to internal state: parameter control of public method CarManufacturingCompany in businessmodel.CarManufacturingCompany is assigned to field control without being referenced in the statements before the assignment.
+3 Warning: encapsulation: unchecked assignment to internal state: parameter lastname of public method User in businessmodel.User is assigned to field lastname without being referenced in the statements before the assignment.
+4 Warning: encapsulation: unchecked assignment to internal state: parameter responsibletasks of public method setResponsibletasks in businessmodel.WorkPost is assigned to field responsibletasks without being referenced in the statements before the assignment.
+5 Warning: encapsulation: unchecked assignment to internal state: parameter order_in_process of public method setOrder in businessmodel.WorkPost is assigned to field order_in_process without being referenced in the statements before the assignment.
+6 Warning: encapsulation: unchecked assignment to internal state: parameter today of public method setToday in businessmodel.ProductionScheduler is assigned to field today without being referenced in the statements before the assignment.
+7 Warning: encapsulation: unchecked assignment to internal state: parameter production of public method setProductionScheduler in businessmodel.OrderManager is assigned to field production without being referenced in the statements before the assignment.
+8 Warning: encapsulation: unchecked assignment to internal state: parameter control of public method UserInterFace in ui.UserInterFace is assigned to field control without being referenced in the statements before the assignment.
