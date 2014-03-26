@@ -2,7 +2,11 @@ package ui;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Set;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 import component.Component;
 import control.Controller;
@@ -292,8 +296,13 @@ public class UserInterFace {
 	}
 
 	private ArrayList<Component> chooseCar(CarModel cm) {
-		ArrayList<Component[]> possibleparts =  cm.getPossibilities();
+		HashMap<String, ArrayList<Component>> possibleparts =  cm.getPossibilities();
+		Set<String> it = possibleparts.keySet();
 		ArrayList<Component> parts = new ArrayList<Component>();
+		
+		for(String type : it){
+			ArrayList<Component> choices = possibleparts.get(type);
+		}
 		for(Component[] choices : possibleparts){
 			String type = "";
 			String choice = "";

@@ -1,6 +1,7 @@
 package businessmodel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import component.Component;
 
@@ -84,8 +85,8 @@ public class CarModel {
 	 * 
 	 * @return	List of  list of components, ordered by type.
 	 */
-	public ArrayList<Component[]> getPossibilities(){
-		return this.cms.getPosibilities();
+	public HashMap<String, ArrayList<Component>> getPossibilities(){
+		return this.cms.getPossibilities();
 	}
 	
 	@Override

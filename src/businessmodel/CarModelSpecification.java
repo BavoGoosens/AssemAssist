@@ -1,6 +1,7 @@
 package businessmodel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import component.*;
 
@@ -13,40 +14,7 @@ import component.*;
  */
 public class CarModelSpecification {
 	
-	/**
-	 * A list with all the available body types.
-	 */
-	private ArrayList<Body> bodies = new ArrayList<Body>();
-
-	/**
-	 * A list of available colors for this model.
-	 */
-	private ArrayList<Color> colors = new ArrayList<Color>();
-
-	/**
-	 * A list of available engines for this car model.
-	 */
-	private ArrayList<Engine> engines = new ArrayList<Engine>();
-
-	/**
-	 * A list of available gear boxes.
-	 */
-	private ArrayList<Gearbox> gearboxes = new ArrayList<Gearbox>();
-
-	/**
-	 * A list of available seats.
-	 */
-	private ArrayList<Seats> seats = new ArrayList<Seats>();
-
-	/**
-	 * A list of available airco installations.
-	 */
-	private ArrayList<Airco> aircos = new ArrayList<Airco>();
-
-	/**
-	 * A list of available wheel types.
-	 */
-	private ArrayList<Wheels> wheels = new ArrayList<Wheels>();
+	private HashMap<String, ArrayList<Component>> spec;
 
 	/**
 	 * This method constructs the car model specification.
@@ -54,182 +22,24 @@ public class CarModelSpecification {
 	 * @param 	parts 
 	 * 			The list of components this specification consists of.
 	 */
-	public CarModelSpecification(ArrayList<Component> parts) {
+	public CarModelSpecification(ArrayList<String> types,  ArrayList<Component> parts) {
+		this.setTypes(types);
 		this.setComponents(parts);
 	}
 	
+	private void setTypes(ArrayList<String> types) {
+		for (String type: types){
+			this.spec.put(type, new ArrayList<Component>());
+		}
+	}
+
 	private void setComponents(ArrayList<Component> parts) {
 		for (Component part : parts){
-			if (part instanceof Body)
-				this.getBodies().add((Body) part);
-			if (part instanceof Engine)
-				this.getEngines().add((Engine) part);
-			if (part instanceof Wheels)
-				this.getWheels().add((Wheels) part);
-			if (part instanceof Airco)
-				this.getAircos().add((Airco) part);
-			if (part instanceof Seats)
-				this.getSeats().add((Seats) part);
-			if (part instanceof Gearbox)
-				this.getGearboxes().add((Gearbox) part);
-			if (part instanceof Color)
-				this.getColors().add((Color) part);
+			String type = part.getClass().getName();
+			ArrayList<Component> list = this.spec.get(type);
+			list.add(part);
 		}
 		
-	}
-
-	/**
-	 * A method to get the different bodies for a car model.
-	 * 
-	 * @return the bodies of this car model specification
-	 */
-	public ArrayList<Body> getBodies() {
-		return this.bodies;
-	}
-
-	/**
-	 * A method to get the different colors for a car model.
-	 * 
-	 * @return the colors of this car mode specification.
-	 */
-	public ArrayList<Color> getColors() {
-		return this.colors;
-	}
-
-	/**
-	 * A method to get the different engines of a car model.
-	 * 
-	 * @return the engines of this car model specification.
-	 */
-	public ArrayList<Engine> getEngines() {
-		return this.engines;
-	}
-
-	/**
-	 * A method to get the different gear boxes of a car model.
-	 * 
-	 * @return the gear boxes of this car model specification.
-	 */
-	public ArrayList<Gearbox> getGearboxes() {
-		return this.gearboxes;
-	}
-
-	/**
-	 * A method to get the different seats of a car model.
-	 * 
-	 * @return the seats of this car model specification.
-	 */
-	public ArrayList<Seats> getSeats() {
-		return this.seats;
-	}
-
-	/**
-	 * A method to get the different aircos of a car model.
-	 * 
-	 * @return the aircos of this car model specification.
-	 */
-	public ArrayList<Airco> getAircos() {
-		return this.aircos;
-	}
-
-	/**
-	 * A method to get the different wheels of a car model.
-	 * 
-	 * @return the wheels od this car model specification.
-	 */
-	public ArrayList<Wheels> getWheels() {
-		return this.wheels;
-	}
-
-	/**
-	 * A method that sets the different bodies for a car model to the given bodies.
-	 * 
-	 * @param  bodies 
-	 *         the different bodies of a car model.
-	 * @throws IllegalArgumentException
-	 *         bodies == null
-	 */
-	private void setBodies(ArrayList<Body> bodies) throws IllegalArgumentException {
-		if (bodies == null) throw new IllegalArgumentException();
-		this.bodies = bodies;
-	}
-
-	/**
-	 * A method that sets the different colors for a car model to the given colors.
-	 * 
-	 * @param  colors 
-	 *         the different colors of a car model.
-	 * @throws IllegalArgumentException
-	 *         colors == null
-	 */
-	private void setColors(ArrayList<Color> colors) throws IllegalArgumentException {
-		if (colors == null) throw new IllegalArgumentException();
-		this.colors = colors;
-	}
-
-	/**
-	 * A method that sets the different engines for a car model to the given engines.
-	 * 
-	 * @param  engines 
-	 *         the different engines of a car model.
-	 * @throws IllegalArgumentException
-	 *         engines == null
-	 */
-	private void setEngines(ArrayList<Engine> engines) throws IllegalArgumentException {
-		if (engines == null) throw new IllegalArgumentException();
-		this.engines = engines;
-	}
-
-	/**
-	 * A method that sets the different gear boxes for a car model to the given gear boxes.
-	 * 
-	 * @param  gearboxes 
-	 *         the different gear boxes of a car model.
-	 * @throws IllegalArgumentException
-	 *         gearboxes == null
-	 */
-	private void setGearboxes(ArrayList<Gearbox> gearboxes) throws IllegalArgumentException {
-		if (gearboxes == null) throw new IllegalArgumentException();
-		this.gearboxes = gearboxes;
-	}
-
-	/**
-	 * A method that sets the seats bodies for a car model to the given seats.
-	 * 
-	 * @param  seats 
-	 *         the different seats of a car model.
-	 * @throws IllegalArgumentException
-	 *         seats == null
-	 */
-	private void setSeats(ArrayList<Seats> seats) throws IllegalArgumentException {
-		if (seats == null) throw new IllegalArgumentException();
-		this.seats = seats;
-	}
-
-	/**
-	 * A method that sets the different aircos for a car model to the given aircos.
-	 * 
-	 * @param  aircos 
-	 *         the different aircos of a car model.
-	 * @throws IllegalArgumentException
-	 *         aircos == null
-	 */
-	private void setAircos(ArrayList<Airco> aircos) throws IllegalArgumentException {
-		if (aircos == null) throw new IllegalArgumentException();
-		this.aircos = aircos;
-	}
-
-	/**
-	 * A method that sets the different wheels for a car model to the given wheels.
-	 * 
-	 * @param  wheels 
-	 *         the different wheels of a car model.
-	 * @throws IllegalArgumentException
-	 *         wheels == null
-	 */
-	private void setWheels(ArrayList<Wheels> wheels) throws IllegalArgumentException {
-		if (wheels == null) throw new IllegalArgumentException();
-		this.wheels = wheels;
 	}
 	
 	/**
@@ -237,26 +47,14 @@ public class CarModelSpecification {
 	 * 
 	 * @return A list of list of all the components of a car model specification
 	 */
-	public ArrayList<Component[]> getPosibilities(){
-		ArrayList<Component[]> posibilities=  new ArrayList<Component[]>();
-		
-		posibilities.add(this.getBodies().toArray(new Component[this.getBodies().size()]));
-		posibilities.add(this.getColors().toArray(new Component[this.getColors().size()]));
-		posibilities.add(this.getEngines().toArray(new Component[this.getEngines().size()]));
-		posibilities.add(this.getSeats().toArray(new Component[this.getSeats().size()]));
-		posibilities.add(this.getWheels().toArray(new Component[this.getWheels().size()]));
-		posibilities.add(this.getGearboxes().toArray(new Component[this.getGearboxes().size()]));
-		posibilities.add(this.getAircos().toArray(new Component[this.getAircos().size()]));
-		
-		return posibilities;
+	@SuppressWarnings("unchecked")
+	public HashMap<String, ArrayList<Component>> getPossibilities(){
+		return (HashMap<String, ArrayList<Component>>) this.spec.clone();
 	}
 	
 	@Override
 	public String toString() {
-		return "bodies= " + bodies.toString() + ", colors= " + colors.toString()
-				+ ", engines=  " + engines.toString() + ", gearboxes= " + gearboxes.toString()
-				+ ", seats= " + seats.toString() + ", aircos= " + aircos.toString() + ", wheels= "
-				+ wheels.toString();
+		return this.spec.toString();
 	}
 }
 
