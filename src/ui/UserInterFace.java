@@ -46,8 +46,6 @@ public class UserInterFace {
 			System.out.println("Please enter your login information");
 			System.out.print("Username: ");
 			String username = this.scan.next();
-			System.out.print("Password: ");
-			String password = this.scan.next();
 			
 			currentUser = this.control.getUser(username);
 			if (currentUser == null){
@@ -63,6 +61,8 @@ public class UserInterFace {
 			this.performAssemblyTask(currentUser);
 		if (this.control.canAdvanceAssemblyLine(currentUser))
 			this.advance(currentUser);	
+		if (this.control.canOrderSingleTask(currentUser))
+			this.advance(currentUser);
 	}
 
 	private void printUsers() {

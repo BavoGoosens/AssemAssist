@@ -17,18 +17,10 @@ public class CarManufacturingCompany {
 	private OrderManager ordermanager;
 
 	/**
-	 * A variable that holds an controller.
-	 */
-	private Controller controller;
-
-	/**
 	 * A constructor for a car manufacturing company.
 	 * 
-	 * @param 	control
-	 * 			The controller that controls this car manufacturing company.
 	 */
 	public CarManufacturingCompany(OrderManager ordermanager, ArrayList<User> users){
-		this.setController();
 		this.setUsers(users);
 		this.setOrderManager(ordermanager);
 	}
@@ -73,6 +65,9 @@ public class CarManufacturingCompany {
 	public boolean canAdvanceAssemblyLine(User currentUser) {
 		return currentUser.canAdvanceAssemblyLine();
 	}
+	public boolean canOrderSingleTask(User currentUser) {
+		return currentUser.canOrderSingleTask();
+	}
 	
 	public void advanceAssemblyLine(int time) {
 		this.getOrderManager().getProductionScheduler().advance(time);
@@ -94,19 +89,6 @@ public class CarManufacturingCompany {
 		return ordermanager;
 	}
 
-	private Controller getController() {
-		return controller;
-	}
-
-	/**
-	 * A method to set the controller of this class to the given controller.
-	 * 
-	 * @param 	controller
-	 * 			the new controller of this car manufacturing company.
-	 */
-	private void setController(Controller controller) {
-		this.controller = new Controller(this);
-	}
 
 	/**
 	 * A method to set the user manager of this class to the given user manager.
@@ -127,4 +109,6 @@ public class CarManufacturingCompany {
 	private void setOrderManager(OrderManager ordermanager) {
 		this.ordermanager = ordermanager;
 	}
+
+
 }

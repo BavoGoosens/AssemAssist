@@ -41,10 +41,6 @@ public class Controller {
 		return cmc.getUser(username);
 	}
 
-	public boolean canPlaceOrder(User currentuser) {
-		return this.cmc.canPlaceOrder(currentuser);
-	}
-
 	public ArrayList<Order> getCompletedOrders(User currentuser) {
 		return this.cmc.getCompletedOrders(currentuser);
 	}
@@ -57,6 +53,11 @@ public class Controller {
 		return this.cmc.getAvailableCarModels(currentuser);		
 	}
 
+
+	public boolean canPlaceOrder(User currentuser) {
+		return this.cmc.canPlaceOrder(currentuser);
+	}
+
 	public boolean canPerformAssemblyTask(User currentuser) {
 		return this.cmc.canPerformAssemblyTask(currentuser);
 	}
@@ -64,6 +65,11 @@ public class Controller {
 	public boolean canAdvanceAssemblyLine(User currentuser) {
 		return this.cmc.canAdvanceAssemblyLine(currentuser);
 	}
+	
+	public boolean canOrderSingleTask(User currentuser) {
+		return this.cmc.canOrderSingleTask(currentuser);
+	}
+
 	
 	public void advanceAssemblyLine(int time) {
 		this.cmc.advanceAssemblyLine(time);
