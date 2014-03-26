@@ -43,7 +43,7 @@ public class CarManufacturingCompany {
 
 	public ArrayList<Order> getPendingOrders(User user) {
 		try {
-			return this.getOrdermanager().getPendingOrders(user);
+			return this.getOrderManager().getPendingOrders(user);
 		}catch (NullPointerException e){
 			return null;
 		}
@@ -78,15 +78,11 @@ public class CarManufacturingCompany {
 	}
 	
 	public void placeOrder(Order order){
-		this.getOrdermanager().placeOrder(order);
+		this.getOrderManager().placeOrder(order);
 	}
 
 	private ArrayList<User> getUsers() {
 		return this.users;
-	}
-
-	private OrderManager getOrdermanager() {
-		return ordermanager;
 	}
 
 

@@ -83,21 +83,19 @@ public class UserInterFace {
 			if (response.equalsIgnoreCase("yes")) {
 
 				this.displayString(" > overview current assembly status: \n"+ '\n');
-				for(AssemblyTask as: this.control.overview()){
+				for(AssemblyTask as: this.control.overview())
 					if(!as.isCompleted())
 						this.displayString("   " +as.toString()+ " : not completed"+ '\n');
 					else
 						this.displayString("   " +as.toString()+ " : completed"+ '\n');
-				}
-
-
+				
 				this.displayString("\n > overview future assembly status: \n"+ '\n');
-				for(AssemblyTask as: this.control.futureOverview()){
+				for(AssemblyTask as: this.control.futureOverview())
 					if(!as.isCompleted())
 						this.displayString("   " +as.toString()+ " : not completed"+ '\n');
 					else
 						this.displayString("   " +as.toString()+ " : completed"+ '\n');
-				}
+				
 
 				this.displayString("\n > Please enter the time that was spent during the current phase.\n");
 				this.displayString(" >> ");
@@ -105,6 +103,7 @@ public class UserInterFace {
 
 				try {
 					int time = Integer.parseInt(response);
+					
 					if (!this.control.canAdvanceAssemblyLine()){
 						this.displayString(" > cannot advance assemblyline because of unfinished task \n");
 						for(WorkPost wp : this.control.getWorkingStations())
@@ -112,25 +111,27 @@ public class UserInterFace {
 								this.displayString("   "+ wp.getName());
 						this.displayString(" \n");
 						break;
-					}
-					else
+					}else{
 						this.control.advanceAssemblyLine(time);
-
+					}
+					
 					this.displayString(" > overview \n");
-					for(AssemblyTask as: this.control.overview()){
+					for(AssemblyTask as: this.control.overview())
 						if(!as.isCompleted())
 							this.displayString("   " +as.toString()+ " : not completed"+ '\n');
 						else
 							this.displayString("   " +as.toString()+ " : completed"+ '\n');
-					}
+					
 
 				} catch (NumberFormatException e) {
 					this.badInput();
 				}
+				
 			} else if (response.equalsIgnoreCase("no")) {
 				break;
 			}
 		}
+		
 		this.login();
 	}
 
@@ -240,12 +241,15 @@ public class UserInterFace {
 	}
 
 	public void order(User currentuser){
+		
 		this.displayOrderOverview(currentuser);
 		while(true){
+			
 			this.displayOrderHelp();
 			String response = this.getInput();
 			if (response.equalsIgnoreCase("quit"))
 				break;
+			
 			if (response.equalsIgnoreCase("order")){
 				ArrayList<CarModel> cml = this.control.getAvailableCarModels(currentuser);
 				CarModel cm = this.chooseCarModel(cml);
@@ -258,6 +262,7 @@ public class UserInterFace {
 				Date datum = this.control.getCompletionTimeEstimate();
 				boolean answered = false;
 				while (answered == false){
+					
 					this.displayString("\n" + " " + order.toString() + "\n" +
 							" > It will be finished around this time: " + datum.toString() + "\n" + 
 							" > Is this the order you wish to place? (yes/no) \n >>" );
@@ -269,7 +274,7 @@ public class UserInterFace {
 					}else if (answer.equalsIgnoreCase("no")){
 						this.displayString(" Allright please enter your new order or quit the system \n");
 						answered = true;
-					} else{
+					}else{
 						this.badInput();
 					}
 				}
@@ -363,6 +368,7 @@ public class UserInterFace {
 
 
 	public void displayOrderOverview(User currentuser){
+		
 		ArrayList<Order> completed = this.control.getCompletedOrders(currentuser);
 		ArrayList<Order> pending = this.control.getPendingOrders(currentuser);
 		if (completed != null & completed.size() > 0){
