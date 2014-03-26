@@ -32,7 +32,7 @@ public class AssemblyTask {
 	 * @param   name
 	 *          the name of this assembly process.
 	 */
-	public AssemblyTask(String name, ArrayList<Action> actions){
+	public AssemblyTask(String name, ArrayList<Action> actions) throws IllegalArgumentException {
 		this.setName(name);
 		this.setActions(actions);
 	}

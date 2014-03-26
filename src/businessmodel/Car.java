@@ -23,7 +23,7 @@ public class Car {
 	 * @param   components
 	 *          An ArrayList with all the components of this new car.
 	 */
-	public Car(ArrayList<Component> components){
+	public Car(ArrayList<Component> components) throws IllegalArgumentException {
 		setComponents(components);
 	}
 
@@ -36,8 +36,7 @@ public class Car {
 	 * 			if components is null
 	 */
 	private void setComponents(ArrayList<Component> components) throws IllegalArgumentException {
-		if(components == null)
-			throw new IllegalArgumentException();
+		if(components == null) throw new IllegalArgumentException();
 		this.components = components;
 	}
 
@@ -57,7 +56,8 @@ public class Car {
 	 * @param   component
 	 *          the component that you want to add.
 	 */
-	public void addComponent(Component component) {
+	public void addComponent(Component component) throws IllegalArgumentException {
+		if (component == null) throw new IllegalArgumentException("Bad component!");
 		this.getComponents().add(component);
 	}
 	
@@ -67,7 +67,8 @@ public class Car {
 	 * @param   component
 	 *          the component that you want to remove.
 	 */
-	public void removeComponent(Component component) {
+	public void removeComponent(Component component) throws IllegalArgumentException {
+		if (component == null) throw new IllegalArgumentException("Bad component!");
 		if( this.getComponents().contains(component))
 			this.getComponents().remove(component);
 	}

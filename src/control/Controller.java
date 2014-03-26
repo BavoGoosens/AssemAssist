@@ -55,19 +55,19 @@ public class Controller {
 
 
 	public boolean canPlaceOrder(User currentuser) {
-		return this.cmc.canPlaceOrder(currentuser);
+		return currentuser.canPlaceOrder();
 	}
 
 	public boolean canPerformAssemblyTask(User currentuser) {
-		return this.cmc.canPerformAssemblyTask(currentuser);
+		return currentuser.canPerfomAssemblyTask();
 	}
 
 	public boolean canAdvanceAssemblyLine(User currentuser) {
-		return this.cmc.canAdvanceAssemblyLine(currentuser);
+		return currentuser.canAdvanceAssemblyLine();
 	}
 	
 	public boolean canOrderSingleTask(User currentuser) {
-		return this.cmc.canOrderSingleTask(currentuser);
+		return currentuser.canOrderSingleTask();
 	}
 
 	

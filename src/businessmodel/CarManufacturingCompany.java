@@ -2,7 +2,8 @@ package businessmodel;
 
 import java.util.ArrayList;
 
-import control.Controller;
+import exceptions.IllegalNumberException;
+import exceptions.NoClearanceException;
 
 public class CarManufacturingCompany {
 
@@ -20,56 +21,40 @@ public class CarManufacturingCompany {
 	 * A constructor for a car manufacturing company.
 	 * 
 	 */
-	public CarManufacturingCompany(OrderManager ordermanager, ArrayList<User> users){
+	public CarManufacturingCompany(OrderManager ordermanager, ArrayList<User> users) throws IllegalArgumentException {
 		this.setUsers(users);
 		this.setOrderManager(ordermanager);
 	}
 	
 
-	public User getUser(String username) {
+	public User getUser(String username) throws IllegalArgumentException {
 		for(User user: this.getUsers())
 			if (user.getFirstname().equals(username))
 				return user;
-		throw new IllegalArgumentException("Username doesn't exist");
+		throw new IllegalArgumentException("Username doesn't exist!");
 	}
 
-	public ArrayList<Order> getCompletedOrders(User user) {
-		try{
-			return ordermanager.getCompletedOrders(user);
-		}catch (NullPointerException e){
-			return null;		
-		}
+	public ArrayList<Order> getCompletedOrders(User user) throws IllegalArgumentException, NoClearanceException {
+		if (user == null) throw new IllegalArgumentException("Bad user!");
+		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
+		return ordermanager.getCompletedOrders(user);
 	}
 
-	public ArrayList<Order> getPendingOrders(User user) {
-		try {
-			return this.getOrderManager().getPendingOrders(user);
-		}catch (NullPointerException e){
-			return null;
-		}
+	public ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
+		if (user == null) throw new IllegalArgumentException("Bad user!");
+		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
+		return this.getOrderManager().getPendingOrders(user);
 	}
 	
-	public ArrayList<CarModel> getAvailableCarModels(User currentuser) {
-		if (this.canPlaceOrder(currentuser)){
-			return this.getOrderManager().getCarmodels();
-		}
-		return null;
+	public ArrayList<CarModel> getAvailableCarModels(User currentuser) throws IllegalArgumentException,
+																			NoClearanceException {
+		if (currentuser == null) throw new IllegalArgumentException("Bad user!");
+		if (!currentuser.canPlaceOrder()) throw new NoClearanceException(currentuser);
+		return this.getOrderManager().getCarmodels();
 	}
 	
-	public boolean canPlaceOrder(User currentUser) {
-		return currentUser.canPlaceOrder();
-	}
-	public boolean canPerformAssemblyTask(User currentUser) {
-		return currentUser.canPerfomAssemblyTask();
-	}
-	public boolean canAdvanceAssemblyLine(User currentUser) {
-		return currentUser.canAdvanceAssemblyLine();
-	}
-	public boolean canOrderSingleTask(User currentUser) {
-		return currentUser.canOrderSingleTask();
-	}
-	
-	public void advanceAssemblyLine(int time) {
+	public void advanceAssemblyLine(int time) throws IllegalNumberException {
+		if (time < 0) throw new IllegalNumberException(time, "Bad time!");
 		this.getOrderManager().getProductionScheduler().advance(time);
 	}
 
@@ -77,7 +62,8 @@ public class CarManufacturingCompany {
 		return this.ordermanager;
 	}
 	
-	public void placeOrder(Order order){
+	public void placeOrder(Order order) throws IllegalArgumentException {
+		if (order == null) throw new IllegalArgumentException("Bad order!");
 		this.getOrderManager().placeOrder(order);
 	}
 
@@ -92,7 +78,8 @@ public class CarManufacturingCompany {
 	 * @param 	usermanager
 	 * 			the new user manager of this car manufacturing company.
 	 */
-	private void setUsers(ArrayList<User> users) {
+	private void setUsers(ArrayList<User> users) throws IllegalArgumentException {
+		if (users == null) throw new IllegalArgumentException("Bad list of users!");
 		this.users = users;
 	}
 
@@ -102,7 +89,8 @@ public class CarManufacturingCompany {
 	 * @param 	ordermanager
 	 * 			the new order manager of this car manufacturing company.
 	 */
-	private void setOrderManager(OrderManager ordermanager) {
+	private void setOrderManager(OrderManager ordermanager) throws IllegalArgumentException {
+		if (ordermanager == null) throw new IllegalArgumentException("Bad ordermanager!");
 		this.ordermanager = ordermanager;
 	}
 

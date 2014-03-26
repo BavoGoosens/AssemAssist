@@ -3,14 +3,6 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import component.Airco;
-import component.Body;
-import component.Color;
-import component.Engine;
-import component.Gearbox;
-import component.Seats;
-import component.Wheels;
-
 /**
  * A class that represents an assembly line. It currently holds 3 work post.
  * 
@@ -27,7 +19,7 @@ public class AssemblyLine {
 	/**
 	 * A constructor for the class AssemblyLine.
 	 */
-	public AssemblyLine(ArrayList<WorkPost> workposts) {
+	public AssemblyLine(ArrayList<WorkPost> workposts) throws IllegalArgumentException {
 		this.setWorkPosts(workposts);
 	}
 
@@ -35,7 +27,8 @@ public class AssemblyLine {
 	 * A method to set the work posts of this workpost to the given work posts.
 	 * @param workposts
 	 */
-	private void setWorkPosts(ArrayList<WorkPost> workposts) {
+	private void setWorkPosts(ArrayList<WorkPost> workposts) throws IllegalArgumentException {
+		if (workposts == null) throw new IllegalArgumentException("Bad list of work posts!");
 		this.workposts = workposts;
 	}
 
@@ -75,7 +68,9 @@ public class AssemblyLine {
 	 * @return 	Order
 	 * 		   	A finished order if the last WorkPost was working on an Order. 
 	 */
-	public Order advance(Order neworder) {
+	public Order advance(Order neworder) throws IllegalStateException {
+		if (!this.canAdvance()) throw new IllegalStateException("Cannot advance assembly line!");
+		// order can be 'null'
 		Order temp1 = this.getWorkPosts().get(0).getOrder();
 		Order temp2 = this.getWorkPosts().get(1).getOrder();
 		Order finished = this.getWorkPosts().get(2).getOrder();

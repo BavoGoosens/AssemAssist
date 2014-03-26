@@ -28,7 +28,7 @@ public class Action {
 	 * @param 	description
 	 * 			The description of the new action.
 	 */
-	public Action(String descr) {
+	public Action(String descr) throws IllegalArgumentException {
 		this.setDescription(descr);
 	}
 
@@ -56,7 +56,8 @@ public class Action {
 	 * @param	description
 	 * 			The description of the action
 	 */
-	private void setDescription(String description) {
+	private void setDescription(String description) throws IllegalArgumentException {
+		if (description == null) throw new IllegalArgumentException("Bad description!");
 		this.description = description;
 	}
 
@@ -66,7 +67,8 @@ public class Action {
 	 * @param	component
 	 * 			The component that needs to be added.
 	 */
-	protected void addComponent(Component component) {
+	protected void addComponent(Component component) throws IllegalArgumentException {
+		if (component == null) throw new IllegalArgumentException("Bad component!");
 		if (!this.getComponents().contains(component.getClass().getName())) 
 			this.getComponents().add(component.getClass().getName());
 	}
