@@ -30,7 +30,7 @@ public class CarModel {
 	 * @param   cms
 	 *          A car model specification of the car.
 	 */
-	public CarModel(String carmodel,CarModelSpecification cms){
+	public CarModel(String carmodel,CarModelSpecification cms) throws IllegalArgumentException {
 		setCarmodel(carmodel);
 		setCarModelSpecification(cms);
 	}
@@ -51,7 +51,8 @@ public class CarModel {
 	 * @param    carmodel
 	 *           the new name of this car model.
 	 */
-	private void setCarmodel(String carmodel) {
+	private void setCarmodel(String carmodel) throws IllegalArgumentException {
+		if (carmodel == null || carmodel.equals("")) throw new IllegalArgumentException("Bad name for carmodel!");
 		this.carmodel = carmodel;
 	}	
 	
@@ -74,9 +75,7 @@ public class CarModel {
 	 * 			if cms == null
 	 */
 	private void setCarModelSpecification(CarModelSpecification cms) throws IllegalArgumentException {
-		if(cms == null){
-			throw new IllegalArgumentException();
-		}
+		if(cms == null) throw new IllegalArgumentException();
 		this.cms = cms;
 	}
 	
