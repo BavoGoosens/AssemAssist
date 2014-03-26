@@ -28,8 +28,8 @@ public class Controller {
 
 	private CarManufacturingCompany cmc; 
 
-	public Controller(){
-		this.cmc = new CarManufacturingCompany(this);
+	public Controller(CarManufacturingCompany cmc){
+		this.cmc = cmc;
 		this.ui = new UserInterFace(this);
 	}
 

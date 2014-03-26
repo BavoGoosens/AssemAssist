@@ -1,9 +1,7 @@
 package businessmodel;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Locale;
 import org.joda.time.DateTime;
 
 /**
@@ -52,12 +50,15 @@ public class ProductionScheduler {
 	 * 
 	 * @param	DateTime
 	 * 			The date and time when this scheduler starts.
+	 * 
+	 * @param 	AssemblyLine
+	 * 			the assembly line of this ProductionScheduler.
 	 */
-	public ProductionScheduler(OrderManager ordermanager, DateTime start) {	
+	public ProductionScheduler(OrderManager ordermanager, DateTime start,AssemblyLine assemblyline) {	
 		this.setToday(start);
 		this.setAvailableTime(17*60);
 		this.setOrderManager(ordermanager);
-		this.setAssemblyline(new AssemblyLine());
+		this.setAssemblyline(assemblyline);
 		this.setDayOrders(new LinkedList<Order>());
 	}
 

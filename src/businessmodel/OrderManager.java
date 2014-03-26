@@ -37,11 +37,6 @@ public class OrderManager {
 	private ProductionScheduler production;
 
 	/**
-	 * An inventory for this Order manager
-	 */
-	private Inventory inventory;
-
-	/**
 	 * A boolean that indicates if this is the first order that 
 	 * has been entered in the system.
 	 */
@@ -53,13 +48,11 @@ public class OrderManager {
 	 * @param    carmodels
 	 *           the car models that an car manufacturing company offers.
 	 */
-	public OrderManager(){
+	public OrderManager(ArrayList<CarModel> carmodels){
 		this.pendingorders = new LinkedList<Order>();
 		this.completedorders = new LinkedList<Order>();
 		DateTime start = new DateTime().withHourOfDay(6).withMinuteOfHour(0).withSecondOfMinute(0);
-		this.setProductionScheduler(new ProductionScheduler(this, start));
-		this.inventory = new Inventory();
-		this.setCarmodels(inventory);
+		this.setCarModels(carmodels);
 	}
 
 	/**
@@ -103,25 +96,6 @@ public class OrderManager {
 	 */
 	public ArrayList<CarModel> getCarmodels() {
 		return carmodels;
-	}
-
-	/**
-	 * A method to set the car models of this order manager to the given car models.
-	 * 
-	 * @param    carmodels
-	 *           the new car models of this order manager.
-	 */
-	private void setCarmodels(Inventory inventory){
-		CarModelSpecification spec1 = new CarModelSpecification(this.getInventory().bodytypes,
-				this.getInventory().colortypes,this.getInventory().enginetypes,
-				this.getInventory().gearboxtypes,this.getInventory().seattypes,
-				this.getInventory().aircotypes,this.getInventory().wheeltypes);
-		CarModel carmodel1 = new CarModel("Audi A8",spec1);
-		CarModel carmodel2 = new CarModel("Audi TT",spec1);
-		CarModel carmodel3 = new CarModel("Audi R8",spec1);
-		this.getCarmodels().add(carmodel1);
-		this.getCarmodels().add(carmodel2);
-		this.getCarmodels().add(carmodel3);
 	}
 
 	/**
@@ -262,12 +236,8 @@ public class OrderManager {
 		}
 		return res;
 	}
-
-	/**
-	 * A method to get the inventory of this order manager.
-	 * @return the inventory of this class.
-	 */
-	private Inventory getInventory() {
-		return inventory;
+	
+	private void setCarModels(ArrayList<CarModel> carmodels){
+		this.carmodels = carmodels;
 	}
 }

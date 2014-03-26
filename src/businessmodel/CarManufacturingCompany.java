@@ -9,22 +9,17 @@ public class CarManufacturingCompany {
 	/**
 	 * A variable that holds an user management.
 	 */
-	private UserManagement um = new UserManagement();
-
-	/**
-	 * A variable that holds an inventory
-	 */
-	private Inventory inv;
+	private UserManagement usermanagement = new UserManagement();
 
 	/**
 	 * A variable that holds an order manager.
 	 */
-	private OrderManager om;
+	private OrderManager ordermanager;
 
 	/**
 	 * A variable that holds an controller.
 	 */
-	private Controller control;
+	private Controller controller;
 
 	/**
 	 * A constructor for a car manufacturing company.
@@ -32,10 +27,10 @@ public class CarManufacturingCompany {
 	 * @param 	control
 	 * 			The controller that controls this car manufacturing company.
 	 */
-	public CarManufacturingCompany(Controller control){
-		this.control = control;
-		this.um = new UserManagement();
-		this.om = new OrderManager();
+	public CarManufacturingCompany(OrderManager ordermanager, UserManagement userm){
+		this.setController();
+		this.setUserManagement(userm);
+		this.setOrderManager(ordermanager);
 	}
 	
 	/**
@@ -48,16 +43,16 @@ public class CarManufacturingCompany {
 	 * @return	true if the combination of the user name and the password matches a user in the system.
 	 */
 	public boolean login(String username, String password) {
-		return this.um.authenticate(username, password);		
+		return this.usermanagement.authenticate(username, password);		
 	}
 
 	public User getUser(String username) {
-		return this.um.getUser(username);
+		return this.getUsermanagement().getUser(username);
 	}
 
 	public ArrayList<Order> getCompletedOrders(User user) {
 		try{
-			return om.getCompletedOrders(user);
+			return ordermanager.getCompletedOrders(user);
 		}catch (NullPointerException e){
 			return null;		
 		}
@@ -65,36 +60,78 @@ public class CarManufacturingCompany {
 
 	public ArrayList<Order> getPendingOrders(User user) {
 		try {
-			return om.getPendingOrders(user);
+			return this.getOrdermanager().getPendingOrders(user);
 		}catch (NullPointerException e){
 			return null;
 		}
 	}
 	public boolean canPlaceOrder(User currentuser) {
-		return this.um.canPlaceOrder(currentuser);
+		return this.getUsermanagement().canPlaceOrder(currentuser);
 	}
 	public ArrayList<CarModel> getAvailableCarModels(User currentuser) {
 		if (this.canPlaceOrder(currentuser)){
-			return this.om.getCarmodels();
+			return this.getOrderManager().getCarmodels();
 		}
 		return null;
 	}
 	public boolean canPerformAssemblyTask(User currentuser) {
-		return this.um.isMechanic(currentuser);
+		return this.getUsermanagement().isMechanic(currentuser);
 	}
 	public boolean canAdvanceAssemblyLine(User currentuser) {
-		return this.um.canControlAssemblyLine(currentuser);
+		return this.getUsermanagement().canControlAssemblyLine(currentuser);
 	}
 	
 	public void advanceAssemblyLine(int time) {
-		this.om.getProductionScheduler().advance(time);
+		this.getOrderManager().getProductionScheduler().advance(time);
 	}
 
 	public OrderManager getOrderManager(){
-		return this.om;
+		return this.ordermanager;
 	}
 	
 	public void placeOrder(Order order){
-		this.om.placeOrder(order);
+		this.getOrdermanager().placeOrder(order);
+	}
+
+	private UserManagement getUsermanagement() {
+		return usermanagement;
+	}
+
+	private OrderManager getOrdermanager() {
+		return ordermanager;
+	}
+
+	private Controller getController() {
+		return controller;
+	}
+
+	/**
+	 * A method to set the controller of this class to the given controller.
+	 * 
+	 * @param 	controller
+	 * 			the new controller of this car manufacturing company.
+	 */
+	private void setController(Controller controller) {
+		this.controller = new Controller(this);
+	}
+
+	/**
+	 * A method to set the user manager of this class to the given user manager.
+	 * 
+	 * @param 	usermanager
+	 * 			the new user manager of this car manufacturing company.
+	 */
+	private void setUserManagement(UserManagement usermanager) {
+		this.usermanagement = usermanager;
+	}
+
+	/**
+	 * A method to set the order manager of this class to the given order manager.
+	 * 
+	 * @param 	ordermanager
+	 * 			the new order manager of this car manufacturing company.
+	 */
+	private void setOrderManager(OrderManager ordermanager) {
+		this.ordermanager = ordermanager;
 	}
 }
