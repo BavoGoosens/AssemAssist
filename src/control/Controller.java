@@ -12,7 +12,6 @@ import businessmodel.Order;
 import businessmodel.OrderManager;
 import businessmodel.ProductionScheduler;
 import businessmodel.User;
-import businessmodel.UserManagement;
 import businessmodel.WorkPost;
 
 /**
@@ -37,9 +36,6 @@ public class Controller {
 		this.ui.login();
 	}
 
-	public boolean authenticate(String username, String password) {
-		return this.cmc.login(username, password);
-	}
 
 	public User getUser(String username) {
 		return cmc.getUser(username);

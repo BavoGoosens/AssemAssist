@@ -40,7 +40,7 @@ public class UserInterFace {
 	 * 
 	 */
 	public void login(){
-		User currentuser;
+		User currentUser;
 		while (true){
 			printUsers();
 			System.out.println("Please enter your login information");
@@ -48,19 +48,21 @@ public class UserInterFace {
 			String username = this.scan.next();
 			System.out.print("Password: ");
 			String password = this.scan.next();
-			if (this.control.authenticate(username,password)){
-				currentuser = this.control.getUser(username);
-				break;
-			} else {
+			
+			currentUser = this.control.getUser(username);
+			if (currentUser == null){
 				this.badLogin();
-			}
+				continue;
+			}else
+				break;
+			
 		}
-		if (this.control.canPlaceOrder(currentuser))
-			this.order(currentuser);
-		if (this.control.canPerformAssemblyTask(currentuser))
-			this.performAssemblyTask(currentuser);
-		if (this.control.canAdvanceAssemblyLine(currentuser))
-			this.advance(currentuser);	
+		if (this.control.canPlaceOrder(currentUser))
+			this.order(currentUser);
+		if (this.control.canPerformAssemblyTask(currentUser))
+			this.performAssemblyTask(currentUser);
+		if (this.control.canAdvanceAssemblyLine(currentUser))
+			this.advance(currentUser);	
 	}
 
 	private void printUsers() {

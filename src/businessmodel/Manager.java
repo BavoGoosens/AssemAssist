@@ -17,10 +17,13 @@ public class Manager extends User {
 	 * 			the last name of the new manager.
 	 * @param 	username
 	 * 			the user name of the new manager.
-	 * @param 	password
-	 * 			the password of the new manager.
 	 */
-	public Manager(String firstname, String lastname, String username, String password) {
-		super(firstname,lastname,username,password);
+	public Manager(String firstname, String lastname, String username) {
+		super(firstname,lastname,username);
+	}
+	
+	@Override
+	public boolean canAdvanceAssemblyLine(){
+		return true;
 	}
 }

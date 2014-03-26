@@ -9,7 +9,7 @@ public class CarManufacturingCompany {
 	/**
 	 * A variable that holds an user management.
 	 */
-	private UserManagement usermanagement = new UserManagement();
+	private ArrayList<User> users = new ArrayList<User>();
 
 	/**
 	 * A variable that holds an order manager.
@@ -27,27 +27,18 @@ public class CarManufacturingCompany {
 	 * @param 	control
 	 * 			The controller that controls this car manufacturing company.
 	 */
-	public CarManufacturingCompany(OrderManager ordermanager, UserManagement userm){
+	public CarManufacturingCompany(OrderManager ordermanager, ArrayList<User> users){
 		this.setController();
-		this.setUserManagement(userm);
+		this.setUsers(users);
 		this.setOrderManager(ordermanager);
 	}
 	
-	/**
-	 * A method to check if a given user name and password belong to a user of the system.
-	 * 
-	 * @param 	username
-	 * 			the user name of the user that wants to login
-	 * @param 	password
-	 * 			the password of the user that wants to login.
-	 * @return	true if the combination of the user name and the password matches a user in the system.
-	 */
-	public boolean login(String username, String password) {
-		return this.usermanagement.authenticate(username, password);		
-	}
 
 	public User getUser(String username) {
-		return this.getUsermanagement().getUser(username);
+		for(User user: this.getUsers())
+			if (user.getFirstname().equals(username))
+				return user;
+		throw new IllegalArgumentException("Username doesn't exist");
 	}
 
 	public ArrayList<Order> getCompletedOrders(User user) {
@@ -65,20 +56,22 @@ public class CarManufacturingCompany {
 			return null;
 		}
 	}
-	public boolean canPlaceOrder(User currentuser) {
-		return this.getUsermanagement().canPlaceOrder(currentuser);
-	}
+	
 	public ArrayList<CarModel> getAvailableCarModels(User currentuser) {
 		if (this.canPlaceOrder(currentuser)){
 			return this.getOrderManager().getCarmodels();
 		}
 		return null;
 	}
-	public boolean canPerformAssemblyTask(User currentuser) {
-		return this.getUsermanagement().isMechanic(currentuser);
+	
+	public boolean canPlaceOrder(User currentUser) {
+		return currentUser.canPlaceOrder();
 	}
-	public boolean canAdvanceAssemblyLine(User currentuser) {
-		return this.getUsermanagement().canControlAssemblyLine(currentuser);
+	public boolean canPerformAssemblyTask(User currentUser) {
+		return currentUser.canPerfomAssemblyTask();
+	}
+	public boolean canAdvanceAssemblyLine(User currentUser) {
+		return currentUser.canAdvanceAssemblyLine();
 	}
 	
 	public void advanceAssemblyLine(int time) {
@@ -93,8 +86,8 @@ public class CarManufacturingCompany {
 		this.getOrdermanager().placeOrder(order);
 	}
 
-	private UserManagement getUsermanagement() {
-		return usermanagement;
+	private ArrayList<User> getUsers() {
+		return this.users;
 	}
 
 	private OrderManager getOrdermanager() {
@@ -121,8 +114,8 @@ public class CarManufacturingCompany {
 	 * @param 	usermanager
 	 * 			the new user manager of this car manufacturing company.
 	 */
-	private void setUserManagement(UserManagement usermanager) {
-		this.usermanagement = usermanager;
+	private void setUsers(ArrayList<User> users) {
+		this.users = users;
 	}
 
 	/**

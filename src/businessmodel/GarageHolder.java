@@ -17,10 +17,13 @@ public class GarageHolder extends User {
 	 * 			the last name of the new garage holder.
 	 * @param 	username
 	 * 			the user name for the new garage holder.
-	 * @param 	password
-	 * 			the password for his garage holder.
 	 */
-	public GarageHolder(String firstname, String lastname, String username, String password) {
-		super(firstname,lastname,username,password);
+	public GarageHolder(String firstname, String lastname, String username) {
+		super(firstname,lastname,username);
+	}
+	
+	@Override
+	public boolean canPlaceOrder(){
+		return true;
 	}
 }

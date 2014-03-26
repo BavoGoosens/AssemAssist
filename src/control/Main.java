@@ -180,17 +180,18 @@ public class Main {
 		ordermanager.setProductionScheduler(prod1);
 		
 		// aanmaak users
-		GarageHolder garageholder = new GarageHolder("jan","Willens","Jan2014","cc12");
-		Mechanic mechanic = new Mechanic("Peter","Winkens","Peter2014","cc12");
-		Manager manager = new Manager("Fred","Janssen","Fred2014","cc12");
-		
+		GarageHolder garageholder = new GarageHolder("jan","Willens","Jan2014");
+		Mechanic mechanic = new Mechanic("Peter","Winkens","Peter2014");
+		Manager manager = new Manager("Fred","Janssen","Fred2014");
+		ArrayList<User> users = new ArrayList<User>();
+		users.add(garageholder);
+		users.add(mechanic);
+		users.add(manager);
 		// aanmaak usermanagement 
-		
-		// UserManagment fixen.
-		UserManagement usermanagement = new UserManagement();
+	
 		
 		// aanmaak car manufacturing company
 		// Controller moet hier aangemaakt worden?
-		CarManufacturingCompany cmc = new CarManufacturingCompany(ordermanager,usermanagement);
+		CarManufacturingCompany cmc = new CarManufacturingCompany(ordermanager,users);
 	}
 }

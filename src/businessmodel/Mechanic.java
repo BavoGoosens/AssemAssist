@@ -17,10 +17,13 @@ public class Mechanic extends User {
 	 * 			the last name of the new mechanic.
 	 * @param 	username
 	 * 			the user name of the new mechanic.
-	 * @param 	password
-	 * 			the password of the new mechanic.
 	 */
-	public Mechanic(String firstname, String lastname, String username, String password) {
-		super(firstname,lastname,username,password);
+	public Mechanic(String firstname, String lastname, String username) {
+		super(firstname,lastname,username);
+	}
+	
+	@Override
+	public boolean canPerfomAssemblyTask(){
+		return true;
 	}
 }
