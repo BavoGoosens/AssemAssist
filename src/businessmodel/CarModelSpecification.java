@@ -22,18 +22,20 @@ public class CarModelSpecification {
 	 * @param 	parts 
 	 * 			The list of components this specification consists of.
 	 */
-	public CarModelSpecification(ArrayList<String> types,  ArrayList<Component> parts) {
+	public CarModelSpecification(ArrayList<String> types,  ArrayList<Component> parts) throws IllegalArgumentException {
 		this.setTypes(types);
 		this.setComponents(parts);
 	}
 	
-	private void setTypes(ArrayList<String> types) {
+	private void setTypes(ArrayList<String> types) throws IllegalArgumentException {
+		if (types == null) throw new IllegalArgumentException("Bad list of types!");
 		for (String type: types){
 			this.spec.put(type, new ArrayList<Component>());
 		}
 	}
 
-	private void setComponents(ArrayList<Component> parts) {
+	private void setComponents(ArrayList<Component> parts) throws IllegalArgumentException {
+		if (parts == null) throw new IllegalArgumentException("Bad list of parts!");
 		for (Component part : parts){
 			String type = part.getClass().getName();
 			ArrayList<Component> list = this.spec.get(type);

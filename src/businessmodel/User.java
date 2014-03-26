@@ -35,19 +35,21 @@ public abstract class User {
 	 * @param usertype
 	 * 		  the specific type of User.
 	 */
-	public User (String firstname, String lastname, String username){
+	public User (String firstname, String lastname, String username) throws IllegalArgumentException {
+		if (firstname == null) throw new IllegalArgumentException("Bad first name!");
+		if (lastname == null) throw new IllegalArgumentException("Bad last name!");
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.setUsername(username);
 	}
 	
 	/**
-	 * This method returns the name of the User.
+	 * This method returns the user name of the User.
 	 * 
 	 * @return String
-	 * 		   A string representing the name of this User.
+	 * 		   A string representing the user name of this User.
 	 */
-	private String getUsername() {
+	public String getUsername() {
 		return username;
 	}
 
@@ -57,7 +59,8 @@ public abstract class User {
 	 * @param username
 	 * 		  the username of this User.
 	 */
-	private void setUsername(String username) {
+	private void setUsername(String username) throws IllegalArgumentException {
+		if (username == null) throw new IllegalArgumentException("Bad username!");
 		this.username = username;
 	}
 

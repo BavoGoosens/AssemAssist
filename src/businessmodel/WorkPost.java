@@ -37,7 +37,7 @@ public class WorkPost {
 	 * @param	name
 	 * 			The name of the work post
 	 */
-	public WorkPost(String name) {
+	public WorkPost(String name) throws IllegalArgumentException {
 		this.setName(name);
 		this.pendingtasks = new ArrayList<AssemblyTask>();
 	}
@@ -50,7 +50,7 @@ public class WorkPost {
 	 * @param 	tasks
 	 * 			The tasks this work post is responsible for.
 	 */
-	public WorkPost(String name, ArrayList<AssemblyTask> tasks) {
+	public WorkPost(String name, ArrayList<AssemblyTask> tasks) throws IllegalArgumentException {
 		this(name);
 		this.setResponsibletasks(tasks);
 	}
@@ -120,7 +120,8 @@ public class WorkPost {
 	 * @param responsibletasks
 	 * 		  An ArrayList with all the AssemblyTasks this WorkPost is responsible for.
 	 */
-	public void setResponsibletasks(ArrayList<AssemblyTask> responsibletasks) {
+	public void setResponsibletasks(ArrayList<AssemblyTask> responsibletasks) throws IllegalArgumentException {
+		if (responsibletasks == null) throw new IllegalArgumentException("Bad list of responsible tasks!");
 		this.responsibletasks = responsibletasks;
 	}
 
@@ -140,7 +141,8 @@ public class WorkPost {
 	 * @param order_in_process
 	 *        The Order the WorkPost is working on.
 	 */
-	public void setOrder(Order order_in_process) {
+	public void setOrder(Order order_in_process) throws IllegalArgumentException {
+		if (order_in_process == null) throw new IllegalArgumentException("Bad order!");
 		this.order_in_process = order_in_process;
 	}
 
@@ -164,7 +166,8 @@ public class WorkPost {
 	 * @param   Order
 	 * 			The order that this work post needs to start working on.
 	 */
-	public void setNewOrder(Order order){
+	public void setNewOrder(Order order) throws IllegalArgumentException {
+		if (order == null) throw new IllegalArgumentException("Bad order!");
 		this.setOrder(order);
 		this.refreshAssemblyTasks();
 	}
@@ -191,7 +194,8 @@ public class WorkPost {
 	 * @return ArrayList<AssemblyTask>
 	 *         A list of AssemblyTasks that need to be carried out to install (some of) the components.
 	 */
-	protected ArrayList<AssemblyTask> possibleAssemblyTasks(ArrayList<Component> carparts) {
+	protected ArrayList<AssemblyTask> possibleAssemblyTasks(ArrayList<Component> carparts) throws IllegalArgumentException {
+		if (carparts == null) throw new IllegalArgumentException("Bad list of car parts!");
 		ArrayList<AssemblyTask> result = new ArrayList<AssemblyTask>();
 		for(AssemblyTask task :this.getResponsibletasks()){
 			for(Action action: task.getActions()){

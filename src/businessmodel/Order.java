@@ -2,8 +2,11 @@ package businessmodel;
 
 import java.util.ArrayList;
 import java.util.Locale;
+
 import org.joda.time.DateTime;
+
 import component.Component;
+import exceptions.NoClearanceException;
 
 /**
  * A class representing a specific car order
@@ -38,7 +41,7 @@ public class Order {
 	 * @param   deliverydate
 	 *          the delivery date of the new order.
 	 */
-	public Order(User user, ArrayList<Component> components){
+	public Order(User user, ArrayList<Component> components) throws IllegalArgumentException, NoClearanceException{
 		setUser(user);
 		this.car = new Car(components);
 		this.deliverydate = new DateTime();	
@@ -52,22 +55,10 @@ public class Order {
 	 * @throws  IllegalArgumentException
 	 * 			!canHaveAsUser(user)
 	 */
-	private void setUser(User user) throws IllegalArgumentException {
-		if (!canHaveAsUser(user)) 
-			throw new IllegalArgumentException();
+	private void setUser(User user) throws IllegalArgumentException, NoClearanceException {
+		if (user == null) throw new IllegalArgumentException("Bad user!");
+		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
 		this.user = user;
-	}
-
-	/**
-	 * A method to check if this order can have the given user.
-	 * 
-	 * @param   user
-	 *          the new user of this order.
-	 * @return  boolean
-	 * 			true if user is instanceof garage holder
-	 */
-	private boolean canHaveAsUser(User user) {
-		return (user instanceof GarageHolder);		
 	}
 
 	/**

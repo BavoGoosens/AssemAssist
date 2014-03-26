@@ -18,7 +18,7 @@ public class GarageHolder extends User {
 	 * @param 	username
 	 * 			the user name for the new garage holder.
 	 */
-	public GarageHolder(String firstname, String lastname, String username) {
+	public GarageHolder(String firstname, String lastname, String username) throws IllegalArgumentException {
 		super(firstname,lastname,username);
 	}
 	

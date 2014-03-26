@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
+
 import org.joda.time.DateTime;
+
+import exceptions.IllegalNumberException;
+import exceptions.NoClearanceException;
 
 
 /**
@@ -48,7 +52,7 @@ public class OrderManager {
 	 * @param    carmodels
 	 *           the car models that an car manufacturing company offers.
 	 */
-	public OrderManager(ArrayList<CarModel> carmodels){
+	public OrderManager(ArrayList<CarModel> carmodels) throws IllegalArgumentException {
 		this.pendingorders = new LinkedList<Order>();
 		this.completedorders = new LinkedList<Order>();
 		DateTime start = new DateTime().withHourOfDay(6).withMinuteOfHour(0).withSecondOfMinute(0);
@@ -61,8 +65,7 @@ public class OrderManager {
 	 * @param order
 	 * 		  An Order that needs to be added.
 	 */
-	public void placeOrder(Order order){
-
+	public void placeOrder(Order order) throws IllegalArgumentException {
 		this.addOrder(order);
 		boolean added = this.getProductionScheduler().update();
 		if (added == false){
@@ -104,7 +107,8 @@ public class OrderManager {
 	 * @param   order
 	 *          the order that needs to be added.
 	 */
-	public void addOrder(Order order){
+	public void addOrder(Order order) throws IllegalArgumentException {
+		if (order == null) throw new IllegalArgumentException("Bad order!");
 		this.getPendingOrders().add(order);
 	}
 
@@ -131,7 +135,9 @@ public class OrderManager {
 	 * 
 	 * @return  the completed orders of a given user of this order manager.
 	 */
-	public ArrayList<Order> getCompletedOrders(User user){
+	public ArrayList<Order> getCompletedOrders(User user) throws IllegalArgumentException, NoClearanceException {
+		if (user == null) throw new IllegalArgumentException("Bad user!");
+		if (user.canPlaceOrder()) throw new NoClearanceException(user);
 		ArrayList<Order> completedorders = new ArrayList<Order>();
 		for (Order order: this.getCompletedOrders()){
 			if (order.getUser() == user)
@@ -146,7 +152,9 @@ public class OrderManager {
 	 * @return 	ArrayList<Order>
 	 * 			the pending orders of a given user managed by this order manager.
 	 */
-	public ArrayList<Order> getPendingOrders(User user){
+	public ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
+		if (user == null) throw new IllegalArgumentException("Bad user!");
+		if (user.canPlaceOrder()) throw new NoClearanceException(user);
 		ArrayList<Order> pendingorders = new ArrayList<Order>();
 		pendingorders.addAll(this.getProductionScheduler().getDayorders());
 		for (Order order: this.getPendingOrders()){
@@ -172,7 +180,8 @@ public class OrderManager {
 	 * @param 	production
 	 * 			The ProductionScheduler this OrderManager uses.
 	 */
-	public void setProductionScheduler(ProductionScheduler production) {
+	public void setProductionScheduler(ProductionScheduler production) throws IllegalArgumentException {
+		if (production == null) throw new IllegalArgumentException("Bad production scheduler!");
 		this.production = production;
 	}
 
@@ -213,7 +222,8 @@ public class OrderManager {
 	 * @param finished 
 	 * 		  The Order that needs to be moved.
 	 */
-	public void finishedOrder(Order finished) {
+	public void finishedOrder(Order finished) throws IllegalArgumentException {
+		if (finished == null) throw new IllegalArgumentException("Bad order!");
 		this.getCompletedOrders().add(finished);
 	}
 
@@ -227,6 +237,7 @@ public class OrderManager {
 	 * 		   A list with the requested orders.
 	 */
 	public LinkedList<Order> getNbOrders(int nb) {
+		if (nb < 0) throw new IllegalNumberException(nb, "Bad number!");
 		LinkedList<Order> res = new LinkedList<Order>();
 		for (int i = 0 ; i < nb - 1; i++){
 			Order tmp = this.getPendingOrders().pollFirst();
@@ -237,7 +248,8 @@ public class OrderManager {
 		return res;
 	}
 	
-	private void setCarModels(ArrayList<CarModel> carmodels){
+	private void setCarModels(ArrayList<CarModel> carmodels) throws IllegalArgumentException {
+		if (carmodels == null) throw new IllegalArgumentException("Bad list of car models!");
 		this.carmodels = carmodels;
 	}
 }

@@ -29,32 +29,25 @@ public class CarManufacturingCompany {
 
 	public User getUser(String username) throws IllegalArgumentException {
 		for(User user: this.getUsers())
-			if (user.getFirstname().equals(username))
+			if (user.getUsername().equals(username))
 				return user;
 		throw new IllegalArgumentException("Username doesn't exist!");
 	}
 
 	public ArrayList<Order> getCompletedOrders(User user) throws IllegalArgumentException, NoClearanceException {
-		if (user == null) throw new IllegalArgumentException("Bad user!");
-		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
 		return ordermanager.getCompletedOrders(user);
 	}
 
 	public ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
-		if (user == null) throw new IllegalArgumentException("Bad user!");
-		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
 		return this.getOrderManager().getPendingOrders(user);
 	}
 	
 	public ArrayList<CarModel> getAvailableCarModels(User currentuser) throws IllegalArgumentException,
 																			NoClearanceException {
-		if (currentuser == null) throw new IllegalArgumentException("Bad user!");
-		if (!currentuser.canPlaceOrder()) throw new NoClearanceException(currentuser);
 		return this.getOrderManager().getCarmodels();
 	}
 	
 	public void advanceAssemblyLine(int time) throws IllegalNumberException {
-		if (time < 0) throw new IllegalNumberException(time, "Bad time!");
 		this.getOrderManager().getProductionScheduler().advance(time);
 	}
 
@@ -63,7 +56,6 @@ public class CarManufacturingCompany {
 	}
 	
 	public void placeOrder(Order order) throws IllegalArgumentException {
-		if (order == null) throw new IllegalArgumentException("Bad order!");
 		this.getOrderManager().placeOrder(order);
 	}
 

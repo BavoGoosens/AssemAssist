@@ -12,7 +12,7 @@ public class CustomsShopManager extends User {
 	 * @param 	username
 	 * 			the user name for the new customs shop manager.
 	 */
-	public CustomsShopManager(String firstname, String lastname, String username) {
+	public CustomsShopManager(String firstname, String lastname, String username) throws IllegalArgumentException {
 		super(firstname,lastname,username);
 	}
 	

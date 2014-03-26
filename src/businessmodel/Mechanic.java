@@ -18,7 +18,7 @@ public class Mechanic extends User {
 	 * @param 	username
 	 * 			the user name of the new mechanic.
 	 */
-	public Mechanic(String firstname, String lastname, String username) {
+	public Mechanic(String firstname, String lastname, String username) throws IllegalArgumentException {
 		super(firstname,lastname,username);
 	}
 	

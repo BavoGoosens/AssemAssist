@@ -2,7 +2,10 @@ package businessmodel;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+
 import org.joda.time.DateTime;
+
+import exceptions.IllegalNumberException;
 
 /**
  * A class that is responsible for scheduling orders for an individual day.
@@ -68,7 +71,8 @@ public class ProductionScheduler {
 	 * @param 	int time
 	 * 			An integer representing the time spent during this stage (in minutes). 
 	 */
-	public void advance(int time){
+	public void advance(int time) throws IllegalNumberException {
+		if (time < 0) throw new IllegalNumberException(time, "Bad time!");
 		Order finished = null;
 		if (this.getAssemblyline().canAdvance()){
 			Order neworder = this.getNextDayOrder();
@@ -110,6 +114,7 @@ public class ProductionScheduler {
 	 * 			The time spent during this phase.	
 	 */
 	public void updateDaySchedule(int time){
+		if (time < 0) throw new IllegalNumberException(time, "Bad time!");
 		int timediff = time - 60;
 		for(Order or : this.getDayorders()){
 			or.setDate(or.getDate().plusMinutes(timediff));
@@ -239,7 +244,8 @@ public class ProductionScheduler {
 	 * @param 	ordermanager
 	 * 		  	The OrderManager that supplies and manages the orders for this ProductionScheduler.
 	 */
-	private void setOrderManager(OrderManager ordermanager) {
+	private void setOrderManager(OrderManager ordermanager) throws IllegalArgumentException {
+		if (ordermanager == null) throw new IllegalArgumentException("Bad order manager");
 		this.ordermanager = ordermanager;
 	}
 
@@ -261,7 +267,8 @@ public class ProductionScheduler {
 	 * @param 	dayorders
 	 * 			A LinkedList<Order> that will be scheduled and finished today.
 	 */
-	private void setDayOrders(LinkedList<Order> dayorders) {
+	private void setDayOrders(LinkedList<Order> dayorders) throws IllegalArgumentException {
+		if (dayorders == null) throw new IllegalArgumentException("Bad list of day orders!");
 		this.dayorders = dayorders;
 	}
 
@@ -301,7 +308,8 @@ public class ProductionScheduler {
 	 * @param	AssemblyLine
 	 * 		   	The Assembly line that this production scheduler uses.
 	 */
-	private void setAssemblyline(AssemblyLine assemblyline) {
+	private void setAssemblyline(AssemblyLine assemblyline) throws IllegalArgumentException {
+		if (assemblyline == null) throw new IllegalArgumentException("Bad assembly line!");
 		this.assemblyline = assemblyline;
 	}
 
@@ -321,7 +329,8 @@ public class ProductionScheduler {
 	 * @param 	today
 	 * 			The start date and time for this scheduler
 	 */
-	public void setToday(DateTime today) {
+	public void setToday(DateTime today) throws IllegalArgumentException {
+		if (today == null) throw new IllegalArgumentException("Bad date for today!");
 		this.today = today;
 	}
 

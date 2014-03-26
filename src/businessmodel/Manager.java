@@ -18,7 +18,7 @@ public class Manager extends User {
 	 * @param 	username
 	 * 			the user name of the new manager.
 	 */
-	public Manager(String firstname, String lastname, String username) {
+	public Manager(String firstname, String lastname, String username) throws IllegalArgumentException {
 		super(firstname,lastname,username);
 	}
 	
