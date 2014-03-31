@@ -2,6 +2,7 @@ package control;
 import java.util.ArrayList;
 import java.util.Date;
 
+import exceptions.NoClearanceException;
 import ui.UserInterFace;
 import businessmodel.Action;
 import businessmodel.AssemblyTask;
@@ -41,15 +42,15 @@ public class Controller {
 		return cmc.getUser(username);
 	}
 
-	public ArrayList<Order> getCompletedOrders(User currentuser) {
+	public ArrayList<Order> getCompletedOrders(User currentuser) throws NoClearanceException {
 		return this.cmc.getCompletedOrders(currentuser);
 	}
 
-	public ArrayList<Order> getPendingOrders(User currentuser) {
+	public ArrayList<Order> getPendingOrders(User currentuser) throws NoClearanceException {
 		return this.cmc.getPendingOrders(currentuser);
 	}
 
-	public ArrayList<CarModel> getAvailableCarModels(User currentuser) {
+	public ArrayList<CarModel> getAvailableCarModels(User currentuser) throws NoClearanceException {
 		return this.cmc.getAvailableCarModels(currentuser);		
 	}
 
