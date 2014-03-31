@@ -137,7 +137,7 @@ public class OrderManager {
 	 */
 	public ArrayList<Order> getCompletedOrders(User user) throws IllegalArgumentException, NoClearanceException {
 		if (user == null) throw new IllegalArgumentException("Bad user!");
-		if (user.canPlaceOrder()) throw new NoClearanceException(user);
+		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
 		ArrayList<Order> completedorders = new ArrayList<Order>();
 		for (Order order: this.getCompletedOrders()){
 			if (order.getUser() == user)
@@ -154,7 +154,7 @@ public class OrderManager {
 	 */
 	public ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
 		if (user == null) throw new IllegalArgumentException("Bad user!");
-		if (user.canPlaceOrder()) throw new NoClearanceException(user);
+		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
 		ArrayList<Order> pendingorders = new ArrayList<Order>();
 		pendingorders.addAll(this.getProductionScheduler().getDayorders());
 		for (Order order: this.getPendingOrders()){

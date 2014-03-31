@@ -1,7 +1,7 @@
 package exceptions;
 import businessmodel.*;
 
-public class NoClearanceException extends RuntimeException {
+public class NoClearanceException extends Exception {
 	
 	private static final long serialVersionUID = 2038156514090663821L;
 	private User user;
