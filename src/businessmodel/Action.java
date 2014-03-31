@@ -2,8 +2,6 @@ package businessmodel;
 
 import java.util.ArrayList;
 
-import component.*;
-
 /**
  * A class representing an action.
  * 
@@ -67,9 +65,9 @@ public class Action {
 	 * @param	component
 	 * 			The component that needs to be added.
 	 */
-	protected void addComponent(Component component) throws IllegalArgumentException {
+/*	protected void addComponent(Component component) throws IllegalArgumentException {
 		if (component == null) throw new IllegalArgumentException("Bad component!");
 		if (!this.getComponents().contains(component.getClass().getName())) 
 			this.getComponents().add(component.getClass().getName());
-	}
+	} */
 }

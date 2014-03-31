@@ -366,7 +366,7 @@ public class ProductionScheduler {
 
 		for(WorkPost workpost: this.getAssemblyline().getWorkPosts()){
 			if(temp != null){
-				for(AssemblyTask assem: workpost.possibleAssemblyTasks(temp.getCar().getComponents())){
+				for(AssemblyTask assem: workpost.possibleAssemblyTasks(temp.getCar().getOptionsClone())){
 					assemblytasks.add(assem);
 				}
 			}

@@ -13,11 +13,7 @@ public class DefaultMandatoryOptionRestriction extends Restriction {
 
 	@Override
 	public boolean check(Car car) {
-		
-		ArrayList<CarOption> options = car.getOptionsClone();
-		for (CarOption option: car.getOptions()) {
-			options.remove(option);
-		}
+		return true;
 	}
 
 }

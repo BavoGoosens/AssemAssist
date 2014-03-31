@@ -1,6 +1,5 @@
 package businessmodel;
 
-import component.Component;
 import java.util.ArrayList;
 
 /**
@@ -178,7 +177,7 @@ public class WorkPost {
 	private void refreshAssemblyTasks() {
 		Order currentOrder = this.getOrder();
 		if (currentOrder != null ){
-			ArrayList<Component> carparts = currentOrder.getCar().getComponents();
+			ArrayList<CarOption> carparts = currentOrder.getCar().getOptionsClone();
 			ArrayList<AssemblyTask> newPendingTasks = this.possibleAssemblyTasks(carparts);
 			this.setPendingTasks(newPendingTasks);
 		}
@@ -194,13 +193,13 @@ public class WorkPost {
 	 * @return ArrayList<AssemblyTask>
 	 *         A list of AssemblyTasks that need to be carried out to install (some of) the components.
 	 */
-	protected ArrayList<AssemblyTask> possibleAssemblyTasks(ArrayList<Component> carparts) throws IllegalArgumentException {
-		if (carparts == null) throw new IllegalArgumentException("Bad list of car parts!");
+	protected ArrayList<AssemblyTask> possibleAssemblyTasks(ArrayList<CarOption> carOptions) throws IllegalArgumentException {
+		if (carOptions == null) throw new IllegalArgumentException("Bad list of car parts!");
 		ArrayList<AssemblyTask> result = new ArrayList<AssemblyTask>();
 		for(AssemblyTask task :this.getResponsibletasks()){
 			for(Action action: task.getActions()){
-				for(Component component: carparts){
-					if(action.getComponents().contains(component.getClass().getName()))
+				for(CarOption option: carOptions){
+					if(action.getComponents().contains(option.getClass().getName()))
 						result.add(task);	
 				}		
 			}
