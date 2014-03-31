@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import org.joda.time.DateTime;
-
-import component.Component;
 import exceptions.NoClearanceException;
 
 /**
@@ -41,9 +39,9 @@ public class Order {
 	 * @param   deliverydate
 	 *          the delivery date of the new order.
 	 */
-	public Order(User user, ArrayList<Component> components) throws IllegalArgumentException, NoClearanceException{
+	public Order(User user, ArrayList<CarOption> options) throws IllegalArgumentException, NoClearanceException{
 		setUser(user);
-		this.car = new Car(components);
+		this.car = new Car(options);
 		this.deliverydate = new DateTime();	
 	}
 

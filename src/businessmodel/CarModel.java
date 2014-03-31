@@ -3,8 +3,6 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import component.Component;
-
 /**
  * This car represents a car model. 
  * 
@@ -85,7 +83,7 @@ public class CarModel {
 	 * 
 	 * @return	List of  list of components, ordered by type.
 	 */
-	public HashMap<String, ArrayList<Component>> getPossibilities(){
+	public ArrayList<CarOption> getPossibilities(){
 		return this.cms.getPossibilities();
 	}
 	

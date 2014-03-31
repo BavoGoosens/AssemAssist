@@ -28,12 +28,18 @@ public class OptionList {
 		return this.options;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public ArrayList<CarOption> getOptionsClone() {
+		return (ArrayList<CarOption>) this.options.clone();
+	}
+	
+	@SuppressWarnings("unchecked")
 	private void setOptions(ArrayList<CarOption> options) throws IllegalArgumentException,
 																 IllegalCarOptionCategoryException {
 		if (options == null) throw new IllegalArgumentException("Bad list of options!");
 		if (!this.canHaveAsOptions(options)) 
 			throw new IllegalCarOptionCategoryException("List contains option(s) of wrong category!");
-		this.options = options;
+		this.options = (ArrayList<CarOption>) options.clone();
 	}
 	
 	public void addOption(CarOption option) throws IllegalArgumentException, IllegalCarOptionCategoryException {
@@ -60,7 +66,7 @@ public class OptionList {
 	}
 	
 	private boolean canHaveAsOption(CarOption option) {
-		return option.getCategory() == this.getCategory();
+		return option.getCategory().hasAsPossibleOption(option);
 	}
 
 }

@@ -1,7 +1,5 @@
 package businessmodel;
 
-import component.*;
-
 import java.util.ArrayList;
 
 /**
@@ -15,7 +13,7 @@ public class Car {
 	/**
 	 * A list that holds all the components of a car.
 	 */
-	private ArrayList<Component> components;
+	private ArrayList<CarOption> options;
 
 	/**
 	 * A constructor to create a new car.
@@ -23,8 +21,8 @@ public class Car {
 	 * @param   components
 	 *          An ArrayList with all the components of this new car.
 	 */
-	public Car(ArrayList<Component> components) throws IllegalArgumentException {
-		setComponents(components);
+	public Car(ArrayList<CarOption> options) throws IllegalArgumentException {
+		setOptions(options);
 	}
 
 	/**
@@ -35,9 +33,10 @@ public class Car {
 	 * @throws 	IllegalArgumentException
 	 * 			if components is null
 	 */
-	private void setComponents(ArrayList<Component> components) throws IllegalArgumentException {
-		if(components == null) throw new IllegalArgumentException();
-		this.components = components;
+	@SuppressWarnings("unchecked")
+	private void setOptions(ArrayList<CarOption> options) throws IllegalArgumentException {
+		if(options == null) throw new IllegalArgumentException();
+		this.options = (ArrayList<CarOption>) options.clone();
 	}
 
 	/**
@@ -46,8 +45,13 @@ public class Car {
 	 * @return  ArrayList<Component>
 	 * 			this.components
 	 */
-	public ArrayList<Component> getComponents(){
-		return this.components;
+	private ArrayList<CarOption> getOptions(){
+		return this.options;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<CarOption> getOptionsClone() {
+		return (ArrayList<CarOption>) this.options.clone();
 	}
 
 	/**
@@ -56,9 +60,9 @@ public class Car {
 	 * @param   component
 	 *          the component that you want to add.
 	 */
-	public void addComponent(Component component) throws IllegalArgumentException {
-		if (component == null) throw new IllegalArgumentException("Bad component!");
-		this.getComponents().add(component);
+	public void addOption(CarOption option) throws IllegalArgumentException {
+		if (option == null) throw new IllegalArgumentException("Bad option!");
+		this.getOptions().add(option);
 	}
 	
 	/**
@@ -67,15 +71,15 @@ public class Car {
 	 * @param   component
 	 *          the component that you want to remove.
 	 */
-	public void removeComponent(Component component) throws IllegalArgumentException {
-		if (component == null) throw new IllegalArgumentException("Bad component!");
-		if( this.getComponents().contains(component))
-			this.getComponents().remove(component);
+	public void removeOption(CarOption option) throws IllegalArgumentException {
+		if (option == null) throw new IllegalArgumentException("Bad option!");
+		if( this.getOptions().contains(option))
+			this.getOptions().remove(option);
 	}
 	
 	@Override
 	public String toString() {
-		return "components= " + components.toString();
+		return "option= " + this.getOptions().toString();
 	}
 
 }

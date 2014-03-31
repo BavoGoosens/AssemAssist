@@ -27,17 +27,23 @@ public class CarOptionCategory {
 		return this.possibleOptions;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public ArrayList<CarOption> getPossibleOptionsClone() {
+		return (ArrayList<CarOption>) this.possibleOptions.clone();
+	}
+	
 	private void setName(String name) throws IllegalArgumentException {
 		if (name == null || name.equals("")) throw new IllegalArgumentException("Bad name!");
 		this.name = name;
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void setPossibleOptions(ArrayList<CarOption> possibleOptions) throws IllegalArgumentException,
 																				 IllegalCarOptionCategoryException {
 		if (possibleOptions == null) throw new IllegalArgumentException("Bad list of possible options!");
 		if (!this.canHaveAsPossibleOptions(possibleOptions)) 
 			throw new IllegalCarOptionCategoryException("List contains option(s) of wrong category!");
-		this.possibleOptions = possibleOptions;
+		this.possibleOptions = (ArrayList<CarOption>) possibleOptions.clone();
 	}
 	
 	public void addPossibleOption(CarOption possibleOption) throws IllegalArgumentException, IllegalCarOptionCategoryException {
