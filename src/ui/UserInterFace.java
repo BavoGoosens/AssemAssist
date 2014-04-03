@@ -13,10 +13,10 @@ import control.Controller;
 import businessmodel.Action;
 import businessmodel.AssemblyTask;
 import businessmodel.CarModel;
-import businessmodel.GarageHolder;
 import businessmodel.Order;
-import businessmodel.User;
 import businessmodel.WorkPost;
+import businessmodel.user.GarageHolder;
+import businessmodel.user.User;
 
 /**
  * This class provides a console user interface for the AssemAssist System.

@@ -1,4 +1,5 @@
-package businessmodel;
+package businessmodel.user;
+
 
 public class CustomsShopManager extends User {
 

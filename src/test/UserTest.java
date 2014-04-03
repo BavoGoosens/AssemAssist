@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.Mechanic;
+import businessmodel.user.Mechanic;
 
 public class UserTest {
 	

@@ -17,9 +17,9 @@ import component.Gearbox;
 import component.Seats;
 import component.Wheels;
 import businessmodel.AssemblyLine;
-import businessmodel.GarageHolder;
 import businessmodel.Order;
 import businessmodel.OrderManager;
+import businessmodel.user.GarageHolder;
 
 public class AssemblyLineTest {
 	

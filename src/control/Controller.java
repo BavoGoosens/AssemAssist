@@ -11,9 +11,9 @@ import businessmodel.Inventory;
 import businessmodel.Order;
 import businessmodel.OrderManager;
 import businessmodel.ProductionScheduler;
-import businessmodel.User;
 import businessmodel.WorkPost;
 import businessmodel.exceptions.NoClearanceException;
+import businessmodel.user.User;
 
 /**
  * This class is the main controller instance. 

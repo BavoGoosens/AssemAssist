@@ -1,4 +1,4 @@
-package businessmodel;
+package businessmodel.scheduler;
 
 import java.util.ArrayList;
 
@@ -14,9 +14,16 @@ public abstract class Shift {
 		generateTimeSlots(hours);
 	}
 	
+	public Shift(int hours,TimeSlot timeslot){
+		timeslots = new ArrayList<TimeSlot>();
+		generateTimeSlots(hours);
+		timeslots.set(0, timeslot);
+		
+	}
+	
 	private void generateTimeSlots(int hours){
 		for(int i = 0;i < hours;i++){
-			NormalTimeSlot slot = new NormalTimeSlot(3);
+			TimeSlot slot = new TimeSlot(3);
 			this.getTimeSlots().add(slot);
 		}
 	}
@@ -24,4 +31,19 @@ public abstract class Shift {
 	protected ArrayList<TimeSlot> getTimeSlots(){
 		return this.timeslots;
 	}
+	
+	protected void addTimeSlot(){
+		TimeSlot temp = new TimeSlot(3);
+	}
+	
+	protected void removeTimeSlot(){
+		
+	}
+	
+	protected TimeSlot endOfShift(){
+		//TODO: maak dit 
+		return null;
+		
+	}
+	
 }

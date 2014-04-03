@@ -1,13 +1,26 @@
-package businessmodel;
+package businessmodel.scheduler;
 
-public abstract class TimeSlot {
+import businessmodel.Order;
 
-	private Order [] orders;
+public class TimeSlot {
+
+	private Order[] orders;
+	private final boolean[] permissions;
+	
 	
 	public TimeSlot(int sizeworkposts){
 		this.orders = new Order [sizeworkposts];
+		this.permissions = new boolean[sizeworkposts];
+		for (int i = 0; i < this.permissions.length; i++){
+			this.permissions[i] = true;
+		}
 	}
 
+	public TimeSlot(int sizeworkposts, boolean[] permissions){
+		this.orders = new Order [sizeworkposts];
+		this.permissions = permissions;
+	}
+	
 	// Exceptions moeten nog worden aangepast.
 	public void addOrderToTimeslot(Order order, int i) throws IllegalArgumentException{
 		if(order == null) 

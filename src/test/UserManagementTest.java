@@ -5,10 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.GarageHolder;
-import businessmodel.Manager;
-import businessmodel.Mechanic;
 import businessmodel.UserManagement;
+import businessmodel.user.GarageHolder;
+import businessmodel.user.Manager;
+import businessmodel.user.Mechanic;
 
 public class UserManagementTest {
 	

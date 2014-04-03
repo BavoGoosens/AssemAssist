@@ -1,4 +1,4 @@
-package businessmodel;
+package businessmodel.schedulingalgorithms;
 
 public class FIFO extends SchedulingAlgorithm {
 

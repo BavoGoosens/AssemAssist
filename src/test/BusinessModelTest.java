@@ -11,6 +11,9 @@ import org.junit.Test;
 import component.*;
 import control.Controller;
 import businessmodel.*;
+import businessmodel.user.GarageHolder;
+import businessmodel.user.Manager;
+import businessmodel.user.Mechanic;
 
 public class BusinessModelTest {
 

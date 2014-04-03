@@ -6,6 +6,7 @@ import java.util.Locale;
 import org.joda.time.DateTime;
 
 import businessmodel.exceptions.NoClearanceException;
+import businessmodel.user.User;
 
 /**
  * A class representing a specific car order

@@ -1,4 +1,4 @@
-package businessmodel;
+package businessmodel.user;
 
 /**
  * A class that represents a manager.

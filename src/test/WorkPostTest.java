@@ -17,9 +17,9 @@ import component.Gearbox;
 import component.Seats;
 import component.Wheels;
 import businessmodel.AssemblyTask;
-import businessmodel.GarageHolder;
 import businessmodel.Order;
 import businessmodel.WorkPost;
+import businessmodel.user.GarageHolder;
 
 public class WorkPostTest {
 	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
+import businessmodel.user.User;
 
 
 public class CarManufacturingCompany {
