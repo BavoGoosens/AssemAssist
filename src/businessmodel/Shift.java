@@ -6,29 +6,22 @@ import org.joda.time.DateTime;
 
 public abstract class Shift {
 
-	/**
-	 * 
-	 */
+
 	private ArrayList<TimeSlot> timeslots; 
 	
-	/**
-	 * 
-	 */
-	private DateTime currenttime;
-	
-	
-	public Shift(){
+	public Shift(int hours){
 		timeslots = new ArrayList<TimeSlot>();
+		generateTimeSlots(hours);
 	}
 	
-	/**
-	 * A method to set the current time of this schift to the given currenttime
-	 * @param beginday
-	 * @throws IllegalArgumentException
-	 */
-	protected void updateCurrentTime(DateTime beginday) throws IllegalArgumentException {
-		if(beginday == null) 
-			throw new IllegalArgumentException("Date cannot be null");
-		this.currenttime = beginday;
+	private void generateTimeSlots(int hours){
+		for(int i = 0;i < hours;i++){
+			NormalTimeSlot slot = new NormalTimeSlot(3);
+			this.getTimeSlots().add(slot);
+		}
+	}
+	
+	protected ArrayList<TimeSlot> getTimeSlots(){
+		return this.timeslots;
 	}
 }
