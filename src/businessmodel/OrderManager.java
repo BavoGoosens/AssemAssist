@@ -7,8 +7,9 @@ import java.util.LinkedList;
 
 import org.joda.time.DateTime;
 
-import exceptions.IllegalNumberException;
-import exceptions.NoClearanceException;
+import businessmodel.exceptions.IllegalNumberException;
+import businessmodel.exceptions.NoClearanceException;
+
 
 
 /**

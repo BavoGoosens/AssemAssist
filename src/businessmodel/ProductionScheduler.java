@@ -5,7 +5,8 @@ import java.util.LinkedList;
 
 import org.joda.time.DateTime;
 
-import exceptions.IllegalNumberException;
+import businessmodel.exceptions.IllegalNumberException;
+
 
 /**
  * A class that is responsible for scheduling orders for an individual day.

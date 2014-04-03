@@ -2,7 +2,8 @@ package businessmodel;
 
 import java.util.ArrayList;
 
-import exceptions.IllegalCarOptionCategoryException;
+import businessmodel.exceptions.IllegalCarOptionCategoryException;
+
 
 public class OptionList {
 	

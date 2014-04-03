@@ -2,7 +2,6 @@ package control;
 import java.util.ArrayList;
 import java.util.Date;
 
-import exceptions.NoClearanceException;
 import ui.UserInterFace;
 import businessmodel.Action;
 import businessmodel.AssemblyTask;
@@ -14,6 +13,7 @@ import businessmodel.OrderManager;
 import businessmodel.ProductionScheduler;
 import businessmodel.User;
 import businessmodel.WorkPost;
+import businessmodel.exceptions.NoClearanceException;
 
 /**
  * This class is the main controller instance. 

@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import org.joda.time.DateTime;
-import exceptions.NoClearanceException;
+
+import businessmodel.exceptions.NoClearanceException;
 
 /**
  * A class representing a specific car order
