@@ -1,12 +1,11 @@
 package businessmodel.schedulingalgorithms;
 
 import businessmodel.Order;
-import businessmodel.scheduler.Shift;
+import businessmodel.scheduler.*;
 
 public abstract class SchedulingAlgorithm {
 
-        
-        public void schedule(Shift shift, Order order){}
+        public void schedule(Scheduler schedule){}
 
 }
 
