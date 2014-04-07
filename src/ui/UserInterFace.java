@@ -13,8 +13,8 @@ import control.Controller;
 import businessmodel.Action;
 import businessmodel.AssemblyTask;
 import businessmodel.CarModel;
-import businessmodel.Order;
 import businessmodel.WorkPost;
+import businessmodel.order.Order;
 import businessmodel.user.GarageHolder;
 import businessmodel.user.User;
 

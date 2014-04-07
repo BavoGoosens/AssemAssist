@@ -1,6 +1,5 @@
-package businessmodel;
+package businessmodel.order;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 import org.joda.time.DateTime;
@@ -14,12 +13,7 @@ import businessmodel.user.User;
  * @author SWOP Team 10 2014
  *
  */
-public class Order {
-
-	/**
-	 * A variable that contains the specific car being ordered.
-	 */
-	private Car car;
+public abstract class Order {
 
 	/**
 	 * A variable that represents an user.
@@ -27,9 +21,13 @@ public class Order {
 	private User user;
 
 	/**
-	 * A variable that holds the delivery date for an order.
+	 * The estimated time of delivery.
 	 */
-	private DateTime deliverydate;
+	private DateTime estimatedatetime;
+	
+	private DateTime timestamp;
+	
+	private DateTime completiondatetime;
 
 	/**
 	 * A constructor for the class Order.
@@ -41,10 +39,9 @@ public class Order {
 	 * @param   deliverydate
 	 *          the delivery date of the new order.
 	 */
-	public Order(User user, ArrayList<CarOption> options) throws IllegalArgumentException, NoClearanceException{
+	public Order(User user) throws IllegalArgumentException, NoClearanceException{
 		setUser(user);
-		this.car = new Car(options);
-		this.deliverydate = new DateTime();	
+		this.timestamp = new DateTime();
 	}
 
 	/**
@@ -62,37 +59,13 @@ public class Order {
 	}
 
 	/**
-	 * This method returns the new car for this order.
-	 * 
-	 * @return 	Car
-	 * 			this.car
-	 */
-	public Car getCar() {
-		return car;
-	}
-
-//	/**
-//	 * a method to see if the order is completed or not.
-//	 * 
-//	 * @return	boolean
-//	 * 			True if and only if all the components of the car of this order are completed.
-//	 */
-//	public boolean isCompleted(){
-//		Boolean completed = true;
-//		for(Component component: this.car.getComponents())
-//			if(component.isCompleted() == false)
-//				completed = false;
-//		return completed;
-//	}
-
-	/**
 	 * A variable to get the delivery date.
 	 *  
 	 * @return  DateTime
 	 * 			this.deliverydate
 	 */
-	public DateTime getDate() {
-		return this.deliverydate;
+	public DateTime getEstimateDate() {
+		return this.estimatedatetime;
 	}
 
 	/**
@@ -103,10 +76,10 @@ public class Order {
 	 * @throws 	IllegalArgumentException
 	 * 			delivery == null
 	 */
-	public void setDate(DateTime deliverydate) throws IllegalArgumentException {
+	public void setEstimateDate(DateTime deliverydate) throws IllegalArgumentException {
 		if(deliverydate == null)
 			throw new IllegalArgumentException();
-		this.deliverydate = deliverydate;
+		this.estimatedatetime = deliverydate;
 	}
 
 	/**
@@ -121,7 +94,7 @@ public class Order {
 	
 	@Override
 	public String toString() {
-		return "user: " + this.user.toString() + ", delivery date= " + this.deliverydate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
+		return "user: " + this.user.toString() + ", delivery date= " + this.estimatedatetime.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
 	}
 
 }

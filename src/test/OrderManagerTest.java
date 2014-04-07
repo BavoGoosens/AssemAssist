@@ -16,8 +16,8 @@ import component.Engine;
 import component.Gearbox;
 import component.Seats;
 import component.Wheels;
-import businessmodel.Order;
 import businessmodel.OrderManager;
+import businessmodel.order.Order;
 import businessmodel.user.GarageHolder;
 
 public class OrderManagerTest {

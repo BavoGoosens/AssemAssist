@@ -3,6 +3,8 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import businessmodel.order.Order;
+
 /**
  * A class that represents an assembly line. It currently holds 3 work post.
  * 

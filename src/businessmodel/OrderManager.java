@@ -9,6 +9,7 @@ import org.joda.time.DateTime;
 
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
+import businessmodel.order.Order;
 import businessmodel.user.User;
 
 
@@ -209,11 +210,11 @@ public class OrderManager {
 			time = 60*3;
 			for(Order order: this.getPendingOrders()){
 				start.setMinutes(time);
-				order.setDate(start);
+				order.setEstimateDate(start);
 			}
 		}else{
 			for(Order order: this.getPendingOrders()){
-				order.getDate().setMinutes(order.getDate().getMinutes()+time);
+				order.getEstimateDate().setMinutes(order.getEstimateDate().getMinutes()+time);
 			}
 		}
 	}

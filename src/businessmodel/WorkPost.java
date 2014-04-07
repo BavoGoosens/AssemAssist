@@ -2,6 +2,8 @@ package businessmodel;
 
 import java.util.ArrayList;
 
+import businessmodel.order.Order;
+
 /**
  * A class that represents work posts in a factory.
  * 

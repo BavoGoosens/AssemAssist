@@ -8,11 +8,11 @@ import businessmodel.AssemblyTask;
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Inventory;
-import businessmodel.Order;
 import businessmodel.OrderManager;
 import businessmodel.ProductionScheduler;
 import businessmodel.WorkPost;
 import businessmodel.exceptions.NoClearanceException;
+import businessmodel.order.Order;
 import businessmodel.user.User;
 
 /**
