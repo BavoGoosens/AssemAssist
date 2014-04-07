@@ -38,6 +38,7 @@ public class TimeSlot {
 	 * 			the number of WorkSlot's that will be generated.
 	 */
 	private void generateWorkSlots(int sizeworkposts){
+		this.workslots = new ArrayList<WorkSlot>();
 		for(int i = 0; i< sizeworkposts; i++){
 			WorkSlot temp = new WorkSlot();
 			this.getWorkSlots().add(temp);

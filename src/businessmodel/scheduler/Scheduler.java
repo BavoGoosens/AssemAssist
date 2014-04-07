@@ -7,7 +7,6 @@ import org.joda.time.DateTime;
 
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
 import businessmodel.order.Order;
-import businessmodel.schedulingalgorithms.*;
 
 public class Scheduler {
 
@@ -24,39 +23,17 @@ public class Scheduler {
 		generateShifts();	
 	}
 
-	protected void schedule(){
-		for (Order order: this.getOrders()){
-			reschedule(order);
-		}
+	public void changeAlgorithm(String algoname){
+		if (algoname == null)
+			throw new NullPointerException("No scheduling algorithm supplied");
+		else if (algoname.equalsIgnoreCase("fifo") || algoname.equalsIgnoreCase("first in first out") )
+			this.algo = new FIFO(this);
+		else if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch"))
+			this.algo = new SpecificationBatch(this);
+		else
+			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");
 	}
 
-	private void reschedule(Order order){
-		if (CanScheduleOrder(order))
-			this.ScheduleOrder(order);
-		else 
-			this.updateTimeofOrder(order);	
-	}
-	
-	private void updateTimeofOrder(Order order) {
-		DateTime date = this.getPrevious(order).getEstimateDate();
-		if (date.getHourOfDay() <= 21)
-			order.setEstimateDate(date.plusMinutes(60));
-		else{
-			date.plusHours(8);
-			order.setEstimateDate(date.plusMinutes(60));
-		}
-	}
-
-	private void ScheduleOrder(Order order) {
-		for(Shift sh: this.getShifts()){
-			sh
-		}
-	}
-
-	private boolean CanScheduleOrder(Order order) {
-		return false;
-	}
-	
 	protected void addOrder(Order order){
 		if(order == null) 
 			throw new IllegalArgumentException();
@@ -64,25 +41,42 @@ public class Scheduler {
 		this.reschedule(order);
 	}
 
+	protected void schedule(){
+		for (Order order: this.getOrders()){
+			reschedule(order);
+		}
+	}
+
+	protected ArrayList<Shift> getShifts() {
+		return shifts;
+	}
+
+	private void reschedule(Order order){
+		algo.schedule(order);
+		this.updateTimeofOrder(order);	
+	}
+
+	private void updateTimeofOrder(Order order) {
+		
+		DateTime date = this.getPrevious(order).getEstimateDate();
+		if(date == null){
+			date = new DateTime();
+			date.withHourOfDay(6);
+			date.withMinuteOfHour(0);
+		}
+		else if (date.getHourOfDay() <= 21)
+			order.setEstimateDate(date.plusMinutes(60));
+		else{
+			date.plusHours(8);
+			order.setEstimateDate(date.plusMinutes(60));
+		}
+	}
+
 	private void generateShifts(){
 		Shift currrentshift = new FreeShift(8);
 		Shift endshift = new EndShift(8);
 		this.getShifts().add(currrentshift);
 		this.getShifts().add(endshift);
-	}
-
-	public void changeAlgorithm(String algoname){
-		if (algoname == null )
-			throw new NullPointerException("No scheduling algorithm supplied");
-		if (algoname.equalsIgnoreCase("fifo") || algoname.equalsIgnoreCase("first in first out") )
-			this.algo = new FIFO(this);
-		if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch"))
-			this.algo = new SpecificationBatch(this);
-		throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");
-	}
-
-	private ArrayList<Shift> getShifts() {
-		return shifts;
 	}
 
 	private LinkedList<Order> getOrders() {
@@ -93,17 +87,10 @@ public class Scheduler {
 		return algo;
 	}
 
-	private Order getNext(Order order){
-		int index = this.getOrders().indexOf(order);
-		if(index + 1 >= this.getOrders().size() && this.getOrders().size() < 0)
-			return null;
-		else
-			return this.getOrders().get(index-1);
-	}
-
+	// TODO defensief maken IllegalArgumentException denk ik ??
 	private Order getPrevious(Order order){
 		int index = this.getOrders().indexOf(order);
-		if(index-1 < 0 || this.getOrders().size() < 0)
+		if(index-1 < 0)
 			return null;
 		else
 			return this.getOrders().get(index-1);
