@@ -1,43 +1,56 @@
 package businessmodel.scheduler;
 
-import businessmodel.order.Order;
+import java.util.ArrayList;
 
+/**
+ * A class that represents a TimeSlot. Each TimeSlot had a number of WorkPost's. 
+ * @author SWOP 2014 team 10
+ *
+ */
 public class TimeSlot {
 
-	private Order[] orders;
-	private final boolean[] permissions;
-	
-	
+	/**
+	 * A list that holds the WorkSlot's of this TimeSlot.
+	 */
+	private ArrayList<WorkSlot> workslots;
+
+	/**
+	 * A constructor for the class TimeSlot. A number of WorkSlots will be generated.
+	 * @param	sizeworkposts
+	 * 			the number of workSlots that will be generated.
+	 * 
+	 */
 	public TimeSlot(int sizeworkposts){
-		this.orders = new Order [sizeworkposts];
-		this.permissions = new boolean[sizeworkposts];
-		for (int i = 0; i < this.permissions.length; i++){
-			this.permissions[i] = true;
-		}
+		generateWorkSlots(sizeworkposts);
 	}
 
-	public TimeSlot(int sizeworkposts, boolean[] permissions){
-		this.orders = new Order [sizeworkposts];
-		this.permissions = permissions;
+	/**
+	 * A method to get the WorkSlot's of this TimeSlot.
+	 * @return	this.workslots
+	 */
+	protected ArrayList<WorkSlot> getWorkSlots(){
+		return this.workslots;
+	}
+
+	/**
+	 * A method that generates the WorkSlot's of this TimeSlot.
+	 * @param	sizeworkposts
+	 * 			the number of WorkSlot's that will be generated.
+	 */
+	private void generateWorkSlots(int sizeworkposts){
+		for(int i = 0; i< sizeworkposts; i++){
+			WorkSlot temp = new WorkSlot();
+			this.getWorkSlots().add(temp);
+		}
 	}
 	
-	// Exceptions moeten nog worden aangepast.
-	public void addOrderToTimeslot(Order order, int i) throws IllegalArgumentException{
-		if(order == null) 
-			throw new IllegalArgumentException("An order cannot be null");
-		if(!this.IsAvailable(i))
-			throw new IllegalArgumentException("There is already an order scheduled.");
-		if ( i < 0 || i > this.getOrders().length-1)
-			throw new IllegalArgumentException("Cannot access that work post!");
-		this.getOrders()[i] = order;
+	/**
+	 * A method to terminate this object of TimeSlot.
+	 */
+	protected void terminate(){
+		for(WorkSlot wp: this.getWorkSlots()){
+			wp.terminate();
+		}
+		this.workslots = null;
 	}
-	
-	protected Order [] getOrders(){
-		return this.orders;
-	}
-	
-	protected boolean IsAvailable(int i){
-		return (this.getOrders()[i] == null);
-	}
-	
 }

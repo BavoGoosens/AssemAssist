@@ -6,5 +6,8 @@ public class EndShift extends Shift {
 		super(hours);
 	}
 
-	
+	@Override
+	protected void removeTimeSlot(){
+
+	}
 }
