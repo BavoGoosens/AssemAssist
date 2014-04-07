@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import org.joda.time.DateTime;
 
 import businessmodel.exceptions.IllegalNumberException;
+import businessmodel.order.Order;
 
 
 /**
@@ -118,7 +119,7 @@ public class ProductionScheduler {
 		if (time < 0) throw new IllegalNumberException(time, "Bad time!");
 		int timediff = time - 60;
 		for(Order or : this.getDayorders()){
-			or.setDate(or.getDate().plusMinutes(timediff));
+			or.setEstimateDate(or.getEstimateDate().plusMinutes(timediff));
 		}
 		this.setAvailableTime(this.getAvailableTime() - time);
 		this.setDelayTime(this.getDelayTime() + timediff); 
@@ -137,10 +138,10 @@ public class ProductionScheduler {
 		if (or != null ){
 			if(this.getDayorders().isEmpty() || 
 					this.getAssemblyline().getWorkPostOrders().contains(this.getDayorders().peekLast())){
-				or.setDate(this.getToday().plusHours(3));
+				or.setEstimateDate(this.getToday().plusHours(3));
 				this.getDayorders().add(or);
 			} else {
-				or.setDate(this.getDayorders().peekLast().getDate().plusMinutes(60));
+				or.setEstimateDate(this.getDayorders().peekLast().getEstimateDate().plusMinutes(60));
 				this.getDayorders().add(or);
 			}
 		}

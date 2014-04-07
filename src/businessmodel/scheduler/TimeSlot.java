@@ -1,6 +1,6 @@
 package businessmodel.scheduler;
 
-import businessmodel.Order;
+import businessmodel.order.Order;
 
 public class TimeSlot {
 

@@ -3,8 +3,8 @@ package businessmodel.scheduler;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import businessmodel.Order;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
+import businessmodel.order.Order;
 import businessmodel.schedulingalgorithms.*;
 
 public class Scheduler {

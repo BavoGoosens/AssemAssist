@@ -1,6 +1,6 @@
 package businessmodel.schedulingalgorithms;
 
-import businessmodel.Order;
+import businessmodel.order.Order;
 import businessmodel.scheduler.*;
 
 public abstract class SchedulingAlgorithm {

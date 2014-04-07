@@ -17,10 +17,10 @@ import component.Gearbox;
 import component.Seats;
 import component.Wheels;
 import businessmodel.AssemblyTask;
-import businessmodel.Order;
 import businessmodel.OrderManager;
 import businessmodel.ProductionScheduler;
 import businessmodel.WorkPost;
+import businessmodel.order.Order;
 import businessmodel.user.GarageHolder;
 
 public class ProductionSchedulerTest {
@@ -65,7 +65,7 @@ public class ProductionSchedulerTest {
 
 		for(int i = 1; i< 30;i++){
 			Order temp = new Order(garageholder,this.components);
-			temp.setDate(date);
+			temp.setEstimateDate(date);
 			this.orders.add(temp);
 		}
 		ordermanager = new OrderManager();
