@@ -2,6 +2,8 @@ package businessmodel.scheduler;
 
 import java.util.ArrayList;
 
+import businessmodel.order.Order;
+
 /**
  * A class that represents a TimeSlot. Each TimeSlot had a number of WorkPost's. 
  * @author SWOP 2014 team 10
@@ -53,5 +55,13 @@ public class TimeSlot {
 			wp.terminate();
 		}
 		this.workslots = null;
+	}
+
+	public void removeWorkSlot() {
+		this.getWorkSlots().get(this.getWorkSlots().size());
+	}
+
+	public void addOrderToWorkSlot(Order order, int i) {
+		this.getWorkSlots().get(i).addOrder(order);
 	}
 }

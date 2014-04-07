@@ -74,7 +74,7 @@ public class WorkSlot{
 	 * 			if occupied is not a boolean
 	 */
 	private void setOccupied(boolean occupied) throws IllegalArgumentException{
-		if (occupied != false || occupied != true)
+		if (occupied != false && occupied != true)
 			throw new IllegalArgumentException("Not a boolean");
 		this.occupied = occupied;
 	}	

@@ -28,8 +28,11 @@ public class SchedulerTest {
 		ArrayList<CarOption> henk1 = new ArrayList<CarOption>();
 		henk1.add(c2);
 		Order order = new StandardCarOrder(c1,henk1);
-
+		Order order1 = new StandardCarOrder(c1,henk1);
+		Order order2 = new StandardCarOrder(c1,henk1);
 		sched1.addOrder(order);
+		sched1.addOrder(order1);
+		sched1.addOrder(order2);
 
 	}
 

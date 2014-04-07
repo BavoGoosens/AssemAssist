@@ -24,9 +24,11 @@ public abstract class Order {
 	 * The estimated time of delivery.
 	 */
 	private DateTime estimatedatetime;
-	
+
 	private DateTime timestamp;
-	
+
+	private DateTime standardtime;
+
 	private DateTime completiondatetime;
 
 	/**
@@ -91,10 +93,34 @@ public abstract class Order {
 	public User getUser() {
 		return this.user;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "user: " + this.user.toString() + ", delivery date= " + this.estimatedatetime.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
 	}
 
+	/**
+	 * A method to update the estimated completion time of an order.
+	 * @param	order
+	 * 			the order for which the completion date needs to be updated.
+	 */
+	//TODO updaten 
+	public void updateEstimatedCompletionTimeOfOrder(Order previousorder) {
+		DateTime date;
+		if (previousorder == null){
+			DateTime datetemp = new DateTime();
+			date = new DateTime(datetemp.getYear(), datetemp.getMonthOfYear(), datetemp.getDayOfMonth(), 8, 0);
+			this.setEstimateDate(date);
+			return;
+		}
+		else 
+			date = previousorder.getEstimateDate();
+
+		if (date.getHourOfDay() <= 21)
+			this.setEstimateDate(date.plusMinutes(60));
+		else{
+			date.plusHours(8);
+			this.setEstimateDate(date.plusMinutes(60));
+		}
+	}
 }

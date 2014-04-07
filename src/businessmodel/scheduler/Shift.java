@@ -1,5 +1,6 @@
 package businessmodel.scheduler;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import businessmodel.order.Order;
@@ -7,19 +8,14 @@ import businessmodel.order.Order;
 public abstract class Shift {
 
 	private LinkedList<TimeSlot> timeslots; 
-	
+
+	//TODO halen uit assemblyline 
 	private int numberofworkposts = 3;
-	
+
 	public Shift(int hours){
 		generateTimeSlots(hours);
 	}
 
-	public Shift(int hours,TimeSlot timeslot){
-		generateTimeSlots(hours);
-		timeslots.set(0, timeslot);
-		
-	}
-	
 	private void generateTimeSlots(int hours){
 		this.timeslots = new LinkedList<TimeSlot>();
 		for(int i = 0;i < hours;i++){
@@ -27,36 +23,51 @@ public abstract class Shift {
 			this.getTimeSlots().add(slot);
 		}
 	}
-	
+
 	protected void addTimeSlot(){
-		
+		TimeSlot slot = new TimeSlot(this.getNumberofworkposts());
+		this.getTimeSlots().add(slot);
 	}
-	
-	protected void removeTimeSlot(){
-		
+
+	protected void removeLastTimeSlot(){
+
 	}
-	
-	protected LinkedList<TimeSlot> getTimeSlots() {
+
+	protected ArrayList<TimeSlot> canAddOrder(Order order){
+		ArrayList<TimeSlot> timeslots;
+		for(TimeSlot slot1 : this.getTimeSlots()){
+			timeslots = checkSlot(slot1);
+			if (timeslots != null)
+				return timeslots;
+		}
+		return null;
+	}
+
+	private ArrayList<TimeSlot> checkSlot(TimeSlot slot1){
+		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();
+		for(int i = 0; i < this.getNumberofworkposts(); i++){
+			if (slot1.getWorkSlots().get(i).isOccupied())
+				return null;
+			slot1 = this.getNext(slot1);
+			timeslots.add(slot1);
+		}
 		return timeslots;
 	}
 
+	protected void addOrderToSlots(Order order, ArrayList<TimeSlot> timeslots){
+		int count = 0;
+		for(TimeSlot timeslot: timeslots){
+			timeslot.addOrderToWorkSlot(order, count);
+			count++;
+		}
+	}
+	
 	private int getNumberofworkposts() {
 		return numberofworkposts;
 	}
 
-	protected void terminate(){
-		for(TimeSlot timeslot: this.getTimeSlots()){
-			timeslot.terminate();
-		}
-		this.timeslots = null;
-	}
-	
-	protected TimeSlot getNext(TimeSlot timeslot){
-		int index = this.getTimeSlots().indexOf(timeslot);
-		if(index + 1 >= this.getTimeSlots().size() || this.getTimeSlots().size() < 0)
-			return null;
-		else
-			return this.getTimeSlots().get(index+1);
+	protected LinkedList<TimeSlot> getTimeSlots() {
+		return timeslots;
 	}
 
 	protected TimeSlot getPrevious(TimeSlot timeslot){
@@ -65,5 +76,20 @@ public abstract class Shift {
 			return null;
 		else
 			return this.getTimeSlots().get(index-1);
+	}
+
+	protected TimeSlot getNext(TimeSlot timeslot){
+		int index = this.getTimeSlots().indexOf(timeslot);
+		if(index + 1 >= this.getTimeSlots().size() || this.getTimeSlots().size() < 0)
+			return null;
+		else
+			return this.getTimeSlots().get(index+1);
+	}
+
+	protected void terminate(){
+		for(TimeSlot timeslot: this.getTimeSlots()){
+			timeslot.terminate();
+		}
+		this.timeslots = null;
 	}
 }
