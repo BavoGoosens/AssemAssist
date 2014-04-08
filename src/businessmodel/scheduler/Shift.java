@@ -9,14 +9,11 @@ public abstract class Shift {
 
 	private LinkedList<TimeSlot> timeslots;
 	
-	private Shift nextShift;
-
 	//TODO halen uit assemblyline 
 	private int numberofworkposts = 3;
 
-	public Shift(int hours, Shift nextShift){
+	public Shift(int hours){
 		generateTimeSlots(hours);
-		this.nextShift = nextShift;
 	}
 
 	private void generateTimeSlots(int hours){
@@ -86,9 +83,5 @@ public abstract class Shift {
 			return newtimeslot.getWorkSlots().get(0).getOrder();
 		else
 			return null;
-	}
-	
-	protected Shift getNextShift(){
-		return this.nextShift;
 	}
 }

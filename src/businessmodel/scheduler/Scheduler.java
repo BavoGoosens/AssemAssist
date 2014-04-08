@@ -125,8 +125,8 @@ public class Scheduler {
 	 * A method to generate new shifts for the current day.
 	 */
 	private void generateShifts(){
-		Shift currrentshift = new FreeShift(8, null);
-		Shift endshift = new EndShift(8,currrentshift);
+		Shift endshift = new EndShift(8);
+		Shift currrentshift = new FreeShift(8, endshift);
 		this.getShifts().add(currrentshift);
 		this.getShifts().add(endshift);
 	}

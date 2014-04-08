@@ -7,8 +7,11 @@ import businessmodel.order.Order;
 
 public class FreeShift extends Shift{
 
+	private Shift nextShift;
+
 	public FreeShift(int hours, Shift nextShift) {
-		super(hours, nextShift);
+		super(hours);
+		this.nextShift = nextShift;
 	}
 	
 	@Override
@@ -34,5 +37,9 @@ public class FreeShift extends Shift{
 			timeslots.add(slot);
 		}
 		return timeslots;
+	}
+	
+	protected Shift getNextShift(){
+		return this.nextShift;
 	}
 }

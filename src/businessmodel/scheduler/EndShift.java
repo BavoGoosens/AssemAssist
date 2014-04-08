@@ -7,8 +7,8 @@ import businessmodel.order.Order;
 
 public class EndShift extends Shift {
 
-	public EndShift(int hours,Shift nextShift) {
-		super(hours,nextShift);
+	public EndShift(int hours) {
+		super(hours);
 	}
 	
 	@Override
