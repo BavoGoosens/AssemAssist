@@ -72,5 +72,10 @@ public class CarOptionCategory {
 	private boolean canHaveAsPossibleOption(CarOption option) {
 		return option.getCategory() == this;
 	}
+	
+	@Override
+	public String toString() {
+		return this.getName().toUpperCase();
+	}
 
 }

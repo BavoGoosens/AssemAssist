@@ -19,7 +19,7 @@ public class UltraEngineAircoRestriction extends Restriction {
 		if (engineOption.getName().equalsIgnoreCase("ultra 3l v8")) {
 			return checkAirco(options);
 		}
-		return false;
+		return true;
 	}
 	
 	private CarOption getEngineOption(ArrayList<CarOption> options) {

@@ -26,7 +26,7 @@ public class CarOption {
 	
 	@Override
 	public String toString() {
-		return "Car option: "+this.getName();
+		return this.getCategory().toString()+": "+this.getName();
 	}
 
 }

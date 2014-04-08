@@ -14,6 +14,7 @@ public abstract class Restriction {
 		if (name == null || name.equals("")) throw new IllegalArgumentException("Bad name!");
 		if (inventory == null) throw new IllegalArgumentException("Bad inventory!");
 		this.name = name;
+		this.inventory = inventory;
 	}
 	
 	public String getName() {
