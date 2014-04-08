@@ -1,6 +1,6 @@
 package businessmodel.scheduler;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import businessmodel.order.Order;
 
@@ -14,7 +14,7 @@ public class TimeSlot {
 	/**
 	 * A list that holds the WorkSlot's of this TimeSlot.
 	 */
-	private ArrayList<WorkSlot> workslots;
+	private LinkedList<WorkSlot> workslots;
 
 	/**
 	 * A constructor for the class TimeSlot. A number of WorkSlots will be generated.
@@ -30,7 +30,7 @@ public class TimeSlot {
 	 * A method to get the WorkSlot's of this TimeSlot.
 	 * @return	this.workslots
 	 */
-	protected ArrayList<WorkSlot> getWorkSlots(){
+	protected LinkedList<WorkSlot> getWorkSlots(){
 		return this.workslots;
 	}
 
@@ -40,7 +40,7 @@ public class TimeSlot {
 	 * 			the number of WorkSlot's that will be generated.
 	 */
 	private void generateWorkSlots(int sizeworkposts){
-		this.workslots = new ArrayList<WorkSlot>();
+		this.workslots = new LinkedList<WorkSlot>();
 		for(int i = 0; i< sizeworkposts; i++){
 			WorkSlot temp = new WorkSlot();
 			this.getWorkSlots().add(temp);

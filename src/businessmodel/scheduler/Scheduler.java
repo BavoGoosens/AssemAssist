@@ -1,6 +1,7 @@
 package businessmodel.scheduler;
 
 import java.util.LinkedList;
+
 import businessmodel.AssemblyLine;
 import businessmodel.OrderManager;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
@@ -124,8 +125,8 @@ public class Scheduler {
 	 * A method to generate new shifts for the current day.
 	 */
 	private void generateShifts(){
-		Shift currrentshift = new FreeShift(8);
-		Shift endshift = new EndShift(8);
+		Shift currrentshift = new FreeShift(8, null);
+		Shift endshift = new EndShift(8,currrentshift);
 		this.getShifts().add(currrentshift);
 		this.getShifts().add(endshift);
 	}
@@ -200,7 +201,7 @@ public class Scheduler {
 		return this.shifts;
 	}
 
-	private OrderManager getOrdermanager() {
+	protected OrderManager getOrdermanager() {
 		return this.ordermanager;
 	}
 
@@ -210,5 +211,13 @@ public class Scheduler {
 
 	private AssemblyLine getAssemblyline() {
 		return assemblyline;
+	}
+	
+	protected Shift getNext(Shift shift){
+		int index = this.getShifts().indexOf(shift);
+		if(index + 1 >= this.getShifts().size() || this.getShifts().size() < 0)
+			return null;
+		else
+			return this.getShifts().get(index+1);
 	}
 }

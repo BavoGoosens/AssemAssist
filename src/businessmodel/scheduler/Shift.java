@@ -7,13 +7,16 @@ import businessmodel.order.Order;
 
 public abstract class Shift {
 
-	private LinkedList<TimeSlot> timeslots; 
+	private LinkedList<TimeSlot> timeslots;
+	
+	private Shift nextShift;
 
 	//TODO halen uit assemblyline 
 	private int numberofworkposts = 3;
 
-	public Shift(int hours){
+	public Shift(int hours, Shift nextShift){
 		generateTimeSlots(hours);
+		this.nextShift = nextShift;
 	}
 
 	private void generateTimeSlots(int hours){
@@ -29,29 +32,14 @@ public abstract class Shift {
 		this.getTimeSlots().add(slot);
 	}
 
-	protected void removeLastTimeSlot(){
-		
+	protected Order removeLastTimeSlot(){
+		Order temp = this.getTimeSlots().getLast().getWorkSlots().getLast().getOrder();
+		this.getTimeSlots().removeLast();
+		return temp;
 	}
 
 	protected ArrayList<TimeSlot> canAddOrder(Order order){
-		ArrayList<TimeSlot> timeslots;
-		for(TimeSlot slot1 : this.getTimeSlots()){
-			timeslots = checkSlot(slot1);
-			if (timeslots != null)
-				return timeslots;
-		}
 		return null;
-	}
-
-	private ArrayList<TimeSlot> checkSlot(TimeSlot slot1){
-		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();
-		for(int i = 0; i < this.getNumberofworkposts(); i++){
-			if (slot1.getWorkSlots().get(i).isOccupied())
-				return null;
-			slot1 = this.getNext(slot1);
-			timeslots.add(slot1);
-		}
-		return timeslots;
 	}
 
 	protected void addOrderToSlots(Order order, ArrayList<TimeSlot> timeslots){
@@ -98,5 +86,9 @@ public abstract class Shift {
 			return newtimeslot.getWorkSlots().get(0).getOrder();
 		else
 			return null;
+	}
+	
+	protected Shift getNextShift(){
+		return this.nextShift;
 	}
 }
