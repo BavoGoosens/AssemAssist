@@ -1,7 +1,5 @@
 package test;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -14,11 +12,12 @@ import businessmodel.Inventory;
 
 public class CarModelSpecificationTest {
 	
+	private Inventory inventory;
 	private CarModelSpecification modelASpec;
 
 	@Before
 	public void setUp() {
-		Inventory inventory = new Inventory();
+		inventory = new Inventory();
 		ArrayList<CarOption> options = new ArrayList<CarOption>();
 		
 		CarOptionCategory body = inventory.getBody();
@@ -61,7 +60,14 @@ public class CarModelSpecificationTest {
 	
 	@Test
 	public void testModel() {
-		assertNotNull(modelASpec);
+		ArrayList<CarOption> options = new ArrayList<CarOption>();
+		for (CarOptionCategory category: inventory.getAllCategories()) {
+			options.addAll(modelASpec.getOptionsOfCategory(category));
+		}
+		System.out.println("Model A:");
+		for (CarOption option: options) {
+			System.out.println("-: "+option);
+		}
 	}
 
 }
