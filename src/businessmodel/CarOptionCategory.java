@@ -9,8 +9,8 @@ public class CarOptionCategory {
 	private String name;
 	private ArrayList<CarOption> possibleOptions;
 
-	public CarOptionCategory(String name) throws IllegalArgumentException, IllegalCarOptionCategoryException{
-		this.setPossibleOptions(new ArrayList<CarOption>());
+	public CarOptionCategory(String name) throws IllegalArgumentException {
+		this.possibleOptions = new ArrayList<CarOption>();
 		this.setName(name);
 	}
 	
