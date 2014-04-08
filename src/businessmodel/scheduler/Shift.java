@@ -30,7 +30,7 @@ public abstract class Shift {
 	}
 
 	protected void removeLastTimeSlot(){
-
+		
 	}
 
 	protected ArrayList<TimeSlot> canAddOrder(Order order){
@@ -57,12 +57,11 @@ public abstract class Shift {
 	protected void addOrderToSlots(Order order, ArrayList<TimeSlot> timeslots){
 		int count = 0;
 		for(TimeSlot timeslot: timeslots){
-			timeslot.addOrderToWorkSlot(order, count);
-			count++;
+			timeslot.addOrderToWorkSlot(order, count++);
 		}
 	}
-	
-	private int getNumberofworkposts() {
+
+	protected int getNumberofworkposts() {
 		return numberofworkposts;
 	}
 
@@ -91,5 +90,13 @@ public abstract class Shift {
 			timeslot.terminate();
 		}
 		this.timeslots = null;
+	}
+
+	protected Order getNextOrderForAssemblyLine() {
+		TimeSlot newtimeslot = this.getTimeSlots().pollFirst();
+		if(!newtimeslot.getWorkSlots().isEmpty())
+			return newtimeslot.getWorkSlots().get(0).getOrder();
+		else
+			return null;
 	}
 }

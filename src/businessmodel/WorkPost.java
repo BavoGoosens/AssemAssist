@@ -167,8 +167,7 @@ public class WorkPost {
 	 * @param   Order
 	 * 			The order that this work post needs to start working on.
 	 */
-	public void setNewOrder(Order order) throws IllegalArgumentException {
-		if (order == null) throw new IllegalArgumentException("Bad order!");
+	public void setNewOrder(Order order) {
 		this.setOrder(order);
 		this.refreshAssemblyTasks();
 	}
@@ -214,4 +213,9 @@ public class WorkPost {
 		return this.getName();
 	}
 
+	public Order switchOrders(Order order) {
+		Order temp = this.getOrder();
+		this.setNewOrder(order);
+		return temp;
+	}
 }

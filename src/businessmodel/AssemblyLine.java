@@ -21,19 +21,20 @@ public class AssemblyLine {
 	/**
 	 * A constructor for the class AssemblyLine.
 	 */
-	public AssemblyLine(ArrayList<WorkPost> workposts) throws IllegalArgumentException {
-		this.setWorkPosts(workposts);
+	public AssemblyLine() throws IllegalArgumentException {
+		this.generateWorkPosts();
 	}
-
-	/**
-	 * A method to set the work posts of this workpost to the given work posts.
-	 * @param workposts
-	 */
-	private void setWorkPosts(ArrayList<WorkPost> workposts) throws IllegalArgumentException {
-		if (workposts == null) throw new IllegalArgumentException("Bad list of work posts!");
-		this.workposts = workposts;
+	
+	// TODO aanpassen voor als er meerdere WorkPosts mogelijk zijn.
+	private void generateWorkPosts(){
+		WorkPost post1 = new WorkPost("Car");
+		WorkPost post2 = new WorkPost("");
+		WorkPost post3 = new WorkPost("");
+		this.getWorkPosts().add(post1);
+		this.getWorkPosts().add(post2);
+		this.getWorkPosts().add(post3);
 	}
-
+	
 	/**
 	 * This method returns the list of work posts at the assembly line.
 	 * 
@@ -59,29 +60,14 @@ public class AssemblyLine {
 		return true;
 	}		
 
-	/**
-	 * This method advances the Assembly Line. 
-	 * It adds the supplied order to the first work post and moves the rest forward. 
-	 * If the last WorkPost was working on an Order. That order is finished and is returned.
-	 * 
-	 * @param 	neworder 
-	 * 		  	The Order that is added at the front of the line.
-	 * 
-	 * @return 	Order
-	 * 		   	A finished order if the last WorkPost was working on an Order. 
-	 */
 	public Order advance(Order neworder) throws IllegalStateException {
-		if (!this.canAdvance()) throw new IllegalStateException("Cannot advance assembly line!");
-		// order can be 'null'
-		Order temp1 = this.getWorkPosts().get(0).getOrder();
-		Order temp2 = this.getWorkPosts().get(1).getOrder();
-		Order finished = this.getWorkPosts().get(2).getOrder();
-		
-		this.getWorkPosts().get(0).setNewOrder(neworder);
-		this.getWorkPosts().get(1).setNewOrder(temp1);
-		this.getWorkPosts().get(2).setNewOrder(temp2);
-
-		return finished;
+		if (!this.canAdvance())
+			throw new IllegalStateException("Cannot advance assembly line!");
+		Order temp = neworder;
+		for(WorkPost wp: this.getWorkPosts()){
+			temp = wp.switchOrders(temp);
+		}
+		return temp;
 	}
 	
 	/**
@@ -95,7 +81,6 @@ public class AssemblyLine {
 		for(WorkPost wp: this.getWorkPosts())
 			if (wp.getOrder() != null)
 				orders.add(wp.getOrder());
-		
 		return orders;
 	}
 }

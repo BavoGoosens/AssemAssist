@@ -123,4 +123,12 @@ public abstract class Order {
 			this.setEstimateDate(date.plusMinutes(60));
 		}
 	}
+	
+	/**
+	 * 
+	 * @param date
+	 */
+	public void updateCompletionTime(DateTime date){
+		this.completiondatetime = date;
+	}
 }

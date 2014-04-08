@@ -1,12 +1,13 @@
 package businessmodel.scheduler;
 
 import java.util.LinkedList;
-import org.joda.time.DateTime;
+import businessmodel.AssemblyLine;
+import businessmodel.OrderManager;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
 import businessmodel.order.Order;
 
-// Uses scheduelingAlgorithm to perform scheduling operations.
 public class Scheduler {
+
 
 	/**
 	 * A list that holds all the shifts of this Scheduler. It holds at each moment 2 shifts of the current day.
@@ -21,7 +22,7 @@ public class Scheduler {
 	/**
 	 * A variable that holds the current Scheduling Algorithm.
 	 */
-	private SchedulingAlgorithm algo;
+	private SchedulingAlgorithm algortime;
 
 	/**
 	 * A variable that holds the delay time in minutes for this scheduler.
@@ -29,56 +30,87 @@ public class Scheduler {
 	private int delay;
 
 	/**
-	 * A Constructor for the class Scheduler. 
+	 * The OrderManager that manages this scheduler.
 	 */
-	public Scheduler(){
-		this.shifts = new LinkedList<Shift>();
-		this.orders = new LinkedList<Order>();
-		this.changeAlgorithm("fifo");
-		this.setDelay(0);
-		this.generateShifts();	
-	}
+	private OrderManager ordermanager;
 
 	/**
-	 * A method to change the current algorithm that is used for scheduling.
-	 * @param	algoname
-	 * 			the new scheduling algorithm.
-	 * @throws 	IllegalSchedulingAlgorithmException
-	 * 			if the given algorithm is not implemented.
+	 * The AssymblyLine that this Scheduler manages.
 	 */
-	public void changeAlgorithm(String algoname) throws IllegalSchedulingAlgorithmException{
-		if (algoname == null)
-			throw new NullPointerException("No scheduling algorithm supplied");
-		else if (algoname.equalsIgnoreCase("fifo") || algoname.equalsIgnoreCase("first in first out") )
-			this.algo = new FIFO(this);
-		else if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch"))
-			this.algo = new SpecificationBatch(this);
-		else
-			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");
+	private AssemblyLine assemblyline;
+
+	/**
+	 * A Constructor for the class Scheduler. 
+	 */
+	public Scheduler(OrderManager ordermanager){
+		this.shifts = new LinkedList<Shift>();
+		this.orders = new LinkedList<Order>();
+		this.assemblyline = new AssemblyLine();
+		this.setOrdermanager(ordermanager);
+		this.changeAlgorithm("fifo");
+		this.setDelay(0);
+		this.generateShifts();
 	}
 
+	// Deel AssemblyLine
+
+	public boolean canAdvance(){
+		return this.getAssemblyline().canAdvance();
+	}
+	
+	public void advance(int time){
+		if(!this.canAdvance())
+			return;
+		int delay = time - 60;
+		updateOrders();
+		updateAssemblylineStatus();
+		updateDelay(delay);
+		updateEstimatedTimeOfOrders(delay);
+		this.getAlgo().updateSchedule();
+	}
+	
+	private void updateOrders(){
+		this.getOrdermanager().finishedOrder(this.getOrders().pollFirst());
+	}
+	
+	private void updateDelay(int delay){
+		this.setDelay(this.getDelay()+delay);
+	}
+	
+	private void updateAssemblylineStatus(){
+		Order nextorder = this.getShifts().getFirst().getNextOrderForAssemblyLine();
+		this.getAssemblyline().advance(nextorder);
+	}
+	
+	private void updateEstimatedTimeOfOrders(int delay){
+		for(Order order: this.getOrders()){
+			order.getEstimateDate().plusMinutes(delay);
+		}
+	}
+
+	// Deel Scheduler
+	
+	public void ScheduleDay(){
+		int size = this.getShifts().size()*this.getShifts().getFirst().getTimeSlots().size();
+		for(Order order: this.getOrdermanager().getNbOrders(size)){
+			this.addOrder(order);
+		}
+	} 
+
+	protected Order getNextOrderToSchedule(){
+		return this.getOrdermanager().getPendingOrders().pollFirst();
+	}
+	
 	/**
 	 * A method to add a new Order. The Order will be added to the list of orders and scheduled into the system.
 	 * @param	order
 	 * 			the new order that needs to be scheduled.
 	 */
-	protected void addOrder(Order order) throws IllegalArgumentException{
-		if(canAdOrder(order))
-			throw new IllegalArgumentException("Not a valid Order");
+	private void addOrder(Order order) {
 		this.getOrders().add(order);
 		this.scheduleOrder(order);
 	}
 
-	/**
-	 * A method to check if this order can be added.
-	 * @param	order
-	 * 			the order that needs to be added.
-	 * @return	true if the order is not null.
-	 */
-	private boolean canAdOrder(Order order){
-		return (order != null);	
-	}
-	
 	/**
 	 * A method to schedule an individual Order into the schedule. The estimated completion time is updated.
 	 * @param	order
@@ -99,11 +131,29 @@ public class Scheduler {
 	}
 
 	/**
+	 * A method to change the current algorithm that is used for scheduling.
+	 * @param	algoname
+	 * 			the new scheduling algorithm.
+	 * @throws 	IllegalSchedulingAlgorithmException
+	 * 			if the given algorithm is not implemented.
+	 */
+	public void changeAlgorithm(String algoname) throws IllegalSchedulingAlgorithmException{
+		if (algoname == null)
+			throw new NullPointerException("No scheduling algorithm supplied");
+		else if (algoname.equalsIgnoreCase("fifo") || algoname.equalsIgnoreCase("first in first out") )
+			this.algortime = new FIFO(this);
+		else if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch"))
+			this.algortime = new SpecificationBatch(this);
+		else
+			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");
+	}
+
+	/**
 	 * a method to get the orders of the car manufacturing company.
 	 * @return	this.orders
 	 */
-	protected LinkedList<Order> getOrders() {
-		return orders;
+	public LinkedList<Order> getOrders() {
+		return this.orders;
 	}
 
 	/**
@@ -120,26 +170,13 @@ public class Scheduler {
 			return this.getOrders().get(index-1);
 	}
 
-	/**
-	 * A method to get the next order in the list
-	 * @param 	order
-	 * 			the current order
-	 * @return	the next order in the list.
-	 */
-	private Order getNext(Order order){
-		int index = this.getOrders().indexOf(order);
-		if(index+1 > this.getOrders().size())
-			return null;
-		else
-			return this.getOrders().get(index+1);
-	}
 
 	/**
 	 * A method to get the current scheduling algorithm of this scheduler.
 	 * @return	this.algo
 	 */
 	private SchedulingAlgorithm getAlgo() {
-		return this.algo;
+		return this.algortime;
 	}
 
 	protected int getDelay() {
@@ -148,7 +185,8 @@ public class Scheduler {
 
 	/**
 	 * A method to set the delay of this scheduler to the given scheduler.
-	 * @param delay
+	 * @param	delay
+	 * 			the delay of this scheduler.
 	 */
 	private void setDelay(int delay) {
 		this.delay = delay;
@@ -160,5 +198,17 @@ public class Scheduler {
 	 */
 	protected LinkedList<Shift> getShifts() {
 		return this.shifts;
+	}
+
+	private OrderManager getOrdermanager() {
+		return this.ordermanager;
+	}
+
+	private void setOrdermanager(OrderManager ordermanager) {
+		this.ordermanager = ordermanager;
+	}
+
+	private AssemblyLine getAssemblyline() {
+		return assemblyline;
 	}
 }

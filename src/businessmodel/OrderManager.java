@@ -1,25 +1,19 @@
 package businessmodel;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
-
 import org.joda.time.DateTime;
-
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.Order;
+import businessmodel.scheduler.Scheduler;
 import businessmodel.user.User;
-
-
 
 /**
  * A class that represents an order manager.
  * This class handles all the orders for a car manufacturing company.
  * 
  * @author   SWOP team 10
- *
  */
 public class OrderManager {
 
@@ -39,26 +33,20 @@ public class OrderManager {
 	private ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
 
 	/**
-	 * A production scheduler this Order Manager uses.
+	 * A scheduler this Order Manager uses.
 	 */
-	private ProductionScheduler production;
-
-	/**
-	 * A boolean that indicates if this is the first order that 
-	 * has been entered in the system.
-	 */
-	private boolean firstorder = true;
+	private Scheduler scheduler;
 
 	/**
 	 * A constructor for the class OrderManager.
 	 * 
 	 * @param    carmodels
-	 *           the car models that an car manufacturing company offers.
+	 *           the car models that a car manufacturing company offers.
 	 */
 	public OrderManager(ArrayList<CarModel> carmodels) throws IllegalArgumentException {
 		this.pendingorders = new LinkedList<Order>();
 		this.completedorders = new LinkedList<Order>();
-		DateTime start = new DateTime().withHourOfDay(6).withMinuteOfHour(0).withSecondOfMinute(0);
+		this.scheduler = new Scheduler(this);
 		this.setCarModels(carmodels);
 	}
 
@@ -70,14 +58,6 @@ public class OrderManager {
 	 */
 	public void placeOrder(Order order) throws IllegalArgumentException {
 		this.addOrder(order);
-		boolean added = this.getProductionScheduler().update();
-		if (added == false){
-			this.updateEstimatedTime(0);
-		}
-		if(this.firstorder == true){
-			this.getProductionScheduler().advance(60);
-			this.firstorder = false;
-		}
 	}
 
 	/**
@@ -155,11 +135,11 @@ public class OrderManager {
 	 * @return 	ArrayList<Order>
 	 * 			the pending orders of a given user managed by this order manager.
 	 */
-	public ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
+	protected ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
 		if (user == null) throw new IllegalArgumentException("Bad user!");
 		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
 		ArrayList<Order> pendingorders = new ArrayList<Order>();
-		pendingorders.addAll(this.getProductionScheduler().getDayorders());
+		pendingorders.addAll(this.getScheduler().getOrders());
 		for (Order order: this.getPendingOrders()){
 			if (order.getUser() == user)
 				pendingorders.add(order);
@@ -168,55 +148,28 @@ public class OrderManager {
 	}
 
 	/**
-	 * A method that returns the production scheduler for this OrderManager.
+	 * A method that returns the Scheduler for this OrderManager.
 	 * 
-	 * @return	ProductionScheduler
-	 * 			A production scheduler this OrderManager uses.
+	 * @return	this.scheduler
 	 */
-	public ProductionScheduler getProductionScheduler() {
-		return production;
+	public Scheduler getScheduler() {
+		return this.scheduler;
 	}
 
 	/**
-	 * A method that sets the production scheduler for this OrderManager.
+	 * A method that sets the scheduler for this OrderManager.
 	 * 
-	 * @param 	production
-	 * 			The ProductionScheduler this OrderManager uses.
+	 * @param 	scheduler
+	 * 			The Scheduler this OrderManager uses.
 	 */
-	public void setProductionScheduler(ProductionScheduler production) throws IllegalArgumentException {
-		if (production == null) throw new IllegalArgumentException("Bad production scheduler!");
-		this.production = production;
+	public void setScheduler(Scheduler scheduler) throws IllegalArgumentException {
+		if (scheduler == null) throw new IllegalArgumentException("Bad production scheduler!");
+		this.scheduler = scheduler;
 	}
 
 	@Override
 	public String toString() {
 		return "orders= " + this.getOrders().toString() + ", carmodels= " + carmodels.toString();
-	}
-
-	/**
-	 * A method to update the completion time of the pending orders.
-	 * @param index
-	 */
-	// TODO: Make this better and use jodatime 
-	public void updateEstimatedTime(int time){
-		if (time == 0){
-			int day = this.production.getToday().getDay() + 1;
-			Date start = (Date) this.production.getToday().clone();
-			start.setHours(start.getHours()+8);
-			start.setDate(day);
-			start.setHours(6);
-			start.setMinutes(0);
-			start.setSeconds(0);
-			time = 60*3;
-			for(Order order: this.getPendingOrders()){
-				start.setMinutes(time);
-				order.setEstimateDate(start);
-			}
-		}else{
-			for(Order order: this.getPendingOrders()){
-				order.getEstimateDate().setMinutes(order.getEstimateDate().getMinutes()+time);
-			}
-		}
 	}
 
 	/**

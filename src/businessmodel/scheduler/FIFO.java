@@ -21,18 +21,20 @@ public class FIFO extends SchedulingAlgorithm {
 		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();
 		for (Shift sh: this.getScheduler().getShifts()){
 			timeslots = sh.canAddOrder(order);
-			sh.addOrderToSlots(order,timeslots);
-			order.updateEstimatedCompletionTimeOfOrder(this.getScheduler().getPrevious(order));
+			if(timeslots!= null){
+				sh.addOrderToSlots(order,timeslots);
+				order.updateEstimatedCompletionTimeOfOrder(this.getScheduler().getPrevious(order));
+				break;
+			}
 		}
 	}
 
 	@Override
-	//TODO aanpassen
 	public void updateSchedule(){
 		if(this.getScheduler().getDelay() >= 60){
 			this.getScheduler().getShifts().getLast().addTimeSlot();
-			// get the next order that needs to be scheduled.
-			// this.scheduleOrder();
+			Order nextorder = this.getScheduler().getNextOrderToSchedule();
+			this.scheduleOrder(nextorder);
 		}
 		else if (this.getScheduler().getDelay() <= 60 ){
 			this.getScheduler().getShifts().getLast().removeLastTimeSlot();

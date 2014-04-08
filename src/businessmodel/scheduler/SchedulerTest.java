@@ -8,8 +8,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import businessmodel.CarModel;
 import businessmodel.CarOption;
 import businessmodel.CarOptionCategory;
+import businessmodel.OrderManager;
 import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;
@@ -22,7 +24,8 @@ public class SchedulerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Scheduler sched1 = new Scheduler();
+		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
+		OrderManager ord = new OrderManager(carmodels);
 		GarageHolder c1 = new GarageHolder("","","");
 		CarOption c2 = new CarOption("Henk",new CarOptionCategory("Henk"));
 		ArrayList<CarOption> henk1 = new ArrayList<CarOption>();
@@ -30,10 +33,10 @@ public class SchedulerTest {
 		Order order = new StandardCarOrder(c1,henk1);
 		Order order1 = new StandardCarOrder(c1,henk1);
 		Order order2 = new StandardCarOrder(c1,henk1);
-		sched1.addOrder(order);
-		sched1.addOrder(order1);
-		sched1.addOrder(order2);
-
+		ord.addOrder(order);
+		ord.addOrder(order1);
+		ord.addOrder(order2);
+		ord.getScheduler().ScheduleDay();
 	}
 
 	@Test
