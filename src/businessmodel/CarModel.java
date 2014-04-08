@@ -74,7 +74,7 @@ public class CarModel {
 	 * 			if cms == null
 	 */
 	private void setCarModelSpecification(CarModelSpecification cms) throws IllegalArgumentException {
-		if(cms == null) throw new IllegalArgumentException();
+		if(cms == null) throw new IllegalArgumentException("Bad car model specification!");
 		this.cms = cms;
 	}
 	
@@ -84,7 +84,7 @@ public class CarModel {
 	 * @return	List of  list of components, ordered by type.
 	 */
 	public ArrayList<CarOption> getPossibilities(){
-		return this.cms.getPossibilities();
+		return this.cms.getOptionsClone();
 	}
 	
 	@Override

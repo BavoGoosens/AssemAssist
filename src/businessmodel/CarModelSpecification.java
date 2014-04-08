@@ -1,7 +1,6 @@
 package businessmodel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * This class represents a car model specification.
@@ -12,7 +11,7 @@ import java.util.HashMap;
  */
 public class CarModelSpecification {
 	
-	private ArrayList<OptionList> optionLists;
+	private ArrayList<CarOption> options;
 
 	/**
 	 * This method constructs the car model specification.
@@ -20,38 +19,34 @@ public class CarModelSpecification {
 	 * @param 	parts 
 	 * 			The list of components this specification consists of.
 	 */
-	public CarModelSpecification(ArrayList<OptionList> optionLists) throws IllegalArgumentException {
-		this.setOptionLists(optionLists);
+	public CarModelSpecification(ArrayList<CarOption> options) throws IllegalArgumentException {
+		this.setOptions(options);
 	}
 	
-	private ArrayList<OptionList> getOptionLists() {
-		return this.optionLists;
+	private ArrayList<CarOption> getOptions() {
+		return this.options;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<OptionList> getOptionListsClone() {
-		return (ArrayList<OptionList>) this.optionLists.clone();
+	public ArrayList<CarOption> getOptionsClone() {
+		return (ArrayList<CarOption>) this.getOptions().clone();
+	}
+	
+	public ArrayList<CarOption> getOptionsOfCategory(CarOptionCategory category) throws IllegalArgumentException {
+		if (category == null) throw new IllegalArgumentException("Bad category!");
+		ArrayList<CarOption> options = new ArrayList<CarOption>();
+		for (CarOption option: this.getOptions()) {
+			if (option.getCategory() == category) {
+				options.add(option);
+			}
+		}
+		return options;
 	}
 
 	@SuppressWarnings("unchecked")
-	private void setOptionLists(ArrayList<OptionList> optionLists) throws IllegalArgumentException {
-		if (optionLists == null) throw new IllegalArgumentException("Bad list of option lists!");
-		this.optionLists = (ArrayList<OptionList>) optionLists.clone();
-	}
-	
-	/**
-	 * A method to get all the components of this car model specification.
-	 * 
-	 * @return A list of list of all the components of a car model specification
-	 */
-	public ArrayList<CarOption> getPossibilities() {
-		ArrayList<CarOption> possibilities = new ArrayList<CarOption>();
-		for (OptionList list: this.getOptionLists()) {
-			for (CarOption option: list.getOptionsClone()) {
-				possibilities.add(option);
-			}
-		}
-		return possibilities;
+	private void setOptions(ArrayList<CarOption> options) throws IllegalArgumentException {
+		if (options == null) throw new IllegalArgumentException("Bad list of options!");
+		this.options = (ArrayList<CarOption>) options.clone();
 	}
 }
 

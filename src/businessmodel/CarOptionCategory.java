@@ -32,6 +32,14 @@ public class CarOptionCategory {
 		return (ArrayList<CarOption>) this.possibleOptions.clone();
 	}
 	
+	public CarOption getOptionWithName(String name) throws IllegalArgumentException {
+		if (name == null) throw new IllegalArgumentException("Bad name!");
+		for (CarOption option: this.getPossibleOptions()) {
+			if (option.getName().equalsIgnoreCase(name)) return option;
+		}
+		throw new IllegalArgumentException("No option found with that name!");
+	}
+	
 	private void setName(String name) throws IllegalArgumentException {
 		if (name == null || name.equals("")) throw new IllegalArgumentException("Bad name!");
 		this.name = name;

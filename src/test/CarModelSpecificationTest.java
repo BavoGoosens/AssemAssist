@@ -8,83 +8,60 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.CarModelSpecification;
-
-import component.Airco;
-import component.Body;
-import component.Color;
-import component.Engine;
-import component.Gearbox;
-import component.Seats;
-import component.Wheels;
+import businessmodel.CarOption;
+import businessmodel.CarOptionCategory;
+import businessmodel.Inventory;
 
 public class CarModelSpecificationTest {
 	
-	private ArrayList<Body> bodies;
-	private ArrayList<Color> colors;
-	private ArrayList<Engine> engines;
-	private ArrayList<Airco> aircos;
-	private ArrayList<Gearbox> gearboxes;
-	private ArrayList<Wheels> wheelss;
-	private ArrayList<Seats> seatss;
-	private Body body;	private Body body2;
-	private Color color; private Color color2;
-	private Engine engine; private Engine engine2;
-	private Gearbox gearbox; private Gearbox gearbox2;
-	private Seats seats; private Seats seats2;
-	private Airco airco; private Airco airco2;
-	private Wheels wheels; private Wheels wheels2;
-	private CarModelSpecification cms;
+	private CarModelSpecification modelASpec;
 
 	@Before
-	public void setUp() throws Exception {
-		body = new Body("sedan",1000);
-		color = new Color("red",1000);
-		engine = new Engine("standard 2l 4 cilinders",1000);
-		gearbox = new Gearbox("6 speed manual",1000);
-		seats = new Seats("leather black",1000);
-		airco = new Airco("manual",1000);
-		wheels = new Wheels("comfort",1000);
-		body2 = new Body("sedan",1000);
-		color2 = new Color("red",1000);
-		engine2 = new Engine("standard 2l 4 cilinders",1000);
-		gearbox2 = new Gearbox("6 speed manual",1000);
-		seats2 = new Seats("leather black",1000);
-		airco2 = new Airco("manual",1000);
-		wheels2 = new Wheels("comfort",1000);
-		bodies = new ArrayList<Body>();
-		colors = new ArrayList<Color>();
-		engines = new ArrayList<Engine>();
-		gearboxes = new ArrayList<Gearbox>();
-		seatss = new ArrayList<Seats>();
-		aircos = new ArrayList<Airco>();
-		wheelss = new ArrayList<Wheels>();
-		bodies.add(body2);
-		bodies.add(body);
-		colors.add(color);
-		colors.add(color2);
-		engines.add(engine);
-		engines.add(engine2);
-		gearboxes.add(gearbox);
-		gearboxes.add(gearbox2);
-		seatss.add(seats);
-		seatss.add(seats2);
-		aircos.add(airco);
-		aircos.add(airco2);
-		wheelss.add(wheels);
-		wheelss.add(wheels2);
-		cms = new CarModelSpecification(bodies,colors,engines,gearboxes,seatss,aircos,wheelss);
+	public void setUp() {
+		Inventory inventory = new Inventory();
+		ArrayList<CarOption> options = new ArrayList<CarOption>();
+		
+		CarOptionCategory body = inventory.getBody();
+		CarOptionCategory color = inventory.getColor();
+		CarOptionCategory engine = inventory.getEngine();
+		CarOptionCategory gearbox = inventory.getGearbox();
+		CarOptionCategory seats = inventory.getSeats();
+		CarOptionCategory airco = inventory.getAirco();
+		CarOptionCategory wheels = inventory.getWheels();
+		
+		options.add(body.getOptionWithName("sedan"));
+		options.add(body.getOptionWithName("break"));
+		
+		options.add(color.getOptionWithName("red"));
+		options.add(color.getOptionWithName("blue"));
+		options.add(color.getOptionWithName("black"));
+		options.add(color.getOptionWithName("white"));
+		
+		options.add(engine.getOptionWithName("standard 2l v4"));
+		options.add(engine.getOptionWithName("performance 2.5l v6"));
+		
+		options.add(gearbox.getOptionWithName("6 speed manual"));
+		options.add(gearbox.getOptionWithName("5 speed manual"));
+		options.add(gearbox.getOptionWithName("5 speed automatic"));
+		
+		options.add(seats.getOptionWithName("leather white"));
+		options.add(seats.getOptionWithName("leather black"));
+		options.add(seats.getOptionWithName("vinyl grey"));
+		
+		options.add(airco.getOptionWithName("manual"));
+		options.add(airco.getOptionWithName("automatic"));
+		
+		options.add(wheels.getOptionWithName("winter"));
+		options.add(wheels.getOptionWithName("comfort"));
+		options.add(wheels.getOptionWithName("sports"));
+		
+		modelASpec = new CarModelSpecification(options);
+		
 	}
-
+	
 	@Test
-	public void test() {
-		assertEquals(cms.getBodies(),this.bodies);
-		assertEquals(cms.getColors(),this.colors);
-		assertEquals(cms.getEngines(),this.engines);
-		assertEquals(cms.getAircos(),this.aircos);
-		assertEquals(cms.getGearboxes(),this.gearboxes);
-		assertEquals(cms.getSeats(),this.seatss);
-		assertEquals(cms.getWheels(),this.wheelss);
-		assertTrue(!cms.getPosibilities().isEmpty());
+	public void testModel() {
+		assertNotNull(modelASpec);
 	}
 
 }
