@@ -106,7 +106,7 @@ public class Scheduler {
 		}
 		else if (this.getDelay() <= 60){
 			Order order = this.getShifts().getLast().removeLastTimeSlot();
-			this.getOrdermanager().getPendingOrders().addFirst(order);
+			this.getOrdermanager().placeOrderInFront(order);
 			this.setDelay(this.getDelay()+60);
 		}
 	}
@@ -148,7 +148,7 @@ public class Scheduler {
 	 * @param	order
 	 * 			the new order that needs to be scheduled.
 	 */
-	public void addOrder(Order order) {
+	private void addOrder(Order order) {
 		this.getOrders().add(order);
 		this.scheduleOrder(order);
 	}
