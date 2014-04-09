@@ -195,7 +195,7 @@ public class OrderManager {
 	public LinkedList<Order> getNbOrders(int nb) {
 		if (nb < 0) throw new IllegalNumberException(nb, "Bad number!");
 		LinkedList<Order> res = new LinkedList<Order>();
-		for (int i = 0 ; i < nb - 1; i++){
+		for (int i = 0 ; i < nb; i++){
 			Order tmp = this.getPendingOrders().pollFirst();
 			if (tmp == null)
 				break;

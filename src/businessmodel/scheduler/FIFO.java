@@ -1,7 +1,6 @@
 package businessmodel.scheduler;
 
 import java.util.ArrayList;
-
 import businessmodel.order.Order;
 
 public class FIFO extends SchedulingAlgorithm {
@@ -37,11 +36,9 @@ public class FIFO extends SchedulingAlgorithm {
 			this.scheduleOrder(nextorder);
 		}
 		else if (this.getScheduler().getDelay() <= 60 ){
-			this.getScheduler().getShifts().getLast().removeLastTimeSlot();
+			Order order = this.getScheduler().getShifts().getLast().removeLastTimeSlot();
+			this.getScheduler().getOrdermanager().getPendingOrders().addFirst(order);
 		}
-		//
 	}
-
-
 }
 

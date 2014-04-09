@@ -7,13 +7,69 @@ import businessmodel.order.Order;
 
 public abstract class Shift {
 
-	private LinkedList<TimeSlot> timeslots; 
+	private LinkedList<TimeSlot> timeslots;
+	
+	private int numberofworkposts;
 
-	//TODO halen uit assemblyline 
-	private int numberofworkposts = 3;
-
-	public Shift(int hours){
+	public Shift(int hours, int numberofworkposts){
+		this.setNumberOfWorkPosts(numberofworkposts);
 		generateTimeSlots(hours);
+	}
+
+	/**
+	 * A method to check if an order can be added to this shift.
+	 * @param	order
+	 * 			the order that you want added.
+	 * @return	returns a list of TimeSlot's if the order can be scheduled.
+	 * 			null if the order cannot be added.
+	 */
+	protected ArrayList<TimeSlot> canAddOrder(Order order){
+		return null;
+	}
+
+	/**
+	 * A method to add a Tie
+	 */
+	protected void addTimeSlot(){
+		TimeSlot slot = new TimeSlot(this.getNumberofworkposts());
+		this.getTimeSlots().add(slot);
+	}
+
+	protected Order removeLastTimeSlot(){
+		Order temp = this.getTimeSlots().getLast().getWorkSlots().getLast().getOrder();
+		this.getTimeSlots().removeLast();
+		return temp;
+	}
+
+	protected void addOrderToSlots(Order order, ArrayList<TimeSlot> timeslots){
+		int count = 0;
+		for(TimeSlot timeslot: timeslots){
+			timeslot.addOrderToWorkSlot(order, count++);
+		}
+	}
+
+	protected TimeSlot getNextTimeSlot(TimeSlot timeslot){
+		int index = this.getTimeSlots().indexOf(timeslot);
+		if(index + 1 >= this.getTimeSlots().size() || this.getTimeSlots().size() < 0)
+			return null;
+		else
+			return this.getTimeSlots().get(index+1);
+	}
+
+	protected Order getNextOrderForAssemblyLine() {
+		TimeSlot newtimeslot = this.getTimeSlots().pollFirst();
+		if(!newtimeslot.getWorkSlots().isEmpty())
+			return newtimeslot.getWorkSlots().get(0).getOrder();
+		else
+			return null;
+	}
+	
+	protected LinkedList<TimeSlot> getTimeSlots() {
+		return timeslots;
+	}
+
+	protected int getNumberofworkposts() {
+		return this.numberofworkposts;
 	}
 
 	private void generateTimeSlots(int hours){
@@ -24,79 +80,7 @@ public abstract class Shift {
 		}
 	}
 
-	protected void addTimeSlot(){
-		TimeSlot slot = new TimeSlot(this.getNumberofworkposts());
-		this.getTimeSlots().add(slot);
-	}
-
-	protected void removeLastTimeSlot(){
-		
-	}
-
-	protected ArrayList<TimeSlot> canAddOrder(Order order){
-		ArrayList<TimeSlot> timeslots;
-		for(TimeSlot slot1 : this.getTimeSlots()){
-			timeslots = checkSlot(slot1);
-			if (timeslots != null)
-				return timeslots;
-		}
-		return null;
-	}
-
-	private ArrayList<TimeSlot> checkSlot(TimeSlot slot1){
-		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();
-		for(int i = 0; i < this.getNumberofworkposts(); i++){
-			if (slot1.getWorkSlots().get(i).isOccupied())
-				return null;
-			slot1 = this.getNext(slot1);
-			timeslots.add(slot1);
-		}
-		return timeslots;
-	}
-
-	protected void addOrderToSlots(Order order, ArrayList<TimeSlot> timeslots){
-		int count = 0;
-		for(TimeSlot timeslot: timeslots){
-			timeslot.addOrderToWorkSlot(order, count++);
-		}
-	}
-
-	protected int getNumberofworkposts() {
-		return numberofworkposts;
-	}
-
-	protected LinkedList<TimeSlot> getTimeSlots() {
-		return timeslots;
-	}
-
-	protected TimeSlot getPrevious(TimeSlot timeslot){
-		int index = this.getTimeSlots().indexOf(timeslot);
-		if(index-1 < 0 || this.getTimeSlots().size() < 0)
-			return null;
-		else
-			return this.getTimeSlots().get(index-1);
-	}
-
-	protected TimeSlot getNext(TimeSlot timeslot){
-		int index = this.getTimeSlots().indexOf(timeslot);
-		if(index + 1 >= this.getTimeSlots().size() || this.getTimeSlots().size() < 0)
-			return null;
-		else
-			return this.getTimeSlots().get(index+1);
-	}
-
-	protected void terminate(){
-		for(TimeSlot timeslot: this.getTimeSlots()){
-			timeslot.terminate();
-		}
-		this.timeslots = null;
-	}
-
-	protected Order getNextOrderForAssemblyLine() {
-		TimeSlot newtimeslot = this.getTimeSlots().pollFirst();
-		if(!newtimeslot.getWorkSlots().isEmpty())
-			return newtimeslot.getWorkSlots().get(0).getOrder();
-		else
-			return null;
+	private void setNumberOfWorkPosts(int numberofworkposts) {
+		this.numberofworkposts = numberofworkposts;
 	}
 }

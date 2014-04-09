@@ -28,14 +28,6 @@ public class WorkSlot{
 	}
 	
 	/**
-	 * A method to check if this WorkSlot is occupied.
-	 * @return	this.occupied
-	 */
-	protected boolean isOccupied(){
-		return this.getOccupied();
-	}
-
-	/**
 	 * A method to add a new Order.
 	 * @param	order
 	 *       	the new order of this WorkSlot. 
@@ -45,6 +37,14 @@ public class WorkSlot{
 		this.setOccupied(true);
 	}
 	
+	/**
+	 * A method to check if this WorkSlot is occupied.
+	 * @return	this.occupied
+	 */
+	protected boolean isOccupied(){
+		return this.getOccupied();
+	}
+
 	/**
 	 * A method to get the order of this WorkSlot.
 	 * @return	this.order
@@ -85,12 +85,5 @@ public class WorkSlot{
 	 */
 	private boolean getOccupied(){
 		return this.occupied;
-	}
-	
-	/**
-	 * A method to terminate this WorkSlot object.
-	 */
-	protected void terminate(){
-		this.order = null;
 	}
 }

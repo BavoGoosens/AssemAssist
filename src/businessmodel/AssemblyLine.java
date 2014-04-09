@@ -83,4 +83,8 @@ public class AssemblyLine {
 				orders.add(wp.getOrder());
 		return orders;
 	}
+	
+	public int getNumberOfWokrkPosts(){
+		return this.getWorkPosts().size();
+	}
 }
