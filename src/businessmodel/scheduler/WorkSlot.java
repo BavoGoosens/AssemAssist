@@ -2,7 +2,6 @@ package businessmodel.scheduler;
 
 import businessmodel.order.Order;
 
-
 /**
  * A class that represents a WorkSlot. Each TimeSlot has a number of WorkSlot's. Each WorkSlot represents a hour on an WorkPost.
  * 
