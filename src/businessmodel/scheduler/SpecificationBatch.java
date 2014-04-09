@@ -45,9 +45,6 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 			orderList.addLast(currentOrder);
 		}
 		
-		for(Order ord: orderList)
-			System.out.println(ord);
-		System.out.println("--------------------");
 	}
 
 	@Override
