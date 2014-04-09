@@ -48,7 +48,7 @@ public class Scheduler {
 		this.orders = new LinkedList<Order>();
 		this.assemblyline = new AssemblyLine();
 		this.setOrdermanager(ordermanager);
-		this.changeAlgorithm("sb");
+		this.changeAlgorithm("fifo");
 		this.setDelay(0);
 		this.generateShifts();
 	}
