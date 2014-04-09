@@ -14,9 +14,13 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	}
 
 	@Override
-	public void schedule(){
-		for(Order order: this.getScheduler().getOrders())
+	public void schedule(LinkedList<Order> orders){
+		for(Order order: orders)
 			this.scheduleOrder(order);
+		this.reschedule();
+//		for(Order order: orderList)
+//			System.out.println(order);
+		
 	}
 	
 	@Override
@@ -45,7 +49,8 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 			orderList.addLast(currentOrder);
 		}
 		
-		this.reschedule();
+		
+		
 	}
 
 	private void reschedule() {

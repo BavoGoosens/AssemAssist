@@ -1,5 +1,7 @@
 package businessmodel.scheduler;
 
+import java.util.LinkedList;
+
 import businessmodel.order.Order;
 
 //Interface for subclasses.
@@ -12,7 +14,7 @@ public abstract class SchedulingAlgorithm {
 		this.scheduler = scheduler;
 	}
 	
-	public abstract void schedule();
+	public abstract void schedule(LinkedList<Order> orders);
 	
 	public abstract void scheduleOrder(Order order);
 	

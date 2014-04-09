@@ -93,9 +93,8 @@ public class Scheduler {
 	
 	public void ScheduleDay(){
 		int size = this.getShifts().size()*this.getShifts().getFirst().getTimeSlots().size()-(this.getAssemblyline().getNumberOfWokrkPosts()-1);
-		for(Order order: this.getOrdermanager().getNbOrders(size)){
-			this.addOrder(order);
-		}
+		this.getAlgo().schedule(this.getOrdermanager().getNbOrders(size));
+	
 	} 
 
 	protected Order getNextOrderToSchedule(){
@@ -107,7 +106,7 @@ public class Scheduler {
 	 * @param	order
 	 * 			the new order that needs to be scheduled.
 	 */
-	public void addOrder(Order order) {
+	private void addOrder(Order order) {
 		this.getOrders().add(order);
 		this.scheduleOrder(order);
 	}
