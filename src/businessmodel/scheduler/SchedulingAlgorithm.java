@@ -18,8 +18,6 @@ public abstract class SchedulingAlgorithm {
 	
 	public abstract void scheduleOrder(Order order);
 	
-	public abstract void updateSchedule();
-	
 	protected Scheduler getScheduler(){
 		return this.scheduler;
 	}
