@@ -1,23 +1,19 @@
 package businessmodel.scheduler;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-
 import businessmodel.order.Order;
 
 public class EndShift extends Shift {
 
-	public EndShift(int hours) {
-		super(hours);
+	public EndShift(int hours,int numberofworkposts) {
+		super(hours,numberofworkposts);
 	}
 	
 	@Override
 	protected ArrayList<TimeSlot> canAddOrder(Order order){
 		ArrayList<TimeSlot> timeslots;
-		LinkedList<TimeSlot> temp = this.getTimeSlots();
-		temp.remove(temp.size());
-		temp.remove(temp.size());
-		for(TimeSlot slot : temp){
+		for(int i = 0 ; i< this.getTimeSlots().size()-2;i++){
+			TimeSlot slot = this.getTimeSlots().get(i);
 			timeslots = checkSlot(slot);
 			if (timeslots != null)
 				return timeslots;
@@ -30,8 +26,8 @@ public class EndShift extends Shift {
 		for(int i = 0; i < this.getNumberofworkposts(); i++){
 			if (slot.getWorkSlots().get(i).isOccupied())
 				return null;
-			slot = this.getNext(slot);
 			timeslots.add(slot);
+			slot = this.getNextTimeSlot(slot);
 		}
 		return timeslots;
 	}

@@ -9,10 +9,11 @@ public class FreeShift extends Shift{
 
 	private Shift nextShift;
 
-	public FreeShift(int hours, Shift nextShift) {
-		super(hours);
+	public FreeShift(int hours,int numberofworkposts, Shift nextShift) {
+		super(hours, numberofworkposts);
 		this.nextShift = nextShift;
 	}
+	
 	
 	@Override
 	protected ArrayList<TimeSlot> canAddOrder(Order order){
@@ -28,17 +29,27 @@ public class FreeShift extends Shift{
 		return null;
 	}
 	
+	/**
+	 * A method to check if a number of slots are available.
+	 * @param 	slot
+	 * 			the first slot to check.
+	 * @return	a list of slots if there is room. null if there is no place available.
+	 */
 	private ArrayList<TimeSlot> checkSlot(TimeSlot slot){
 		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();
 		for(int i = 0; i < this.getNumberofworkposts(); i++){
 			if (slot.getWorkSlots().get(i).isOccupied())
 				return null;
-			slot = this.getNext(slot);
 			timeslots.add(slot);
+			slot = this.getNextTimeSlot(slot);
 		}
 		return timeslots;
 	}
 	
+	/**
+	 * A method to get the next shift of the day.
+	 * @return	the next shift of the day
+	 */
 	protected Shift getNextShift(){
 		return this.nextShift;
 	}

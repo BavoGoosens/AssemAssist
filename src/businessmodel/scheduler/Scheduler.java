@@ -92,7 +92,7 @@ public class Scheduler {
 	// Deel Scheduler
 	
 	public void ScheduleDay(){
-		int size = this.getShifts().size()*this.getShifts().getFirst().getTimeSlots().size();
+		int size = this.getShifts().size()*this.getShifts().getFirst().getTimeSlots().size()-(this.getAssemblyline().getNumberOfWokrkPosts()-1);
 		for(Order order: this.getOrdermanager().getNbOrders(size)){
 			this.addOrder(order);
 		}
@@ -125,8 +125,8 @@ public class Scheduler {
 	 * A method to generate new shifts for the current day.
 	 */
 	private void generateShifts(){
-		Shift endshift = new EndShift(8);
-		Shift currrentshift = new FreeShift(8, endshift);
+		Shift endshift = new EndShift(8,this.getAssemblyline().getNumberOfWokrkPosts());
+		Shift currrentshift = new FreeShift(8,this.getAssemblyline().getNumberOfWokrkPosts(), endshift);
 		this.getShifts().add(currrentshift);
 		this.getShifts().add(endshift);
 	}
@@ -213,7 +213,7 @@ public class Scheduler {
 		return assemblyline;
 	}
 	
-	protected Shift getNext(Shift shift){
+	protected Shift getNextShift(Shift shift){
 		int index = this.getShifts().indexOf(shift);
 		if(index + 1 >= this.getShifts().size() || this.getShifts().size() < 0)
 			return null;

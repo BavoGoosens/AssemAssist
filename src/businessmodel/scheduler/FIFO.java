@@ -1,7 +1,6 @@
 package businessmodel.scheduler;
 
 import java.util.ArrayList;
-
 import businessmodel.order.Order;
 
 public class FIFO extends SchedulingAlgorithm {
