@@ -64,18 +64,5 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 		return queue;
 	}
 	
-	private class Pair
-	{
-	    private final Order currentOrder;
-	    private final Order order;
-
-	    public Pair(Order currentOrder, Order order){
-	    	this.currentOrder = currentOrder;
-	        this.order = order;
-	    }
-
-	    public Order getKey()   { return currentOrder; }
-	    public Order getValue() { return order; }
-	}
 }
 
