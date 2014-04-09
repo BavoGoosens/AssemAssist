@@ -47,7 +47,7 @@ public class Scheduler {
 		this.orders = new LinkedList<Order>();
 		this.assemblyline = new AssemblyLine();
 		this.setOrdermanager(ordermanager);
-		this.changeAlgorithm("fifo");
+		this.changeAlgorithm("sb");
 		this.setDelay(0);
 		this.generateShifts();
 	}
@@ -106,7 +106,7 @@ public class Scheduler {
 	 * @param	order
 	 * 			the new order that needs to be scheduled.
 	 */
-	private void addOrder(Order order) {
+	public void addOrder(Order order) {
 		this.getOrders().add(order);
 		this.scheduleOrder(order);
 	}
