@@ -148,7 +148,7 @@ public class Scheduler {
 	 * @param	order
 	 * 			the new order that needs to be scheduled.
 	 */
-	private void addOrder(Order order) {
+	public void addOrder(Order order) {
 		this.getOrders().add(order);
 		this.scheduleOrder(order);
 	}

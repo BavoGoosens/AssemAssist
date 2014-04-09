@@ -1,9 +1,12 @@
+
 package businessmodel.order;
 
 import java.util.Locale;
 
 import org.joda.time.DateTime;
 
+import businessmodel.Car;
+import businessmodel.CarOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.user.User;
 
@@ -93,10 +96,10 @@ public abstract class Order {
 	public User getUser() {
 		return this.user;
 	}
-
+//+ ", delivery date= " + this.estimatedatetime.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
 	@Override
 	public String toString() {
-		return "user: " + this.user.toString() + ", delivery date= " + this.estimatedatetime.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
+		return "user: " + this.user.toString() ;
 	}
 
 	/**
@@ -131,4 +134,25 @@ public abstract class Order {
 	public void updateCompletionTime(DateTime date){
 		this.completiondatetime = date;
 	}
+	
+	/**
+	 * 
+	 * @return null
+	 */
+	public Car getCar(){
+		return null;
+	}
+
+	public boolean equalsCarOptions(Object order) throws IllegalArgumentException{
+		
+		if (order == null) throw new IllegalArgumentException("bad order");
+		int count = 0;
+		for(CarOption carOption: ((StandardCarOrder) order).getCar().getOptionsClone())
+			for(CarOption carOption2: this.getCar().getOptionsClone())
+				if (!carOption.toString().equals(carOption2.toString()))
+					return false;
+						
+		return true;
+	}
+	
 }

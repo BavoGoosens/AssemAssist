@@ -26,6 +26,7 @@ public class StandardCarOrder extends Order {
 	 * @return 	Car
 	 * 			this.car
 	 */
+	@Override
 	public Car getCar() {
 		return car;
 	}
