@@ -6,19 +6,23 @@ import java.util.LinkedList;
 import businessmodel.order.Order;
 
 public class SpecificationBatch extends SchedulingAlgorithm {
-	
+
 	private LinkedList<Order> orderList = new LinkedList<Order>();
-	
+
 	public SpecificationBatch(Scheduler scheduler){
 		super(scheduler);
 	}
 
 	@Override
-	public void schedule(){
-		for(Order order: this.getScheduler().getOrders())
+	public void schedule(LinkedList<Order> orders){
+		for(Order order: orders)
 			this.scheduleOrder(order);
+		this.reschedule();
+				for(Order order: orderList)
+					System.out.println(order);
+
 	}
-	
+
 	@Override
 	public void scheduleOrder(Order currentOrder) {
 
@@ -28,30 +32,31 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 				similarCarOptionsOrder.add(order);
 			}
 		}
-		
+
 		if (similarCarOptionsOrder.size() != 0){
-			
+
 			similarCarOptionsOrder.add(currentOrder);
-			
+
 			for(Order ord: similarCarOptionsOrder)
 				orderList.remove(ord);
-			
+
 			Collections.reverse(similarCarOptionsOrder);
-			
+
 			for(Order ord: similarCarOptionsOrder)
 				orderList.addFirst(ord);
 
 		}else{
 			orderList.addLast(currentOrder);
 		}
-		
-		this.reschedule();
+
+
+
 	}
 
 	private void reschedule() {
-		
+
 		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();
-		
+
 		for(Order order: orderList){
 			for (Shift sh: this.getScheduler().getShifts()){
 				timeslots = sh.canAddOrder(order);
@@ -62,21 +67,8 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 				}
 			}
 		}
-		
+
 	}
 
-	@Override
-	public void updateSchedule(){
-		if(this.getScheduler().getDelay() >= 60){
-			this.getScheduler().getShifts().getLast().addTimeSlot();
-			Order nextorder = this.getScheduler().getNextOrderToSchedule();
-			this.scheduleOrder(nextorder);
-		}
-		else if (this.getScheduler().getDelay() <= 60 ){
-			Order order = this.getScheduler().getShifts().getLast().removeLastTimeSlot();
-			this.getScheduler().getOrdermanager().getPendingOrders().addFirst(order);
-		}
-	}
-	
 }
 

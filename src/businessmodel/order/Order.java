@@ -1,7 +1,7 @@
 
 package businessmodel.order;
 
-import java.util.Locale;
+import java.util.ArrayList;
 
 import org.joda.time.DateTime;
 
@@ -96,7 +96,7 @@ public abstract class Order {
 	public User getUser() {
 		return this.user;
 	}
-//+ ", delivery date= " + this.estimatedatetime.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
+	//+ ", delivery date= " + this.estimatedatetime.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
 	@Override
 	public String toString() {
 		return "user: " + this.user.toString() ;
@@ -126,6 +126,40 @@ public abstract class Order {
 			this.setEstimateDate(date.plusMinutes(60));
 		}
 	}
+
+	/**
+	 * Method to check if caroptions from two orders are the same or not
+	 * 
+	 * @param order
+	 * @return true if caroptions are the same else return false
+	 * @throws IllegalArgumentException
+	 */
+	public boolean equalsCarOptions(Object order) throws IllegalArgumentException{
+
+		if (order == null) throw new IllegalArgumentException("bad order");
+
+		ArrayList<CarOption> orders = this.getCar().getOptionsClone();
+		ArrayList<CarOption> orders2 = ((StandardCarOrder) order).getCar().getOptionsClone();
+		ArrayList<CarOption> temp = new ArrayList<CarOption>();
+		
+		if (orders.size() < orders2.size()){
+			temp = orders;
+			orders= orders2;
+			orders2 = temp;
+		}
+			
+		for(CarOption carOption: orders){
+			boolean sameCarOptions = false;
+			for(CarOption carOption2: orders2){
+				if (carOption.toString().equals(carOption2.toString())){
+					sameCarOptions = true;
+				}
+			}
+			if(!sameCarOptions)
+				return false;
+		}
+		return true;
+	}
 	
 	/**
 	 * 
@@ -134,25 +168,13 @@ public abstract class Order {
 	public void updateCompletionTime(DateTime date){
 		this.completiondatetime = date;
 	}
-	
+
 	/**
 	 * 
 	 * @return null
 	 */
 	public Car getCar(){
 		return null;
-	}
-
-	public boolean equalsCarOptions(Object order) throws IllegalArgumentException{
-		
-		if (order == null) throw new IllegalArgumentException("bad order");
-		int count = 0;
-		for(CarOption carOption: ((StandardCarOrder) order).getCar().getOptionsClone())
-			for(CarOption carOption2: this.getCar().getOptionsClone())
-				if (!carOption.toString().equals(carOption2.toString()))
-					return false;
-						
-		return true;
 	}
 	
 }
