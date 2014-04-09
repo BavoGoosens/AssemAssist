@@ -12,11 +12,11 @@ public abstract class SchedulingAlgorithm {
 		this.scheduler = scheduler;
 	}
 	
-	public void schedule(){}
+	public abstract void schedule();
 	
-	public void scheduleOrder(Order order) {}
+	public abstract void scheduleOrder(Order order);
 	
-	public void updateSchedule(){}
+	public abstract void updateSchedule();
 	
 	protected Scheduler getScheduler(){
 		return this.scheduler;
