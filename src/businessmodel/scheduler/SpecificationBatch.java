@@ -2,29 +2,28 @@ package businessmodel.scheduler;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map.Entry;
-import java.util.PriorityQueue;
-
-import businessmodel.CarOption;
 import businessmodel.order.Order;
 
 public class SpecificationBatch extends SchedulingAlgorithm {
 	
-	LinkedList<Order> list = new LinkedList<Order>();
-	private HashMap<Order, Order> queue = new HashMap<Order, Order>();
+	private LinkedList<Order> orderList = new LinkedList<Order>();
 	
 	public SpecificationBatch(Scheduler scheduler){
 		super(scheduler);
 	}
 
 	@Override
+	public void schedule(){
+		for(Order order: this.getScheduler().getOrders())
+			this.scheduleOrder(order);
+	}
+	
+	@Override
 	public void scheduleOrder(Order currentOrder) {
 
 		ArrayList<Order> similarCarOptionsOrder = new ArrayList<Order>();
-		for(Order order: this.getOrders()){
+		for(Order order: orderList){
 			if (currentOrder.equalsCarOptions(order)){
 				similarCarOptionsOrder.add(order);
 			}
@@ -35,33 +34,33 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 			similarCarOptionsOrder.add(currentOrder);
 			
 			for(Order ord: similarCarOptionsOrder)
-				list.remove(ord);
+				orderList.remove(ord);
 			
 			Collections.reverse(similarCarOptionsOrder);
 			
 			for(Order ord: similarCarOptionsOrder)
-				list.addFirst(ord);
+				orderList.addFirst(ord);
 
 		}else{
-			list.addLast(currentOrder);
+			orderList.addLast(currentOrder);
 		}
 		
-		for(Order ord: this.getOrders())
+		for(Order ord: orderList)
 			System.out.println(ord);
 		System.out.println("--------------------");
 	}
 
 	@Override
 	public void updateSchedule(){
-
-	}
-
-	public LinkedList<Order> getOrders(){
-		return list;
-	}
-	
-	public HashMap<Order, Order> getOrdersScheduled(){
-		return queue;
+		if(this.getScheduler().getDelay() >= 60){
+			this.getScheduler().getShifts().getLast().addTimeSlot();
+			Order nextorder = this.getScheduler().getNextOrderToSchedule();
+			this.scheduleOrder(nextorder);
+		}
+		else if (this.getScheduler().getDelay() <= 60 ){
+			Order order = this.getScheduler().getShifts().getLast().removeLastTimeSlot();
+			this.getScheduler().getOrdermanager().getPendingOrders().addFirst(order);
+		}
 	}
 	
 }
