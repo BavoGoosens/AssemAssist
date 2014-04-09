@@ -29,18 +29,5 @@ public class FIFO extends SchedulingAlgorithm {
 			}
 		}
 	}
-
-	@Override
-	public void updateSchedule(){
-		if(this.getScheduler().getDelay() >= 60){
-			this.getScheduler().getShifts().getLast().addTimeSlot();
-			Order nextorder = this.getScheduler().getNextOrderToSchedule();
-			this.scheduleOrder(nextorder);
-		}
-		else if (this.getScheduler().getDelay() <= 60 ){
-			Order order = this.getScheduler().getShifts().getLast().removeLastTimeSlot();
-			this.getScheduler().getOrdermanager().getPendingOrders().addFirst(order);
-		}
-	}
 }
 

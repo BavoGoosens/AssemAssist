@@ -21,6 +21,12 @@ public class EndShift extends Shift {
 		return null;
 	}
 	
+	/**
+	 * A method to check if a number of slots are available.
+	 * @param 	slot
+	 * 			the first slot to check.
+	 * @return	a list of slots if there is room. null if there is no place available.
+	 */
 	private ArrayList<TimeSlot> checkSlot(TimeSlot slot){
 		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();
 		for(int i = 0; i < this.getNumberofworkposts(); i++){

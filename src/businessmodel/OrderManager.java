@@ -2,7 +2,6 @@ package businessmodel;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import org.joda.time.DateTime;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.Order;
@@ -207,5 +206,13 @@ public class OrderManager {
 	private void setCarModels(ArrayList<CarModel> carmodels) throws IllegalArgumentException {
 		if (carmodels == null) throw new IllegalArgumentException("Bad list of car models!");
 		this.carmodels = carmodels;
+	}
+
+	/**
+	 * A method to place an order in front of the pending orders.
+	 * @param order
+	 */
+	public void placeOrderInFront(Order order) {
+		this.getPendingOrders().addFirst(order);		
 	}
 }

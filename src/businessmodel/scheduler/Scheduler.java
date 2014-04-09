@@ -7,8 +7,12 @@ import businessmodel.OrderManager;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
 import businessmodel.order.Order;
 
+/**
+ * A Class that represents a scheduler for an AssymblyLine.
+ * @author	SWOP team 10
+ *
+ */
 public class Scheduler {
-
 
 	/**
 	 * A list that holds all the shifts of this Scheduler. It holds at each moment 2 shifts of the current day.
@@ -54,35 +58,72 @@ public class Scheduler {
 	}
 
 	// Deel AssemblyLine
-
-	public boolean canAdvance(){
-		return this.getAssemblyline().canAdvance();
-	}
 	
 	public void advance(int time){
 		if(!this.canAdvance())
 			return;
 		int delay = time - 60;
-		updateOrders();
+		updateCompletedOrders();
 		updateAssemblylineStatus();
 		updateDelay(delay);
 		updateEstimatedTimeOfOrders(delay);
-		this.getAlgo().updateSchedule();
+		this.updateSchedule();
 	}
 	
-	private void updateOrders(){
+	/**
+	 * A method to check if the AssymblyLine can advance.
+	 * @return true if the AssyemblyLine can advance.
+	 */
+	public boolean canAdvance(){
+		return this.getAssemblyline().canAdvance();
+	}
+	
+	/**
+	 * A method to update the orders of this Scheduler. The first order will be push to the finished orders.
+	 */
+	private void updateCompletedOrders(){
 		this.getOrdermanager().finishedOrder(this.getOrders().pollFirst());
 	}
 	
+	/**
+	 * A method to update the delay of this day.
+	 * @param	delay
+	 * 			the delay that occurred in minutes.
+	 */
 	private void updateDelay(int delay){
 		this.setDelay(this.getDelay()+delay);
 	}
 	
+	/**
+	 * A method to update The Schedule if the delay was to high or to low.
+	 */
+	public void updateSchedule(){
+		if(this.getDelay() >= 60){
+			this.getShifts().getLast().addTimeSlot();
+			Order nextorder = this.getNextOrderToSchedule();
+			this.scheduleOrder(nextorder);
+			this.setDelay(this.getDelay()-60);
+		}
+		else if (this.getDelay() <= 60){
+			Order order = this.getShifts().getLast().removeLastTimeSlot();
+			this.getOrdermanager().getPendingOrders().addFirst(order);
+			this.setDelay(this.getDelay()+60);
+		}
+	}
+
+	/**
+	 * A method to update the status of the AssemblyLine. A new order will be placed on WorkPost 1 and the other orders will advance.
+	 */
 	private void updateAssemblylineStatus(){
 		Order nextorder = this.getShifts().getFirst().getNextOrderForAssemblyLine();
 		this.getAssemblyline().advance(nextorder);
 	}
 	
+	/**
+	 * A method to update the estimated completion time of the orders that are currently scheduled.
+	 * @param 	delay
+	 * 			The delay that occurred last hour.
+	 */
 	private void updateEstimatedTimeOfOrders(int delay){
 		for(Order order: this.getOrders()){
 			order.getEstimateDate().plusMinutes(delay);
