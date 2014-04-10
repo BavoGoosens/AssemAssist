@@ -18,8 +18,6 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 		for(Order order: orders)
 			this.scheduleOrder(order);
 		this.reschedule();
-				for(Order order: orderList)
-					System.out.println(order);
 
 	}
 
