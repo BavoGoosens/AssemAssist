@@ -29,7 +29,7 @@ public class RestrictionTest {
 	 */
 	public void testDefaultMandatoryOptions() {
 		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
-		DefaultMandatoryOptionsRestriction restriction = new DefaultMandatoryOptionsRestriction("Test1", this.inventory);
+		DefaultMandatoryOptionRestriction restriction = new DefaultMandatoryOptionRestriction("Test1", this.inventory);
 		for (CarOptionCategory category: categories) {
 			if (category != this.inventory.getEngine()) {
 				chosen.add(category.getPossibleOptionsClone().get(0));
@@ -119,7 +119,7 @@ public class RestrictionTest {
 	@Test
 	public void normalTest() {
 		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
-		DefaultMandatoryOptionsRestriction restriction1 = new DefaultMandatoryOptionsRestriction("Test1", this.inventory);
+		DefaultMandatoryOptionRestriction restriction1 = new DefaultMandatoryOptionRestriction("Test1", this.inventory);
 		SportBodyRestriction restriction2 = new SportBodyRestriction("Test2", this.inventory);
 		UltraEngineAircoRestriction restriction3 = new UltraEngineAircoRestriction("Test3", this.inventory);
 		for (CarOptionCategory category: categories) {

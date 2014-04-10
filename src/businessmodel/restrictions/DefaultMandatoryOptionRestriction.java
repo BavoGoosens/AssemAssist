@@ -6,9 +6,9 @@ import businessmodel.CarOption;
 import businessmodel.CarOptionCategory;
 import businessmodel.Inventory;
 
-public class DefaultMandatoryOptionsRestriction extends Restriction {
+public class DefaultMandatoryOptionRestriction extends Restriction {
 
-	public DefaultMandatoryOptionsRestriction(String name, Inventory inventory) throws IllegalArgumentException {
+	public DefaultMandatoryOptionRestriction(String name, Inventory inventory) throws IllegalArgumentException {
 		super(name, inventory);
 	}
 
