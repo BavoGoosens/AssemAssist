@@ -11,6 +11,10 @@ import org.junit.Test;
 import component.*;
 import control.Controller;
 import businessmodel.*;
+import businessmodel.order.Order;
+import businessmodel.user.GarageHolder;
+import businessmodel.user.Manager;
+import businessmodel.user.Mechanic;
 
 public class BusinessModelTest {
 
@@ -124,7 +128,7 @@ public class BusinessModelTest {
 
 		for(int i = 1; i< 30;i++){
 			Order temp = new Order(garageholder,this.components);
-			temp.setDate(date);
+			temp.setEstimateDate(date);
 			this.orders.add(temp);
 		}
 		

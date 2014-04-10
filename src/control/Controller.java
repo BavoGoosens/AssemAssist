@@ -2,18 +2,18 @@ package control;
 import java.util.ArrayList;
 import java.util.Date;
 
-import exceptions.NoClearanceException;
 import ui.UserInterFace;
 import businessmodel.Action;
 import businessmodel.AssemblyTask;
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Inventory;
-import businessmodel.Order;
 import businessmodel.OrderManager;
 import businessmodel.ProductionScheduler;
-import businessmodel.User;
 import businessmodel.WorkPost;
+import businessmodel.exceptions.NoClearanceException;
+import businessmodel.order.Order;
+import businessmodel.user.User;
 
 /**
  * This class is the main controller instance. 

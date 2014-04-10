@@ -2,7 +2,7 @@ package businessmodel;
 
 import java.util.ArrayList;
 
-import exceptions.IllegalCarOptionCategoryException;
+import businessmodel.exceptions.IllegalCarOptionCategoryException;
 
 /**
  * A class that represents an inventory for a factory. Here we hold all the different component.

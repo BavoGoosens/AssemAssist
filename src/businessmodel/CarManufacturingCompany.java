@@ -2,8 +2,11 @@ package businessmodel;
 
 import java.util.ArrayList;
 
-import exceptions.IllegalNumberException;
-import exceptions.NoClearanceException;
+import businessmodel.exceptions.IllegalNumberException;
+import businessmodel.exceptions.NoClearanceException;
+import businessmodel.order.Order;
+import businessmodel.user.User;
+
 
 public class CarManufacturingCompany {
 

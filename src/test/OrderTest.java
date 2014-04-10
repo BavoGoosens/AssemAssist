@@ -16,8 +16,8 @@ import component.Engine;
 import component.Gearbox;
 import component.Seats;
 import component.Wheels;
-import businessmodel.GarageHolder;
-import businessmodel.Order;
+import businessmodel.order.Order;
+import businessmodel.user.GarageHolder;
 
 public class OrderTest {
 	
@@ -56,7 +56,7 @@ public class OrderTest {
 
 		for(int i = 1; i< 30;i++){
 			Order temp = new Order(garageholder,this.components);
-			temp.setDate(date);
+			temp.setEstimateDate(date);
 			this.orders.add(temp);
 		}
 	}
@@ -65,7 +65,7 @@ public class OrderTest {
 	public void test() {
 		assertEquals(orders.get(0).getCar().getComponents(),this.components);
 		assertEquals(orders.get(0).getUser(),this.garageholder);
-		assertEquals(orders.get(0).getDate(),this.date);
+		assertEquals(orders.get(0).getEstimateDate(),this.date);
 		assertEquals(orders.get(0).isCompleted(),false);
 		assertEquals(orders.get(0).getUser(),garageholder);
 	}
