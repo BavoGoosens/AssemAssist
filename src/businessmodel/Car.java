@@ -22,6 +22,7 @@ public class Car {
 	 *          An ArrayList with all the components of this new car.
 	 */
 	public Car(ArrayList<CarOption> options) throws IllegalArgumentException {
+		
 		setOptions(options);
 	}
 

@@ -10,8 +10,8 @@ public class CarOptionCategory {
 	private String name;
 	private ArrayList<CarOption> possibleOptions;
 
-	public CarOptionCategory(String name) throws IllegalArgumentException, IllegalCarOptionCategoryException{
-		this.setPossibleOptions(new ArrayList<CarOption>());
+	public CarOptionCategory(String name) throws IllegalArgumentException {
+		this.possibleOptions = new ArrayList<CarOption>();
 		this.setName(name);
 	}
 	
@@ -31,6 +31,14 @@ public class CarOptionCategory {
 	@SuppressWarnings("unchecked")
 	public ArrayList<CarOption> getPossibleOptionsClone() {
 		return (ArrayList<CarOption>) this.possibleOptions.clone();
+	}
+	
+	public CarOption getOptionWithName(String name) throws IllegalArgumentException {
+		if (name == null) throw new IllegalArgumentException("Bad name!");
+		for (CarOption option: this.getPossibleOptions()) {
+			if (option.getName().equalsIgnoreCase(name)) return option;
+		}
+		throw new IllegalArgumentException("No option found with that name!");
 	}
 	
 	private void setName(String name) throws IllegalArgumentException {
@@ -72,6 +80,11 @@ public class CarOptionCategory {
 	
 	private boolean canHaveAsPossibleOption(CarOption option) {
 		return option.getCategory() == this;
+	}
+	
+	@Override
+	public String toString() {
+		return this.getName().toUpperCase();
 	}
 
 }
