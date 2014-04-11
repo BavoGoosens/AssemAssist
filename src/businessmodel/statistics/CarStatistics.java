@@ -10,6 +10,8 @@ import businessmodel.util.Tuple;
 
 public class CarStatistics implements Observer{
 
+	private Subject s;
+	
 	/**
 	 * The average number of cars produced.
 	 */
@@ -23,6 +25,7 @@ public class CarStatistics implements Observer{
 	private ArrayList<Tuple<LocalDate, Integer>> number_of_cars;
 
 	public CarStatistics(Subject s){
+		this.s = s;
 		s.subscribeObserver(this);
 		this.number_of_cars = new ArrayList<>();
 	}
