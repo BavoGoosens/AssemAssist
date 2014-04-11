@@ -18,43 +18,30 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 		for(Order order: orders)
 			this.scheduleOrder(order);
 		this.reschedule();
-
 	}
 
 	@Override
 	public void scheduleOrder(Order currentOrder) {
-
 		ArrayList<Order> similarCarOptionsOrder = new ArrayList<Order>();
 		for(Order order: orderList){
 			if (currentOrder.equalsCarOptions(order)){
 				similarCarOptionsOrder.add(order);
 			}
 		}
-
 		if (similarCarOptionsOrder.size() != 0){
-
 			similarCarOptionsOrder.add(currentOrder);
-
 			for(Order ord: similarCarOptionsOrder)
 				orderList.remove(ord);
-
 			Collections.reverse(similarCarOptionsOrder);
-
 			for(Order ord: similarCarOptionsOrder)
 				orderList.addFirst(ord);
-
 		}else{
 			orderList.addLast(currentOrder);
 		}
-
-
-
 	}
 
 	private void reschedule() {
-
 		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();
-
 		for(Order order: orderList){
 			for (Shift sh: this.getScheduler().getShifts()){
 				timeslots = sh.canAddOrder(order);
@@ -65,8 +52,6 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 				}
 			}
 		}
-
 	}
-
 }
 

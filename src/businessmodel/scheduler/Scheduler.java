@@ -60,8 +60,8 @@ public class Scheduler {
 	// Deel AssemblyLine
 	
 	public void advance(int time){
-		if(!this.canAdvance())
-			return;
+//		if(!this.canAdvance())
+//			return;
 		int delay = time - 60;
 		updateCompletedOrders();
 		updateAssemblylineStatus();
@@ -134,8 +134,8 @@ public class Scheduler {
 	
 	public void ScheduleDay(){
 		int size = this.getShifts().size()*this.getShifts().getFirst().getTimeSlots().size()-(this.getAssemblyline().getNumberOfWokrkPosts()-1);
-		this.getAlgo().schedule(this.getOrdermanager().getNbOrders(size));
-	
+		this.getOrders().addAll(this.getOrdermanager().getNbOrders(size));
+		this.getAlgo().schedule(this.getOrders());
 	} 
 
 	protected Order getNextOrderToSchedule(){
@@ -147,7 +147,7 @@ public class Scheduler {
 	 * @param	order
 	 * 			the new order that needs to be scheduled.
 	 */
-	private void addOrder(Order order) {
+	protected void addOrder(Order order) {
 		this.getOrders().add(order);
 		this.scheduleOrder(order);
 	}

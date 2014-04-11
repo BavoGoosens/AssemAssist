@@ -142,8 +142,7 @@ public class WorkPost {
 	 * @param order_in_process
 	 *        The Order the WorkPost is working on.
 	 */
-	public void setOrder(Order order_in_process) throws IllegalArgumentException {
-		if (order_in_process == null) throw new IllegalArgumentException("Bad order!");
+	public void setOrder(Order order_in_process) {
 		this.order_in_process = order_in_process;
 	}
 
@@ -176,9 +175,8 @@ public class WorkPost {
 	 * This method refreshes the pending tasks that need to be done for the current order. 
 	 */
 	private void refreshAssemblyTasks() {
-		Order currentOrder = this.getOrder();
-		if (currentOrder != null ){
-			ArrayList<CarOption> carparts = currentOrder.getCar().getOptionsClone();
+		if (this.getOrder() != null ){
+			ArrayList<CarOption> carparts = this.getOrder().getCar().getOptionsClone();
 			ArrayList<AssemblyTask> newPendingTasks = this.possibleAssemblyTasks(carparts);
 			this.setPendingTasks(newPendingTasks);
 		}
