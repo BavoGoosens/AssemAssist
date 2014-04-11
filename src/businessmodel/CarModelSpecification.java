@@ -2,6 +2,8 @@ package businessmodel;
 
 import java.util.ArrayList;
 
+import businessmodel.category.CarOption;
+
 /**
  * This class represents a car model specification.
  * It gives an overview of lists of Components that are available for a car model.

@@ -6,9 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.CarModelSpecification;
-import businessmodel.CarOption;
 import businessmodel.CarOptionCategory;
 import businessmodel.Inventory;
+import businessmodel.category.CarOption;
 
 public class CarModelSpecificationTest {
 	

@@ -2,6 +2,8 @@ package businessmodel;
 
 import java.util.ArrayList;
 
+import businessmodel.category.CarOption;
+
 /**
  * A class representing a car.
  * 
