@@ -20,7 +20,7 @@ public class WorkPost {
 	/**
 	 * The tasks this WorkPost can handle.
 	 */
-	private ArrayList<AssemblyTask> responsibletasks;
+	private ArrayList<AssemblyTask> responsible_assembly_tasks;
 
 	/**
 	 * The tasks that are pending at the work post.
@@ -51,9 +51,9 @@ public class WorkPost {
 	 * @param 	tasks
 	 * 			The tasks this work post is responsible for.
 	 */
-	public WorkPost(String name, ArrayList<AssemblyTask> tasks) throws IllegalArgumentException {
+	public WorkPost(String name, ArrayList<AssemblyTask> categories) throws IllegalArgumentException {
 		this(name);
-		this.setResponsibletasks(tasks);
+		this.setResponsibletasks(categories);
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class WorkPost {
 	 * 		   An ArrayList with all the AssemblyTasks this WorkPost is responsible for.
 	 */
 	public ArrayList<AssemblyTask> getResponsibletasks() {
-		return responsibletasks;
+		return responsible_assembly_tasks;
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class WorkPost {
 	 */
 	public void setResponsibletasks(ArrayList<AssemblyTask> responsibletasks) throws IllegalArgumentException {
 		if (responsibletasks == null) throw new IllegalArgumentException("Bad list of responsible tasks!");
-		this.responsibletasks = responsibletasks;
+		this.responsible_assembly_tasks = responsibletasks;
 	}
 
 	/**
@@ -176,7 +176,7 @@ public class WorkPost {
 	 */
 	private void refreshAssemblyTasks() {
 		if (this.getOrder() != null ){
-			ArrayList<CarOption> carparts = this.getOrder().getCar().getOptionsClone();
+			ArrayList<CarOption> carparts = this.getOrder().getCarOptions();
 			ArrayList<AssemblyTask> newPendingTasks = this.possibleAssemblyTasks(carparts);
 			this.setPendingTasks(newPendingTasks);
 		}
@@ -193,14 +193,13 @@ public class WorkPost {
 	 *         A list of AssemblyTasks that need to be carried out to install (some of) the components.
 	 */
 	protected ArrayList<AssemblyTask> possibleAssemblyTasks(ArrayList<CarOption> carOptions) throws IllegalArgumentException {
-		if (carOptions == null) throw new IllegalArgumentException("Bad list of car parts!");
+		if (carOptions == null) 
+			throw new IllegalArgumentException("Bad list of car parts!");
 		ArrayList<AssemblyTask> result = new ArrayList<AssemblyTask>();
-		for(AssemblyTask task :this.getResponsibletasks()){
-			for(Action action: task.getActions()){
-				for(CarOption option: carOptions){
-					if(action.getComponents().contains(option.getClass().getName()))
-						result.add(task);	
-				}		
+		for(AssemblyTask assem : this.getResponsibletasks()){
+			for(CarOption option: carOptions){
+				if(option.getCategory().equals(assem.getCategory()))
+					result.add(new AssemblyTask(assem.getName(),assem.getCategory()));
 			}
 		}
 		return result;

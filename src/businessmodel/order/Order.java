@@ -29,24 +29,26 @@ public abstract class Order {
 	private DateTime estimatedatetime;
 
 	private DateTime timestamp;
+	
+	private DateTime placedonworkpost;
 
 	private DateTime standardtime;
 
 	private DateTime completiondatetime;
-
+	
+	private ArrayList<CarOption> caroptions;
+	
 	/**
 	 * A constructor for the class Order.
 	 * 
 	 * @param   user
-	 *          the user that makes the new order.
-	 * @param   components
-	 *          the components of the new car.
-	 * @param   deliverydate
-	 *          the delivery date of the new order.
+	 *          the user that makes the new Order.
+	 * @param   caroptions
+	 *          the car options of the new Order.
 	 */
-	public Order(User user) throws IllegalArgumentException, NoClearanceException{
+	public Order(User user, ArrayList<CarOption> options) throws IllegalArgumentException, NoClearanceException{
 		setUser(user);
-		this.timestamp = new DateTime();
+		setCapoptions(options);
 	}
 
 	/**
@@ -103,35 +105,10 @@ public abstract class Order {
 	}
 
 	/**
-	 * A method to update the estimated completion time of an order.
-	 * @param	order
-	 * 			the order for which the completion date needs to be updated.
-	 */
-	//TODO updaten 
-	public void updateEstimatedCompletionTimeOfOrder(Order previousorder) {
-		DateTime date;
-		if (previousorder == null){
-			DateTime datetemp = new DateTime();
-			date = new DateTime(datetemp.getYear(), datetemp.getMonthOfYear(), datetemp.getDayOfMonth(), 8, 0);
-			this.setEstimateDate(date);
-			return;
-		}
-		else 
-			date = previousorder.getEstimateDate();
-
-		if (date.getHourOfDay() <= 21)
-			this.setEstimateDate(date.plusMinutes(60));
-		else{
-			date.plusHours(8);
-			this.setEstimateDate(date.plusMinutes(60));
-		}
-	}
-
-	/**
-	 * Method to check if caroptions from two orders are the same or not
+	 * Method to check if car options from two orders are the same or not
 	 * 
 	 * @param order
-	 * @return true if caroptions are the same else return false
+	 * @return true if car options are the same else return false
 	 * @throws IllegalArgumentException
 	 */
 	public boolean equalsCarOptions(Object order) throws IllegalArgumentException{
@@ -176,5 +153,36 @@ public abstract class Order {
 	public Car getCar(){
 		return null;
 	}
+
+	public void updateEstimatedDate(int delay) {
+		this.getEstimateDate().plusMinutes(delay);		
+	}
 	
+	public void setCompletionDate(DateTime date){
+		this.completiondatetime = date;
+	}
+	
+	public DateTime getCompletionDate(){
+		return this.completiondatetime;
+	}
+
+	public DateTime getTimestamp(){
+		return this.timestamp;
+	}
+	
+	public void setTimestamp(DateTime timestamp) {
+		this.timestamp = timestamp;
+	}
+	
+	public void setPlacedOnWorkpost(DateTime date){
+		this.placedonworkpost = date;
+	}
+	
+	public ArrayList<CarOption> getCarOptions() {
+		return caroptions;
+	}
+
+	private void setCapoptions(ArrayList<CarOption> capoptions) {
+		this.caroptions = capoptions;
+	}
 }

@@ -84,7 +84,7 @@ public class AssemblyLine {
 		return orders;
 	}
 	
-	public int getNumberOfWokrkPosts(){
+	public int getNumberOfWorkPosts(){
 		return this.getWorkPosts().size();
 	}
 }

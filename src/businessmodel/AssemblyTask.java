@@ -1,5 +1,4 @@
 package businessmodel;
-import java.util.ArrayList;
 
 /**
  * A class that represents an assembly task.
@@ -13,28 +12,23 @@ public class AssemblyTask {
 	 * A variable that holds the name of this assembly task.
 	 */
 	private String name;
-	
-	/**
-	 * A variable that holds the individual actions of this assembly task.
-	 */
-	private ArrayList<Action> actions;
 
 	/**
 	 * A variable that specifies if this assembly task has been completed.
 	 */
 	private boolean completed = false; 
+	
+	private CarOptionCategory category;
 
 	/**
 	 * A constructor for the class assembly task.
 	 * 
-	 * @param   actions
-	 *          the actions that are part of this assembly process.   
 	 * @param   name
 	 *          the name of this assembly process.
 	 */
-	public AssemblyTask(String name, ArrayList<Action> actions) throws IllegalArgumentException {
+	public AssemblyTask(String name, CarOptionCategory category) throws IllegalArgumentException {
 		this.setName(name);
-		this.setActions(actions);
+		this.setCategory(category);
 	}
 
 	/**
@@ -50,16 +44,6 @@ public class AssemblyTask {
 			throw new IllegalArgumentException();
 		this.name = name;
 	}
-
-	/**
-	 * A method to get the actions of this assembly task.
-	 * 
-	 * @return  ArrayList<Action>
-	 * 			the actions of this assembly task.
-	 */
-	public ArrayList<Action> getActions() {
-		return this.actions;
-	}
 	
 	/**
 	 * A method to get the name of this assembly task.
@@ -67,7 +51,7 @@ public class AssemblyTask {
 	 * @return  String
 	 * 			the name of this assembly task.
 	 */
-	private String getName() {
+	protected String getName() {
 		return this.name;
 	}
 
@@ -87,36 +71,18 @@ public class AssemblyTask {
 	public boolean isCompleted(){
 		return this.completed;
 	}
-
-	/**
-	 * A method to set the actions of this assembly task to the given actions.
-	 * 
-	 * @param 	actions
-	 * 			the new actions of this assembly task.
-	 */
-	private void setActions(ArrayList<Action> actions) {
-		if (actions == null)
-			this.actions = new ArrayList<Action>();
-		else
-			this.actions = actions;
-	}
 	
 	@Override
 	public String toString(){
 		return this.getName();
 	}
 	
-	/**
-	 * This method returns a string with the name of the assembly task and all the actions that need to be performed.
-	 * 
-	 * @return  String
-	 * 			A string with on the first line the name of the assembly task and starting on the third line all the actions.
-	 */
-	public String toCompleteString(){
-		String result = this.getName() + "\n Actions: \n";
-		for( Action act : this.getActions()){
-			result += act.getDescription();
-		}
-		return result;
+
+	protected CarOptionCategory getCategory() {
+		return category;
+	}
+
+	private void setCategory(CarOptionCategory category) {
+		this.category = category;
 	}
 }

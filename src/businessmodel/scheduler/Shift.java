@@ -59,7 +59,7 @@ public abstract class Shift {
 	 * @return	the last order that needs to be rescheduled.
 	 */
 	protected Order removeLastTimeSlot(){
-		Order temp = this.getTimeSlots().getLast().getWorkSlots().getLast().getOrder();
+		Order temp = this.getTimeSlots().getLast().getLastOrderOfLastWorkSLot();
 		this.getTimeSlots().removeLast();
 		return temp;
 	}
@@ -91,7 +91,7 @@ public abstract class Shift {
 	protected Order getNextOrderForAssemblyLine() {
 		TimeSlot newtimeslot = this.getTimeSlots().pollFirst();
 		if(!newtimeslot.getWorkSlots().isEmpty())
-			return newtimeslot.getWorkSlots().get(0).getOrder();
+			return newtimeslot.getNextOrder();
 		else
 			return null;
 	}
