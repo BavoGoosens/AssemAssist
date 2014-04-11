@@ -1,5 +1,7 @@
 package businessmodel.observer;
 
+import java.util.UUID;
+
 /**
  * An interface which holds all the methods an Observer needs to implement in order to use the observer design pattern.
  *  

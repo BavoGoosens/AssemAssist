@@ -83,9 +83,10 @@ public class SchedulerTest {
 		ord.addOrder(order14);
 		ord.addOrder(order15);
 		ord.addOrder(order16);
-		ord.addOrder(order17);
 
 		ord.getScheduler().ScheduleDay();
+		
+		ord.addOrder(order17);
 		
 		// test
 		for(int k =0; k<2 ; k++){
@@ -99,6 +100,7 @@ public class SchedulerTest {
 				}
 			}
 		}
+		ord.getScheduler().advance(60);
 	}
 
 	@Test
