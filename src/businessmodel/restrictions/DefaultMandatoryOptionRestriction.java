@@ -2,13 +2,13 @@ package businessmodel.restrictions;
 
 import java.util.ArrayList;
 
-import businessmodel.CarOption;
 import businessmodel.CarOptionCategory;
-import businessmodel.Inventory;
+import businessmodel.Catalog;
+import businessmodel.category.CarOption;
 
 public class DefaultMandatoryOptionRestriction extends Restriction {
 
-	public DefaultMandatoryOptionRestriction(String name, Inventory inventory) throws IllegalArgumentException {
+	public DefaultMandatoryOptionRestriction(String name, Catalog inventory) throws IllegalArgumentException {
 		super(name, inventory);
 	}
 

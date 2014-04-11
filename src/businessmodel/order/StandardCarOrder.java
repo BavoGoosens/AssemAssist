@@ -3,7 +3,7 @@ package businessmodel.order;
 import java.util.ArrayList;
 
 import businessmodel.Car;
-import businessmodel.CarOption;
+import businessmodel.category.CarOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.user.User;
 

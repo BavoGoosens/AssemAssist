@@ -1,4 +1,4 @@
-package businessmodel;
+package businessmodel.category;
 
 public class CarOption {
 

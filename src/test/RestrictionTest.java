@@ -7,19 +7,19 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import businessmodel.category.CarOption;
 import businessmodel.restrictions.*;
-import businessmodel.CarOption;
 import businessmodel.CarOptionCategory;
-import businessmodel.Inventory;
+import businessmodel.Catalog;
 
 public class RestrictionTest {
 
-	private Inventory inventory;
+	private Catalog inventory;
 	private ArrayList<CarOptionCategory> categories;
 	
 	@Before
 	public void setUp() throws Exception {
-		this.inventory = new Inventory();
+		this.inventory = new Catalog();
 		this.categories = this.inventory.getAllCategories();
 	}
 

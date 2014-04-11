@@ -3,6 +3,8 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import businessmodel.category.CarOption;
+
 /**
  * This car represents a car model. 
  * 

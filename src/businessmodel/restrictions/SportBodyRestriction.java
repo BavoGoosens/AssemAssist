@@ -2,12 +2,12 @@ package businessmodel.restrictions;
 
 import java.util.ArrayList;
 
-import businessmodel.CarOption;
-import businessmodel.Inventory;
+import businessmodel.Catalog;
+import businessmodel.category.CarOption;
 
 public class SportBodyRestriction extends Restriction {
 
-	public SportBodyRestriction(String name, Inventory inventory) throws IllegalArgumentException {
+	public SportBodyRestriction(String name, Catalog inventory) throws IllegalArgumentException {
 		super(name, inventory);
 	}
 

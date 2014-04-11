@@ -2,15 +2,15 @@ package businessmodel.restrictions;
 
 import java.util.ArrayList;
 
-import businessmodel.CarOption;
-import businessmodel.Inventory;
+import businessmodel.Catalog;
+import businessmodel.category.CarOption;
 
 public abstract class Restriction {
 	
 	private String name;
-	private Inventory inventory;
+	private Catalog inventory;
 
-	public Restriction(String name, Inventory inventory) throws IllegalArgumentException {
+	public Restriction(String name, Catalog inventory) throws IllegalArgumentException {
 		if (name == null || name.equals("")) throw new IllegalArgumentException("Bad name!");
 		if (inventory == null) throw new IllegalArgumentException("Bad inventory!");
 		this.name = name;
@@ -21,7 +21,7 @@ public abstract class Restriction {
 		return this.name;
 	}
 	
-	public Inventory getInventory() {
+	public Catalog getInventory() {
 		return this.inventory;
 	}
 	

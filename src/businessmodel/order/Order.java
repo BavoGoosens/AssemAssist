@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.joda.time.DateTime;
 
 import businessmodel.Car;
-import businessmodel.CarOption;
+import businessmodel.category.CarOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.user.User;
 

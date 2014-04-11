@@ -7,7 +7,7 @@ import businessmodel.Action;
 import businessmodel.AssemblyTask;
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
-import businessmodel.Inventory;
+import businessmodel.Catalog;
 import businessmodel.OrderManager;
 import businessmodel.ProductionScheduler;
 import businessmodel.WorkPost;
