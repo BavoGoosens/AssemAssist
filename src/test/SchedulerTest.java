@@ -7,9 +7,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import businessmodel.CarModel;
-import businessmodel.CarOption;
 import businessmodel.CarOptionCategory;
 import businessmodel.OrderManager;
+import businessmodel.category.CarOption;
 import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;

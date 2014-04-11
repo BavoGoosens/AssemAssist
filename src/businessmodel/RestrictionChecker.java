@@ -2,6 +2,8 @@ package businessmodel;
 
 import java.util.ArrayList;
 
+import businessmodel.category.CarOption;
+
 public class RestrictionChecker {
 	
 	private static Inventory inventory;

@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import businessmodel.category.CarOption;
 import businessmodel.restrictions.*;
-import businessmodel.CarOption;
 import businessmodel.CarOptionCategory;
 import businessmodel.Inventory;
 

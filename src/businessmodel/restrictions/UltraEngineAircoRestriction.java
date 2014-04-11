@@ -2,8 +2,8 @@ package businessmodel.restrictions;
 
 import java.util.ArrayList;
 
-import businessmodel.CarOption;
 import businessmodel.Inventory;
+import businessmodel.category.CarOption;
 
 public class UltraEngineAircoRestriction extends Restriction {
 

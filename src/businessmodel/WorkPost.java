@@ -2,6 +2,7 @@ package businessmodel;
 
 import java.util.ArrayList;
 
+import businessmodel.category.CarOption;
 import businessmodel.order.Order;
 
 /**
