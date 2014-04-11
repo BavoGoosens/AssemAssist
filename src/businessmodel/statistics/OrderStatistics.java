@@ -11,6 +11,8 @@ import businessmodel.util.Tuple;
 
 public class OrderStatistics implements Observer {
 
+	private Subject s;
+	
 	/**
 	 * The average delay of all the finished orders.
 	 */
@@ -21,7 +23,12 @@ public class OrderStatistics implements Observer {
 	 */
 	private int median;
 
-	private ArrayList<Tuple<Order, Integer>> number_of_cars;
+	private ArrayList<Tuple<Order, Integer>> finished_orders;
+	
+	public OrderStatistics(Subject s){
+		this.s = s;
+		s.subscribeObserver(this);
+	}
 	
 	@Override
 	public void update(Subject s, Object o) {
@@ -32,6 +39,14 @@ public class OrderStatistics implements Observer {
 	@Override
 	public void update(Subject s) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	private void updateAverage(){
+		
+	}
+	
+	private void updateMedian(){
 		
 	}
 

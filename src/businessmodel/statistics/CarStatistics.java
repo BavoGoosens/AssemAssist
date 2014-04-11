@@ -1,17 +1,21 @@
 package businessmodel.statistics;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 import org.joda.time.LocalDate;
 
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
+import businessmodel.scheduler.Scheduler;
+import businessmodel.util.CarTupleComperator;
 import businessmodel.util.Tuple;
 
 public class CarStatistics implements Observer{
 
 	private Subject s;
-	
+
 	/**
 	 * The average number of cars produced.
 	 */
@@ -27,7 +31,7 @@ public class CarStatistics implements Observer{
 	public CarStatistics(Subject s){
 		this.s = s;
 		s.subscribeObserver(this);
-		this.number_of_cars = new ArrayList<>();
+		this.number_of_cars = new ArrayList<Tuple<LocalDate, Integer>>();
 	}
 
 	public int getAverage(){
@@ -51,14 +55,24 @@ public class CarStatistics implements Observer{
 
 	@Override
 	public void update(Subject s, Object o) {
-		// TODO Auto-generated method stub
+		if (s instanceof Scheduler){
 
+		}
 	}
 
 	@Override
 	public void update(Subject s) {
-		// TODO Auto-generated method stub
+		if (s instanceof Scheduler){
 
+		}
+	}
+
+	private void updateMedian(){
+		Collections.sort(this.number_of_cars, new CarTupleComperator()); 
+	}
+
+	private void updateAverage(){
+		
 	}
 
 }

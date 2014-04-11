@@ -6,10 +6,10 @@ import businessmodel.category.CarOption;
 
 public class RestrictionChecker {
 	
-	private static Inventory inventory;
+	private static Catalog inventory;
 
 	public RestrictionChecker() {
-		inventory = new Inventory();
+		inventory = new Catalog();
 	}
 	
 	public static boolean check(ArrayList<CarOption> options) {

@@ -1,6 +1,6 @@
 package businessmodel.util;
 
-public class Tuple <X , Y> {
+public class Tuple <X , Y> implements Comparable<Tuple<X,Y>> {
 
 	private final X x;
 
@@ -29,5 +29,13 @@ public class Tuple <X , Y> {
 		return this.x.equals(pairo.getX()) &&
 				this.y.equals(pairo.getY());
 	}
+
+	@Override
+	public int compareTo(Tuple<X, Y> o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
 
 }

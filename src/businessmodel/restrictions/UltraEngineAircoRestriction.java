@@ -2,12 +2,12 @@ package businessmodel.restrictions;
 
 import java.util.ArrayList;
 
-import businessmodel.Inventory;
+import businessmodel.Catalog;
 import businessmodel.category.CarOption;
 
 public class UltraEngineAircoRestriction extends Restriction {
 
-	public UltraEngineAircoRestriction(String name, Inventory inventory)
+	public UltraEngineAircoRestriction(String name, Catalog inventory)
 			throws IllegalArgumentException {
 		super(name, inventory);
 	}

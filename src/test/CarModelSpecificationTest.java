@@ -7,17 +7,17 @@ import org.junit.Test;
 
 import businessmodel.CarModelSpecification;
 import businessmodel.CarOptionCategory;
-import businessmodel.Inventory;
+import businessmodel.Catalog;
 import businessmodel.category.CarOption;
 
 public class CarModelSpecificationTest {
 	
-	private Inventory inventory;
+	private Catalog inventory;
 	private CarModelSpecification modelASpec;
 
 	@Before
 	public void setUp() {
-		inventory = new Inventory();
+		inventory = new Catalog();
 		ArrayList<CarOption> options = new ArrayList<CarOption>();
 		
 		CarOptionCategory body = inventory.getBody();
