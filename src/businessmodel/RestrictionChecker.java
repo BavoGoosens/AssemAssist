@@ -3,6 +3,7 @@ package businessmodel;
 import java.util.ArrayList;
 
 import businessmodel.category.CarOption;
+import businessmodel.category.CarOptionCategory;
 
 public class RestrictionChecker {
 	

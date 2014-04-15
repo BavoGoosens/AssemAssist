@@ -2,9 +2,9 @@ package businessmodel.restrictions;
 
 import java.util.ArrayList;
 
-import businessmodel.CarOptionCategory;
 import businessmodel.Catalog;
 import businessmodel.category.CarOption;
+import businessmodel.category.CarOptionCategory;
 
 public class DefaultMandatoryOptionRestriction extends Restriction {
 
