@@ -8,12 +8,17 @@ public class Wheels extends CarOptionCategory {
 
 	public Wheels() {
 		super();
-		Wheels.key = UUID.randomUUID();
 	}
 
 	@Override
 	public UUID getKey() {
 		return Wheels.key;
+	}
+
+	@Override
+	public CarOptionCategory create() {
+		Wheels.key = UUID.randomUUID();
+		return this;
 	}
 
 }

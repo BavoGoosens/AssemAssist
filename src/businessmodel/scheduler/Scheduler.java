@@ -296,20 +296,16 @@ public class Scheduler implements Subject {
 	protected void setEstimatedCompletionDate(Order order){
 		Order previousorder = this.getPreviousOrder(order);
 		if(previousorder != null) {
-			if(previousorder.getEstimateDate() == null)
+			if(previousorder.getEstimateDate() == null){
 				order.setEstimateDate(this.getCurrentTime().plusHours(3));
-			else if(previousorder.getEstimateDate().getHourOfDay() <= 21)
-				order.setEstimateDate(this.getPreviousOrder(order).getEstimateDate().plusHours(1));
-			else {
-				DateTime date = previousorder.getCompletionDate();
-				date.plusDays(1);
-				date.withHourOfDay(8);
-				date.withMinuteOfHour(0);
-				order.setCompletionDate(date);
+			}else if(previousorder.getEstimateDate().getHourOfDay() <= 21){
+				order.setEstimateDate(previousorder.getEstimateDate().plusHours(1));
+			}else {
+				order.setEstimateDate(previousorder.getEstimateDate().plusDays(1).withHourOfDay(8).withMinuteOfHour(0));
 			}
-		}
-		else
+		}else{
 			order.setEstimateDate(this.getCurrentTime().plusHours(3));
+		}
 	}
 
 	@Override

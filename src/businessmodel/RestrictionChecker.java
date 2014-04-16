@@ -2,8 +2,10 @@ package businessmodel;
 
 import java.util.ArrayList;
 
+import businessmodel.category.Airco;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
+import businessmodel.category.Spoiler;
 
 public class RestrictionChecker {
 	
@@ -29,8 +31,8 @@ public class RestrictionChecker {
 			}
 		}
 		for (CarOption option: options) {
-			if (option.getCategory() != inventory.getSpoiler() && 
-					option.getCategory() != inventory.getAirco()) {
+			if (option.getCategory() != inventory.getCategory(new Spoiler().getKey()) && 
+					option.getCategory() != inventory.getCategory(new Airco().getKey())) {
 				return false;
 			}
 		}

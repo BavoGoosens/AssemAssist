@@ -3,8 +3,10 @@ package businessmodel.restrictions;
 import java.util.ArrayList;
 
 import businessmodel.Catalog;
+import businessmodel.category.Airco;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
+import businessmodel.category.Spoiler;
 
 public class DefaultMandatoryOptionRestriction extends Restriction {
 
@@ -20,8 +22,8 @@ public class DefaultMandatoryOptionRestriction extends Restriction {
 			categories.remove(option.getCategory());
 		}
 		for (CarOptionCategory category: categories) {
-			if (category != this.getInventory().getSpoiler() && 
-					category != this.getInventory().getAirco()) {
+			if (category != this.getInventory().getCategory(new Spoiler().getKey()) && 
+					category != this.getInventory().getCategory(new Airco().getKey())) {
 				return false;
 			}
 		}

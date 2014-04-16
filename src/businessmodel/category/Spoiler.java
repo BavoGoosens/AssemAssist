@@ -8,12 +8,18 @@ public class Spoiler extends CarOptionCategory {
 
 	public Spoiler() {
 		super();
-		Spoiler.key = UUID.randomUUID();
+		
 	}
 
 	@Override
 	public UUID getKey() {
 		return Spoiler.key;
+	}
+
+	@Override
+	public CarOptionCategory create() {
+		Spoiler.key = UUID.randomUUID();
+		return this;
 	}
 
 }

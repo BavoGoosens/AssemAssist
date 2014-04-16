@@ -8,12 +8,18 @@ public class Color extends CarOptionCategory {
 
 	public Color() {
 		super();
-		Color.key = UUID.randomUUID();
+	
 	}
 
 	@Override
 	public UUID getKey() {
 		return Color.key;
+	}
+
+	@Override
+	public CarOptionCategory create() {
+		Color.key = UUID.randomUUID();
+		return this;
 	}
 
 }

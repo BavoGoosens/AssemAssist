@@ -7,7 +7,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import businessmodel.CarModel;
+import businessmodel.Catalog;
 import businessmodel.OrderManager;
+import businessmodel.category.Airco;
+import businessmodel.category.Body;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 import businessmodel.order.Order;
@@ -15,7 +18,9 @@ import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;
 
 public class SchedulerTest {
-
+	
+	private static Catalog inventory = new Catalog();
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -42,9 +47,10 @@ public class SchedulerTest {
 		GarageHolder c16 = new GarageHolder("16","","");
 		GarageHolder c17 = new GarageHolder("17","","");
 		GarageHolder c18 = new GarageHolder("18","","");
-
-
-		CarOption blabla = new CarOption("Henk",new CarOptionCategory("Henk"));
+		System.out.println(new Body().getKey());
+		System.out.println(new Body().getKey());
+		
+		CarOption blabla = new CarOption("Henk", inventory.getCategory(new Airco().getKey()));
 		ArrayList<CarOption> henk1 = new ArrayList<CarOption>();
 		henk1.add(blabla);
 		Order order = new StandardCarOrder(c1,henk1);
@@ -93,10 +99,11 @@ public class SchedulerTest {
 			for(int i =0 ; i< 8; i++){
 				System.out.println(">>>>>new WorkSlot");
 				for(int j = 0; j< 3; j++){
-					if(ord.getScheduler().getShifts().get(k).getTimeSlots().get(i).getWorkSlots().get(j).getOrder()!= null)
-						System.out.println(ord.getScheduler().getShifts().get(k).getTimeSlots().get(i).getWorkSlots().get(j).getOrder().getUser().toString());
-					else
+					if(ord.getScheduler().getShifts().get(k).getTimeSlots().get(i).getWorkSlots().get(j).getOrder()!= null){
+						System.out.println(ord.getScheduler().getShifts().get(k).getTimeSlots().get(i).getWorkSlots().get(j).getOrder().toString());
+					}else{
 						System.out.println("0");
+					}
 				}
 			}
 		}

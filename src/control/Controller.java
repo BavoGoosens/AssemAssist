@@ -84,29 +84,29 @@ public class Controller {
 		return new Date();
 	}
 
-	public ArrayList<WorkPost> getWorkingStations() {
-		return this.cmc.getOrderManager().getProductionScheduler().getAssemblyline().getWorkPosts();
-	}
+//	public ArrayList<WorkPost> getWorkingStations() {
+//		return this.cmc.getOrderManager().getScheduler().getAssemblyline().getWorkPosts();
+//	}
+//
+//	public boolean canAdvanceAssemblyLine() {
+//		return this.cmc.getOrderManager().getScheduler().getAssemblyline().canAdvance();
+//	}
 
-	public boolean canAdvanceAssemblyLine() {
-		return this.cmc.getOrderManager().getProductionScheduler().getAssemblyline().canAdvance();
-	}
-
-	public ArrayList<AssemblyTask> overview() {
-		ArrayList<AssemblyTask> overviewList = new ArrayList<AssemblyTask>();
-		for(WorkPost wp: this.getWorkingStations())
-			for (AssemblyTask as : wp.getPendingTasks())
-				overviewList.add(as);
-		return overviewList;
-		
-		
-	}
-	
-	public ArrayList<AssemblyTask> futureOverview() {
-		return this.cmc.getOrderManager().getProductionScheduler().getFutureAssemblyTasks();
-		
-		
-	}
+//	public ArrayList<AssemblyTask> overview() {
+//		ArrayList<AssemblyTask> overviewList = new ArrayList<AssemblyTask>();
+//		for(WorkPost wp: this.getWorkingStations())
+//			for (AssemblyTask as : wp.getPendingTasks())
+//				overviewList.add(as);
+//		return overviewList;
+//		
+//		
+//	}
+//	
+//	public ArrayList<AssemblyTask> futureOverview() {
+//		return this.cmc.getOrderManager().getScheduler().getFutureAssemblyTasks();
+//		
+//		
+//	}
 
 
 }

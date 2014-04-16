@@ -8,12 +8,18 @@ public class Seats extends CarOptionCategory {
 
 	public Seats() {
 		super();
-		Seats.key = UUID.randomUUID();
+		
 	}
 
 	@Override
 	public UUID getKey() {
 		return Seats.key;
+	}
+
+	@Override
+	public CarOptionCategory create() {
+		Seats.key = UUID.randomUUID();
+		return this;
 	}
 
 }

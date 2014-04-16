@@ -8,12 +8,18 @@ public class Body extends CarOptionCategory {
 
 	public Body() {
 		super();
-		Body.key = UUID.randomUUID();
+	
 	}
 
 	@Override
 	public UUID getKey() {
 		return Body.key;
+	}
+
+	@Override
+	public CarOptionCategory create() {
+		Body.key = UUID.randomUUID();
+		return this;
 	}
 
 }

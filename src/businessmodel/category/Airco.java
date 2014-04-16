@@ -8,12 +8,16 @@ public class Airco extends CarOptionCategory {
 
 	public Airco() {
 		super();
-		Airco.key = UUID.randomUUID();
 	}
 
 	@Override
 	public UUID getKey() {
 		return Airco.key;
+	}
+
+	public CarOptionCategory create() {
+		Airco.key = UUID.randomUUID();
+		return this;
 	}
 
 }

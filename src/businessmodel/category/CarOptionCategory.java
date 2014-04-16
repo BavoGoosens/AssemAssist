@@ -14,6 +14,7 @@ public abstract class CarOptionCategory {
 	}
 	
 	public abstract UUID getKey();
+	public abstract CarOptionCategory create(); 
 	
 	private ArrayList<CarOption> getOptions() {
 		return this.options;
