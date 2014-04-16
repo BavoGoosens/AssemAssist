@@ -4,11 +4,10 @@ import java.util.UUID;
 
 public class Engine extends CarOptionCategory {
 	
-	private static UUID key;
+	private final static UUID key = UUID.randomUUID();
 
 	public Engine() {
 		super();
-		Engine.key = UUID.randomUUID();
 	}
 
 	@Override

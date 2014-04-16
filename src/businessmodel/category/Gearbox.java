@@ -4,11 +4,10 @@ import java.util.UUID;
 
 public class Gearbox extends CarOptionCategory {
 	
-	private static UUID key;
+	private final static UUID key = UUID.randomUUID();
 
 	public Gearbox() {
 		super();
-		Gearbox.key = UUID.randomUUID();
 	}
 
 	@Override
