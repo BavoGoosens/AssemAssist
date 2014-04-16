@@ -1,17 +1,14 @@
 package businessmodel.order;
 
-import businessmodel.AssemblyTask;
+import java.util.ArrayList;
+
+import businessmodel.category.CarOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.user.User;
 
 public class SingleTaskOrder extends Order {
 	
-	private AssemblyTask task;
-
-	public SingleTaskOrder(User user, AssemblyTask assem) throws IllegalArgumentException,
-			NoClearanceException {
-		super(user);
-		this.task = assem;
+	public SingleTaskOrder(User user, ArrayList<CarOption> options) throws IllegalArgumentException, NoClearanceException {
+		super(user,options);
 	}
-
 }

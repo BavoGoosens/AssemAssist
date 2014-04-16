@@ -57,6 +57,7 @@ public class OrderManager {
 	 */
 	public void placeOrder(Order order) throws IllegalArgumentException {
 		this.addOrder(order);
+		
 	}
 
 	/**

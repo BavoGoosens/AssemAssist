@@ -1,6 +1,7 @@
 package businessmodel.exceptions;
 
-import businessmodel.CarOptionCategory;
+import businessmodel.category.CarOptionCategory;
+
 
 public class IllegalCarOptionCategoryException extends Exception {
 	

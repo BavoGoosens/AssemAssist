@@ -1,6 +1,6 @@
 package businessmodel.util;
 
-public class Tuple <X , Y> {
+public class Tuple <X , Y>{
 
 	private final X x;
 

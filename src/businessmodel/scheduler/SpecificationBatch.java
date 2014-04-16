@@ -47,7 +47,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 				timeslots = sh.canAddOrder(order);
 				if(timeslots!= null){
 					sh.addOrderToSlots(order,timeslots);
-					order.updateEstimatedCompletionTimeOfOrder(this.getScheduler().getPrevious(order));
+					order.updateEstimatedCompletionTimeOfOrder(this.getScheduler().getPreviousOrder(order));
 					break;
 				}
 			}

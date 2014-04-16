@@ -51,7 +51,7 @@ public class CarManufacturingCompany {
 	}
 	
 	public void advanceAssemblyLine(int time) throws IllegalNumberException {
-		this.getOrderManager().getProductionScheduler().advance(time);
+		this.getOrderManager().getScheduler().advance(time);
 	}
 
 	public OrderManager getOrderManager(){

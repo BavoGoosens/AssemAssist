@@ -2,9 +2,13 @@ package businessmodel.scheduler;
 
 import java.util.LinkedList;
 
+import org.joda.time.DateTime;
+
 import businessmodel.AssemblyLine;
 import businessmodel.OrderManager;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
+import businessmodel.observer.Observer;
+import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 
 /**
@@ -12,7 +16,7 @@ import businessmodel.order.Order;
  * @author	SWOP team 10
  *
  */
-public class Scheduler {
+public class Scheduler implements Subject {
 
 	/**
 	 * A list that holds all the shifts of this Scheduler. It holds at each moment 2 shifts of the current day.
@@ -45,6 +49,12 @@ public class Scheduler {
 	private AssemblyLine assemblyline;
 
 	/**
+	 * A variable that holds the current time;
+	 */
+	private DateTime currenttime;
+
+
+	/**
 	 * A Constructor for the class Scheduler. 
 	 */
 	public Scheduler(OrderManager ordermanager){
@@ -58,18 +68,17 @@ public class Scheduler {
 	}
 
 	// Deel AssemblyLine
-	
+
 	public void advance(int time){
-//		if(!this.canAdvance())
-//			return;
 		int delay = time - 60;
+		this.getCurrentTime().plusMinutes(time);
 		updateCompletedOrders();
 		updateAssemblylineStatus();
 		updateDelay(delay);
 		updateEstimatedTimeOfOrders(delay);
 		this.updateSchedule();
 	}
-	
+
 	/**
 	 * A method to check if the AssymblyLine can advance.
 	 * @return true if the AssyemblyLine can advance.
@@ -77,14 +86,16 @@ public class Scheduler {
 	public boolean canAdvance(){
 		return this.getAssemblyline().canAdvance();
 	}
-	
+
 	/**
-	 * A method to update the orders of this Scheduler. The first order will be push to the finished orders.
+	 * A method to update the orders of this Scheduler. The completed order is push to completed orders and its completion date is set.
 	 */
 	private void updateCompletedOrders(){
-		this.getOrdermanager().finishedOrder(this.getOrders().pollFirst());
+		Order completedorder = this.getOrders().pollFirst();
+		completedorder.setCompletionDate(this.getCurrentTime());
+		this.getOrdermanager().finishedOrder(completedorder);
 	}
-	
+
 	/**
 	 * A method to update the delay of this day.
 	 * @param	delay
@@ -93,7 +104,7 @@ public class Scheduler {
 	private void updateDelay(int delay){
 		this.setDelay(this.getDelay()+delay);
 	}
-	
+
 	/**
 	 * A method to update The Schedule if the delay was to high or to low.
 	 */
@@ -117,8 +128,9 @@ public class Scheduler {
 	private void updateAssemblylineStatus(){
 		Order nextorder = this.getShifts().getFirst().getNextOrderForAssemblyLine();
 		this.getAssemblyline().advance(nextorder);
+		nextorder.setPlacedOnWorkpost(this.getCurrentTime());
 	}
-	
+
 	/**
 	 * A method to update the estimated completion time of the orders that are currently scheduled.
 	 * @param 	delay
@@ -126,22 +138,37 @@ public class Scheduler {
 	 */
 	private void updateEstimatedTimeOfOrders(int delay){
 		for(Order order: this.getOrders()){
-			order.getEstimateDate().plusMinutes(delay);
+			order.updateEstimatedDate(delay);
 		}
 	}
 
 	// Deel Scheduler
-	
+
 	public void ScheduleDay(){
-		int size = this.getShifts().size()*this.getShifts().getFirst().getTimeSlots().size()-(this.getAssemblyline().getNumberOfWokrkPosts()-1);
+		this.updateCurrentTime();
+		int size = this.getNumberOfOrdersToSchedule();
 		this.getOrders().addAll(this.getOrdermanager().getNbOrders(size));
 		this.getAlgo().schedule(this.getOrders());
 	} 
 
+	private void updateCurrentTime() {
+		DateTime datetemp = new DateTime();
+		if(this.currenttime == null){
+			this.currenttime = new DateTime(datetemp.getYear(), datetemp.getMonthOfYear(), datetemp.getDayOfMonth(), 8, 0);
+			}
+		else 
+			currenttime = new DateTime(currenttime.getYear(), currenttime.getMonthOfYear(), currenttime.getDayOfMonth(), 8, 0);
+			currenttime.plusDays(1);
+	}
+
+	private int getNumberOfOrdersToSchedule() {
+		return this.getShifts().size()*this.getShifts().getFirst().getTimeSlots().size()-(this.getAssemblyline().getNumberOfWorkPosts()-1);
+	}
+
 	protected Order getNextOrderToSchedule(){
 		return this.getOrdermanager().getPendingOrders().pollFirst();
 	}
-	
+
 	/**
 	 * A method to add a new Order. The Order will be added to the list of orders and scheduled into the system.
 	 * @param	order
@@ -149,6 +176,7 @@ public class Scheduler {
 	 */
 	protected void addOrder(Order order) {
 		this.getOrders().add(order);
+		order.setTimestamp(this.getCurrentTime());
 		this.scheduleOrder(order);
 	}
 
@@ -165,8 +193,8 @@ public class Scheduler {
 	 * A method to generate new shifts for the current day.
 	 */
 	private void generateShifts(){
-		Shift endshift = new EndShift(8,this.getAssemblyline().getNumberOfWokrkPosts());
-		Shift currrentshift = new FreeShift(8,this.getAssemblyline().getNumberOfWokrkPosts(), endshift);
+		Shift endshift = new EndShift(8,this.getAssemblyline().getNumberOfWorkPosts());
+		Shift currrentshift = new FreeShift(8,this.getAssemblyline().getNumberOfWorkPosts(), endshift);
 		this.getShifts().add(currrentshift);
 		this.getShifts().add(endshift);
 	}
@@ -203,7 +231,7 @@ public class Scheduler {
 	 * 			the current order.
 	 * @return	the previous order of the current order.
 	 */
-	protected Order getPrevious(Order order){
+	protected Order getPreviousOrder(Order order){
 		int index = this.getOrders().indexOf(order);
 		if(index-1 < 0)
 			return null;
@@ -252,12 +280,58 @@ public class Scheduler {
 	private AssemblyLine getAssemblyline() {
 		return assemblyline;
 	}
-	
+
 	protected Shift getNextShift(Shift shift){
 		int index = this.getShifts().indexOf(shift);
 		if(index + 1 >= this.getShifts().size() || this.getShifts().size() < 0)
 			return null;
 		else
 			return this.getShifts().get(index+1);
+	}
+
+	protected DateTime getCurrentTime(){
+		return (DateTime) this.currenttime;
+	}
+
+	protected void setEstimatedCompletionDate(Order order){
+		Order previousorder = this.getPreviousOrder(order);
+		if(previousorder != null) {
+			if(previousorder.getEstimateDate() == null)
+				order.setEstimateDate(this.getCurrentTime().plusHours(3));
+			else if(previousorder.getEstimateDate().getHourOfDay() <= 21)
+				order.setEstimateDate(this.getPreviousOrder(order).getEstimateDate().plusHours(1));
+			else {
+				DateTime date = previousorder.getCompletionDate();
+				date.plusDays(1);
+				date.withHourOfDay(8);
+				date.withMinuteOfHour(0);
+				order.setCompletionDate(date);
+			}
+		}
+		else
+			order.setEstimateDate(this.getCurrentTime().plusHours(3));
+	}
+
+	@Override
+	public void subscribeObserver(Observer o) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void unsubscribeObserver(Observer o) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void notifyObservers(Object alteredData) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void notifyObservers() {
+		// TODO Auto-generated method stub
+
 	}
 }

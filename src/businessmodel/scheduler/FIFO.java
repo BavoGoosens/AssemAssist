@@ -24,7 +24,7 @@ public class FIFO extends SchedulingAlgorithm {
 			timeslots = sh.canAddOrder(order);
 			if(timeslots!= null){
 				sh.addOrderToSlots(order,timeslots);
-				order.updateEstimatedCompletionTimeOfOrder(this.getScheduler().getPrevious(order));
+				this.getScheduler().setEstimatedCompletionDate(order);
 				break;
 			}
 		}

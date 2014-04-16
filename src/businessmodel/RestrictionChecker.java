@@ -3,13 +3,14 @@ package businessmodel;
 import java.util.ArrayList;
 
 import businessmodel.category.CarOption;
+import businessmodel.category.CarOptionCategory;
 
 public class RestrictionChecker {
 	
-	private static Inventory inventory;
+	private static Catalog inventory;
 
 	public RestrictionChecker() {
-		inventory = new Inventory();
+		inventory = new Catalog();
 	}
 	
 	public static boolean check(ArrayList<CarOption> options) {

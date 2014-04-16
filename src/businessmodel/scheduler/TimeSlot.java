@@ -56,4 +56,16 @@ public class TimeSlot {
 	protected LinkedList<WorkSlot> getWorkSlots(){
 		return this.workslots;
 	}
+
+	protected boolean workSlotOccupied(int i){
+		return this.getWorkSlots().get(i).isOccupied();
+	}
+
+	protected Order getLastOrderOfLastWorkSLot() {
+		return this.getWorkSlots().getLast().getOrder();
+	}
+
+	protected Order getNextOrder() {
+		return getWorkSlots().get(0).getOrder();
+	}
 }

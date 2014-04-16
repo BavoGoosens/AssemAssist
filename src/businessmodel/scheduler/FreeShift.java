@@ -21,8 +21,8 @@ public class FreeShift extends Shift{
 		LinkedList<TimeSlot> temp = this.getTimeSlots();
 		temp.add(this.getNextShift().getTimeSlots().get(0));
 		temp.add(this.getNextShift().getTimeSlots().get(1));
-		for(TimeSlot slot : temp){
-			timeslots = checkSlot(slot);
+		for(TimeSlot timeslot : temp){
+			timeslots = checkTimeSlots(timeslot);
 			if (timeslots != null)
 				return timeslots;
 		}
@@ -30,18 +30,18 @@ public class FreeShift extends Shift{
 	}
 	
 	/**
-	 * A method to check if a number of slots are available.
-	 * @param 	slot
+	 * A method to check if a number of Timeslo's are available to handle an order.
+	 * @param 	timeslot
 	 * 			the first slot to check.
 	 * @return	a list of slots if there is room. null if there is no place available.
 	 */
-	private ArrayList<TimeSlot> checkSlot(TimeSlot slot){
+	private ArrayList<TimeSlot> checkTimeSlots(TimeSlot timeslot){
 		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();
-		for(int i = 0; i < this.getNumberofworkposts(); i++){
-			if (slot.getWorkSlots().get(i).isOccupied())
+		for(int numberofworkslot = 0; numberofworkslot < this.getNumberofworkposts(); numberofworkslot++){
+			if (timeslot.workSlotOccupied(numberofworkslot))
 				return null;
-			timeslots.add(slot);
-			slot = this.getNextTimeSlot(slot);
+			timeslots.add(timeslot);
+			timeslot = this.getNextTimeSlot(timeslot);
 		}
 		return timeslots;
 	}
