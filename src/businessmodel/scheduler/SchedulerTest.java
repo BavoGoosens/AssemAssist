@@ -50,7 +50,7 @@ public class SchedulerTest {
 		System.out.println(new Body().getKey());
 		System.out.println(new Body().getKey());
 		
-		CarOption blabla = new CarOption("Henk", inventory.getCategory(new Airco().getKey()));
+		CarOption blabla = new CarOption("Henk", new Airco());
 		ArrayList<CarOption> henk1 = new ArrayList<CarOption>();
 		henk1.add(blabla);
 		Order order = new StandardCarOrder(c1,henk1);

@@ -8,10 +8,6 @@ public class Engine extends CarOptionCategory {
 
 	public Engine() {
 		super();
-<<<<<<< HEAD
-	
-=======
->>>>>>> 10f1a3a1e1567f9a33494156d9341b89044c7497
 	}
 
 	@Override
@@ -19,10 +15,5 @@ public class Engine extends CarOptionCategory {
 		return Engine.key;
 	}
 
-	@Override
-	public CarOptionCategory create() {
-		Engine.key = UUID.randomUUID();
-		return this;
-	}
 
 }

@@ -8,21 +8,11 @@ public class Gearbox extends CarOptionCategory {
 
 	public Gearbox() {
 		super();
-<<<<<<< HEAD
-		
-=======
->>>>>>> 10f1a3a1e1567f9a33494156d9341b89044c7497
 	}
 
 	@Override
 	public UUID getKey() {
 		return Gearbox.key;
-	}
-
-	@Override
-	public CarOptionCategory create() {
-		Gearbox.key = UUID.randomUUID();
-		return this;
 	}
 
 

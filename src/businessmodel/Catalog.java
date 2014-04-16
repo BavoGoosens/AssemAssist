@@ -2,24 +2,9 @@ package businessmodel;
 
 import java.util.ArrayList;
 
-import businessmodel.category.Airco;
-import businessmodel.category.Body;
-import businessmodel.category.CarModelFactory;
-import businessmodel.category.CarOption;
-import businessmodel.category.CarOptionCategory;
-import businessmodel.category.Color;
-import businessmodel.category.Engine;
-import businessmodel.category.Gearbox;
-import businessmodel.category.ModelAFactory;
-import businessmodel.category.ModelBFactory;
-import businessmodel.category.ModelCFactory;
-<<<<<<< HEAD
-import businessmodel.category.Seats;
-import businessmodel.category.Spoiler;
-import businessmodel.category.Wheels;
+import businessmodel.category.*;
 import businessmodel.exceptions.IllegalCarOptionCategoryException;
-=======
->>>>>>> 10f1a3a1e1567f9a33494156d9341b89044c7497
+
 
 /**
  * A class that represents an inventory for a factory. Here we hold all the different component.
@@ -29,64 +14,15 @@ import businessmodel.exceptions.IllegalCarOptionCategoryException;
  */
 public class Catalog {
 	
-<<<<<<< HEAD
-	private ArrayList<CarModel> available_models;
-	private ArrayList<CarOptionCategory> categories;
-=======
-	ArrayList<CarModel> availableModels;
-	ArrayList<CarModelFactory> factories;
->>>>>>> 10f1a3a1e1567f9a33494156d9341b89044c7497
+
+	private ArrayList<CarModel> availableModels;
+	private ArrayList<CarModelFactory> factories;
 
 	/**
 	 * A Constructor that creates a new inventory list.
 	 */
 	public Catalog() {
-<<<<<<< HEAD
-		
-		this.available_models = new ArrayList<CarModel>();
-		this.createCategories();
-		this.createAllModels();
-	}
-	
 
-	private void createCategories() {
-		
-		categories = new ArrayList<CarOptionCategory>();
-		
-		categories.add(new Airco().create());
-		categories.add(new Seats().create());
-		categories.add(new Body().create());
-		categories.add(new Color().create());
-		categories.add(new Spoiler().create());
-		categories.add(new Wheels().create());
-		categories.add(new Gearbox().create());
-		categories.add(new Engine().create());
-		
-	}
-
-
-	private void createAllModels() {
-		
-		CarModelFactory factoryA = new ModelAFactory();
-		CarModelFactory factoryB = new ModelBFactory();
-		CarModelFactory factoryC = new ModelCFactory();
-		
-		available_models.add(factoryA.createModel());
-		available_models.add(factoryB.createModel());
-		available_models.add(factoryC.createModel());
-	}
-
-	public ArrayList<CarOptionCategory> getAllCategories() {
-		return categories;
-	}
-	
-	public CarOptionCategory getCategory(UUID id) {
-		for(CarOptionCategory category: categories)
-			if (category.getKey().equals(id))
-				return category;
-		return null;
-	}
-=======
 		this.availableModels = new ArrayList<CarModel>();
 		this.factories = new ArrayList<CarModelFactory>();
 		this.factories.add(new ModelAFactory());
@@ -126,5 +62,5 @@ public class Catalog {
 		}
 		return categories;
 	}
->>>>>>> 10f1a3a1e1567f9a33494156d9341b89044c7497
+
 }
