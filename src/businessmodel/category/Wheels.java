@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class Wheels extends CarOptionCategory {
 	
-	private static UUID key;
+	private final static UUID key = UUID.randomUUID();
 
 	public Wheels() {
 		super();
@@ -15,10 +15,5 @@ public class Wheels extends CarOptionCategory {
 		return Wheels.key;
 	}
 
-	@Override
-	public CarOptionCategory create() {
-		Wheels.key = UUID.randomUUID();
-		return this;
-	}
 
 }

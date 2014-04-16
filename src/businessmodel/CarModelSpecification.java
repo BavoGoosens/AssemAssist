@@ -39,7 +39,7 @@ public class CarModelSpecification {
 		if (category == null) throw new IllegalArgumentException("Bad category!");
 		ArrayList<CarOption> options = new ArrayList<CarOption>();
 		for (CarOption option: this.getOptions()) {
-			if (option.getCategory() == category) {
+			if (option.getCategory().equals(category)) {
 				options.add(option);
 			}
 		}

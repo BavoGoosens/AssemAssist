@@ -8,21 +8,21 @@ import businessmodel.category.CarOption;
 public abstract class Restriction {
 	
 	private String name;
-	private Catalog inventory;
+	private Catalog catalog;
 
-	public Restriction(String name, Catalog inventory) throws IllegalArgumentException {
+	public Restriction(String name, Catalog catalog) throws IllegalArgumentException {
 		if (name == null || name.equals("")) throw new IllegalArgumentException("Bad name!");
-		if (inventory == null) throw new IllegalArgumentException("Bad inventory!");
+		if (catalog == null) throw new IllegalArgumentException("Bad catalog!");
 		this.name = name;
-		this.inventory = inventory;
+		this.catalog = catalog;
 	}
 	
 	public String getName() {
 		return this.name;
 	}
 	
-	public Catalog getInventory() {
-		return this.inventory;
+	public Catalog getCatalog() {
+		return this.catalog;
 	}
 	
 	public abstract boolean check(ArrayList<CarOption> options);

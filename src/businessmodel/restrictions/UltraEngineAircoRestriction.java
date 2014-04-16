@@ -3,9 +3,7 @@ package businessmodel.restrictions;
 import java.util.ArrayList;
 
 import businessmodel.Catalog;
-import businessmodel.category.Airco;
-import businessmodel.category.CarOption;
-import businessmodel.category.Engine;
+import businessmodel.category.*;
 
 public class UltraEngineAircoRestriction extends Restriction {
 
@@ -26,7 +24,9 @@ public class UltraEngineAircoRestriction extends Restriction {
 	
 	private CarOption getEngineOption(ArrayList<CarOption> options) {
 		for (CarOption option: options) {
-			if (option.getCategory() == getInventory().getCategory(new Engine().getKey())) {
+
+			if (option.getCategory().equals(new Engine())) {
+
 				return option;
 			}
 		}
@@ -35,10 +35,13 @@ public class UltraEngineAircoRestriction extends Restriction {
 	
 	private boolean checkAirco(ArrayList<CarOption> options) {
 		for (CarOption option: options) {
-			if (option.getCategory() == getInventory().getCategory(new Airco().getKey())) {
+
+			if (option.getCategory().equals(new Airco())) {
+
 				return option.getName().equalsIgnoreCase("manual");
 			}
 		}
+		// to-do: indien geen airco wel oke, moet hier true teruggegeven worden!
 		return false;
 	}
 

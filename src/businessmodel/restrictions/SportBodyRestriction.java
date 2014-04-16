@@ -3,10 +3,8 @@ package businessmodel.restrictions;
 import java.util.ArrayList;
 
 import businessmodel.Catalog;
-import businessmodel.category.Body;
-import businessmodel.category.CarOption;
-import businessmodel.category.Engine;
-import businessmodel.category.Spoiler;
+import businessmodel.category.*;
+
 
 public class SportBodyRestriction extends Restriction {
 
@@ -26,7 +24,8 @@ public class SportBodyRestriction extends Restriction {
 
 	private CarOption getBodyOption(ArrayList<CarOption> options) {
 		for (CarOption option: options) {
-			if (option.getCategory() == this.getInventory().getCategory(new Body().getKey())) {
+
+			if (option.getCategory().equals(new Body())) {
 				return option;
 			}
 		}
@@ -35,7 +34,9 @@ public class SportBodyRestriction extends Restriction {
 
 	private boolean checkForSpoiler(ArrayList<CarOption> options) {
 		for (CarOption option: options) {
-			if (option.getCategory() == this.getInventory().getCategory(new Spoiler().getKey())) {
+
+			if (option.getCategory().equals(new Spoiler())) {
+
 				return true;
 			}
 		}
@@ -44,7 +45,9 @@ public class SportBodyRestriction extends Restriction {
 
 	private boolean checkEngine(ArrayList<CarOption> options) {
 		for (CarOption option: options) {
-			if (option.getCategory() == this.getInventory().getCategory(new Engine().getKey())) {
+
+			if (option.getCategory().equals(new Engine())) {
+
 				return option.getName().equalsIgnoreCase("performance 2.5l v6") ||
 						option.getName().equalsIgnoreCase("ultra 3l v8");
 			}
