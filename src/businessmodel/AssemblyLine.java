@@ -3,6 +3,14 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import businessmodel.category.Airco;
+import businessmodel.category.Body;
+import businessmodel.category.Color;
+import businessmodel.category.Engine;
+import businessmodel.category.Gearbox;
+import businessmodel.category.Seats;
+import businessmodel.category.Spoiler;
+import businessmodel.category.Wheels;
 import businessmodel.order.Order;
 
 /**
@@ -25,11 +33,26 @@ public class AssemblyLine {
 		this.generateWorkPosts();
 	}
 	
-	// TODO aanpassen voor als er meerdere WorkPosts mogelijk zijn.
+	// TODO factory van maken? overleggen met assistent
 	private void generateWorkPosts(){
-		WorkPost post1 = new WorkPost("Car");
-		WorkPost post2 = new WorkPost("");
-		WorkPost post3 = new WorkPost("");
+		
+		ArrayList<AssemblyTask> tasksWorkPost1 = new ArrayList<AssemblyTask>();
+		ArrayList<AssemblyTask> tasksWorkPost2 = new ArrayList<AssemblyTask>();
+		ArrayList<AssemblyTask> tasksWorkPost3 = new ArrayList<AssemblyTask>();
+		
+		tasksWorkPost1.add(new AssemblyTask("Assembly Car Body", new Body()));
+		tasksWorkPost1.add(new AssemblyTask("Paint Car", new Color()));
+		tasksWorkPost2.add(new AssemblyTask("Insert Engine", new Engine()));
+		tasksWorkPost2.add(new AssemblyTask("Insert Gearbox", new Gearbox()));
+		tasksWorkPost3.add(new AssemblyTask("Install Seats", new Seats()));
+		tasksWorkPost3.add(new AssemblyTask("Install Airco", new Airco()));
+		tasksWorkPost3.add(new AssemblyTask("Mount Wheels", new Wheels()));
+		tasksWorkPost3.add(new AssemblyTask("Install Spoiler", new Spoiler()));
+		
+		WorkPost post1 = new WorkPost("Car Body Post", tasksWorkPost1);
+		WorkPost post2 = new WorkPost("Drivetrain Post", tasksWorkPost2);
+		WorkPost post3 = new WorkPost("Accesoires Post", tasksWorkPost3);
+		
 		this.getWorkPosts().add(post1);
 		this.getWorkPosts().add(post2);
 		this.getWorkPosts().add(post3);
