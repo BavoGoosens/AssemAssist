@@ -1,7 +1,6 @@
 package businessmodel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import businessmodel.category.CarOption;
 
@@ -16,7 +15,7 @@ public class CarModel {
 	/**
 	 * A variable that describes the model of the car.
 	 */
-	private String carmodel;
+	private String name;
 	
 	/**
 	 * A variable the specifies the CarModelSpecification of this car.
@@ -31,8 +30,8 @@ public class CarModel {
 	 * @param   cms
 	 *          A car model specification of the car.
 	 */
-	public CarModel(String carmodel,CarModelSpecification cms) throws IllegalArgumentException {
-		setCarmodel(carmodel);
+	public CarModel(String name,CarModelSpecification cms) throws IllegalArgumentException {
+		setCarmodel(name);
 		setCarModelSpecification(cms);
 	}
 	
@@ -42,8 +41,8 @@ public class CarModel {
 	 * @return  String
 	 * 			the name of this car model.
 	 */
-	public String getCarmodel() {
-		return this.carmodel;
+	public String getName() {
+		return this.name;
 	}
 
 	/**
@@ -52,9 +51,9 @@ public class CarModel {
 	 * @param    carmodel
 	 *           the new name of this car model.
 	 */
-	private void setCarmodel(String carmodel) throws IllegalArgumentException {
-		if (carmodel == null || carmodel.equals("")) throw new IllegalArgumentException("Bad name for carmodel!");
-		this.carmodel = carmodel;
+	private void setCarmodel(String name) throws IllegalArgumentException {
+		if (name == null || name.equals("")) throw new IllegalArgumentException("Bad name for carmodel!");
+		this.name = name;
 	}	
 	
 	/**
@@ -91,7 +90,7 @@ public class CarModel {
 	
 	@Override
 	public String toString() {
-		return "carmodel= " + carmodel;
+		return "Car model: " + name;
 	}
 
 }

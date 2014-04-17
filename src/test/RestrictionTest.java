@@ -45,7 +45,7 @@ public class RestrictionTest {
 				}
 			}
 		}
-		System.out.println(chosen);
+		System.out.println("DefaultMandatoryOptions test: "+chosen);
 		assertFalse(restriction.check(chosen));
 	}
 	
@@ -54,21 +54,23 @@ public class RestrictionTest {
 	 * Test for a car with a sport body without a spoiler
 	 */
 	public void testSportBodyRestriction() {
-		SportBodyRestriction restriction = new SportBodyRestriction("Test2", this.catalog);
-		CarModel modelA = this.aFactory.createModel();
+		Restriction restriction = new SportBodyRestriction("Test2", this.catalog);
+		CarModel modelB = this.bFactory.createModel();
 		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
 		for (CarOptionCategory category: this.categories) {
-			ArrayList<CarOption> options = category.getOptionsClone();
-			if (category.equals()) {
+			ArrayList<CarOption> options = modelB.getCarModelSpecification().getOptionsOfCategory(category);
+			if (category.equals(new Body())) {
 				for (CarOption option: options) {
 					if (option.getName().equalsIgnoreCase("sport")) {
 						chosen.add(option);
 					}
 				}
-			} else if (category != this.inventory.getSpoiler()) {
-				chosen.add(category.getPossibleOptionsClone().get(0));
+			}
+			else if (!category.equals(new Spoiler())) {
+				chosen.add(options.get(0));
 			}
 		}
+		System.out.println("SportBody test1: "+chosen);
 		assertFalse(restriction.check(chosen));
 	} 
 	
@@ -76,46 +78,51 @@ public class RestrictionTest {
 	/**
 	 * Test for a car with a sport body with a standard engine
 	 */
-/*	public void testSportBodyRestriction2() {
+	public void testSportBodyRestriction2() {
+		Restriction restriction = new SportBodyRestriction("Test3", this.catalog);
+		CarModel modelB = this.bFactory.createModel();
 		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
-		SportBodyRestriction restriction = new SportBodyRestriction("Test3", this.inventory);
 		for (CarOptionCategory category: categories) {
-			ArrayList<CarOption> options = category.getPossibleOptionsClone();
-			if (category == this.inventory.getBody()) {
+			ArrayList<CarOption> options = modelB.getCarModelSpecification().getOptionsOfCategory(category);
+			if (category.equals(new Body())) {
 				for (CarOption option: options) {
 					if (option.getName().equalsIgnoreCase("sport")) {
 						chosen.add(option);
 					}
 				}
-			} else if (category == this.inventory.getEngine()) {
+			} else if (category.equals(new Engine())) {
 				for (CarOption option: options) {
 					if (option.getName().equalsIgnoreCase("standard 2l v4")) {
 						chosen.add(option);
 					}
 				}
 			} else {
-				chosen.add(category.getPossibleOptionsClone().get(0));
+				chosen.add(options.get(0));
 			}
 		}
+		System.out.println("SportBody test2: "+chosen);
 		assertFalse(restriction.check(chosen));
 	}
+	
+	
 	
 	@Test
 	/**
 	 * Test for a car with an ultra engine and an automatic airco
 	 */
-/*	public void testUltraEngineAircoRestriction() {
+	public void testUltraEngineAircoRestriction() {
+		Restriction restriction = new UltraEngineAircoRestriction("Test3", this.catalog);
+		CarModel modelC = this.cFactory.createModel();
 		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
-		UltraEngineAircoRestriction restriction = new UltraEngineAircoRestriction("Test2", this.inventory);
 		for (CarOptionCategory category: categories) {
-			ArrayList<CarOption> options = category.getPossibleOptionsClone();
-			if (category == this.inventory.getEngine()) {
+			ArrayList<CarOption> options = modelC.getCarModelSpecification().getOptionsOfCategory(category);
+			if (category.equals(new Engine())) {
 				for (CarOption option: options) {
 					if (option.getName().equalsIgnoreCase("ultra 3l v8")) {
 						chosen.add(option);
 					}
 				}
-			} else if (category == this.inventory.getAirco()) {
+			} else if (category.equals(new Airco())) {
 				for (CarOption option: options) {
 					if (option.getName().equalsIgnoreCase("automatic")) {
 						chosen.add(option);
@@ -125,21 +132,27 @@ public class RestrictionTest {
 				chosen.add(options.get(0));
 			}
 		}
+		System.out.println("UltraEngineAirco test: "+chosen);
 		assertFalse(restriction.check(chosen));
 	}
 	
 	@Test
 	public void normalTest() {
+		Restriction restriction1 = new DefaultMandatoryOptionRestriction("Test1", this.catalog);
+		Restriction restriction2 = new SportBodyRestriction("Test2", this.catalog);
+		Restriction restriction3 = new UltraEngineAircoRestriction("Test3", this.catalog);
 		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
-		DefaultMandatoryOptionRestriction restriction1 = new DefaultMandatoryOptionRestriction("Test1", this.inventory);
-		SportBodyRestriction restriction2 = new SportBodyRestriction("Test2", this.inventory);
-		UltraEngineAircoRestriction restriction3 = new UltraEngineAircoRestriction("Test3", this.inventory);
+		CarModel modelA = this.aFactory.createModel();
 		for (CarOptionCategory category: categories) {
-			chosen.add(category.getPossibleOptionsClone().get(0));
+			ArrayList<CarOption> options = modelA.getCarModelSpecification().getOptionsOfCategory(category);
+			if (options.size() > 0) {
+				chosen.add(options.get(0));
+			}
 		}
+		System.out.println("Normal test: "+chosen);
 		assertTrue(restriction1.check(chosen));
 		assertTrue(restriction2.check(chosen));
 		assertTrue(restriction3.check(chosen));
-	} */
+	}
 
 }

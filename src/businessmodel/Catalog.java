@@ -3,7 +3,6 @@ package businessmodel;
 import java.util.ArrayList;
 
 import businessmodel.category.*;
-import businessmodel.exceptions.IllegalCarOptionCategoryException;
 
 
 /**
