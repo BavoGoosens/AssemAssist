@@ -12,14 +12,10 @@ public abstract class CarModelFactory {
 	public CarModel createModel() {
 		
 		ArrayList<CarOption> options = new ArrayList<CarOption>();
-		
 		for (CarOption option: this.createBody().getOptionsClone()) {
 			options.add(option);
 		}
 		for (CarOption option: this.createColor().getOptionsClone()) {
-			options.add(option);
-		}
-		for (CarOption option: this.createEngine().getOptionsClone()) {
 			options.add(option);
 		}
 		for (CarOption option: this.createEngine().getOptionsClone()) {
