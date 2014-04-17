@@ -88,7 +88,7 @@ public class Scheduler implements Subject {
 	}
 
 	/**
-	 * A method to update the orders of this Scheduler. The completed order is push to completed orders and its completion date is set.
+	 * A method to update the orders of this Scheduler. The completed order is pushed to completed orders and its completion date is set.
 	 */
 	private void updateCompletedOrders(){
 		Order completedorder = this.getOrders().pollFirst();

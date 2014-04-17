@@ -85,6 +85,7 @@ public class SchedulerTest {
 				System.out.println(">>>>>new WorkSlot");
 				for(int j = 0; j< 3; j++){
 					if(ord.getScheduler().getShifts().get(k).getTimeSlots().get(i).getWorkSlots().get(j).getOrder()!= null){
+						
 						System.out.println(ord.getScheduler().getShifts().get(k).getTimeSlots().get(i).getWorkSlots().get(j).getOrder().toString());
 					}else{
 						System.out.println("0");
