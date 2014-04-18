@@ -8,25 +8,6 @@ import businessmodel.category.Wheels;
 
 public class AccesoiresWorkPostFactory extends WorkPostFactory{
 
-	@Override
-	protected AssemblyTask createBodyTask() {
-		return null;
-	}
-
-	@Override
-	protected AssemblyTask createColorTask() {
-		return null;
-	}
-
-	@Override
-	protected AssemblyTask createEngineTask() {
-		return null;
-	}
-
-	@Override
-	protected AssemblyTask createGearboxTask() {
-		return null;
-	}
 
 	@Override
 	protected AssemblyTask createSeatsTask() {

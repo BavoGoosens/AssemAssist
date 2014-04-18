@@ -17,36 +17,6 @@ public class CarBodyWorkPostFactory extends WorkPostFactory {
 	}
 
 	@Override
-	protected AssemblyTask createEngineTask() {
-		return null;
-	}
-
-	@Override
-	protected AssemblyTask createGearboxTask() {
-		return null;
-	}
-
-	@Override
-	protected AssemblyTask createSeatsTask() {
-		return null;
-	}
-
-	@Override
-	protected AssemblyTask createAircoTask() {
-		return null;
-	}
-
-	@Override
-	protected AssemblyTask createWheelsTask() {
-		return null;
-	}
-
-	@Override
-	protected AssemblyTask createSpoilerTask() {
-		return null;
-	}
-
-	@Override
 	protected String getName() {
 		return "Car Body Workpost";
 	}
