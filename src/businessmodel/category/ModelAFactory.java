@@ -111,12 +111,6 @@ public class ModelAFactory extends CarModelFactory {
 		}
 		return wheels;
 	}
-	
-	@Override
-	protected Spoiler createSpoiler() {
-		Spoiler spoiler = new Spoiler();
-		return spoiler;
-	}
 
 	@Override
 	protected String getName() {
