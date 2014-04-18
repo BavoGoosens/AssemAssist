@@ -39,7 +39,7 @@ public class AssemblyLine {
 	}
 	
 	/**
-	 * 
+	 * Method to generate all the factories for de WorkPosts
 	 */
 	private void generateWorkPosts(){
 		
@@ -51,7 +51,7 @@ public class AssemblyLine {
 	}
 	
 	/**
-	 * 
+	 * Method to create all WorkPosts
 	 */
 	private void createAllWorkPosts() {
 		for (WorkPostFactory workPostFactory: this.getFactories()) {
