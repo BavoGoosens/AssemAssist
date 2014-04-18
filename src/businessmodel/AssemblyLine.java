@@ -5,9 +5,13 @@ import java.util.LinkedList;
 
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
+import businessmodel.category.CarModelFactory;
 import businessmodel.category.Color;
 import businessmodel.category.Engine;
 import businessmodel.category.Gearbox;
+import businessmodel.category.ModelAFactory;
+import businessmodel.category.ModelBFactory;
+import businessmodel.category.ModelCFactory;
 import businessmodel.category.Seats;
 import businessmodel.category.Spoiler;
 import businessmodel.category.Wheels;
@@ -25,6 +29,7 @@ public class AssemblyLine {
 	 * List of work posts at the assembly line.
 	 */
 	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
+	private ArrayList<WorkPostFactory> factories = new ArrayList<WorkPostFactory>();
 
 	/**
 	 * A constructor for the class AssemblyLine.
@@ -33,40 +38,28 @@ public class AssemblyLine {
 		this.generateWorkPosts();
 	}
 	
-	// TODO factory van maken? overleggen met assistent
+	/**
+	 * 
+	 */
 	private void generateWorkPosts(){
 		
-		ArrayList<AssemblyTask> tasksWorkPost1 = new ArrayList<AssemblyTask>();
-		ArrayList<AssemblyTask> tasksWorkPost2 = new ArrayList<AssemblyTask>();
-		ArrayList<AssemblyTask> tasksWorkPost3 = new ArrayList<AssemblyTask>();
+		this.getFactories().add(new CarBodyWorkPostFactory());
+		this.getFactories().add(new DrivetrainWorkPostFactory());
+		this.getFactories().add(new AccesoiresWorkPostFactory());
+		createAllWorkPosts();
 		
-		tasksWorkPost1.add(new AssemblyTask("Assembly Car Body", new Body()));
-		tasksWorkPost1.add(new AssemblyTask("Paint Car", new Color()));
-		tasksWorkPost2.add(new AssemblyTask("Insert Engine", new Engine()));
-		tasksWorkPost2.add(new AssemblyTask("Insert Gearbox", new Gearbox()));
-		tasksWorkPost3.add(new AssemblyTask("Install Seats", new Seats()));
-		tasksWorkPost3.add(new AssemblyTask("Install Airco", new Airco()));
-		tasksWorkPost3.add(new AssemblyTask("Mount Wheels", new Wheels()));
-		tasksWorkPost3.add(new AssemblyTask("Install Spoiler", new Spoiler()));
-		
-		WorkPost post1 = new WorkPost("Car Body Post", tasksWorkPost1);
-		WorkPost post2 = new WorkPost("Drivetrain Post", tasksWorkPost2);
-		WorkPost post3 = new WorkPost("Accesoires Post", tasksWorkPost3);
-		
-		this.getWorkPosts().add(post1);
-		this.getWorkPosts().add(post2);
-		this.getWorkPosts().add(post3);
 	}
 	
 	/**
-	 * This method returns the list of work posts at the assembly line.
 	 * 
-	 * @return	ArrayList<WorkPost>
-	 * 			this.workposts
 	 */
-	public ArrayList<WorkPost> getWorkPosts() {
-		return this.workposts;
+	private void createAllWorkPosts() {
+		for (WorkPostFactory workPostFactory: this.getFactories()) {
+			this.getWorkPosts().add(workPostFactory.createWorkPost());
+		}
 	}
+	
+	
 
 	/**
 	 * This method checks whether the assembly line can move forward.
@@ -83,6 +76,12 @@ public class AssemblyLine {
 		return true;
 	}		
 
+	/**
+	 * 
+	 * @param neworder
+	 * @return
+	 * @throws IllegalStateException
+	 */
 	public Order advance(Order neworder) throws IllegalStateException {
 		if (!this.canAdvance())
 			throw new IllegalStateException("Cannot advance assembly line!");
@@ -107,6 +106,28 @@ public class AssemblyLine {
 		return orders;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	private ArrayList<WorkPostFactory> getFactories() {
+		return this.factories ;
+	}
+
+	/**
+	 * This method returns the list of work posts at the assembly line.
+	 * 
+	 * @return	ArrayList<WorkPost>
+	 * 			this.workposts
+	 */
+	public ArrayList<WorkPost> getWorkPosts() {
+		return this.workposts;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public int getNumberOfWorkPosts(){
 		return this.getWorkPosts().size();
 	}
