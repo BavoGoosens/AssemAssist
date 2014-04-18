@@ -42,21 +42,37 @@ public abstract class CarModelFactory {
 
 	}
 
-	protected abstract Body createBody();
+	protected Body createBody() {
+		return new Body();
+	}
 
-	protected abstract Color createColor();
+	protected Color createColor() {
+		return new Color();
+	}
 
-	protected abstract Engine createEngine();
+	protected Engine createEngine() {
+		return new Engine();
+	}
 
-	protected abstract Gearbox createGearbox();
+	protected Gearbox createGearbox() {
+		return new Gearbox();
+	}
 
-	protected abstract Seats createSeats();
+	protected Seats createSeats() {
+		return new Seats();
+	}
 
-	protected abstract Airco createAirco();
+	protected Airco createAirco() {
+		return new Airco();
+	}
 
-	protected abstract Wheels createWheels();
+	protected Wheels createWheels() {
+		return new Wheels();
+	}
 
-	protected abstract Spoiler createSpoiler();
+	protected Spoiler createSpoiler() {
+		return new Spoiler();
+	}
 
 	protected abstract String getName();
 
