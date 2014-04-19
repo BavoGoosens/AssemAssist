@@ -77,7 +77,6 @@ public class AssemblyTask {
 		return this.getName();
 	}
 	
-
 	protected CarOptionCategory getCategory() {
 		return category;
 	}
