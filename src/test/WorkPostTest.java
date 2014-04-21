@@ -24,7 +24,7 @@ import businessmodel.user.GarageHolder;
 public class WorkPostTest {
 	
 	private GarageHolder garageholder;
-	private Body body;
+	private Body body;import static org.junit.Assert.*;
 	private Color color;
 	private Engine engine;
 	private Gearbox gearbox;

@@ -3,6 +3,18 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import businessmodel.category.Airco;
+import businessmodel.category.Body;
+import businessmodel.category.CarModelFactory;
+import businessmodel.category.Color;
+import businessmodel.category.Engine;
+import businessmodel.category.Gearbox;
+import businessmodel.category.ModelAFactory;
+import businessmodel.category.ModelBFactory;
+import businessmodel.category.ModelCFactory;
+import businessmodel.category.Seats;
+import businessmodel.category.Spoiler;
+import businessmodel.category.Wheels;
 import businessmodel.order.Order;
 
 /**
@@ -17,6 +29,7 @@ public class AssemblyLine {
 	 * List of work posts at the assembly line.
 	 */
 	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
+	private ArrayList<WorkPostFactory> factories = new ArrayList<WorkPostFactory>();
 
 	/**
 	 * A constructor for the class AssemblyLine.
@@ -25,25 +38,28 @@ public class AssemblyLine {
 		this.generateWorkPosts();
 	}
 	
-	// TODO aanpassen voor als er meerdere WorkPosts mogelijk zijn.
+	/**
+	 * Method to generate all the factories for de WorkPosts
+	 */
 	private void generateWorkPosts(){
-		WorkPost post1 = new WorkPost("Car");
-		WorkPost post2 = new WorkPost("");
-		WorkPost post3 = new WorkPost("");
-		this.getWorkPosts().add(post1);
-		this.getWorkPosts().add(post2);
-		this.getWorkPosts().add(post3);
+		
+		this.getFactories().add(new CarBodyWorkPostFactory());
+		this.getFactories().add(new DrivetrainWorkPostFactory());
+		this.getFactories().add(new AccesoiresWorkPostFactory());
+		createAllWorkPosts();
+		
 	}
 	
 	/**
-	 * This method returns the list of work posts at the assembly line.
-	 * 
-	 * @return	ArrayList<WorkPost>
-	 * 			this.workposts
+	 * Method to create all WorkPosts
 	 */
-	public ArrayList<WorkPost> getWorkPosts() {
-		return this.workposts;
+	private void createAllWorkPosts() {
+		for (WorkPostFactory workPostFactory: this.getFactories()) {
+			this.getWorkPosts().add(workPostFactory.createWorkPost());
+		}
 	}
+	
+	
 
 	/**
 	 * This method checks whether the assembly line can move forward.
@@ -60,6 +76,12 @@ public class AssemblyLine {
 		return true;
 	}		
 
+	/**
+	 * 
+	 * @param neworder
+	 * @return
+	 * @throws IllegalStateException
+	 */
 	public Order advance(Order neworder) throws IllegalStateException {
 		if (!this.canAdvance())
 			throw new IllegalStateException("Cannot advance assembly line!");
@@ -84,6 +106,28 @@ public class AssemblyLine {
 		return orders;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	private ArrayList<WorkPostFactory> getFactories() {
+		return this.factories ;
+	}
+
+	/**
+	 * This method returns the list of work posts at the assembly line.
+	 * 
+	 * @return	ArrayList<WorkPost>
+	 * 			this.workposts
+	 */
+	public ArrayList<WorkPost> getWorkPosts() {
+		return this.workposts;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public int getNumberOfWorkPosts(){
 		return this.getWorkPosts().size();
 	}

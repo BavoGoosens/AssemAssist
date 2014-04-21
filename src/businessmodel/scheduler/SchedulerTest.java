@@ -7,14 +7,19 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import businessmodel.CarModel;
-import businessmodel.CarOptionCategory;
+import businessmodel.Catalog;
 import businessmodel.OrderManager;
+import businessmodel.category.Airco;
+import businessmodel.category.Body;
 import businessmodel.category.CarOption;
+import businessmodel.category.CarOptionCategory;
 import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;
 
 public class SchedulerTest {
+
+	private static Catalog inventory = new Catalog();
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -42,9 +47,9 @@ public class SchedulerTest {
 		GarageHolder c16 = new GarageHolder("16","","");
 		GarageHolder c17 = new GarageHolder("17","","");
 		GarageHolder c18 = new GarageHolder("18","","");
+		
 
-
-		CarOption blabla = new CarOption("Henk",new CarOptionCategory("Henk"));
+		CarOption blabla = new CarOption("Henk", new Airco());
 		ArrayList<CarOption> henk1 = new ArrayList<CarOption>();
 		henk1.add(blabla);
 		Order order = new StandardCarOrder(c1,henk1);
@@ -67,40 +72,45 @@ public class SchedulerTest {
 		Order order17 = new StandardCarOrder(c18,henk1);
 
 		ord.addOrder(order);
-		ord.addOrder(order1);
-		ord.addOrder(order2);
-		ord.addOrder(order3);
-		ord.addOrder(order4);
-		ord.addOrder(order5);
-		ord.addOrder(order6);
-		ord.addOrder(order7);
-		ord.addOrder(order8);
-		ord.addOrder(order9);
-		ord.addOrder(order10);
-		ord.addOrder(order11);
-		ord.addOrder(order12);
-		ord.addOrder(order13);
-		ord.addOrder(order14);
-		ord.addOrder(order15);
-		ord.addOrder(order16);
+
+		
 
 		ord.getScheduler().ScheduleDay();
+
 		
-		ord.addOrder(order17);
-		
+
 		// test
 		for(int k =0; k<2 ; k++){
 			for(int i =0 ; i< 8; i++){
 				System.out.println(">>>>>new WorkSlot");
 				for(int j = 0; j< 3; j++){
-					if(ord.getScheduler().getShifts().get(k).getTimeSlots().get(i).getWorkSlots().get(j).getOrder()!= null)
-						System.out.println(ord.getScheduler().getShifts().get(k).getTimeSlots().get(i).getWorkSlots().get(j).getOrder().getUser().toString());
-					else
+					if(ord.getScheduler().getShifts().get(k).getTimeSlots().get(i).getWorkSlots().get(j).getOrder()!= null){
+						
+						System.out.println(ord.getScheduler().getShifts().get(k).getTimeSlots().get(i).getWorkSlots().get(j).getOrder().toString());
+					}else{
 						System.out.println("0");
+					}
 				}
 			}
 		}
 		ord.getScheduler().advance(60);
+		System.out.println("----------------------------------------------------------");
+		// test
+		for(int k =0; k<2 ; k++){
+			int length = ord.getScheduler().getShifts().get(k).getTimeSlots().size();
+			for(int i =0 ; i< length; i++){
+				System.out.println(">>>>>new WorkSlot");
+				for(int j = 0; j< 3; j++){
+					if(ord.getScheduler().getShifts().get(k).getTimeSlots().get(i).getWorkSlots().get(j).getOrder()!= null){
+						System.out.println(ord.getScheduler().getShifts().get(k).getTimeSlots().get(i).getWorkSlots().get(j).getOrder().toString());
+					}else{
+						System.out.println("0");
+					}
+				}
+			}
+		}
+		
+		
 	}
 
 	@Test

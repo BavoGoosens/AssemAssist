@@ -1,6 +1,10 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
+
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -86,7 +90,7 @@ public class SchedulerTest {
 		ord.addOrder(order17);
 
 		ord.getScheduler().ScheduleDay();
-		
+		assertEquals(wp.getOrder(),orders.get(0));
 		// test
 		for(int k =0; k<2 ; k++){
 			for(int i =0 ; i< 8; i++){

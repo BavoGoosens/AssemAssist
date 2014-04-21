@@ -1,5 +1,7 @@
 package businessmodel;
 
+import businessmodel.category.CarOptionCategory;
+
 /**
  * A class that represents an assembly task.
  * 

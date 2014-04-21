@@ -1,5 +1,7 @@
 package businessmodel.category;
 
+import java.util.UUID;
+
 public class CarOption {
 
 	private String name;
@@ -17,6 +19,10 @@ public class CarOption {
 	
 	public CarOptionCategory getCategory() {
 		return this.category;
+	}
+	
+	public UUID getCategoryKey() {
+		return this.category.getKey();
 	}
 	
 	private void setName(String name) throws IllegalArgumentException {

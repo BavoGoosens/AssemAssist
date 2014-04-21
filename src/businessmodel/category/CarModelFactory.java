@@ -8,16 +8,14 @@ import businessmodel.CarModelSpecification;
 public abstract class CarModelFactory {
 
 	public CarModelFactory() {}
-	
+
 	public CarModel createModel() {
+		
 		ArrayList<CarOption> options = new ArrayList<CarOption>();
 		for (CarOption option: this.createBody().getOptionsClone()) {
 			options.add(option);
 		}
 		for (CarOption option: this.createColor().getOptionsClone()) {
-			options.add(option);
-		}
-		for (CarOption option: this.createEngine().getOptionsClone()) {
 			options.add(option);
 		}
 		for (CarOption option: this.createEngine().getOptionsClone()) {
@@ -38,27 +36,45 @@ public abstract class CarModelFactory {
 		for (CarOption option: this.createSpoiler().getOptionsClone()) {
 			options.add(option);
 		}
+		
 		CarModelSpecification cms = new CarModelSpecification(options);
 		return new CarModel(this.getName(), cms);
-		
+
 	}
-	
-	protected abstract Body createBody();
-	
-	protected abstract Color createColor();
-	
-	protected abstract Engine createEngine();
-	
-	protected abstract Gearbox createGearbox();
-	
-	protected abstract Seats createSeats();
-	
-	protected abstract Airco createAirco();
-	
-	protected abstract Wheels createWheels();
-	
-	protected abstract Spoiler createSpoiler();
-	
+
+	protected Body createBody() {
+		return new Body();
+	}
+
+	protected Color createColor() {
+		return new Color();
+	}
+
+	protected Engine createEngine() {
+		return new Engine();
+	}
+
+	protected Gearbox createGearbox() {
+		return new Gearbox();
+	}
+
+	protected Seats createSeats() {
+		return new Seats();
+	}
+
+	protected Airco createAirco() {
+		return new Airco();
+	}
+
+	protected Wheels createWheels() {
+		return new Wheels();
+	}
+
+	protected Spoiler createSpoiler() {
+		return new Spoiler();
+	}
+
 	protected abstract String getName();
+
 
 }

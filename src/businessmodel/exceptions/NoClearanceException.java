@@ -1,5 +1,4 @@
 package businessmodel.exceptions;
-import businessmodel.*;
 import businessmodel.user.User;
 
 public class NoClearanceException extends Exception {

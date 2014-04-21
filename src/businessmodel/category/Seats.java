@@ -4,16 +4,16 @@ import java.util.UUID;
 
 public class Seats extends CarOptionCategory {
 	
-	private static UUID key;
+	private final static UUID key = UUID.randomUUID();
 
 	public Seats() {
 		super();
-		Seats.key = UUID.randomUUID();
 	}
 
 	@Override
 	public UUID getKey() {
 		return Seats.key;
 	}
+
 
 }

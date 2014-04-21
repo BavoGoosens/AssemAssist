@@ -2,26 +2,25 @@ package businessmodel.restrictions;
 
 import java.util.ArrayList;
 
-import businessmodel.CarOptionCategory;
 import businessmodel.Catalog;
-import businessmodel.category.CarOption;
+import businessmodel.category.*;
+
 
 public class DefaultMandatoryOptionRestriction extends Restriction {
 
-	public DefaultMandatoryOptionRestriction(String name, Catalog inventory) throws IllegalArgumentException {
-		super(name, inventory);
+	public DefaultMandatoryOptionRestriction(String name, Catalog catalog) throws IllegalArgumentException {
+		super(name, catalog);
 	}
 
 	@Override
 	public boolean check(ArrayList<CarOption> options) throws IllegalArgumentException {
 		if (options == null) throw new IllegalArgumentException("Bad list of options!");
-		ArrayList<CarOptionCategory> categories = getInventory().getAllCategories();
+		ArrayList<CarOptionCategory> categories = getCatalog().getAllCategories();
 		for (CarOption option: options) {
 			categories.remove(option.getCategory());
 		}
 		for (CarOptionCategory category: categories) {
-			if (category != this.getInventory().getSpoiler() && 
-					category != this.getInventory().getAirco()) {
+			if (!category.equals(new Spoiler()) && !category.equals(new Airco())) {
 				return false;
 			}
 		}

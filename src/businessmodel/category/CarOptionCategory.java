@@ -20,7 +20,7 @@ public abstract class CarOptionCategory {
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected ArrayList<CarOption> getOptionsClone() {
+	public ArrayList<CarOption> getOptionsClone() {
 		return (ArrayList<CarOption>) this.options.clone();
 	}
 	
@@ -51,13 +51,12 @@ public abstract class CarOptionCategory {
 	@Override
 	public boolean equals(Object category) throws IllegalArgumentException {
 		if (category == null) throw new IllegalArgumentException("Bad category!");
-		//todo: checken of category een CarOptionCategory is!
 		return this.getKey().equals(((CarOptionCategory) category).getKey());
 	}
 	
 	@Override
 	public String toString() {
-		return this.getClass().getName().toUpperCase();
+		return this.getClass().getSimpleName().toUpperCase();
 	}
 
 }

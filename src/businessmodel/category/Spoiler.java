@@ -4,16 +4,16 @@ import java.util.UUID;
 
 public class Spoiler extends CarOptionCategory {
 	
-	private static UUID key;
+	private final static UUID key = UUID.randomUUID();
 
 	public Spoiler() {
 		super();
-		Spoiler.key = UUID.randomUUID();
 	}
 
 	@Override
 	public UUID getKey() {
 		return Spoiler.key;
 	}
+
 
 }

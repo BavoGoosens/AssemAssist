@@ -2,6 +2,7 @@
 package businessmodel.order;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import org.joda.time.DateTime;
 
@@ -98,10 +99,10 @@ public abstract class Order {
 	public User getUser() {
 		return this.user;
 	}
-	//+ ", delivery date= " + this.estimatedatetime.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
+	//
 	@Override
 	public String toString() {
-		return "user: " + this.user.toString() ;
+		return "user: " + this.user.toString() + ", delivery date= " + this.estimatedatetime.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT); 
 	}
 
 	/**

@@ -56,7 +56,14 @@ public class CarStatistics implements Observer{
 	@Override
 	public void update(Subject s, Object o) {
 		if (s instanceof Scheduler){
+			if (o instanceof Tuple<?, ?>){
 
+
+			} else {
+				
+			}
+		} else {
+			
 		}
 	}
 
