@@ -25,78 +25,12 @@ import businessmodel.user.User;
  * @author Team 10
  *
  */
-public abstract class Controller {
-
-	private View ui;
-
-	private CarManufacturingCompany cmc; 
-
-	protected Controller(CarManufacturingCompany cmc){
-		this.cmc = cmc;
-	}
-	
-	protected View getView(){
-		return this.ui;
-	}
-	
-	protected void setView(View view){
-		this.ui = view;
-	}
-	
-	protected CarManufacturingCompany getCarManufacturingCompany(){
-		return this.cmc;
-	}
-
-	public static void run(CarManufacturingCompany cmc){
-		Controller control = new LoginHandler(cmc);
-	}
-	
-	public void login(String uname, String password){
-		throw new UnsupportedMethodException();
-	}
+public interface Controller {
 
 	public abstract void quit();
 
 	public abstract void cancel();
 
-	public void check(Order or){
-		throw new UnsupportedMethodException();
-	}
-
-	public void startNewOrder(){
-		throw new UnsupportedMethodException();
-	}
-
-	public void select(WorkPost wp){
-		throw new UnsupportedMethodException();
-	}
-
-	public void AssemblyLineStatus(){
-		throw new UnsupportedMethodException();
-	}
-
-	public void displayStatistics(){
-		throw new UnsupportedMethodException();
-	}
-
-	public void changeAlgorithm(){
-		throw new UnsupportedMethodException();
-	}
-
-	public void pendingOrders(User user){
-		throw new UnsupportedMethodException();
-	}
-
-	public void completedOrders(User user){		
-		throw new UnsupportedMethodException();
-	}
-
-	public void getWorkPosts(){
-		throw new UnsupportedMethodException();
-	}
-
-	public void availableTasks(){
-		throw new UnsupportedMethodException();
-	}
+	public abstract void help();
 
 }

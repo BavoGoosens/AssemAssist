@@ -23,6 +23,6 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		CarManufacturingCompany cmc = new CarManufacturingCompany();
-		Controller.run(cmc);
+		LoginHandler start = new LoginHandler(cmc);
 	}
 }

@@ -4,12 +4,16 @@ import ui.LoginView;
 import ui.View;
 import businessmodel.CarManufacturingCompany;
 
-public class LoginHandler extends Controller{
+public class LoginHandler implements LoginController{
+	
+	private CarManufacturingCompany cmc;
+	
+	private View view;
 
-	protected LoginHandler(CarManufacturingCompany cmc) {
-		super(cmc);
-		View view = new LoginView(this, super.getCarManufacturingCompany());
-		super.setView(view);
+	public LoginHandler(CarManufacturingCompany cmc) {
+		this.cmc = cmc;
+		View view = new LoginView(this, this.cmc);
+		this.view = view;
 		view.display();
 	}
 
@@ -29,6 +33,12 @@ public class LoginHandler extends Controller{
 	public void login(String uname, String password) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void help() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

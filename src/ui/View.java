@@ -5,21 +5,10 @@ import businessmodel.CarManufacturingCompany;
 
 public abstract class View {
 	
-	private Controller controller;
-	
 	private CarManufacturingCompany cmc;
 	
-	public View( Controller control, CarManufacturingCompany cmc ){
-		this.controller = control;
+	public View(CarManufacturingCompany cmc ){
 		this.cmc = cmc;
-	}
-	
-	protected void setController (Controller controller){
-		this.controller = controller;
-	}
-	
-	protected Controller getController(){
-		return this.getController();
 	}
 	
 	protected CarManufacturingCompany getCarManufacturingCompany(){
@@ -34,5 +23,7 @@ public abstract class View {
 	public abstract void display();
 	
 	public abstract void update();
+	
+	public abstract void displayHelp();
 
 }
