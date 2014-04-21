@@ -2,7 +2,9 @@ package control;
 import java.util.ArrayList;
 import java.util.Date;
 
+import ui.LoginView;
 import ui.UserInterFace;
+import ui.View;
 import businessmodel.Action;
 import businessmodel.AssemblyTask;
 import businessmodel.CarManufacturingCompany;
@@ -12,6 +14,7 @@ import businessmodel.OrderManager;
 import businessmodel.ProductionScheduler;
 import businessmodel.WorkPost;
 import businessmodel.exceptions.NoClearanceException;
+import businessmodel.exceptions.UnsupportedMethodException;
 import businessmodel.order.Order;
 import businessmodel.user.User;
 
@@ -22,91 +25,78 @@ import businessmodel.user.User;
  * @author Team 10
  *
  */
-public class Controller {
+public abstract class Controller {
 
-	private UserInterFace ui;
+	private View ui;
 
 	private CarManufacturingCompany cmc; 
 
-	public Controller(CarManufacturingCompany cmc){
+	protected Controller(CarManufacturingCompany cmc){
 		this.cmc = cmc;
-		this.ui = new UserInterFace(this);
-	}
-
-	public void run(){
-		this.ui.login();
-	}
-
-
-	public User getUser(String username) {
-		return cmc.getUser(username);
-	}
-
-	public ArrayList<Order> getCompletedOrders(User currentuser) throws NoClearanceException {
-		return this.cmc.getCompletedOrders(currentuser);
-	}
-
-	public ArrayList<Order> getPendingOrders(User currentuser) throws NoClearanceException {
-		return this.cmc.getPendingOrders(currentuser);
-	}
-
-	public ArrayList<CarModel> getAvailableCarModels(User currentuser) throws NoClearanceException {
-		return this.cmc.getAvailableCarModels(currentuser);		
-	}
-
-
-	public boolean canPlaceOrder(User currentuser) {
-		return currentuser.canPlaceOrder();
-	}
-
-	public boolean canPerformAssemblyTask(User currentuser) {
-		return currentuser.canPerfomAssemblyTask();
-	}
-
-	public boolean canAdvanceAssemblyLine(User currentuser) {
-		return currentuser.canAdvanceAssemblyLine();
 	}
 	
-	public boolean canOrderSingleTask(User currentuser) {
-		return currentuser.canOrderSingleTask();
+	protected View getView(){
+		return this.ui;
 	}
-
 	
-	public void advanceAssemblyLine(int time) {
-		this.cmc.advanceAssemblyLine(time);
+	protected void setView(View view){
+		this.ui = view;
+	}
+	
+	protected CarManufacturingCompany getCarManufacturingCompany(){
+		return this.cmc;
 	}
 
-	public void placeOrder(Order order) {
-		this.cmc.placeOrder(order);
+	public static void run(CarManufacturingCompany cmc){
+		Controller control = new LoginHandler(cmc);
+	}
+	
+	public void login(String uname, String password){
+		throw new UnsupportedMethodException();
 	}
 
-	public Date getCompletionTimeEstimate() {
-		return new Date();
+	public abstract void quit();
+
+	public abstract void cancel();
+
+	public void check(Order or){
+		throw new UnsupportedMethodException();
 	}
 
-//	public ArrayList<WorkPost> getWorkingStations() {
-//		return this.cmc.getOrderManager().getScheduler().getAssemblyline().getWorkPosts();
-//	}
-//
-//	public boolean canAdvanceAssemblyLine() {
-//		return this.cmc.getOrderManager().getScheduler().getAssemblyline().canAdvance();
-//	}
+	public void startNewOrder(){
+		throw new UnsupportedMethodException();
+	}
 
-//	public ArrayList<AssemblyTask> overview() {
-//		ArrayList<AssemblyTask> overviewList = new ArrayList<AssemblyTask>();
-//		for(WorkPost wp: this.getWorkingStations())
-//			for (AssemblyTask as : wp.getPendingTasks())
-//				overviewList.add(as);
-//		return overviewList;
-//		
-//		
-//	}
-//	
-//	public ArrayList<AssemblyTask> futureOverview() {
-//		return this.cmc.getOrderManager().getScheduler().getFutureAssemblyTasks();
-//		
-//		
-//	}
+	public void select(WorkPost wp){
+		throw new UnsupportedMethodException();
+	}
 
+	public void AssemblyLineStatus(){
+		throw new UnsupportedMethodException();
+	}
+
+	public void displayStatistics(){
+		throw new UnsupportedMethodException();
+	}
+
+	public void changeAlgorithm(){
+		throw new UnsupportedMethodException();
+	}
+
+	public void pendingOrders(User user){
+		throw new UnsupportedMethodException();
+	}
+
+	public void completedOrders(User user){		
+		throw new UnsupportedMethodException();
+	}
+
+	public void getWorkPosts(){
+		throw new UnsupportedMethodException();
+	}
+
+	public void availableTasks(){
+		throw new UnsupportedMethodException();
+	}
 
 }

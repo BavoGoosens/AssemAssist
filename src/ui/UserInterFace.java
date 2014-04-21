@@ -8,7 +8,6 @@ import java.util.Set;
 
 import javax.swing.text.html.HTMLDocument.Iterator;
 
-import component.Component;
 import control.Controller;
 import businessmodel.Action;
 import businessmodel.AssemblyTask;
