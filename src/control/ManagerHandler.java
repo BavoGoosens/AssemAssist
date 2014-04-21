@@ -1,6 +1,13 @@
 package control;
 
+import businessmodel.CarManufacturingCompany;
+import businessmodel.user.User;
+
 public class ManagerHandler implements ManagerController {
+
+	public ManagerHandler(CarManufacturingCompany cmc, User use) {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public void quit() {

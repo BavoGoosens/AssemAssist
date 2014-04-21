@@ -11,6 +11,8 @@ public class LoginView extends View {
 	
 	private LoginController controller; 
 	
+	private String username;
+	
 	public LoginView(LoginController control, CarManufacturingCompany cmc) {
 		super(cmc);
 		this.controller = control;
@@ -19,24 +21,18 @@ public class LoginView extends View {
 	@Override
 	public void display() {
 		System.out.println("Please enter your login information");
-		System.out.print("Username: ");
-		String username = scan.nextLine();
-		if (username.equalsIgnoreCase("quit"))
-			this.controller.quit();
-		if (username.equalsIgnoreCase("cancel"))
-			this.controller.cancel();
-		System.out.print("Password: ");
+		System.out.println("Username: ");
+		this.username = scan.nextLine();
+		this.check(username);
+		System.out.println("Password: ");
 		String password = scan.nextLine();
-		if (password.equalsIgnoreCase("quit"))
-			this.controller.quit();
-		if (password.equalsIgnoreCase("cancel"))
-			this.controller.cancel();
+		this.check(password);
 		this.controller.login(username, password);
 	}
 
 	@Override
 	public void update() {
-		System.out.println("We could not find you in the system, please try again");
+		this.displayHelp();
 		this.display();
 	}
 
@@ -45,4 +41,32 @@ public class LoginView extends View {
 		super.helpOverview();
 	}	
 	
+	private void check(String str){
+		if (str.equalsIgnoreCase("quit"))
+			this.controller.quit();
+		if (str.equalsIgnoreCase("cancel"))
+			this.controller.cancel();
+		if (str.equalsIgnoreCase("help"))
+			this.controller.help();
+	}
+	
+	public void register(){
+		System.out.println("We could not find you in the system ! \nEnter as what kind of user (garageholder"
+				+ "/mechanic/manager/customshopmanager) you want to register: ");
+		String type = scan.nextLine();
+		this.check(type);
+		System.out.println("Please enter your first name: ");
+		String fname = scan.nextLine();
+		this.check(fname);
+		System.out.println("Please enter your last name: ");
+		String lname = scan.nextLine();
+		this.check(lname);
+		this.controller.register(fname, lname, this.username, type);
+	}
+
+	@Override
+	public void error() {
+		System.out.println("Something went wrong, please try again");
+		this.update();
+	}
 }

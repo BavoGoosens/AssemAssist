@@ -1,8 +1,16 @@
 package control;
 
+import businessmodel.CarManufacturingCompany;
 import businessmodel.order.StandardCarOrder;
+import businessmodel.user.User;
 
 public class StandardOrderHandler implements StandardOrderController{
+
+	public StandardOrderHandler(CarManufacturingCompany cmc, User use) {
+		this.user = use;
+		this.cmc = cmc;
+		
+	}
 
 	@Override
 	public void quit() {

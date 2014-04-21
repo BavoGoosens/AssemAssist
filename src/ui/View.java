@@ -1,6 +1,5 @@
 package ui;
 
-import control.Controller;
 import businessmodel.CarManufacturingCompany;
 
 public abstract class View {
@@ -18,6 +17,7 @@ public abstract class View {
 	public void helpOverview() {
 		System.out.println("To go back to the previous step enter: CANCEL");
 		System.out.println("To go back to the login prompt enter: QUIT");
+		System.out.println("If you need help enter: HELP");
 	}
 	
 	public abstract void display();
@@ -25,5 +25,7 @@ public abstract class View {
 	public abstract void update();
 	
 	public abstract void displayHelp();
+	
+	public abstract void error();
 
 }

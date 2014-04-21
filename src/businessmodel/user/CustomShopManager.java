@@ -1,7 +1,7 @@
 package businessmodel.user;
 
 
-public class CustomsShopManager extends User {
+public class CustomShopManager extends User {
 
 	/**
 	 * A constructor to create a new customs shop manager.
@@ -13,7 +13,7 @@ public class CustomsShopManager extends User {
 	 * @param 	username
 	 * 			the user name for the new customs shop manager.
 	 */
-	public CustomsShopManager(String firstname, String lastname, String username) throws IllegalArgumentException {
+	public CustomShopManager(String firstname, String lastname, String username) throws IllegalArgumentException {
 		super(firstname,lastname,username);
 	}
 	

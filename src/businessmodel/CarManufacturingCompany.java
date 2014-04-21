@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.Order;
+import businessmodel.user.GarageHolder;
 import businessmodel.user.User;
 
 
@@ -24,7 +25,7 @@ public class CarManufacturingCompany {
 	 * A constructor for a car manufacturing company.
 	 * 
 	 */
-	public CarManufacturingCompany(OrderManager ordermanager, ArrayList<User> users) throws IllegalArgumentException {
+	public CarManufacturingCompany() throws IllegalArgumentException {
 		this.setUsers(users);
 		this.setOrderManager(ordermanager);
 	}
@@ -87,6 +88,11 @@ public class CarManufacturingCompany {
 	private void setOrderManager(OrderManager ordermanager) throws IllegalArgumentException {
 		if (ordermanager == null) throw new IllegalArgumentException("Bad ordermanager!");
 		this.ordermanager = ordermanager;
+	}
+
+
+	public void register(User user) {
+		this.users.add(user);
 	}
 
 
