@@ -16,21 +16,16 @@ public abstract class WorkPostFactory {
 
 	public WorkPost createWorkPost(){
 		
-		ArrayList<AssemblyTask> tempTasks = new ArrayList<AssemblyTask>();
-		
-		tempTasks.add(this.createBodyTask());
-		tempTasks.add(this.createColorTask());
-		tempTasks.add(this.createEngineTask());
-		tempTasks.add(this.createGearboxTask());
-		tempTasks.add(this.createSeatsTask());
-		tempTasks.add(this.createAircoTask());
-		tempTasks.add(this.createWheelsTask());
-		tempTasks.add(this.createSpoilerTask());
-		
 		ArrayList<AssemblyTask> tasks = new ArrayList<AssemblyTask>();
-		for (AssemblyTask assemblyTask: tempTasks)
-			if (assemblyTask != null)
-				tasks.add(assemblyTask);
+		
+		tasks.add(this.createBodyTask());
+		tasks.add(this.createColorTask());
+		tasks.add(this.createEngineTask());
+		tasks.add(this.createGearboxTask());
+		tasks.add(this.createSeatsTask());
+		tasks.add(this.createAircoTask());
+		tasks.add(this.createWheelsTask());
+		tasks.add(this.createSpoilerTask());
 		
 		return new WorkPost(this.getName(), tasks);
 		
