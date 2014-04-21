@@ -135,7 +135,7 @@ public class OrderManager {
 	 * @return 	ArrayList<Order>
 	 * 			the pending orders of a given user managed by this order manager.
 	 */
-	protected ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
+	public ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
 		if (user == null) throw new IllegalArgumentException("Bad user!");
 		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
 		ArrayList<Order> pendingorders = new ArrayList<Order>();

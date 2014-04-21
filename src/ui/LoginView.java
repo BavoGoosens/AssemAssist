@@ -31,12 +31,6 @@ public class LoginView extends View {
 	}
 
 	@Override
-	public void update() {
-		this.displayHelp();
-		this.display();
-	}
-
-	@Override
 	public void displayHelp() {
 		super.helpOverview();
 	}	
@@ -66,7 +60,8 @@ public class LoginView extends View {
 
 	@Override
 	public void error() {
-		System.out.println("> Something went wrong, please try again");
-		this.update();
+		System.out.println("! Something went wrong, please try again");
+		this.displayHelp();
+		this.display();
 	}
 }

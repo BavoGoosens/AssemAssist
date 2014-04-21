@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
+import businessmodel.observer.OrderManagerObserver;
 import businessmodel.order.Order;
 import businessmodel.user.GarageHolder;
 import businessmodel.user.User;
@@ -95,5 +96,8 @@ public class CarManufacturingCompany {
 		this.users.add(user);
 	}
 
+	public void registerObserver(OrderManagerObserver obs){
+		
+	}
 
 }

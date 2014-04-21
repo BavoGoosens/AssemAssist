@@ -8,17 +8,14 @@ import businessmodel.order.StandardCarOrder;
 import businessmodel.user.User;
 
 public class StandardOrderHandler implements StandardOrderController{
-
-	private User active_user;
 	
 	private CarManufacturingCompany cmc;
 	
 	private View view;
 	
 	public StandardOrderHandler(CarManufacturingCompany cmc, User use) {
-		this.active_user = use;
 		this.cmc = cmc;
-		GarageHolderView view = new GarageHolderView(this, this.cmc);
+		GarageHolderView view = new GarageHolderView(this, this.cmc, use);
 		this.view = view;
 		this.view.display();
 	}

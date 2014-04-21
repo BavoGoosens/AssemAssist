@@ -21,9 +21,7 @@ public abstract class View {
 	}
 	
 	public abstract void display();
-	
-	public abstract void update();
-	
+		
 	public abstract void displayHelp();
 	
 	public abstract void error();

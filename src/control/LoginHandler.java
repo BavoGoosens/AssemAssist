@@ -30,7 +30,8 @@ public class LoginHandler implements LoginController{
 
 	@Override
 	public void cancel() {
-		this.view.update();
+		this.view.displayHelp();
+		this.view.display();
 	}
 
 	@Override
