@@ -15,9 +15,9 @@ public abstract class View {
 	}
 	
 	public void helpOverview() {
-		System.out.println("To go back to the previous step enter: CANCEL");
-		System.out.println("To go back to the login prompt enter: QUIT");
-		System.out.println("If you need help enter: HELP");
+		System.out.println("> To go back to the previous step enter: CANCEL");
+		System.out.println("> To go back to the login prompt enter: QUIT");
+		System.out.println("> If you need help enter: HELP");
 	}
 	
 	public abstract void display();

@@ -1,19 +1,13 @@
 package ui;
 
+import control.SchedulingController;
 import businessmodel.CarManufacturingCompany;
-import businessmodel.observer.Subject;
-import control.StandardOrderController;
 
-public class GarageHolderView extends View {
-	
-	private Subject subject;
-	
-	private StandardOrderController controller;
-	
-	public GarageHolderView(StandardOrderController control, CarManufacturingCompany cmc) {
+public class SchedulingView extends View {
+
+	public SchedulingView(SchedulingController control, CarManufacturingCompany cmc) {
 		super(cmc);
-		this.controller = control;
-		super.cmc.registerObserver(this);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override

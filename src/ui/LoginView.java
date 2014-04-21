@@ -20,11 +20,11 @@ public class LoginView extends View {
 	
 	@Override
 	public void display() {
-		System.out.println("Please enter your login information");
-		System.out.println("Username: ");
+		System.out.println("> Please enter your login information");
+		System.out.println(">> Username: ");
 		this.username = scan.nextLine();
 		this.check(username);
-		System.out.println("Password: ");
+		System.out.println(">> Password: ");
 		String password = scan.nextLine();
 		this.check(password);
 		this.controller.login(username, password);
@@ -51,14 +51,14 @@ public class LoginView extends View {
 	}
 	
 	public void register(){
-		System.out.println("We could not find you in the system ! \nEnter as what kind of user (garageholder"
+		System.out.println("> We could not find you in the system ! \nEnter as what kind of user (garageholder"
 				+ "/mechanic/manager/customshopmanager) you want to register: ");
 		String type = scan.nextLine();
 		this.check(type);
-		System.out.println("Please enter your first name: ");
+		System.out.println(">> Please enter your first name: ");
 		String fname = scan.nextLine();
 		this.check(fname);
-		System.out.println("Please enter your last name: ");
+		System.out.println(">> Please enter your last name: ");
 		String lname = scan.nextLine();
 		this.check(lname);
 		this.controller.register(fname, lname, this.username, type);
@@ -66,7 +66,7 @@ public class LoginView extends View {
 
 	@Override
 	public void error() {
-		System.out.println("Something went wrong, please try again");
+		System.out.println("> Something went wrong, please try again");
 		this.update();
 	}
 }
