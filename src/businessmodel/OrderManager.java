@@ -179,34 +179,32 @@ public class OrderManager {
 
 		LinkedList<Order> res = new LinkedList<Order>();
 		LinkedList<Order> single_task_orders = getSingleTaskOrdersNextDay();
-		if(single_task_orders!= null)
-			res.addAll(single_task_orders);
-
-		for (int i = single_task_orders.size()-1 ; i < nb; i++){
-			Order tmp = this.getPendingOrders().poll();
-			if (tmp == null)
-				break;
-			res.add(tmp);
+		
+		if(single_task_orders!= null){
+			for(Order order: single_task_orders){
+				res.add(order);
+				getPendingOrders().remove(order);
+			}
+		}
+		
+		for (int i = 0; i < (nb - single_task_orders.size()); i++){
+			res.add(getPendingOrders().poll());
 		}
 		return res;
 	}
 
 	private LinkedList<Order> getSingleTaskOrdersNextDay() {
 		LinkedList<Order> temp = new LinkedList<Order>();
-		ArrayList<Integer> indices = new ArrayList<Integer>();
+		
 		for(Order order: this.getPendingOrders()){
 			if(order.getUser_end_date()!= null){
 				if(order.getUser_end_date().getDayOfWeek()-1 == this.getScheduler().getCurrentTime().getDayOfWeek()){
 					int index = this.getPendingOrders().indexOf(order);
 					temp.add(this.getPendingOrders().get(index));
-					indices.add(index);
 				}
 			}
 		}
-		Collections.reverse(indices);
-		for(Integer a: indices){
-			this.getPendingOrders().remove(a);
-		}
+		
 		return temp;
 	}
 
