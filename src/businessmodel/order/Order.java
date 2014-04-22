@@ -40,9 +40,7 @@ public abstract class Order {
 	private DateTime user_end_date;
 	
 	private ArrayList<CarOption> caroptions;
-	
-	private int priority = 1;
-	
+		
 	private boolean completed;
 	
 	/**
@@ -217,14 +215,6 @@ public abstract class Order {
 	public void setStandardtime_on_assemblyline(
 			DateTime standardtime_on_assemblyline) {
 		this.standardtime_on_assemblyline = standardtime_on_assemblyline;
-	}
-
-	public int getPriority() {
-		return priority;
-	}
-	
-	public void updatePriority(int priority){
-		this.priority = priority;
 	}
 
 	public boolean isCompleted() {

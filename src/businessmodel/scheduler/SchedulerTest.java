@@ -2,6 +2,7 @@ package businessmodel.scheduler;
 
 import java.util.ArrayList;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,6 +16,7 @@ import businessmodel.category.Body;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 import businessmodel.order.Order;
+import businessmodel.order.SingleTaskOrder;
 import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;
 
@@ -48,7 +50,8 @@ public class SchedulerTest {
 		GarageHolder c16 = new GarageHolder("16","","");
 		GarageHolder c17 = new GarageHolder("17","","");
 		GarageHolder c18 = new GarageHolder("18","","");
-
+		GarageHolder c19 = new GarageHolder("18","","");
+		GarageHolder c20 = new GarageHolder("18","","");
 
 		CarOption blabla = new CarOption("Henk", new Airco());
 		ArrayList<CarOption> henk1 = new ArrayList<CarOption>();
@@ -71,6 +74,9 @@ public class SchedulerTest {
 		Order order15 = new StandardCarOrder(c16,henk1);
 		Order order16 = new StandardCarOrder(c17,henk1);
 		Order order17 = new StandardCarOrder(c18,henk1);
+		Order order18 = new SingleTaskOrder(c19,henk1, new DateTime());
+		Order order19 = new SingleTaskOrder(c20,henk1, new DateTime());
+
 
 		ord.addOrder(order);
 		ord.addOrder(order1);
@@ -79,6 +85,8 @@ public class SchedulerTest {
 		ord.addOrder(order4);
 		ord.addOrder(order5);
 		ord.addOrder(order6);
+		ord.addOrder(order18);
+		ord.addOrder(order19);
 //		ord.addOrder(order7);
 //		ord.addOrder(order8);
 //		ord.addOrder(order9);

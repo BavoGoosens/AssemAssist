@@ -169,7 +169,7 @@ public class Scheduler implements Subject {
 	}
 
 	protected Order getNextOrderToSchedule(){
-		return this.getOrdermanager().getListOfPendingOrders().poll();
+		return this.getOrdermanager().getPendingOrders().poll();
 	}
 
 	/**

@@ -22,20 +22,11 @@ import businessmodel.user.User;
  */
 public class OrderManager {
 
-	@SuppressWarnings("unchecked")
-	public LinkedList<Order> getListOfPendingOrders() {
-		LinkedList<Order> temp = new LinkedList<Order>();
-		Object [] a = this.getPendingOrders().toArray();
-		for(int i = 0; i < a.length-1;i++){
-			temp.add((Order) a[i]);
-		}
-		return temp;
-	}
 
-	public PriorityQueue<Order> getPendingOrders(){
+	public LinkedList<Order> getPendingOrders(){
 		return this.pendingorders;
 	}
-	
+
 	/**
 	 * A list that holds all the completed orders of a car manufacturing company.
 	 */
@@ -51,7 +42,7 @@ public class OrderManager {
 	 */
 	private Scheduler scheduler;
 
-	private PriorityQueue<Order> pendingorders;
+	private LinkedList<Order> pendingorders;
 
 	/**
 	 * A constructor for the class OrderManager.
@@ -60,11 +51,10 @@ public class OrderManager {
 	 *           the car models that a car manufacturing company offers.
 	 */
 	public OrderManager(ArrayList<CarModel> carmodels) throws IllegalArgumentException {
+		this.pendingorders = new LinkedList<Order>();
 		this.completedorders = new LinkedList<Order>();
 		this.scheduler = new Scheduler(this);
 		this.setCarModels(carmodels);
-		Comparator<Order> comparator = new PriorityComparator();
-		this.pendingorders = new PriorityQueue<Order>(10, comparator);
 	}
 
 	/**
@@ -75,7 +65,7 @@ public class OrderManager {
 	 */
 	public void placeOrder(Order order) throws IllegalArgumentException {
 		this.addOrder(order);
-		
+
 	}
 
 	/**
@@ -136,7 +126,7 @@ public class OrderManager {
 		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
 		ArrayList<Order> pendingorders = new ArrayList<Order>();
 		pendingorders.addAll(this.getScheduler().getOrders());
-		for (Order order: this.getListOfPendingOrders()){
+		for (Order order: this.getPendingOrders()){
 			if (order.getUser() == user)
 				pendingorders.add(order);
 		}
@@ -185,14 +175,33 @@ public class OrderManager {
 	 */
 	public LinkedList<Order> getNbOrders(int nb) {
 		if (nb < 0) throw new IllegalNumberException(nb, "Bad number!");
+
 		LinkedList<Order> res = new LinkedList<Order>();
-		for (int i = 0 ; i < nb; i++){
+		LinkedList<Order> single_task_orders = getSingleTaskOrdersNextDay();
+		if(single_task_orders!= null)
+			res.addAll(single_task_orders);
+
+		for (int i = single_task_orders.size()-1 ; i < nb; i++){
 			Order tmp = this.getPendingOrders().poll();
 			if (tmp == null)
 				break;
 			res.add(tmp);
 		}
 		return res;
+	}
+
+	private LinkedList<Order> getSingleTaskOrdersNextDay() {
+		LinkedList<Order> temp = new LinkedList<Order>();
+		for(Order order: this.getPendingOrders()){
+			if(order.getUser_end_date()!= null){
+				if(order.getUser_end_date().getDayOfWeek() == this.getScheduler().getCurrentTime().getDayOfWeek()){
+					int index = this.getPendingOrders().indexOf(order);
+					temp.add(this.getPendingOrders().get(index));
+					this.getPendingOrders().remove(index);
+				}
+			}
+		}
+		return temp;
 	}
 
 	private void setCarModels(ArrayList<CarModel> carmodels) throws IllegalArgumentException {
@@ -205,15 +214,6 @@ public class OrderManager {
 	 * @param order
 	 */
 	public void PlaceOrderInFront(Order order) {
-		order.updatePriority(0);
-		this.getListOfPendingOrders().add(order);		
-	}
-	
-	public void updatePriorities(DateTime time){
-		for(Order order: this.getListOfPendingOrders()){
-			if(order.getUser_end_date()!=null)
-				if(time.getMillis() - order.getUser_end_date().getMillis() <= 86400000)
-					order.updatePriority(0);
-			}
+		this.getPendingOrders().add(order);		
 	}
 }
