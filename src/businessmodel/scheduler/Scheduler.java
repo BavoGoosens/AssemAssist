@@ -73,10 +73,12 @@ public class Scheduler implements Subject {
 	public void advance(int time){
 		int delay = time - 60;
 		this.getCurrentTime().plusMinutes(time);
+		
 		updateAssemblylineStatus();
 		updateCompletedOrders();
 		updateDelay(delay);
 		updateEstimatedTimeOfOrders(delay);
+		
 		this.updateSchedule();
 	}
 
@@ -229,21 +231,6 @@ public class Scheduler implements Subject {
 	}
 
 	/**
-	 * A method to get the previous order in the list.
-	 * @param 	order
-	 * 			the current order.
-	 * @return	the previous order of the current order.
-	 */
-	protected Order getPreviousOrder(Order order){
-		int index = this.getOrders().indexOf(order);
-		if(index-1 < 0)
-			return null;
-		else
-			return this.getOrders().get(index-1);
-	}
-
-
-	/**
 	 * A method to get the current scheduling algorithm of this scheduler.
 	 * @return	this.algo
 	 */
@@ -295,21 +282,6 @@ public class Scheduler implements Subject {
 
 	public DateTime getCurrentTime(){
 		return (DateTime) this.currenttime;
-	}
-
-	protected void setEstimatedCompletionDate(Order order){
-		Order previousorder = this.getPreviousOrder(order);
-		if(previousorder != null) {
-			if(previousorder.getEstimateDate() == null){
-				order.setEstimateDate(this.getCurrentTime().plusHours(3));
-			}else if(previousorder.getEstimateDate().getHourOfDay() <= 21){
-				order.setEstimateDate(previousorder.getEstimateDate().plusHours(1));
-			}else {
-				order.setEstimateDate(previousorder.getEstimateDate().plusDays(1).withHourOfDay(11).withMinuteOfHour(0));
-			}
-		}else{
-			order.setEstimateDate(this.getCurrentTime().plusHours(3));
-		}
 	}
 
 	@Override
