@@ -23,21 +23,6 @@ public class SchedulingHandler implements SchedulingController{
 	}
 
 	@Override
-	public void quit() {
-		new LoginHandler(this.cmc);
-	}
-
-	@Override
-	public void cancel() {
-		new ManagerHandler(this.cmc, this.active_user);
-	}
-
-	@Override
-	public void help() {
-		this.view.displayHelp();
-	}
-
-	@Override
 	public void selectAlgorithm(String algo, String[] args) {
 		// TODO Auto-generated method stub
 

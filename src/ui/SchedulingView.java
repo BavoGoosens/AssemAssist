@@ -2,22 +2,17 @@ package ui;
 
 import control.SchedulingController;
 import businessmodel.CarManufacturingCompany;
+import businessmodel.Model;
 
 public class SchedulingView extends View {
 
-	public SchedulingView(SchedulingController control, CarManufacturingCompany cmc) {
+	public SchedulingView(Model cmc) {
 		super(cmc);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void display() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void update() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -30,6 +25,18 @@ public class SchedulingView extends View {
 
 	@Override
 	public void error() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void cancel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void quit() {
 		// TODO Auto-generated method stub
 		
 	}

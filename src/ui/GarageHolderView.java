@@ -1,39 +1,38 @@
 package ui;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import businessmodel.CarManufacturingCompany;
-import businessmodel.OrderManager;
+import businessmodel.CarModel;
+import businessmodel.Model;
 import businessmodel.exceptions.NoClearanceException;
-import businessmodel.observer.OrderManagerObserver;
-import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
-import businessmodel.user.GarageHolder;
 import businessmodel.user.User;
 import control.StandardOrderController;
+import control.StandardOrderHandler;
 
-public class GarageHolderView extends View implements OrderManagerObserver {
+public class GarageHolderView extends View{
 
 	private ArrayList<Order> pending_orders;
 
 	private ArrayList<Order> completed_orders;
 
-	private OrderManager subject;
-
 	private StandardOrderController controller;
 
+	private int step = 0;
+
 	private User user;
-	
+
 	private Scanner scan = new Scanner(System.in);
 
-	public GarageHolderView(StandardOrderController control, CarManufacturingCompany cmc, User user) {
-		super(cmc);
-		this.controller = control;
-		super.getCarManufacturingCompany().registerObserver(this);
+	public GarageHolderView(Model model, User user) {
+		super(model);
 		this.user = user;
+		this.controller = new StandardOrderHandler(this.getModel(), this.user);
+		this.update();
 	}
 
 	@Override
@@ -55,22 +54,40 @@ public class GarageHolderView extends View implements OrderManagerObserver {
 		System.out.println(">> ");
 		String response = this.scan.nextLine();
 		this.check(response);
-		if (response.equalsIgnoreCase("order"))
-			this.controller.startNewOrder();
+		if (response.equalsIgnoreCase("order")){
+			this.startNewOrder();
+			this.step++;
+		}
 		Pattern pattern = Pattern.compile("\\d*");
 		if (pattern.matcher(response).find()){
 			int number = Integer.parseInt(response);
 			if (number > size) {
 				int index = number - size - 1;
 				StandardCarOrder or = (StandardCarOrder) this.completed_orders.get(index);
-				this.controller.check(or);
+				this.check(or);
+				this.step++;
 			} else {
 				StandardCarOrder or = (StandardCarOrder) this.completed_orders.get(number - 1);
-				this.controller.check(or);
+				this.check(or);
+				this.step++;
 			}
 		} else {
 			this.error();
 		}
+	}
+
+	private void check(StandardCarOrder or) {
+		// TODO:
+	}
+
+	private void startNewOrder() {
+		// TODO Auto-generated method stub
+		// choose the car model
+
+	}
+	
+	private void displayOrderingForm(CarModel model){
+		// TODO:
 	}
 
 	@Override
@@ -84,31 +101,53 @@ public class GarageHolderView extends View implements OrderManagerObserver {
 		this.displayHelp();
 		this.display();
 	}
-	
+
 	private void check(String str){
 		if (str.equalsIgnoreCase("quit"))
-			this.controller.quit();
+			this.quit();
 		if (str.equalsIgnoreCase("cancel"))
-			this.controller.cancel();
+			this.cancel();
 		if (str.equalsIgnoreCase("help"))
-			this.controller.help();
+			this.displayHelp();
 	}
-	
 
-	@Override
-	public void update(Subject s, Object o) {
-		this.subject = (OrderManager) s;
+
+	public void update() {
 		try {
-			this.pending_orders = this.subject.getPendingOrders(this.user);
-			this.completed_orders = this.subject.getCompletedOrders(this.user);
-		} catch (IllegalArgumentException | NoClearanceException e) {
-			e.printStackTrace();
+			Iterator<Order> pending = this.getModel().getPendingOrders(this.user);
+			Iterator<Order> completed = this.getModel().getCompletedOrders(this.user);
+			this.pending_orders.clear();
+			this.completed_orders.clear();
+			while (pending.hasNext())
+				this.pending_orders.add(pending.next());
+			while (completed.hasNext())
+				this.completed_orders.add(completed.next());	
+		} catch (NoClearanceException e) {
+			// NOP
 		}
 	}
 
 	@Override
-	public void update(Subject s) {
-		this.update(s, null);
+	public void cancel() {
+		if (this.step == 0){
+			this.displayHelp();
+			this.display();
+		}
+		if (this.step == 1){
+			this.displayHelp();
+			this.display();
+			this.step--;
+		}
+		if (this.step == 2){
+			this.displayHelp();
+			this.startNewOrder();
+			this.step--;
+		}
+	}
+
+	@Override
+	public void quit() {
+		new LoginView(this.getModel()).display();
 	}
 
 }

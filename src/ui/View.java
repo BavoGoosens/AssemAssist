@@ -1,16 +1,16 @@
 package ui;
 
-import businessmodel.CarManufacturingCompany;
+import businessmodel.Model;
 
 public abstract class View {
 	
-	private CarManufacturingCompany cmc;
+	private Model cmc;
 	
-	public View(CarManufacturingCompany cmc ){
+	public View(Model cmc ){
 		this.cmc = cmc;
 	}
 	
-	protected CarManufacturingCompany getCarManufacturingCompany(){
+	protected Model getModel(){
 		return this.cmc;
 	}
 	
@@ -23,6 +23,10 @@ public abstract class View {
 	public abstract void display();
 		
 	public abstract void displayHelp();
+	
+	public abstract void cancel();
+	
+	public abstract void quit();
 	
 	public abstract void error();
 

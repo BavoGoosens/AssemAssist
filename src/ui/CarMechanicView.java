@@ -1,12 +1,12 @@
 package ui;
 
-import businessmodel.CarManufacturingCompany;
-import control.Controller;
+import businessmodel.Model;
+import businessmodel.user.User;
 
 public class CarMechanicView extends View {
 
-	public CarMechanicView(Controller control, CarManufacturingCompany cmc) {
-		super(control, cmc);
+	public CarMechanicView(Model cmc, User user) {
+		super(cmc);
 	}
 
 	@Override
@@ -16,7 +16,25 @@ public class CarMechanicView extends View {
 	}
 
 	@Override
-	public void update() {
+	public void displayHelp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void cancel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void quit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void error() {
 		// TODO Auto-generated method stub
 		
 	}

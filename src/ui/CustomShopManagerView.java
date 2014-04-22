@@ -1,12 +1,12 @@
 package ui;
 
-import businessmodel.CarManufacturingCompany;
-import control.Controller;
+import businessmodel.Model;
+import businessmodel.user.User;
 
 public class CustomShopManagerView extends View {
 
-	public CustomShopManagerView(Controller control, CarManufacturingCompany cmc) {
-		super(control, cmc);
+	public CustomShopManagerView(Model model, User user) {
+		super(model);
 	}
 
 	@Override
@@ -16,7 +16,25 @@ public class CustomShopManagerView extends View {
 	}
 
 	@Override
-	public void update() {
+	public void displayHelp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void cancel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void quit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void error() {
 		// TODO Auto-generated method stub
 		
 	}

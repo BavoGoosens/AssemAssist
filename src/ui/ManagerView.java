@@ -3,16 +3,13 @@ package ui;
 import java.util.Scanner;
 
 import businessmodel.CarManufacturingCompany;
-import control.Controller;
-import control.ManagerController;
+import businessmodel.Model;
+import businessmodel.user.User;
 
 public class ManagerView extends View {
 	
-	private ManagerController control;
-
-	public ManagerView(ManagerController control, CarManufacturingCompany cmc) {
-		super(cmc);
-		this.control = control;
+	public ManagerView(Model model, User user) {
+		super(model);
 	}
 
 	@Override
@@ -23,14 +20,19 @@ public class ManagerView extends View {
 		String input = new Scanner(System.in).nextLine();
 		this.check(input);
 		if (input.equalsIgnoreCase("stats"))
-			this.control.checkStatistics();
+			this.checkStatistics();
 		if (input.equalsIgnoreCase("algo"))
-			this.control.changeAlgorithm();
+			this.changeAlgorithm();
 	}
 
-	@Override
-	public void update() {
-		// NOP
+	private void changeAlgorithm() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void checkStatistics() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
@@ -45,10 +47,22 @@ public class ManagerView extends View {
 
 	private void check(String str){
 		if (str.equalsIgnoreCase("quit"))
-			this.control.quit();
+			this.quit();
 		if (str.equalsIgnoreCase("cancel"))
-			this.control.cancel();
+			this.cancel();
 		if (str.equalsIgnoreCase("help"))
-			this.control.help();
+			this.displayHelp();
+	}
+
+	@Override
+	public void cancel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void quit() {
+		// TODO Auto-generated method stub
+		
 	}
 }

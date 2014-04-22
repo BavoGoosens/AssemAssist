@@ -1,23 +1,17 @@
 package ui;
 
-import control.Controller;
 import businessmodel.CarManufacturingCompany;
+import businessmodel.Model;
 
 public class StatisticsView extends View{
 
-	public StatisticsView(Controller control, CarManufacturingCompany cmc) {
+	public StatisticsView(Model cmc) {
 		super(cmc);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void display() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void update() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -30,6 +24,18 @@ public class StatisticsView extends View{
 
 	@Override
 	public void error() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void cancel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void quit() {
 		// TODO Auto-generated method stub
 		
 	}
