@@ -175,6 +175,7 @@ public class OrderManager {
 	 * 		   A list with the requested orders.
 	 */
 	public LinkedList<Order> getNbOrders(int nb) {
+		
 		if (nb < 0) throw new IllegalNumberException(nb, "Bad number!");
 
 		LinkedList<Order> res = new LinkedList<Order>();
