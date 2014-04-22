@@ -16,7 +16,7 @@ public class FIFO extends SchedulingAlgorithm {
 		for(Order order: orders)
 			this.scheduleOrder(order);
 	}
-
+	
 	@Override
 	public void scheduleOrder(Order order) {
 		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();

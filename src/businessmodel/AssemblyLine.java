@@ -86,14 +86,15 @@ public class AssemblyLine {
 	 * @return
 	 * @throws IllegalStateException
 	 */
-	public Order advance(Order neworder) throws IllegalStateException {
+	public void advance(Order neworder) throws IllegalStateException {
 		if (!this.canAdvance())
 			throw new IllegalStateException("Cannot advance assembly line!");
 		Order temp = neworder;
 		for(WorkPost wp: this.getWorkPosts()){
 			temp = wp.switchOrders(temp);
 		}
-		return temp;
+		if(temp != null)
+			temp.setCompleted();
 	}
 
 	/**

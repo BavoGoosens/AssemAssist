@@ -1,7 +1,5 @@
 package businessmodel;
 
-import java.util.ArrayList;
-
 /**
  * A class representing an action.
  * 
@@ -14,11 +12,6 @@ public class Action {
 	 * The description of this action.
 	 */
 	private String description;
-
-	/**
-	 * The list of components of this action.
-	 */
-	private ArrayList<String> component_types = new ArrayList<String>();
 
 	/**
 	 * This method constructs a new action with a given description.
@@ -40,15 +33,6 @@ public class Action {
 	}
 
 	/**
-	 * This method returns the list of components needed for this action.
-	 * 
-	 * @return	the components of this action.
-	 */
-	public ArrayList<String> getComponents() {
-		return this.component_types;
-	}
-
-	/**
 	 * This method sets the description of the action.
 	 * 
 	 * @param	description
@@ -58,16 +42,4 @@ public class Action {
 		if (description == null) throw new IllegalArgumentException("Bad description!");
 		this.description = description;
 	}
-
-	/**
-	 * This method adds a component to the action.
-	 * 
-	 * @param	component
-	 * 			The component that needs to be added.
-	 */
-/*	protected void addComponent(Component component) throws IllegalArgumentException {
-		if (component == null) throw new IllegalArgumentException("Bad component!");
-		if (!this.getComponents().contains(component.getClass().getName())) 
-			this.getComponents().add(component.getClass().getName());
-	} */
 }

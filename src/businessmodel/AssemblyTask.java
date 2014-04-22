@@ -18,8 +18,11 @@ public class AssemblyTask {
 	/**
 	 * A variable that specifies if this assembly task has been completed.
 	 */
-	private boolean completed = false; 
+	private boolean completed = false;
 	
+	/**
+	 *  
+	 */
 	private CarOptionCategory category;
 
 	/**
@@ -79,7 +82,6 @@ public class AssemblyTask {
 		return this.getName();
 	}
 	
-
 	protected CarOptionCategory getCategory() {
 		return category;
 	}
