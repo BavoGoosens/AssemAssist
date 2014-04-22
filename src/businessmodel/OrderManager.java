@@ -89,6 +89,7 @@ public class OrderManager {
 		if (order == null) throw new IllegalArgumentException("Bad order!");
 		order.setTimestamp(this.getScheduler().getCurrentTime());
 		this.getPendingOrders().add(order);
+		this.setEstimatedCompletionDate(order);
 	}
 
 	/**
@@ -220,5 +221,34 @@ public class OrderManager {
 	 */
 	public void PlaceOrderInFront(Order order) {
 		this.getPendingOrders().add(order);		
+	}
+	
+	protected void setEstimatedCompletionDate(Order order){
+		Order previousorder = this.getPreviousOrder(order);
+		if(previousorder != null) {
+			if(previousorder.getEstimateDate() == null){
+				order.setEstimateDate(this.getScheduler().getCurrentTime().plusHours(3));
+			}else if(previousorder.getEstimateDate().getHourOfDay() <= 21){
+				order.setEstimateDate(previousorder.getEstimateDate().plusHours(1));
+			}else {
+				order.setEstimateDate(previousorder.getEstimateDate().plusDays(1).withHourOfDay(11).withMinuteOfHour(0));
+			}
+		}else{
+			order.setEstimateDate(this.getScheduler().getCurrentTime().plusHours(3));
+		}
+	}
+
+	/**
+	 * A method to get the previous order in the list.
+	 * @param 	order
+	 * 			the current order.
+	 * @return	the previous order of the current order.
+	 */
+	protected Order getPreviousOrder(Order order){
+		int index = this.getPendingOrders().indexOf(order);
+		if(index-1 < 0)
+			return null;
+		else
+			return this.getPendingOrders().get(index-1);
 	}
 }
