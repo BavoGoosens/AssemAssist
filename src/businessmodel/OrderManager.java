@@ -2,6 +2,7 @@ package businessmodel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -192,14 +193,19 @@ public class OrderManager {
 
 	private LinkedList<Order> getSingleTaskOrdersNextDay() {
 		LinkedList<Order> temp = new LinkedList<Order>();
+		ArrayList<Integer> indices = new ArrayList<Integer>();
 		for(Order order: this.getPendingOrders()){
 			if(order.getUser_end_date()!= null){
-				if(order.getUser_end_date().getDayOfWeek() == this.getScheduler().getCurrentTime().getDayOfWeek()){
+				if(order.getUser_end_date().getDayOfWeek()-1 == this.getScheduler().getCurrentTime().getDayOfWeek()){
 					int index = this.getPendingOrders().indexOf(order);
 					temp.add(this.getPendingOrders().get(index));
-					this.getPendingOrders().remove(index);
+					indices.add(index);
 				}
 			}
+		}
+		Collections.reverse(indices);
+		for(Integer a: indices){
+			this.getPendingOrders().remove(a);
 		}
 		return temp;
 	}
