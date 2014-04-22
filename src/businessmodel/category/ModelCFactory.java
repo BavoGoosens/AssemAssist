@@ -8,6 +8,9 @@ import businessmodel.exceptions.IllegalCarOptionCategoryException;
 
 public class ModelCFactory extends CarModelFactory {
 
+	/**
+	 * Creates the body category of the C model with the necessary car options.
+	 */
 	@Override
 	protected Body createBody() {
 		Body body = new Body();
@@ -20,6 +23,9 @@ public class ModelCFactory extends CarModelFactory {
 		return body;
 	}
 
+	/**
+	 * Creates the color category of the C model with the necessary car options.
+	 */
 	@Override
 	protected Color createColor() {
 		Color color = new Color();
@@ -34,6 +40,9 @@ public class ModelCFactory extends CarModelFactory {
 		return color;
 	}
 
+	/**
+	 * Creates the engine category of the C model with the necessary car options.
+	 */
 	@Override
 	protected Engine createEngine() {
 		Engine engine = new Engine();
@@ -48,6 +57,9 @@ public class ModelCFactory extends CarModelFactory {
 		return engine;
 	}
 
+	/**
+	 * Creates the gear box category of the C model with the necessary car options.
+	 */
 	@Override
 	protected Gearbox createGearbox() {
 		Gearbox gearbox = new Gearbox();
@@ -60,6 +72,9 @@ public class ModelCFactory extends CarModelFactory {
 		return gearbox;
 	}
 
+	/**
+	 * Creates the seats category of the C model with the necessary car options.
+	 */
 	@Override
 	protected Seats createSeats() {
 		Seats seats = new Seats();
@@ -74,6 +89,9 @@ public class ModelCFactory extends CarModelFactory {
 		return seats;
 	}
 
+	/**
+	 * Creates the airco category of the C model with the necessary car options.
+	 */
 	protected Airco createAirco() {
 		Airco airco = new Airco();
 		CarOption airco1 = new CarOption("manual", airco);
@@ -87,6 +105,9 @@ public class ModelCFactory extends CarModelFactory {
 		return airco;
 	}
 
+	/**
+	 * Creates the wheels category of the C model with the necessary car options.
+	 */
 	@Override
 	protected Wheels createWheels() {
 		Wheels wheels = new Wheels();
@@ -101,6 +122,9 @@ public class ModelCFactory extends CarModelFactory {
 		return wheels;
 	}
 
+	/**
+	 * Creates the spoiler category of the C model with the necessary car options.
+	 */
 	protected Spoiler createSpoiler() {
 		Spoiler spoiler = new Spoiler();
 		CarOption spoiler1 = new CarOption("low", spoiler);
@@ -114,11 +138,17 @@ public class ModelCFactory extends CarModelFactory {
 		return spoiler;
 	}
 	
+	/**
+	 * Returns the name of the C model.
+	 */
 	@Override
 	protected String getName() {
 		return "Model C";
 	}
 
+	/**
+	 * Creates a C model.
+	 */
 	@Override
 	public CarModel createModel() {
 		ArrayList<CarOption> options = new ArrayList<CarOption>();
