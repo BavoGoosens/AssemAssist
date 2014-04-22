@@ -13,20 +13,10 @@ public class FIFO extends SchedulingAlgorithm {
 
 	@Override
 	public void schedule(LinkedList<Order> orders){
-		LinkedList<Order> orders2 = this.prioritySchedule(orders);
-		for(Order order: orders2)
+		for(Order order: orders)
 			this.scheduleOrder(order);
 	}
-
-	private LinkedList<Order> prioritySchedule(LinkedList<Order> orders) {
-		LinkedList<Order> orders2 = this.prioritySchedule(orders);
-		for(Order order: orders){
-			if(order.getClass().getName() == "SingleTaskOrder")
-				this.scheduleOrder(order);
-		}
-		return orders2;
-	}
-
+	
 	@Override
 	public void scheduleOrder(Order order) {
 		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();

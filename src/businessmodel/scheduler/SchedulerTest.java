@@ -9,6 +9,7 @@ import org.junit.Test;
 import businessmodel.CarModel;
 import businessmodel.Catalog;
 import businessmodel.OrderManager;
+import businessmodel.WorkPost;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
 import businessmodel.category.CarOption;
@@ -47,7 +48,7 @@ public class SchedulerTest {
 		GarageHolder c16 = new GarageHolder("16","","");
 		GarageHolder c17 = new GarageHolder("17","","");
 		GarageHolder c18 = new GarageHolder("18","","");
-		
+
 
 		CarOption blabla = new CarOption("Henk", new Airco());
 		ArrayList<CarOption> henk1 = new ArrayList<CarOption>();
@@ -72,12 +73,29 @@ public class SchedulerTest {
 		Order order17 = new StandardCarOrder(c18,henk1);
 
 		ord.addOrder(order);
+		ord.addOrder(order1);
+		ord.addOrder(order2);
+		ord.addOrder(order3);
+		ord.addOrder(order4);
+		ord.addOrder(order5);
+		ord.addOrder(order6);
+//		ord.addOrder(order7);
+//		ord.addOrder(order8);
+//		ord.addOrder(order9);
+//		ord.addOrder(order10);
+//		ord.addOrder(order11);
+//		ord.addOrder(order12);
+//		ord.addOrder(order13);
+//		ord.addOrder(order14);
+//		ord.addOrder(order15);
 
-		
+
+
+
 
 		ord.getScheduler().ScheduleDay();
 
-		
+
 
 		// test
 		for(int k =0; k<2 ; k++){
@@ -85,7 +103,6 @@ public class SchedulerTest {
 				System.out.println(">>>>>new WorkSlot");
 				for(int j = 0; j< 3; j++){
 					if(ord.getScheduler().getShifts().get(k).getTimeSlots().get(i).getWorkSlots().get(j).getOrder()!= null){
-						
 						System.out.println(ord.getScheduler().getShifts().get(k).getTimeSlots().get(i).getWorkSlots().get(j).getOrder().toString());
 					}else{
 						System.out.println("0");
@@ -95,22 +112,20 @@ public class SchedulerTest {
 		}
 		ord.getScheduler().advance(60);
 		System.out.println("----------------------------------------------------------");
-		// test
-		for(int k =0; k<2 ; k++){
-			int length = ord.getScheduler().getShifts().get(k).getTimeSlots().size();
-			for(int i =0 ; i< length; i++){
-				System.out.println(">>>>>new WorkSlot");
-				for(int j = 0; j< 3; j++){
-					if(ord.getScheduler().getShifts().get(k).getTimeSlots().get(i).getWorkSlots().get(j).getOrder()!= null){
-						System.out.println(ord.getScheduler().getShifts().get(k).getTimeSlots().get(i).getWorkSlots().get(j).getOrder().toString());
-					}else{
-						System.out.println("0");
-					}
-				}
+
+		int i = 10;
+		while(i > 0){
+			for(WorkPost wp : ord.getScheduler().getAssemblyline().getWorkPosts()){
+				if(wp.getOrder()!= null)
+					System.out.println(wp.getOrder().getUser());
+				else
+					System.out.println("0");
+				i--;
 			}
 		}
-		
-		
+
+
+
 	}
 
 	@Test
