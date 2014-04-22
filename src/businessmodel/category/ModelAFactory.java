@@ -1,5 +1,9 @@
 package businessmodel.category;
 
+import java.util.ArrayList;
+
+import businessmodel.CarModel;
+import businessmodel.CarModelSpecification;
 import businessmodel.exceptions.IllegalCarOptionCategoryException;
 
 public class ModelAFactory extends CarModelFactory {
@@ -82,7 +86,6 @@ public class ModelAFactory extends CarModelFactory {
 		return seats;
 	}
 	
-	@Override
 	protected Airco createAirco() {
 		Airco airco = new Airco();
 		CarOption airco1 = new CarOption("manual", airco);
@@ -115,6 +118,38 @@ public class ModelAFactory extends CarModelFactory {
 	@Override
 	protected String getName() {
 		return "Model A";
+	}
+
+
+	@Override
+	public CarModel createModel() {
+		
+		ArrayList<CarOption> options = new ArrayList<CarOption>();
+		
+		for (CarOption option: this.createBody().getOptionsClone()) 
+			options.add(option);
+		
+		for (CarOption option: this.createColor().getOptionsClone()) 
+			options.add(option);
+		
+		for (CarOption option: this.createEngine().getOptionsClone()) 
+			options.add(option);
+		
+		for (CarOption option: this.createGearbox().getOptionsClone())
+			options.add(option);
+		
+		for (CarOption option: this.createSeats().getOptionsClone()) 
+			options.add(option);
+		
+		for (CarOption option: this.createAirco().getOptionsClone()) 
+			options.add(option);
+		
+		for (CarOption option: this.createWheels().getOptionsClone())
+			options.add(option);
+		
+		
+		CarModelSpecification cms = new CarModelSpecification(options);
+		return new CarModel(this.getName(), cms);
 	}
 	
 	
