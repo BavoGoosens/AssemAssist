@@ -9,6 +9,7 @@ import businessmodel.observer.Observer;
 import businessmodel.order.Order;
 import businessmodel.statistics.CarStatistics;
 import businessmodel.statistics.OrderStatistics;
+import businessmodel.statistics.StatisticsManager;
 import businessmodel.user.CustomShopManager;
 import businessmodel.user.GarageHolder;
 import businessmodel.user.Manager;
@@ -23,7 +24,9 @@ public class CarManufacturingCompany implements Model{
 	private OrderManager ordermanager;
 	
 	private TaskManager taskmanager;
-
+	
+	private StatisticsManager statisticsmanager;
+	
 	private Catalog catalog;
 
 	/**
@@ -34,6 +37,7 @@ public class CarManufacturingCompany implements Model{
 		this.catalog = new Catalog();
 		this.setOrderManager(new OrderManager(this.catalog.getAvailaleModelsClone()));
 		this.taskmanager = new TaskManager(this.getOrderManager().getScheduler().getAssemblyline().getWorkPosts());
+		this.statisticsmanager = new StatisticsManager(this.getOrderManager());
 		// for ease of use
 		this.users.add(new GarageHolder("wow", "wow", "wow"));
 		this.users.add(new Mechanic("wow", "wow", "woww"));
@@ -89,14 +93,12 @@ public class CarManufacturingCompany implements Model{
 
 	@Override
 	public CarStatistics getCarStatistics() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.statisticsmanager.getCarStatistics();
 	}
 
 	@Override
 	public OrderStatistics getOrderStatistics() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getOrderStatistics();
 	}
 
 	@Override
