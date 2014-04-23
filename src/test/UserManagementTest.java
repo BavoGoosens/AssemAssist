@@ -15,7 +15,7 @@ public class UserManagementTest {
 	private Mechanic mechanic;
 	private GarageHolder garageholder;
 	private Manager manager;
-	private User um;
+	
 	
 	@Before
 	public void setUp() throws Exception {

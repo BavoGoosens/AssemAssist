@@ -5,7 +5,7 @@ import java.util.UUID;
 /**
  * Class representing a car option of a specific car option category.
  * 
- * @author team 10
+ * @author SWOP team 10 2013-2014
  *
  */
 public class CarOption {

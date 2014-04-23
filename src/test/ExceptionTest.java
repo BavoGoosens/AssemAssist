@@ -15,7 +15,6 @@ import businessmodel.category.CarOption;
 import businessmodel.category.Engine;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.StandardCarOrder;
-import businessmodel.user.GarageHolder;
 import businessmodel.user.Manager;
 
 

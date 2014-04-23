@@ -3,20 +3,20 @@ package businessmodel.category;
 import java.util.UUID;
 
 /**
- * Class representing a gearbox category.
+ * Class representing a gear box category.
  * 
- * @author team 10
+ * @author SWOP team 10 2013-2014
  *
  */
 public class Gearbox extends CarOptionCategory {
 	
 	/**
-	 * Indicates the unique key of the category.
+	 * The unique key of the category.
 	 */
 	private final static UUID key = UUID.randomUUID();
 
 	/**
-	 * Creates a new gearbox category.
+	 * Creates a new gear box category.
 	 */
 	public Gearbox() {
 		super();

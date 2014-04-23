@@ -3,7 +3,6 @@ package test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.joda.time.DateTime;
 import org.junit.Before;
@@ -14,13 +13,11 @@ import businessmodel.OrderManager;
 import businessmodel.category.Body;
 import businessmodel.category.CarOption;
 import businessmodel.category.Engine;
-import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;
 
 public class OrderTest {
 	
-	private ArrayList<Order> orders;
 	private GarageHolder garageholder;
 	private DateTime date;
 	private OrderManager orderManager ;

@@ -1,7 +1,7 @@
 package businessmodel.user;
 
 /**
- * A class that represents a mechanic.
+ * A class representing a mechanic.
  * 
  * @author SWOP team 10 2013-2014 
  *
@@ -9,14 +9,16 @@ package businessmodel.user;
 public class Mechanic extends User {
 
 	/**
-	 * A constructor to create a new mechanic.
+	 * Creates a new mechanic with a given first name, last name and user name.
 	 * 
 	 * @param 	firstname
-	 * 			the first name of the new mechanic.
+	 * 			The first name of the new mechanic.
 	 * @param 	lastname
-	 * 			the last name of the new mechanic.
+	 * 			The last name of the new mechanic.
 	 * @param 	username
-	 * 			the user name of the new mechanic.
+	 * 			The user name of the new mechanic.
+	 * 
+	 * @throws	IllegalArgumentException
 	 */
 	public Mechanic(String firstname, String lastname, String username) throws IllegalArgumentException {
 		super(firstname,lastname,username);

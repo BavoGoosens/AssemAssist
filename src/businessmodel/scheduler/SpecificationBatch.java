@@ -35,7 +35,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 		if (orderList.size() != 0){
 			
 			for(Order order: orderList)
-				for(CarOption option: order.getCarOptions())
+				for(CarOption option: order.getCar().getOptionsClone())
 					if (option.toString().equals(this.option.toString()))
 						similarCarOptionsOrder.add(order);
 			
