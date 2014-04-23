@@ -221,7 +221,7 @@ public class WorkPost {
 		for(AssemblyTask assem : this.getResponsibleTasks()){
 			for(CarOption option: carOptions){
 				if(option.getCategory().equals(assem.getCategory()))
-					result.add(new AssemblyTask(assem.getName(),assem.getCategory()));
+					result.add(new AssemblyTask(assem.getName(),assem.getCategory(),this));
 			}
 		}
 		return result;

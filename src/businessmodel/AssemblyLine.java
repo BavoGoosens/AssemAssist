@@ -25,7 +25,7 @@ public class AssemblyLine {
 	 * List of work posts at the assembly line.
 	 */
 	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
-	
+
 
 	/**
 	 * Creates a new assembly line.
@@ -42,20 +42,19 @@ public class AssemblyLine {
 		ArrayList<AssemblyTask> tasksWorkPost1 = new ArrayList<AssemblyTask>();
 		ArrayList<AssemblyTask> tasksWorkPost2 = new ArrayList<AssemblyTask>();
 		ArrayList<AssemblyTask> tasksWorkPost3 = new ArrayList<AssemblyTask>();
-
-		tasksWorkPost1.add(new AssemblyTask("Assembly Car Body", new Body()));
-		tasksWorkPost1.add(new AssemblyTask("Paint Car", new Color()));
-		tasksWorkPost2.add(new AssemblyTask("Insert Engine", new Engine()));
-		tasksWorkPost2.add(new AssemblyTask("Insert Gearbox", new Gearbox()));
-		tasksWorkPost3.add(new AssemblyTask("Install Seats", new Seats()));
-		tasksWorkPost3.add(new AssemblyTask("Install Airco", new Airco()));
-		tasksWorkPost3.add(new AssemblyTask("Mount Wheels", new Wheels()));
-		tasksWorkPost3.add(new AssemblyTask("Install Spoiler", new Spoiler()));
-
 		WorkPost post1 = new WorkPost("Car Body Post", tasksWorkPost1);
 		WorkPost post2 = new WorkPost("Drivetrain Post", tasksWorkPost2);
-		WorkPost post3 = new WorkPost("Accesoires Post", tasksWorkPost3);
-		
+		WorkPost post3 = new WorkPost("Accesoires Post", tasksWorkPost3);		
+
+		tasksWorkPost1.add(new AssemblyTask("Assembly Car Body", new Body(),post1));
+		tasksWorkPost1.add(new AssemblyTask("Paint Car", new Color(),post1));
+		tasksWorkPost2.add(new AssemblyTask("Insert Engine", new Engine(),post2));
+		tasksWorkPost2.add(new AssemblyTask("Insert Gearbox", new Gearbox(),post2));
+		tasksWorkPost3.add(new AssemblyTask("Install Seats", new Seats(),post3));
+		tasksWorkPost3.add(new AssemblyTask("Install Airco", new Airco(),post3));
+		tasksWorkPost3.add(new AssemblyTask("Mount Wheels", new Wheels(),post3));
+		tasksWorkPost3.add(new AssemblyTask("Install Spoiler", new Spoiler(),post3));
+
 		this.getWorkPosts().add(post1);
 		this.getWorkPosts().add(post2);
 		this.getWorkPosts().add(post3);
