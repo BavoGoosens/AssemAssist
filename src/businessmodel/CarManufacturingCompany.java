@@ -6,6 +6,10 @@ import java.util.Iterator;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.Order;
+import businessmodel.user.CustomShopManager;
+import businessmodel.user.GarageHolder;
+import businessmodel.user.Manager;
+import businessmodel.user.Mechanic;
 import businessmodel.user.User;
 
 
@@ -15,6 +19,7 @@ public class CarManufacturingCompany implements Model{
 	 * A variable that holds an user management.
 	 */
 	private ArrayList<User> users = new ArrayList<User>();
+	
 
 	/**
 	 * A variable that holds an order manager.
@@ -30,6 +35,10 @@ public class CarManufacturingCompany implements Model{
 	public CarManufacturingCompany() throws IllegalArgumentException {
 		this.catalog = new Catalog();
 		this.setOrderManager(new OrderManager(this.catalog.getAvailaleModelsClone()));
+		this.users.add(new GarageHolder("wow", "wow", "wow"));
+		this.users.add(new Mechanic("wow", "wow", "woww"));
+		this.users.add(new Manager("wow", "wow", "wowww"));
+		this.users.add(new CustomShopManager("wow", "wow", "wowwww"));
 	}
 	
 
@@ -46,15 +55,6 @@ public class CarManufacturingCompany implements Model{
 
 	public Iterator<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
 		return this.getOrderManager().getPendingOrders(user).iterator();
-	}
-	
-	public ArrayList<CarModel> getAvailableCarModels(User currentuser) throws IllegalArgumentException,
-																			NoClearanceException {
-		return this.getOrderManager().getCarmodels();
-	}
-	
-	public void advanceAssemblyLine(int time) throws IllegalNumberException {
-		this.getOrderManager().getScheduler().advance(time);
 	}
 
 	public OrderManager getOrderManager(){
@@ -98,8 +98,7 @@ public class CarManufacturingCompany implements Model{
 
 	@Override
 	public Iterator<CarModel> getCarModels(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.catalog.getAvailaleModelsClone().iterator();
 	}
 
 
@@ -133,8 +132,13 @@ public class CarManufacturingCompany implements Model{
 
 	@Override
 	public User login(String username, String password) {
+		return this.getUser(username);
+	}
+
+
+	public void finishTask(AssemblyTask task, int time, User user) {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 }
