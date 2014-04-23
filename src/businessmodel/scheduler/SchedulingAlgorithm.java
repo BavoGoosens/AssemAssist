@@ -14,7 +14,7 @@ public abstract class SchedulingAlgorithm {
 		this.scheduler = scheduler;
 	}
 	
-	public abstract void schedule(LinkedList<Order> orders);
+	public abstract LinkedList<Order> schedule(LinkedList<Order> orders);
 	
 	public abstract void scheduleOrder(Order order);
 	

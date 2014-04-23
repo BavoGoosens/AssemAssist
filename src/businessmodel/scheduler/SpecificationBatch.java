@@ -18,26 +18,27 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	}
 
 	@Override
-	public void schedule(LinkedList<Order> orders){
+	public LinkedList<Order> schedule(LinkedList<Order> orders){
 
 		for(Order order: orders)
 			this.scheduleOrder(order);
 		this.reschedule();
+		return orderList;
 	}
 
 	@Override
 	public void scheduleOrder(Order currentOrder) {
-
+		
 		ArrayList<Order> similarCarOptionsOrder = new ArrayList<Order>();
-
-		for(Order order: orderList)
-			for(CarOption option: currentOrder.getCarOptions())
-				if (option.toString().equals(this.option.toString()))
-					similarCarOptionsOrder.add(order);
-
-		if (similarCarOptionsOrder.size() != 0){
-
-			similarCarOptionsOrder.add(currentOrder);
+		orderList.add(currentOrder);
+	
+		if (orderList.size() != 0){
+			
+			for(Order order: orderList)
+				for(CarOption option: order.getCarOptions())
+					if (option.toString().equals(this.option.toString()))
+						similarCarOptionsOrder.add(order);
+			
 			for(Order ord: similarCarOptionsOrder)
 				orderList.remove(ord);
 			Collections.reverse(similarCarOptionsOrder);

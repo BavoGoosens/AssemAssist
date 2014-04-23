@@ -69,6 +69,7 @@ public class BatchAlgorithmTest {
 			orderManager.getScheduler().changeAlgorithm("sb");
 			
 			orderManager.getScheduler().ScheduleDay();
+			
 			for(Order order: orderManager.getScheduler().getOrders())
 				System.out.println(order);
 		

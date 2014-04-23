@@ -13,9 +13,10 @@ public class FIFO extends SchedulingAlgorithm {
 	}
 
 	@Override
-	public void schedule(LinkedList<Order> orders){
+	public LinkedList<Order> schedule(LinkedList<Order> orders){
 		for(Order order: orders)
 			this.scheduleOrder(order);
+		return orders;
 	}
 	
 	@Override

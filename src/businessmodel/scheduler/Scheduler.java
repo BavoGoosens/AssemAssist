@@ -156,8 +156,8 @@ public class Scheduler implements Subject {
 	public void ScheduleDay(){
 		this.updateCurrentTime();
 		int size = this.getNumberOfOrdersToSchedule();
-		this.getOrders().addAll(this.getOrdermanager().getNbOrders(size));
-		this.getAlgo().schedule(this.getOrders());
+		this.getOrders().addAll(this.getAlgo().schedule(this.getOrdermanager().getNbOrders(size)));
+		
 	} 
 
 	private void updateCurrentTime() {
