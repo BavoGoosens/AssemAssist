@@ -96,25 +96,25 @@ public class SchedulerTest {
 
 
 		ord.addOrder(order1);
-//		ord.addOrder(order2);
-//		ord.addOrder(order3);
-//		ord.addOrder(order4);
-//		ord.addOrder(order5);
-//		ord.addOrder(order6);
-//		ord.addOrder(order19);
-//		ord.addOrder(order7);
-//		ord.addOrder(order8);
-//		ord.addOrder(order9);
-//		ord.addOrder(order10);
-//		ord.addOrder(order11);
-//		ord.addOrder(order12);
-//		ord.addOrder(order13);
-//		ord.addOrder(order14);
-//		ord.addOrder(order15);
-//		ord.addOrder(order20);
-//		ord.addOrder(order16);
-//		ord.addOrder(order17);
-//		ord.addOrder(order18);
+		ord.addOrder(order2);
+		ord.addOrder(order3);
+		ord.addOrder(order4);
+		ord.addOrder(order5);
+		ord.addOrder(order6);
+		ord.addOrder(order19);
+		ord.addOrder(order7);
+		ord.addOrder(order8);
+		ord.addOrder(order9);
+		ord.addOrder(order10);
+		ord.addOrder(order11);
+		ord.addOrder(order12);
+		ord.addOrder(order13);
+		ord.addOrder(order14);
+		ord.addOrder(order15);
+		ord.addOrder(order20);
+		ord.addOrder(order16);
+		ord.addOrder(order17);
+		ord.addOrder(order18);
 		
 		ord.getScheduler().ScheduleDay();
 		
