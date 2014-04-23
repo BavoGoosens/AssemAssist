@@ -101,7 +101,7 @@ public class SchedulerTest {
 		ord.addOrder(order4);
 		ord.addOrder(order5);
 		ord.addOrder(order6);
-	//	ord.addOrder(order19);
+		//	ord.addOrder(order19);
 		ord.addOrder(order7);
 		ord.addOrder(order8);
 		ord.addOrder(order9);
@@ -111,11 +111,11 @@ public class SchedulerTest {
 		ord.addOrder(order13);
 		ord.addOrder(order14);
 		ord.addOrder(order15);
-	//	ord.addOrder(order20);
-	//	ord.addOrder(order16);
-	//	ord.addOrder(order17);
-	//	ord.addOrder(order18);
-		
+		//	ord.addOrder(order20);
+		//	ord.addOrder(order16);
+		//	ord.addOrder(order17);
+		//	ord.addOrder(order18);
+
 		// test
 		for(int k =0; k<2 ; k++){
 			for(int i =0 ; i< 7; i++){
@@ -130,23 +130,51 @@ public class SchedulerTest {
 			}
 		}
 		System.out.println("----------------------------------------------------------");
+
+		AssemblyLine assembly = ord.getScheduler().getAssemblyline();
+
+		for(WorkPost wp1 : ord.getScheduler().getAssemblyline().getWorkPosts()){
+			if(wp1.getOrder()!= null)
+				System.out.println(wp1.getOrder().getUser());
+			else
+				System.out.println("0");
+		} 
 		
-		for(int i=0; i < 16; i++){
-			for(WorkPost wp : ord.getScheduler().getAssemblyline().getWorkPosts()){
-				if(wp.getOrder()!= null)
-					System.out.println(wp.getOrder().getUser());
+		WorkPost wp = assembly.getWorkPosts().get(0);
+		for(AssemblyTask assem : wp.getPendingTasks())
+			cmc.completeAssemBlyTask(assem, 20);
+	
+		
+		for(WorkPost wp1 : ord.getScheduler().getAssemblyline().getWorkPosts()){
+			if(wp1.getOrder()!= null)
+				System.out.println(wp1.getOrder().getUser());
+			else
+				System.out.println("0");
+		}
+		
+		wp = assembly.getWorkPosts().get(0);
+		for(AssemblyTask assem : wp.getPendingTasks())
+			cmc.completeAssemBlyTask(assem, 20);
+		
+		wp = assembly.getWorkPosts().get(1);
+		for(AssemblyTask assem : wp.getPendingTasks())
+			cmc.completeAssemBlyTask(assem, 20);
+		
+		for(int i=0; i < 13; i++){
+			for(WorkPost wp1 : ord.getScheduler().getAssemblyline().getWorkPosts()){
+				if(wp1.getOrder()!= null)
+					System.out.println(wp1.getOrder().getUser());
 				else
 					System.out.println("0");
 			}
 			System.out.println("=====");
-			AssemblyLine assembly = ord.getScheduler().getAssemblyline();
-			
-			for(WorkPost wp: assembly.getWorkPosts()){
-				for(AssemblyTask assem : wp.getPendingTasks())
-					cmc.completeAssemBlyTask(assem, 20);
+
+			for(WorkPost wp1: assembly.getWorkPosts()){
+					for(AssemblyTask assem : wp1.getPendingTasks())
+						cmc.completeAssemBlyTask(assem, 20);
 			}
 		}
-		
+
 		for(Order order: ord.getCompletedOrders()){
 			System.out.println(order.getUser());
 			System.out.println(order.getCompletionDate().toString());

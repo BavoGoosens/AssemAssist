@@ -76,6 +76,7 @@ public class Scheduler implements Subject {
 	// Deel AssemblyLine
 
 	public void advance(int time) throws IllegalNumberException{
+		System.out.println("test");
 		if (time < 0) throw new IllegalNumberException("Bad time!");
 		int delay = time - 60;
 		this.currenttime = this.getCurrentTime().plusMinutes(time);
