@@ -8,12 +8,11 @@ import org.joda.time.LocalDate;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
+import businessmodel.scheduler.Scheduler;
 import businessmodel.util.CarTupleComperator;
 import businessmodel.util.Tuple;
 
 public class CarStatistics implements Observer {
-
-	private Subject s;
 
 	/**
 	 * The average number of cars produced.
@@ -28,7 +27,6 @@ public class CarStatistics implements Observer {
 	private ArrayList<Tuple<LocalDate, Integer>> number_of_cars;
 
 	public CarStatistics(Subject s){
-		this.s = s;
 		s.subscribeObserver(this);
 		this.number_of_cars = new ArrayList<Tuple<LocalDate, Integer>>();
 	}
@@ -69,6 +67,13 @@ public class CarStatistics implements Observer {
 			this.median = (fml + fol) / 2;
 		} else {
 			this.median = temp.get((int) Math.ceil(temp.size()/2)).getY();
+		}
+	}
+
+	@Override
+	public void update(Subject subject) {
+		if (subject instanceof Scheduler) {
+			
 		}
 	}
 
