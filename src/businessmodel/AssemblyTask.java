@@ -24,6 +24,8 @@ public class AssemblyTask {
 	 *  
 	 */
 	private CarOptionCategory category;
+	
+	private WorkPost workpost;
 
 	/**
 	 * A constructor for the class assembly task.
@@ -31,7 +33,8 @@ public class AssemblyTask {
 	 * @param   name
 	 *          the name of this assembly process.
 	 */
-	public AssemblyTask(String name, CarOptionCategory category) throws IllegalArgumentException {
+	public AssemblyTask(String name, CarOptionCategory category, WorkPost workpost) throws IllegalArgumentException {
+		this.workpost = workpost;
 		this.setName(name);
 		this.setCategory(category);
 	}
@@ -63,7 +66,7 @@ public class AssemblyTask {
 	/**
 	 * A method to set this assembly task to completed.
 	 */
-	public void completeAssemblytask(){
+	protected void completeAssemblytask(){
 		this.completed = true;
 	}
 	

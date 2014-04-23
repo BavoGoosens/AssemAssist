@@ -61,6 +61,11 @@ public class CarManufacturingCompany {
 	public void placeOrder(Order order) throws IllegalArgumentException {
 		this.getOrderManager().placeOrder(order);
 	}
+	
+
+	public void completeAssemBlyTask(AssemblyTask assemblytask){
+		assemblytask.completeAssemblytask();
+	}
 
 	private ArrayList<User> getUsers() {
 		return this.users;
@@ -88,6 +93,4 @@ public class CarManufacturingCompany {
 		if (ordermanager == null) throw new IllegalArgumentException("Bad ordermanager!");
 		this.ordermanager = ordermanager;
 	}
-
-
 }
