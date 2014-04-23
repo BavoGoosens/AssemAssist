@@ -33,8 +33,8 @@ public class AssemblyLine implements Subject{
 	private int timeCurrentStatus = 0;
 	
 	private Scheduler scheduler;
-
-	private ArrayList<Observer> subscribers;
+	
+	private ArrayList<Observer> subscribers = new ArrayList<Observer>();
 
 	/**
 	 * Creates a new assembly line.
