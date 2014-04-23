@@ -3,6 +3,7 @@ package businessmodel;
 import java.util.ArrayList;
 
 import businessmodel.category.CarOption;
+import businessmodel.restrictions.RestrictionChecker;
 
 /**
  * A class representing a car.
@@ -25,6 +26,8 @@ public class Car {
 	 * @throws	IllegalArgumentException
 	 */
 	public Car(ArrayList<CarOption> options) throws IllegalArgumentException {
+		RestrictionChecker restrictionChecker = new RestrictionChecker();
+		if (!restrictionChecker.check(options)) throw new UnsatisfiedRestrictionException();
 		setOptions(options);
 	}
 

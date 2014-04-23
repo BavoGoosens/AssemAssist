@@ -41,7 +41,6 @@ public class UltraEngineAircoRestriction extends Restriction {
 				return option.getName().equalsIgnoreCase("manual");
 			}
 		}
-		// to-do: indien geen airco wel oke, moet hier true teruggegeven worden!
 		return false;
 	}
 
