@@ -8,45 +8,30 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.Car;
+import businessmodel.CarModel;
 import businessmodel.Catalog;
-import component.Airco;
-import component.Body;
-import component.Color;
-import component.Component;
-import component.Engine;
-import component.Gearbox;
-import component.Seats;
-import component.Wheels;
+import businessmodel.category.Body;
+import businessmodel.category.CarOption;
+import businessmodel.category.Engine;
 
 public class CarTest {
 	
-	private Body body;
-	private Color color;
-	private Engine engine;
-	private Gearbox gearbox;
-	private Seats seats;
-	private Airco airco;
-	private Wheels wheels;
-	private Car car1;
-	private ArrayList<Component> components;
-
+	private CarModel model;
+	private ArrayList<CarOption> options;
 	@Before
 	public void setUp() throws Exception {
-		new Catalog().getAvailaleModelsClone().get(0);
+		CarOption option = new CarOption("small engine", new Engine() );
+		CarOption option2 = new CarOption("big body", new Body() );
+		options =  new ArrayList<CarOption>();
+		options.add(option);
+		options.add(option2);
+		
+		
 	}
 
 	@Test
 	public void test() {
-		assertEquals(this.components,car1.getComponents());
-		Body bodytest = new Body("test",500);
-		car1.removeComponent(bodytest);
-		car1.addComponent(bodytest);
-		car1.removeComponent(bodytest);
-		assertEquals(car1.toString(),"components= [name= sedan, price= "+1000.0+","
-				+ " name= red, price= "+1000.0+", name= standard 2l 4 cilinders, price= "
-						+ ""+1000.0+", name= 6 speed manual, price= "+1000.0+", name= leather black, "
-								+ "price= "+1000.0+", name= manual, price= "+1000.0+", "
-										+ "name= comfort, price= "+1000.0+"]");
+		new Car(options);
 	}
 
 }
