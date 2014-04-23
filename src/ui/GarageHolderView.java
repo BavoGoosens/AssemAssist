@@ -5,8 +5,11 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import javax.swing.text.html.Option;
+
 import businessmodel.CarModel;
 import businessmodel.Model;
+import businessmodel.category.CarOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
@@ -19,6 +22,8 @@ public class GarageHolderView extends View{
 	private ArrayList<Order> pending_orders;
 
 	private ArrayList<Order> completed_orders;
+	
+	private ArrayList<CarModel> available_carmodels;
 
 	private StandardOrderController controller;
 
@@ -83,11 +88,66 @@ public class GarageHolderView extends View{
 	private void startNewOrder() {
 		// TODO Auto-generated method stub
 		// choose the car model
-
+		Iterator<CarModel> iter = this.getModel().getCarModels(this.user);
+		while (iter.hasNext())
+			this.available_carmodels.add(iter.next());
+		System.out.println("> Please enter the corresponding number of the car model you wish to order:");
+		int count = 1;
+		for (CarModel cm : this.available_carmodels){
+			System.out.println("> " + count + ") "+ cm.toString());
+		}
+		System.out.println(">> ");
+		String response = this.scan.nextLine();
+		this.check(response);
+		Pattern pattern = Pattern.compile("\\d*");
+		if (pattern.matcher(response).find()){
+			int number = Integer.parseInt(response);
+			if (number > this.available_carmodels.size() || number < 1){
+				System.out.println("! You entered something wrong please try again");
+				this.startNewOrder();
+			}
+			
+		number -= 1;
+		CarModel chosen = this.available_carmodels.get(number);				
+		this.step ++;
+		displayOrderingForm(chosen);
+		}
+		
 	}
 	
 	private void displayOrderingForm(CarModel model){
-		// TODO:
+		ArrayList <CarOption> chosen = new ArrayList<>();
+		ArrayList <CarOption> available = model.getPossibilities();
+		boolean validorder = false;
+		while (validorder = false){
+			System.out.println("> Your chosen car options: ");
+			for (CarOption cho : chosen)
+				System.out.println("> " + cho.toString());
+			System.out.println("> Enter the number of the option you want to include in your car");
+			System.out.println("> If you have chosen everything enter ORDER");
+			int number = 1;
+			for (CarOption opt : available){
+				System.out.println("> " + number + ") " + opt.toString());
+				number ++;
+			}
+			String response = this.scan.nextLine();
+			this.check(response);
+			Pattern pattern = Pattern.compile("\\d*");
+			if (pattern.matcher(response).find()){
+				int choice = Integer.parseInt(response);
+				if ( choice > available.size() || choice < 1){
+					System.out.println("! You entered something wrong. Please try again");
+					continue;
+				}
+				
+			} else if (response.equalsIgnoreCase("order")){
+				// try placing the order 
+				// errors get thrown if it does not comply to the restrictions
+			} else {
+				System.out.println("! You entered something wrong. Please try again");
+				continue;
+			}
+		}
 	}
 
 	@Override

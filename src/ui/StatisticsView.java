@@ -1,6 +1,5 @@
 package ui;
 
-import businessmodel.CarManufacturingCompany;
 import businessmodel.Model;
 
 public class StatisticsView extends View{
