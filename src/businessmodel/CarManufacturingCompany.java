@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
+import businessmodel.observer.Observer;
 import businessmodel.order.Order;
 import businessmodel.user.CustomShopManager;
 import businessmodel.user.GarageHolder;
@@ -139,6 +140,14 @@ public class CarManufacturingCompany implements Model{
 	public void finishTask(AssemblyTask task, int time, User user) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	@Override
+	public AssemblyLine registerAssemblyLineObserver(Observer observer) {
+		AssemblyLine line = this.getOrderManager().getScheduler().getAssemblyline();
+		line.subscribeObserver(observer);
+		return line;
 	}
 
 }

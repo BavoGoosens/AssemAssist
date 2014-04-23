@@ -15,9 +15,12 @@ public abstract class View {
 	}
 	
 	public void helpOverview() {
-		System.out.println("> To go back to the previous step enter: CANCEL");
-		System.out.println("> To go back to the login prompt enter: QUIT");
-		System.out.println("> If you need help enter: HELP");
+		System.out.println("The >> characters indicate the system expects input");
+		System.out.println("The > characters indicate standard output");
+		System.out.println("The ! indicate an error occured ");
+		System.out.println("To go back to the previous step enter: CANCEL");
+		System.out.println("To go back to the login prompt enter: QUIT");
+		System.out.println("If you need help enter: HELP");
 	}
 	
 	public abstract void display();
@@ -29,5 +32,14 @@ public abstract class View {
 	public abstract void quit();
 	
 	public abstract void error();
+
+	protected void check(String str) {
+		if (str.equalsIgnoreCase("quit"))
+			this.quit();
+		if (str.equalsIgnoreCase("cancel"))
+			this.cancel();
+		if (str.equalsIgnoreCase("help"))
+			this.displayHelp();
+	}
 
 }

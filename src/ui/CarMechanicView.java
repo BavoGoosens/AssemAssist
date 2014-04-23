@@ -123,14 +123,5 @@ public class CarMechanicView extends View {
 		this.display();		
 	}
 
-	private void check(String str){
-		if (str.equalsIgnoreCase("quit"))
-			this.quit();
-		if (str.equalsIgnoreCase("cancel"))
-			this.cancel();
-		if (str.equalsIgnoreCase("help"))
-			this.displayHelp();
-	}
-
 
 }

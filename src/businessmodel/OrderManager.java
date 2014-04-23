@@ -137,7 +137,7 @@ public class OrderManager {
 	 * 
 	 * @return	this.scheduler
 	 */
-	public Scheduler getScheduler() {
+	protected Scheduler getScheduler() {
 		return this.scheduler;
 	}
 
@@ -255,5 +255,9 @@ public class OrderManager {
 			if(this.getScheduler().getOrders().size()== 0)
 				return null;
 			return this.getScheduler().getOrders().getLast();
+	}
+	
+	protected Scheduler getScheduler(){
+		return this.scheduler;
 	}
 }

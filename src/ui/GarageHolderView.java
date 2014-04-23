@@ -199,16 +199,6 @@ public class GarageHolderView extends View{
 		this.display();
 	}
 
-	private void check(String str){
-		if (str.equalsIgnoreCase("quit"))
-			this.quit();
-		if (str.equalsIgnoreCase("cancel"))
-			this.cancel();
-		if (str.equalsIgnoreCase("help"))
-			this.displayHelp();
-	}
-
-
 	public void update() {
 		try {
 			Iterator<Order> pending = this.getModel().getPendingOrders(this.user);

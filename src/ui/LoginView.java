@@ -56,15 +56,6 @@ public class LoginView extends View {
 		super.helpOverview();
 	}	
 
-	private void check(String str){
-		if (str.equalsIgnoreCase("quit"))
-			this.quit();
-		if (str.equalsIgnoreCase("cancel"))
-			this.cancel();
-		if (str.equalsIgnoreCase("help"))
-			this.displayHelp();
-	}
-
 	public void register(){
 		System.out.println("> We could not find you in the system !");
 		System.out.println("> Enter as what kind of user (garageholder"
