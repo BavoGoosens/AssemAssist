@@ -145,4 +145,11 @@ public class CarManufacturingCompany implements Model{
 		return null;
 	}
 
+
+	@Override
+	public User login(String username, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
