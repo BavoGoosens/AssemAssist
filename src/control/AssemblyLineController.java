@@ -1,7 +1,6 @@
 package control;
 
 import businessmodel.AssemblyTask;
-import businessmodel.WorkPost;
 
 public interface AssemblyLineController{
 	

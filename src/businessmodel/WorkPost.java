@@ -101,7 +101,7 @@ public class WorkPost {
 	 */
 	public boolean isCompleted(){
 		for(AssemblyTask task: this.getPendingTasks()){
-			if(task.isCompleted() == false)
+			if(!task.isCompleted())
 				return false;
 		}
 		return true;
@@ -160,6 +160,7 @@ public class WorkPost {
 
 	protected void AssemblyTaskCompleted(int time) {
 		this.setTime_order_in_process(this.getTime_order_in_process()+time);
+		this.getAssemblyline().notifyObservers();
 		this.notifyAssemBlyLine();
 	}
 
@@ -260,7 +261,7 @@ public class WorkPost {
 	 * 			The new order the work post needs to start working on.
 	 * @return	The order the work post was previously working on.
 	 */
-	 public Order switchOrders(Order order) {
+	public Order switchOrders(Order order) {
 		Order temp = this.getOrder();
 		this.setNewOrder(order);
 		return temp;
@@ -269,5 +270,10 @@ public class WorkPost {
 	@Override
 	public String toString(){
 		return this.getName();
+	}
+
+	public ArrayList<AssemblyTask> getFinishedTasks() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

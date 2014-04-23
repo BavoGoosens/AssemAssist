@@ -1,11 +1,11 @@
 package businessmodel.scheduler;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import org.joda.time.DateTime;
 
 import sun.nio.cs.ext.TIS_620;
-
 import businessmodel.AssemblyLine;
 import businessmodel.OrderManager;
 import businessmodel.WorkPost;
@@ -57,6 +57,8 @@ public class Scheduler implements Subject {
 	 * A variable that holds the current time;
 	 */
 	private DateTime currenttime;
+	
+	private ArrayList<Observer> observers;
 
 
 	/**
@@ -66,6 +68,7 @@ public class Scheduler implements Subject {
 		this.shifts = new LinkedList<Shift>();
 		this.orders = new LinkedList<Order>();
 		this.assemblyline = new AssemblyLine(this);
+		this.observers = new ArrayList<Observer>();
 		this.updateCurrentTime();
 		this.setOrdermanager(ordermanager);
 		this.changeAlgorithm("fifo", null);
@@ -376,25 +379,21 @@ public class Scheduler implements Subject {
 	}
 
 	@Override
-	public void subscribeObserver(Observer o) {
-		// TODO Auto-generated method stub
+	public void subscribeObserver(Observer observer) throws IllegalArgumentException {
+		if (observer == null) throw new IllegalArgumentException("Bad observer!");
+		this.observers.add(observer);
 	}
 
 	@Override
-	public void unsubscribeObserver(Observer o) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void notifyObservers(Object alteredData) {
-		// TODO Auto-generated method stub
-
+	public void unsubscribeObserver(Observer observer) throws IllegalArgumentException {
+		if (observer == null) throw new IllegalArgumentException("Bad observer!");
+		this.observers.remove(observer);
 	}
 
 	@Override
 	public void notifyObservers() {
-		// TODO Auto-generated method stub
-
+		for (Observer observer: this.observers) {
+			observer.update(this);
+		}
 	}
 }

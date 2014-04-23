@@ -1,26 +1,34 @@
 package ui;
 
+import java.util.Scanner;
+
 import control.SchedulingController;
-import businessmodel.CarManufacturingCompany;
+import control.SchedulingHandler;
 import businessmodel.Model;
+import businessmodel.user.User;
 
 public class SchedulingView extends View {
+	
+	private User user;
+	
+	private Scanner scan = new Scanner(System.in);
+	
+	private SchedulingController controller;
 
-	public SchedulingView(Model cmc) {
+	public SchedulingView(Model cmc, User user) {
 		super(cmc);
-		// TODO Auto-generated constructor stub
+		this.user = user;
+		this.controller = new SchedulingHandler(this.getModel(), this.user);
 	}
 
 	@Override
 	public void display() {
-		// TODO Auto-generated method stub
-		
+		this.getModel().getSchedulingAlgorithms(user);
 	}
 
 	@Override
 	public void displayHelp() {
-		// TODO Auto-generated method stub
-		
+		this.helpOverview();
 	}
 
 	@Override
@@ -31,14 +39,12 @@ public class SchedulingView extends View {
 
 	@Override
 	public void cancel() {
-		// TODO Auto-generated method stub
-		
+		new ManagerView(this.getModel(), this.user).display();		
 	}
 
 	@Override
 	public void quit() {
-		// TODO Auto-generated method stub
-		
+		new LoginView(this.getModel()).display();		
 	}
 
 }

@@ -1,6 +1,7 @@
 package control;
 
 import ui.LoginView;
+import ui.View;
 import businessmodel.CarManufacturingCompany;
 
 /**
@@ -14,7 +15,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		CarManufacturingCompany cmc = new CarManufacturingCompany();
-		LoginView view = new LoginView(cmc);
+		View view = new LoginView(cmc);
 		view.display();
 	}
 }

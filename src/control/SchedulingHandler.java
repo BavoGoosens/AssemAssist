@@ -1,8 +1,8 @@
 package control;
 
-import ui.SchedulingView;
-import ui.View;
 import businessmodel.CarManufacturingCompany;
+import businessmodel.Model;
+import businessmodel.category.CarOption;
 import businessmodel.user.User;
 
 public class SchedulingHandler implements SchedulingController{
@@ -11,21 +11,14 @@ public class SchedulingHandler implements SchedulingController{
 
 	private CarManufacturingCompany cmc;
 
-	private View view;
-
-	public SchedulingHandler(CarManufacturingCompany cmc, User active_user) {
-		this.cmc = cmc;
+	public SchedulingHandler(Model cmc, User active_user) {
+		this.cmc = (CarManufacturingCompany) cmc;
 		this.active_user = active_user;
-		View view = new SchedulingView(this, this.cmc);
-		this.view = view;
-		this.view.displayHelp();
-		this.view.display();
 	}
 
 	@Override
-	public void selectAlgorithm(String algo, String[] args) {
-		// TODO Auto-generated method stub
-
+	public void selectAlgorithm(String algo, CarOption args) {
+		this.cmc.changeAlgorithm(algo, args);
 	}
 
 }

@@ -1,20 +1,19 @@
 package businessmodel.statistics;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
+import businessmodel.order.Order;
 import businessmodel.scheduler.Scheduler;
 import businessmodel.util.CarTupleComperator;
 import businessmodel.util.Tuple;
 
-public class CarStatistics implements Observer{
-
-	private Subject s;
+public class CarStatistics implements Observer {
 
 	/**
 	 * The average number of cars produced.
@@ -25,12 +24,14 @@ public class CarStatistics implements Observer{
 	 * The median number of cars produced.
 	 */
 	private int median;
+	
+	DateTime beginTime;
 
 	private ArrayList<Tuple<LocalDate, Integer>> number_of_cars;
 
-	public CarStatistics(Subject s){
-		this.s = s;
-		s.subscribeObserver(this);
+	public CarStatistics(Subject subject) throws IllegalArgumentException {
+		subject.subscribeObserver(this);
+		if (subject == null || !(subject instanceof Scheduler)) throw new IllegalArgumentException("Bad subject!");
 		this.number_of_cars = new ArrayList<Tuple<LocalDate, Integer>>();
 	}
 
@@ -53,27 +54,6 @@ public class CarStatistics implements Observer{
 			throw new IllegalArgumentException("The supplied number of days is to large");
 	}
 
-	@Override
-	public void update(Subject s, Object o) {
-		if (s instanceof Scheduler){
-			if (o instanceof Tuple<?, ?>){
-
-
-			} else {
-				
-			}
-		} else {
-			
-		}
-	}
-
-	@Override
-	public void update(Subject s) {
-		if (s instanceof Scheduler){
-
-		}
-	}
-
 	private void updateAverage(){
 		int count = 0;
 		for (Tuple<LocalDate, Integer> tup : this.number_of_cars){
@@ -91,6 +71,13 @@ public class CarStatistics implements Observer{
 			this.median = (fml + fol) / 2;
 		} else {
 			this.median = temp.get((int) Math.ceil(temp.size()/2)).getY();
+		}
+	}
+
+	@Override
+	public void update(Subject subject) {
+		if (subject instanceof Scheduler) {
+			
 		}
 	}
 

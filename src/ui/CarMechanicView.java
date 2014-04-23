@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 import control.AssemblyLineController;
 import control.AssemblyLineHandler;
-import businessmodel.AssemblyLine;
 import businessmodel.AssemblyTask;
 import businessmodel.Model;
 import businessmodel.WorkPost;
@@ -60,7 +59,7 @@ public class CarMechanicView extends View {
 	}
 
 	private void performTasks(WorkPost wp) {
-		ArrayList<AssemblyTask> tasks = wp.getPendingTasks();
+		ArrayList<AssemblyTask> tasks = this.getModel().getPendingTasks(wp);
 		System.out.println("> Please enter the number of the task you want to perform: ");
 		int num  = 1;
 		for (AssemblyTask ass : tasks)
@@ -121,15 +120,6 @@ public class CarMechanicView extends View {
 	public void error() {
 		System.out.println("! You entered something wrong. Please try again");
 		this.display();		
-	}
-
-	private void check(String str){
-		if (str.equalsIgnoreCase("quit"))
-			this.quit();
-		if (str.equalsIgnoreCase("cancel"))
-			this.cancel();
-		if (str.equalsIgnoreCase("help"))
-			this.displayHelp();
 	}
 
 

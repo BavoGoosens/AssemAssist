@@ -3,9 +3,13 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import businessmodel.category.CarOption;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
+import businessmodel.observer.Observer;
 import businessmodel.order.Order;
+import businessmodel.statistics.CarStatistics;
+import businessmodel.statistics.OrderStatistics;
 import businessmodel.user.CustomShopManager;
 import businessmodel.user.GarageHolder;
 import businessmodel.user.Manager;
@@ -137,6 +141,55 @@ public class CarManufacturingCompany implements Model{
 
 
 	public void finishTask(AssemblyTask task, int time, User user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public AssemblyLine registerAssemblyLineObserver(Observer observer) {
+		AssemblyLine line = this.getOrderManager().getScheduler().getAssemblyline();
+		line.subscribeObserver(observer);
+		return line;
+	}
+
+
+	@Override
+	public CarStatistics getCarStatistics() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public OrderStatistics getOrderStatistics() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<WorkPost> getWorkPosts() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<AssemblyTask> getPendingTasks(WorkPost wp) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<AssemblyTask> getFinishedTasks(WorkPost wp) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public void changeAlgorithm(String algo, CarOption args) {
 		// TODO Auto-generated method stub
 		
 	}

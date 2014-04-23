@@ -9,12 +9,16 @@ import org.junit.Test;
 import businessmodel.CarModel;
 import businessmodel.Catalog;
 import businessmodel.OrderManager;
+import businessmodel.category.Airco;
 import businessmodel.category.Body;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 import businessmodel.category.Color;
 import businessmodel.category.Engine;
+import businessmodel.category.Gearbox;
 import businessmodel.category.ModelAFactory;
+import businessmodel.category.Seats;
+import businessmodel.category.Wheels;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
@@ -37,45 +41,76 @@ public class BatchAlgorithmTest {
 
 			ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
 			OrderManager orderManager = new OrderManager(carmodels);
-			CarModel modelA = new ModelAFactory().createModel();
-			ArrayList<CarOption> chosen = new ArrayList<CarOption>();
-			for (CarOptionCategory category: this.categories) {
-				ArrayList<CarOption> options = modelA.getCarModelSpecification().getOptionsOfCategory(category);
-				if (options.size() > 0) {
-					chosen.add(options.get(0));
-				}
-			}
-			Order order1 = new StandardCarOrder(new GarageHolder("bouwe", "ceunen", "bouwe"), chosen);
+
+			ArrayList<CarOption> options = new ArrayList<CarOption>();
+			options.add(new CarOption("Airco", new Airco()));
+			options.add(new CarOption("seats", new Seats()));
+			options.add(new CarOption("Color", new Color()));
+			options.add(new CarOption("Gearbox", new Gearbox()));
+			options.add(new CarOption("Wheels", new Wheels()));
+			
+			CarOption engine = new CarOption("small engine", new Engine());
+			CarOption body = new CarOption("big body", new Body());
+			options.add(body);
+			options.add(engine);
+			
+			Order order1 = new StandardCarOrder(new GarageHolder("bouwe", "", ""), options);
 			orderManager.addOrder(order1);
+			
+			//---------------------------------------------------------------------------------
+			
+			options.remove(body);
+			options.remove(engine);
+			engine = new CarOption("medium engine", new Engine());
+			body = new CarOption("big body", new Body());
+			options.add(body);
+			options.add(engine);
 
-			CarOption option1 = new CarOption("medium engine", new Engine());
-			CarOption option21 = new CarOption("big body", new Body() );
-			ArrayList<CarOption> options1 = new ArrayList<CarOption>();
-			options1.add(option1);
-			options1.add(option21);
-			Order order2 = new StandardCarOrder(new GarageHolder("sander", "ceunen", "bouwe"), options1);
+	
+			Order order2 = new StandardCarOrder(new GarageHolder("sander", "", ""), options);
 			orderManager.addOrder(order2);
+			
+			//---------------------------------------------------------------------------------
+			
+			options.remove(body);
+			options.remove(engine);
+			engine = new CarOption("medium engine", new Engine());
+			body = new CarOption("big body", new Body());
+			options.add(body);
+			options.add(engine);
 
-			CarOption option11 = new CarOption("medium engine",new Engine());
-			CarOption option211 = new CarOption("big body", new Body() );
-			ArrayList<CarOption> options11 = new ArrayList<CarOption>();
-			options11.add(option11);
-			options11.add(option211);
-			Order order3 = new StandardCarOrder(new GarageHolder("bavo", "ceunen", "bouwe"), options11);
+			Order order3 = new StandardCarOrder(new GarageHolder("bavo", "", ""), options);
 			orderManager.addOrder(order3);
 
-			CarOption option111 = new CarOption("small engine",new Engine());
-			ArrayList<CarOption> options111 = new ArrayList<CarOption>();
-			options111.add(option111);
-			Order order4 = new StandardCarOrder(new GarageHolder("michiel", "ceunen", "bouwe"), options111);
+			//---------------------------------------------------------------------------------
+			
+			options.remove(body);
+			options.remove(engine);
+			engine = new CarOption("small engine", new Engine());
+			body = new CarOption("small body", new Body());
+			options.add(body);
+			options.add(engine);
+
+			Order order4 = new StandardCarOrder(new GarageHolder("michiel", "", ""), options);
 			orderManager.addOrder(order4);
 
-			CarOption option1111 = new CarOption("medium engine",new Engine());
-			ArrayList<CarOption> options1111 = new ArrayList<CarOption>();
-			options1111.add(option1111);
-			Order order5 = new StandardCarOrder(new GarageHolder("lol", "ceunen", "bouwe"), options1111);
+			
+			//---------------------------------------------------------------------------------
+			
+			options.remove(body);
+			options.remove(engine);
+			engine = new CarOption("medium engine", new Engine());
+			body = new CarOption("body", new Body());
+			options.add(body);
+			options.add(engine);
+
+			Order order5 = new StandardCarOrder(new GarageHolder("lol", "", ""), options);
 			orderManager.addOrder(order5);
 
+			
+			//----------------------------------------------------------------------------------
+			
+			
 			orderManager.getScheduler().changeAlgorithm("sb",  new CarOption("medium engine",new Engine()));
 			try{
 				orderManager.getScheduler().changeAlgorithm("dsfsf",  new CarOption("medium engine",new Engine()));

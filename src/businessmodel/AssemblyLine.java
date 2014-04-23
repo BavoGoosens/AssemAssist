@@ -11,6 +11,8 @@ import businessmodel.category.Gearbox;
 import businessmodel.category.Seats;
 import businessmodel.category.Spoiler;
 import businessmodel.category.Wheels;
+import businessmodel.observer.Observer;
+import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 import businessmodel.scheduler.Scheduler;
 
@@ -20,7 +22,7 @@ import businessmodel.scheduler.Scheduler;
  * @author 	SWOP team 10 2014
  *
  */
-public class AssemblyLine {
+public class AssemblyLine implements Subject{
 
 	/**
 	 * List of work posts at the assembly line.
@@ -53,14 +55,14 @@ public class AssemblyLine {
 		WorkPost post2 = new WorkPost("Drivetrain Post", tasks_workPost_2, this);
 		WorkPost post3 = new WorkPost("Accesoires Post", tasks_workPost_3, this);		
 
-		tasks_workPost_1.add(new AssemblyTask("Assembly Car Body", new Body(),post1));
-		tasks_workPost_1.add(new AssemblyTask("Paint Car", new Color(),post1));
-		tasks_workPost_2.add(new AssemblyTask("Insert Engine", new Engine(),post2));
-		tasks_workPost_2.add(new AssemblyTask("Insert Gearbox", new Gearbox(),post2));
-		tasks_workPost_3.add(new AssemblyTask("Install Seats", new Seats(),post3));
-		tasks_workPost_3.add(new AssemblyTask("Install Airco", new Airco(),post3));
-		tasks_workPost_3.add(new AssemblyTask("Mount Wheels", new Wheels(),post3));
-		tasks_workPost_3.add(new AssemblyTask("Install Spoiler", new Spoiler(),post3));
+		tasks_workPost_1.add(new AssemblyTask("Assembly Car Body", "assemble blabla", new Body(),post1));
+		tasks_workPost_1.add(new AssemblyTask("Paint Car","paint blabla", new Color(),post1));
+		tasks_workPost_2.add(new AssemblyTask("Insert Engine", "insert engine blabla", new Engine(),post2));
+		tasks_workPost_2.add(new AssemblyTask("Insert Gearbox","insert gearbox blabla", new Gearbox(),post2));
+		tasks_workPost_3.add(new AssemblyTask("Install Seats", "insert seats blabla", new Seats(),post3));
+		tasks_workPost_3.add(new AssemblyTask("Install Airco", "insert airco blabla", new Airco(),post3));
+		tasks_workPost_3.add(new AssemblyTask("Mount Wheels", "insert mount wheels", new Wheels(),post3));
+		tasks_workPost_3.add(new AssemblyTask("Install Spoiler","install spoiler", new Spoiler(),post3));
 
 		this.getWorkPosts().add(post1);
 		this.getWorkPosts().add(post2);
@@ -146,7 +148,7 @@ public class AssemblyLine {
 			if(!wp.isCompleted())
 				completed = false;
 		}
-		if(completed == true)
+		if(completed)
 			this.getScheduler().advance(this.timeCurrentStatus);
 	}
 	
@@ -164,6 +166,28 @@ public class AssemblyLine {
 
 	private void setScheduler(Scheduler scheduler) {
 		this.scheduler = scheduler;
+	}
+
+	private ArrayList<Observer> subscribers;
+	
+	@Override
+	public void subscribeObserver(Observer observer) {
+		if (!subscribers.contains(observer))
+			this.subscribers.add(observer);
+	}
+
+
+	@Override
+	public void unsubscribeObserver(Observer observer) {
+		if (this.subscribers.contains(observer))
+			this.subscribers.remove(observer);		
+	}
+
+
+	@Override
+	public void notifyObservers() {
+		for (Observer obs : this.subscribers)
+			obs.update(this);
 	}
 	
 }

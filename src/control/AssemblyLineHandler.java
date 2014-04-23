@@ -3,7 +3,6 @@ package control;
 import businessmodel.AssemblyTask;
 import businessmodel.CarManufacturingCompany;
 import businessmodel.Model;
-import businessmodel.WorkPost;
 import businessmodel.user.User;
 
 public class AssemblyLineHandler implements AssemblyLineController{
