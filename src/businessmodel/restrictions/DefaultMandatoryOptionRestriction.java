@@ -15,16 +15,20 @@ public class DefaultMandatoryOptionRestriction extends Restriction {
 	@Override
 	public boolean check(ArrayList<CarOption> options) throws IllegalArgumentException {
 		if (options == null) throw new IllegalArgumentException("Bad list of options!");
+		this.clearMandatoryCategories();
+		this.clearMandatoryOptions();
+		boolean restrictionViolated = false;
 		ArrayList<CarOptionCategory> categories = getCatalog().getAllCategories();
 		for (CarOption option: options) {
 			categories.remove(option.getCategory());
 		}
 		for (CarOptionCategory category: categories) {
 			if (!category.equals(new Spoiler()) && !category.equals(new Airco())) {
-				return false;
+				this.addMandatoryCategory(category);
+				restrictionViolated = true;
 			}
 		}
-		return true;
+		return !restrictionViolated;
 	}
 
 }

@@ -40,6 +40,14 @@ public abstract class Restriction {
 	
 	public abstract boolean check(ArrayList<CarOption> options);
 	
+	protected void clearMandatoryOptions() {
+		this.mandatoryOptions.clear();
+	}
+	
+	protected void clearMandatoryCategories() {
+		this.mandatoryCategories.clear();
+	}
+	
 	protected void addMandatoryOptions(ArrayList<CarOption> options) {
 		if (options == null) throw new IllegalArgumentException("Bad list of options!");
 		for (CarOption option: options) {
@@ -47,7 +55,7 @@ public abstract class Restriction {
 		}
 	}
 	
-	protected void addMandatoryCategory(ArrayList<CarOptionCategory> categories) {
+	protected void addMandatoryCategories(ArrayList<CarOptionCategory> categories) {
 		if (categories == null) throw new IllegalArgumentException("Bad list of categories!");
 		for (CarOptionCategory category: categories) {
 			this.addMandatoryCategory(category);

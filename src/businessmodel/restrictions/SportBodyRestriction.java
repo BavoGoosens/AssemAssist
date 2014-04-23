@@ -8,14 +8,17 @@ import businessmodel.category.*;
 
 public class SportBodyRestriction extends Restriction {
 
-	public SportBodyRestriction(String name, Catalog inventory) throws IllegalArgumentException {
-		super(name, inventory);
+	public SportBodyRestriction(String name, Catalog catalog) throws IllegalArgumentException {
+		super(name, catalog);
 	}
 
 	@Override
 	public boolean check(ArrayList<CarOption> options) {
+		if (options == null) throw new IllegalArgumentException("Bad list of options!");
+		this.clearMandatoryCategories();
+		this.clearMandatoryOptions();
 		CarOption bodyOption = this.getBodyOption(options);
-		if (bodyOption == null) return false;
+		if (bodyOption == null) return true; // als er geen body is, is deze restrictie wel voldaan
 		if (bodyOption.getName().equalsIgnoreCase("sport")) {
 			return checkForSpoiler(options) && checkEngine(options);
 		}
@@ -24,7 +27,6 @@ public class SportBodyRestriction extends Restriction {
 
 	private CarOption getBodyOption(ArrayList<CarOption> options) {
 		for (CarOption option: options) {
-
 			if (option.getCategory().equals(new Body())) {
 				return option;
 			}
@@ -34,9 +36,7 @@ public class SportBodyRestriction extends Restriction {
 
 	private boolean checkForSpoiler(ArrayList<CarOption> options) {
 		for (CarOption option: options) {
-
 			if (option.getCategory().equals(new Spoiler())) {
-
 				return true;
 			}
 		}
@@ -45,7 +45,6 @@ public class SportBodyRestriction extends Restriction {
 
 	private boolean checkEngine(ArrayList<CarOption> options) {
 		for (CarOption option: options) {
-
 			if (option.getCategory().equals(new Engine())) {
 
 				return option.getName().equalsIgnoreCase("performance 2.5l v6") ||
