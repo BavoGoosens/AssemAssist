@@ -378,8 +378,7 @@ public class Scheduler implements Subject {
 		}
 	}
 
-	protected ArrayList<CarOption> getUnscheduledCarOptions(){
-
+	public ArrayList<CarOption> getUnscheduledCarOptions(){
 		HashMap<String,CarOption> options = new HashMap<String,CarOption>();
 		for(Order order: this.getOrders()){
 			for(CarOption carOption: order.getOptions()){
