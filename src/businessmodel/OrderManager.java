@@ -198,8 +198,8 @@ public class OrderManager {
 		LinkedList<Order> temp = new LinkedList<Order>();
 
 		for(Order order: this.getPendingOrders()){
-			if(order.getUser_end_date()!= null){
-				if(order.getUser_end_date().getDayOfWeek()-1 == this.getScheduler().getCurrentTime().getDayOfWeek()){
+			if(order.getUserEndDate()!= null){
+				if(order.getUserEndDate().getDayOfWeek()-1 == this.getScheduler().getCurrentTime().getDayOfWeek()){
 					int index = this.getPendingOrders().indexOf(order);
 					temp.add(this.getPendingOrders().get(index));
 				}

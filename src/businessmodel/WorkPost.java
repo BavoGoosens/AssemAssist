@@ -191,7 +191,7 @@ public class WorkPost {
 	 */
 	private void refreshAssemblyTasks() {
 		if (this.getOrder() != null) {
-			ArrayList<CarOption> carParts = this.getOrder().getCar().getOptionsClone();
+			ArrayList<CarOption> carParts = this.getOrder().getOptions();
 			ArrayList<AssemblyTask> newPendingTasks = this.possibleAssemblyTasks(carParts);
 			this.setPendingTasks(newPendingTasks);
 		}
