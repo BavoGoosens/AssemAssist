@@ -9,6 +9,7 @@ import org.joda.time.DateTime;
 import businessmodel.Car;
 import businessmodel.category.CarOption;
 import businessmodel.exceptions.NoClearanceException;
+import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.user.User;
 
 /**
@@ -39,7 +40,7 @@ public abstract class Order {
 
 	private DateTime user_end_date;
 
-	private ArrayList<CarOption> caroptions;
+	private Car car;
 
 	private boolean completed;
 
@@ -50,10 +51,12 @@ public abstract class Order {
 	 *          the user that makes the new Order.
 	 * @param   caroptions
 	 *          the car options of the new Order.
+	 * @throws 	UnsatisfiedRestrictionException
 	 */
-	public Order(User user, ArrayList<CarOption> options, DateTime user_end_date) throws IllegalArgumentException, NoClearanceException{
+	public Order(User user, ArrayList<CarOption> options, DateTime user_end_date) throws IllegalArgumentException, NoClearanceException, UnsatisfiedRestrictionException {
+		if (!user.canPlaceOrder()) throw new NoClearanceException();
 		setUser(user);
-		setCapoptions(options);
+		setCar(new Car(options));
 		this.setUser_end_date(user_end_date);
 	}
 
@@ -142,12 +145,13 @@ public abstract class Order {
 		this.setOrder_placed_on_workpost(date);
 	}
 
-	public ArrayList<CarOption> getCarOptions() {
-		return caroptions;
+	public Car getCar() {
+		return this.car;
 	}
 
-	private void setCapoptions(ArrayList<CarOption> capoptions) {
-		this.caroptions = capoptions;
+	private void setCar(Car car) {
+		if (car == null) throw new IllegalArgumentException("Bad car!");
+		this.car = car;
 	}
 
 	public DateTime getUser_end_date() {
