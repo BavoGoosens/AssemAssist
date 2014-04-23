@@ -5,37 +5,35 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.UserManagement;
 import businessmodel.user.GarageHolder;
 import businessmodel.user.Manager;
 import businessmodel.user.Mechanic;
+import businessmodel.user.User;
 
 public class UserManagementTest {
 	
 	private Mechanic mechanic;
 	private GarageHolder garageholder;
 	private Manager manager;
-	private UserManagement um;
+	private User um;
 	
 	@Before
 	public void setUp() throws Exception {
-		mechanic = new Mechanic("Sander","Geijsen","Sander1","henk");
-		garageholder = new GarageHolder("Sander","Geijsen","Sander2","henk");
-		manager = new Manager("Sander","Geijsen","Sander3","henk");
-		um = new UserManagement();
+		mechanic = new Mechanic("Sander","Geijsen","Sander1");
+		garageholder = new GarageHolder("Sander","Geijsen","Sander2");
+		manager = new Manager("Sander","Geijsen","Sander3");
+		
 	}
 
 	@Test
 	public void test() {
-		assertFalse(um.canPlaceOrder(mechanic));
-		assertFalse(um.canPlaceOrder(manager));
-		assertTrue(um.canPlaceOrder(garageholder));
-		assertFalse(um.canControlAssemblyLine(mechanic));
-		assertFalse(um.canControlAssemblyLine(garageholder));
-		assertTrue(um.canControlAssemblyLine(manager));
-		assertFalse(um.isMechanic(garageholder));
-		assertFalse(um.isMechanic(manager));
-		assertTrue(um.isMechanic(mechanic));
+		assertFalse(mechanic.canPlaceOrder());
+		assertFalse(manager.canPlaceOrder());
+		assertTrue(garageholder.canPlaceOrder());
+		assertFalse(mechanic.canAdvanceAssemblyLine());
+		assertFalse(garageholder.canAdvanceAssemblyLine());
+		assertTrue(manager.canAdvanceAssemblyLine());
+	
 	}
 
 }

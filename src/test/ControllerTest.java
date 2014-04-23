@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.user.Mechanic;
-import control.Controller;
 
 public class ControllerTest {
 	
@@ -14,7 +13,7 @@ public class ControllerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		mechanic = new Mechanic("Sander","Geijsen","Sander1","henk");
+		mechanic = new Mechanic("Sander","Geijsen","Sander1");
 	}
 
 	@Test

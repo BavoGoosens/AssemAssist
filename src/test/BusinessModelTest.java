@@ -8,9 +8,9 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
-import component.*;
-import control.Controller;
+
 import businessmodel.*;
+import businessmodel.category.*;
 import businessmodel.order.Order;
 import businessmodel.user.GarageHolder;
 import businessmodel.user.Manager;
@@ -80,9 +80,9 @@ public class BusinessModelTest {
 		
 		car1 = new Car(components);
 		
-		mechanic = new Mechanic("Sander","Geijsen","Sander1","henk");
-		garageholder = new GarageHolder("Sander","Geijsen","Sander2","henk");
-		manager = new Manager("Sander","Geijsen","Sander3","henk");
+		mechanic = new Mechanic("Sander","Geijsen","Sander1");
+		garageholder = new GarageHolder("Sander","Geijsen","Sander2");
+		manager = new Manager("Sander","Geijsen","Sander3");
 		
 		date = new Date();
 
@@ -94,7 +94,7 @@ public class BusinessModelTest {
 		aircos = new ArrayList<Airco>();
 		wheelss = new ArrayList<Wheels>();
 
-		try {cms = new CarModelSpecification(null,colors,engines,gearboxes,seatss,aircos,wheelss);} 
+		try {cms = new CarModelSpecification(null);} 
 		catch (IllegalArgumentException e) {}
 		try {cms = new CarModelSpecification(bodies,null,engines,gearboxes,seatss,aircos,wheelss);} 
 		catch (IllegalArgumentException e) {}

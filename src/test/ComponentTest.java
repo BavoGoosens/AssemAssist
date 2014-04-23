@@ -5,7 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import component.Body;
+import businessmodel.category.*;
+
 
 public class ComponentTest {
 	
@@ -13,7 +14,7 @@ public class ComponentTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		body = new Body("sedan",1000);
+		body = new Body();
 	}
 
 	@Test

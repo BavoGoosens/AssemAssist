@@ -1,11 +1,10 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Date;
 
-import org.joda.time.DateTime;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,40 +13,40 @@ import businessmodel.OrderManager;
 import businessmodel.category.Body;
 import businessmodel.category.CarOption;
 import businessmodel.category.Engine;
-import businessmodel.order.Order;
+import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;
+import businessmodel.user.Manager;
 
-public class OrderTest {
-	
-	private ArrayList<Order> orders;
-	private GarageHolder garageholder;
-	private DateTime date;
-	private OrderManager orderManager ;
+
+
+public class ExceptionTest {
+	private OrderManager orderManager;
+	private Manager manager;
+
 	@Before
 	public void setUp() throws Exception {
-		
 		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
 		orderManager = new OrderManager(carmodels);
-		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
+		manager = new Manager("bouwe", "ceunen", "bouwe");
 		
 		CarOption option = new CarOption("small engine", new Engine() );
 		CarOption option2 = new CarOption("big body", new Body() );
 		ArrayList<CarOption> options = new ArrayList<CarOption>();
 		options.add(option);
 		options.add(option2);
-		orderManager.addOrder(new StandardCarOrder(garageholder, options));
 		
-		date = orderManager.getScheduler().getCurrentTime().plusHours(3);
+		try{
+		orderManager.addOrder(new StandardCarOrder(manager, options));
+		
+		}catch (NoClearanceException ex){
+			assertEquals(ex.getUser(), manager);
+		}
+		
 	}
 
 	@Test
 	public void test() {
 		
-		assertEquals(orderManager.getPendingOrders().get(0).getUser(),this.garageholder);
-		assertEquals(orderManager.getPendingOrders().get(0).getEstimateDate(),this.date);
-		assertEquals(orderManager.getPendingOrders().get(0).isCompleted(),false);
-		
 	}
-
 }
