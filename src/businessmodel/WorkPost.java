@@ -29,6 +29,11 @@ public class WorkPost {
 	private ArrayList<AssemblyTask> pendingTasks;
 
 	/**
+	 * the tasks that are finished for this WorkPost.
+	 */
+	private ArrayList<AssemblyTask> finishedTasks;
+	
+	/**
 	 * The order the working post is currently handling.
 	 */
 	private Order orderInProcess ;
@@ -52,11 +57,10 @@ public class WorkPost {
 	 * 			The tasks this work post is responsible for.
 	 * @throws 	IllegalArgumentException
 	 */
-	public WorkPost(String name, ArrayList<AssemblyTask> tasks, AssemblyLine assemblyline) throws IllegalArgumentException {
+	public WorkPost(String name, AssemblyLine assemblyline) throws IllegalArgumentException {
 		this.setName(name);
 		this.setAssemblyline(assemblyline);
 		this.pendingTasks = new ArrayList<AssemblyTask>();
-		this.setResponsibletasks(tasks);
 	}
 
 	/**
@@ -133,6 +137,23 @@ public class WorkPost {
 	@SuppressWarnings("unchecked")
 	public ArrayList<AssemblyTask> getResponsibleTasksClone() {
 		return (ArrayList<AssemblyTask>) this.getResponsibleTasks().clone();
+	}
+
+	public ArrayList<AssemblyTask> getFinishedTasks() {
+		return this.finishedTasks;
+	}
+
+	/**
+	 * Refreshes the order the work post is currently working on an returns the previous order.
+	 * 
+	 * @param	order
+	 * 			The new order the work post needs to start working on.
+	 * @return	The order the work post was previously working on.
+	 */
+	public Order switchOrders(Order order) {
+		Order temp = this.getOrder();
+		this.setNewOrder(order);
+		return temp;
 	}
 
 	/**
@@ -254,26 +275,8 @@ public class WorkPost {
 		this.assemblyline = assemblyline;
 	}
 
-	/**
-	 * Refreshes the order the work post is currently working on an returns the previous order.
-	 * 
-	 * @param	order
-	 * 			The new order the work post needs to start working on.
-	 * @return	The order the work post was previously working on.
-	 */
-	public Order switchOrders(Order order) {
-		Order temp = this.getOrder();
-		this.setNewOrder(order);
-		return temp;
-	}
-
 	@Override
 	public String toString(){
 		return this.getName();
-	}
-
-	public ArrayList<AssemblyTask> getFinishedTasks() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
