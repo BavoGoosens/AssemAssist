@@ -87,7 +87,7 @@ public class ProductionSchedulerTest {
 					while (iter.hasNext())
 					    copy.add(iter.next());
 					for(AssemblyTask assem : copy)
-							cmc.completeAssemBlyTask(assem, 20);
+							cmc.finishTask(assem, 20);
 					
 				}
 			}
@@ -102,7 +102,7 @@ public class ProductionSchedulerTest {
 					while (iter.hasNext())
 					    copy.add(iter.next());
 					for(AssemblyTask assem : copy)
-							cmc.completeAssemBlyTask(assem, 20);
+							cmc.finishTask(assem, 20);
 					
 				}
 			}
@@ -116,7 +116,7 @@ public class ProductionSchedulerTest {
 					while (iter.hasNext())
 					    copy.add(iter.next());
 					for(AssemblyTask assem : copy)
-							cmc.completeAssemBlyTask(assem, 20);
+							cmc.finishTask(assem, 20);
 					
 				}
 			}

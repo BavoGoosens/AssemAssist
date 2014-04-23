@@ -18,7 +18,7 @@ public class AssemblyLineHandler implements AssemblyLineController{
 
 	@Override
 	public void finishTask(AssemblyTask task, int time) {
-		this.cmc.finishTask(task, time, this.user);
+		this.cmc.finishTask(task, time);
 	}
 
 }

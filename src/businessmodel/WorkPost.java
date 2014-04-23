@@ -136,7 +136,7 @@ public class WorkPost {
 	 */
 
 	@SuppressWarnings("unchecked")
-	protected ArrayList<AssemblyTask> getResponsibleTasksClone() {
+	public ArrayList<AssemblyTask> getResponsibleTasksClone() {
 		return (ArrayList<AssemblyTask>) this.getResponsibleTasks().clone();
 	}
 

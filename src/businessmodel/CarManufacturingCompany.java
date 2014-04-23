@@ -118,7 +118,7 @@ public class CarManufacturingCompany implements Model{
 		return this.ordermanager;
 	}
 
-	public void finishTask(AssemblyTask task, int time, User user) {
+	public void finishTask(AssemblyTask task, int time) {
 		task.completeAssemblytask(time);
 	}
 

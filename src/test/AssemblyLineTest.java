@@ -98,7 +98,7 @@ public class AssemblyLineTest {
 		while (iter.hasNext())
 		    copy.add(iter.next());
 		for(AssemblyTask assem : copy)
-				cmc.completeAssemBlyTask(assem, 20);
+				cmc.finishTask(assem, 20);
 		
 		
 		assertEquals(testassembly.getWorkPosts().get(0).getOrder(),orders.get(1));
@@ -119,7 +119,7 @@ public class AssemblyLineTest {
 		while (iter1.hasNext())
 		    copy1.add(iter1.next());
 		for(AssemblyTask assem : copy1)
-				cmc.completeAssemBlyTask(assem, 20);
+				cmc.finishTask(assem, 20);
 		
 		
 		
@@ -130,7 +130,7 @@ public class AssemblyLineTest {
 		while (iter11.hasNext())
 		    copy11.add(iter11.next());
 		for(AssemblyTask assem : copy11)
-				cmc.completeAssemBlyTask(assem, 20);
+				cmc.finishTask(assem, 20);
 
 		assertEquals(testassembly.getWorkPosts().get(0).getOrder(),orders.get(2));
 		assertEquals(testassembly.getWorkPosts().get(1).getOrder(),orders.get(1));
@@ -147,12 +147,12 @@ public class AssemblyLineTest {
 
 			for(WorkPost wp1: testassembly.getWorkPosts()){
 
-				Iterator<AssemblyTask> iter111 = cmc.getPendingTasks(wp);
+				Iterator<AssemblyTask> iter111 = cmc.getPendingTasks(wp1);
 				List<AssemblyTask> copy111 = new ArrayList<AssemblyTask>();
 				while (iter111.hasNext())
 				    copy111.add(iter111.next());
 				for(AssemblyTask assem : copy111)
-						cmc.completeAssemBlyTask(assem, 20);
+						cmc.finishTask(assem, 20);
 			}
 		}
 
