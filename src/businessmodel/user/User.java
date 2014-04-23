@@ -2,7 +2,7 @@ package businessmodel.user;
 /**
  * A class representing a user of the system.
  * 
- * @author Team 10
+ * @author SWOP team 10 2013-2014
  *
  */
 public abstract class User {
