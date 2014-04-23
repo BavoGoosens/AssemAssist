@@ -116,7 +116,7 @@ public class AssemblyTask {
 	}
 
 	private void notifyWorkPost(int time){
-		this.getWorkpost().AssemblyTaskCompleted(this,time);
+		this.getWorkpost().AssemblyTaskCompleted(time);
 	}
 
 	public WorkPost getWorkpost() {
