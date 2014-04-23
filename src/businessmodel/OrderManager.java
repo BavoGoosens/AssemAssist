@@ -5,6 +5,8 @@ import java.util.LinkedList;
 
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
+import businessmodel.observer.Observer;
+import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 import businessmodel.scheduler.Scheduler;
 import businessmodel.user.User;
@@ -15,9 +17,10 @@ import businessmodel.user.User;
  * 
  * @author   SWOP team 10
  */
-public class OrderManager {
+public class OrderManager implements Subject {
 
-
+	private ArrayList<Observer> observers;
+	
 	public LinkedList<Order> getPendingOrders(){
 		return this.pendingorders;
 	}
@@ -49,6 +52,7 @@ public class OrderManager {
 		this.pendingorders = new LinkedList<Order>();
 		this.completedorders = new LinkedList<Order>();
 		this.scheduler = new Scheduler(this);
+		this.observers = new ArrayList<Observer>();
 		this.setCarModels(carmodels);
 	}
 
@@ -161,6 +165,7 @@ public class OrderManager {
 	public void finishedOrder(Order finished) throws IllegalArgumentException {
 		if (finished == null) throw new IllegalArgumentException("Bad order!");
 		this.getCompletedOrders().add(finished);
+		this.notifyObservers();
 	}
 
 	/**
@@ -255,5 +260,24 @@ public class OrderManager {
 			if(this.getScheduler().getOrders().size()== 0)
 				return null;
 			return this.getScheduler().getOrders().getLast();
+	}
+
+	@Override
+	public void subscribeObserver(Observer observer) throws IllegalArgumentException {
+		if (observer == null) throw new IllegalArgumentException("Bad observer!");
+		this.observers.add(observer);
+	}
+
+	@Override
+	public void unsubscribeObserver(Observer observer) throws IllegalArgumentException {
+		if (observer == null) throw new IllegalArgumentException("Bad observer!");
+		this.observers.remove(observer);
+	}
+
+	@Override
+	public void notifyObservers() {
+		for (Observer observer: this.observers) {
+			observer.update(this);
+		}
 	}
 }

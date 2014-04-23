@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
-import org.joda.time.Duration;
+import org.joda.time.Period;
 
 import businessmodel.OrderManager;
 import businessmodel.observer.Observer;
@@ -29,7 +29,6 @@ public class OrderStatistics implements Observer {
 	
 	public OrderStatistics(Subject subject){
 		this.finishedOrders = new ArrayList<Tuple<Order, Integer>>();
-		this.update();
 		subject.subscribeObserver(this);
 	}
 	
@@ -71,16 +70,23 @@ public class OrderStatistics implements Observer {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void update(Subject subject) {
 		if (subject instanceof OrderManager) {
+			this.finishedOrders = new ArrayList<Tuple<Order, Integer>>();
 			OrderManager orderManager = (OrderManager) subject;
 			LinkedList<Order> finishedOrders = orderManager.getCompletedOrders();
 			for (Order order: finishedOrders) {
-				Duration duration = new Duration(order.getOrder_placed_on_workpost(), order.getCompletionDate());
-				this.finishedOrders.add(new Tuple(order, 10));
+				Period period = new Period(order.getOrder_placed_on_workpost(),
+						order.getCompletionDate());
+				Period normalPeriod = new Period(order.getOrder_placed_on_workpost(), 
+						order.getStandardtime_on_assemblyline());
+				Period delay = period.minus(normalPeriod);
+				this.finishedOrders.add(new Tuple(order, delay.getMinutes()));
 			}
+			this.updateAverage();
+			this.updateMedian();
 		}
 	}
 
