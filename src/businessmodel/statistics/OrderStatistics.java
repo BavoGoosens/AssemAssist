@@ -2,66 +2,85 @@ package businessmodel.statistics;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 
-import org.joda.time.LocalDate;
+import org.joda.time.Duration;
 
+import businessmodel.OrderManager;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
-import businessmodel.util.CarTupleComperator;
 import businessmodel.util.OrderTupleComperator;
 import businessmodel.util.Tuple;
 
 public class OrderStatistics implements Observer {
-
-	private Subject s;
 	
 	/**
 	 * The average delay of all the finished orders.
 	 */
-	private int avarage;
+	private int average;
 
 	/**
 	 * The median delay of all the finished orders.
 	 */
 	private int median;
 
-	private ArrayList<Tuple<Order, Integer>> finished_orders;
+	private ArrayList<Tuple<Order, Integer>> finishedOrders;
 	
-	public OrderStatistics(Subject s){
-		this.s = s;
-		s.subscribeObserver(this);
+	public OrderStatistics(Subject subject){
+		this.finishedOrders = new ArrayList<Tuple<Order, Integer>>();
+		this.update();
+		subject.subscribeObserver(this);
 	}
 	
-	@Override
-	public void update(Subject s, Object o) {
-		// TODO Auto-generated method stub
-		
+	public int getAverage() {
+		return this.average;
 	}
-
-	@Override
-	public void update(Subject s) {
-		// TODO Auto-generated method stub
-		
+	
+	public int getMedian() {
+		return this.median;
 	}
 	
 	private void updateAverage(){
-		int count = 0;
-		for (Tuple<Order, Integer> tup : this.finished_orders){
-			count += tup.getY();
-		}		
-		this.avarage = (int) Math.floor(count / this.finished_orders.size());
+		if (this.finishedOrders.size() > 0) {
+			int count = 0;
+			for (Tuple<Order, Integer> tup : this.finishedOrders){
+				count += tup.getY();
+			}		
+			this.average = (int) Math.floor(count / this.finishedOrders.size());
+		} else {
+			this.average = 0;
+		}
 	}
 	
-	private void updateMedian(){
-		ArrayList<Tuple<Order, Integer>> temp = (ArrayList<Tuple<Order, Integer>>) this.finished_orders.clone();
-		Collections.sort(temp, new OrderTupleComperator());
-		if ( temp.size() % 2 == 0 ){
-			int fml = temp.get(temp.size()/2).getY();
-			int fol = temp.get(temp.size()/2 + 1).getY();
-			this.median = (fml + fol) / 2;
+	@SuppressWarnings("unchecked")
+	private void updateMedian() {
+		if (this.finishedOrders.size() > 0) {
+			ArrayList<Tuple<Order, Integer>> temp = 
+					(ArrayList<Tuple<Order, Integer>>) this.finishedOrders.clone();
+			Collections.sort(temp, new OrderTupleComperator());
+			if ( temp.size() % 2 == 0 ){
+				int fml = temp.get(temp.size()/2).getY();
+				int fol = temp.get(temp.size()/2 + 1).getY();
+				this.median = (fml + fol) / 2;
+			} else {
+				this.median = temp.get((int) Math.ceil(temp.size()/2)).getY();
+			}
 		} else {
-			this.median = temp.get((int) Math.ceil(temp.size()/2)).getY();
+			this.median = 0;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void update(Subject subject) {
+		if (subject instanceof OrderManager) {
+			OrderManager orderManager = (OrderManager) subject;
+			LinkedList<Order> finishedOrders = orderManager.getCompletedOrders();
+			for (Order order: finishedOrders) {
+				Duration duration = new Duration(order.getOrder_placed_on_workpost(), order.getCompletionDate());
+				this.finishedOrders.add(new Tuple(order, 10));
+			}
 		}
 	}
 

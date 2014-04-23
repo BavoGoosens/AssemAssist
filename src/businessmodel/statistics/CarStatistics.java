@@ -1,18 +1,17 @@
 package businessmodel.statistics;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 import org.joda.time.LocalDate;
 
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
-import businessmodel.scheduler.Scheduler;
+import businessmodel.order.Order;
 import businessmodel.util.CarTupleComperator;
 import businessmodel.util.Tuple;
 
-public class CarStatistics implements Observer{
+public class CarStatistics implements Observer {
 
 	private Subject s;
 
@@ -51,27 +50,6 @@ public class CarStatistics implements Observer{
 			return result;
 		} else 
 			throw new IllegalArgumentException("The supplied number of days is to large");
-	}
-
-	@Override
-	public void update(Subject s, Object o) {
-		if (s instanceof Scheduler){
-			if (o instanceof Tuple<?, ?>){
-
-
-			} else {
-				
-			}
-		} else {
-			
-		}
-	}
-
-	@Override
-	public void update(Subject s) {
-		if (s instanceof Scheduler){
-
-		}
 	}
 
 	private void updateAverage(){
