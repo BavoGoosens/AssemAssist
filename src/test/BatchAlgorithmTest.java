@@ -66,7 +66,7 @@ public class BatchAlgorithmTest {
 			options1111.add(option1111);
 			orderManager.addOrder(new StandardCarOrder(new GarageHolder("lol", "ceunen", "bouwe"), options1111));
 			
-			orderManager.getScheduler().changeAlgorithm("sb");
+			orderManager.getScheduler().changeAlgorithm("sb",  new CarOption("medium engine",new Engine()));
 			
 			orderManager.getScheduler().ScheduleDay();
 			

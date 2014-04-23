@@ -5,13 +5,9 @@ import java.util.LinkedList;
 
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
-import businessmodel.category.CarModelFactory;
 import businessmodel.category.Color;
 import businessmodel.category.Engine;
 import businessmodel.category.Gearbox;
-import businessmodel.category.ModelAFactory;
-import businessmodel.category.ModelBFactory;
-import businessmodel.category.ModelCFactory;
 import businessmodel.category.Seats;
 import businessmodel.category.Spoiler;
 import businessmodel.category.Wheels;
@@ -19,7 +15,7 @@ import businessmodel.order.Order;
 import businessmodel.scheduler.Scheduler;
 
 /**
- * A class that represents an assembly line. It currently holds 3 work post.
+ * A class representing an assembly line. It currently holds 3 work post.
  * 
  * @author 	SWOP team 10 2014
  *
@@ -37,15 +33,16 @@ public class AssemblyLine {
 	private Scheduler scheduler;
 
 	/**
-	 * A constructor for the class AssemblyLine.
+	 * Creates a new assembly line.
 	 */
 	public AssemblyLine(Scheduler scheduler) throws IllegalArgumentException {
 		this.setScheduler(scheduler);
 		this.generateWorkPosts();
 	}
 
+
 	/**
-	 * Method to generate all the factories for de WorkPosts
+	 * Method to generate all the factories for the WorkPosts
 	 */
 	private void generateWorkPosts(){
 
@@ -71,10 +68,9 @@ public class AssemblyLine {
 	}
 
 	/**
-	 * This method checks whether the assembly line can move forward.
+	 * Checks whether the assembly line can move forward.
 	 * 
-	 * @return boolean
-	 * 		   true is the assembly line can move forward. false otherwise.
+	 * @return True if the assembly line can move forward.
 	 */
 	public boolean canAdvance() {
 		for(WorkPost wp : this.getWorkPosts()){
@@ -86,10 +82,13 @@ public class AssemblyLine {
 	}		
 
 	/**
+	 * Advances the assembly line and adds a new order to the assembly line.
 	 * 
-	 * @param neworder
-	 * @return
-	 * @throws IllegalStateException
+	 * @param 	neworder
+	 * 			The new order that needs to be added to the assembly line, when moved forward.	
+	 * @throws	IllegalStateException
+	 * 			| If the assembly line cannot be advanced.
+	 * 			| !this.canAdvance()
 	 */
 	public void advance(Order neworder) throws IllegalStateException {
 		if (!this.canAdvance())
@@ -104,10 +103,9 @@ public class AssemblyLine {
 	}
 
 	/**
-	 * A method that returns all the orders that are on the assembly line.
+	 * Returns all the orders that are on the assembly line.
 	 * 
-	 * @return  LinkedList<Order>
-	 * 		    A list with all the orders that are on the assembly line.
+	 * @return  A list with all the orders that are currently on the assembly line.
 	 */
 	protected LinkedList<Order> getWorkPostOrders(){
 		LinkedList<Order> orders = new LinkedList<Order>();
@@ -119,18 +117,18 @@ public class AssemblyLine {
 
 
 	/**
-	 * This method returns the list of work posts at the assembly line.
+	 * Returns the list of work posts at the assembly line.
 	 * 
-	 * @return	ArrayList<WorkPost>
-	 * 			this.workposts
+	 * @return	The list of work posts at the assembly line.
 	 */
 	public ArrayList<WorkPost> getWorkPosts() {
 		return this.workposts;
 	}
 
 	/**
+	 * Returns the number of work posts at the assembly line.
 	 * 
-	 * @return
+	 * @return	The number of work posts at the assembly line.
 	 */
 	public int getNumberOfWorkPosts(){
 		return this.getWorkPosts().size();

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import businessmodel.category.CarOption;
 
 /**
- * This car represents a car model. 
+ * A class representing a car model. 
  * 
  * @author SWOP Team 10 2014
  *
@@ -13,22 +13,24 @@ import businessmodel.category.CarOption;
 public class CarModel {
 
 	/**
-	 * A variable that describes the model of the car.
+	 * The name of the car model.
 	 */
 	private String name;
 	
 	/**
-	 * A variable the specifies the CarModelSpecification of this car.
+	 * The car model specification of the car model.
 	 */
 	private CarModelSpecification cms;
 
 	/**
-	 * A constructor for the class CarModel.
+	 * Creates a new car model with a given name and car model specification.
 	 * 
-	 * @param   carmodel
-	 *          A string that represents the name of the car model.
+	 * @param   name
+	 *          The name for the new car model.
 	 * @param   cms
-	 *          A car model specification of the car.
+	 *          The car model specification for the car new model.
+	 * @throws	IllegalArgumentException
+	 * 
 	 */
 	public CarModel(String name,CarModelSpecification cms) throws IllegalArgumentException {
 		setCarmodel(name);
@@ -36,20 +38,22 @@ public class CarModel {
 	}
 	
 	/**
-	 * A method to get the car model.
+	 * Returns the name of the car model.
 	 * 
-	 * @return  String
-	 * 			the name of this car model.
+	 * @return  The name of the car model.
 	 */
 	public String getName() {
 		return this.name;
 	}
 
 	/**
-	 * A method to set name the car model to the given name.
+	 * Sets the name of the car model to the given name.
 	 * 
-	 * @param    carmodel
-	 *           the new name of this car model.
+	 * @param	name
+	 *          The name for the car model.
+	 * @throws	IllegalArgumentException
+	 * 			| If the name is equal to 'null' or is equal to the empty string
+	 * 			| name == null || name.equals("")
 	 */
 	private void setCarmodel(String name) throws IllegalArgumentException {
 		if (name == null || name.equals("")) throw new IllegalArgumentException("Bad name for carmodel!");
@@ -57,22 +61,22 @@ public class CarModel {
 	}	
 	
 	/**
-	 * A method to get the car model specification of this car model.
+	 * Returns the car model specification of the car model.
 	 * 
-	 * @return  CarModelSpecification 
-	 * 			the car manufacturing company of this car model.
+	 * @return  The car model specification of the car model.
 	 */
 	public CarModelSpecification getCarModelSpecification() {
 		return cms;
 	}
 
 	/**
-	 * A method to set the car model specification of this car model to the given car model specification.
+	 * Sets the car model specification of this car model to the given car model specification.
 	 * 
-	 * @param   cmss
-	 *          the new car model specification of this car model.
+	 * @param   cms
+	 *          The car model specification for the car model.
 	 * @throws 	IllegalArgumentException
-	 * 			if cms == null
+	 * 			| If the car model specification is equal to 'null'
+	 * 			| cms == null
 	 */
 	private void setCarModelSpecification(CarModelSpecification cms) throws IllegalArgumentException {
 		if(cms == null) throw new IllegalArgumentException("Bad car model specification!");
@@ -80,14 +84,18 @@ public class CarModel {
 	}
 	
 	/**
-	 * A method that return a list of all the possible components ordered by type. 
+	 * Returns a list of all the possible options of the car model.
 	 * 
-	 * @return	List of  list of components, ordered by type.
+	 * @return	List of all the possible options of the car model.
+	 * 			This depends on the car model specification.
 	 */
 	public ArrayList<CarOption> getPossibilities(){
 		return this.cms.getOptionsClone();
 	}
 	
+	/**
+	 * Returns a string representation of the car model.
+	 */
 	@Override
 	public String toString() {
 		return "Car model: " + name;

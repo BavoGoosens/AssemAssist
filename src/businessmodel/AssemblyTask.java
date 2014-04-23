@@ -3,7 +3,7 @@ package businessmodel;
 import businessmodel.category.CarOptionCategory;
 
 /**
- * A class that represents an assembly task.
+ * A class representing an assembly task.
  * 
  * @author SWOP team 10 2014
  *
@@ -11,27 +11,31 @@ import businessmodel.category.CarOptionCategory;
 public class AssemblyTask {
 
 	/**
-	 * A variable that holds the name of this assembly task.
+	 * The name of the assembly task.
 	 */
 	private String name;
 
 	/**
-	 * A variable that specifies if this assembly task has been completed.
+	 * Specifies if this assembly task has been completed.
 	 */
 	private boolean completed = false;
 	
 	/**
-	 *  
+	 * The category of the car options that this assembly task manages. 
 	 */
 	private CarOptionCategory category;
 	
 	private WorkPost workpost;
 
 	/**
-	 * A constructor for the class assembly task.
+	 * Creates a new assembly task.
 	 * 
-	 * @param   name
-	 *          the name of this assembly process.
+	 * @param 	name
+	 * 			The name for the assembly task.
+	 * @param 	category
+	 * 			The category for the assembly task.
+	 * @throws 	IllegalArgumentException
+	 * 
 	 */
 	public AssemblyTask(String name, CarOptionCategory category, WorkPost workpost) throws IllegalArgumentException {
 		this.setWorkpost(workpost);
@@ -40,12 +44,13 @@ public class AssemblyTask {
 	}
 
 	/**
-	 * A method to set the name of this assembly task to the given name.
+	 * Sets the name of this assembly task to the given name.
 	 * 
 	 * @param   name
-	 *          the new name of this assembly task.
+	 *          The new name for the assembly task.
 	 * @throws 	IllegalArgumentException
-	 * 			if the given name is null
+	 * 			| If the name is equal to 'null'
+	 * 			| name == null
 	 */			
 	private void setName(String name) throws IllegalArgumentException{
 		if(name == null) 
@@ -54,10 +59,9 @@ public class AssemblyTask {
 	}
 	
 	/**
-	 * A method to get the name of this assembly task.
+	 * Returns the name of this assembly task.
 	 * 
-	 * @return  String
-	 * 			the name of this assembly task.
+	 * @return  The name of this assembly task.
 	 */
 	protected String getName() {
 		return this.name;
@@ -72,25 +76,42 @@ public class AssemblyTask {
 	}
 	
 	/**
-	 * A method to check if this assembly task is completed.
+	 * Checks if this assembly task is completed.
 	 * 
-	 * @return  boolean
-	 * 			true if all actions of this assembly task are completed.
+	 * @return	True if the assembly task is completed.
 	 */
 	public boolean isCompleted(){
 		return this.completed;
 	}
 	
+	/**
+	 * Returns a string representation of the assembly task.
+	 */
 	@Override
 	public String toString(){
 		return this.getName();
 	}
 	
+	/**
+	 * Returns the category of the assembly task.
+	 * 
+	 * @return	The category of the assembly task.
+	 */
 	protected CarOptionCategory getCategory() {
 		return category;
 	}
-
-	private void setCategory(CarOptionCategory category) {
+	
+	/**
+	 * Sets the category of the assembly task.
+	 * 
+	 * @param 	category
+	 * 			The category for the assembly task.
+	 * @throws 	IllegalArgumentException
+	 * 			| If the category is equal to 'null'
+	 * 			| category == null
+	 */
+	private void setCategory(CarOptionCategory category) throws IllegalArgumentException {
+		if (category == null) throw new IllegalArgumentException("Bad category!");
 		this.category = category;
 	}
 
