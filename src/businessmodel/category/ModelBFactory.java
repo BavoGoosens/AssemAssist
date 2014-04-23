@@ -6,6 +6,12 @@ import businessmodel.CarModel;
 import businessmodel.CarModelSpecification;
 import businessmodel.exceptions.IllegalCarOptionCategoryException;
 
+/**
+ * Class representing a factory that creates B model objects.
+ * 
+ * @author team 10
+ *
+ */
 public class ModelBFactory extends CarModelFactory {
 
 	/**
