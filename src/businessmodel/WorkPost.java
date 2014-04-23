@@ -33,28 +33,24 @@ public class WorkPost {
 	 */
 	private Order order_in_process ;
 
-	/**
-	 * This method constructs a new work post with a given name.
-	 * 
-	 * @param	name
-	 * 			The name of the work post
-	 */
-	public WorkPost(String name) throws IllegalArgumentException {
-		this.setName(name);
-		this.pendingtasks = new ArrayList<AssemblyTask>();
-	}
+	private int time_order_in_process;
+
+	private AssemblyLine assemblyline;
+
 
 	/**
-	 * This method constructs a new work post with a given name and given assembly tasks.
-	 * 
-	 * @param	name
-	 * 			The name of the work post
-	 * @param 	tasks
-	 * 			The tasks this work post is responsible for.
+	 * This method constructs a new work post with a given name and a given set of assembly tasks.
+	 *
+	 * @param name
+	 * The name of the work post
+	 * @param tasks
+	 * The tasks this work post is responsible for.
 	 */
-	public WorkPost(String name, ArrayList<AssemblyTask> categories) throws IllegalArgumentException {
-		this(name);
-		this.setResponsibletasks(categories);
+	public WorkPost(String name, ArrayList<AssemblyTask> tasks, AssemblyLine assemblyline) throws IllegalArgumentException {
+		this.setName(name);
+		this.setAssemblyline(assemblyline);
+		this.pendingtasks = new ArrayList<AssemblyTask>();
+		this.setResponsibletasks(tasks);
 	}
 
 	/**
@@ -127,6 +123,12 @@ public class WorkPost {
 		this.responsible_assembly_tasks = responsibletasks;
 	}
 
+	public Order switchOrders(Order order) {
+		Order temp = this.getOrder();
+		this.setNewOrder(order);
+		return temp;
+	}
+
 	/**
 	 * This method returns the Order the Work Post is working on.
 	 * 
@@ -145,6 +147,7 @@ public class WorkPost {
 	 */
 	public void setOrder(Order order_in_process) {
 		this.order_in_process = order_in_process;
+		this.time_order_in_process = 0;
 	}
 
 	/**
@@ -206,14 +209,40 @@ public class WorkPost {
 		return result;
 	}
 
-	@Override
-	public String toString(){
-		return this.getName();
+	protected void AssemblyTaskCompleted(int time) {
+		this.setTime_order_in_process(this.getTime_order_in_process()+time);
+		this.notifyAssemBlyLine();
 	}
 
-	public Order switchOrders(Order order) {
-		Order temp = this.getOrder();
-		this.setNewOrder(order);
-		return temp;
+	protected void notifyAssemBlyLine(){
+		boolean completed= true;
+		for(AssemblyTask assemblytask: this.getPendingTasks()){
+			if(!assemblytask.isCompleted())
+				completed = false;
+		}
+		if(completed){
+			this.getAssemblyline().WorkPostCompleted(this.getTime_order_in_process());
+		}
+
+		@Override
+		public String toString(){
+			return this.getName();
+		}
+
+		private int getTime_order_in_process() {
+			return time_order_in_process;
+		}
+
+		private void setTime_order_in_process(int time){
+			this.time_order_in_process = time;
+		}
+
+
+		protected AssemblyLine getAssemblyline() {
+			return assemblyline;
+		}
+
+		private void setAssemblyline(AssemblyLine assemblyline) {
+			this.assemblyline = assemblyline;
+		}
 	}
-}

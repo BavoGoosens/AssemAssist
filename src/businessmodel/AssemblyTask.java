@@ -34,7 +34,7 @@ public class AssemblyTask {
 	 *          the name of this assembly process.
 	 */
 	public AssemblyTask(String name, CarOptionCategory category, WorkPost workpost) throws IllegalArgumentException {
-		this.workpost = workpost;
+		this.setWorkpost(workpost);
 		this.setName(name);
 		this.setCategory(category);
 	}
@@ -66,8 +66,9 @@ public class AssemblyTask {
 	/**
 	 * A method to set this assembly task to completed.
 	 */
-	protected void completeAssemblytask(){
+	protected void completeAssemblytask(int time){
 		this.completed = true;
+		this.notifyWorkPost(time);
 	}
 	
 	/**
@@ -91,5 +92,17 @@ public class AssemblyTask {
 
 	private void setCategory(CarOptionCategory category) {
 		this.category = category;
+	}
+
+	private void notifyWorkPost(int time){
+		this.getWorkpost().AssemblyTaskCompleted(this,time);
+	}
+
+	public WorkPost getWorkpost() {
+		return workpost;
+	}
+
+	public void setWorkpost(WorkPost workpost) {
+		this.workpost = workpost;
 	}
 }
