@@ -9,10 +9,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.CarModel;
+import businessmodel.Catalog;
 import businessmodel.OrderManager;
 import businessmodel.category.Body;
 import businessmodel.category.CarOption;
+import businessmodel.category.CarOptionCategory;
 import businessmodel.category.Engine;
+import businessmodel.category.ModelAFactory;
+import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;
 
@@ -20,30 +24,40 @@ public class OrderTest {
 	
 	private GarageHolder garageholder;
 	private DateTime date;
-	private OrderManager orderManager ;
+	private ArrayList<CarOptionCategory> categories;
+	private Catalog catalog;
+	private OrderManager om;
 	@Before
 	public void setUp() throws Exception {
 		
 		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
-		orderManager = new OrderManager(carmodels);
+		om = new OrderManager(carmodels);
 		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
 		
-		CarOption option = new CarOption("small engine", new Engine() );
-		CarOption option2 = new CarOption("big body", new Body() );
-		ArrayList<CarOption> options = new ArrayList<CarOption>();
-		options.add(option);
-		options.add(option2);
-		orderManager.addOrder(new StandardCarOrder(garageholder, options));
+
+		this.catalog = new Catalog();
+		this.categories = this.catalog.getAllCategories();
+
+		CarModel modelA = new ModelAFactory().createModel();
+		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
+		for (CarOptionCategory category: this.categories) {
+			ArrayList<CarOption> options = modelA.getCarModelSpecification().getOptionsOfCategory(category);
+			if (options.size() > 0) {
+				chosen.add(options.get(0));
+			}
+
+		}
+		om.addOrder(new StandardCarOrder(garageholder, chosen));
 		
-		date = orderManager.getScheduler().getCurrentTime().plusHours(3);
+		date = om.getScheduler().getCurrentTime().plusHours(3);
 	}
 
 	@Test
 	public void test() {
 		
-		assertEquals(orderManager.getPendingOrders().get(0).getUser(),this.garageholder);
-		assertEquals(orderManager.getPendingOrders().get(0).getEstimateDate(),this.date);
-		assertEquals(orderManager.getPendingOrders().get(0).isCompleted(),false);
+		assertEquals(om.getScheduler().getOrders().get(0).getUser(),this.garageholder);
+		assertEquals(om.getScheduler().getOrders().get(0).getEstimateDate(),this.date);
+		assertEquals(om.getScheduler().getOrders().get(0).isCompleted(),false);
 		
 	}
 

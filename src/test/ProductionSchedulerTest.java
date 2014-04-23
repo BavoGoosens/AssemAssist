@@ -11,11 +11,14 @@ import org.junit.Test;
 import businessmodel.AssemblyTask;
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
+import businessmodel.Catalog;
 import businessmodel.OrderManager;
 import businessmodel.WorkPost;
 import businessmodel.category.Body;
 import businessmodel.category.CarOption;
+import businessmodel.category.CarOptionCategory;
 import businessmodel.category.Engine;
+import businessmodel.category.ModelAFactory;
 import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
 import businessmodel.scheduler.Scheduler;
@@ -27,6 +30,8 @@ public class ProductionSchedulerTest {
 	private ArrayList<Order> orders;
 	private OrderManager om;
 	private StandardCarOrder order;
+	private ArrayList<CarOptionCategory> categories;
+	private Catalog catalog;
 
 	@Before
 	public void setUp() throws Exception {
@@ -36,12 +41,19 @@ public class ProductionSchedulerTest {
 		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
 		orders = new ArrayList<Order>();
 		
-		CarOption option = new CarOption("small engine", new Engine() );
-		CarOption option2 = new CarOption("big body", new Body() );
-		ArrayList<CarOption> options = new ArrayList<CarOption>();
-		options.add(option);
-		options.add(option2);
-		order = new StandardCarOrder(garageholder, options);
+		this.catalog = new Catalog();
+		this.categories = this.catalog.getAllCategories();
+
+		CarModel modelA = new ModelAFactory().createModel();
+		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
+		for (CarOptionCategory category: this.categories) {
+			ArrayList<CarOption> options = modelA.getCarModelSpecification().getOptionsOfCategory(category);
+			if (options.size() > 0) {
+				chosen.add(options.get(0));
+			}
+		}
+		
+		order = new StandardCarOrder(garageholder, chosen);
 		orders.add(order);
 		om.addOrder(order);
 		
@@ -59,7 +71,7 @@ public class ProductionSchedulerTest {
 			om.placeOrder(order);
 		
 		assertTrue(om.getCompletedOrders().isEmpty());
-		assertEquals(orders.get(0),om.getPendingOrders().get(0));
+		assertEquals(orders.get(0),om.getScheduler().getOrders().get(0));
 		om.getScheduler().ScheduleDay();
 		prodsched.advance(60);
 		

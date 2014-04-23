@@ -8,10 +8,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.CarModel;
+import businessmodel.Catalog;
 import businessmodel.OrderManager;
 import businessmodel.category.Body;
 import businessmodel.category.CarOption;
+import businessmodel.category.CarOptionCategory;
 import businessmodel.category.Engine;
+import businessmodel.category.ModelAFactory;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
@@ -24,6 +27,8 @@ public class OrderManagerTest {
 	private Order order;
 	CarOption option;
 	CarOption option2;
+	private Catalog catalog;
+	private ArrayList<CarOptionCategory> categories;
 
 	@Before
 	public void setUp() throws Exception {
@@ -31,12 +36,18 @@ public class OrderManagerTest {
 		om = new OrderManager(carmodels);
 		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
 
-		CarOption option = new CarOption("small engine", new Engine() );
-		CarOption option2 = new CarOption("big body", new Body() );
-		ArrayList<CarOption> options = new ArrayList<CarOption>();
-		options.add(option);
-		options.add(option2);
-		order = new StandardCarOrder(garageholder, options);
+		this.catalog = new Catalog();
+		this.categories = this.catalog.getAllCategories();
+
+		CarModel modelA = new ModelAFactory().createModel();
+		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
+		for (CarOptionCategory category: this.categories) {
+			ArrayList<CarOption> options = modelA.getCarModelSpecification().getOptionsOfCategory(category);
+			if (options.size() > 0) {
+				chosen.add(options.get(0));
+			}
+		}
+		order = new StandardCarOrder(garageholder, chosen);
 		om.addOrder(order);
 	}
 
@@ -44,7 +55,7 @@ public class OrderManagerTest {
 	public void test() {
 		try {
 			
-			assertTrue(om.getPendingOrders().contains(order));
+			assertTrue(om.getScheduler().getOrders().contains(order));
 			assertTrue(om.getPendingOrders(garageholder).contains(order));
 			om.finishedOrder(order);
 			assertTrue(om.getCompletedOrders().contains(order));
@@ -52,8 +63,7 @@ public class OrderManagerTest {
 			
 
 		} catch (IllegalArgumentException | NoClearanceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 
