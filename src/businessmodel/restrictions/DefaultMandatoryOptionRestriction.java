@@ -2,22 +2,37 @@ package businessmodel.restrictions;
 
 import java.util.ArrayList;
 
-import businessmodel.Catalog;
 import businessmodel.category.*;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 
-
+/**
+ * Class representing a restriction that checks the default mandatory options.
+ * 
+ * @author SWOP team 10 2013-2014
+ *
+ */
 public class DefaultMandatoryOptionRestriction extends Restriction {
+	
+	private ArrayList<CarOptionCategory> categories;
 
-	public DefaultMandatoryOptionRestriction(String name, Catalog catalog) throws IllegalArgumentException {
-		super(name, catalog);
+	public DefaultMandatoryOptionRestriction(ArrayList<CarOptionCategory> categories) throws IllegalArgumentException {
+		this.setCategories(categories);
+	}
+	
+	private void setCategories(ArrayList<CarOptionCategory> categories) throws IllegalArgumentException {
+		if (categories == null) throw new IllegalArgumentException("Bad list of categories!");
+		this.categories = categories;
+	}
+	
+	private ArrayList<CarOptionCategory> getCategories() {
+		return this.categories;
 	}
 
 	@Override
 	public boolean check(ArrayList<CarOption> options) throws IllegalArgumentException, UnsatisfiedRestrictionException {
 		if (options == null) throw new IllegalArgumentException("Bad list of options!");
 		ArrayList<CarOptionCategory> unimplementedMandatoryCategories = new ArrayList<CarOptionCategory>();
-		ArrayList<CarOptionCategory> categories = getCatalog().getAllCategories();
+		ArrayList<CarOptionCategory> categories = getCategories();
 		for (CarOption option: options) {
 			categories.remove(option.getCategory());
 		}

@@ -46,11 +46,11 @@ public class WorkPost {
 	/**
 	 * This method constructs a new work post with a given name and a given set of assembly tasks.
 	 *
-	 * @param name
-	 * The name of the work post
-	 * @param tasks
-	 * The tasks this work post is responsible for.
-	 * @throws IllegalArgumentException
+	 * @param 	name
+	 * 			The name of the work post
+	 * @param 	tasks
+	 * 			The tasks this work post is responsible for.
+	 * @throws 	IllegalArgumentException
 	 */
 	public WorkPost(String name, ArrayList<AssemblyTask> tasks, AssemblyLine assemblyline) throws IllegalArgumentException {
 		this.setName(name);

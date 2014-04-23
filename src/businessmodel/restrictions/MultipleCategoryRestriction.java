@@ -2,17 +2,18 @@ package businessmodel.restrictions;
 
 import java.util.ArrayList;
 
-import businessmodel.Catalog;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
-
+/**
+ * A class representing a restriction that checks for multiple categories.
+ * 
+ * @author SWOP team 10 2013-2014
+ *
+ */
 public class MultipleCategoryRestriction extends Restriction {
 
-	public MultipleCategoryRestriction(String name, Catalog catalog)
-			throws IllegalArgumentException {
-		super(name, catalog);
-	}
+	public MultipleCategoryRestriction() {}
 
 	@Override
 	public boolean check(ArrayList<CarOption> options)

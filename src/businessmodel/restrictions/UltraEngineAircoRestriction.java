@@ -2,16 +2,19 @@ package businessmodel.restrictions;
 
 import java.util.ArrayList;
 
-import businessmodel.Catalog;
 import businessmodel.category.*;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 
+/**
+ * A class representing a restriction that checks for the mandatory options and 
+ * categories for a set of options with an ultra engine.
+ * 
+ * @author SWOP team 10 2013-2014
+ *
+ */
 public class UltraEngineAircoRestriction extends Restriction {
 
-	public UltraEngineAircoRestriction(String name, Catalog catalog)
-			throws IllegalArgumentException {
-		super(name, catalog);
-	}
+	public UltraEngineAircoRestriction() {}
 
 	@Override
 	public boolean check(ArrayList<CarOption> options) throws UnsatisfiedRestrictionException {
