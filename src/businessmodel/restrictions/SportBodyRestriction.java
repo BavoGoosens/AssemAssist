@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import businessmodel.Catalog;
 import businessmodel.category.*;
+import businessmodel.exceptions.UnsatisfiedRestrictionException;
 
 
 public class SportBodyRestriction extends Restriction {
@@ -13,14 +14,13 @@ public class SportBodyRestriction extends Restriction {
 	}
 
 	@Override
-	public boolean check(ArrayList<CarOption> options) {
+	public boolean check(ArrayList<CarOption> options) throws UnsatisfiedRestrictionException {
 		if (options == null) throw new IllegalArgumentException("Bad list of options!");
-		this.clearMandatoryCategories();
-		this.clearMandatoryOptions();
 		CarOption bodyOption = this.getBodyOption(options);
 		if (bodyOption == null) return true; // als er geen body is, is deze restrictie wel voldaan
 		if (bodyOption.getName().equalsIgnoreCase("sport")) {
-			return checkForSpoiler(options) && checkEngine(options);
+			checkForSpoiler(options);
+			checkEngine(options);
 		}
 		return true;
 	}
@@ -34,24 +34,25 @@ public class SportBodyRestriction extends Restriction {
 		return null;
 	}
 
-	private boolean checkForSpoiler(ArrayList<CarOption> options) {
+	private boolean checkForSpoiler(ArrayList<CarOption> options) throws UnsatisfiedRestrictionException {
 		for (CarOption option: options) {
 			if (option.getCategory().equals(new Spoiler())) {
 				return true;
 			}
 		}
-		return false;
+		throw new UnsatisfiedRestrictionException("If you choose a SPORT BODY, you must "
+				+ "choose a SPOILER option.");
 	}
 
-	private boolean checkEngine(ArrayList<CarOption> options) {
+	private boolean checkEngine(ArrayList<CarOption> options) throws UnsatisfiedRestrictionException {
 		for (CarOption option: options) {
 			if (option.getCategory().equals(new Engine())) {
-
-				return option.getName().equalsIgnoreCase("performance 2.5l v6") ||
-						option.getName().equalsIgnoreCase("ultra 3l v8");
+				if (option.getName().equalsIgnoreCase("performance 2.5l v6") ||
+						option.getName().equalsIgnoreCase("ultra 3l v8")) return true;
 			}
 		}
-		return false;
+		throw new UnsatisfiedRestrictionException("If you choose a SPORT BODY, you must choose "
+				+ "a PERFORMANCE or ULTRA ENGINE");
 	}
 
 }
