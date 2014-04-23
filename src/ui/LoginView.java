@@ -22,15 +22,17 @@ public class LoginView extends View {
 	@Override
 	public void display() {
 		System.out.println("> Please enter your login information");
-		System.out.println(">> Username: ");
+		System.out.print(">> Username: ");
 		String username = scan.nextLine();
 		this.check(username);
-		System.out.println(">> Password: ");
+		System.out.print(">> Password: ");
 		String password = scan.nextLine();
 		this.check(password);
-		this.user = this.getModel().login(username, password);
-		if (this.user.equals(null))
+		try{
+			this.user = this.getModel().login(username, password);
+		} catch (IllegalArgumentException e) {
 			this.register();
+		}
 		if (this.user instanceof GarageHolder){
 			GarageHolderView view = new GarageHolderView(this.getModel(), this.user);
 			view.display();
@@ -64,20 +66,22 @@ public class LoginView extends View {
 	}
 
 	public void register(){
-		System.out.println("> We could not find you in the system ! \nEnter as what kind of user (garageholder"
+		System.out.println("> We could not find you in the system !");
+		System.out.println("> Enter as what kind of user (garageholder"
 				+ "/mechanic/manager/customshopmanager) you want to register: ");
+		System.out.print(">> ");
 		String type = scan.nextLine();
 		this.check(type);
-		System.out.println(">> Please enter your first name: ");
+		System.out.print(">> Please enter your first name: ");
 		String fname = scan.nextLine();
 		this.check(fname);
-		System.out.println(">> Please enter your last name: ");
+		System.out.print(">> Please enter your last name: ");
 		String lname = scan.nextLine();
 		this.check(lname);
-		System.out.println(">> Please enter your username: ");
+		System.out.print(">> Please enter your username: ");
 		String uname = scan.nextLine();
 		this.check(uname);
-		System.out.println(">> Please enter your password: ");
+		System.out.print(">> Please enter your password: ");
 		String password = scan.nextLine();
 		this.check(password);
 		if (type.equalsIgnoreCase("garageholder")){
