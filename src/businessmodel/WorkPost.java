@@ -134,11 +134,12 @@ public class WorkPost {
 	 * 
 	 * @return	A cloned list of assembly tasks the work post is responsible for.
 	 */
+	@SuppressWarnings("unchecked")
 	protected ArrayList<AssemblyTask> getResponsibleTasksClone() {
 		return (ArrayList<AssemblyTask>) this.getResponsibleTasks().clone();
 	}
 
-	public ArrayList<AssemblyTask> getFinishedTasks() {
+	protected ArrayList<AssemblyTask> getFinishedTasks() {
 		return this.finishedTasks;
 	}
 

@@ -67,9 +67,12 @@ public class CarManufacturingCompany implements Model{
 	}
 
 	@Override
+	//TODO nakijken
 	public Iterator<String> getSchedulingAlgorithms(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<String> algos = new ArrayList<String>(); 
+		algos.add("FIFO"); 
+		algos.add("Specification Batch"); 
+		return algos.iterator();
 	}
 
 	@Override
@@ -98,20 +101,17 @@ public class CarManufacturingCompany implements Model{
 
 	@Override
 	public Iterator<WorkPost> getWorkPosts() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getOrderManager().getScheduler().getAssemblyline().getWorkPosts().iterator();
 	}
 
 	@Override
 	public Iterator<AssemblyTask> getPendingTasks(WorkPost wp) {
-		// TODO Auto-generated method stub
-		return null;
+		return wp.getPendingTasks().iterator();
 	}
 
 	@Override
 	public Iterator<AssemblyTask> getFinishedTasks(WorkPost wp) {
-		// TODO Auto-generated method stub
-		return null;
+		return wp.getFinishedTasks().iterator();
 	}
 
 	public OrderManager getOrderManager(){
@@ -119,21 +119,15 @@ public class CarManufacturingCompany implements Model{
 	}
 
 	public void finishTask(AssemblyTask task, int time, User user) {
-		// TODO Auto-generated method stub
-
+		task.completeAssemblytask(time);
 	}
 
-	public void changeAlgorithm(String algo, CarOption args) {
-		// TODO Auto-generated method stub
-
+	public void changeAlgorithm(String algo, CarOption option) {
+		this.getOrderManager().getScheduler().changeAlgorithm(algo, option);
 	}
 
 	public void placeOrder(Order order) throws IllegalArgumentException {
 		this.getOrderManager().placeOrder(order);
-	}
-
-	public void completeAssemBlyTask(AssemblyTask assemblytask, int time){
-		assemblytask.completeAssemblytask(time);
 	}
 
 	private ArrayList<User> getUsers() {
@@ -165,8 +159,7 @@ public class CarManufacturingCompany implements Model{
 
 	@Override
 	public Iterator<CarOption> getUnscheduledCarOptions() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getOrderManager().getScheduler().getUnscheduledCarOptions().iterator();
 	}
 
 }
