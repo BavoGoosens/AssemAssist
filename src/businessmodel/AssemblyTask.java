@@ -70,7 +70,8 @@ public class AssemblyTask {
 	/**
 	 * A method to set this assembly task to completed.
 	 */
-	protected void completeAssemblytask(int time){
+	//TODO protected zetten nadat SchedulerTest is verwijderd.
+	public void completeAssemblytask(int time){
 		this.completed = true;
 		this.notifyWorkPost(time);
 	}

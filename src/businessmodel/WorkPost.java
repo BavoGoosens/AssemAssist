@@ -84,18 +84,8 @@ public class WorkPost {
 	 * 
 	 * @return	The tasks that are pending at the work post
 	 */
-	private ArrayList<AssemblyTask> getPendingTasks() {
+	public ArrayList<AssemblyTask> getPendingTasks() {
 		return this.pendingTasks;
-	}
-
-	/**
-	 * Returns a cloned list of tasks that are pending at the work post.
-	 * 	
-	 * @return	A cloned list of tasks that are pending at the work post.
-	 */
-	@SuppressWarnings("unchecked")
-	public ArrayList<AssemblyTask> getPendingTasksClone() {
-		return (ArrayList<AssemblyTask>) this.getPendingTasks().clone();
 	}
 
 	/**
