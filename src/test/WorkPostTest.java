@@ -65,8 +65,8 @@ public class WorkPostTest {
 		
 		WorkPost post1 = new WorkPost("Test", tasksWorkPost1, om.getScheduler().getAssemblyline());		
 
-		tasksWorkPost1.add(new AssemblyTask("Assembly Car Body", new Body(),post1));
-		tasksWorkPost1.add(new AssemblyTask("Paint Car", new Color(),post1));
+		tasksWorkPost1.add(new AssemblyTask("Assembly Car Body","assemble blabla", new Body(),post1));
+		tasksWorkPost1.add(new AssemblyTask("Paint Car", "assemble paint", new Color(),post1));
 
 		post1.setNewOrder(om.getScheduler().getOrders().get(0));
 		assertEquals(post1.getOrder(),om.getScheduler().getOrders().get(0));

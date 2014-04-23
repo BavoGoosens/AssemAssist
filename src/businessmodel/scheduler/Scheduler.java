@@ -4,6 +4,8 @@ import java.util.LinkedList;
 
 import org.joda.time.DateTime;
 
+import sun.nio.cs.ext.TIS_620;
+
 import businessmodel.AssemblyLine;
 import businessmodel.OrderManager;
 import businessmodel.WorkPost;
@@ -74,6 +76,7 @@ public class Scheduler implements Subject {
 	// Deel AssemblyLine
 
 	public void advance(int time) throws IllegalNumberException{
+		System.out.println("test");
 		if (time < 0) throw new IllegalNumberException("Bad time!");
 		int delay = time - 60;
 		this.currenttime = this.getCurrentTime().plusMinutes(time);
@@ -117,18 +120,24 @@ public class Scheduler implements Subject {
 	 */
 	public void updateSchedule(){
 
-		if(this.getDelay() >= 60){
+		if(this.getDelay() <= -60){
 
 			this.getShifts().getLast().addTimeSlot();
+			this.setDelay(this.getDelay()+60);
 			Order nextorder = this.getNextOrderToSchedule();
-			this.scheduleOrder(nextorder);
-			this.setDelay(this.getDelay()-60);
+			if(nextorder!= null)
+				this.scheduleOrder(nextorder);
+			this.updateDelay(this.getDelay());
 
-		}else if (this.getDelay() <= -60){
+		}else if (this.getDelay() >= 60){
 
 			Order order = this.getShifts().getLast().removeLastTimeSlot();
-			this.getOrdermanager().PlaceOrderInFront(order);
-			this.setDelay(this.getDelay()+60);	
+			if(this.getShifts().getLast().getTimeSlots().size() == 0)
+				this.getShifts().removeLast();
+			if(order!= null)
+				this.getOrdermanager().PlaceOrderInFront(order);
+			this.setDelay(this.getDelay()-60);	
+			this.updateDelay(this.getDelay());
 		}
 	}
 
@@ -137,6 +146,8 @@ public class Scheduler implements Subject {
 	 */
 	private void updateAssemblylineStatus(){
 		Order nextorder = this.getShifts().getFirst().getNextOrderForAssemblyLine();
+		if(this.getShifts().getFirst().getTimeSlots().size() == 0)
+			this.getShifts().removeFirst();
 		this.getAssemblyline().advance(nextorder);
 		if(nextorder != null)
 			nextorder.setPlacedOnWorkpost(this.getCurrentTime());
@@ -173,7 +184,11 @@ public class Scheduler implements Subject {
 	}
 
 	public boolean canAddOrder(){
-		return this.getOrders().size() < this.getNumberOfOrdersToSchedule();
+		int count = 0;
+		for(Shift shift: this.getShifts())
+			count += shift.getTimeSlots().size();
+		count = count -2;
+		return this.getOrders().size() < count;
 	}
 
 	private void updateCurrentTime() {
@@ -231,15 +246,41 @@ public class Scheduler implements Subject {
 	 * @throws 	IllegalSchedulingAlgorithmException
 	 * 			if the given algorithm is not implemented.
 	 */
-	public void changeAlgorithm(String algoname, CarOption option) throws IllegalSchedulingAlgorithmException{
-		if (algoname == null)
+	public void changeAlgorithm(String algoname, CarOption option) throws IllegalSchedulingAlgorithmException, IllegalArgumentException{
+
+		if (algoname == null){
 			throw new NullPointerException("No scheduling algorithm supplied");
-		else if (algoname.equalsIgnoreCase("fifo") || algoname.equalsIgnoreCase("first in first out") )
+		}else if (algoname.equalsIgnoreCase("fifo") || algoname.equalsIgnoreCase("first in first out") ){
 			this.algortime = new FIFO(this);
-		else if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch"))
-			this.algortime = new SpecificationBatch(this,option );
-		else
+		}else if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch")){
+			
+			if (option == null) throw new IllegalArgumentException("No such option");
+			
+			if (!this.checkOptionsForSpecificationBatch(option)) throw new IllegalArgumentException("Too little orders with that option ( less than 3 )");
+			this.algortime = new SpecificationBatch(this,option);
+			
+		}else{
 			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");
+		}
+	}
+
+
+	/**
+	 * 
+	 * @param option
+	 * @return
+	 */
+	private boolean checkOptionsForSpecificationBatch(CarOption option) {
+		
+		int count = 0;
+		for(Order order: this.getOrders())
+			if (order.getOptions().toString().equals(option))
+				count++;
+				
+		if (count < 3)
+			return false;
+		return true;
+		
 	}
 
 	/**

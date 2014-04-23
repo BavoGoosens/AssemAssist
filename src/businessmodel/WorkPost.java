@@ -169,7 +169,7 @@ public class WorkPost {
 	 */
 	public boolean isCompleted(){
 		for(AssemblyTask task: this.getPendingTasks()){
-			if(task.isCompleted() == false)
+			if(!task.isCompleted())
 				return false;
 		}
 		return true;
@@ -214,7 +214,7 @@ public class WorkPost {
 		for(AssemblyTask assem : this.getResponsibleTasks()){
 			for(CarOption option: carOptions){
 				if(option.getCategory().equals(assem.getCategory()))
-					result.add(new AssemblyTask(assem.getName(),assem.getCategory(),this));
+					result.add(new AssemblyTask(assem.getName(), assem.getDescription(),assem.getCategory(),this));
 			}
 		}
 		return result;
