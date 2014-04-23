@@ -79,7 +79,6 @@ public class AssemblyLineTest {
 		testassembly.getWorkPosts().get(0).setNewOrder(orders.get(0));
 		testassembly.getWorkPosts().get(1).setNewOrder(orders.get(1));
 		testassembly.getWorkPosts().get(2).setNewOrder(orders.get(2));
-		testassembly.advance(orders.get(3));
 
 		assertEquals(testassembly.getWorkPosts().get(0).getOrder(),orders.get(3));
 		assertEquals(testassembly.getWorkPosts().get(1).getOrder(),orders.get(0));

@@ -55,6 +55,10 @@ public class ProductionSchedulerTest {
 		
 		order = new StandardCarOrder(garageholder, chosen);
 		orders.add(order);
+		orders.add(order);
+		orders.add(order);
+		om.addOrder(order);
+		om.addOrder(order);
 		om.addOrder(order);
 		
 	}
@@ -73,7 +77,6 @@ public class ProductionSchedulerTest {
 		assertTrue(om.getCompletedOrders().isEmpty());
 		assertEquals(orders.get(0),om.getScheduler().getOrders().get(0));
 		om.getScheduler().ScheduleDay();
-		prodsched.advance(60);
 		
 		for(Order order:this.orders){
 			for(WorkPost wp: prodsched.getAssemblyline().getWorkPosts()){
@@ -105,7 +108,7 @@ public class ProductionSchedulerTest {
 			}
 			
 		}
-		assertTrue(om.getPendingOrders().isEmpty());
+		assertTrue(om.getScheduler().getOrders().isEmpty());
 	}
 
 }
