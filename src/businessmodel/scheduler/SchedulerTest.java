@@ -10,12 +10,16 @@ import org.junit.Test;
 import businessmodel.AssemblyLine;
 import businessmodel.AssemblyTask;
 import businessmodel.CarManufacturingCompany;
-import businessmodel.CarModel;
 import businessmodel.OrderManager;
 import businessmodel.WorkPost;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
 import businessmodel.category.CarOption;
+import businessmodel.category.Color;
+import businessmodel.category.Engine;
+import businessmodel.category.Gearbox;
+import businessmodel.category.Seats;
+import businessmodel.category.Wheels;
 import businessmodel.order.Order;
 import businessmodel.order.SingleTaskOrder;
 import businessmodel.order.StandardCarOrder;
@@ -52,11 +56,21 @@ public class SchedulerTest {
 		GarageHolder c19 = new GarageHolder("19","","");
 		GarageHolder c20 = new GarageHolder("20","","");
 
-		CarOption blabla = new CarOption("Henk", new Airco());
-		CarOption blabla2 = new CarOption("Henk2", new Body());
+		CarOption airco = new CarOption("Arico", new Airco());
+		CarOption body = new CarOption("Body", new Body());
+		CarOption seats = new CarOption("seats", new Seats());
+		CarOption color = new CarOption("Color", new Color());
+		CarOption gearbox = new CarOption("Gearbox", new Gearbox());
+		CarOption engine = new CarOption("Engine", new Engine());
+		CarOption wheels = new CarOption("Wheels", new Wheels());
 		ArrayList<CarOption> henk1 = new ArrayList<CarOption>();
-		henk1.add(blabla);
-		henk1.add(blabla2);
+		henk1.add(airco);
+		henk1.add(body);
+		henk1.add(seats);
+		henk1.add(color);
+		henk1.add(gearbox);
+		henk1.add(engine);
+		henk1.add(wheels);
 		Order order1 = new StandardCarOrder(c1,henk1);
 		Order order2 = new StandardCarOrder(c2,henk1);
 		Order order3 = new StandardCarOrder(c3,henk1);
@@ -92,19 +106,19 @@ public class SchedulerTest {
 		ord.addOrder(order8);
 		ord.addOrder(order9);
 		ord.addOrder(order10);
-	//	ord.addOrder(order11);
-	//	ord.addOrder(order12);
-	//	ord.addOrder(order13);
-	//	ord.addOrder(order14);
-	//	ord.addOrder(order15);
+		ord.addOrder(order11);
+		ord.addOrder(order12);
+		ord.addOrder(order13);
+		ord.addOrder(order14);
+		ord.addOrder(order15);
 	//	ord.addOrder(order20);
 	//	ord.addOrder(order16);
 	//	ord.addOrder(order17);
-//		ord.addOrder(order18);
+	//	ord.addOrder(order18);
 		
 		// test
 		for(int k =0; k<2 ; k++){
-			for(int i =0 ; i< 8; i++){
+			for(int i =0 ; i< 7; i++){
 				System.out.println(">>>>>new WorkSlot");
 				for(int j = 0; j< 3; j++){
 					if(ord.getScheduler().getShifts().get(k).getTimeSlots().get(i).getWorkSlots().get(j).getOrder()!= null){
@@ -117,7 +131,7 @@ public class SchedulerTest {
 		}
 		System.out.println("----------------------------------------------------------");
 		
-		for(int i=0; i < 10; i++){
+		for(int i=0; i < 16; i++){
 			for(WorkPost wp : ord.getScheduler().getAssemblyline().getWorkPosts()){
 				if(wp.getOrder()!= null)
 					System.out.println(wp.getOrder().getUser());

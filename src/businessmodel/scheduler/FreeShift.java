@@ -17,20 +17,22 @@ public class FreeShift extends Shift{
 	
 	@Override
 	protected ArrayList<TimeSlot> canAddOrder(Order order){
-		ArrayList<TimeSlot> timeslots;	
+		ArrayList<TimeSlot> timeslots= null;	
 		LinkedList<TimeSlot> temp = this.getTimeSlots();
 		temp.add(this.getNextShift().getTimeSlots().get(0));
 		temp.add(this.getNextShift().getTimeSlots().get(1));
-		for(TimeSlot timeslot : temp){
-			timeslots = checkTimeSlots(timeslot);
+		for(int i = 0 ; i< temp.size()-2; i++){
+			timeslots = checkTimeSlots(temp.get(i));
 			if (timeslots != null)
-				return timeslots;
+				break;
 		}
-		return null;
+		temp.removeLast();
+		temp.removeLast();
+		return timeslots;
 	}
 	
 	/**
-	 * A method to check if a number of Timeslo's are available to handle an order.
+	 * A method to check if a number of Timeslot's are available to handle an order.
 	 * @param 	timeslot
 	 * 			the first slot to check.
 	 * @return	a list of slots if there is room. null if there is no place available.
