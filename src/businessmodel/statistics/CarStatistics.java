@@ -3,6 +3,7 @@ package businessmodel.statistics;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import businessmodel.observer.Observer;
@@ -23,11 +24,14 @@ public class CarStatistics implements Observer {
 	 * The median number of cars produced.
 	 */
 	private int median;
+	
+	DateTime beginTime;
 
 	private ArrayList<Tuple<LocalDate, Integer>> number_of_cars;
 
-	public CarStatistics(Subject s){
-		s.subscribeObserver(this);
+	public CarStatistics(Subject subject) throws IllegalArgumentException {
+		subject.subscribeObserver(this);
+		if (subject == null || !(subject instanceof Scheduler)) throw new IllegalArgumentException("Bad subject!");
 		this.number_of_cars = new ArrayList<Tuple<LocalDate, Integer>>();
 	}
 
