@@ -1,11 +1,9 @@
 package businessmodel;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
-import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 import businessmodel.statistics.CarStatistics;
 import businessmodel.statistics.OrderStatistics;
@@ -23,10 +21,6 @@ public interface Model {
 	
 	public Iterator<AssemblyTask> getAvailableTasks(User user);
 	
-	public Iterator<AssemblyTask> getPendingTasks(User user);
-	
-	public Iterator<AssemblyTask> getCompletedTasks(User user);
-	
 	public Iterator<String> getSchedulingAlgorithms(User user);
 
 	public User login(String username, String password);
@@ -39,10 +33,10 @@ public interface Model {
 
 	public OrderStatistics getOrderStatistics();
 
-	public ArrayList<WorkPost> getWorkPosts();
+	public Iterator<WorkPost> getWorkPosts();
 
-	public ArrayList<AssemblyTask> getPendingTasks(WorkPost wp);
+	public Iterator<AssemblyTask> getPendingTasks(WorkPost wp);
 
-	public ArrayList<AssemblyTask> getFinishedTasks(WorkPost wp);
+	public Iterator<AssemblyTask> getFinishedTasks(WorkPost wp);
 
 }

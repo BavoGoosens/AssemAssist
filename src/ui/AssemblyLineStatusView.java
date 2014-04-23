@@ -1,6 +1,7 @@
 package ui;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import businessmodel.AssemblyLine;
@@ -27,12 +28,21 @@ public class AssemblyLineStatusView extends View implements Observer {
 
 	@Override
 	public void display() {
-		ArrayList<WorkPost> posts =  this.getModel().getWorkPosts();
+		Iterator<WorkPost> postss =  this.getModel().getWorkPosts();
+		ArrayList<WorkPost> posts = new ArrayList<>();
+		while(postss.hasNext())
+			posts.add(postss.next());
 		System.out.println("> This is the assembly line status: ");
 		for (WorkPost wp : posts){
 			System.out.println("  > " + wp.getName() + "status: " );
-			ArrayList<AssemblyTask> pending = this.getModel().getPendingTasks(wp);
-			ArrayList<AssemblyTask> finished = this.getModel().getFinishedTasks(wp);
+			Iterator<AssemblyTask> pendingiter = this.getModel().getPendingTasks(wp);
+			ArrayList<AssemblyTask> pending = new ArrayList<>();
+			while (pendingiter.hasNext())
+				pending.add(pendingiter.next());
+			Iterator<AssemblyTask> finishediter = this.getModel().getFinishedTasks(wp);
+			ArrayList<AssemblyTask> finished = new ArrayList<>();
+			while (finishediter.hasNext())
+				finished.add(finishediter.next());
 			System.out.println("    > pending tasks:");
 			for (AssemblyTask task : pending)
 				System.out.println("    > " + task.toString());
