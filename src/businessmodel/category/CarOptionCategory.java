@@ -6,9 +6,10 @@ import java.util.UUID;
 import businessmodel.exceptions.IllegalCarOptionCategoryException;
 
 /**
- * Class representing a car option category for a specific car model specification.
+ * Class representing a car option category with the possible options 
+ * for a specific car model specification.
  * 
- * @author team 10
+ * @author SWOP team 10 2013-2014
  *
  */
 public abstract class CarOptionCategory {
@@ -25,6 +26,10 @@ public abstract class CarOptionCategory {
 		this.options = new ArrayList<CarOption>();
 	}
 	
+	/**
+	 * Returns the unique key of the car option category.
+	 * @return	The unique key of the car option category.
+	 */
 	public abstract UUID getKey();
 	
 	/**

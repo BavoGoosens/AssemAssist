@@ -9,7 +9,7 @@ import businessmodel.exceptions.IllegalCarOptionCategoryException;
 /**
  * Class representing a factory that creates A model objects.
  * 
- * @author team 10
+ * @author SWOP team 10 2013-2014
  *
  */
 public class ModelAFactory extends CarModelFactory {
@@ -144,6 +144,8 @@ public class ModelAFactory extends CarModelFactory {
 	
 	/**
 	 * Returns the name of the A model.
+	 * 
+	 * @return	The name of the A model.
 	 */
 	@Override
 	protected String getName() {
