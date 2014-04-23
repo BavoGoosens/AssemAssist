@@ -8,9 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.AssemblyLine;
+import businessmodel.AssemblyTask;
+import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Catalog;
 import businessmodel.OrderManager;
+import businessmodel.WorkPost;
 import businessmodel.category.*;
 import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
@@ -34,6 +37,9 @@ public class AssemblyLineTest {
 
 
 	private ArrayList<CarOptionCategory> categories;
+
+
+	private CarManufacturingCompany cmc = new CarManufacturingCompany();
 
 	@Before
 	public void setUp() throws Exception {
@@ -79,11 +85,21 @@ public class AssemblyLineTest {
 		testassembly.getWorkPosts().get(0).setNewOrder(orders.get(0));
 		testassembly.getWorkPosts().get(1).setNewOrder(orders.get(1));
 		testassembly.getWorkPosts().get(2).setNewOrder(orders.get(2));
-		testassembly.advance(orders.get(3));
 
-		assertEquals(testassembly.getWorkPosts().get(0).getOrder(),orders.get(3));
+
+		for(WorkPost wp: om.getScheduler().getAssemblyline().getWorkPosts()){
+			if(wp.getOrder() != null){
+				for(AssemblyTask assem : wp.getPendingTasks())
+					cmc.completeAssemBlyTask(assem, 20);
+
+			}
+		}
+
+
+		assertEquals(testassembly.getWorkPosts().get(0).getOrder(),null);
 		assertEquals(testassembly.getWorkPosts().get(1).getOrder(),orders.get(0));
 		assertEquals(testassembly.getWorkPosts().get(2).getOrder(),orders.get(1));
+
 	}
 
 }
