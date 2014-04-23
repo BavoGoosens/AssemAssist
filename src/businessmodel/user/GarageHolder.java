@@ -1,7 +1,7 @@
 package businessmodel.user;
 
 /**
- * A class that represents a garage holder.
+ * A class representing a garage holder.
  * 
  * @author SWOP team 10 2013-2014 
  *
@@ -9,14 +9,15 @@ package businessmodel.user;
 public class GarageHolder extends User {
 
 	/**
-	 * A constructor to create a new garage holder.
+	 * Creates a new garage holder with a given first name, last name and user name.
 	 * 
 	 * @param 	firstname
-	 * 			the first name of the new garage holder.
+	 * 			The first name of the new garage holder.
 	 * @param 	lastname
-	 * 			the last name of the new garage holder.
+	 * 			The last name of the new garage holder.
 	 * @param 	username
-	 * 			the user name for the new garage holder.
+	 * 			The user name for the new garage holder.
+	 * @throws 	IllegalArgumentException
 	 */
 	public GarageHolder(String firstname, String lastname, String username) throws IllegalArgumentException {
 		super(firstname,lastname,username);

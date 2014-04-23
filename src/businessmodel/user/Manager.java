@@ -1,22 +1,23 @@
 package businessmodel.user;
 
 /**
- * A class that represents a manager.
+ * A class representing a manager.
  * 
- * @author SWOP team 10 2014 
+ * @author SWOP team 10 2013-2014 
  *
  */
 public class Manager extends User {
 
 	/**
-	 * A constructor to create a new manager.
+	 * Creates a new manager with a given first name, last name and user name.
 	 * 
 	 * @param 	firstname
-	 * 			the first name of the new manager.
+	 * 			The first name of the new manager.
 	 * @param 	lastname
-	 * 			the last name of the new manager.
+	 * 			The last name of the new manager.
 	 * @param 	username
-	 * 			the user name of the new manager.
+	 * 			The user name of the new manager.
+	 * @throws	IllegalArgumentException
 	 */
 	public Manager(String firstname, String lastname, String username) throws IllegalArgumentException {
 		super(firstname,lastname,username);
