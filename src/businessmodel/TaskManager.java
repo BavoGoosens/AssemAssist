@@ -34,6 +34,11 @@ public class TaskManager {
 		tasks_workPost_3.add(new AssemblyTask("Install Airco", "insert airco blabla", new Airco(),workpost3));
 		tasks_workPost_3.add(new AssemblyTask("Mount Wheels", "insert mount wheels", new Wheels(),workpost3));
 		tasks_workPost_3.add(new AssemblyTask("Install Spoiler","install spoiler", new Spoiler(),workpost3));
+		
+		workpost1.setResponsibletasks(tasks_workPost_1);
+		workpost2.setResponsibletasks(tasks_workPost_2);
+		workpost3.setResponsibletasks(tasks_workPost_3);
+		
 	}
 	
 	private void generatePossibleSingleTasks() {

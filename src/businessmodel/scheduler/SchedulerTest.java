@@ -101,7 +101,9 @@ public class SchedulerTest {
 		ord.placeOrder(order4);
 		ord.placeOrder(order5);
 		ord.placeOrder(order6);
+
 		//	ord.placeOrder(order19);
+
 		ord.placeOrder(order7);
 		ord.placeOrder(order8);
 		ord.placeOrder(order9);
@@ -111,10 +113,12 @@ public class SchedulerTest {
 		ord.placeOrder(order13);
 		ord.placeOrder(order14);
 		ord.placeOrder(order15);
+
 		//	ord.placeOrder(order20);
 		//	ord.placeOrder(order16);
 		//	ord.placeOrder(order17);
 		//	ord.placeOrder(order18);
+
 
 		// test
 		for(int k =0; k<2 ; k++){

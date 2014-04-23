@@ -59,7 +59,10 @@ public class CarMechanicView extends View {
 	}
 
 	private void performTasks(WorkPost wp) {
-		ArrayList<AssemblyTask> tasks = this.getModel().getPendingTasks(wp);
+		Iterator<AssemblyTask> taskss = this.getModel().getPendingTasks(wp);
+		ArrayList<AssemblyTask> tasks = new ArrayList<>();
+		while (taskss.hasNext())
+			tasks.add(taskss.next());
 		System.out.println("> Please enter the number of the task you want to perform: ");
 		int num  = 1;
 		for (AssemblyTask ass : tasks)
