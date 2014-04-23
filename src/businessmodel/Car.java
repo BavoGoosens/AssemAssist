@@ -60,7 +60,7 @@ public class Car {
 	/**
 	 * Returns a cloned list of options of the car.
 	 * 
-	 * @return	A cloned list of options of the car.
+	 * @return	The options (clone) of the car.
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<CarOption> getOptionsClone() {

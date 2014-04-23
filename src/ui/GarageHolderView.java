@@ -6,8 +6,6 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.text.html.Option;
-
 import businessmodel.CarModel;
 import businessmodel.Model;
 import businessmodel.category.CarOption;
@@ -21,11 +19,11 @@ import control.StandardOrderHandler;
 
 public class GarageHolderView extends View{
 
-	private ArrayList<Order> pending_orders;
+	private ArrayList<Order> pending_orders = new ArrayList<>();
 
-	private ArrayList<Order> completed_orders;
+	private ArrayList<Order> completed_orders = new ArrayList<>();
 
-	private ArrayList<CarModel> available_carmodels;
+	private ArrayList<CarModel> available_carmodels = new ArrayList<>();
 
 	private StandardOrderController controller;
 
@@ -39,44 +37,40 @@ public class GarageHolderView extends View{
 		super(model);
 		this.user = user;
 		this.controller = new StandardOrderHandler(this.getModel(), this.user);
-		this.update();
 	}
 
 	@Override
 	public void display() {
+		this.update();
+		this.step = 0;
 		System.out.println("> These are your pending orders: ");
 		int size = this.pending_orders.size();
 		int count = 1; 
-		for (Order or : this.pending_orders){
-			System.out.println("> " + count + or.toString());
-			count ++;
-		}
+		for (Order or : this.pending_orders)
+			System.out.println("> " + count ++ + ") " + or.toString());
 		System.out.println("> These are your completed orders: ");
-		for (Order or : this.completed_orders){
-			System.out.println("> " + count + or.toString());
-			count ++;
-		}
+		for (Order or : this.completed_orders)
+			System.out.println("> " + count ++ + ") " + or.toString());
 		System.out.println("> If you wish to inspect an individual order enter the order's ranking number");
 		System.out.println("> If you wish to place a new order enter ORDER: ");
-		System.out.println(">> ");
+		System.out.print(">> ");
 		String response = this.scan.nextLine();
 		this.check(response);
+		Pattern pattern = Pattern.compile("^(\\d*)$");
 		if (response.equalsIgnoreCase("order")){
-			this.startNewOrder();
 			this.step++;
-		}
-		Pattern pattern = Pattern.compile("\\d*");
-		if (pattern.matcher(response).find()){
+			this.startNewOrder();
+		}else if (pattern.matcher(response).find()){
 			int number = Integer.parseInt(response);
 			if (number > size) {
 				int index = number - size - 1;
 				StandardCarOrder or = (StandardCarOrder) this.completed_orders.get(index);
-				this.check(or);
 				this.step++;
+				this.check(or);
 			} else {
-				StandardCarOrder or = (StandardCarOrder) this.completed_orders.get(number - 1);
-				this.check(or);
+				StandardCarOrder or = (StandardCarOrder) this.pending_orders.get(number - 1);
 				this.step++;
+				this.check(or);
 			}
 		} else {
 			this.error();
@@ -88,29 +82,32 @@ public class GarageHolderView extends View{
 		System.out.println("> Here are the order details: ");
 		// kan gedetailleerder worden gemaakt
 		System.out.println(or.toString());
+		System.out.print(">> ");
+		String response = this.scan.nextLine();
+		this.check(response);
+		this.check(or);
 	}
 
 	private void startNewOrder() {
 		// choose the car model
+		this.available_carmodels.clear();
 		Iterator<CarModel> iter = this.getModel().getCarModels(this.user);
 		while (iter.hasNext())
 			this.available_carmodels.add(iter.next());
 		System.out.println("> Please enter the corresponding number of the car model you wish to order:");
 		int count = 1;
-		for (CarModel cm : this.available_carmodels){
-			System.out.println("> " + count + ") "+ cm.toString());
-		}
-		System.out.println(">> ");
+		for (CarModel cm : this.available_carmodels)
+			System.out.println("> " + count ++ + ") "+ cm.toString());
+		System.out.print(">> ");
 		String response = this.scan.nextLine();
 		this.check(response);
-		Pattern pattern = Pattern.compile("\\d*");
+		Pattern pattern = Pattern.compile("^(\\d*)$");
 		if (pattern.matcher(response).find()){
 			int number = Integer.parseInt(response);
 			if (number > this.available_carmodels.size() || number < 1){
 				System.out.println("! You entered something wrong please try again");
 				this.startNewOrder();
 			}
-
 			number -= 1;
 			CarModel chosen = this.available_carmodels.get(number);				
 			this.step ++;
@@ -138,9 +135,11 @@ public class GarageHolderView extends View{
 				System.out.println("> " + number + ") " + opt.toString());
 				number ++;
 			}
+			System.out.print(">> ");
 			String response = this.scan.nextLine();
 			this.check(response);
-			Pattern remover = Pattern.compile("(?i)remove\\s*(\\d*)");
+			Pattern remover = Pattern.compile("remove *(\\d*)",Pattern.CASE_INSENSITIVE);
+			Matcher matcher = remover.matcher(response);
 			Pattern pattern = Pattern.compile("^\\d*$");
 			if (pattern.matcher(response).find()){
 				int choice = Integer.parseInt(response);
@@ -150,10 +149,12 @@ public class GarageHolderView extends View{
 					CarOption want = available.remove(choice - 1);
 					chosen.add(want);
 				}
-			} else if (remover.matcher(response).find()) {
-				String num = remover.matcher(response).group();
+			} else if (matcher.find()) {
+				String num = matcher.group();
+				num = num.split(" ")[1];
+
 				int nam = Integer.parseInt(num);
-				if ( nam > available.size() || nam < 1){
+				if ( nam > chosen.size() || nam < 1){
 					System.out.println("! You entered something wrong. Please try again");
 				} else {
 					CarOption removed = chosen.remove(nam - 1);
@@ -180,7 +181,9 @@ public class GarageHolderView extends View{
 				System.out.println("! You entered something wrong. Please try again");
 			}
 		}
+		System.out.println("The order has been placed");
 		this.controller.placeOrder(validorder);
+		this.display();
 	}
 
 	@Override
@@ -227,14 +230,14 @@ public class GarageHolderView extends View{
 			this.display();
 		}
 		if (this.step == 1){
+			this.step--;
 			this.displayHelp();
 			this.display();
-			this.step--;
 		}
 		if (this.step == 2){
+			this.step--;
 			this.displayHelp();
 			this.startNewOrder();
-			this.step--;
 		}
 	}
 

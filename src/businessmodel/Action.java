@@ -3,7 +3,7 @@ package businessmodel;
 /**
  * A class representing an action.
  * 
- * @author team 10
+ * @author SWOP team 10 2013-2014
  *
  */
 public class Action {
