@@ -141,7 +141,7 @@ public class OrderManager implements Subject {
 	 * 
 	 * @return	this.scheduler
 	 */
-	protected Scheduler getScheduler() {
+	public Scheduler getScheduler() {
 		return this.scheduler;
 	}
 
