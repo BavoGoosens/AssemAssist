@@ -3,6 +3,7 @@ package businessmodel;
 import java.util.ArrayList;
 
 import businessmodel.category.CarOption;
+import businessmodel.restrictions.RestrictionChecker;
 
 /**
  * A class representing a car.
@@ -13,28 +14,31 @@ import businessmodel.category.CarOption;
 public class Car {
 
 	/**
-	 * A list that holds all the components of a car.
+	 * A list that holds all the options of a car.
 	 */
 	private ArrayList<CarOption> options;
 
 	/**
-	 * A constructor to create a new car.
+	 * Creates a new car with a given list of options.
 	 * 
-	 * @param   components
-	 *          An ArrayList with all the components of this new car.
+	 * @param   options
+	 *          The options of the car.
+	 * @throws	IllegalArgumentException
 	 */
 	public Car(ArrayList<CarOption> options) throws IllegalArgumentException {
-		
+		RestrictionChecker restrictionChecker = new RestrictionChecker();
+		if (!restrictionChecker.check(options)) throw new UnsatisfiedRestrictionException();
 		setOptions(options);
 	}
 
 	/**
-	 * A method to set the components of this car to the given components.
+	 * Sets the options of this car to the given options.
 	 * 
-	 * @param   components
-	 *          the new components of this car.
+	 * @param   options
+	 *          The options of the car.
 	 * @throws 	IllegalArgumentException
-	 * 			if components is null
+	 * 			| If the list of options is equal to 'null'
+	 * 			| options == null
 	 */
 	@SuppressWarnings("unchecked")
 	private void setOptions(ArrayList<CarOption> options) throws IllegalArgumentException {
@@ -43,46 +47,30 @@ public class Car {
 	}
 
 	/**
-	 * A method to get the components of this car.
+	 * Returns the options of the car.
 	 *
-	 * @return  ArrayList<Component>
-	 * 			this.components
+	 * @return  The options of the car.
 	 */
 	private ArrayList<CarOption> getOptions(){
 		return this.options;
 	}
 	
+	/**
+	 * Returns a cloned list of options of the car.
+	 * 
+	 * @return	A cloned list of options of the car.
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<CarOption> getOptionsClone() {
 		return (ArrayList<CarOption>) this.options.clone();
 	}
-
-	/**
-	 * A method to add a component to the components of this car.
-	 * 
-	 * @param   component
-	 *          the component that you want to add.
-	 */
-	public void addOption(CarOption option) throws IllegalArgumentException {
-		if (option == null) throw new IllegalArgumentException("Bad option!");
-		this.getOptions().add(option);
-	}
 	
 	/**
-	 * A method to remove a component from this car.
-	 * 
-	 * @param   component
-	 *          the component that you want to remove.
+	 * Returns a string representation of this car.
 	 */
-	public void removeOption(CarOption option) throws IllegalArgumentException {
-		if (option == null) throw new IllegalArgumentException("Bad option!");
-		if( this.getOptions().contains(option))
-			this.getOptions().remove(option);
-	}
-	
 	@Override
 	public String toString() {
-		return "option= " + this.getOptions().toString();
+		return "option = " + this.getOptions().toString();
 	}
 
 }

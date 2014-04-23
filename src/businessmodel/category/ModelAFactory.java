@@ -6,8 +6,17 @@ import businessmodel.CarModel;
 import businessmodel.CarModelSpecification;
 import businessmodel.exceptions.IllegalCarOptionCategoryException;
 
+/**
+ * Class representing a factory that creates A model objects.
+ * 
+ * @author team 10
+ *
+ */
 public class ModelAFactory extends CarModelFactory {
 	
+	/**
+	 * Creates the body category of the A model with the necessary car options.
+	 */
 	@Override
 	protected Body createBody() {
 		Body body = new Body();
@@ -22,6 +31,9 @@ public class ModelAFactory extends CarModelFactory {
 		return body;
 	}
 	
+	/**
+	 * Creates the color category of the A model with the necessary car options.
+	 */
 	@Override
 	protected Color createColor() {
 		Color color = new Color();
@@ -40,6 +52,9 @@ public class ModelAFactory extends CarModelFactory {
 		return color;
 	}
 	
+	/**
+	 * Creates the engine category of the A model with the necessary car options.
+	 */
 	@Override
 	protected Engine createEngine() {
 		Engine engine = new Engine();
@@ -54,6 +69,9 @@ public class ModelAFactory extends CarModelFactory {
 		return engine;
 	}
 	
+	/**
+	 * Creates the gear box category of the A model with the necessary car options.
+	 */
 	@Override
 	protected Gearbox createGearbox() {
 		Gearbox gearbox = new Gearbox();
@@ -70,6 +88,9 @@ public class ModelAFactory extends CarModelFactory {
 		return gearbox;
 	}
 	
+	/**
+	 * Creates the seats category of the A model with the necessary car options.
+	 */
 	@Override
 	protected Seats createSeats() {
 		Seats seats = new Seats();
@@ -86,6 +107,9 @@ public class ModelAFactory extends CarModelFactory {
 		return seats;
 	}
 	
+	/**
+	 * Creates the airco category of the A model with the necessary car options.
+	 */
 	protected Airco createAirco() {
 		Airco airco = new Airco();
 		CarOption airco1 = new CarOption("manual", airco);
@@ -99,6 +123,9 @@ public class ModelAFactory extends CarModelFactory {
 		return airco;
 	}
 	
+	/**
+	 * Creates the wheels category of the A model with the necessary car options.
+	 */
 	@Override
 	protected Wheels createWheels() {
 		Wheels wheels = new Wheels();
@@ -114,13 +141,19 @@ public class ModelAFactory extends CarModelFactory {
 		}
 		return wheels;
 	}
-
+	
+	/**
+	 * Returns the name of the A model.
+	 */
 	@Override
 	protected String getName() {
 		return "Model A";
 	}
 
 
+	/**
+	 * Creates an A model.
+	 */
 	@Override
 	public CarModel createModel() {
 		

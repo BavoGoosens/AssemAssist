@@ -62,7 +62,7 @@ public class Scheduler implements Subject {
 	public Scheduler(OrderManager ordermanager){
 		this.shifts = new LinkedList<Shift>();
 		this.orders = new LinkedList<Order>();
-		this.assemblyline = new AssemblyLine();
+		this.assemblyline = new AssemblyLine(this);
 		this.updateCurrentTime();
 		this.setOrdermanager(ordermanager);
 		this.changeAlgorithm("fifo", null);
