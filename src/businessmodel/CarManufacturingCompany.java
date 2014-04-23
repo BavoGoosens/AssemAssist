@@ -5,9 +5,7 @@ import java.util.Iterator;
 
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
-import businessmodel.observer.OrderManagerObserver;
 import businessmodel.order.Order;
-import businessmodel.user.GarageHolder;
 import businessmodel.user.User;
 
 
