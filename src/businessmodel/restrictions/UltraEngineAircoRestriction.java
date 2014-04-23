@@ -4,16 +4,17 @@ import java.util.ArrayList;
 
 import businessmodel.Catalog;
 import businessmodel.category.*;
+import businessmodel.exceptions.UnsatisfiedRestrictionException;
 
 public class UltraEngineAircoRestriction extends Restriction {
 
-	public UltraEngineAircoRestriction(String name, Catalog inventory)
+	public UltraEngineAircoRestriction(String name, Catalog catalog)
 			throws IllegalArgumentException {
-		super(name, inventory);
+		super(name, catalog);
 	}
 
 	@Override
-	public boolean check(ArrayList<CarOption> options) {
+	public boolean check(ArrayList<CarOption> options) throws UnsatisfiedRestrictionException {
 		CarOption engineOption = getEngineOption(options);
 		if (engineOption == null) return false;
 		if (engineOption.getName().equalsIgnoreCase("ultra 3l v8")) {
@@ -24,25 +25,21 @@ public class UltraEngineAircoRestriction extends Restriction {
 	
 	private CarOption getEngineOption(ArrayList<CarOption> options) {
 		for (CarOption option: options) {
-
 			if (option.getCategory().equals(new Engine())) {
-
 				return option;
 			}
 		}
 		return null;
 	}
 	
-	private boolean checkAirco(ArrayList<CarOption> options) {
+	private boolean checkAirco(ArrayList<CarOption> options) throws UnsatisfiedRestrictionException {
 		for (CarOption option: options) {
-
 			if (option.getCategory().equals(new Airco())) {
-
-				return option.getName().equalsIgnoreCase("manual");
+				if (option.getName().equalsIgnoreCase("manual")) return true;
 			}
 		}
-		// to-do: indien geen airco wel oke, moet hier true teruggegeven worden!
-		return false;
+		throw new UnsatisfiedRestrictionException("If you choose an ULTRA ENGINE, you must "
+				+ "choose the MANUAL AIRCO");
 	}
 
 }

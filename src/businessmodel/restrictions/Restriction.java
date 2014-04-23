@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import businessmodel.Catalog;
 import businessmodel.category.CarOption;
+import businessmodel.exceptions.UnsatisfiedRestrictionException;
 
 public abstract class Restriction {
 	
@@ -25,6 +26,6 @@ public abstract class Restriction {
 		return this.catalog;
 	}
 	
-	public abstract boolean check(ArrayList<CarOption> options);
+	public abstract boolean check(ArrayList<CarOption> options) throws IllegalArgumentException, UnsatisfiedRestrictionException;
 
 }

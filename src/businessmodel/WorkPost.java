@@ -34,27 +34,28 @@ public class WorkPost {
 	private Order orderInProcess ;
 
 	/**
-	 * Creates a new work post with a given name.
-	 * 
-	 * @param	name
-	 * 			The name of the work post
-	 * @throws	IllegalArgumentException
+	 * The time was spent working of this workPost for the current order.
 	 */
-	public WorkPost(String name) throws IllegalArgumentException {
-		this.setName(name);
-		this.pendingTasks = new ArrayList<AssemblyTask>();
-	}
+	private int time_order_in_process;
+
+	/**
+	 * The AssemblyLine that this WorkPost is a part of.
+	 */
+	private AssemblyLine assemblyline;
 
 	/**
 	 * This method constructs a new work post with a given name and a given set of assembly tasks.
-	 * 
-	 * @param	name
-	 * 			The name of the work post
-	 * @param 	tasks
-	 * 			The tasks this work post is responsible for.
+	 *
+	 * @param name
+	 * The name of the work post
+	 * @param tasks
+	 * The tasks this work post is responsible for.
+	 * @throws IllegalArgumentException
 	 */
-	public WorkPost(String name, ArrayList<AssemblyTask> tasks) throws IllegalArgumentException {
-		this(name);
+	public WorkPost(String name, ArrayList<AssemblyTask> tasks, AssemblyLine assemblyline) throws IllegalArgumentException {
+		this.setName(name);
+		this.setAssemblyline(assemblyline);
+		this.pendingTasks = new ArrayList<AssemblyTask>();
 		this.setResponsibletasks(tasks);
 	}
 
@@ -88,18 +89,8 @@ public class WorkPost {
 	 * 
 	 * @return	The tasks that are pending at the work post
 	 */
-	private ArrayList<AssemblyTask> getPendingTasks() {
+	public ArrayList<AssemblyTask> getPendingTasks() {
 		return this.pendingTasks;
-	}
-	
-	/**
-	 * Returns a cloned list of tasks that are pending at the work post.
-	 * 	
-	 * @return	A cloned list of tasks that are pending at the work post.
-	 */
-	@SuppressWarnings("unchecked")
-	public ArrayList<AssemblyTask> getPendingTasksClone() {
-		return (ArrayList<AssemblyTask>) this.getPendingTasks().clone();
 	}
 
 	/**
@@ -125,7 +116,7 @@ public class WorkPost {
 	private ArrayList<AssemblyTask> getResponsibleTasks() {
 		return this.responsibleAssemblyTasks;
 	}
-	
+
 	/**
 	 * Returns a cloned list of assembly tasks the work post is responsible for.
 	 * 
@@ -165,9 +156,11 @@ public class WorkPost {
 	 * @param	orderInProcess
 	 * 			The new order the work post is currently working on.
 	 */
-	private void setOrder(Order orderInProcess) {
-		this.orderInProcess = orderInProcess;
+	public void setOrder(Order order_in_process) {
+		this.orderInProcess = order_in_process;
+		this.time_order_in_process = 0;
 	}
+
 
 	/**
 	 * Returns whether the work post is in a completed state.
@@ -221,12 +214,50 @@ public class WorkPost {
 		for(AssemblyTask assem : this.getResponsibleTasks()){
 			for(CarOption option: carOptions){
 				if(option.getCategory().equals(assem.getCategory()))
-					result.add(new AssemblyTask(assem.getName(),assem.getCategory()));
+					result.add(new AssemblyTask(assem.getName(),assem.getCategory(),this));
 			}
 		}
 		return result;
 	}
-	
+
+	protected void AssemblyTaskCompleted(int time) {
+		this.setTime_order_in_process(this.getTime_order_in_process()+time);
+		this.notifyAssemBlyLine();
+	}
+
+	protected void notifyAssemBlyLine(){
+		boolean completed= true;
+		for(AssemblyTask assemblytask: this.getPendingTasks()){
+			if(!assemblytask.isCompleted())
+				completed = false;
+		}
+		if(completed){
+			this.getAssemblyline().WorkPostCompleted(this.getTime_order_in_process());
+		}
+	}
+
+	@Override
+	public String toString(){
+		return this.getName();
+	}
+
+	private int getTime_order_in_process() {
+		return time_order_in_process;
+	}
+
+	private void setTime_order_in_process(int time){
+		this.time_order_in_process = time;
+	}
+
+
+	protected AssemblyLine getAssemblyline() {
+		return assemblyline;
+	}
+
+	private void setAssemblyline(AssemblyLine assemblyline) {
+		this.assemblyline = assemblyline;
+	}
+
 	/**
 	 * Refreshes the order the work post is currently working on an returns the previous order.
 	 * 
@@ -238,13 +269,5 @@ public class WorkPost {
 		Order temp = this.getOrder();
 		this.setNewOrder(order);
 		return temp;
-	}
-	
-	/**
-	 * Returns a string representation of the work post.
-	 */
-	@Override
-	public String toString(){
-		return this.getName();
 	}
 }

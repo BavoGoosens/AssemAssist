@@ -7,7 +7,6 @@ import org.joda.time.DateTime;
 import businessmodel.AssemblyLine;
 import businessmodel.OrderManager;
 import businessmodel.category.CarOption;
-import businessmodel.category.Engine;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
@@ -62,10 +61,10 @@ public class Scheduler implements Subject {
 	public Scheduler(OrderManager ordermanager){
 		this.shifts = new LinkedList<Shift>();
 		this.orders = new LinkedList<Order>();
-		this.assemblyline = new AssemblyLine();
+		this.assemblyline = new AssemblyLine(this);
 		this.updateCurrentTime();
 		this.setOrdermanager(ordermanager);
-		this.changeAlgorithm("fifo");
+		this.changeAlgorithm("fifo", null);
 		this.setDelay(0);
 		this.generateShifts();
 	}
@@ -215,13 +214,13 @@ public class Scheduler implements Subject {
 	 * @throws 	IllegalSchedulingAlgorithmException
 	 * 			if the given algorithm is not implemented.
 	 */
-	public void changeAlgorithm(String algoname) throws IllegalSchedulingAlgorithmException{
+	public void changeAlgorithm(String algoname, CarOption option) throws IllegalSchedulingAlgorithmException{
 		if (algoname == null)
 			throw new NullPointerException("No scheduling algorithm supplied");
 		else if (algoname.equalsIgnoreCase("fifo") || algoname.equalsIgnoreCase("first in first out") )
 			this.algortime = new FIFO(this);
 		else if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch"))
-			this.algortime = new SpecificationBatch(this, new CarOption("medium engine", new Engine()) );
+			this.algortime = new SpecificationBatch(this,option );
 		else
 			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");
 	}

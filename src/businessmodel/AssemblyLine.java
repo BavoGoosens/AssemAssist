@@ -12,6 +12,7 @@ import businessmodel.category.Seats;
 import businessmodel.category.Spoiler;
 import businessmodel.category.Wheels;
 import businessmodel.order.Order;
+import businessmodel.scheduler.Scheduler;
 
 /**
  * A class representing an assembly line. It currently holds 3 work post.
@@ -25,37 +26,42 @@ public class AssemblyLine {
 	 * List of work posts at the assembly line.
 	 */
 	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
+
 	
+	private int timeCurrentStatus = 0;
+	
+	private Scheduler scheduler;
 
 	/**
 	 * Creates a new assembly line.
 	 */
-	public AssemblyLine() {
+	public AssemblyLine(Scheduler scheduler) throws IllegalArgumentException {
+		this.setScheduler(scheduler);
 		this.generateWorkPosts();
 	}
+
 
 	/**
 	 * Method to generate all the factories for the WorkPosts
 	 */
 	private void generateWorkPosts(){
 
-		ArrayList<AssemblyTask> tasksWorkPost1 = new ArrayList<AssemblyTask>();
-		ArrayList<AssemblyTask> tasksWorkPost2 = new ArrayList<AssemblyTask>();
-		ArrayList<AssemblyTask> tasksWorkPost3 = new ArrayList<AssemblyTask>();
+		ArrayList<AssemblyTask> tasks_workPost_1 = new ArrayList<AssemblyTask>();
+		ArrayList<AssemblyTask> tasks_workPost_2 = new ArrayList<AssemblyTask>();
+		ArrayList<AssemblyTask> tasks_workPost_3 = new ArrayList<AssemblyTask>();
+		WorkPost post1 = new WorkPost("Car Body Post", tasks_workPost_1, this);
+		WorkPost post2 = new WorkPost("Drivetrain Post", tasks_workPost_2, this);
+		WorkPost post3 = new WorkPost("Accesoires Post", tasks_workPost_3, this);		
 
-		tasksWorkPost1.add(new AssemblyTask("Assembly Car Body", new Body()));
-		tasksWorkPost1.add(new AssemblyTask("Paint Car", new Color()));
-		tasksWorkPost2.add(new AssemblyTask("Insert Engine", new Engine()));
-		tasksWorkPost2.add(new AssemblyTask("Insert Gearbox", new Gearbox()));
-		tasksWorkPost3.add(new AssemblyTask("Install Seats", new Seats()));
-		tasksWorkPost3.add(new AssemblyTask("Install Airco", new Airco()));
-		tasksWorkPost3.add(new AssemblyTask("Mount Wheels", new Wheels()));
-		tasksWorkPost3.add(new AssemblyTask("Install Spoiler", new Spoiler()));
+		tasks_workPost_1.add(new AssemblyTask("Assembly Car Body", new Body(),post1));
+		tasks_workPost_1.add(new AssemblyTask("Paint Car", new Color(),post1));
+		tasks_workPost_2.add(new AssemblyTask("Insert Engine", new Engine(),post2));
+		tasks_workPost_2.add(new AssemblyTask("Insert Gearbox", new Gearbox(),post2));
+		tasks_workPost_3.add(new AssemblyTask("Install Seats", new Seats(),post3));
+		tasks_workPost_3.add(new AssemblyTask("Install Airco", new Airco(),post3));
+		tasks_workPost_3.add(new AssemblyTask("Mount Wheels", new Wheels(),post3));
+		tasks_workPost_3.add(new AssemblyTask("Install Spoiler", new Spoiler(),post3));
 
-		WorkPost post1 = new WorkPost("Car Body Post", tasksWorkPost1);
-		WorkPost post2 = new WorkPost("Drivetrain Post", tasksWorkPost2);
-		WorkPost post3 = new WorkPost("Accesoires Post", tasksWorkPost3);
-		
 		this.getWorkPosts().add(post1);
 		this.getWorkPosts().add(post2);
 		this.getWorkPosts().add(post3);
@@ -93,6 +99,7 @@ public class AssemblyLine {
 		}
 		if(temp != null)
 			temp.setCompleted();
+		this.timeCurrentStatus = 0;
 	}
 
 	/**
@@ -126,4 +133,37 @@ public class AssemblyLine {
 	public int getNumberOfWorkPosts(){
 		return this.getWorkPosts().size();
 	}
+
+	protected void WorkPostCompleted(int time_order_in_process) {
+		if(time_order_in_process > this.timeCurrentStatus)
+			this.timeCurrentStatus = time_order_in_process;
+		this.notifyScheduler();
+	}
+	
+	private void notifyScheduler(){
+		boolean completed = true;
+		for(WorkPost wp: this.getWorkPosts()){
+			if(!wp.isCompleted())
+				completed = false;
+		}
+		if(completed == true)
+			this.getScheduler().advance(this.timeCurrentStatus);
+	}
+	
+	/**
+	 * A method to get the time spent working on the current status of the AssemblyLine.
+	 * @return
+	 */
+	public int getTimeCurrentStatus() {
+		return timeCurrentStatus;
+	}
+
+	private Scheduler getScheduler() {
+		return scheduler;
+	}
+
+	private void setScheduler(Scheduler scheduler) {
+		this.scheduler = scheduler;
+	}
+	
 }
