@@ -10,6 +10,7 @@ import org.junit.Test;
 
 
 import businessmodel.AssemblyTask;
+import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.OrderManager;
 import businessmodel.WorkPost;
@@ -53,6 +54,7 @@ public class ProductionSchedulerTest {
 	@SuppressWarnings("unused")
 	@Test
 	public void test() {
+		CarManufacturingCompany cmc = new CarManufacturingCompany();
 		
 		Scheduler prodsched = om.getScheduler();
 		assertTrue(om.getCompletedOrders().isEmpty());
@@ -68,30 +70,32 @@ public class ProductionSchedulerTest {
 		for(Order order:this.orders){
 			for(WorkPost wp: prodsched.getAssemblyline().getWorkPosts()){
 				if(wp.getOrder() != null){
-					for(AssemblyTask task: wp.getPendingTasksClone())
-						task.isCompleted();
+					for(AssemblyTask assem : wp.getPendingTasks())
+							cmc.completeAssemBlyTask(assem, 20);
+					
 				}
 			}
-			prodsched.advance(60); 
 		}
 		
 		for(Order order:this.orders){
 			for(WorkPost wp: prodsched.getAssemblyline().getWorkPosts()){
 				if(wp.getOrder() != null){
-					for(AssemblyTask task: wp.getPendingTasksClone())
-						task.isCompleted();
+					for(AssemblyTask assem : wp.getPendingTasks())
+							cmc.completeAssemBlyTask(assem, 20);
+					
 				}
 			}
-			prodsched.advance(40);
+			
 		}
 		for(Order order:this.orders){
 			for(WorkPost wp: prodsched.getAssemblyline().getWorkPosts()){
 				if(wp.getOrder() != null){
-					for(AssemblyTask task: wp.getPendingTasksClone())
-						task.isCompleted();
+					for(AssemblyTask assem : wp.getPendingTasks())
+							cmc.completeAssemBlyTask(assem, 20);
+					
 				}
 			}
-			prodsched.advance(80);
+			
 		}
 		assertTrue(om.getPendingOrders().isEmpty());
 	}
