@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import org.joda.time.DateTime;
 
+import businessmodel.Car;
 import businessmodel.category.CarOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
