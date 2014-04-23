@@ -53,14 +53,14 @@ public class AssemblyLine {
 		WorkPost post2 = new WorkPost("Drivetrain Post", tasks_workPost_2, this);
 		WorkPost post3 = new WorkPost("Accesoires Post", tasks_workPost_3, this);		
 
-		tasks_workPost_1.add(new AssemblyTask("Assembly Car Body", new Body(),post1));
-		tasks_workPost_1.add(new AssemblyTask("Paint Car", new Color(),post1));
-		tasks_workPost_2.add(new AssemblyTask("Insert Engine", new Engine(),post2));
-		tasks_workPost_2.add(new AssemblyTask("Insert Gearbox", new Gearbox(),post2));
-		tasks_workPost_3.add(new AssemblyTask("Install Seats", new Seats(),post3));
-		tasks_workPost_3.add(new AssemblyTask("Install Airco", new Airco(),post3));
-		tasks_workPost_3.add(new AssemblyTask("Mount Wheels", new Wheels(),post3));
-		tasks_workPost_3.add(new AssemblyTask("Install Spoiler", new Spoiler(),post3));
+		tasks_workPost_1.add(new AssemblyTask("Assembly Car Body", "assemble blabla", new Body(),post1));
+		tasks_workPost_1.add(new AssemblyTask("Paint Car","paint blabla", new Color(),post1));
+		tasks_workPost_2.add(new AssemblyTask("Insert Engine", "insert engine blabla", new Engine(),post2));
+		tasks_workPost_2.add(new AssemblyTask("Insert Gearbox","insert gearbox blabla", new Gearbox(),post2));
+		tasks_workPost_3.add(new AssemblyTask("Install Seats", "insert seats blabla", new Seats(),post3));
+		tasks_workPost_3.add(new AssemblyTask("Install Airco", "insert airco blabla", new Airco(),post3));
+		tasks_workPost_3.add(new AssemblyTask("Mount Wheels", "insert mount wheels", new Wheels(),post3));
+		tasks_workPost_3.add(new AssemblyTask("Install Spoiler","install spoiler", new Spoiler(),post3));
 
 		this.getWorkPosts().add(post1);
 		this.getWorkPosts().add(post2);
