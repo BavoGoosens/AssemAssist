@@ -36,8 +36,7 @@ public class ProductionSchedulerTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
-		om = new OrderManager(carmodels);
+		om = new CarManufacturingCompany().getOrderManager();
 		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
 		orders = new ArrayList<Order>();
 		
