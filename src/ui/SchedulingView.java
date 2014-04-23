@@ -28,8 +28,7 @@ public class SchedulingView extends View {
 
 	@Override
 	public void displayHelp() {
-		// TODO Auto-generated method stub
-		
+		this.helpOverview();
 	}
 
 	@Override
@@ -40,14 +39,12 @@ public class SchedulingView extends View {
 
 	@Override
 	public void cancel() {
-		// TODO Auto-generated method stub
-		
+		new ManagerView(this.getModel(), this.user).display();		
 	}
 
 	@Override
 	public void quit() {
-		// TODO Auto-generated method stub
-		
+		new LoginView(this.getModel()).display();		
 	}
 
 }

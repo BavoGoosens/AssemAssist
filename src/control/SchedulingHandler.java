@@ -2,6 +2,7 @@ package control;
 
 import businessmodel.CarManufacturingCompany;
 import businessmodel.Model;
+import businessmodel.category.CarOption;
 import businessmodel.user.User;
 
 public class SchedulingHandler implements SchedulingController{
@@ -16,9 +17,8 @@ public class SchedulingHandler implements SchedulingController{
 	}
 
 	@Override
-	public void selectAlgorithm(String algo, String[] args) {
-		// TODO Auto-generated method stub
-
+	public void selectAlgorithm(String algo, CarOption args) {
+		this.cmc.changeAlgorithm(algo, args);
 	}
 
 }

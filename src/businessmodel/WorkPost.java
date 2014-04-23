@@ -222,6 +222,7 @@ public class WorkPost {
 
 	protected void AssemblyTaskCompleted(int time) {
 		this.setTime_order_in_process(this.getTime_order_in_process()+time);
+		this.getAssemblyline().notifyObservers();
 		this.notifyAssemBlyLine();
 	}
 

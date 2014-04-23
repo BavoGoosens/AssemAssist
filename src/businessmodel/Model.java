@@ -1,5 +1,6 @@
 package businessmodel;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import businessmodel.exceptions.NoClearanceException;
@@ -37,5 +38,11 @@ public interface Model {
 	public CarStatistics getCarStatistics();
 
 	public OrderStatistics getOrderStatistics();
+
+	public ArrayList<WorkPost> getWorkPosts();
+
+	public ArrayList<AssemblyTask> getPendingTasks(WorkPost wp);
+
+	public ArrayList<AssemblyTask> getFinishedTasks(WorkPost wp);
 
 }

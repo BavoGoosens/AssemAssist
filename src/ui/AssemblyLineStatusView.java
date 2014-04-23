@@ -27,12 +27,12 @@ public class AssemblyLineStatusView extends View implements Observer {
 
 	@Override
 	public void display() {
-		ArrayList<WorkPost> posts =  this.subject.getWorkPosts();
+		ArrayList<WorkPost> posts =  this.getModel().getWorkPosts();
 		System.out.println("> This is the assembly line status: ");
 		for (WorkPost wp : posts){
 			System.out.println("  > " + wp.getName() + "status: " );
-			ArrayList<AssemblyTask> pending = wp.getPendingTasks();
-			ArrayList<AssemblyTask> finished = wp.getFinishedTasks();
+			ArrayList<AssemblyTask> pending = this.getModel().getPendingTasks(wp);
+			ArrayList<AssemblyTask> finished = this.getModel().getFinishedTasks(wp);
 			System.out.println("    > pending tasks:");
 			for (AssemblyTask task : pending)
 				System.out.println("    > " + task.toString());
