@@ -14,6 +14,8 @@ public class AssemblyTask {
 	 * The name of the assembly task.
 	 */
 	private String name;
+	
+	private String action_description;
 
 	/**
 	 * Specifies if this assembly task has been completed.
@@ -37,10 +39,19 @@ public class AssemblyTask {
 	 * @throws 	IllegalArgumentException
 	 * 
 	 */
-	public AssemblyTask(String name, CarOptionCategory category, WorkPost workpost) throws IllegalArgumentException {
+	public AssemblyTask(String name, String description_of_actions, CarOptionCategory category, WorkPost workpost) throws IllegalArgumentException {
 		this.setWorkpost(workpost);
 		this.setName(name);
 		this.setCategory(category);
+		this.setDescription(description_of_actions);
+	}
+
+	private void setDescription(String description_of_actions) {
+		this.action_description = description_of_actions;
+	}
+	
+	public String getDescription(){
+		return this.action_description;
 	}
 
 	/**

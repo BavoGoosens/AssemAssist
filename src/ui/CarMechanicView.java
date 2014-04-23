@@ -39,7 +39,7 @@ public class CarMechanicView extends View {
 		int num  = 1;
 		for (WorkPost wp : posts)
 			System.out.println("> " + num++ + ") " + wp.toString());
-		System.out.println(">> ");
+		System.out.print(">> ");
 		String response = this.scan.nextLine();
 		Pattern pattern = Pattern.compile("^\\d*$");
 		this.check(response);
@@ -47,17 +47,14 @@ public class CarMechanicView extends View {
 			AssemblyLineStatusView view = new AssemblyLineStatusView(this.getModel(), this.user);
 			view.display();
 		} else if (pattern.matcher(response).find()){
-			int choice = Integer.parseInt(response)s;
-			if (choice < 1 || choice > posts.size()){
-				System.out.println("! You entered something wrong. Please try again");
-				this.display();
-			}
+			int choice = Integer.parseInt(response);
+			if (choice < 1 || choice > posts.size())
+				this.error();
 			WorkPost wp = posts.get(choice - 1);
 			this.performTasks(wp);
 		} else {
-			
-		}
-		
+			this.error();
+		}	
 	}
 
 	private void performTasks(WorkPost wp) {
@@ -66,11 +63,16 @@ public class CarMechanicView extends View {
 		int num  = 1;
 		for (AssemblyTask ass : tasks)
 			System.out.println("> " + num ++ + ") " + ass.toString());
-		System.out.println(">> ");
+		System.out.print(">> ");
 		String response = this.scan.nextLine();
 		this.check(response);
 		Pattern pattern = Pattern.compile("^\\d*$");
-		
+		if (pattern.matcher(response).find()){
+			
+		} else {
+			System.out.println("! You entered something wrong. Please try again");
+			this.performTasks(wp);
+		}
 	}
 
 	@Override
@@ -91,8 +93,8 @@ public class CarMechanicView extends View {
 
 	@Override
 	public void error() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("! You entered something wrong. Please try again");
+		this.display();		
 	}
 
 	private void check(String str){
