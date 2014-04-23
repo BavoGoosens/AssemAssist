@@ -40,8 +40,7 @@ public class AssemblyLineTest {
 	@Before
 	public void setUp() throws Exception {
 
-		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
-		om = new OrderManager(carmodels);
+		om =new CarManufacturingCompany().getOrderManager();
 		orders = new ArrayList<Order>();
 
 		this.catalog = new Catalog();

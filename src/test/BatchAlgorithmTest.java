@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Catalog;
 import businessmodel.OrderManager;
@@ -39,8 +40,7 @@ public class BatchAlgorithmTest {
 			this.catalog = new Catalog();
 			this.categories = this.catalog.getAllCategories();
 
-			ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
-			OrderManager orderManager = new OrderManager(carmodels);
+			OrderManager orderManager = new CarManufacturingCompany().getOrderManager();
 
 			ArrayList<CarOption> options = new ArrayList<CarOption>();
 			options.add(new CarOption("Airco", new Airco()));

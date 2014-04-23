@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Catalog;
 import businessmodel.OrderManager;
@@ -32,8 +33,7 @@ public class OrderManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
-		om = new OrderManager(carmodels);
+		om = new CarManufacturingCompany().getOrderManager();
 		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
 
 		this.catalog = new Catalog();
