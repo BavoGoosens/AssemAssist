@@ -3,6 +3,7 @@ package businessmodel.scheduler;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import businessmodel.category.CarOption;
 import businessmodel.order.Order;
 
 public class FIFO extends SchedulingAlgorithm {
@@ -12,11 +13,12 @@ public class FIFO extends SchedulingAlgorithm {
 	}
 
 	@Override
-	public void schedule(LinkedList<Order> orders){
+	public LinkedList<Order> schedule(LinkedList<Order> orders){
 		for(Order order: orders)
 			this.scheduleOrder(order);
+		return orders;
 	}
-
+	
 	@Override
 	public void scheduleOrder(Order order) {
 		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();
@@ -24,10 +26,10 @@ public class FIFO extends SchedulingAlgorithm {
 			timeslots = sh.canAddOrder(order);
 			if(timeslots!= null){
 				sh.addOrderToSlots(order,timeslots);
-				this.getScheduler().setEstimatedCompletionDate(order);
 				break;
 			}
 		}
 	}
+
 }
 

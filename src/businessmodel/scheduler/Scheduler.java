@@ -6,6 +6,8 @@ import org.joda.time.DateTime;
 
 import businessmodel.AssemblyLine;
 import businessmodel.OrderManager;
+import businessmodel.category.CarOption;
+import businessmodel.category.Engine;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
@@ -61,6 +63,7 @@ public class Scheduler implements Subject {
 		this.shifts = new LinkedList<Shift>();
 		this.orders = new LinkedList<Order>();
 		this.assemblyline = new AssemblyLine();
+		this.updateCurrentTime();
 		this.setOrdermanager(ordermanager);
 		this.changeAlgorithm("fifo");
 		this.setDelay(0);
@@ -72,8 +75,8 @@ public class Scheduler implements Subject {
 	public void advance(int time){
 		int delay = time - 60;
 		this.getCurrentTime().plusMinutes(time);
-		updateCompletedOrders();
 		updateAssemblylineStatus();
+		updateCompletedOrders();
 		updateDelay(delay);
 		updateEstimatedTimeOfOrders(delay);
 		this.updateSchedule();
@@ -91,9 +94,11 @@ public class Scheduler implements Subject {
 	 * A method to update the orders of this Scheduler. The completed order is pushed to completed orders and its completion date is set.
 	 */
 	private void updateCompletedOrders(){
-		Order completedorder = this.getOrders().pollFirst();
-		completedorder.setCompletionDate(this.getCurrentTime());
-		this.getOrdermanager().finishedOrder(completedorder);
+		if(this.getOrders().peekFirst().isCompleted()){
+			Order completedorder = this.getOrders().pollFirst();
+			completedorder.setCompletionDate(this.getCurrentTime());
+			this.getOrdermanager().finishedOrder(completedorder);
+		}
 	}
 
 	/**
@@ -109,16 +114,20 @@ public class Scheduler implements Subject {
 	 * A method to update The Schedule if the delay was to high or to low.
 	 */
 	public void updateSchedule(){
+		
 		if(this.getDelay() >= 60){
+			
 			this.getShifts().getLast().addTimeSlot();
 			Order nextorder = this.getNextOrderToSchedule();
 			this.scheduleOrder(nextorder);
 			this.setDelay(this.getDelay()-60);
-		}
-		else if (this.getDelay() <= 60){
+			
+		}else if (this.getDelay() <= -60){
+			
 			Order order = this.getShifts().getLast().removeLastTimeSlot();
-			this.getOrdermanager().placeOrderInFront(order);
+			this.getOrdermanager().PlaceOrderInFront(order);
 			this.setDelay(this.getDelay()+60);
+			
 		}
 	}
 
@@ -147,18 +156,18 @@ public class Scheduler implements Subject {
 	public void ScheduleDay(){
 		this.updateCurrentTime();
 		int size = this.getNumberOfOrdersToSchedule();
-		this.getOrders().addAll(this.getOrdermanager().getNbOrders(size));
-		this.getAlgo().schedule(this.getOrders());
+		this.getOrders().addAll(this.getAlgo().schedule(this.getOrdermanager().getNbOrders(size)));
+		
 	} 
 
 	private void updateCurrentTime() {
 		DateTime datetemp = new DateTime();
 		if(this.currenttime == null){
 			this.currenttime = new DateTime(datetemp.getYear(), datetemp.getMonthOfYear(), datetemp.getDayOfMonth(), 8, 0);
-			}
+		}
 		else 
 			currenttime = new DateTime(currenttime.getYear(), currenttime.getMonthOfYear(), currenttime.getDayOfMonth(), 8, 0);
-			currenttime.plusDays(1);
+		currenttime.plusDays(1);
 	}
 
 	private int getNumberOfOrdersToSchedule() {
@@ -166,7 +175,7 @@ public class Scheduler implements Subject {
 	}
 
 	protected Order getNextOrderToSchedule(){
-		return this.getOrdermanager().getPendingOrders().pollFirst();
+		return this.getOrdermanager().getPendingOrders().poll();
 	}
 
 	/**
@@ -212,7 +221,7 @@ public class Scheduler implements Subject {
 		else if (algoname.equalsIgnoreCase("fifo") || algoname.equalsIgnoreCase("first in first out") )
 			this.algortime = new FIFO(this);
 		else if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch"))
-			this.algortime = new SpecificationBatch(this);
+			this.algortime = new SpecificationBatch(this, new CarOption("medium engine", new Engine()) );
 		else
 			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");
 	}
@@ -277,7 +286,8 @@ public class Scheduler implements Subject {
 		this.ordermanager = ordermanager;
 	}
 
-	private AssemblyLine getAssemblyline() {
+	// TODO private 
+	public AssemblyLine getAssemblyline() {
 		return assemblyline;
 	}
 
@@ -289,7 +299,7 @@ public class Scheduler implements Subject {
 			return this.getShifts().get(index+1);
 	}
 
-	protected DateTime getCurrentTime(){
+	public DateTime getCurrentTime(){
 		return (DateTime) this.currenttime;
 	}
 
@@ -301,7 +311,7 @@ public class Scheduler implements Subject {
 			}else if(previousorder.getEstimateDate().getHourOfDay() <= 21){
 				order.setEstimateDate(previousorder.getEstimateDate().plusHours(1));
 			}else {
-				order.setEstimateDate(previousorder.getEstimateDate().plusDays(1).withHourOfDay(8).withMinuteOfHour(0));
+				order.setEstimateDate(previousorder.getEstimateDate().plusDays(1).withHourOfDay(11).withMinuteOfHour(0));
 			}
 		}else{
 			order.setEstimateDate(this.getCurrentTime().plusHours(3));

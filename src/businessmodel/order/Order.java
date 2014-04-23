@@ -27,18 +27,22 @@ public abstract class Order {
 	/**
 	 * The estimated time of delivery.
 	 */
-	private DateTime estimatedatetime;
+	private DateTime estimated_endtime;
 
-	private DateTime timestamp;
-	
-	private DateTime placedonworkpost;
+	private DateTime order_placed;
 
-	private DateTime standardtime;
+	private DateTime order_placed_on_workpost;
 
-	private DateTime completiondatetime;
-	
+	private DateTime standardtime_on_assemblyline;
+
+	private DateTime completion_time;
+
+	private DateTime user_end_date;
+
 	private ArrayList<CarOption> caroptions;
-	
+
+	private boolean completed;
+
 	/**
 	 * A constructor for the class Order.
 	 * 
@@ -47,9 +51,10 @@ public abstract class Order {
 	 * @param   caroptions
 	 *          the car options of the new Order.
 	 */
-	public Order(User user, ArrayList<CarOption> options) throws IllegalArgumentException, NoClearanceException{
+	public Order(User user, ArrayList<CarOption> options, DateTime user_end_date) throws IllegalArgumentException, NoClearanceException{
 		setUser(user);
 		setCapoptions(options);
+		this.setUser_end_date(user_end_date);
 	}
 
 	/**
@@ -73,7 +78,7 @@ public abstract class Order {
 	 * 			this.deliverydate
 	 */
 	public DateTime getEstimateDate() {
-		return this.estimatedatetime;
+		return this.estimated_endtime;
 	}
 
 	/**
@@ -87,7 +92,7 @@ public abstract class Order {
 	public void setEstimateDate(DateTime deliverydate) throws IllegalArgumentException {
 		if(deliverydate == null)
 			throw new IllegalArgumentException();
-		this.estimatedatetime = deliverydate;
+		this.estimated_endtime = deliverydate;
 	}
 
 	/**
@@ -102,88 +107,79 @@ public abstract class Order {
 	//
 	@Override
 	public String toString() {
-		return "user: " + this.user.toString() + ", delivery date= " + this.estimatedatetime.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT); 
+		return "user: " + this.user.toString() + ", delivery date= " + this.estimated_endtime.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT); 
 	}
 
-	/**
-	 * Method to check if car options from two orders are the same or not
-	 * 
-	 * @param order
-	 * @return true if car options are the same else return false
-	 * @throws IllegalArgumentException
-	 */
-	public boolean equalsCarOptions(Object order) throws IllegalArgumentException{
-
-		if (order == null) throw new IllegalArgumentException("bad order");
-
-		ArrayList<CarOption> orders = this.getCar().getOptionsClone();
-		ArrayList<CarOption> orders2 = ((StandardCarOrder) order).getCar().getOptionsClone();
-		ArrayList<CarOption> temp = new ArrayList<CarOption>();
-		
-		if (orders.size() < orders2.size()){
-			temp = orders;
-			orders= orders2;
-			orders2 = temp;
-		}
-			
-		for(CarOption carOption: orders){
-			boolean sameCarOptions = false;
-			for(CarOption carOption2: orders2){
-				if (carOption.toString().equals(carOption2.toString())){
-					sameCarOptions = true;
-				}
-			}
-			if(!sameCarOptions)
-				return false;
-		}
-		return true;
-	}
-	
-	/**
+		/**
 	 * 
 	 * @param date
 	 */
 	public void updateCompletionTime(DateTime date){
-		this.completiondatetime = date;
-	}
-
-	/**
-	 * 
-	 * @return null
-	 */
-	public Car getCar(){
-		return null;
+		this.completion_time = date;
 	}
 
 	public void updateEstimatedDate(int delay) {
 		this.getEstimateDate().plusMinutes(delay);		
 	}
-	
+
 	public void setCompletionDate(DateTime date){
-		this.completiondatetime = date;
+		this.completion_time = date;
 	}
-	
+
 	public DateTime getCompletionDate(){
-		return this.completiondatetime;
+		return this.completion_time;
 	}
 
 	public DateTime getTimestamp(){
-		return this.timestamp;
+		return this.order_placed;
 	}
-	
+
 	public void setTimestamp(DateTime timestamp) {
-		this.timestamp = timestamp;
+		this.order_placed = timestamp;
 	}
-	
+
 	public void setPlacedOnWorkpost(DateTime date){
-		this.placedonworkpost = date;
+		this.setOrder_placed_on_workpost(date);
 	}
-	
+
 	public ArrayList<CarOption> getCarOptions() {
 		return caroptions;
 	}
 
 	private void setCapoptions(ArrayList<CarOption> capoptions) {
 		this.caroptions = capoptions;
+	}
+
+	public DateTime getUser_end_date() {
+		return user_end_date;
+	}
+
+	private void setUser_end_date(DateTime user_end_date) {
+		this.user_end_date = user_end_date;
+	}
+
+	public DateTime getOrder_placed_on_workpost() {
+		return order_placed_on_workpost;
+	}
+
+	public void setOrder_placed_on_workpost(DateTime order_placed_on_workpost) {
+		this.order_placed_on_workpost = order_placed_on_workpost;
+	}
+
+	public DateTime getStandardtime_on_assemblyline() {
+		return standardtime_on_assemblyline;
+	}
+
+	public void setStandardtime_on_assemblyline(
+			DateTime standardtime_on_assemblyline) {
+		this.standardtime_on_assemblyline = standardtime_on_assemblyline;
+	}
+
+	public boolean isCompleted() {
+		return this.completed;
+	}
+
+	public void setCompleted() {
+		this.completed = true;
 	}
 }

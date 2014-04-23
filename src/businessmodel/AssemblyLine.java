@@ -5,9 +5,13 @@ import java.util.LinkedList;
 
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
+import businessmodel.category.CarModelFactory;
 import businessmodel.category.Color;
 import businessmodel.category.Engine;
 import businessmodel.category.Gearbox;
+import businessmodel.category.ModelAFactory;
+import businessmodel.category.ModelBFactory;
+import businessmodel.category.ModelCFactory;
 import businessmodel.category.Seats;
 import businessmodel.category.Spoiler;
 import businessmodel.category.Wheels;
@@ -25,6 +29,7 @@ public class AssemblyLine {
 	 * List of work posts at the assembly line.
 	 */
 	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
+	
 
 	/**
 	 * A constructor for the class AssemblyLine.
@@ -32,14 +37,16 @@ public class AssemblyLine {
 	public AssemblyLine() throws IllegalArgumentException {
 		this.generateWorkPosts();
 	}
-	
-	// TODO factory van maken? overleggen met assistent
+
+	/**
+	 * Method to generate all the factories for de WorkPosts
+	 */
 	private void generateWorkPosts(){
-		
+
 		ArrayList<AssemblyTask> tasksWorkPost1 = new ArrayList<AssemblyTask>();
 		ArrayList<AssemblyTask> tasksWorkPost2 = new ArrayList<AssemblyTask>();
 		ArrayList<AssemblyTask> tasksWorkPost3 = new ArrayList<AssemblyTask>();
-		
+
 		tasksWorkPost1.add(new AssemblyTask("Assembly Car Body", new Body()));
 		tasksWorkPost1.add(new AssemblyTask("Paint Car", new Color()));
 		tasksWorkPost2.add(new AssemblyTask("Insert Engine", new Engine()));
@@ -48,7 +55,7 @@ public class AssemblyLine {
 		tasksWorkPost3.add(new AssemblyTask("Install Airco", new Airco()));
 		tasksWorkPost3.add(new AssemblyTask("Mount Wheels", new Wheels()));
 		tasksWorkPost3.add(new AssemblyTask("Install Spoiler", new Spoiler()));
-		
+
 		WorkPost post1 = new WorkPost("Car Body Post", tasksWorkPost1);
 		WorkPost post2 = new WorkPost("Drivetrain Post", tasksWorkPost2);
 		WorkPost post3 = new WorkPost("Accesoires Post", tasksWorkPost3);
@@ -56,16 +63,6 @@ public class AssemblyLine {
 		this.getWorkPosts().add(post1);
 		this.getWorkPosts().add(post2);
 		this.getWorkPosts().add(post3);
-	}
-	
-	/**
-	 * This method returns the list of work posts at the assembly line.
-	 * 
-	 * @return	ArrayList<WorkPost>
-	 * 			this.workposts
-	 */
-	public ArrayList<WorkPost> getWorkPosts() {
-		return this.workposts;
 	}
 
 	/**
@@ -83,16 +80,23 @@ public class AssemblyLine {
 		return true;
 	}		
 
-	public Order advance(Order neworder) throws IllegalStateException {
+	/**
+	 * 
+	 * @param neworder
+	 * @return
+	 * @throws IllegalStateException
+	 */
+	public void advance(Order neworder) throws IllegalStateException {
 		if (!this.canAdvance())
 			throw new IllegalStateException("Cannot advance assembly line!");
 		Order temp = neworder;
 		for(WorkPost wp: this.getWorkPosts()){
 			temp = wp.switchOrders(temp);
 		}
-		return temp;
+		if(temp != null)
+			temp.setCompleted();
 	}
-	
+
 	/**
 	 * A method that returns all the orders that are on the assembly line.
 	 * 
@@ -106,7 +110,22 @@ public class AssemblyLine {
 				orders.add(wp.getOrder());
 		return orders;
 	}
-	
+
+
+	/**
+	 * This method returns the list of work posts at the assembly line.
+	 * 
+	 * @return	ArrayList<WorkPost>
+	 * 			this.workposts
+	 */
+	public ArrayList<WorkPost> getWorkPosts() {
+		return this.workposts;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
 	public int getNumberOfWorkPosts(){
 		return this.getWorkPosts().size();
 	}

@@ -1,7 +1,14 @@
 package businessmodel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
+
+import org.joda.time.DateTime;
+
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.Order;
@@ -16,15 +23,15 @@ import businessmodel.user.User;
  */
 public class OrderManager {
 
+
+	public LinkedList<Order> getPendingOrders(){
+		return this.pendingorders;
+	}
+
 	/**
 	 * A list that holds all the completed orders of a car manufacturing company.
 	 */
 	private LinkedList<Order> completedorders;
-
-	/**
-	 * A list that holds all the pending orders for a car manufacturing company.
-	 */
-	private LinkedList<Order> pendingorders;
 
 	/**
 	 * A list that holds all the car models of a car manufacturing company.
@@ -35,6 +42,8 @@ public class OrderManager {
 	 * A scheduler this Order Manager uses.
 	 */
 	private Scheduler scheduler;
+
+	private LinkedList<Order> pendingorders;
 
 	/**
 	 * A constructor for the class OrderManager.
@@ -57,21 +66,7 @@ public class OrderManager {
 	 */
 	public void placeOrder(Order order) throws IllegalArgumentException {
 		this.addOrder(order);
-		
-	}
 
-	/**
-	 * A method to get the orders of this order manager.
-	 * 
-	 * @return 	LinkedList<Order>
-	 * 			All the orders of this order manager.
-	 */
-	public LinkedList<Order> getOrders() {
-		LinkedList<Order> temp = this.getPendingOrders();
-		for(Order order: this.getCompletedOrders()){
-			temp.add(order);
-		}
-		return temp;
 	}
 
 	/**
@@ -92,7 +87,9 @@ public class OrderManager {
 	 */
 	public void addOrder(Order order) throws IllegalArgumentException {
 		if (order == null) throw new IllegalArgumentException("Bad order!");
+		order.setTimestamp(this.getScheduler().getCurrentTime());
 		this.getPendingOrders().add(order);
+		this.setEstimatedCompletionDate(order);
 	}
 
 	/**
@@ -102,15 +99,6 @@ public class OrderManager {
 	 */
 	public LinkedList<Order> getCompletedOrders(){
 		return this.completedorders;
-	}
-
-	/**
-	 * A method to get the pending orders of this order manager.
-	 * 
-	 * @return the pending orders of this order manager.
-	 */
-	public LinkedList<Order> getPendingOrders(){
-		return this.pendingorders;
 	}
 
 	/**
@@ -167,11 +155,6 @@ public class OrderManager {
 		this.scheduler = scheduler;
 	}
 
-	@Override
-	public String toString() {
-		return "orders= " + this.getOrders().toString() + ", carmodels= " + carmodels.toString();
-	}
-
 	/**
 	 * A method that moves a finished order from the pending list to the finished list.
 	 * 
@@ -193,17 +176,42 @@ public class OrderManager {
 	 * 		   A list with the requested orders.
 	 */
 	public LinkedList<Order> getNbOrders(int nb) {
+		
 		if (nb < 0) throw new IllegalNumberException(nb, "Bad number!");
+
 		LinkedList<Order> res = new LinkedList<Order>();
-		for (int i = 0 ; i < nb; i++){
-			Order tmp = this.getPendingOrders().pollFirst();
-			if (tmp == null)
-				break;
-			res.add(tmp);
+		LinkedList<Order> single_task_orders = getSingleTaskOrdersNextDay();
+		
+		if(single_task_orders!= null){
+			for(Order order: single_task_orders){
+				res.add(order);
+				getPendingOrders().remove(order);
+			}
+		}
+		
+		for (int i = 0; i < (nb - single_task_orders.size()); i++){
+			Order order = getPendingOrders().poll();
+			if (order != null)
+				res.add(order);
 		}
 		return res;
 	}
-	
+
+	private LinkedList<Order> getSingleTaskOrdersNextDay() {
+		LinkedList<Order> temp = new LinkedList<Order>();
+		
+		for(Order order: this.getPendingOrders()){
+			if(order.getUser_end_date()!= null){
+				if(order.getUser_end_date().getDayOfWeek()-1 == this.getScheduler().getCurrentTime().getDayOfWeek()){
+					int index = this.getPendingOrders().indexOf(order);
+					temp.add(this.getPendingOrders().get(index));
+				}
+			}
+		}
+		
+		return temp;
+	}
+
 	private void setCarModels(ArrayList<CarModel> carmodels) throws IllegalArgumentException {
 		if (carmodels == null) throw new IllegalArgumentException("Bad list of car models!");
 		this.carmodels = carmodels;
@@ -213,7 +221,36 @@ public class OrderManager {
 	 * A method to place an order in front of the pending orders.
 	 * @param order
 	 */
-	public void placeOrderInFront(Order order) {
-		this.getPendingOrders().addFirst(order);		
+	public void PlaceOrderInFront(Order order) {
+		this.getPendingOrders().add(order);		
+	}
+	
+	protected void setEstimatedCompletionDate(Order order){
+		Order previousorder = this.getPreviousOrder(order);
+		if(previousorder != null) {
+			if(previousorder.getEstimateDate() == null){
+				order.setEstimateDate(this.getScheduler().getCurrentTime().plusHours(3));
+			}else if(previousorder.getEstimateDate().getHourOfDay() <= 21){
+				order.setEstimateDate(previousorder.getEstimateDate().plusHours(1));
+			}else {
+				order.setEstimateDate(previousorder.getEstimateDate().plusDays(1).withHourOfDay(11).withMinuteOfHour(0));
+			}
+		}else{
+			order.setEstimateDate(this.getScheduler().getCurrentTime().plusHours(3));
+		}
+	}
+
+	/**
+	 * A method to get the previous order in the list.
+	 * @param 	order
+	 * 			the current order.
+	 * @return	the previous order of the current order.
+	 */
+	protected Order getPreviousOrder(Order order){
+		int index = this.getPendingOrders().indexOf(order);
+		if(index-1 < 0)
+			return null;
+		else
+			return this.getPendingOrders().get(index-1);
 	}
 }
