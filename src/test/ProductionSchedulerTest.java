@@ -57,9 +57,9 @@ public class ProductionSchedulerTest {
 		orders.add(order);
 		orders.add(order);
 		orders.add(order);
-		om.addOrder(order);
-		om.addOrder(order);
-		om.addOrder(order);
+		om.placeOrder(order);
+		om.placeOrder(order);
+		om.placeOrder(order);
 		
 	}
 

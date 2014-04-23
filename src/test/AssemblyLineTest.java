@@ -68,7 +68,7 @@ public class AssemblyLineTest {
 	
 
 		for(Order order: orders)
-			om.addOrder(order);
+			om.placeOrder(order);
 
 	}
 

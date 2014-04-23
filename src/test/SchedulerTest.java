@@ -95,26 +95,26 @@ public class SchedulerTest {
 		Order order20 = new SingleTaskOrder(c20,chosen, temp);
 
 
-		ord.addOrder(order1);
-		ord.addOrder(order2);
-		ord.addOrder(order3);
-		ord.addOrder(order4);
-		ord.addOrder(order5);
-		ord.addOrder(order6);
-		ord.addOrder(order19);
-		ord.addOrder(order7);
-		ord.addOrder(order8);
-		ord.addOrder(order9);
-		ord.addOrder(order10);
-		ord.addOrder(order11);
-		ord.addOrder(order12);
-		ord.addOrder(order13);
-		ord.addOrder(order14);
-		ord.addOrder(order15);
-		ord.addOrder(order20);
-		ord.addOrder(order16);
-		ord.addOrder(order17);
-		ord.addOrder(order18);
+		ord.placeOrder(order1);
+		ord.placeOrder(order2);
+		ord.placeOrder(order3);
+		ord.placeOrder(order4);
+		ord.placeOrder(order5);
+		ord.placeOrder(order6);
+		ord.placeOrder(order19);
+		ord.placeOrder(order7);
+		ord.placeOrder(order8);
+		ord.placeOrder(order9);
+		ord.placeOrder(order10);
+		ord.placeOrder(order11);
+		ord.placeOrder(order12);
+		ord.placeOrder(order13);
+		ord.placeOrder(order14);
+		ord.placeOrder(order15);
+		ord.placeOrder(order20);
+		ord.placeOrder(order16);
+		ord.placeOrder(order17);
+		ord.placeOrder(order18);
 		
 		ord.getScheduler().ScheduleDay();
 		

@@ -48,7 +48,7 @@ public class OrderManagerTest {
 			}
 		}
 		order = new StandardCarOrder(garageholder, chosen);
-		om.addOrder(order);
+		om.placeOrder(order);
 	}
 
 	@Test
