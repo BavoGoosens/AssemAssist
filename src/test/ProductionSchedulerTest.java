@@ -3,6 +3,8 @@ package test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -80,7 +82,11 @@ public class ProductionSchedulerTest {
 		for(Order order:this.orders){
 			for(WorkPost wp: prodsched.getAssemblyline().getWorkPosts()){
 				if(wp.getOrder() != null){
-					for(AssemblyTask assem : wp.getPendingTasks())
+					Iterator<AssemblyTask> iter = cmc.getPendingTasks(wp);
+					List<AssemblyTask> copy = new ArrayList<AssemblyTask>();
+					while (iter.hasNext())
+					    copy.add(iter.next());
+					for(AssemblyTask assem : copy)
 							cmc.completeAssemBlyTask(assem, 20);
 					
 				}
@@ -90,7 +96,12 @@ public class ProductionSchedulerTest {
 		for(Order order:this.orders){
 			for(WorkPost wp: prodsched.getAssemblyline().getWorkPosts()){
 				if(wp.getOrder() != null){
-					for(AssemblyTask assem : wp.getPendingTasks())
+					
+					Iterator<AssemblyTask> iter = cmc.getPendingTasks(wp);
+					List<AssemblyTask> copy = new ArrayList<AssemblyTask>();
+					while (iter.hasNext())
+					    copy.add(iter.next());
+					for(AssemblyTask assem : copy)
 							cmc.completeAssemBlyTask(assem, 20);
 					
 				}
@@ -100,7 +111,11 @@ public class ProductionSchedulerTest {
 		for(Order order:this.orders){
 			for(WorkPost wp: prodsched.getAssemblyline().getWorkPosts()){
 				if(wp.getOrder() != null){
-					for(AssemblyTask assem : wp.getPendingTasks())
+					Iterator<AssemblyTask> iter = cmc.getPendingTasks(wp);
+					List<AssemblyTask> copy = new ArrayList<AssemblyTask>();
+					while (iter.hasNext())
+					    copy.add(iter.next());
+					for(AssemblyTask assem : copy)
 							cmc.completeAssemBlyTask(assem, 20);
 					
 				}

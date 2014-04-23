@@ -134,7 +134,7 @@ public class WorkPost {
 	 * 
 	 * @return	A cloned list of assembly tasks the work post is responsible for.
 	 */
-	protected ArrayList<AssemblyTask> getResponsibleTasksClone() {
+	public ArrayList<AssemblyTask> getResponsibleTasksClone() {
 		return (ArrayList<AssemblyTask>) this.getResponsibleTasks().clone();
 	}
 
