@@ -1,6 +1,8 @@
 package ui;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -14,6 +16,7 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
 import businessmodel.user.User;
+import businessmodel.util.OrderDateTimeComperator;
 import control.StandardOrderController;
 import control.StandardOrderHandler;
 
@@ -26,8 +29,6 @@ public class GarageHolderView extends View{
 	private ArrayList<CarModel> available_carmodels = new ArrayList<>();
 
 	private StandardOrderController controller;
-
-	private int step = 0;
 
 	private User user;
 
@@ -42,7 +43,6 @@ public class GarageHolderView extends View{
 	@Override
 	public void display() {
 		this.update();
-		this.step = 0;
 		System.out.println("> These are your pending orders: ");
 		int size = this.pending_orders.size();
 		int count = 1; 
@@ -58,18 +58,15 @@ public class GarageHolderView extends View{
 		this.check(response);
 		Pattern pattern = Pattern.compile("^(\\d*)$");
 		if (response.equalsIgnoreCase("order")){
-			this.step++;
 			this.startNewOrder();
 		}else if (pattern.matcher(response).find()){
 			int number = Integer.parseInt(response);
 			if (number > size) {
 				int index = number - size - 1;
 				StandardCarOrder or = (StandardCarOrder) this.completed_orders.get(index);
-				this.step++;
 				this.check(or);
 			} else {
 				StandardCarOrder or = (StandardCarOrder) this.pending_orders.get(number - 1);
-				this.step++;
 				this.check(or);
 			}
 		} else {
@@ -81,7 +78,13 @@ public class GarageHolderView extends View{
 		this.displayHelp();
 		System.out.println("> Here are the order details: ");
 		// kan gedetailleerder worden gemaakt
-		System.out.println(or.toString());
+		if (or.isCompleted()){
+			System.out.println("> Timestamp of ordering: " + or.getTimestamp());
+			System.out.println("> Timestamp of completion: " + or.getCompletionDate()); 
+		} else {
+			System.out.println("> Timestamp of ordering: " + or.getTimestamp());
+			System.out.println("> Estimated production time: " + or.getStandardtime_on_assemblyline());
+		}
 		System.out.print(">> ");
 		String response = this.scan.nextLine();
 		this.check(response);
@@ -110,7 +113,6 @@ public class GarageHolderView extends View{
 			}
 			number -= 1;
 			CarModel chosen = this.available_carmodels.get(number);				
-			this.step ++;
 			displayOrderingForm(chosen);
 		}
 
@@ -218,6 +220,8 @@ public class GarageHolderView extends View{
 				this.pending_orders.add(pending.next());
 			while (completed.hasNext())
 				this.completed_orders.add(completed.next());	
+			Collections.sort(this.pending_orders, new OrderDateTimeComperator());
+			Collections.sort(this.completed_orders, new OrderDateTimeComperator());
 		} catch (NoClearanceException e) {
 			// NOP
 		}
@@ -225,20 +229,8 @@ public class GarageHolderView extends View{
 
 	@Override
 	public void cancel() {
-		if (this.step == 0){
-			this.displayHelp();
-			this.display();
-		}
-		if (this.step == 1){
-			this.step--;
-			this.displayHelp();
-			this.display();
-		}
-		if (this.step == 2){
-			this.step--;
-			this.displayHelp();
-			this.startNewOrder();
-		}
+		this.displayHelp();
+		this.display();
 	}
 
 	@Override
