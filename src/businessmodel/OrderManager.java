@@ -262,8 +262,6 @@ public class OrderManager implements Subject {
 			return this.getScheduler().getOrders().getLast();
 	}
 	
-	protected Scheduler getScheduler(){
-		return this.scheduler;
 
 	@Override
 	public void subscribeObserver(Observer observer) throws IllegalArgumentException {
