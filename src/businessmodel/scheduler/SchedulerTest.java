@@ -11,13 +11,11 @@ import businessmodel.AssemblyLine;
 import businessmodel.AssemblyTask;
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
-import businessmodel.Catalog;
 import businessmodel.OrderManager;
 import businessmodel.WorkPost;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
 import businessmodel.category.CarOption;
-import businessmodel.category.CarOptionCategory;
 import businessmodel.order.Order;
 import businessmodel.order.SingleTaskOrder;
 import businessmodel.order.StandardCarOrder;
@@ -31,7 +29,6 @@ public class SchedulerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
 		CarManufacturingCompany cmc = new CarManufacturingCompany();
 		OrderManager ord = cmc.getOrderManager();
 		GarageHolder c1 = new GarageHolder("1","","");
@@ -56,8 +53,10 @@ public class SchedulerTest {
 		GarageHolder c20 = new GarageHolder("20","","");
 
 		CarOption blabla = new CarOption("Henk", new Airco());
+		CarOption blabla2 = new CarOption("Henk2", new Body());
 		ArrayList<CarOption> henk1 = new ArrayList<CarOption>();
 		henk1.add(blabla);
+		henk1.add(blabla2);
 		Order order1 = new StandardCarOrder(c1,henk1);
 		Order order2 = new StandardCarOrder(c2,henk1);
 		Order order3 = new StandardCarOrder(c3,henk1);
@@ -88,23 +87,21 @@ public class SchedulerTest {
 		ord.addOrder(order4);
 		ord.addOrder(order5);
 		ord.addOrder(order6);
-//		ord.addOrder(order19);
-//		ord.addOrder(order7);
-//		ord.addOrder(order8);
-//		ord.addOrder(order9);
-//		ord.addOrder(order10);
-//		ord.addOrder(order11);
-//		ord.addOrder(order12);
-//		ord.addOrder(order13);
-//		ord.addOrder(order14);
-//		ord.addOrder(order15);
-//		ord.addOrder(order20);
-//		ord.addOrder(order16);
-//		ord.addOrder(order17);
+	//	ord.addOrder(order19);
+		ord.addOrder(order7);
+		ord.addOrder(order8);
+		ord.addOrder(order9);
+		ord.addOrder(order10);
+	//	ord.addOrder(order11);
+	//	ord.addOrder(order12);
+	//	ord.addOrder(order13);
+	//	ord.addOrder(order14);
+	//	ord.addOrder(order15);
+	//	ord.addOrder(order20);
+	//	ord.addOrder(order16);
+	//	ord.addOrder(order17);
 //		ord.addOrder(order18);
 		
-		ord.getScheduler().ScheduleDay();
-
 		// test
 		for(int k =0; k<2 ; k++){
 			for(int i =0 ; i< 8; i++){
@@ -118,7 +115,6 @@ public class SchedulerTest {
 				}
 			}
 		}
-		ord.getScheduler().advance(60);
 		System.out.println("----------------------------------------------------------");
 		
 		for(int i=0; i < 10; i++){
@@ -136,9 +132,11 @@ public class SchedulerTest {
 					cmc.completeAssemBlyTask(assem, 20);
 			}
 		}
-
-
-
+		
+		for(Order order: ord.getCompletedOrders()){
+			System.out.println(order.getUser());
+			System.out.println(order.getCompletionDate().toString());
+		}
 	}
 
 	@Test
