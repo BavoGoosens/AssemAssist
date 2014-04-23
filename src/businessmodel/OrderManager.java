@@ -244,7 +244,7 @@ public class OrderManager {
 	 * @return	the previous order of the current order.
 	 */
 	protected Order getPreviousOrder(Order order){
-		if(this.getScheduler().getOrders().size() >= this.getScheduler().getNumberOfOrdersToSchedule()){
+		if(this.getScheduler().getOrders().size() > this.getScheduler().getNumberOfOrdersToSchedule()){
 			int index = this.getPendingOrders().indexOf(order);
 			if(index-1 < 0)
 				return null;
