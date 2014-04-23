@@ -21,10 +21,6 @@ public class OrderManager implements Subject {
 
 	private ArrayList<Observer> observers;
 	
-	public LinkedList<Order> getPendingOrders(){
-		return this.pendingorders;
-	}
-
 	/**
 	 * A list that holds all the completed orders of a car manufacturing company.
 	 */
@@ -57,17 +53,6 @@ public class OrderManager implements Subject {
 	}
 
 	/**
-	 * A method that adds a new Order.
-	 * 
-	 * @param order
-	 * 		  An Order that needs to be added.
-	 */
-	public void placeOrder(Order order) throws IllegalArgumentException {
-		this.addOrder(order);
-
-	}
-
-	/**
 	 * A method to get the car models of this order manager.
 	 * 
 	 * @return  ArrayList<CarModel> 
@@ -83,14 +68,36 @@ public class OrderManager implements Subject {
 	 * @param   order
 	 *          the order that needs to be added.
 	 */
-	public void addOrder(Order order) throws IllegalArgumentException {
+	public void placeOrder(Order order) throws IllegalArgumentException {
 		if (order == null) throw new IllegalArgumentException("Bad order!");
 		order.setTimestamp(this.getScheduler().getCurrentTime());
-		this.setEstimatedCompletionDate(order);
+		this.setEstimatedCompletionDateOfOrder(order);
 		if(this.getScheduler().canAddOrder())
 			this.getScheduler().addOrderToSchedule(order);
 		else
 			this.getPendingOrders().add(order);
+	}
+
+	public LinkedList<Order> getPendingOrders(){
+		return this.pendingorders;
+	}
+
+	/**
+	 * A method to get the pending orders of a given user of this order manager.
+	 * 
+	 * @return 	ArrayList<Order>
+	 * 			the pending orders of a given user managed by this order manager.
+	 */
+	public ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
+		if (user == null) throw new IllegalArgumentException("Bad user!");
+		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
+		ArrayList<Order> pendingorders = new ArrayList<Order>();
+		pendingorders.addAll(this.getScheduler().getOrders());
+		for (Order order: this.getPendingOrders()){
+			if (order.getUser() == user)
+				pendingorders.add(order);
+		}
+		return pendingorders;
 	}
 
 	/**
@@ -119,49 +126,12 @@ public class OrderManager implements Subject {
 	}
 
 	/**
-	 * A method to get the pending orders of a given user of this order manager.
-	 * 
-	 * @return 	ArrayList<Order>
-	 * 			the pending orders of a given user managed by this order manager.
-	 */
-	public ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
-		if (user == null) throw new IllegalArgumentException("Bad user!");
-		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
-		ArrayList<Order> pendingorders = new ArrayList<Order>();
-		pendingorders.addAll(this.getScheduler().getOrders());
-		for (Order order: this.getPendingOrders()){
-			if (order.getUser() == user)
-				pendingorders.add(order);
-		}
-		return pendingorders;
-	}
-
-	/**
-	 * A method that returns the Scheduler for this OrderManager.
-	 * 
-	 * @return	this.scheduler
-	 */
-	public Scheduler getScheduler() {
-		return this.scheduler;
-	}
-
-	/**
-	 * A method that sets the scheduler for this OrderManager.
-	 * 
-	 * @param 	scheduler
-	 * 			The Scheduler this OrderManager uses.
-	 */
-	public void setScheduler(Scheduler scheduler) throws IllegalArgumentException {
-		if (scheduler == null) throw new IllegalArgumentException("Bad production scheduler!");
-		this.scheduler = scheduler;
-	}
-
-	/**
 	 * A method that moves a finished order from the pending list to the finished list.
 	 * 
 	 * @param finished 
 	 * 		  The Order that needs to be moved.
 	 */
+	//TODO deze 3 methodes public of?? 
 	public void finishedOrder(Order finished) throws IllegalArgumentException {
 		if (finished == null) throw new IllegalArgumentException("Bad order!");
 		this.getCompletedOrders().add(finished);
@@ -199,26 +169,6 @@ public class OrderManager implements Subject {
 		return res;
 	}
 
-	private LinkedList<Order> getSingleTaskOrdersNextDay() {
-		LinkedList<Order> temp = new LinkedList<Order>();
-
-		for(Order order: this.getPendingOrders()){
-			if(order.getUserEndDate()!= null){
-				if(order.getUserEndDate().getDayOfWeek()-1 == this.getScheduler().getCurrentTime().getDayOfWeek()){
-					int index = this.getPendingOrders().indexOf(order);
-					temp.add(this.getPendingOrders().get(index));
-				}
-			}
-		}
-
-		return temp;
-	}
-
-	private void setCarModels(ArrayList<CarModel> carmodels) throws IllegalArgumentException {
-		if (carmodels == null) throw new IllegalArgumentException("Bad list of car models!");
-		this.carmodels = carmodels;
-	}
-
 	/**
 	 * A method to place an order in front of the pending orders.
 	 * @param order
@@ -227,7 +177,16 @@ public class OrderManager implements Subject {
 		this.getPendingOrders().add(order);		
 	}
 
-	protected void setEstimatedCompletionDate(Order order){
+	/**
+	 * A method that returns the Scheduler for this OrderManager.
+	 * 
+	 * @return	this.scheduler
+	 */
+	public Scheduler getScheduler() {
+		return this.scheduler;
+	}
+
+	protected void setEstimatedCompletionDateOfOrder(Order order){
 		Order previousorder = this.getPreviousOrder(order);
 		if(previousorder != null) {
 			if(previousorder.getEstimateDate() == null){
@@ -262,6 +221,26 @@ public class OrderManager implements Subject {
 			return this.getScheduler().getOrders().getLast();
 	}
 	
+
+	private void setCarModels(ArrayList<CarModel> carmodels) throws IllegalArgumentException {
+		if (carmodels == null) throw new IllegalArgumentException("Bad list of car models!");
+		this.carmodels = carmodels;
+	}
+
+	private LinkedList<Order> getSingleTaskOrdersNextDay() {
+		LinkedList<Order> temp = new LinkedList<Order>();
+	
+		for(Order order: this.getPendingOrders()){
+			if(order.getUserEndDate()!= null){
+				if(order.getUserEndDate().getDayOfWeek()-1 == this.getScheduler().getCurrentTime().getDayOfWeek()){
+					int index = this.getPendingOrders().indexOf(order);
+					temp.add(this.getPendingOrders().get(index));
+				}
+			}
+		}
+	
+		return temp;
+	}
 
 	@Override
 	public void subscribeObserver(Observer observer) throws IllegalArgumentException {
