@@ -3,6 +3,7 @@ package businessmodel.scheduler;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import businessmodel.category.CarOption;
 import businessmodel.order.Order;
 
 public class FIFO extends SchedulingAlgorithm {
@@ -12,9 +13,10 @@ public class FIFO extends SchedulingAlgorithm {
 	}
 
 	@Override
-	public void schedule(LinkedList<Order> orders){
+	public LinkedList<Order> schedule(LinkedList<Order> orders){
 		for(Order order: orders)
 			this.scheduleOrder(order);
+		return orders;
 	}
 	
 	@Override
@@ -28,5 +30,6 @@ public class FIFO extends SchedulingAlgorithm {
 			}
 		}
 	}
+
 }
 

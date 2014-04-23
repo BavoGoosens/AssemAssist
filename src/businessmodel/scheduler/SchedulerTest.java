@@ -84,20 +84,20 @@ public class SchedulerTest {
 		ord.addOrder(order4);
 		ord.addOrder(order5);
 		ord.addOrder(order6);
-		ord.addOrder(order19);
-		ord.addOrder(order7);
-		ord.addOrder(order8);
-		ord.addOrder(order9);
-		ord.addOrder(order10);
-		ord.addOrder(order11);
-		ord.addOrder(order12);
-		ord.addOrder(order13);
-		ord.addOrder(order14);
-		ord.addOrder(order15);
-		ord.addOrder(order20);
-		ord.addOrder(order16);
-		ord.addOrder(order17);
-		ord.addOrder(order18);
+//		ord.addOrder(order19);
+//		ord.addOrder(order7);
+//		ord.addOrder(order8);
+//		ord.addOrder(order9);
+//		ord.addOrder(order10);
+//		ord.addOrder(order11);
+//		ord.addOrder(order12);
+//		ord.addOrder(order13);
+//		ord.addOrder(order14);
+//		ord.addOrder(order15);
+//		ord.addOrder(order20);
+//		ord.addOrder(order16);
+//		ord.addOrder(order17);
+//		ord.addOrder(order18);
 		
 		ord.getScheduler().ScheduleDay();
 
@@ -117,15 +117,18 @@ public class SchedulerTest {
 		ord.getScheduler().advance(60);
 		System.out.println("----------------------------------------------------------");
 
-		int i = 10;
-		while(i > 0){
+		
+		for(int i=0; i < 10; i++){
 			for(WorkPost wp : ord.getScheduler().getAssemblyline().getWorkPosts()){
 				if(wp.getOrder()!= null)
 					System.out.println(wp.getOrder().getUser());
 				else
 					System.out.println("0");
-				i--;
+				
 			}
+			System.out.println("=====");
+			ord.getScheduler().advance(60);
+
 		}
 
 
