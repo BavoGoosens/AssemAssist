@@ -102,7 +102,7 @@ public class SchedulerTest {
 		ord.placeOrder(order5);
 		ord.placeOrder(order6);
 
-		//	ord.placeOrder(order19);
+		ord.placeOrder(order19);
 
 		ord.placeOrder(order7);
 		ord.placeOrder(order8);

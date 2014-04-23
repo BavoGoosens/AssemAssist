@@ -41,6 +41,7 @@ public class AssemblyLineTest {
 	public void setUp() throws Exception {
 
 		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
+		
 		om = new OrderManager(carmodels);
 		orders = new ArrayList<Order>();
 

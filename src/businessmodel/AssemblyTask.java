@@ -45,7 +45,13 @@ public class AssemblyTask {
 		this.setCategory(category);
 		this.setDescription(description_of_actions);
 	}
-
+	
+	public AssemblyTask(String name, String description_of_actions, CarOptionCategory category) throws IllegalArgumentException {
+		this.setName(name);
+		this.setCategory(category);
+		this.setDescription(description_of_actions);
+	}
+	
 	private void setDescription(String description_of_actions) {
 		this.action_description = description_of_actions;
 	}
@@ -127,7 +133,7 @@ public class AssemblyTask {
 	}
 
 	private void notifyWorkPost(int time){
-		this.getWorkpost().AssemblyTaskCompleted(time);
+		this.getWorkpost().AssemblyTaskCompleted(this,time);
 	}
 
 	public WorkPost getWorkpost() {

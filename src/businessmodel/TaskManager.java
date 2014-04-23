@@ -1,6 +1,7 @@
 package businessmodel;
 
 import java.util.ArrayList;
+
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
 import businessmodel.category.Color;
@@ -12,20 +13,25 @@ import businessmodel.category.Wheels;
 
 public class TaskManager {
 
+	private ArrayList<AssemblyTask> singleTaskOrders;
+
 	public TaskManager(ArrayList<WorkPost> workposts){	
 		this.generateRepsonsibleAssemblyTasks(workposts);
 		this.generatePossibleSingleTasks();
 	}
 
+	@SuppressWarnings("unchecked")
+	protected ArrayList<AssemblyTask> getSingleTaskOrders() {
+		return (ArrayList<AssemblyTask>) singleTaskOrders.clone();
+	}
+	
 	private void generateRepsonsibleAssemblyTasks(ArrayList<WorkPost> workposts){
 		ArrayList<AssemblyTask> tasks_workPost_1 = new ArrayList<AssemblyTask>();
 		ArrayList<AssemblyTask> tasks_workPost_2 = new ArrayList<AssemblyTask>();
 		ArrayList<AssemblyTask> tasks_workPost_3 = new ArrayList<AssemblyTask>();
-		
 		WorkPost workpost1 = workposts.get(0);
 		WorkPost workpost2 = workposts.get(1);
 		WorkPost workpost3 = workposts.get(2);
-		
 		tasks_workPost_1.add(new AssemblyTask("Assembly Car Body", "assemble blabla", new Body(),workpost1));
 		tasks_workPost_1.add(new AssemblyTask("Paint Car","paint blabla", new Color(),workpost1));
 		tasks_workPost_2.add(new AssemblyTask("Insert Engine", "insert engine blabla", new Engine(),workpost2));
@@ -34,16 +40,14 @@ public class TaskManager {
 		tasks_workPost_3.add(new AssemblyTask("Install Airco", "insert airco blabla", new Airco(),workpost3));
 		tasks_workPost_3.add(new AssemblyTask("Mount Wheels", "insert mount wheels", new Wheels(),workpost3));
 		tasks_workPost_3.add(new AssemblyTask("Install Spoiler","install spoiler", new Spoiler(),workpost3));
-		
 		workpost1.setResponsibletasks(tasks_workPost_1);
 		workpost2.setResponsibletasks(tasks_workPost_2);
 		workpost3.setResponsibletasks(tasks_workPost_3);
-		
-	}
-	
-	private void generatePossibleSingleTasks() {
-		
 	}
 
-	
+	private void generatePossibleSingleTasks() {
+		this.singleTaskOrders = new ArrayList<AssemblyTask>();
+		singleTaskOrders.add(new AssemblyTask("Paint Car","paint blabla", new Color()));
+		singleTaskOrders.add(new AssemblyTask("Install Seats", "insert seats blabla", new Seats()));
+	}
 }

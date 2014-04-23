@@ -1,6 +1,7 @@
 package businessmodel.scheduler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import org.joda.time.DateTime;
@@ -57,7 +58,7 @@ public class Scheduler implements Subject {
 	 * A variable that holds the current time;
 	 */
 	private DateTime currenttime;
-	
+
 	private ArrayList<Observer> observers;
 
 
@@ -255,12 +256,12 @@ public class Scheduler implements Subject {
 		}else if (algoname.equalsIgnoreCase("fifo") || algoname.equalsIgnoreCase("first in first out") ){
 			this.algortime = new FIFO(this);
 		}else if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch")){
-			
+
 			if (option == null) throw new IllegalArgumentException("No such option");
-			
+
 			if (!this.checkOptionsForSpecificationBatch(option)) throw new IllegalArgumentException("Too little orders with that option ( less than 3 )");
 			this.algortime = new SpecificationBatch(this,option);
-			
+
 		}else{
 			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");
 		}
@@ -273,16 +274,16 @@ public class Scheduler implements Subject {
 	 * @return
 	 */
 	private boolean checkOptionsForSpecificationBatch(CarOption option) {
-		
+
 		int count = 0;
 		for(Order order: this.getOrders())
 			if (order.getOptions().toString().equals(option))
 				count++;
-				
+
 		if (count < 3)
 			return false;
 		return true;
-		
+
 	}
 
 	/**
@@ -375,6 +376,18 @@ public class Scheduler implements Subject {
 		}else{
 			order.setEstimateDate(this.getCurrentTime().plusHours(3));
 		}
+	}
+
+	protected ArrayList<CarOption> getUnscheduledCarOptions(){
+
+		HashMap<String,CarOption> options = new HashMap<String,CarOption>();
+		for(Order order: this.getOrders()){
+			for(CarOption carOption: order.getOptions()){
+				if(!options.containsKey(carOption.getName()))
+					options.put(carOption.getName(), carOption);
+			}
+		}
+		return (ArrayList<CarOption>) options.values();
 	}
 
 	@Override

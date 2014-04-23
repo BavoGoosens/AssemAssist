@@ -125,7 +125,7 @@ public class WorkPost {
 	 * 
 	 * @return	The tasks that are pending at the work post
 	 */
-	public ArrayList<AssemblyTask> getPendingTasks() {
+	protected ArrayList<AssemblyTask> getPendingTasks() {
 		return this.pendingTasks;
 	}
 
@@ -134,8 +134,7 @@ public class WorkPost {
 	 * 
 	 * @return	A cloned list of assembly tasks the work post is responsible for.
 	 */
-	@SuppressWarnings("unchecked")
-	public ArrayList<AssemblyTask> getResponsibleTasksClone() {
+	protected ArrayList<AssemblyTask> getResponsibleTasksClone() {
 		return (ArrayList<AssemblyTask>) this.getResponsibleTasks().clone();
 	}
 
@@ -179,7 +178,9 @@ public class WorkPost {
 		return result;
 	}
 
-	protected void AssemblyTaskCompleted(int time) {
+	protected void AssemblyTaskCompleted(AssemblyTask assem, int time) {
+		this.getPendingTasks().remove(assem);
+		this.getPendingTasks().add(assem);
 		this.setTime_order_in_process(this.getTime_order_in_process()+time);
 		this.getAssemblyline().notifyObservers();
 		this.notifyAssemBlyLine();

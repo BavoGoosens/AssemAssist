@@ -2,6 +2,7 @@ package businessmodel;
 
 import java.util.Iterator;
 
+import businessmodel.category.CarOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
 import businessmodel.order.Order;
@@ -38,5 +39,7 @@ public interface Model {
 	public Iterator<AssemblyTask> getPendingTasks(WorkPost wp);
 
 	public Iterator<AssemblyTask> getFinishedTasks(WorkPost wp);
+	
+	public Iterator<CarOption> getUnscheduledCarOptions();
 
 }

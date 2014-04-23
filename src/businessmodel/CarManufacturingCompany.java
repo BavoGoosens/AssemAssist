@@ -18,15 +18,8 @@ import businessmodel.user.User;
 
 public class CarManufacturingCompany implements Model{
 
-	/**
-	 * A variable that holds an user management.
-	 */
 	private ArrayList<User> users = new ArrayList<User>();
-
-
-	/**
-	 * A variable that holds an order manager.
-	 */
+	
 	private OrderManager ordermanager;
 	
 	private TaskManager taskmanager;
@@ -57,23 +50,21 @@ public class CarManufacturingCompany implements Model{
 	public Iterator<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
 		return this.getOrderManager().getPendingOrders(user).iterator();
 	}
-
+	
+	@Override
 	public void register(User user) {
 		this.users.add(user);
 	}
-
 
 	@Override
 	public Iterator<WorkPost> getWorkPosts(User user) {
 		return this.getOrderManager().getScheduler().getAssemblyline().getWorkPosts().iterator();
 	}
 
-
 	@Override
 	public Iterator<CarModel> getCarModels(User user) {
 		return this.catalog.getAvailaleModelsClone().iterator();
 	}
-
 
 	@Override
 	public Iterator<String> getSchedulingAlgorithms(User user) {
@@ -81,12 +72,10 @@ public class CarManufacturingCompany implements Model{
 		return null;
 	}
 
-
 	@Override
 	public User login(String username, String password) {
 		return this.getUser(username);
 	}
-
 
 	@Override
 	public AssemblyLine registerAssemblyLineObserver(Observer observer) {
@@ -95,13 +84,11 @@ public class CarManufacturingCompany implements Model{
 		return line;
 	}
 
-
 	@Override
 	public CarStatistics getCarStatistics() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public OrderStatistics getOrderStatistics() {
@@ -109,13 +96,11 @@ public class CarManufacturingCompany implements Model{
 		return null;
 	}
 
-
 	@Override
 	public Iterator<WorkPost> getWorkPosts() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public Iterator<AssemblyTask> getPendingTasks(WorkPost wp) {
@@ -123,13 +108,11 @@ public class CarManufacturingCompany implements Model{
 		return null;
 	}
 
-
 	@Override
 	public Iterator<AssemblyTask> getFinishedTasks(WorkPost wp) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	public OrderManager getOrderManager(){
 		return this.ordermanager;
@@ -140,12 +123,10 @@ public class CarManufacturingCompany implements Model{
 
 	}
 
-
 	public void changeAlgorithm(String algo, CarOption args) {
 		// TODO Auto-generated method stub
 
 	}
-
 
 	public void placeOrder(Order order) throws IllegalArgumentException {
 		this.getOrderManager().placeOrder(order);
@@ -179,6 +160,11 @@ public class CarManufacturingCompany implements Model{
 
 	@Override
 	public Iterator<AssemblyTask> getAvailableTasks(User user) {
+		return this.taskmanager.getSingleTaskOrders().iterator();
+	}
+
+	@Override
+	public Iterator<CarOption> getUnscheduledCarOptions() {
 		// TODO Auto-generated method stub
 		return null;
 	}
