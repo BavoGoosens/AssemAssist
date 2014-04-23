@@ -33,10 +33,15 @@ public class WorkPost {
 	 */
 	private Order orderInProcess ;
 
+	/**
+	 * The time was spent working of this workPost for the current order.
+	 */
 	private int time_order_in_process;
 
+	/**
+	 * The AssemblyLine that this WorkPost is a part of.
+	 */
 	private AssemblyLine assemblyline;
-
 
 	/**
 	 * This method constructs a new work post with a given name and a given set of assembly tasks.
