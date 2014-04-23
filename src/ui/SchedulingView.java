@@ -1,20 +1,29 @@
 package ui;
 
+import java.util.Scanner;
+
 import control.SchedulingController;
-import businessmodel.CarManufacturingCompany;
+import control.SchedulingHandler;
 import businessmodel.Model;
+import businessmodel.user.User;
 
 public class SchedulingView extends View {
+	
+	private User user;
+	
+	private Scanner scan = new Scanner(System.in);
+	
+	private SchedulingController controller;
 
-	public SchedulingView(Model cmc) {
+	public SchedulingView(Model cmc, User user) {
 		super(cmc);
-		// TODO Auto-generated constructor stub
+		this.user = user;
+		this.controller = new SchedulingHandler(this.getModel(), this.user);
 	}
 
 	@Override
 	public void display() {
-		// TODO Auto-generated method stub
-		
+		this.getModel().getSchedulingAlgorithms(user);
 	}
 
 	@Override
