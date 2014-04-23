@@ -7,6 +7,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import businessmodel.AssemblyLine;
+import businessmodel.AssemblyTask;
+import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Catalog;
 import businessmodel.OrderManager;
@@ -29,7 +32,8 @@ public class SchedulerTest {
 	@Before
 	public void setUp() throws Exception {
 		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
-		OrderManager ord = new OrderManager(carmodels);
+		CarManufacturingCompany cmc = new CarManufacturingCompany();
+		OrderManager ord = cmc.getOrderManager();
 		GarageHolder c1 = new GarageHolder("1","","");
 		GarageHolder c2 = new GarageHolder("2","","");
 		GarageHolder c3 = new GarageHolder("3","","");
@@ -116,7 +120,6 @@ public class SchedulerTest {
 		}
 		ord.getScheduler().advance(60);
 		System.out.println("----------------------------------------------------------");
-
 		
 		for(int i=0; i < 10; i++){
 			for(WorkPost wp : ord.getScheduler().getAssemblyline().getWorkPosts()){
@@ -124,11 +127,14 @@ public class SchedulerTest {
 					System.out.println(wp.getOrder().getUser());
 				else
 					System.out.println("0");
-				
 			}
 			System.out.println("=====");
-			ord.getScheduler().advance(60);
-
+			AssemblyLine assembly = ord.getScheduler().getAssemblyline();
+			
+			for(WorkPost wp: assembly.getWorkPosts()){
+				for(AssemblyTask assem : wp.getPendingTasks())
+					cmc.completeAssemBlyTask(assem, 20);
+			}
 		}
 
 

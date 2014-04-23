@@ -3,75 +3,57 @@ package test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import component.Airco;
-import component.Body;
-import component.Color;
-import component.Component;
-import component.Engine;
-import component.Gearbox;
-import component.Seats;
-import component.Wheels;
+
 import businessmodel.AssemblyTask;
+import businessmodel.CarModel;
+import businessmodel.OrderManager;
 import businessmodel.WorkPost;
+import businessmodel.category.Body;
+import businessmodel.category.CarOption;
+import businessmodel.category.Color;
+import businessmodel.category.Engine;
 import businessmodel.order.Order;
+import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;
 
 public class WorkPostTest {
 	
 	private GarageHolder garageholder;
-	private Body body;import static org.junit.Assert.*;
-	private Color color;
-	private Engine engine;
-	private Gearbox gearbox;
-	private Seats seats;
-	private Airco airco;
-	private Wheels wheels;
-	private ArrayList<AssemblyTask> tasks;
-	private ArrayList<Order> orders;
-	private Date date;
-	private ArrayList<Component> components;
-
+	private Order order;
+	private OrderManager om;
+	
 	@Before
 	public void setUp() throws Exception {
-		garageholder = new GarageHolder("Sander","Geijsen","Sander2","henk");
-		tasks = new ArrayList<AssemblyTask>();
-		orders = new ArrayList<Order>();
-		body = new Body("sedan",1000);
-		color = new Color("red",1000);
-		engine = new Engine("standard 2l 4 cilinders",1000);
-		gearbox = new Gearbox("6 speed manual",1000);
-		seats = new Seats("leather black",1000);
-		airco = new Airco("manual",1000);
-		wheels = new Wheels("comfort",1000);
-		
-		date = new Date();
-		
-		this.components = new ArrayList<Component>();
-		this.components.add(body);
-		this.components.add(color);
-		this.components.add(engine);
-		this.components.add(gearbox);
-		this.components.add(seats);
-		this.components.add(airco);
-		this.components.add(wheels);
+		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
+		om = new OrderManager(carmodels);
+		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
 
-		for(int i = 1; i< 30;i++){
-			Order temp = new Order(garageholder,this.components);
-			temp.setEstimateDate(date);
-			this.orders.add(temp);
-		}
+		CarOption option = new CarOption("small engine", new Engine() );
+		CarOption option2 = new CarOption("big body", new Body() );
+		ArrayList<CarOption> options = new ArrayList<CarOption>();
+		options.add(option);
+		options.add(option2);
+		order = new StandardCarOrder(garageholder, options);
+		om.addOrder(order);
+		
 	}
 
 	@Test
 	public void test() {
-		WorkPost wp = new WorkPost("Test",tasks);
-		wp.setNewOrder(orders.get(0));
-		assertEquals(wp.getOrder(),orders.get(0));
+		
+		ArrayList<AssemblyTask> tasksWorkPost1 = new ArrayList<AssemblyTask>();
+		
+		WorkPost post1 = new WorkPost("Test", tasksWorkPost1, om.getScheduler().getAssemblyline());		
+
+		tasksWorkPost1.add(new AssemblyTask("Assembly Car Body", new Body(),post1));
+		tasksWorkPost1.add(new AssemblyTask("Paint Car", new Color(),post1));
+
+		post1.setNewOrder(om.getPendingOrders().get(0));
+		assertEquals(post1.getOrder(),om.getPendingOrders().get(0));
 	}
 
 }

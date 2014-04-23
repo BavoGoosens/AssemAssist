@@ -28,7 +28,7 @@ public class AssemblyLine {
 	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
 
 	
-	private int time_current_status = 0;
+	private int timeCurrentStatus = 0;
 	
 	private Scheduler scheduler;
 
@@ -99,7 +99,7 @@ public class AssemblyLine {
 		}
 		if(temp != null)
 			temp.setCompleted();
-		this.time_current_status = 0;
+		this.timeCurrentStatus = 0;
 	}
 
 	/**
@@ -135,8 +135,8 @@ public class AssemblyLine {
 	}
 
 	protected void WorkPostCompleted(int time_order_in_process) {
-		if(time_order_in_process > this.time_current_status)
-			this.time_current_status = time_order_in_process;
+		if(time_order_in_process > this.timeCurrentStatus)
+			this.timeCurrentStatus = time_order_in_process;
 		this.notifyScheduler();
 	}
 	
@@ -147,12 +147,15 @@ public class AssemblyLine {
 				completed = false;
 		}
 		if(completed == true)
-			this.getScheduler().advance(this.time_current_status);
-			
+			this.getScheduler().advance(this.timeCurrentStatus);
 	}
 	
-	public int getTime_current_status() {
-		return time_current_status;
+	/**
+	 * A method to get the time spent working on the current status of the AssemblyLine.
+	 * @return
+	 */
+	public int getTimeCurrentStatus() {
+		return timeCurrentStatus;
 	}
 
 	private Scheduler getScheduler() {

@@ -33,10 +33,15 @@ public class WorkPost {
 	 */
 	private Order orderInProcess ;
 
+	/**
+	 * The time was spent working of this workPost for the current order.
+	 */
 	private int time_order_in_process;
 
+	/**
+	 * The AssemblyLine that this WorkPost is a part of.
+	 */
 	private AssemblyLine assemblyline;
-
 
 	/**
 	 * This method constructs a new work post with a given name and a given set of assembly tasks.
@@ -84,18 +89,8 @@ public class WorkPost {
 	 * 
 	 * @return	The tasks that are pending at the work post
 	 */
-	private ArrayList<AssemblyTask> getPendingTasks() {
+	public ArrayList<AssemblyTask> getPendingTasks() {
 		return this.pendingTasks;
-	}
-
-	/**
-	 * Returns a cloned list of tasks that are pending at the work post.
-	 * 	
-	 * @return	A cloned list of tasks that are pending at the work post.
-	 */
-	@SuppressWarnings("unchecked")
-	public ArrayList<AssemblyTask> getPendingTasksClone() {
-		return (ArrayList<AssemblyTask>) this.getPendingTasks().clone();
 	}
 
 	/**
