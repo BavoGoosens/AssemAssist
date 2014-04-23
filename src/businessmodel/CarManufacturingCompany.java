@@ -29,6 +29,8 @@ public class CarManufacturingCompany implements Model{
 	 * A variable that holds an order manager.
 	 */
 	private OrderManager ordermanager;
+	
+	private TaskManager taskmanager;
 
 	private Catalog catalog;
 
@@ -39,6 +41,7 @@ public class CarManufacturingCompany implements Model{
 	public CarManufacturingCompany() throws IllegalArgumentException {
 		this.catalog = new Catalog();
 		this.setOrderManager(new OrderManager(this.catalog.getAvailaleModelsClone()));
+		this.taskmanager = new TaskManager(this.getOrderManager().getScheduler().getAssemblyline().getWorkPosts());
 		this.users.add(new GarageHolder("wow", "wow", "wow"));
 		this.users.add(new Mechanic("wow", "wow", "woww"));
 		this.users.add(new Manager("wow", "wow", "wowww"));

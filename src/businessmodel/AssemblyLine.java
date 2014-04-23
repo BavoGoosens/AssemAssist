@@ -2,15 +2,6 @@ package businessmodel;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-
-import businessmodel.category.Airco;
-import businessmodel.category.Body;
-import businessmodel.category.Color;
-import businessmodel.category.Engine;
-import businessmodel.category.Gearbox;
-import businessmodel.category.Seats;
-import businessmodel.category.Spoiler;
-import businessmodel.category.Wheels;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
@@ -33,7 +24,7 @@ public class AssemblyLine implements Subject{
 	private int timeCurrentStatus = 0;
 	
 	private Scheduler scheduler;
-	
+		
 	private ArrayList<Observer> subscribers = new ArrayList<Observer>();
 
 	/**
@@ -174,5 +165,4 @@ public class AssemblyLine implements Subject{
 		for (Observer obs : this.subscribers)
 			obs.update(this);
 	}
-	
 }
