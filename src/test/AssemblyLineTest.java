@@ -8,17 +8,12 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
-import component.Airco;
-import component.Body;
-import component.Color;
-import component.Component;
-import component.Engine;
-import component.Gearbox;
-import component.Seats;
-import component.Wheels;
 import businessmodel.AssemblyLine;
+import businessmodel.CarModel;
 import businessmodel.OrderManager;
+import businessmodel.category.*;
 import businessmodel.order.Order;
+import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;
 
 public class AssemblyLineTest {
@@ -32,57 +27,53 @@ public class AssemblyLineTest {
 	private Wheels wheels;
 	
 	private GarageHolder garageholder;
-	
-	private ArrayList<Component> components;
-	private OrderManager ordermanager;
+
 	private Date date;
 	private ArrayList<Order> orders;
+	private StandardCarOrder order1;
+	private StandardCarOrder order2;
+	private StandardCarOrder order3;
+	private StandardCarOrder order4;
+	private OrderManager om;
 
 	@Before
 	public void setUp() throws Exception {
 		
-		garageholder = new GarageHolder("Sander","Geijsen","Sander2","henk");
-		
-		body = new Body("sedan",1000);
-		color = new Color("red",1000);
-		engine = new Engine("standard 2l 4 cilinders",1000);
-		gearbox = new Gearbox("6 speed manual",1000);
-		seats = new Seats("leather black",1000);
-		airco = new Airco("manual",1000);
-		wheels = new Wheels("comfort",1000);
-
-		
-		this.components = new ArrayList<Component>();
-		this.components.add(body);
-		this.components.add(color);
-		this.components.add(engine);
-		this.components.add(gearbox);
-		this.components.add(seats);
-		this.components.add(airco);
-		this.components.add(wheels);
-		
+		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
+		om = new OrderManager(carmodels);
+		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
 		orders = new ArrayList<Order>();
 		
-		date = new Date();
-
-		for(int i = 1; i< 30;i++){
-			Order temp = new Order(garageholder,this.components);
-			temp.setEstimateDate(date);
-			this.orders.add(temp);
-		}
+		CarOption option = new CarOption("small engine", new Engine() );
+		CarOption option2 = new CarOption("big body", new Body() );
+		ArrayList<CarOption> options = new ArrayList<CarOption>();
+		options.add(option);
+		options.add(option2);
+		order1 = new StandardCarOrder(garageholder, options);
+		order2 = new StandardCarOrder(garageholder, options);
+		order3 = new StandardCarOrder(garageholder, options);
+		order4 = new StandardCarOrder(garageholder, options);
 		
-		ordermanager = new OrderManager();
+		orders.add(order1);
+		orders.add(order2);
+		orders.add(order3);
+		orders.add(order4);
+		
+		for(Order order: orders)
+			om.addOrder(order);
 		
 	}
 
 	@Test
 	public void test() {
-		AssemblyLine testassembly = ordermanager.getProductionScheduler().getAssemblyline();
-		assertEquals(testassembly.getWorkPosts().get(0).getResponsibletasks().get(0).getActions().get(0).getDescription(),"Paint car");
+		AssemblyLine testassembly = om.getScheduler().getAssemblyline();
+		assertEquals(testassembly.getWorkPosts().get(0).getResponsibleTasksClone().get(0).toString(),"Assembly Car Body");
+		
 		testassembly.getWorkPosts().get(0).setNewOrder(orders.get(0));
 		testassembly.getWorkPosts().get(1).setNewOrder(orders.get(1));
 		testassembly.getWorkPosts().get(2).setNewOrder(orders.get(2));
 		testassembly.advance(orders.get(3));
+		
 		assertEquals(testassembly.getWorkPosts().get(0).getOrder(),orders.get(3));
 		assertEquals(testassembly.getWorkPosts().get(1).getOrder(),orders.get(0));
 		assertEquals(testassembly.getWorkPosts().get(2).getOrder(),orders.get(1));

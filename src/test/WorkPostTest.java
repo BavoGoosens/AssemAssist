@@ -56,7 +56,7 @@ public class WorkPostTest {
 		
 		ArrayList<AssemblyTask> tasksWorkPost1 = new ArrayList<AssemblyTask>();
 		
-		WorkPost post1 = new WorkPost("Test", tasksWorkPost1);		
+		WorkPost post1 = new WorkPost("Test", tasksWorkPost1, om.getScheduler().getAssemblyline());		
 
 		tasksWorkPost1.add(new AssemblyTask("Assembly Car Body", new Body(),post1));
 		tasksWorkPost1.add(new AssemblyTask("Paint Car", new Color(),post1));

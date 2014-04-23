@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.Car;
+import businessmodel.Catalog;
 import component.Airco;
 import component.Body;
 import component.Color;
@@ -31,22 +32,7 @@ public class CarTest {
 
 	@Before
 	public void setUp() throws Exception {
-		body = new Body("sedan",1000);
-		color = new Color("red",1000);
-		engine = new Engine("standard 2l 4 cilinders",1000);
-		gearbox = new Gearbox("6 speed manual",1000);
-		seats = new Seats("leather black",1000);
-		airco = new Airco("manual",1000);
-		wheels = new Wheels("comfort",1000);
-		this.components = new ArrayList<Component>();
-		this.components.add(body);
-		this.components.add(color);
-		this.components.add(engine);
-		this.components.add(gearbox);
-		this.components.add(seats);
-		this.components.add(airco);
-		this.components.add(wheels);
-		car1 = new Car(components);
+		new Catalog().getAvailaleModelsClone().get(0);
 	}
 
 	@Test

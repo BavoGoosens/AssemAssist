@@ -82,11 +82,11 @@ public class SchedulerTest {
 
 
 		ord.addOrder(order1);
-		ord.addOrder(order2);
-		ord.addOrder(order3);
-		ord.addOrder(order4);
-		ord.addOrder(order5);
-		ord.addOrder(order6);
+//		ord.addOrder(order2);
+//		ord.addOrder(order3);
+//		ord.addOrder(order4);
+//		ord.addOrder(order5);
+//		ord.addOrder(order6);
 //		ord.addOrder(order19);
 //		ord.addOrder(order7);
 //		ord.addOrder(order8);
