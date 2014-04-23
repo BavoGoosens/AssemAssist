@@ -3,7 +3,6 @@ package test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,17 +17,10 @@ import businessmodel.user.GarageHolder;
 
 public class AssemblyLineTest {
 	
-	private Body body;
-	private Color color;
-	private Engine engine;
-	private Gearbox gearbox;
-	private Seats seats;
-	private Airco airco;
-	private Wheels wheels;
-	
+
 	private GarageHolder garageholder;
 
-	private Date date;
+	
 	private ArrayList<Order> orders;
 	private StandardCarOrder order1;
 	private StandardCarOrder order2;

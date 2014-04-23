@@ -3,7 +3,6 @@ package test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,9 +22,6 @@ import businessmodel.scheduler.Scheduler;
 import businessmodel.user.GarageHolder;
 
 public class ProductionSchedulerTest {
-	
-		
-	private Date date;
 	
 	private GarageHolder garageholder;
 	private ArrayList<Order> orders;

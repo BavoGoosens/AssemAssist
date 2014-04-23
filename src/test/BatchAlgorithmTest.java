@@ -6,25 +6,16 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import businessmodel.Car;
 import businessmodel.CarModel;
-import businessmodel.CarModelSpecification;
-
 import businessmodel.OrderManager;
 import businessmodel.category.Body;
 import businessmodel.category.CarOption;
 import businessmodel.category.Engine;
-import businessmodel.exceptions.IllegalCarOptionCategoryException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
-import businessmodel.scheduler.Scheduler;
-import businessmodel.scheduler.SchedulingAlgorithm;
-import businessmodel.scheduler.SpecificationBatch;
 import businessmodel.user.GarageHolder;
-import businessmodel.user.Manager;
-import businessmodel.user.Mechanic;
-import businessmodel.user.User;
+
 
 public class BatchAlgorithmTest {
 

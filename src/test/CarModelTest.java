@@ -2,14 +2,12 @@ package test;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 import businessmodel.CarModel;
 import businessmodel.CarModelSpecification;
 import businessmodel.Catalog;
-import businessmodel.category.*;
 
 public class CarModelTest {
 	

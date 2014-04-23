@@ -1,6 +1,5 @@
 package test;
 
-import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
@@ -8,15 +7,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.Car;
-import businessmodel.CarModel;
-import businessmodel.Catalog;
 import businessmodel.category.Body;
 import businessmodel.category.CarOption;
 import businessmodel.category.Engine;
 
 public class CarTest {
-	
-	private CarModel model;
+
 	private ArrayList<CarOption> options;
 	@Before
 	public void setUp() throws Exception {
