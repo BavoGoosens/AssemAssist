@@ -169,7 +169,7 @@ public class WorkPost {
 	 */
 	public boolean isCompleted(){
 		for(AssemblyTask task: this.getPendingTasks()){
-			if(task.isCompleted() == false)
+			if(!task.isCompleted())
 				return false;
 		}
 		return true;

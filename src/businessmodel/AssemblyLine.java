@@ -146,7 +146,7 @@ public class AssemblyLine {
 			if(!wp.isCompleted())
 				completed = false;
 		}
-		if(completed == true)
+		if(completed)
 			this.getScheduler().advance(this.timeCurrentStatus);
 	}
 	
