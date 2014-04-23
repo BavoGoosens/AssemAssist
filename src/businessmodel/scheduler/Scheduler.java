@@ -115,18 +115,24 @@ public class Scheduler implements Subject {
 	 */
 	public void updateSchedule(){
 
-		if(this.getDelay() >= 60){
+		if(this.getDelay() <= -60){
 
 			this.getShifts().getLast().addTimeSlot();
+			this.setDelay(this.getDelay()+60);
 			Order nextorder = this.getNextOrderToSchedule();
-			this.scheduleOrder(nextorder);
-			this.setDelay(this.getDelay()-60);
+			if(nextorder!= null)
+				this.scheduleOrder(nextorder);
+			this.updateDelay(this.getDelay());
 
-		}else if (this.getDelay() <= -60){
+		}else if (this.getDelay() >= 60){
 
 			Order order = this.getShifts().getLast().removeLastTimeSlot();
-			this.getOrdermanager().PlaceOrderInFront(order);
-			this.setDelay(this.getDelay()+60);	
+			if(this.getShifts().getLast().getTimeSlots().size() == 0)
+				this.getShifts().removeLast();
+			if(order!= null)
+				this.getOrdermanager().PlaceOrderInFront(order);
+			this.setDelay(this.getDelay()-60);	
+			this.updateDelay(this.getDelay());
 		}
 	}
 
@@ -135,6 +141,8 @@ public class Scheduler implements Subject {
 	 */
 	private void updateAssemblylineStatus(){
 		Order nextorder = this.getShifts().getFirst().getNextOrderForAssemblyLine();
+		if(this.getShifts().getFirst().getTimeSlots().size() == 0)
+			this.getShifts().removeFirst();
 		this.getAssemblyline().advance(nextorder);
 		if(nextorder != null)
 			nextorder.setPlacedOnWorkpost(this.getCurrentTime());
@@ -171,7 +179,11 @@ public class Scheduler implements Subject {
 	}
 
 	public boolean canAddOrder(){
-		return this.getOrders().size() < this.getNumberOfOrdersToSchedule();
+		int count = 0;
+		for(Shift shift: this.getShifts())
+			count += shift.getTimeSlots().size();
+		count = count -2;
+		return this.getOrders().size() < count;
 	}
 
 	private void updateCurrentTime() {
