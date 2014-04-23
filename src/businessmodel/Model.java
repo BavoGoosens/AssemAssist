@@ -3,6 +3,8 @@ package businessmodel;
 import java.util.Iterator;
 
 import businessmodel.exceptions.NoClearanceException;
+import businessmodel.observer.Observer;
+import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 import businessmodel.user.User;
 
@@ -27,5 +29,7 @@ public interface Model {
 	public User login(String username, String password);
 	
 	public void register(User user);
+	
+	public AssemblyLine registerAssemblyLineObserver(Observer observer);
 
 }

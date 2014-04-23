@@ -11,6 +11,8 @@ import businessmodel.category.Gearbox;
 import businessmodel.category.Seats;
 import businessmodel.category.Spoiler;
 import businessmodel.category.Wheels;
+import businessmodel.observer.Observer;
+import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 import businessmodel.scheduler.Scheduler;
 
@@ -20,7 +22,7 @@ import businessmodel.scheduler.Scheduler;
  * @author 	SWOP team 10 2014
  *
  */
-public class AssemblyLine {
+public class AssemblyLine implements Subject{
 
 	/**
 	 * List of work posts at the assembly line.
@@ -164,6 +166,28 @@ public class AssemblyLine {
 
 	private void setScheduler(Scheduler scheduler) {
 		this.scheduler = scheduler;
+	}
+
+	private ArrayList<Observer> subscribers;
+	
+	@Override
+	public void subscribeObserver(Observer observer) {
+		if (!subscribers.contains(observer))
+			this.subscribers.add(observer);
+	}
+
+
+	@Override
+	public void unsubscribeObserver(Observer observer) {
+		if (this.subscribers.contains(observer))
+			this.subscribers.remove(observer);		
+	}
+
+
+	@Override
+	public void notifyObservers() {
+		for (Observer obs : this.subscribers)
+			obs.update(this);
 	}
 	
 }

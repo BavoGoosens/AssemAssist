@@ -270,4 +270,9 @@ public class WorkPost {
 		this.setNewOrder(order);
 		return temp;
 	}
+
+	public ArrayList<AssemblyTask> getFinishedTasks() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

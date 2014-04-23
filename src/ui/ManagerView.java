@@ -45,15 +45,6 @@ public class ManagerView extends View {
 		System.out.println("Something went wrong :(");
 	}
 
-	private void check(String str){
-		if (str.equalsIgnoreCase("quit"))
-			this.quit();
-		if (str.equalsIgnoreCase("cancel"))
-			this.cancel();
-		if (str.equalsIgnoreCase("help"))
-			this.displayHelp();
-	}
-
 	@Override
 	public void cancel() {
 		// TODO Auto-generated method stub
