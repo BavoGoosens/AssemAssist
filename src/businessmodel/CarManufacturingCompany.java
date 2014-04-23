@@ -66,10 +66,9 @@ public class CarManufacturingCompany implements Model{
 	public void placeOrder(Order order) throws IllegalArgumentException {
 		this.getOrderManager().placeOrder(order);
 	}
-	
 
-	public void completeAssemBlyTask(AssemblyTask assemblytask){
-		assemblytask.completeAssemblytask();
+	public void completeAssemBlyTask(AssemblyTask assemblytask, int time){
+		assemblytask.completeAssemblytask(time);
 	}
 
 	private ArrayList<User> getUsers() {
