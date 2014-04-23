@@ -73,18 +73,6 @@ public class CarManufacturingCompany implements Model{
 		return this.users;
 	}
 
-
-	/**
-	 * A method to set the user manager of this class to the given user manager.
-	 * 
-	 * @param 	usermanager
-	 * 			the new user manager of this car manufacturing company.
-	 */
-	private void setUsers(ArrayList<User> users) throws IllegalArgumentException {
-		if (users == null) throw new IllegalArgumentException("Bad list of users!");
-		this.users = users;
-	}
-
 	/**
 	 * A method to set the order manager of this class to the given order manager.
 	 * 
