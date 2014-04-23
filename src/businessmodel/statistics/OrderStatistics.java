@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
+import org.joda.time.LocalDate;
 import org.joda.time.Period;
 
 import businessmodel.OrderManager;
@@ -40,6 +41,19 @@ public class OrderStatistics implements Observer {
 		return this.median;
 	}
 	
+	
+	
+	public ArrayList<Tuple<Order, Integer>> getLastDays(int number_of_days) {
+		if (this.finishedOrders.size() > number_of_days){
+			ArrayList<Tuple<Order, Integer>> result = new ArrayList<Tuple<Order, Integer>>(number_of_days);
+			for(int i = this.finishedOrders.size(); i >= this.finishedOrders.size() - number_of_days ; i--){
+				result.add(this.finishedOrders.get(i));
+			}
+			return result;
+		} else 
+			throw new IllegalArgumentException("The supplied number of days is to large");
+	}
+
 	private void updateAverage(){
 		if (this.finishedOrders.size() > 0) {
 			int count = 0;
