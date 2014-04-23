@@ -2,19 +2,24 @@ package control;
 
 import businessmodel.AssemblyTask;
 import businessmodel.CarManufacturingCompany;
+import businessmodel.Model;
 import businessmodel.WorkPost;
 import businessmodel.user.User;
 
 public class AssemblyLineHandler implements AssemblyLineController{
 
-	public AssemblyLineHandler (CarManufacturingCompany cmc, User use) {
-		// TODO Auto-generated constructor stub
+	private CarManufacturingCompany cmc;
+
+	private User user;
+
+	public AssemblyLineHandler (Model cmc, User user) {
+		this.cmc = (CarManufacturingCompany) cmc;
+		this.user = user;
 	}
 
 	@Override
 	public void finishTask(AssemblyTask task, int time) {
-		// TODO Auto-generated method stub
-		
+		this.cmc.finishTask(task, time, this.user);
 	}
 
 }

@@ -8,6 +8,7 @@ import businessmodel.AssemblyLine;
 import businessmodel.OrderManager;
 import businessmodel.WorkPost;
 import businessmodel.category.CarOption;
+import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
@@ -72,7 +73,8 @@ public class Scheduler implements Subject {
 
 	// Deel AssemblyLine
 
-	public void advance(int time){
+	public void advance(int time) throws IllegalNumberException{
+		if (time < 0) throw new IllegalNumberException("Bad time!");
 		int delay = time - 60;
 		this.currenttime = this.getCurrentTime().plusMinutes(time);
 		updateAssemblylineStatus();

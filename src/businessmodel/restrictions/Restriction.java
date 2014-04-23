@@ -2,30 +2,34 @@ package businessmodel.restrictions;
 
 import java.util.ArrayList;
 
-import businessmodel.Catalog;
 import businessmodel.category.CarOption;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 
+/**
+ * A class representing an abstract restriction.
+ * 
+ * @author SWOP team 10 2013-2014
+ *
+ */
 public abstract class Restriction {
-	
-	private String name;
-	private Catalog catalog;
 
-	public Restriction(String name, Catalog catalog) throws IllegalArgumentException {
-		if (name == null || name.equals("")) throw new IllegalArgumentException("Bad name!");
-		if (catalog == null) throw new IllegalArgumentException("Bad catalog!");
-		this.name = name;
-		this.catalog = catalog;
-	}
+	/**
+	 * Creates a new restriction with a given name.	
+	 */
+	public Restriction() {}
 	
-	public String getName() {
-		return this.name;
-	}
-	
-	public Catalog getCatalog() {
-		return this.catalog;
-	}
-	
+	/**
+	 * Checks whether the given set of options violates the restriction or not.
+	 * 
+	 * @param 	options
+	 * 			The set of options.
+	 * @return	True if the set options doesn't violate the restriction.
+	 * @throws 	IllegalArgumentException
+	 * 			| If the set of options is equal to 'null'
+	 * 			| options == null
+	 * @throws 	UnsatisfiedRestrictionException
+	 * 			| If the given set of options violates the restriction
+	 */
 	public abstract boolean check(ArrayList<CarOption> options) throws IllegalArgumentException, UnsatisfiedRestrictionException;
 
 }
