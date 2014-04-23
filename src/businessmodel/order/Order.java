@@ -6,13 +6,12 @@ import java.util.Locale;
 
 import org.joda.time.DateTime;
 
-import businessmodel.Car;
 import businessmodel.category.CarOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.user.User;
 
 /**
- * A class representing a specific car order
+ * A class representing an abstract order.
  * 
  * @author SWOP Team 10 2014
  *
