@@ -5,9 +5,7 @@ import java.util.Iterator;
 
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
-import businessmodel.observer.OrderManagerObserver;
 import businessmodel.order.Order;
-import businessmodel.user.GarageHolder;
 import businessmodel.user.User;
 
 
@@ -66,26 +64,13 @@ public class CarManufacturingCompany implements Model{
 	public void placeOrder(Order order) throws IllegalArgumentException {
 		this.getOrderManager().placeOrder(order);
 	}
-	
 
-	public void completeAssemBlyTask(AssemblyTask assemblytask){
-		assemblytask.completeAssemblytask();
+	public void completeAssemBlyTask(AssemblyTask assemblytask, int time){
+		assemblytask.completeAssemblytask(time);
 	}
 
 	private ArrayList<User> getUsers() {
 		return this.users;
-	}
-
-
-	/**
-	 * A method to set the user manager of this class to the given user manager.
-	 * 
-	 * @param 	usermanager
-	 * 			the new user manager of this car manufacturing company.
-	 */
-	private void setUsers(ArrayList<User> users) throws IllegalArgumentException {
-		if (users == null) throw new IllegalArgumentException("Bad list of users!");
-		this.users = users;
 	}
 
 	/**
