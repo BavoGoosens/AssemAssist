@@ -30,7 +30,7 @@ public class StatisticsView extends View{
 		System.out.println("> Here are the order statistics:" );
 		System.out.println("> Average delay on an Order: " + orderstats.getAverage() + " min");
 		System.out.println("> Median delay on an Order: " + orderstats.getAverage() + " min");
-		//TODO: 
+		//TODO: Michiel gaat dit nog fixen via de orderstatistics
 		try{
 			ArrayList<Tuple<Order, Integer>> ords = orderstats.getLastDays(2);
 			System.out.println("> The last two production days:");
@@ -38,7 +38,6 @@ public class StatisticsView extends View{
 				System.out.println("  > Order: " + day.getX() + "\n" 
 						+"  > delay: " + day.getY() + "min");
 		} catch (IllegalArgumentException e) {
-			//TODO
 			System.out.println("! The system has not been operational long enough to provide these statistics");
 		}
 		System.out.println("> Here are the car statistics:" );
@@ -51,7 +50,6 @@ public class StatisticsView extends View{
 				System.out.println("  > Date: " + day.getX() + "\n" 
 						+"  > number of cars : " + day.getY());
 		} catch (IllegalArgumentException e) {
-			//TODO
 			System.out.println("! The system has not been operational long enough to provide these statistics");
 		}
 		System.out.print(">> ");
