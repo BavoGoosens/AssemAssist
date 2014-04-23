@@ -14,12 +14,14 @@ import businessmodel.WorkPost;
 import businessmodel.user.User;
 
 public class CarMechanicView extends View {
-	
+
 	private AssemblyLineController controller;
-	
+
 	private User user;
-	
+
 	private Scanner scan = new Scanner(System.in);
+	
+	private WorkPost selected_workpost;
 
 	public CarMechanicView(Model cmc, User user) {
 		super(cmc);
@@ -50,8 +52,8 @@ public class CarMechanicView extends View {
 			int choice = Integer.parseInt(response);
 			if (choice < 1 || choice > posts.size())
 				this.error();
-			WorkPost wp = posts.get(choice - 1);
-			this.performTasks(wp);
+			this.selected_workpost = posts.get(choice - 1);
+			this.performTasks(this.selected_workpost);
 		} else {
 			this.error();
 		}	
@@ -68,10 +70,34 @@ public class CarMechanicView extends View {
 		this.check(response);
 		Pattern pattern = Pattern.compile("^\\d*$");
 		if (pattern.matcher(response).find()){
-			
+			int choice = Integer.parseInt(response);
+			if (choice < 1 || choice > tasks.size()){
+				System.out.println("! You entered something wrong. Please try again");
+				this.performTasks(wp);
+			} 
+			this.displayActionOverview(tasks.get(choice - 1));
 		} else {
 			System.out.println("! You entered something wrong. Please try again");
 			this.performTasks(wp);
+		}
+	}
+
+	private void displayActionOverview(AssemblyTask assemblyTask) {
+		System.out.println("This is the sequence of actions you need to perform: ");
+		System.out.println(assemblyTask.getDescription());
+		System.out.println("> Enter the number of minutes it took you to perform all the actions "
+				+ "and hit enter or enter CANCEL to go back to the overview");
+		System.out.println(">> ");
+		String response = this.scan.nextLine();
+		this.check(response);
+		Pattern pattern = Pattern.compile("^\\d*$");
+		if (pattern.matcher(response).find()){
+			int time = Integer.parseInt(response);
+			this.controller.finishTask(assemblyTask, time);
+			this.performTasks(this.selected_workpost);
+		} else {
+			System.out.println("! You entered something wrong. Please try again");
+			this.displayActionOverview(assemblyTask);
 		}
 	}
 
@@ -106,5 +132,5 @@ public class CarMechanicView extends View {
 			this.displayHelp();
 	}
 
-	
+
 }
