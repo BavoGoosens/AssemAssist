@@ -18,6 +18,7 @@ import businessmodel.category.Airco;
 import businessmodel.category.Body;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
+import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.order.Order;
 import businessmodel.order.SingleTaskOrder;
 import businessmodel.order.StandardCarOrder;
@@ -106,8 +107,12 @@ public class SchedulerTest {
 		
 		assertEquals(ord.getScheduler().getOrders().get(0),order1);
 
-		ord.getScheduler().advance(60);
-		
+		try{
+		ord.getScheduler().advance(-1);
+		}catch(IllegalNumberException ex){
+			ex.getNumber();
+			ex.getMessage();
+		}
 
 	
 

@@ -11,6 +11,7 @@ import businessmodel.OrderManager;
 import businessmodel.category.Body;
 import businessmodel.category.CarOption;
 import businessmodel.category.Engine;
+import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
@@ -63,7 +64,11 @@ public class BatchAlgorithmTest {
 			orderManager.addOrder(order5);
 			
 			orderManager.getScheduler().changeAlgorithm("sb",  new CarOption("medium engine",new Engine()));
-			
+			try{
+			orderManager.getScheduler().changeAlgorithm("dsfsf",  new CarOption("medium engine",new Engine()));
+			}catch(IllegalSchedulingAlgorithmException ex){
+				ex.getMessage();
+			}
 			orderManager.getScheduler().ScheduleDay();
 			
 			assertEquals(orderManager.getScheduler().getOrders().get(0),order2);
