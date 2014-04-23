@@ -30,19 +30,19 @@ public abstract class Order {
 	private DateTime estimated_endtime;
 
 	private DateTime order_placed;
-	
+
 	private DateTime order_placed_on_workpost;
 
 	private DateTime standardtime_on_assemblyline;
 
 	private DateTime completion_time;
-	
+
 	private DateTime user_end_date;
-	
+
 	private ArrayList<CarOption> caroptions;
-		
+
 	private boolean completed;
-	
+
 	/**
 	 * A constructor for the class Order.
 	 * 
@@ -110,41 +110,7 @@ public abstract class Order {
 		return "user: " + this.user.toString() + ", delivery date= " + this.estimated_endtime.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT); 
 	}
 
-	/**
-	 * Method to check if car options from two orders are the same or not
-	 * 
-	 * @param order
-	 * @return true if car options are the same else return false
-	 * @throws IllegalArgumentException
-	 */
-	public boolean equalsCarOptions(Object order) throws IllegalArgumentException{
-
-		if (order == null) throw new IllegalArgumentException("bad order");
-
-		ArrayList<CarOption> orders = this.getCar().getOptionsClone();
-		ArrayList<CarOption> orders2 = ((StandardCarOrder) order).getCar().getOptionsClone();
-		ArrayList<CarOption> temp = new ArrayList<CarOption>();
-		
-		if (orders.size() < orders2.size()){
-			temp = orders;
-			orders= orders2;
-			orders2 = temp;
-		}
-			
-		for(CarOption carOption: orders){
-			boolean sameCarOptions = false;
-			for(CarOption carOption2: orders2){
-				if (carOption.toString().equals(carOption2.toString())){
-					sameCarOptions = true;
-				}
-			}
-			if(!sameCarOptions)
-				return false;
-		}
-		return true;
-	}
-	
-	/**
+		/**
 	 * 
 	 * @param date
 	 */
@@ -152,22 +118,14 @@ public abstract class Order {
 		this.completion_time = date;
 	}
 
-	/**
-	 * 
-	 * @return null
-	 */
-	public Car getCar(){
-		return null;
-	}
-
 	public void updateEstimatedDate(int delay) {
 		this.getEstimateDate().plusMinutes(delay);		
 	}
-	
+
 	public void setCompletionDate(DateTime date){
 		this.completion_time = date;
 	}
-	
+
 	public DateTime getCompletionDate(){
 		return this.completion_time;
 	}
@@ -175,15 +133,15 @@ public abstract class Order {
 	public DateTime getTimestamp(){
 		return this.order_placed;
 	}
-	
+
 	public void setTimestamp(DateTime timestamp) {
 		this.order_placed = timestamp;
 	}
-	
+
 	public void setPlacedOnWorkpost(DateTime date){
 		this.setOrder_placed_on_workpost(date);
 	}
-	
+
 	public ArrayList<CarOption> getCarOptions() {
 		return caroptions;
 	}
@@ -220,7 +178,7 @@ public abstract class Order {
 	public boolean isCompleted() {
 		return this.completed;
 	}
-	
+
 	public void setCompleted() {
 		this.completed = true;
 	}

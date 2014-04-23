@@ -190,7 +190,9 @@ public class OrderManager {
 		}
 		
 		for (int i = 0; i < (nb - single_task_orders.size()); i++){
-			res.add(getPendingOrders().poll());
+			Order order = getPendingOrders().poll();
+			if (order != null)
+				res.add(order);
 		}
 		return res;
 	}
