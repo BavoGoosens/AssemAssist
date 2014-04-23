@@ -5,13 +5,13 @@ import java.util.UUID;
 /**
  * Class representing an airco category.
  * 
- * @author team 10
+ * @author SWOP team 10 2013-2014
  *
  */
 public class Airco extends CarOptionCategory {
 	
 	/**
-	 * Indicates the unique key of the category.
+	 * The unique key of the category.
 	 */
 	private final static UUID key = UUID.randomUUID();
 	

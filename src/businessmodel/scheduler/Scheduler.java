@@ -6,6 +6,7 @@ import org.joda.time.DateTime;
 
 import businessmodel.AssemblyLine;
 import businessmodel.OrderManager;
+import businessmodel.WorkPost;
 import businessmodel.category.CarOption;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
@@ -75,7 +76,7 @@ public class Scheduler implements Subject {
 	public void advance(int time) throws IllegalNumberException{
 		if (time < 0) throw new IllegalNumberException("Bad time!");
 		int delay = time - 60;
-		this.getCurrentTime().plusMinutes(time);
+		this.currenttime = this.getCurrentTime().plusMinutes(time);
 		updateAssemblylineStatus();
 		updateCompletedOrders();
 		updateDelay(delay);
@@ -95,7 +96,7 @@ public class Scheduler implements Subject {
 	 * A method to update the orders of this Scheduler. The completed order is pushed to completed orders and its completion date is set.
 	 */
 	private void updateCompletedOrders(){
-		if(this.getOrders().peekFirst().isCompleted()){
+		if(this.getOrders().peekFirst()!= null && this.getOrders().peekFirst().isCompleted()){
 			Order completedorder = this.getOrders().pollFirst();
 			completedorder.setCompletionDate(this.getCurrentTime());
 			this.getOrdermanager().finishedOrder(completedorder);
@@ -115,20 +116,19 @@ public class Scheduler implements Subject {
 	 * A method to update The Schedule if the delay was to high or to low.
 	 */
 	public void updateSchedule(){
-		
+
 		if(this.getDelay() >= 60){
-			
+
 			this.getShifts().getLast().addTimeSlot();
 			Order nextorder = this.getNextOrderToSchedule();
 			this.scheduleOrder(nextorder);
 			this.setDelay(this.getDelay()-60);
-			
+
 		}else if (this.getDelay() <= -60){
-			
+
 			Order order = this.getShifts().getLast().removeLastTimeSlot();
 			this.getOrdermanager().PlaceOrderInFront(order);
-			this.setDelay(this.getDelay()+60);
-			
+			this.setDelay(this.getDelay()+60);	
 		}
 	}
 
@@ -138,7 +138,8 @@ public class Scheduler implements Subject {
 	private void updateAssemblylineStatus(){
 		Order nextorder = this.getShifts().getFirst().getNextOrderForAssemblyLine();
 		this.getAssemblyline().advance(nextorder);
-		nextorder.setPlacedOnWorkpost(this.getCurrentTime());
+		if(nextorder != null)
+			nextorder.setPlacedOnWorkpost(this.getCurrentTime());
 	}
 
 	/**
@@ -152,14 +153,28 @@ public class Scheduler implements Subject {
 		}
 	}
 
-	// Deel Scheduler
-
 	public void ScheduleDay(){
+		this.generateShifts();
 		this.updateCurrentTime();
 		int size = this.getNumberOfOrdersToSchedule();
 		this.getOrders().addAll(this.getAlgo().schedule(this.getOrdermanager().getNbOrders(size)));
-		
 	} 
+
+	public void addOrderToSchedule(Order order){
+		this.getAlgo().scheduleOrder(order);
+		this.getOrders().add(order);
+		boolean advance = true;
+		for(WorkPost wp : this.getAssemblyline().getWorkPosts()){
+			if(wp.getOrder() != null)
+				advance = false;
+		}
+		if(advance)
+			this.updateAssemblylineStatus();
+	}
+
+	public boolean canAddOrder(){
+		return this.getOrders().size() < this.getNumberOfOrdersToSchedule();
+	}
 
 	private void updateCurrentTime() {
 		DateTime datetemp = new DateTime();
@@ -171,7 +186,7 @@ public class Scheduler implements Subject {
 		currenttime.plusDays(1);
 	}
 
-	private int getNumberOfOrdersToSchedule() {
+	public int getNumberOfOrdersToSchedule() {
 		return this.getShifts().size()*this.getShifts().getFirst().getTimeSlots().size()-(this.getAssemblyline().getNumberOfWorkPosts()-1);
 	}
 
@@ -301,7 +316,7 @@ public class Scheduler implements Subject {
 	}
 
 	public DateTime getCurrentTime(){
-		return (DateTime) this.currenttime;
+		return this.currenttime;
 	}
 
 	protected void setEstimatedCompletionDate(Order order){

@@ -9,7 +9,7 @@ import businessmodel.exceptions.IllegalCarOptionCategoryException;
 /**
  * Class representing a factory that creates C model objects.
  * 
- * @author team 10
+ * @author SWOP team 10 2013-2014
  *
  */
 public class ModelCFactory extends CarModelFactory {
@@ -146,6 +146,8 @@ public class ModelCFactory extends CarModelFactory {
 	
 	/**
 	 * Returns the name of the C model.
+	 * 
+	 * @return	The name of the C model.
 	 */
 	@Override
 	protected String getName() {

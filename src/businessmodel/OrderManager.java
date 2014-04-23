@@ -82,8 +82,11 @@ public class OrderManager {
 	public void addOrder(Order order) throws IllegalArgumentException {
 		if (order == null) throw new IllegalArgumentException("Bad order!");
 		order.setTimestamp(this.getScheduler().getCurrentTime());
-		this.getPendingOrders().add(order);
 		this.setEstimatedCompletionDate(order);
+		if(this.getScheduler().canAddOrder())
+			this.getScheduler().addOrderToSchedule(order);
+		else
+			this.getPendingOrders().add(order);
 	}
 
 	/**
@@ -170,19 +173,19 @@ public class OrderManager {
 	 * 		   A list with the requested orders.
 	 */
 	public LinkedList<Order> getNbOrders(int nb) {
-		
+
 		if (nb < 0) throw new IllegalNumberException(nb, "Bad number!");
 
 		LinkedList<Order> res = new LinkedList<Order>();
 		LinkedList<Order> single_task_orders = getSingleTaskOrdersNextDay();
-		
+
 		if(single_task_orders!= null){
 			for(Order order: single_task_orders){
 				res.add(order);
 				getPendingOrders().remove(order);
 			}
 		}
-		
+
 		for (int i = 0; i < (nb - single_task_orders.size()); i++){
 			Order order = getPendingOrders().poll();
 			if (order != null)
@@ -193,7 +196,7 @@ public class OrderManager {
 
 	private LinkedList<Order> getSingleTaskOrdersNextDay() {
 		LinkedList<Order> temp = new LinkedList<Order>();
-		
+
 		for(Order order: this.getPendingOrders()){
 			if(order.getUser_end_date()!= null){
 				if(order.getUser_end_date().getDayOfWeek()-1 == this.getScheduler().getCurrentTime().getDayOfWeek()){
@@ -202,7 +205,7 @@ public class OrderManager {
 				}
 			}
 		}
-		
+
 		return temp;
 	}
 
@@ -218,7 +221,7 @@ public class OrderManager {
 	public void PlaceOrderInFront(Order order) {
 		this.getPendingOrders().add(order);		
 	}
-	
+
 	protected void setEstimatedCompletionDate(Order order){
 		Order previousorder = this.getPreviousOrder(order);
 		if(previousorder != null) {
@@ -241,10 +244,16 @@ public class OrderManager {
 	 * @return	the previous order of the current order.
 	 */
 	protected Order getPreviousOrder(Order order){
-		int index = this.getPendingOrders().indexOf(order);
-		if(index-1 < 0)
-			return null;
+		if(this.getScheduler().getOrders().size() >= this.getScheduler().getNumberOfOrdersToSchedule()){
+			int index = this.getPendingOrders().indexOf(order);
+			if(index-1 < 0)
+				return null;
+			else
+				return this.getPendingOrders().get(index-1);
+		}
 		else
-			return this.getPendingOrders().get(index-1);
+			if(this.getScheduler().getOrders().size()== 0)
+				return null;
+			return this.getScheduler().getOrders().getLast();
 	}
 }

@@ -13,7 +13,7 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.user.User;
 
 /**
- * A class representing a specific car order
+ * A class representing an abstract order.
  * 
  * @author SWOP Team 10 2014
  *
