@@ -120,7 +120,6 @@ public class SchedulerTest {
 		}
 		ord.getScheduler().advance(60);
 		System.out.println("----------------------------------------------------------");
-
 		
 		for(int i=0; i < 10; i++){
 			for(WorkPost wp : ord.getScheduler().getAssemblyline().getWorkPosts()){
