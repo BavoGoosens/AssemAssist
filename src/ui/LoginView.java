@@ -13,8 +13,6 @@ public class LoginView extends View {
 
 	private Scanner scan = new Scanner(System.in);
 
-	private User user;
-
 	public LoginView(Model model) {
 		super(model);
 	}

@@ -10,11 +10,9 @@ public class StandardOrderHandler implements StandardOrderController{
 	
 	private CarManufacturingCompany cmc;
 	
-	private User user;
 		
-	public StandardOrderHandler(Model model, User use) {
+	public StandardOrderHandler(Model model) {
 		this.cmc = (CarManufacturingCompany) model;
-		this.user = use;
 	}
 
 	@Override

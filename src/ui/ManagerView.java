@@ -8,13 +8,11 @@ import businessmodel.user.User;
 
 public class ManagerView extends View {
 	
-	private User user;
-	
 	private Scanner scan = new Scanner(System.in);
 	
 	public ManagerView(Model model, User user) {
 		super(model);
-		this.user = user;
+		setUser(user);
 	}
 
 	@Override

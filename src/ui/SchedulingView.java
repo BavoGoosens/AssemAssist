@@ -13,16 +13,14 @@ import businessmodel.user.User;
 
 public class SchedulingView extends View {
 	
-	private User user;
-	
 	private Scanner scan = new Scanner(System.in);
 	
 	private SchedulingController controller;
 
 	public SchedulingView(Model cmc, User user) {
 		super(cmc);
-		this.user = user;
-		this.controller = new SchedulingHandler(this.getModel(), this.user);
+		setUser(user);
+		this.controller = new SchedulingHandler(this.getModel());
 	}
 
 	@Override

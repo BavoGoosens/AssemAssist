@@ -13,16 +13,14 @@ import businessmodel.observer.Subject;
 import businessmodel.user.User;
 
 public class AssemblyLineStatusView extends View implements Observer {
-	
-	private User user;
-	
+
 	private AssemblyLine subject;
 
 	private Scanner scan = new Scanner(System.in);
-	
+
 	public AssemblyLineStatusView(Model cmc, User user) {
 		super(cmc);
-		this.user = user;
+		setUser(user);
 		this.subject = cmc.registerAssemblyLineObserver(this);
 	}
 

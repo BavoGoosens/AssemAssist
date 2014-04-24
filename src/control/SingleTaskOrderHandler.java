@@ -9,13 +9,11 @@ import businessmodel.user.User;
 
 public class SingleTaskOrderHandler implements SingleTaskOrderController {
 
-	private User active_user;
 
 	private CarManufacturingCompany cmc;
 
-	public SingleTaskOrderHandler(Model cmc, User use) {
+	public SingleTaskOrderHandler(Model cmc) {
 		this.cmc = (CarManufacturingCompany) cmc;
-		this.active_user = use;
 	}
 
 	@Override

@@ -9,15 +9,8 @@ public class AssemblyLineHandler implements AssemblyLineController{
 
 	private CarManufacturingCompany cmc;
 
-	private User user;
-
-	public AssemblyLineHandler (Model cmc, User user) {
+	public AssemblyLineHandler (Model cmc) {
 		this.cmc = (CarManufacturingCompany) cmc;
-		this.setUser(user);
-	}
-
-	private void setUser(User user) {
-		this.user = user;		
 	}
 
 	@Override

@@ -16,16 +16,14 @@ public class CarMechanicView extends View {
 
 	private AssemblyLineController controller;
 
-	private User user;
-
 	private Scanner scan = new Scanner(System.in);
 	
 	private WorkPost selected_workpost;
 
 	public CarMechanicView(Model cmc, User user) {
 		super(cmc);
-		this.user = user;
-		this.controller = new AssemblyLineHandler(this.getModel(), this.user);
+		setUser(user);
+		this.controller = new AssemblyLineHandler(this.getModel());
 	}
 
 	@Override
@@ -45,7 +43,7 @@ public class CarMechanicView extends View {
 		Pattern pattern = Pattern.compile("^\\d*$");
 		this.check(response);
 		if (response.equalsIgnoreCase("status")){
-			AssemblyLineStatusView view = new AssemblyLineStatusView(this.getModel(), this.user);
+			View view = new AssemblyLineStatusView(this.getModel(), this.user);
 			view.display();
 		} else if (pattern.matcher(response).find()){
 			int choice = Integer.parseInt(response);

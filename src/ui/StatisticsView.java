@@ -14,13 +14,11 @@ import businessmodel.util.Tuple;
 
 public class StatisticsView extends View{
 
-	private User user;
-
 	private Scanner scan = new Scanner(System.in);
 
 	public StatisticsView(Model cmc, User user) {
 		super(cmc);
-		this.user = user;
+		setUser(user);
 	}
 
 	@Override

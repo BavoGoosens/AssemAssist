@@ -1,10 +1,12 @@
 package ui;
 
 import businessmodel.Model;
+import businessmodel.user.User;
 
 public abstract class View {
 	
 	private Model cmc;
+	protected User user;
 	
 	public View(Model cmc ){
 		this.setModel(cmc);
@@ -19,6 +21,9 @@ public abstract class View {
 		System.out.println("If you need help enter: HELP");
 	}
 	
+	protected void setUser(User user){
+		this.user = user;
+	}
 	public abstract void display();
 		
 	public abstract void displayHelp();

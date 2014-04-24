@@ -18,16 +18,14 @@ import businessmodel.user.User;
 
 public class CustomShopManagerView extends View {
 
-	private User user;
-
 	private SingleTaskOrderController controller;
 
 	private Scanner scan = new Scanner(System.in);
 
 	public CustomShopManagerView(Model model, User user) {
 		super(model);
-		this.user = user;
-		this.controller = new SingleTaskOrderHandler(this.getModel(), this.user);
+		setUser(user);
+		this.controller = new SingleTaskOrderHandler(this.getModel());
 	}
 
 	@Override

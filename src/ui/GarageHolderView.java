@@ -29,14 +29,12 @@ public class GarageHolderView extends View{
 
 	private StandardOrderController controller;
 
-	private User user;
-
 	private Scanner scan = new Scanner(System.in);
 
 	public GarageHolderView(Model model, User user) {
 		super(model);
-		this.user = user;
-		this.controller = new StandardOrderHandler(this.getModel(), this.user);
+		setUser(user);
+		this.controller = new StandardOrderHandler(this.getModel());
 	}
 
 	@Override
