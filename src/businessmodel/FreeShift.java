@@ -7,11 +7,11 @@ import businessmodel.order.Order;
 
 public class FreeShift extends Shift{
 
-	private Shift nextShift = null;
+	private Shift nextShift;
 
 	public FreeShift(int hours,int numberofworkposts, Shift nextShift) {
 		super(hours, numberofworkposts);
-		this.nextShift = nextShift;
+		this.setNextShift(nextShift);
 	}
 	
 	
@@ -56,5 +56,10 @@ public class FreeShift extends Shift{
 			timeslot = this.getNextTimeSlot(timeslot);
 		}
 		return timeslots;
+	}
+	
+
+	private void setNextShift(Shift nextShift) {
+		this.nextShift = nextShift;
 	}
 }
