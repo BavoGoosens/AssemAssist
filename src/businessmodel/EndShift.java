@@ -1,6 +1,7 @@
 package businessmodel;
 
 import java.util.ArrayList;
+
 import businessmodel.order.Order;
 
 public class EndShift extends Shift {

@@ -5,12 +5,12 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import control.AssemblyLineController;
-import control.AssemblyLineHandler;
 import businessmodel.AssemblyTask;
 import businessmodel.Model;
 import businessmodel.WorkPost;
 import businessmodel.user.User;
+import control.AssemblyLineController;
+import control.AssemblyLineHandler;
 
 public class CarMechanicView extends View {
 

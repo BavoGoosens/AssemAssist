@@ -3,7 +3,6 @@ package control;
 import businessmodel.CarManufacturingCompany;
 import businessmodel.Model;
 import businessmodel.category.CarOption;
-import businessmodel.user.User;
 
 public class SchedulingHandler implements SchedulingController{
 

@@ -1,6 +1,6 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,7 +16,9 @@ import businessmodel.CarModel;
 import businessmodel.Catalog;
 import businessmodel.OrderManager;
 import businessmodel.WorkPost;
-import businessmodel.category.*;
+import businessmodel.category.CarOption;
+import businessmodel.category.CarOptionCategory;
+import businessmodel.category.ModelAFactory;
 import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;

@@ -4,7 +4,6 @@ package control;
 import businessmodel.CarManufacturingCompany;
 import businessmodel.Model;
 import businessmodel.order.StandardCarOrder;
-import businessmodel.user.User;
 
 public class StandardOrderHandler implements StandardOrderController{
 	

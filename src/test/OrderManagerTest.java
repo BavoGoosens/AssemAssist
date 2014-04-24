@@ -1,6 +1,6 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -11,10 +11,8 @@ import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Catalog;
 import businessmodel.OrderManager;
-import businessmodel.category.Body;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
-import businessmodel.category.Engine;
 import businessmodel.category.ModelAFactory;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.Order;

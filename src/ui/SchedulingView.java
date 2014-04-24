@@ -5,11 +5,11 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import control.SchedulingController;
-import control.SchedulingHandler;
 import businessmodel.Model;
 import businessmodel.category.CarOption;
 import businessmodel.user.User;
+import control.SchedulingController;
+import control.SchedulingHandler;
 
 public class SchedulingView extends View {
 	

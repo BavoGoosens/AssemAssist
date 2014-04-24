@@ -2,7 +2,6 @@ package ui;
 
 import java.util.Scanner;
 
-import businessmodel.CarManufacturingCompany;
 import businessmodel.Model;
 import businessmodel.user.User;
 

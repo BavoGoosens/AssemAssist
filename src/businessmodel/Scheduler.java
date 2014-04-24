@@ -6,10 +6,6 @@ import java.util.LinkedList;
 
 import org.joda.time.DateTime;
 
-import businessmodel.AssemblyLine;
-import businessmodel.OrderManager;
-import businessmodel.WorkPost;
-
 import businessmodel.category.CarOption;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;

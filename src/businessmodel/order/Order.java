@@ -129,6 +129,7 @@ public abstract class Order {
 		this.orderPlacedOnWorkPost = orderPlacedOnWorkPost;		
 	}
 
+	//TODO
 	private void setStandardTimeOnAssemblyLine(DateTime placedOnWorkPost) {
 		this.standardTimeOnAssemblyLine = placedOnWorkPost;
 	}

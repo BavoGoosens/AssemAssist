@@ -7,14 +7,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 
-import control.SingleTaskOrderController;
-import control.SingleTaskOrderHandler;
 import businessmodel.AssemblyTask;
 import businessmodel.Model;
 import businessmodel.category.CarOption;
 import businessmodel.user.User;
+import control.SingleTaskOrderController;
+import control.SingleTaskOrderHandler;
 
 public class CustomShopManagerView extends View {
 

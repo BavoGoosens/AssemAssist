@@ -1,23 +1,18 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.AssemblyTask;
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Catalog;
 import businessmodel.OrderManager;
-import businessmodel.WorkPost;
-import businessmodel.category.Body;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
-import businessmodel.category.Color;
-import businessmodel.category.Engine;
 import businessmodel.category.ModelAFactory;
 import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
