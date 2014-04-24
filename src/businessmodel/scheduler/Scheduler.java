@@ -3,6 +3,7 @@ package businessmodel.scheduler;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 import org.joda.time.DateTime;
 
@@ -249,15 +250,32 @@ public class Scheduler implements Subject {
 	
 	}
 
-	public ArrayList<CarOption> getUnscheduledCarOptions(){
-		HashMap<String,CarOption> options = new HashMap<String,CarOption>();
+	public ArrayList<CarOption> getUnscheduledCarOptions(int maxNumber){
+	
+		HashMap<String, Integer> list = new HashMap<String, Integer>();
+		ArrayList<String> options = new ArrayList<String>();
+		HashMap<String, CarOption> result = new HashMap<String, CarOption>();
+		
 		for(Order order: this.getOrders()){
-			for(CarOption carOption: order.getOptions()){
-				if(!options.containsKey(carOption.getName()))
-					options.put(carOption.getName(), carOption);
+			for(CarOption option: order.getOptions()){
+				if (list.containsKey(option.getName())){
+					int count = list.get(option.getName());
+					list.remove(option.getName());
+					list.put(option.getName(),++count) ;
+				}else {
+					options.add(option.getName());
+					list.put(option.getName(), 1);
+					result.put(option.getName(), option);
+				}
 			}
 		}
-		return (ArrayList<CarOption>) options.values();
+		for (String optionName: options)
+			if (list.get(optionName) < 3)
+				result.remove(optionName);
+				
+			
+		return new ArrayList<CarOption>(result.values());
+	
 	}
 
 	@Override
