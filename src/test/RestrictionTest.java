@@ -1,19 +1,26 @@
 package test;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.order.StandardCarOrder;
-import businessmodel.user.GarageHolder;
-import businessmodel.category.*;
-import businessmodel.exceptions.NoClearanceException;
-import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.CarModel;
 import businessmodel.Catalog;
+import businessmodel.category.Airco;
+import businessmodel.category.Body;
+import businessmodel.category.CarOption;
+import businessmodel.category.CarOptionCategory;
+import businessmodel.category.Color;
+import businessmodel.category.Engine;
+import businessmodel.category.ModelAFactory;
+import businessmodel.category.ModelBFactory;
+import businessmodel.category.ModelCFactory;
+import businessmodel.category.Spoiler;
+import businessmodel.exceptions.NoClearanceException;
+import businessmodel.exceptions.UnsatisfiedRestrictionException;
+import businessmodel.order.StandardCarOrder;
+import businessmodel.user.GarageHolder;
 
 public class RestrictionTest {
 

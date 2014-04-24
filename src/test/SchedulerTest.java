@@ -1,7 +1,6 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -10,12 +9,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Catalog;
 import businessmodel.OrderManager;
-import businessmodel.WorkPost;
-import businessmodel.category.Airco;
-import businessmodel.category.Body;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 import businessmodel.category.ModelAFactory;
@@ -36,8 +33,7 @@ public class SchedulerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
-		OrderManager ord = new OrderManager(carmodels);
+		OrderManager ord = new CarManufacturingCompany().getOrderManager();
 		GarageHolder c1 = new GarageHolder("1","","");
 		GarageHolder c2 = new GarageHolder("2","","");
 		GarageHolder c3 = new GarageHolder("3","","");
@@ -95,30 +91,30 @@ public class SchedulerTest {
 		Order order20 = new SingleTaskOrder(c20,chosen, temp);
 
 
-		ord.addOrder(order1);
-		ord.addOrder(order2);
-		ord.addOrder(order3);
-		ord.addOrder(order4);
-		ord.addOrder(order5);
-		ord.addOrder(order6);
-		ord.addOrder(order19);
-		ord.addOrder(order7);
-		ord.addOrder(order8);
-		ord.addOrder(order9);
-		ord.addOrder(order10);
-		ord.addOrder(order11);
-		ord.addOrder(order12);
-		ord.addOrder(order13);
-		ord.addOrder(order14);
-		ord.addOrder(order15);
-		ord.addOrder(order20);
-		ord.addOrder(order16);
-		ord.addOrder(order17);
-		ord.addOrder(order18);
+		ord.placeOrder(order1);
+		ord.placeOrder(order2);
+		ord.placeOrder(order3);
+		ord.placeOrder(order4);
+		ord.placeOrder(order5);
+		ord.placeOrder(order6);
+		ord.placeOrder(order19);
+		ord.placeOrder(order7);
+		ord.placeOrder(order8);
+		ord.placeOrder(order9);
+		ord.placeOrder(order10);
+		ord.placeOrder(order11);
+		ord.placeOrder(order12);
+		ord.placeOrder(order13);
+		ord.placeOrder(order14);
+		ord.placeOrder(order15);
+		ord.placeOrder(order20);
+		ord.placeOrder(order16);
+		ord.placeOrder(order17);
+		ord.placeOrder(order18);
 		
 		ord.getScheduler().ScheduleDay();
 		
-		assertEquals(ord.getScheduler().getOrders().get(0),order1);
+		assertEquals(ord.getScheduler().getOrdersClone().get(0),order1);
 
 		try{
 		ord.getScheduler().advance(-1);

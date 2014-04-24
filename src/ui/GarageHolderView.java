@@ -29,14 +29,12 @@ public class GarageHolderView extends View{
 
 	private StandardOrderController controller;
 
-	private User user;
-
 	private Scanner scan = new Scanner(System.in);
 
 	public GarageHolderView(Model model, User user) {
 		super(model);
-		this.user = user;
-		this.controller = new StandardOrderHandler(this.getModel(), this.user);
+		setUser(user);
+		this.controller = new StandardOrderHandler(this.getModel());
 	}
 
 	@Override
@@ -82,7 +80,7 @@ public class GarageHolderView extends View{
 			System.out.println("> Timestamp of completion: " + or.getCompletionDate()); 
 		} else {
 			System.out.println("> Timestamp of ordering: " + or.getTimestamp());
-			System.out.println("> Estimated production time: " + or.getStandardtime_on_assemblyline());
+			System.out.println("> Estimated production time: " + or.getStandardTimeOnAssemblyLine());
 		}
 		System.out.print(">> ");
 		String response = this.scan.nextLine();

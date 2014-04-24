@@ -1,23 +1,18 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
-
-import businessmodel.AssemblyTask;
+import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Catalog;
 import businessmodel.OrderManager;
-import businessmodel.WorkPost;
-import businessmodel.category.Body;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
-import businessmodel.category.Color;
-import businessmodel.category.Engine;
 import businessmodel.category.ModelAFactory;
 import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
@@ -37,7 +32,7 @@ public class WorkPostTest {
 	public void setUp() throws Exception {
 		
 		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
-		om = new OrderManager(carmodels);
+		om = new CarManufacturingCompany().getOrderManager();
 		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
 		orders = new ArrayList<Order>();
 
@@ -54,22 +49,14 @@ public class WorkPostTest {
 
 		}
 		order = new StandardCarOrder(garageholder, chosen);
-		om.addOrder(order);
+		om.placeOrder(order);
 		
 	}
 
 	@Test
 	public void test() {
 		
-		ArrayList<AssemblyTask> tasksWorkPost1 = new ArrayList<AssemblyTask>();
-		
-		WorkPost post1 = new WorkPost("Test", tasksWorkPost1, om.getScheduler().getAssemblyline());		
-
-		tasksWorkPost1.add(new AssemblyTask("Assembly Car Body","assemble blabla", new Body(),post1));
-		tasksWorkPost1.add(new AssemblyTask("Paint Car", "assemble paint", new Color(),post1));
-
-		post1.setNewOrder(om.getScheduler().getOrders().get(0));
-		assertEquals(post1.getOrder(),om.getScheduler().getOrders().get(0));
+		assertEquals(om.getScheduler().getAssemblyline().getWorkPosts().get(0).getOrder(),om.getScheduler().getOrdersClone().get(0));
 	}
 
 }

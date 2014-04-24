@@ -32,15 +32,6 @@ public class CarModelSpecification {
 	}
 	
 	/**
-	 * Returns the options of the car model specification.
-	 * 
-	 * @return	The options of the car model specification.
-	 */
-	private ArrayList<CarOption> getOptions() {
-		return this.options;
-	}
-	
-	/**
 	 * Returns a cloned object of the list of options of the car model specification.
 	 * 
 	 * @return	A cloned list of the options of the car model specification.
@@ -71,6 +62,15 @@ public class CarModelSpecification {
 		return options;
 	}
 	
+	/**
+	 * Returns the options of the car model specification.
+	 * 
+	 * @return	The options of the car model specification.
+	 */
+	private ArrayList<CarOption> getOptions() {
+		return this.options;
+	}
+
 	/**
 	 * Sets the options of the car model specification to the given list of options.
 	 * 

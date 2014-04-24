@@ -8,7 +8,8 @@ import org.junit.Test;
 import businessmodel.CarModel;
 import businessmodel.CarModelSpecification;
 import businessmodel.Catalog;
-import businessmodel.category.*;
+import businessmodel.category.CarOption;
+import businessmodel.category.CarOptionCategory;
 
 public class CarModelSpecificationTest {
 	

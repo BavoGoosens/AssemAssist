@@ -2,7 +2,10 @@ package businessmodel.restrictions;
 
 import java.util.ArrayList;
 
-import businessmodel.category.*;
+import businessmodel.category.Body;
+import businessmodel.category.CarOption;
+import businessmodel.category.Engine;
+import businessmodel.category.Spoiler;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 
 /**

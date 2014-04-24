@@ -1,17 +1,15 @@
 package ui;
 
 import businessmodel.Model;
+import businessmodel.user.User;
 
 public abstract class View {
 	
 	private Model cmc;
+	protected User user;
 	
 	public View(Model cmc ){
-		this.cmc = cmc;
-	}
-	
-	protected Model getModel(){
-		return this.cmc;
+		this.setModel(cmc);
 	}
 	
 	public void helpOverview() {
@@ -23,6 +21,9 @@ public abstract class View {
 		System.out.println("If you need help enter: HELP");
 	}
 	
+	protected void setUser(User user){
+		this.user = user;
+	}
 	public abstract void display();
 		
 	public abstract void displayHelp();
@@ -33,6 +34,10 @@ public abstract class View {
 	
 	public abstract void error();
 
+	protected Model getModel(){
+		return this.cmc;
+	}
+
 	protected void check(String str) {
 		if (str.equalsIgnoreCase("quit"))
 			this.quit();
@@ -40,6 +45,10 @@ public abstract class View {
 			this.cancel();
 		if (str.equalsIgnoreCase("help"))
 			this.displayHelp();
+	}
+
+	private void setModel(Model cmc) {
+		this.cmc = cmc;		
 	}
 
 }

@@ -2,10 +2,12 @@ package businessmodel;
 
 import java.util.Iterator;
 
+import businessmodel.category.CarOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
-import businessmodel.observer.Subject;
 import businessmodel.order.Order;
+import businessmodel.statistics.CarStatistics;
+import businessmodel.statistics.OrderStatistics;
 import businessmodel.user.User;
 
 public interface Model {
@@ -20,10 +22,6 @@ public interface Model {
 	
 	public Iterator<AssemblyTask> getAvailableTasks(User user);
 	
-	public Iterator<AssemblyTask> getPendingTasks(User user);
-	
-	public Iterator<AssemblyTask> getCompletedTasks(User user);
-	
 	public Iterator<String> getSchedulingAlgorithms(User user);
 
 	public User login(String username, String password);
@@ -31,5 +29,19 @@ public interface Model {
 	public void register(User user);
 	
 	public AssemblyLine registerAssemblyLineObserver(Observer observer);
+
+	public CarStatistics getCarStatistics();
+
+	public OrderStatistics getOrderStatistics();
+
+	public Iterator<WorkPost> getWorkPosts();
+
+	public Iterator<AssemblyTask> getPendingTasks(WorkPost wp);
+
+	public Iterator<AssemblyTask> getFinishedTasks(WorkPost wp);
+	
+	public Iterator<CarOption> getUnscheduledCarOptions(int num);
+
+	public String getCurrentAlgo();
 
 }

@@ -1,6 +1,7 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +9,6 @@ import org.junit.Test;
 import businessmodel.user.GarageHolder;
 import businessmodel.user.Manager;
 import businessmodel.user.Mechanic;
-import businessmodel.user.User;
 
 public class UserManagementTest {
 	

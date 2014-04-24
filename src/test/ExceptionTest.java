@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,7 +35,7 @@ public class ExceptionTest {
 		options.add(option2);
 		
 		try{
-		orderManager.addOrder(new StandardCarOrder(manager, options));
+		orderManager.placeOrder(new StandardCarOrder(manager, options));
 		
 		}catch (NoClearanceException ex){
 			assertEquals(ex.getUser(), manager);

@@ -6,10 +6,9 @@ import java.util.Collections;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import businessmodel.Scheduler;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
-import businessmodel.order.Order;
-import businessmodel.scheduler.Scheduler;
 import businessmodel.util.CarTupleComperator;
 import businessmodel.util.Tuple;
 
@@ -66,8 +65,8 @@ public class CarStatistics implements Observer {
 		ArrayList<Tuple<LocalDate, Integer>> temp = (ArrayList<Tuple<LocalDate, Integer>>) this.number_of_cars.clone();
 		Collections.sort(temp, new CarTupleComperator());
 		if ( temp.size() % 2 == 0 ){
-			int fml = temp.get(temp.size()/2).getY();
-			int fol = temp.get(temp.size()/2 + 1).getY();
+			int fml = temp.get((temp.size()/2) -1).getY();
+			int fol = temp.get((temp.size()/2)).getY();
 			this.median = (fml + fol) / 2;
 		} else {
 			this.median = temp.get((int) Math.ceil(temp.size()/2)).getY();

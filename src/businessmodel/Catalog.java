@@ -2,7 +2,12 @@ package businessmodel;
 
 import java.util.ArrayList;
 
-import businessmodel.category.*;
+import businessmodel.category.CarModelFactory;
+import businessmodel.category.CarOption;
+import businessmodel.category.CarOptionCategory;
+import businessmodel.category.ModelAFactory;
+import businessmodel.category.ModelBFactory;
+import businessmodel.category.ModelCFactory;
 
 
 /**
@@ -31,30 +36,6 @@ public class Catalog {
 		this.createAllModels();
 	}
 	
-	private ArrayList<CarModelFactory> getFactories() {
-		return this.factories;
-	}
-	
-	private ArrayList<CarModel> getAvailableModels() {
-		return this.availableModels;
-	}
-	
-	/**
-	 * Returns a cloned list of all the models that are available.
-	 * 
-	 * @return A cloned list of all available models.
-	 */
-	@SuppressWarnings("unchecked")
-	public ArrayList<CarModel> getAvailaleModelsClone() {
-		return (ArrayList<CarModel>) this.getAvailableModels().clone();
-	}
-	
-	private void createAllModels() {
-		for (CarModelFactory factory: this.getFactories()) {
-			this.getAvailableModels().add(factory.createModel());
-		}
-	}
-	
 	/**
 	 * Returns all the car option categories that are available.
 	 * 
@@ -71,6 +52,41 @@ public class Catalog {
 			}
 		}
 		return categories;
+	}
+
+	/**
+	 * Returns a cloned list of all the models that are available.
+	 * 
+	 * @return A cloned list of all available models.
+	 */
+	@SuppressWarnings("unchecked")
+	public ArrayList<CarModel> getAvailaleModelsClone() {
+		return (ArrayList<CarModel>) this.getAvailableModels().clone();
+	}
+
+	protected ArrayList<CarOption> getAllOptions(CarOptionCategory cat) {
+		ArrayList<CarOption> res = new ArrayList<>();
+		for (CarModel model: this.getAvailableModels()){
+			for (CarOption option: model.getPossibilities()) {
+				if (option.getCategory().equals(cat))
+					res.add(option);
+			}
+		}
+		return res;
+	}
+
+	private void createAllModels() {
+		for (CarModelFactory factory: this.getFactories()) {
+			this.getAvailableModels().add(factory.createModel());
+		}
+	}
+
+	private ArrayList<CarModelFactory> getFactories() {
+		return this.factories;
+	}
+	
+	private ArrayList<CarModel> getAvailableModels() {
+		return this.availableModels;
 	}
 
 }

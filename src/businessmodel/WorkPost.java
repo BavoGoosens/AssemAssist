@@ -29,6 +29,11 @@ public class WorkPost {
 	private ArrayList<AssemblyTask> pendingTasks;
 
 	/**
+	 * the tasks that are finished for this WorkPost.
+	 */
+	private ArrayList<AssemblyTask> finishedTasks;
+
+	/**
 	 * The order the working post is currently handling.
 	 */
 	private Order orderInProcess ;
@@ -52,11 +57,62 @@ public class WorkPost {
 	 * 			The tasks this work post is responsible for.
 	 * @throws 	IllegalArgumentException
 	 */
-	public WorkPost(String name, ArrayList<AssemblyTask> tasks, AssemblyLine assemblyline) throws IllegalArgumentException {
+	public WorkPost(String name, AssemblyLine assemblyline) throws IllegalArgumentException {
 		this.setName(name);
 		this.setAssemblyline(assemblyline);
+		this.responsibleAssemblyTasks = new ArrayList<AssemblyTask>();
 		this.pendingTasks = new ArrayList<AssemblyTask>();
-		this.setResponsibletasks(tasks);
+		this.finishedTasks = new ArrayList<AssemblyTask>();
+	}
+
+	/**
+	 * Sets the list of assembly tasks this work post is responsible for.
+	 * 
+	 * @param 	responsibleTasks
+	 * 		  	The new list with all the assembly tasks the work post is responsible for.
+	 * @throws	IllegalArgumentException
+	 * 			| If the list of responsible tasks is equal to 'null'
+	 * 			| responsibleTasks == null
+	 */
+	public void setResponsibletasks(ArrayList<AssemblyTask> responsibleTasks) throws IllegalArgumentException {
+		if (responsibleTasks == null) throw new IllegalArgumentException("Bad list of responsible tasks!");
+		for(AssemblyTask assem: responsibleTasks){
+			if(!this.responsibleAssemblyTasks.contains(assem))
+				this.responsibleAssemblyTasks.add(assem);
+		}
+	}
+
+	/**
+	 * Returns the order the work post is currently working on.
+	 * 
+	 * @return The order the work post is currently working on.
+	 */
+	public Order getOrder() {
+		return this.orderInProcess;
+	}
+
+	/**
+	 * This method sets the order the work post is currently working on to the given order.
+	 * 
+	 * @param	orderInProcess
+	 * 			The new order the work post is currently working on.
+	 */
+	public void PlaceOrderOnWorkPost(Order order_in_process) {
+		this.setOrder(order_in_process);
+		this.time_order_in_process = 0;
+	}
+	
+	/**
+	 * Returns whether the work post is in a completed state.
+	 * 
+	 * @return True if all tasks that are pending at the work post are completed.
+	 */
+	public boolean isCompleted(){
+		for(AssemblyTask task: this.getPendingTasks()){
+			if(!task.isCompleted())
+				return false;
+		}
+		return true;
 	}
 
 	/**
@@ -67,6 +123,120 @@ public class WorkPost {
 	public String getName() {
 		return this.name;
 	}
+
+	/**
+	 * Returns a cloned list of assembly tasks the work post is responsible for.
+	 * 
+	 * @return	A cloned list of assembly tasks the work post is responsible for.
+	 */
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<AssemblyTask> getResponsibleTasksClone() {
+		return (ArrayList<AssemblyTask>) this.getResponsibleTasks().clone();
+	}
+
+	/**
+	 * Refreshes the order the work post is currently working on an returns the previous order.
+	 * 
+	 * @param	order
+	 * 			The new order the work post needs to start working on.
+	 * @return	The order the work post was previously working on.
+	 */
+	public Order switchOrders(Order order) {
+		Order temp = this.getOrder();
+		this.setNewOrder(order);
+		return temp;
+	}
+
+	/**
+	 * Returns the tasks that are pending at the work post.
+	 * 
+	 * @return	The tasks that are pending at the work post
+	 */
+	protected ArrayList<AssemblyTask> getPendingTasks() {
+		return this.pendingTasks;
+	}
+
+	protected ArrayList<AssemblyTask> getFinishedTasks() {
+		return this.finishedTasks;
+	}
+
+	/**
+	 * Returns the list of assembly tasks that this work post can carry out based on 
+	 * the given car options.
+	 * 
+	 * @param 	carOptions
+	 * 		  	A list of options that need to be installed.
+	 * 
+	 * @return 	The list of assembly tasks that this work post can carry out based on the 
+	 * 			given car options.
+	 */
+	protected ArrayList<AssemblyTask> possibleAssemblyTasks(ArrayList<CarOption> carOptions) throws IllegalArgumentException {
+		if (carOptions == null) 
+			throw new IllegalArgumentException("Bad list of car parts!");
+		ArrayList<AssemblyTask> result = new ArrayList<AssemblyTask>();
+		for(AssemblyTask assem : this.getResponsibleTasks()){
+			for(CarOption option: carOptions){
+				if(option.getCategory().equals(assem.getCategory()))
+					result.add(new AssemblyTask(assem.getName(),assem.getDescription(),assem.getCategory(),this));
+			}
+		}
+		return result;
+	}
+
+	protected void AssemblyTaskCompleted(AssemblyTask assem, int time) {
+		this.getPendingTasks().remove(assem);
+		this.finishedTasks.add(assem);
+		this.setTime_order_in_process(this.getTime_order_in_process()+time);
+		this.getAssemblyline().notifyObservers();
+		this.notifyAssemBlyLine();
+	}
+
+	protected void notifyAssemBlyLine(){
+		boolean completed= true;
+		for(AssemblyTask assemblytask: this.getPendingTasks()){
+			if(!assemblytask.isCompleted())
+				completed = false;
+		}
+		if(completed){
+			this.getAssemblyline().WorkPostCompleted(this.getTime_order_in_process());
+		}
+	}
+
+	protected AssemblyLine getAssemblyline() {
+		return assemblyline;
+	}
+
+	/**
+	 * This method sets the order the work post is currently working on to 
+	 * the given order and refreshes the assembly tasks.
+	 * 
+	 * @param   The order that this work post needs to start working on.
+	 */
+	protected void setNewOrder(Order order) {
+		this.PlaceOrderOnWorkPost(order);
+		this.refreshAssemblyTasks();
+	}
+
+	/**
+	 * This method refreshes the pending tasks that need to be done for the current order. 
+	 */
+	private void refreshAssemblyTasks() {
+		if (this.getOrder() != null) {
+			ArrayList<CarOption> carParts = this.getOrder().getOptions();
+			ArrayList<AssemblyTask> newPendingTasks = this.possibleAssemblyTasks(carParts);
+			this.setPendingTasks(newPendingTasks);
+		}
+	}
+
+	private int getTime_order_in_process() {
+		return time_order_in_process;
+	}
+
+	private void setTime_order_in_process(int time){
+		this.time_order_in_process = time;
+	}
+
 
 	/**
 	 * This method sets the name of the work post to the given name.
@@ -84,13 +254,8 @@ public class WorkPost {
 		this.name = name;
 	}
 
-	/**
-	 * Returns the tasks that are pending at the work post.
-	 * 
-	 * @return	The tasks that are pending at the work post
-	 */
-	public ArrayList<AssemblyTask> getPendingTasks() {
-		return this.pendingTasks;
+	private void setOrder(Order order_in_process) {
+		this.orderInProcess = order_in_process;
 	}
 
 	/**
@@ -117,162 +282,12 @@ public class WorkPost {
 		return this.responsibleAssemblyTasks;
 	}
 
-	/**
-	 * Returns a cloned list of assembly tasks the work post is responsible for.
-	 * 
-	 * @return	A cloned list of assembly tasks the work post is responsible for.
-	 */
-	@SuppressWarnings("unchecked")
-	public ArrayList<AssemblyTask> getResponsibleTasksClone() {
-		return (ArrayList<AssemblyTask>) this.getResponsibleTasks().clone();
-	}
-
-	/**
-	 * Sets the list of assembly tasks this work post is responsible for.
-	 * 
-	 * @param 	responsibleTasks
-	 * 		  	The new list with all the assembly tasks the work post is responsible for.
-	 * @throws	IllegalArgumentException
-	 * 			| If the list of responsible tasks is equal to 'null'
-	 * 			| responsibleTasks == null
-	 */
-	public void setResponsibletasks(ArrayList<AssemblyTask> responsibleTasks) throws IllegalArgumentException {
-		if (responsibleTasks == null) throw new IllegalArgumentException("Bad list of responsible tasks!");
-		this.responsibleAssemblyTasks = responsibleTasks;
-	}
-
-	/**
-	 * Returns the order the work post is currently working on.
-	 * 
-	 * @return The order the work post is currently working on.
-	 */
-	public Order getOrder() {
-		return this.orderInProcess;
-	}
-
-	/**
-	 * This method sets the order the work post is currently working on to the given order.
-	 * 
-	 * @param	orderInProcess
-	 * 			The new order the work post is currently working on.
-	 */
-	public void setOrder(Order order_in_process) {
-		this.orderInProcess = order_in_process;
-		this.time_order_in_process = 0;
-	}
-
-
-	/**
-	 * Returns whether the work post is in a completed state.
-	 * 
-	 * @return True if all tasks that are pending at the work post are completed.
-	 */
-	public boolean isCompleted(){
-		for(AssemblyTask task: this.getPendingTasks()){
-			if(!task.isCompleted())
-				return false;
-		}
-		return true;
-	}
-
-	/**
-	 * This method sets the order the work post is currently working on to 
-	 * the given order and refreshes the assembly tasks.
-	 * 
-	 * @param   The order that this work post needs to start working on.
-	 */
-	public void setNewOrder(Order order) {
-		this.setOrder(order);
-		this.refreshAssemblyTasks();
-	}
-
-	/**
-	 * This method refreshes the pending tasks that need to be done for the current order. 
-	 */
-	private void refreshAssemblyTasks() {
-		if (this.getOrder() != null) {
-			ArrayList<CarOption> carParts = this.getOrder().getOptions();
-			ArrayList<AssemblyTask> newPendingTasks = this.possibleAssemblyTasks(carParts);
-			this.setPendingTasks(newPendingTasks);
-		}
-	}
-
-	/**
-	 * Returns the list of assembly tasks that this work post can carry out based on 
-	 * the given car options.
-	 * 
-	 * @param 	carOptions
-	 * 		  	A list of options that need to be installed.
-	 * 
-	 * @return 	The list of assembly tasks that this work post can carry out based on the 
-	 * 			given car options.
-	 */
-	protected ArrayList<AssemblyTask> possibleAssemblyTasks(ArrayList<CarOption> carOptions) throws IllegalArgumentException {
-		if (carOptions == null) 
-			throw new IllegalArgumentException("Bad list of car parts!");
-		ArrayList<AssemblyTask> result = new ArrayList<AssemblyTask>();
-		for(AssemblyTask assem : this.getResponsibleTasks()){
-			for(CarOption option: carOptions){
-				if(option.getCategory().equals(assem.getCategory()))
-					result.add(new AssemblyTask(assem.getName(), assem.getDescription(),assem.getCategory(),this));
-			}
-		}
-		return result;
-	}
-
-	protected void AssemblyTaskCompleted(int time) {
-		this.setTime_order_in_process(this.getTime_order_in_process()+time);
-		this.notifyAssemBlyLine();
-	}
-
-	protected void notifyAssemBlyLine(){
-		boolean completed= true;
-		for(AssemblyTask assemblytask: this.getPendingTasks()){
-			if(!assemblytask.isCompleted())
-				completed = false;
-		}
-		if(completed){
-			this.getAssemblyline().WorkPostCompleted(this.getTime_order_in_process());
-		}
+	private void setAssemblyline(AssemblyLine assemblyline) {
+		this.assemblyline = assemblyline;
 	}
 
 	@Override
 	public String toString(){
 		return this.getName();
-	}
-
-	private int getTime_order_in_process() {
-		return time_order_in_process;
-	}
-
-	private void setTime_order_in_process(int time){
-		this.time_order_in_process = time;
-	}
-
-
-	protected AssemblyLine getAssemblyline() {
-		return assemblyline;
-	}
-
-	private void setAssemblyline(AssemblyLine assemblyline) {
-		this.assemblyline = assemblyline;
-	}
-
-	/**
-	 * Refreshes the order the work post is currently working on an returns the previous order.
-	 * 
-	 * @param	order
-	 * 			The new order the work post needs to start working on.
-	 * @return	The order the work post was previously working on.
-	 */
-	public Order switchOrders(Order order) {
-		Order temp = this.getOrder();
-		this.setNewOrder(order);
-		return temp;
-	}
-
-	public ArrayList<AssemblyTask> getFinishedTasks() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

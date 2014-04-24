@@ -34,6 +34,25 @@ public class Car {
 	}
 
 	/**
+	 * Returns a cloned list of options of the car.
+	 * 
+	 * @return	The options (clone) of the car.
+	 */
+	@SuppressWarnings("unchecked")
+	public ArrayList<CarOption> getOptionsClone() {
+		return (ArrayList<CarOption>) this.options.clone();
+	}
+	
+	/**
+	 * Returns the options of the car.
+	 *
+	 * @return  The options of the car.
+	 */
+	private ArrayList<CarOption> getOptions(){
+		return this.options;
+	}
+
+	/**
 	 * Sets the options of this car to the given options.
 	 * 
 	 * @param   options
@@ -48,25 +67,6 @@ public class Car {
 		this.options = (ArrayList<CarOption>) options.clone();
 	}
 
-	/**
-	 * Returns the options of the car.
-	 *
-	 * @return  The options of the car.
-	 */
-	private ArrayList<CarOption> getOptions(){
-		return this.options;
-	}
-	
-	/**
-	 * Returns a cloned list of options of the car.
-	 * 
-	 * @return	The options (clone) of the car.
-	 */
-	@SuppressWarnings("unchecked")
-	public ArrayList<CarOption> getOptionsClone() {
-		return (ArrayList<CarOption>) this.options.clone();
-	}
-	
 	/**
 	 * Returns a string representation of this car.
 	 */

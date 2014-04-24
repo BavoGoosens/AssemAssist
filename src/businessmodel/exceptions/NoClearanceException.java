@@ -16,16 +16,20 @@ public class NoClearanceException extends Exception {
 	}
 	
 	public NoClearanceException(User user) {
-		this.user = user;
+		this.setUser(user);
 	}
 	
 	public NoClearanceException(User user, String message) {
 		super(message);
-		this.user = user;
+		this.setUser(user);
 	}
 	
 	public User getUser() {
 		return this.user;
+	}
+
+	private void setUser(User user) {
+		this.user = user;
 	}
 	
 	

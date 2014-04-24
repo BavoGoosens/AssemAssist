@@ -1,17 +1,16 @@
-package businessmodel.scheduler;
+package businessmodel;
+
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import businessmodel.AssemblyLine;
-import businessmodel.AssemblyTask;
-import businessmodel.CarManufacturingCompany;
-import businessmodel.OrderManager;
-import businessmodel.WorkPost;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
 import businessmodel.category.CarOption;
@@ -95,26 +94,28 @@ public class SchedulerTest {
 		Order order20 = new SingleTaskOrder(c20,henk1, temp);
 
 
-		ord.addOrder(order1);
-		ord.addOrder(order2);
-		ord.addOrder(order3);
-		ord.addOrder(order4);
-		ord.addOrder(order5);
-		ord.addOrder(order6);
-		//	ord.addOrder(order19);
-		ord.addOrder(order7);
-		ord.addOrder(order8);
-		ord.addOrder(order9);
-		ord.addOrder(order10);
-		ord.addOrder(order11);
-		ord.addOrder(order12);
-		ord.addOrder(order13);
-		ord.addOrder(order14);
-		ord.addOrder(order15);
-		//	ord.addOrder(order20);
-		//	ord.addOrder(order16);
-		//	ord.addOrder(order17);
-		//	ord.addOrder(order18);
+		ord.placeOrder(order1);
+		ord.placeOrder(order2);
+		ord.placeOrder(order3);
+		ord.placeOrder(order4);
+		ord.placeOrder(order5);
+		ord.placeOrder(order6);
+		ord.placeOrder(order19);
+		ord.placeOrder(order7);
+		ord.placeOrder(order8);
+		ord.placeOrder(order9);
+		ord.placeOrder(order10);
+		ord.placeOrder(order11);
+		ord.placeOrder(order12);
+		ord.placeOrder(order13);
+		ord.placeOrder(order14);
+		ord.placeOrder(order15);
+
+		ord.placeOrder(order20);
+		ord.placeOrder(order16);
+		ord.placeOrder(order17);
+		ord.placeOrder(order18);
+
 
 		// test
 		for(int k =0; k<2 ; k++){
@@ -131,7 +132,9 @@ public class SchedulerTest {
 		}
 		System.out.println("----------------------------------------------------------");
 
-		AssemblyLine assembly = ord.getScheduler().getAssemblyline();
+		AssemblyLine testassembly = ord.getScheduler().getAssemblyline();
+		
+		assertEquals(testassembly.getWorkPosts().get(0).getResponsibleTasksClone().get(0).toString(),"Assembly Car Body");
 
 		for(WorkPost wp1 : ord.getScheduler().getAssemblyline().getWorkPosts()){
 			if(wp1.getOrder()!= null)
@@ -140,10 +143,16 @@ public class SchedulerTest {
 				System.out.println("0");
 		} 
 		
-		WorkPost wp = assembly.getWorkPosts().get(0);
-		for(AssemblyTask assem : wp.getPendingTasks())
-			cmc.completeAssemBlyTask(assem, 20);
-	
+		
+		System.out.println("===========");
+		WorkPost wp = testassembly.getWorkPosts().get(0);
+
+		Iterator<AssemblyTask> iter = cmc.getPendingTasks(wp);
+		List<AssemblyTask> copy = new ArrayList<AssemblyTask>();
+		while (iter.hasNext())
+		    copy.add(iter.next());
+		for(AssemblyTask assem : copy)
+				cmc.finishTask(assem, 20);
 		
 		for(WorkPost wp1 : ord.getScheduler().getAssemblyline().getWorkPosts()){
 			if(wp1.getOrder()!= null)
@@ -152,15 +161,25 @@ public class SchedulerTest {
 				System.out.println("0");
 		}
 		
-		wp = assembly.getWorkPosts().get(0);
-		for(AssemblyTask assem : wp.getPendingTasks())
-			cmc.completeAssemBlyTask(assem, 20);
+		wp = testassembly.getWorkPosts().get(0);
 		
-		wp = assembly.getWorkPosts().get(1);
-		for(AssemblyTask assem : wp.getPendingTasks())
-			cmc.completeAssemBlyTask(assem, 20);
+		Iterator<AssemblyTask> iter1 = cmc.getPendingTasks(wp);
+		List<AssemblyTask> copy1 = new ArrayList<AssemblyTask>();
+		while (iter1.hasNext())
+		    copy1.add(iter1.next());
+		for(AssemblyTask assem : copy1)
+				cmc.finishTask(assem, 20);
 		
-		for(int i=0; i < 13; i++){
+		wp = testassembly.getWorkPosts().get(1);
+
+		Iterator<AssemblyTask> iter11 = cmc.getPendingTasks(wp);
+		List<AssemblyTask> copy11 = new ArrayList<AssemblyTask>();
+		while (iter11.hasNext())
+		    copy11.add(iter11.next());
+		for(AssemblyTask assem : copy11)
+				cmc.finishTask(assem, 20);
+		
+		for(int i=0; i < 16; i++){
 			for(WorkPost wp1 : ord.getScheduler().getAssemblyline().getWorkPosts()){
 				if(wp1.getOrder()!= null)
 					System.out.println(wp1.getOrder().getUser());
@@ -169,9 +188,14 @@ public class SchedulerTest {
 			}
 			System.out.println("=====");
 
-			for(WorkPost wp1: assembly.getWorkPosts()){
-					for(AssemblyTask assem : wp1.getPendingTasks())
-						cmc.completeAssemBlyTask(assem, 20);
+			for(WorkPost wp1: testassembly.getWorkPosts()){
+
+				Iterator<AssemblyTask> iter111 = cmc.getPendingTasks(wp1);
+				List<AssemblyTask> copy111 = new ArrayList<AssemblyTask>();
+				while (iter111.hasNext())
+				    copy111.add(iter111.next());
+				for(AssemblyTask assem : copy111)
+						cmc.finishTask(assem, 20);
 			}
 		}
 

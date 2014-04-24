@@ -34,7 +34,7 @@ public class IllegalNumberException extends RuntimeException {
 	 * 			The number of the exception.
 	 */
 	public IllegalNumberException(int number) {
-		this.number = number;
+		this.setNumber(number);
 	}
 	
 	/**
@@ -47,7 +47,7 @@ public class IllegalNumberException extends RuntimeException {
 	 */
 	public IllegalNumberException(int number, String message) {
 		super(message);
-		this.number = number;
+		this.setNumber(number);
 	}
 	
 	/**
@@ -57,6 +57,10 @@ public class IllegalNumberException extends RuntimeException {
 	 */
 	public int getNumber() {
 		return this.number;
+	}
+
+	private void setNumber(int number) {
+		this.number = number;
 	}
 
 }

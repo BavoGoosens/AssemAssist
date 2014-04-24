@@ -1,19 +1,18 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Catalog;
 import businessmodel.OrderManager;
-import businessmodel.category.Body;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
-import businessmodel.category.Engine;
 import businessmodel.category.ModelAFactory;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.Order;
@@ -32,8 +31,7 @@ public class OrderManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
-		om = new OrderManager(carmodels);
+		om = new CarManufacturingCompany().getOrderManager();
 		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
 
 		this.catalog = new Catalog();
@@ -48,18 +46,18 @@ public class OrderManagerTest {
 			}
 		}
 		order = new StandardCarOrder(garageholder, chosen);
-		om.addOrder(order);
+		om.placeOrder(order);
 	}
 
 	@Test
 	public void test() {
 		try {
 			
-			assertTrue(om.getScheduler().getOrders().contains(order));
+			assertTrue(om.getScheduler().getOrdersClone().contains(order));
 			assertTrue(om.getPendingOrders(garageholder).contains(order));
 			om.finishedOrder(order);
-			assertTrue(om.getCompletedOrders().contains(order));
-			assertTrue(om.getCompletedOrders(garageholder).contains(order));
+			assertTrue(om.getCompletedOrdersClone().contains(order));
+	
 			
 
 		} catch (IllegalArgumentException | NoClearanceException e) {

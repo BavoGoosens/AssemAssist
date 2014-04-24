@@ -43,7 +43,7 @@ public class IllegalCarOptionCategoryException extends Exception {
 	 * 			The category of the exception.
 	 */
 	public IllegalCarOptionCategoryException(CarOptionCategory category) {
-		this.category = category;
+		this.setCategory(category);
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class IllegalCarOptionCategoryException extends Exception {
 	 */
 	public IllegalCarOptionCategoryException(CarOptionCategory category, String message) {
 		super(message);
-		this.category = category;
+		this.setCategory(category);
 	}
 	
 	/**
@@ -66,6 +66,10 @@ public class IllegalCarOptionCategoryException extends Exception {
 	 */
 	public CarOptionCategory getCategory() {
 		return this.category;
+	}
+
+	private void setCategory(CarOptionCategory category) {
+		this.category = category;
 	}
 
 }

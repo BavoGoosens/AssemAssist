@@ -1,4 +1,4 @@
-package businessmodel.scheduler;
+package businessmodel;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -11,9 +11,8 @@ public class FreeShift extends Shift{
 
 	public FreeShift(int hours,int numberofworkposts, Shift nextShift) {
 		super(hours, numberofworkposts);
-		this.nextShift = nextShift;
+		this.setNextShift(nextShift);
 	}
-	
 	
 	@Override
 	protected ArrayList<TimeSlot> canAddOrder(Order order){
@@ -30,7 +29,15 @@ public class FreeShift extends Shift{
 		temp.removeLast();
 		return timeslots;
 	}
-	
+
+	/**
+	 * A method to get the next shift of the day.
+	 * @return	the next shift of the day
+	 */
+	protected Shift getNextShift(){
+		return this.nextShift;
+	}
+
 	/**
 	 * A method to check if a number of Timeslot's are available to handle an order.
 	 * @param 	timeslot
@@ -48,11 +55,7 @@ public class FreeShift extends Shift{
 		return timeslots;
 	}
 	
-	/**
-	 * A method to get the next shift of the day.
-	 * @return	the next shift of the day
-	 */
-	protected Shift getNextShift(){
-		return this.nextShift;
+	private void setNextShift(Shift nextShift) {
+		this.nextShift = nextShift;
 	}
 }

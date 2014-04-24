@@ -1,27 +1,27 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-
 
 import businessmodel.AssemblyTask;
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Catalog;
 import businessmodel.OrderManager;
+import businessmodel.Scheduler;
 import businessmodel.WorkPost;
-import businessmodel.category.Body;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
-import businessmodel.category.Engine;
 import businessmodel.category.ModelAFactory;
 import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
-import businessmodel.scheduler.Scheduler;
 import businessmodel.user.GarageHolder;
 
 public class ProductionSchedulerTest {
@@ -36,8 +36,7 @@ public class ProductionSchedulerTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
-		om = new OrderManager(carmodels);
+		om = new CarManufacturingCompany().getOrderManager();
 		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
 		orders = new ArrayList<Order>();
 		
@@ -57,9 +56,9 @@ public class ProductionSchedulerTest {
 		orders.add(order);
 		orders.add(order);
 		orders.add(order);
-		om.addOrder(order);
-		om.addOrder(order);
-		om.addOrder(order);
+		om.placeOrder(order);
+		om.placeOrder(order);
+		om.placeOrder(order);
 		
 	}
 
@@ -69,20 +68,24 @@ public class ProductionSchedulerTest {
 		CarManufacturingCompany cmc = new CarManufacturingCompany();
 		
 		Scheduler prodsched = om.getScheduler();
-		assertTrue(om.getCompletedOrders().isEmpty());
+		assertTrue(om.getCompletedOrdersClone().isEmpty());
 		
 		for(Order order: this.orders)
 			om.placeOrder(order);
 		
-		assertTrue(om.getCompletedOrders().isEmpty());
-		assertEquals(orders.get(0),om.getScheduler().getOrders().get(0));
+		assertTrue(om.getCompletedOrdersClone().isEmpty());
+		assertEquals(orders.get(0),om.getScheduler().getOrdersClone().get(0));
 		om.getScheduler().ScheduleDay();
 		
 		for(Order order:this.orders){
 			for(WorkPost wp: prodsched.getAssemblyline().getWorkPosts()){
 				if(wp.getOrder() != null){
-					for(AssemblyTask assem : wp.getPendingTasks())
-							cmc.completeAssemBlyTask(assem, 20);
+					Iterator<AssemblyTask> iter = cmc.getPendingTasks(wp);
+					List<AssemblyTask> copy = new ArrayList<AssemblyTask>();
+					while (iter.hasNext())
+					    copy.add(iter.next());
+					for(AssemblyTask assem : copy)
+							cmc.finishTask(assem, 20);
 					
 				}
 			}
@@ -91,24 +94,33 @@ public class ProductionSchedulerTest {
 		for(Order order:this.orders){
 			for(WorkPost wp: prodsched.getAssemblyline().getWorkPosts()){
 				if(wp.getOrder() != null){
-					for(AssemblyTask assem : wp.getPendingTasks())
-							cmc.completeAssemBlyTask(assem, 20);
+					
+					Iterator<AssemblyTask> iter = cmc.getPendingTasks(wp);
+					List<AssemblyTask> copy = new ArrayList<AssemblyTask>();
+					while (iter.hasNext())
+					    copy.add(iter.next());
+					for(AssemblyTask assem : copy)
+							cmc.finishTask(assem, 20);
 					
 				}
 			}
-			
 		}
+	
 		for(Order order:this.orders){
 			for(WorkPost wp: prodsched.getAssemblyline().getWorkPosts()){
 				if(wp.getOrder() != null){
-					for(AssemblyTask assem : wp.getPendingTasks())
-							cmc.completeAssemBlyTask(assem, 20);
+					Iterator<AssemblyTask> iter = cmc.getPendingTasks(wp);
+					List<AssemblyTask> copy = new ArrayList<AssemblyTask>();
+					while (iter.hasNext())
+					    copy.add(iter.next());
+					for(AssemblyTask assem : copy)
+							cmc.finishTask(assem, 20);
 					
 				}
 			}
 			
 		}
-		assertTrue(om.getScheduler().getOrders().isEmpty());
+		assertTrue(om.getScheduler().getOrdersClone().isEmpty());
 	}
 
 }

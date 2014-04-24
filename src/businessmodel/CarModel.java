@@ -38,6 +38,16 @@ public class CarModel {
 	}
 	
 	/**
+	 * Returns a list of all the possible options of the car model.
+	 * 
+	 * @return	List of all the possible options of the car model.
+	 * 			This depends on the car model specification.
+	 */
+	public ArrayList<CarOption> getPossibilities(){
+		return this.cms.getOptionsClone();
+	}
+
+	/**
 	 * Returns the name of the car model.
 	 * 
 	 * @return  The name of the car model.
@@ -46,20 +56,6 @@ public class CarModel {
 		return this.name;
 	}
 
-	/**
-	 * Sets the name of the car model to the given name.
-	 * 
-	 * @param	name
-	 *          The name for the car model.
-	 * @throws	IllegalArgumentException
-	 * 			| If the name is equal to 'null' or is equal to the empty string
-	 * 			| name == null || name.equals("")
-	 */
-	private void setCarmodel(String name) throws IllegalArgumentException {
-		if (name == null || name.equals("")) throw new IllegalArgumentException("Bad name for carmodel!");
-		this.name = name;
-	}	
-	
 	/**
 	 * Returns the car model specification of the car model.
 	 * 
@@ -82,17 +78,21 @@ public class CarModel {
 		if(cms == null) throw new IllegalArgumentException("Bad car model specification!");
 		this.cms = cms;
 	}
-	
+
 	/**
-	 * Returns a list of all the possible options of the car model.
+	 * Sets the name of the car model to the given name.
 	 * 
-	 * @return	List of all the possible options of the car model.
-	 * 			This depends on the car model specification.
+	 * @param	name
+	 *          The name for the car model.
+	 * @throws	IllegalArgumentException
+	 * 			| If the name is equal to 'null' or is equal to the empty string
+	 * 			| name == null || name.equals("")
 	 */
-	public ArrayList<CarOption> getPossibilities(){
-		return this.cms.getOptionsClone();
+	private void setCarmodel(String name) throws IllegalArgumentException {
+		if (name == null || name.equals("")) throw new IllegalArgumentException("Bad name for carmodel!");
+		this.name = name;
 	}
-	
+
 	/**
 	 * Returns a string representation of the car model.
 	 */

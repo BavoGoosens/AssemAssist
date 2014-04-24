@@ -8,7 +8,6 @@ import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
-import businessmodel.scheduler.Scheduler;
 import businessmodel.user.User;
 
 /**
@@ -21,10 +20,6 @@ public class OrderManager implements Subject {
 
 	private ArrayList<Observer> observers;
 	
-	public LinkedList<Order> getPendingOrders(){
-		return this.pendingorders;
-	}
-
 	/**
 	 * A list that holds all the completed orders of a car manufacturing company.
 	 */
@@ -57,24 +52,14 @@ public class OrderManager implements Subject {
 	}
 
 	/**
-	 * A method that adds a new Order.
-	 * 
-	 * @param order
-	 * 		  An Order that needs to be added.
-	 */
-	public void placeOrder(Order order) throws IllegalArgumentException {
-		this.addOrder(order);
-
-	}
-
-	/**
 	 * A method to get the car models of this order manager.
 	 * 
 	 * @return  ArrayList<CarModel> 
 	 * 			this.carmodels
 	 */
+	@SuppressWarnings("unchecked")
 	public ArrayList<CarModel> getCarmodels() {
-		return carmodels;
+		return (ArrayList<CarModel>) carmodels.clone();
 	}
 
 	/**
@@ -83,39 +68,18 @@ public class OrderManager implements Subject {
 	 * @param   order
 	 *          the order that needs to be added.
 	 */
-	public void addOrder(Order order) throws IllegalArgumentException {
+	public void placeOrder(Order order) throws IllegalArgumentException {
 		if (order == null) throw new IllegalArgumentException("Bad order!");
-		order.setTimestamp(this.getScheduler().getCurrentTime());
-		this.setEstimatedCompletionDate(order);
+		order.setTimestampOfOrder(this.getScheduler().getCurrentTime());
+		this.setEstimatedCompletionDateOfOrder(order);
 		if(this.getScheduler().canAddOrder())
 			this.getScheduler().addOrderToSchedule(order);
 		else
 			this.getPendingOrders().add(order);
 	}
 
-	/**
-	 * A method to get the completed orders of this order manager.
-	 * 
-	 * @return  the completed orders of this order manager.
-	 */
-	public LinkedList<Order> getCompletedOrders(){
-		return this.completedorders;
-	}
-
-	/**
-	 * A method to get the completed orders of a given user of this order manager.
-	 * 
-	 * @return  the completed orders of a given user of this order manager.
-	 */
-	public ArrayList<Order> getCompletedOrders(User user) throws IllegalArgumentException, NoClearanceException {
-		if (user == null) throw new IllegalArgumentException("Bad user!");
-		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
-		ArrayList<Order> completedorders = new ArrayList<Order>();
-		for (Order order: this.getCompletedOrders()){
-			if (order.getUser() == user)
-				completedorders.add(order);
-		}
-		return completedorders;
+	protected LinkedList<Order> getPendingOrders(){
+		return this.pendingorders;
 	}
 
 	/**
@@ -137,23 +101,34 @@ public class OrderManager implements Subject {
 	}
 
 	/**
-	 * A method that returns the Scheduler for this OrderManager.
+	 * A method to get the completed orders of this order manager.
 	 * 
-	 * @return	this.scheduler
+	 * @return  the completed orders of this order manager.
 	 */
-	protected Scheduler getScheduler() {
-		return this.scheduler;
+	protected LinkedList<Order> getCompletedOrders(){
+		return this.completedorders;
+	}
+	
+	// for testing
+	@SuppressWarnings("unchecked")
+	public LinkedList<Order> getCompletedOrdersClone(){
+		return (LinkedList<Order>) this.completedorders.clone();
 	}
 
 	/**
-	 * A method that sets the scheduler for this OrderManager.
+	 * A method to get the completed orders of a given user of this order manager.
 	 * 
-	 * @param 	scheduler
-	 * 			The Scheduler this OrderManager uses.
+	 * @return  the completed orders of a given user of this order manager.
 	 */
-	public void setScheduler(Scheduler scheduler) throws IllegalArgumentException {
-		if (scheduler == null) throw new IllegalArgumentException("Bad production scheduler!");
-		this.scheduler = scheduler;
+	protected ArrayList<Order> getCompletedOrders(User user) throws IllegalArgumentException, NoClearanceException {
+		if (user == null) throw new IllegalArgumentException("Bad user!");
+		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
+		ArrayList<Order> completedorders = new ArrayList<Order>();
+		for (Order order: this.getCompletedOrders()){
+			if (order.getUser() == user)
+				completedorders.add(order);
+		}
+		return (ArrayList<Order>) completedorders;
 	}
 
 	/**
@@ -199,46 +174,35 @@ public class OrderManager implements Subject {
 		return res;
 	}
 
-	private LinkedList<Order> getSingleTaskOrdersNextDay() {
-		LinkedList<Order> temp = new LinkedList<Order>();
-
-		for(Order order: this.getPendingOrders()){
-			if(order.getUserEndDate()!= null){
-				if(order.getUserEndDate().getDayOfWeek()-1 == this.getScheduler().getCurrentTime().getDayOfWeek()){
-					int index = this.getPendingOrders().indexOf(order);
-					temp.add(this.getPendingOrders().get(index));
-				}
-			}
-		}
-
-		return temp;
-	}
-
-	private void setCarModels(ArrayList<CarModel> carmodels) throws IllegalArgumentException {
-		if (carmodels == null) throw new IllegalArgumentException("Bad list of car models!");
-		this.carmodels = carmodels;
-	}
-
 	/**
 	 * A method to place an order in front of the pending orders.
 	 * @param order
 	 */
-	public void PlaceOrderInFront(Order order) {
+	public void placeOrderInFront(Order order) {
 		this.getPendingOrders().add(order);		
 	}
 
-	protected void setEstimatedCompletionDate(Order order){
+	/**
+	 * A method that returns the Scheduler for this OrderManager.
+	 * 
+	 * @return	this.scheduler
+	 */
+	public Scheduler getScheduler() {
+		return this.scheduler;
+	}
+
+	protected void setEstimatedCompletionDateOfOrder(Order order){
 		Order previousorder = this.getPreviousOrder(order);
 		if(previousorder != null) {
-			if(previousorder.getEstimateDate() == null){
-				order.setEstimateDate(this.getScheduler().getCurrentTime().plusHours(3));
-			}else if(previousorder.getEstimateDate().getHourOfDay() <= 21){
-				order.setEstimateDate(previousorder.getEstimateDate().plusHours(1));
+			if(previousorder.getEstimatedDeliveryDate() == null){
+				order.setEstimatedDeliveryDateOfOrder(this.getScheduler().getCurrentTime().plusHours(3));
+			}else if(previousorder.getEstimatedDeliveryDate().getHourOfDay() <= 21){
+				order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusHours(1));
 			}else {
-				order.setEstimateDate(previousorder.getEstimateDate().plusDays(1).withHourOfDay(11).withMinuteOfHour(0));
+				order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusDays(1).withHourOfDay(11).withMinuteOfHour(0));
 			}
 		}else{
-			order.setEstimateDate(this.getScheduler().getCurrentTime().plusHours(3));
+			order.setEstimatedDeliveryDateOfOrder(this.getScheduler().getCurrentTime().plusHours(3));
 		}
 	}
 
@@ -262,8 +226,26 @@ public class OrderManager implements Subject {
 			return this.getScheduler().getOrders().getLast();
 	}
 	
-	protected Scheduler getScheduler(){
-		return this.scheduler;
+
+	private void setCarModels(ArrayList<CarModel> carmodels) throws IllegalArgumentException {
+		if (carmodels == null) throw new IllegalArgumentException("Bad list of car models!");
+		this.carmodels = carmodels;
+	}
+
+	private LinkedList<Order> getSingleTaskOrdersNextDay() {
+		LinkedList<Order> temp = new LinkedList<Order>();
+	
+		for(Order order: this.getPendingOrders()){
+			if(order.getUserEndDate()!= null){
+				if(order.getUserEndDate().getDayOfWeek()-1 == this.getScheduler().getCurrentTime().getDayOfWeek()){
+					int index = this.getPendingOrders().indexOf(order);
+					temp.add(this.getPendingOrders().get(index));
+				}
+			}
+		}
+	
+		return temp;
+	}
 
 	@Override
 	public void subscribeObserver(Observer observer) throws IllegalArgumentException {
