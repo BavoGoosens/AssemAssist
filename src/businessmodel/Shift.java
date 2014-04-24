@@ -30,7 +30,7 @@ public abstract class Shift {
 	 * @param 	numberofworkposts
 	 * 			the number of WorkPost's that an AssemblyLine has.
 	 */
-	public Shift(int hours, int numberofworkposts){
+	protected Shift(int hours, int numberofworkposts){
 		this.setNumberOfWorkPosts(numberofworkposts);
 		generateTimeSlots(hours);
 	}

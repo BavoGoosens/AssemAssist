@@ -13,7 +13,7 @@ public abstract class SchedulingAlgorithm {
 	 * Creates a scheduling algorithm with a scheduler.
 	 * @param scheduler
 	 */
-	public SchedulingAlgorithm(Scheduler scheduler){
+	protected SchedulingAlgorithm(Scheduler scheduler){
 		this.setScheduler(scheduler);
 	}
 
@@ -21,7 +21,7 @@ public abstract class SchedulingAlgorithm {
 	 * Method to schedule order. 
 	 * @param order
 	 */
-	public abstract void scheduleOrder(Order order);
+	protected abstract void scheduleOrder(Order order);
 	
 	/**
 	 * Get the scheduler.

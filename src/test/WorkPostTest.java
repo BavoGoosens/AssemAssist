@@ -30,9 +30,9 @@ public class WorkPostTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		
+		CarManufacturingCompany company = new CarManufacturingCompany();
 		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
-		om = new CarManufacturingCompany().getOrderManager();
+		om = company.getOrderManager();
 		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
 		orders = new ArrayList<Order>();
 
@@ -49,7 +49,7 @@ public class WorkPostTest {
 
 		}
 		order = new StandardCarOrder(garageholder, chosen,modelA);
-		om.placeOrder(order);
+		company.placeOrder(order);
 		
 	}
 

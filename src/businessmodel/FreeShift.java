@@ -28,7 +28,7 @@ public class FreeShift extends Shift{
 	 * @param 	nextShift
 	 * 			The next shift.
 	 */
-	public FreeShift(int hours,int numberofworkposts, Shift nextShift) {
+	protected FreeShift(int hours,int numberofworkposts, Shift nextShift) {
 		super(hours, numberofworkposts);
 		this.setNextShift(nextShift);
 	}

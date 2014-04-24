@@ -43,8 +43,8 @@ public class AssemblyLineTest {
 
 	@Before
 	public void setUp() throws Exception {
-		
-		om =new CarManufacturingCompany().getOrderManager();
+		CarManufacturingCompany cmc = new CarManufacturingCompany();
+		om = cmc.getOrderManager();
 		orders = new ArrayList<Order>();
 
 		this.catalog = new Catalog();
@@ -63,22 +63,22 @@ public class AssemblyLineTest {
 		order1 = new StandardCarOrder(new GarageHolder("1", "", ""), chosen, modelA);
 		order2 = new StandardCarOrder(new GarageHolder("2", "", ""), chosen, modelA);
 		order3 = new StandardCarOrder(new GarageHolder("3", "", ""), chosen, modelA);
-		
+
 
 		orders.add(order1);
 		orders.add(order2);
 		orders.add(order3);
-	
+
 
 		for(Order order: orders)
-			om.placeOrder(order);
+			cmc.placeOrder(order);
 
 	}
 
 	@Test
 	public void test() {
 		AssemblyLine testassembly = om.getScheduler().getAssemblyline();
-			
+
 		assertEquals(testassembly.getWorkPosts().get(0).getResponsibleTasksClone().get(0).toString(),"Assembly Car Body");
 
 		for(WorkPost wp1 : om.getScheduler().getAssemblyline().getWorkPosts()){
@@ -87,57 +87,57 @@ public class AssemblyLineTest {
 			else
 				System.out.println("0");
 		} 
-		
+
 		assertEquals(testassembly.getWorkPosts().get(0).getOrder(),orders.get(0));
 		assertEquals(testassembly.getWorkPosts().get(1).getOrder(),null);
 		assertEquals(testassembly.getWorkPosts().get(2).getOrder(),null);
-		
+
 		System.out.println("===========");
 		WorkPost wp = testassembly.getWorkPosts().get(0);
 
 		Iterator<AssemblyTask> iter = cmc.getPendingTasks(wp);
 		List<AssemblyTask> copy = new ArrayList<AssemblyTask>();
 		while (iter.hasNext())
-		    copy.add(iter.next());
+			copy.add(iter.next());
 		for(AssemblyTask assem : copy)
-				cmc.finishTask(assem, 20);
-		
-		
+			cmc.finishTask(assem, 20);
+
+
 		assertEquals(testassembly.getWorkPosts().get(0).getOrder(),orders.get(1));
 		assertEquals(testassembly.getWorkPosts().get(1).getOrder(),orders.get(0));
 		assertEquals(testassembly.getWorkPosts().get(2).getOrder(),null);
-		
+
 		for(WorkPost wp1 : om.getScheduler().getAssemblyline().getWorkPosts()){
 			if(wp1.getOrder()!= null)
 				System.out.println(wp1.getOrder().getUser());
 			else
 				System.out.println("0");
 		}
-		
+
 		wp = testassembly.getWorkPosts().get(0);
-		
+
 		Iterator<AssemblyTask> iter1 = cmc.getPendingTasks(wp);
 		List<AssemblyTask> copy1 = new ArrayList<AssemblyTask>();
 		while (iter1.hasNext())
-		    copy1.add(iter1.next());
+			copy1.add(iter1.next());
 		for(AssemblyTask assem : copy1)
-				cmc.finishTask(assem, 20);
-		
-		
-		
+			cmc.finishTask(assem, 20);
+
+
+
 		wp = testassembly.getWorkPosts().get(1);
 
 		Iterator<AssemblyTask> iter11 = cmc.getPendingTasks(wp);
 		List<AssemblyTask> copy11 = new ArrayList<AssemblyTask>();
 		while (iter11.hasNext())
-		    copy11.add(iter11.next());
+			copy11.add(iter11.next());
 		for(AssemblyTask assem : copy11)
-				cmc.finishTask(assem, 20);
+			cmc.finishTask(assem, 20);
 
 		assertEquals(testassembly.getWorkPosts().get(0).getOrder(),orders.get(2));
 		assertEquals(testassembly.getWorkPosts().get(1).getOrder(),orders.get(1));
 		assertEquals(testassembly.getWorkPosts().get(2).getOrder(),orders.get(0));
-		
+
 		for(int i=0; i < 3; i++){
 			for(WorkPost wp1 : om.getScheduler().getAssemblyline().getWorkPosts()){
 				if(wp1.getOrder()!= null)
@@ -152,9 +152,9 @@ public class AssemblyLineTest {
 				Iterator<AssemblyTask> iter111 = cmc.getPendingTasks(wp1);
 				List<AssemblyTask> copy111 = new ArrayList<AssemblyTask>();
 				while (iter111.hasNext())
-				    copy111.add(iter111.next());
+					copy111.add(iter111.next());
 				for(AssemblyTask assem : copy111)
-						cmc.finishTask(assem, 20);
+					cmc.finishTask(assem, 20);
 			}
 		}
 

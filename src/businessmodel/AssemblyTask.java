@@ -52,7 +52,7 @@ public class AssemblyTask {
 	 * @throws 	IllegalArgumentException
 	 * 
 	 */
-	public AssemblyTask(String name, String descriptionOfActions, CarOptionCategory category, WorkPost workpost) throws IllegalArgumentException {
+	protected AssemblyTask(String name, String descriptionOfActions, CarOptionCategory category, WorkPost workpost) throws IllegalArgumentException {
 		this.setWorkpost(workpost);
 		this.setName(name);
 		this.setCategory(category);
@@ -70,7 +70,7 @@ public class AssemblyTask {
 	 * 			The category for the assembly task.
 	 * @throws 	IllegalArgumentException
 	 */
-	public AssemblyTask(String name, String descriptionOfActions, CarOptionCategory category) throws IllegalArgumentException {
+	protected AssemblyTask(String name, String descriptionOfActions, CarOptionCategory category) throws IllegalArgumentException {
 		this.setName(name);
 		this.setCategory(category);
 		this.setDescription(descriptionOfActions);

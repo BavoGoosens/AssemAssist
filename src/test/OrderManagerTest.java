@@ -3,10 +3,13 @@ package test;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import businessmodel.AssemblyTask;
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Catalog;
@@ -21,6 +24,7 @@ import businessmodel.user.GarageHolder;
 
 public class OrderManagerTest {
 
+	private CarManufacturingCompany cmc;
 	private OrderManager om;
 	private GarageHolder garageholder;
 	private Order order;
@@ -31,7 +35,8 @@ public class OrderManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		om = new CarManufacturingCompany().getOrderManager();
+		cmc = new CarManufacturingCompany();
+		om = cmc.getOrderManager();
 		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
 
 		this.catalog = new Catalog();
@@ -46,7 +51,7 @@ public class OrderManagerTest {
 			}
 		}
 		order = new StandardCarOrder(garageholder, chosen, modelA);
-		om.placeOrder(order);
+		cmc.placeOrder(order);
 	}
 
 	@Test
@@ -54,9 +59,11 @@ public class OrderManagerTest {
 		try {
 			
 			assertTrue(om.getScheduler().getOrdersClone().contains(order));
-			assertTrue(om.getPendingOrders(garageholder).contains(order));
-			om.finishedOrder(order);
-			assertTrue(om.getCompletedOrdersClone().contains(order));
+			Iterator<Order> iter = cmc.getPendingOrders(garageholder);
+			List<Order> copy = new ArrayList<Order>();
+			while (iter.hasNext())
+			    copy.add(iter.next());			
+			assertTrue(copy.contains(order));
 	
 			
 

@@ -28,8 +28,9 @@ public class OrderTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		om = new CarManufacturingCompany().getOrderManager();
+		CarManufacturingCompany cmc = new CarManufacturingCompany();
 		
+		om = cmc.getOrderManager();
 		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
 		
 
@@ -45,7 +46,7 @@ public class OrderTest {
 			}
 
 		}
-		om.placeOrder(new StandardCarOrder(garageholder, chosen, modelA));
+		cmc.placeOrder(new StandardCarOrder(garageholder, chosen, modelA));
 		
 		date = om.getScheduler().getCurrentTime().plusHours(3);
 	}

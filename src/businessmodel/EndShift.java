@@ -20,7 +20,7 @@ public class EndShift extends Shift {
 	 * @param 	numberofworkposts
 	 * 			The number of work posts of the end shift.
 	 */
-	public EndShift(int hours,int numberofworkposts) {
+	protected EndShift(int hours,int numberofworkposts) {
 		super(hours,numberofworkposts);
 	}
 	

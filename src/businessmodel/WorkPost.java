@@ -57,7 +57,7 @@ public class WorkPost {
 	 * 			The tasks this work post is responsible for.
 	 * @throws 	IllegalArgumentException
 	 */
-	public WorkPost(String name, AssemblyLine assemblyline) throws IllegalArgumentException {
+	protected WorkPost(String name, AssemblyLine assemblyline) throws IllegalArgumentException {
 		this.setName(name);
 		this.setAssemblyline(assemblyline);
 		this.responsibleAssemblyTasks = new ArrayList<AssemblyTask>();
@@ -74,7 +74,7 @@ public class WorkPost {
 	 * 			| If the list of responsible tasks is equal to 'null'
 	 * 			| responsibleTasks == null
 	 */
-	public void setResponsibletasks(ArrayList<AssemblyTask> responsibleTasks) throws IllegalArgumentException {
+	protected void setResponsibletasks(ArrayList<AssemblyTask> responsibleTasks) throws IllegalArgumentException {
 		if (responsibleTasks == null) throw new IllegalArgumentException("Bad list of responsible tasks!");
 		for(AssemblyTask assem: responsibleTasks){
 			if(!this.responsibleAssemblyTasks.contains(assem))
@@ -131,7 +131,7 @@ public class WorkPost {
 	 * 			The new order the work post needs to start working on.
 	 * @return	The order the work post was previously working on.
 	 */
-	public Order switchOrders(Order order) {
+	protected Order switchOrders(Order order) {
 		Order temp = this.getOrder();
 		this.setNewOrder(order);
 		return temp;

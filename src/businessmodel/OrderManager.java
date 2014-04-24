@@ -65,13 +65,19 @@ public class OrderManager implements Subject {
 		return (ArrayList<CarModel>) carmodels.clone();
 	}
 
+	// for testing
+	@SuppressWarnings("unchecked")
+	public LinkedList<Order> getCompletedOrdersClone(){
+		return (LinkedList<Order>) this.completedorders.clone();
+	}
+
 	/**
 	 * A method to add an order to this order manager.
 	 * 
 	 * @param   order
 	 *          the order that needs to be added.
 	 */
-	public void placeOrder(Order order) throws IllegalArgumentException {
+	protected void placeOrder(Order order) throws IllegalArgumentException {
 		if (order == null) throw new IllegalArgumentException("Bad order!");
 		order.setTimestampOfOrder(this.getScheduler().getCurrentTime());
 		this.setEstimatedCompletionDateOfOrder(order);
@@ -91,7 +97,7 @@ public class OrderManager implements Subject {
 	 * @return 	ArrayList<Order>
 	 * 			the pending orders of a given user managed by this order manager.
 	 */
-	public ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
+	protected ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
 		if (user == null) throw new IllegalArgumentException("Bad user!");
 		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
 		ArrayList<Order> pendingorders = new ArrayList<Order>();
@@ -112,12 +118,6 @@ public class OrderManager implements Subject {
 		return this.completedorders;
 	}
 	
-	// for testing
-	@SuppressWarnings("unchecked")
-	public LinkedList<Order> getCompletedOrdersClone(){
-		return (LinkedList<Order>) this.completedorders.clone();
-	}
-
 	/**
 	 * A method to get the completed orders of a given user of this order manager.
 	 * 
@@ -140,7 +140,7 @@ public class OrderManager implements Subject {
 	 * @param finished 
 	 * 		  The Order that needs to be moved.
 	 */
-	public void finishedOrder(Order finished) throws IllegalArgumentException {
+	protected void finishedOrder(Order finished) throws IllegalArgumentException {
 		if (finished == null) throw new IllegalArgumentException("Bad order!");
 		this.getCompletedOrders().add(finished);
 		this.notifyObservers();
@@ -155,7 +155,7 @@ public class OrderManager implements Subject {
 	 * @return LinkedList<Order>
 	 * 		   A list with the requested orders.
 	 */
-	public LinkedList<Order> getNbOrders(int nb) {
+	protected LinkedList<Order> getNbOrders(int nb) {
 
 		if (nb < 0) throw new IllegalNumberException(nb, "Bad number!");
 
@@ -181,7 +181,7 @@ public class OrderManager implements Subject {
 	 * A method to place an order in front of the pending orders.
 	 * @param order
 	 */
-	public void placeOrderInFront(Order order) {
+	protected void placeOrderInFront(Order order) {
 		this.getPendingOrders().add(order);		
 	}
 

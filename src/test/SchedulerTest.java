@@ -33,7 +33,8 @@ public class SchedulerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		OrderManager ord = new CarManufacturingCompany().getOrderManager();
+		CarManufacturingCompany cmc = new CarManufacturingCompany();
+		OrderManager ord = cmc.getOrderManager();
 		GarageHolder c1 = new GarageHolder("1","","");
 		GarageHolder c2 = new GarageHolder("2","","");
 		GarageHolder c3 = new GarageHolder("3","","");
@@ -92,26 +93,26 @@ public class SchedulerTest {
 		Order order20 = new SingleTaskOrder(c20,chosen, temp);
 
 
-		ord.placeOrder(order1);
-		ord.placeOrder(order2);
-		ord.placeOrder(order3);
-		ord.placeOrder(order4);
-		ord.placeOrder(order5);
-		ord.placeOrder(order6);
-		ord.placeOrder(order19);
-		ord.placeOrder(order7);
-		ord.placeOrder(order8);
-		ord.placeOrder(order9);
-		ord.placeOrder(order10);
-		ord.placeOrder(order11);
-		ord.placeOrder(order12);
-		ord.placeOrder(order13);
-		ord.placeOrder(order14);
-		ord.placeOrder(order15);
-		ord.placeOrder(order20);
-		ord.placeOrder(order16);
-		ord.placeOrder(order17);
-		ord.placeOrder(order18);
+		cmc.placeOrder(order1);
+		cmc.placeOrder(order2);
+		cmc.placeOrder(order3);
+		cmc.placeOrder(order4);
+		cmc.placeOrder(order5);
+		cmc.placeOrder(order6);
+		cmc.placeOrder(order19);
+		cmc.placeOrder(order7);
+		cmc.placeOrder(order8);
+		cmc.placeOrder(order9);
+		cmc.placeOrder(order10);
+		cmc.placeOrder(order11);
+		cmc.placeOrder(order12);
+		cmc.placeOrder(order13);
+		cmc.placeOrder(order14);
+		cmc.placeOrder(order15);
+		cmc.placeOrder(order20);
+		cmc.placeOrder(order16);
+		cmc.placeOrder(order17);
+		cmc.placeOrder(order18);
 		
 		ord.getScheduler().ScheduleDay();
 		

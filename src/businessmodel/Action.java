@@ -19,7 +19,7 @@ public class Action {
 	 * @param 	description
 	 * 			The description of the new action.
 	 */
-	public Action(String descr) throws IllegalArgumentException {
+	protected Action(String descr) throws IllegalArgumentException {
 		this.setDescription(descr);
 	}
 

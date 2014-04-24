@@ -69,6 +69,50 @@ public class Scheduler implements Subject {
 	}
 
 	/**
+	 * A method to schedule a new day.
+	 * 
+	 * The shift are cleared and new orders are added if possible.
+	 */
+	public void ScheduleDay(){
+		this.dayOrdersCount = 0;
+		this.generateShifts();
+		this.updateCurrentTime();
+		int size = this.getNumberOfOrdersToSchedule();
+		for(Order order: this.getOrdermanager().getNbOrders(size)){
+			this.addOrderToSchedule(order);
+			this.getOrders().add(order);
+		}
+	}
+
+	// for testing
+	@SuppressWarnings("unchecked")
+	/**
+	 * Get a clone of the current orders in the schedule.
+	 * @return a clone of the current orders.
+	 */
+	public LinkedList<Order> getOrdersClone(){
+		return (LinkedList<Order>) this.orders.clone();
+	}
+
+	/**
+	 * Return the AssemblyiLne of this scheduler.
+	 * 
+	 * @return the AssemblyLine of this scheduler.
+	 */
+	public AssemblyLine getAssemblyline() {
+		return assemblyline;
+	}
+
+	/**
+	 * A method to get the current time of this Scheduler.
+	 * 
+	 * @return
+	 */
+	public DateTime getCurrentTime(){
+		return this.currenttime;
+	}
+
+	/**
 	 * Returns true is the AssemblyLine can advance.
 	 * 
 	 * @return true if the AssemblyLine can advance.
@@ -169,50 +213,6 @@ public class Scheduler implements Subject {
 		}else{
 			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");
 		}
-	}
-
-	/**
-	 * A method to schedule a new day.
-	 * 
-	 * The shift are cleared and new orders are added if possible.
-	 */
-	public void ScheduleDay(){
-		this.dayOrdersCount = 0;
-		this.generateShifts();
-		this.updateCurrentTime();
-		int size = this.getNumberOfOrdersToSchedule();
-		for(Order order: this.getOrdermanager().getNbOrders(size)){
-			this.addOrderToSchedule(order);
-			this.getOrders().add(order);
-		}
-	}
-
-	// for testing
-	@SuppressWarnings("unchecked")
-	/**
-	 * Get a clone of the current orders in the schedule.
-	 * @return a clone of the current orders.
-	 */
-	public LinkedList<Order> getOrdersClone(){
-		return (LinkedList<Order>) this.orders.clone();
-	}
-
-	/**
-	 * Return the AssemblyiLne of this scheduler.
-	 * 
-	 * @return the AssemblyLine of this scheduler.
-	 */
-	public AssemblyLine getAssemblyline() {
-		return assemblyline;
-	}
-
-	/**
-	 * A method to get the current time of this Scheduler.
-	 * 
-	 * @return
-	 */
-	public DateTime getCurrentTime(){
-		return this.currenttime;
 	}
 
 	/**

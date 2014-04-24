@@ -38,7 +38,7 @@ public class AssemblyLine implements Subject{
 	/**
 	 * Creates a new assembly line.
 	 */
-	public AssemblyLine(Scheduler scheduler) throws IllegalArgumentException {
+	protected AssemblyLine(Scheduler scheduler) throws IllegalArgumentException {
 		this.setScheduler(scheduler);
 		this.generateWorkPosts();
 	}
@@ -49,7 +49,7 @@ public class AssemblyLine implements Subject{
 	 * 
 	 * @return True if the assembly line can move forward.
 	 */
-	public boolean canAdvance() {
+	protected boolean canAdvance() {
 		for(WorkPost wp : this.getWorkPosts()){
 			boolean ready = wp.isCompleted();
 			if (ready == false)
@@ -67,7 +67,7 @@ public class AssemblyLine implements Subject{
 	 * 			| If the assembly line cannot be advanced.
 	 * 			| !this.canAdvance()
 	 */
-	public void advance(Order neworder) throws IllegalStateException {
+	protected void advance(Order neworder) throws IllegalStateException {
 		if (!this.canAdvance())
 			throw new IllegalStateException("Cannot advance assembly line!");
 		Order temp = neworder;
@@ -94,7 +94,7 @@ public class AssemblyLine implements Subject{
 	 * 
 	 * @return	The number of work posts at the assembly line.
 	 */
-	public int getNumberOfWorkPosts(){
+	protected int getNumberOfWorkPosts(){
 		return this.getWorkPosts().size();
 	}
 
@@ -102,7 +102,7 @@ public class AssemblyLine implements Subject{
 	 * A method to get the time spent working on the current status of the AssemblyLine.
 	 * @return
 	 */
-	public int getTimeCurrentStatus() {
+	protected int getTimeCurrentStatus() {
 		return timeCurrentStatus;
 	}
 

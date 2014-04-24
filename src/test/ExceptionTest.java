@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Catalog;
 import businessmodel.OrderManager;
@@ -27,6 +28,8 @@ public class ExceptionTest {
 
 	@Before
 	public void setUp() throws Exception {
+		CarManufacturingCompany cmc = new CarManufacturingCompany();
+
 		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
 		orderManager = new OrderManager(carmodels);
 		manager = new Manager("bouwe", "ceunen", "bouwe");
@@ -44,7 +47,7 @@ public class ExceptionTest {
 
 		}
 		try{
-		orderManager.placeOrder(new StandardCarOrder(manager, chosen,modelA));
+		cmc.placeOrder(new StandardCarOrder(manager, chosen,modelA));
 		
 		}catch (NoClearanceException ex){
 			assertEquals(ex.getUser(), manager);

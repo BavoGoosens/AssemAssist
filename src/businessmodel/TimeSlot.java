@@ -21,7 +21,7 @@ public class TimeSlot {
 	 * @param	sizeworkposts
 	 * 			the number of workSlots that will be generated.
 	 */
-	public TimeSlot(int sizeworkposts){
+	protected TimeSlot(int sizeworkposts){
 		generateWorkSlots(sizeworkposts);
 	}
 
