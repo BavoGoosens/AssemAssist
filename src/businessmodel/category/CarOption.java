@@ -84,5 +84,12 @@ public class CarOption {
 	public String toString() {
 		return this.getCategory().toString()+": "+this.getName();
 	}
+	
+	@Override
+	public boolean equals(Object carOption) throws IllegalArgumentException {
+		if (carOption == null || !(carOption instanceof CarOption)) throw new IllegalArgumentException("Cannot compare this object: "+carOption+" to a car option!");
+		CarOption option = (CarOption) carOption;
+		return option.getCategory().equals(this.getCategory()) && option.getName().equalsIgnoreCase(this.getName());
+	}
 
 }

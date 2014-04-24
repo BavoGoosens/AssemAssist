@@ -167,7 +167,7 @@ public class GarageHolderView extends View{
 				// try placing the order 
 				// errors get thrown if it does not comply to the restrictions
 				try{
-					validorder = new StandardCarOrder(this.user, chosen);
+					validorder = new StandardCarOrder(this.user, chosen, model);
 				} catch (UnsatisfiedRestrictionException e){
 					String message = e.getMessage();
 					System.out.println("! Your requested selection of car options "

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
+import businessmodel.exceptions.UnsatisfiedRestrictionException;
+import businessmodel.restrictions.RestrictionChecker;
 
 /**
  * This class represents a car model specification.
@@ -84,6 +86,30 @@ public class CarModelSpecification {
 	private void setOptions(ArrayList<CarOption> options) throws IllegalArgumentException {
 		if (options == null) throw new IllegalArgumentException("Bad list of options!");
 		this.options = (ArrayList<CarOption>) options.clone();
+	}
+	
+	public boolean checkRestrictions(Car car) throws IllegalArgumentException, UnsatisfiedRestrictionException {
+		if (car == null) throw new IllegalArgumentException("Bad car!");
+		RestrictionChecker checker = new RestrictionChecker();
+		return this.checkCarModel(car) && checker.check(car.getOptionsClone());
+	}
+	
+	private boolean checkCarModel(Car car) throws IllegalArgumentException, UnsatisfiedRestrictionException {
+		if (car == null) throw new IllegalArgumentException("Bad car!");
+		ArrayList<CarOption> wrongOptions = new ArrayList<CarOption>();
+		for (CarOption option: car.getOptionsClone()) {
+			if (!this.getOptions().contains(option)) {
+				wrongOptions.add(option);
+			}
+		}
+		if (wrongOptions.size() > 0) {
+			String message = "The following options do not belong to the car model you've chosen:\n";
+			for (CarOption option: wrongOptions) {
+				message += "\n- "+option;
+			}
+			throw new UnsatisfiedRestrictionException(message);
+		}
+		return true;
 	}
 }
 

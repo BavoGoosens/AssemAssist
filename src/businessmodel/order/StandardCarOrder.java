@@ -3,6 +3,7 @@ package businessmodel.order;
 import java.util.ArrayList;
 
 import businessmodel.Car;
+import businessmodel.CarModel;
 import businessmodel.category.CarOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
@@ -12,10 +13,11 @@ public class StandardCarOrder extends Order {
 	
 	private Car car;
 	
-	public StandardCarOrder(User user, ArrayList<CarOption> options)
+	public StandardCarOrder(User user, ArrayList<CarOption> options, CarModel model)
 			throws IllegalArgumentException, NoClearanceException, UnsatisfiedRestrictionException {
 		super(user);
-		Car car = new Car(options);
+		Car car = new Car(options, model);
+		model.getCarModelSpecification().checkRestrictions(car);
 		this.setCar(car);
 	}
 	
