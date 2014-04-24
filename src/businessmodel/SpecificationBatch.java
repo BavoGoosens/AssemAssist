@@ -6,16 +6,22 @@ import java.util.LinkedList;
 
 import businessmodel.category.CarOption;
 import businessmodel.order.Order;
-
+/**
+ * A class representing a specification batch scheduling algorithm.
+ * 
+ * @author SWOP team 10 2013-2014
+ *
+ */
 public class SpecificationBatch extends SchedulingAlgorithm {
 
 	private LinkedList<Order> orderList = new LinkedList<Order>();
 	private CarOption option;
 
 	/**
-	 * Creates a specificationbatch algorithm with a scheduler and an option to schedule to options from.
-	 * @param scheduler
-	 * @param option
+	 * Creates a specification batch algorithm with a scheduler and an option to schedule to options from.
+	 * @param 	scheduler
+	 * 			The scheduler of the algorithm.
+	 * @param 	option
 	 */
 	public SpecificationBatch(Scheduler scheduler, CarOption option){
 		super(scheduler);
