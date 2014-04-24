@@ -1,9 +1,10 @@
 package businessmodel.observer;
 
 /**
- * An interface which holds all the methods an Observer needs to implement in order to use the observer design pattern.
+ * An interface which holds all the methods an observer needs to implement in order 
+ * to use the observer design pattern.
  *  
- * @author Seal team 10
+ * @author SWOP team 10 2013-2014
  *
  */
 public interface Observer {
