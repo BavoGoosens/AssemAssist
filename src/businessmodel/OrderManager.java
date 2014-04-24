@@ -173,7 +173,7 @@ public class OrderManager implements Subject {
 	 * A method to place an order in front of the pending orders.
 	 * @param order
 	 */
-	public void PlaceOrderInFront(Order order) {
+	public void placeOrderInFront(Order order) {
 		this.getPendingOrders().add(order);		
 	}
 

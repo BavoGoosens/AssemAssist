@@ -9,8 +9,8 @@ public class StatisticsManager {
 	private OrderStatistics orderStatistics;
 	
 	public StatisticsManager(OrderManager ordermanager){
-		this.carStatistics = new CarStatistics(ordermanager);
-		this.orderStatistics = new OrderStatistics(ordermanager.getScheduler());
+		this.carStatistics = new CarStatistics(ordermanager.getScheduler());
+		this.orderStatistics = new OrderStatistics(ordermanager);
 	}
 	
 	public CarStatistics getCarStatistics() {
