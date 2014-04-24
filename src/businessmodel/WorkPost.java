@@ -41,7 +41,7 @@ public class WorkPost {
 	/**
 	 * The time was spent working of this workPost for the current order.
 	 */
-	private int time_order_in_process;
+	private int timeOrderInProcess;
 
 	/**
 	 * The AssemblyLine that this WorkPost is a part of.
@@ -105,7 +105,7 @@ public class WorkPost {
 	}
 
 	/**
-	 * This method returns the name of the work post.
+	 * Returns the name of the work post.
 	 * 
 	 * @return	The name of the work post.
 	 */
@@ -172,11 +172,11 @@ public class WorkPost {
 		}
 		return result;
 	}
-
+	
 	protected void AssemblyTaskCompleted(AssemblyTask assem, int time) {
 		this.getPendingTasks().remove(assem);
 		this.finishedTasks.add(assem);
-		this.setTime_order_in_process(this.getTime_order_in_process()+time);
+		this.setTimeOrderInProcess(this.getTimeOrderInProcess()+time);
 		this.getAssemblyline().notifyObservers();
 		this.notifyAssemBlyLine();
 	}
@@ -188,7 +188,7 @@ public class WorkPost {
 				completed = false;
 		}
 		if(completed){
-			this.getAssemblyline().WorkPostCompleted(this.getTime_order_in_process());
+			this.getAssemblyline().workPostCompleted(this.getTimeOrderInProcess());
 		}
 	}
 
@@ -204,7 +204,7 @@ public class WorkPost {
 	 */
 	protected void setNewOrder(Order order) {
 		this.setOrder(order);
-		this.time_order_in_process = 0;
+		this.timeOrderInProcess = 0;
 		this.getFinishedTasks().clear();
 		this.refreshAssemblyTasks();
 	}
@@ -220,12 +220,12 @@ public class WorkPost {
 		}
 	}
 
-	private int getTime_order_in_process() {
-		return time_order_in_process;
+	private int getTimeOrderInProcess() {
+		return timeOrderInProcess;
 	}
 
-	private void setTime_order_in_process(int time){
-		this.time_order_in_process = time;
+	private void setTimeOrderInProcess(int time){
+		this.timeOrderInProcess = time;
 	}
 
 
@@ -277,6 +277,9 @@ public class WorkPost {
 		this.assemblyline = assemblyline;
 	}
 
+	/**
+	 * Returns a string representation of the work post.
+	 */
 	@Override
 	public String toString(){
 		return this.getName();

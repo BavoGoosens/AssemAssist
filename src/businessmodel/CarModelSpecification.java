@@ -89,12 +89,16 @@ public class CarModelSpecification {
 	}
 	
 	/**
-	 * Method to check whether the restrictions for a car model are satisfied.
+	 * Checks whether the restrictions for a car are satisfied.
 	 * 
-	 * @param car
-	 * @return
-	 * @throws IllegalArgumentException
-	 * @throws UnsatisfiedRestrictionException
+	 * @param 	car
+	 * 			The car that needs to be checked.
+	 * @return	True if the car doesn't violate any restrictions.
+	 * @throws 	IllegalArgumentException
+	 * 			| If the car is equal to 'null'	
+	 * 			| car == null
+	 * @throws 	UnsatisfiedRestrictionException
+	 * 			| If the car violates any of of the restrictions.
 	 */
 	public boolean checkRestrictions(Car car) throws IllegalArgumentException, UnsatisfiedRestrictionException {
 		if (car == null) throw new IllegalArgumentException("Bad car!");

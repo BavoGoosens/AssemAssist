@@ -21,12 +21,12 @@ public class AssemblyLine implements Subject{
 	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
 
 	/**
-	 * The time spent working on the current status of the AssemblyLine.
+	 * The time spent working on the current status of the assembly line.
 	 */
 	private int timeCurrentStatus = 0;
 
 	/**
-	 * Scheduler.
+	 * The scheduler of the assembly line.
 	 */
 	private Scheduler scheduler;
 		
@@ -107,10 +107,12 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
-	 * A method when a work post is completed.
-	 * @param timeCurrentStatus
+	 * Updates the work post and the scheduler with the current status.
+	 * 
+	 * @param 	timeCurrentStatus
+	 * 			The current status.		
 	 */
-	protected void WorkPostCompleted(int timeCurrentStatus) {
+	protected void workPostCompleted(int timeCurrentStatus) {
 		if(timeCurrentStatus > this.timeCurrentStatus)
 			this.timeCurrentStatus = timeCurrentStatus;
 		this.notifyScheduler();
@@ -132,7 +134,7 @@ public class AssemblyLine implements Subject{
 
 
 	/**
-	 * A method to notify the scheduler if a work post is completed, if all work posts are completed the assembly line advances.
+	 * Notifies the scheduler if a work post is completed, if all work posts are completed the assembly line advances.
 	 */
 	private void notifyScheduler(){
 		boolean completed = true;
@@ -145,7 +147,7 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
-	 * A method to generate the work posts?.
+	 * Generates work posts.
 	 */
 	private void generateWorkPosts(){
 		WorkPost post1 = new WorkPost("Car Body Post", this);

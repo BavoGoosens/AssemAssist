@@ -91,16 +91,16 @@ public class Catalog {
 	}
 
 	/**
-	 * Get the factories.
-	 * @return the factories
+	 * Returns the factories.
+	 * @return The factories in the catalog.
 	 */
 	private ArrayList<CarModelFactory> getFactories() {
 		return this.factories;
 	}
 	
 	/**
-	 * Get the available car models.
-	 * @return the available car models
+	 * Returns the available car models.
+	 * @return The available car models in the catalog.
 	 */
 	private ArrayList<CarModel> getAvailableModels() {
 		return this.availableModels;

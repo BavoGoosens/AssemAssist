@@ -26,7 +26,7 @@ public class Car {
 	 * @throws	IllegalArgumentException
 	 * @throws 	UnsatisfiedRestrictionException 
 	 */
-	public Car(ArrayList<CarOption> options) throws IllegalArgumentException, UnsatisfiedRestrictionException {
+	public Car(ArrayList<CarOption> options) throws IllegalArgumentException {
 		this.setOptions(options);
 	}
 

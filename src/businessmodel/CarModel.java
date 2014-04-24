@@ -25,7 +25,7 @@ public class CarModel {
 	private CarModelSpecification cms;
 	
 	/**
-	 * 
+	 * The standard time to finish this car model.
 	 */
 	private Period standardTimeToFinish;
 
@@ -36,6 +36,8 @@ public class CarModel {
 	 *          The name for the new car model.
 	 * @param   cms
 	 *          The car model specification for the car new model.
+	 * @param	standardTimeToFinish
+	 * 			The standard time to finish this car model.
 	 * @throws	IllegalArgumentException
 	 * 
 	 */
@@ -48,10 +50,14 @@ public class CarModel {
 	}
 	
 	/**
-	 * Creates a new car model with a name and a car model specification.
-	 * @param name
-	 * @param cms
-	 * @throws IllegalArgumentException
+	 * Creates a new car model with a given name, car model specification.
+	 * 
+	 * @param   name
+	 *          The name for the new car model.
+	 * @param   cms
+	 *          The car model specification for the car new model.
+	 * @throws	IllegalArgumentException
+	 * 
 	 */
 	public CarModel(String name, CarModelSpecification cms) throws IllegalArgumentException {
 		this.setCarmodel(name);
@@ -79,8 +85,9 @@ public class CarModel {
 	}
 	
 	/**
-	 * Method to get the standar time to finish.
-	 * @return standard time to finish
+	 * Returns the standard time to finish this car model.
+	 * 
+	 * @return The standard time to finish.
 	 */
 	public Period getStandardTimeToFinish() {
 		return this.standardTimeToFinish;
@@ -125,9 +132,10 @@ public class CarModel {
 	
 	/**
 	 * Method to set the standard time to finish.
+	 * 
 	 * @param standardTimeToFinish
 	 */
-	private void setStandardTimeToFinish(Period standardTimeToFinish) {
+	private void setStandardTimeToFinish(Period standardTimeToFinish) throws IllegalArgumentException {
 		if (standardTimeToFinish == null) throw new IllegalArgumentException("Bad standard time to finish!");
 		this.standardTimeToFinish = standardTimeToFinish;
 	}
