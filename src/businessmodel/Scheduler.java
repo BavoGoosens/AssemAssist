@@ -118,10 +118,6 @@ public class Scheduler implements Subject {
 		}
 	}
 
-	protected LinkedList<Order> getOrders() {
-		return this.orders;
-	}
-
 	// for testing
 	@SuppressWarnings("unchecked")
 	public LinkedList<Order> getOrdersClone(){
@@ -134,6 +130,10 @@ public class Scheduler implements Subject {
 
 	public DateTime getCurrentTime(){
 		return this.currenttime;
+	}
+
+	protected LinkedList<Order> getOrders() {
+		return this.orders;
 	}
 
 	protected LinkedList<Shift> getShifts() {

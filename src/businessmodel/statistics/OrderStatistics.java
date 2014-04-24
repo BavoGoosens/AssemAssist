@@ -40,8 +40,6 @@ public class OrderStatistics implements Observer {
 		return this.median;
 	}
 	
-	
-	
 	public ArrayList<Tuple<Order, Integer>> getLastDays(int number_of_days) {
 		if (this.finishedOrders.size() > number_of_days){
 			ArrayList<Tuple<Order, Integer>> result = new ArrayList<Tuple<Order, Integer>>(number_of_days);
