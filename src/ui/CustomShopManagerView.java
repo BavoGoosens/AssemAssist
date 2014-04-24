@@ -86,6 +86,7 @@ public class CustomShopManagerView extends View {
 				System.out.println("> Your order has been placed :)");
 			} catch (IllegalArgumentException | NoClearanceException
 					| UnsatisfiedRestrictionException e) {
+				System.out.println("! " + e.getMessage());
 				this.error();
 			}
 
