@@ -21,7 +21,7 @@ public class CatalogTest {
 		Catalog catalog = new Catalog();
 		ArrayList<CarOptionCategory> categories = catalog.getAllCategories();
 		for (CarOptionCategory category: categories) {
-			System.out.println(category);
+//			System.out.println(category);
 		}
 	}
 	
@@ -30,7 +30,7 @@ public class CatalogTest {
 		Catalog catalog = new Catalog();
 		ArrayList<CarModel> models = catalog.getAvailaleModelsClone();
 		for (CarModel model: models) {
-			System.out.println(model);
+//			System.out.println(model);
 		}
 	}
 

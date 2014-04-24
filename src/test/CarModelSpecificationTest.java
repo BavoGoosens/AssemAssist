@@ -31,9 +31,9 @@ public class CarModelSpecificationTest {
 		for (CarOptionCategory category: inventory.getAllCategories()) {
 			options.addAll(modelASpec.getOptionsOfCategory(category));
 		}
-		System.out.println("Model A:");
+//		System.out.println("Model A:");
 		for (CarOption option: options) {
-			System.out.println("-: "+option);
+//			System.out.println("-: "+option);
 		}
 	}
 

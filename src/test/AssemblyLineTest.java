@@ -82,17 +82,17 @@ public class AssemblyLineTest {
 		assertEquals(testassembly.getWorkPosts().get(0).getResponsibleTasksClone().get(0).toString(),"Assembly Car Body");
 
 		for(WorkPost wp1 : om.getScheduler().getAssemblyline().getWorkPosts()){
-			if(wp1.getOrder()!= null)
-				System.out.println(wp1.getOrder().getUser());
-			else
-				System.out.println("0");
+			if(wp1.getOrder()!= null);
+//				System.out.println(wp1.getOrder().getUser());
+			else;
+//				System.out.println("0");
 		} 
 
 		assertEquals(testassembly.getWorkPosts().get(0).getOrder(),orders.get(0));
 		assertEquals(testassembly.getWorkPosts().get(1).getOrder(),null);
 		assertEquals(testassembly.getWorkPosts().get(2).getOrder(),null);
 
-		System.out.println("===========");
+//		System.out.println("===========");
 		WorkPost wp = testassembly.getWorkPosts().get(0);
 
 		Iterator<AssemblyTask> iter = cmc.getPendingTasks(wp);
@@ -108,10 +108,10 @@ public class AssemblyLineTest {
 		assertEquals(testassembly.getWorkPosts().get(2).getOrder(),null);
 
 		for(WorkPost wp1 : om.getScheduler().getAssemblyline().getWorkPosts()){
-			if(wp1.getOrder()!= null)
-				System.out.println(wp1.getOrder().getUser());
-			else
-				System.out.println("0");
+			if(wp1.getOrder()!= null);
+//				System.out.println(wp1.getOrder().getUser());
+			else;
+//				System.out.println("0");
 		}
 
 		wp = testassembly.getWorkPosts().get(0);
@@ -140,12 +140,12 @@ public class AssemblyLineTest {
 
 		for(int i=0; i < 3; i++){
 			for(WorkPost wp1 : om.getScheduler().getAssemblyline().getWorkPosts()){
-				if(wp1.getOrder()!= null)
-					System.out.println(wp1.getOrder().getUser());
-				else
-					System.out.println("0");
+				if(wp1.getOrder()!= null);
+//					System.out.println(wp1.getOrder().getUser());
+				else;
+//					System.out.println("0");
 			}
-			System.out.println("=====");
+//			System.out.println("=====");
 
 			for(WorkPost wp1: testassembly.getWorkPosts()){
 

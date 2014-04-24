@@ -56,12 +56,12 @@ public class RestrictionTest {
 				}
 			}
 		}
-		System.out.println("\nChosen options: "+chosen+"\n");
+//		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
 			new StandardCarOrder(gh, chosen, modelA);
-			System.out.println("Success!");
+//			System.out.println("Success!");
 		} catch (UnsatisfiedRestrictionException e) {
-			System.out.println(e.getMessage());
+//			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -85,12 +85,12 @@ public class RestrictionTest {
 				chosen.add(options.get(0));
 			}
 		}
-		System.out.println("\nChosen options: "+chosen+"\n");
+//		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
 			new StandardCarOrder(gh, chosen, modelB);
-			System.out.println("Success!");
+//			System.out.println("Success!");
 		} catch (UnsatisfiedRestrictionException e) {
-			System.out.println(e.getMessage());
+//			System.out.println(e.getMessage());
 		}
 	} 
 	
@@ -119,12 +119,12 @@ public class RestrictionTest {
 				chosen.add(options.get(0));
 			}
 		}
-		System.out.println("\nChosen options: "+chosen+"\n");
+//		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
 			new StandardCarOrder(gh, chosen, modelB);
-			System.out.println("Success!");
+//			System.out.println("Success!");
 		} catch (UnsatisfiedRestrictionException e) {
-			System.out.println(e.getMessage());
+//			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -155,12 +155,12 @@ public class RestrictionTest {
 				chosen.add(options.get(0));
 			}
 		}
-		System.out.println("\nChosen options: "+chosen+"\n");
+//		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
 			new StandardCarOrder(gh, chosen, modelC);
-			System.out.println("Success!");
+//			System.out.println("Success!");
 		} catch (UnsatisfiedRestrictionException e) {
-			System.out.println(e.getMessage());
+//			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -179,12 +179,12 @@ public class RestrictionTest {
 				get(modelC.getCarModelSpecification().getOptionsClone().size()-1));
 		chosen.add(modelC.getCarModelSpecification().getOptionsClone().
 				get(modelC.getCarModelSpecification().getOptionsClone().size()-1));
-		System.out.println("\nChosen options: "+chosen+"\n");
+//		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
 			new StandardCarOrder(gh, chosen, modelC);
-			System.out.println("Success!");
+//			System.out.println("Success!");
 		} catch (UnsatisfiedRestrictionException e) {
-			System.out.println(e.getMessage());
+//			System.out.println(e.getMessage());
 		}
 	}
 	

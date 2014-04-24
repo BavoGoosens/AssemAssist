@@ -103,8 +103,8 @@ public class BatchAlgorithmTest {
 			
 			//----------------------------------------------------------------------------------
 			
-			for(CarOption option : orderManager.getScheduler().getUnscheduledCarOptions(3))
-				System.out.println(option);
+//			for(CarOption option : orderManager.getScheduler().getUnscheduledCarOptions(3))
+//				System.out.println(option);
 			
 			cmc.changeAlgorithm("sb",  new CarOption("medium engine",new Engine()));
 			try{
@@ -114,8 +114,8 @@ public class BatchAlgorithmTest {
 			}
 			orderManager.getScheduler().ScheduleDay();
 
-			for(Order order: orderManager.getScheduler().getOrdersClone())
-				System.out.println(order.toString());
+//			for(Order order: orderManager.getScheduler().getOrdersClone())
+//				System.out.println(order.toString());
 			
 			assertEquals(orderManager.getScheduler().getOrdersClone().get(0),order2);
 			assertEquals(orderManager.getScheduler().getOrdersClone().get(1),order3);
