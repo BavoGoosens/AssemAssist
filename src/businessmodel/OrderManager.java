@@ -104,7 +104,7 @@ public class OrderManager implements Subject {
 	 * 
 	 * @return  the completed orders of this order manager.
 	 */
-	public LinkedList<Order> getCompletedOrders(){
+	protected LinkedList<Order> getCompletedOrders(){
 		return this.completedorders;
 	}
 
@@ -130,7 +130,6 @@ public class OrderManager implements Subject {
 	 * @param finished 
 	 * 		  The Order that needs to be moved.
 	 */
-	//TODO deze 3 methodes public of?? 
 	public void finishedOrder(Order finished) throws IllegalArgumentException {
 		if (finished == null) throw new IllegalArgumentException("Bad order!");
 		this.getCompletedOrders().add(finished);
