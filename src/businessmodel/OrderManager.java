@@ -57,6 +57,7 @@ public class OrderManager implements Subject {
 	 * @return  ArrayList<CarModel> 
 	 * 			this.carmodels
 	 */
+	@SuppressWarnings("unchecked")
 	public ArrayList<CarModel> getCarmodels() {
 		return (ArrayList<CarModel>) carmodels.clone();
 	}
@@ -106,6 +107,12 @@ public class OrderManager implements Subject {
 	 */
 	protected LinkedList<Order> getCompletedOrders(){
 		return this.completedorders;
+	}
+	
+	// for testing
+	@SuppressWarnings("unchecked")
+	public LinkedList<Order> getCompletedOrdersClone(){
+		return (LinkedList<Order>) this.completedorders.clone();
 	}
 
 	/**
