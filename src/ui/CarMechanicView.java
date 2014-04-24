@@ -40,7 +40,7 @@ public class CarMechanicView extends View {
 			System.out.println("> " + num++ + ") " + wp.toString());
 		System.out.print(">> ");
 		String response = this.scan.nextLine();
-		Pattern pattern = Pattern.compile("^\\d*$");
+		Pattern pattern = Pattern.compile("^\\d+$");
 		this.check(response);
 		if (response.equalsIgnoreCase("status")){
 			View view = new AssemblyLineStatusView(this.getModel(), this.user);
@@ -72,7 +72,7 @@ public class CarMechanicView extends View {
 		System.out.print(">> ");
 		String response = this.scan.nextLine();
 		this.check(response);
-		Pattern pattern = Pattern.compile("^\\d*$");
+		Pattern pattern = Pattern.compile("^\\d+$");
 		if (pattern.matcher(response).find()){
 			int choice = Integer.parseInt(response);
 			if (choice < 1 || choice > tasks.size()){
@@ -94,7 +94,7 @@ public class CarMechanicView extends View {
 		System.out.print(">> ");
 		String response = this.scan.nextLine();
 		this.check(response);
-		Pattern pattern = Pattern.compile("^\\d*$");
+		Pattern pattern = Pattern.compile("^\\d+$");
 		if (pattern.matcher(response).find()){
 			int time = Integer.parseInt(response);
 			this.controller.finishTask(assemblyTask, time);
