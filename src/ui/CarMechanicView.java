@@ -61,6 +61,10 @@ public class CarMechanicView extends View {
 		ArrayList<AssemblyTask> tasks = new ArrayList<>();
 		while (taskss.hasNext())
 			tasks.add(taskss.next());
+		if (tasks.isEmpty()){
+			System.out.println("> There are no pending tasks here wow");
+			this.display();
+		}
 		System.out.println("> Please enter the number of the task you want to perform: ");
 		int num  = 1;
 		for (AssemblyTask ass : tasks)
