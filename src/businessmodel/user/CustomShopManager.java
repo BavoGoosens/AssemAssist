@@ -27,4 +27,9 @@ public class CustomShopManager extends User {
 	public boolean canOrderSingleTask(){
 		return true;
 	}
+	
+	@Override
+	public boolean canPlaceOrder(){
+		return true;
+	}
 }
