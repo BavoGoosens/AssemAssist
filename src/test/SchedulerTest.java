@@ -116,24 +116,5 @@ public class SchedulerTest {
 		ord.getScheduler().ScheduleDay();
 		
 		assertEquals(ord.getScheduler().getOrdersClone().get(0),order1);
-
-		try{
-		ord.getScheduler().advance(-1);
-		}catch(IllegalNumberException ex){
-			ex.getNumber();
-			ex.getMessage();
-		}
-
-	
-
-
-
 	}
-
-	@Test
-	public void test() {
-		
-			
-	}
-
 }

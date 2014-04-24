@@ -15,6 +15,8 @@ import businessmodel.order.Order;
 
 /**
  * A Class that represents a scheduler for an AssymblyLine.
+ * It makes a schedule for the assemblyLine.
+ * When the schedule has been complete a new day schedule is created
  * @author SWOP team 10
  *
  */
@@ -29,15 +31,22 @@ public class Scheduler implements Subject {
 	private int delay;
 
 	private DateTime currenttime;
-	
+
 	private OrderManager ordermanager;
 
 	private AssemblyLine assemblyline;
 
 	private ArrayList<Observer> observers;
-	
+
 	private int dayOrdersCount = 0;
 
+	/**
+	 * A new new Scheduler is created.
+	 * Shifts are created and the standard algorithm is set.
+	 * 
+	 * @param 	ordermanager
+	 * 			the OrderManager from this scheduler.
+	 */
 	protected Scheduler(OrderManager ordermanager){
 		this.shifts = new LinkedList<Shift>();
 		this.orders = new LinkedList<Order>();
@@ -51,16 +60,33 @@ public class Scheduler implements Subject {
 		this.setDelay(0);
 		this.generateShifts();
 	}
-	
+
+	/**
+	 *Get the number of orders that has been scheduled so far for this day.
+	 */
 	public int getDayOrdersCount() {
 		return this.dayOrdersCount;
 	}
 
-	public boolean canAdvance(){
+	/**
+	 * Returns true is the AssemblyLine can advance.
+	 * 
+	 * @return true if the AssemblyLine can advance.
+	 */
+	protected boolean canAdvance(){
 		return this.getAssemblyline().canAdvance();
 	}
 
-	public void advance(int time) throws IllegalNumberException{
+	/**
+	 * The AssemblyLine is advanced.
+	 * The delay is updated and the estimated time is updated.
+	 * 
+	 * @param 	time
+	 * 			the time spent on last AssemblyLine status.
+	 * @throws 	IllegalNumberException
+	 * 			if(time < 0)
+	 */
+	protected void advance(int time) throws IllegalNumberException{
 		if (time < 0) throw new IllegalNumberException("Bad time!");
 		int delay = time - 60;
 		this.currenttime = this.getCurrentTime().plusMinutes(time);
@@ -75,7 +101,12 @@ public class Scheduler implements Subject {
 		}
 	}
 
-	public boolean canAddOrder(){
+	/**
+	 * Returns true if an order can be added to the current day.
+	 * 
+	 * @return true if an order can be added.
+	 */
+	protected boolean canAddOrder(){
 		int count = 0;
 		for(Shift shift: this.getShifts())
 			count += shift.getTimeSlots().size();
@@ -83,7 +114,14 @@ public class Scheduler implements Subject {
 		return this.getOrders().size() < count;
 	}
 
-	public void addOrderToSchedule(Order order){
+	/**
+	 * Add this order to the schedule of this day.
+	 * the timestamp of this order is set. This is the time that the order is scheduled.
+	 * If it is the first order it will be placed on the AssemblyLine.
+	 * @param 	order
+	 * 			the order that needs to be added.
+	 */
+	protected void addOrderToSchedule(Order order){
 		this.getAlgo().scheduleOrder(order);
 		order.setTimestampOfOrder(this.getCurrentTime());
 		this.getOrders().add(order);
@@ -96,11 +134,27 @@ public class Scheduler implements Subject {
 			this.updateAssemblylineStatus();
 	}
 
-	public int getNumberOfOrdersToSchedule() {
+	/**
+	 * returns the amount  of orders that can be scheduled for this day
+	 * 
+	 * @return the number of order that can be scheduled.
+	 */
+	protected int getNumberOfOrdersToSchedule() {
 		return this.getShifts().size()*this.getShifts().getFirst().getTimeSlots().size()-(this.getAssemblyline().getNumberOfWorkPosts()-1);
 	}
 
-	public void changeAlgorithm(String algoname, CarOption option) throws IllegalSchedulingAlgorithmException, IllegalArgumentException{
+	/**
+	 * A method to change the current algorithm.
+	 * 
+	 * @param 	algoname
+	 * 			the name of the new algorithm.
+	 * @param 	option
+	 * 			
+	 * @throws 	IllegalSchedulingAlgorithmException
+	 * 
+	 * @throws 	IllegalArgumentException
+	 */
+	protected void changeAlgorithm(String algoname, CarOption option) throws IllegalSchedulingAlgorithmException, IllegalArgumentException{
 
 		if (algoname == null){
 			throw new NullPointerException("No scheduling algorithm supplied");
@@ -110,13 +164,18 @@ public class Scheduler implements Subject {
 
 			if (option == null) throw new IllegalArgumentException("No such option");
 			if (!this.checkOptionsForSpecificationBatch(option)) throw new IllegalArgumentException("Too little orders with that option ( less than 3 )");
-			
+
 			this.algortime = new SpecificationBatch(this,option);
 		}else{
 			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");
 		}
 	}
 
+	/**
+	 * A method to schedule a new day.
+	 * 
+	 * The shift are cleared and new orders are added if possible.
+	 */
 	public void ScheduleDay(){
 		this.dayOrdersCount = 0;
 		this.generateShifts();
@@ -130,26 +189,56 @@ public class Scheduler implements Subject {
 
 	// for testing
 	@SuppressWarnings("unchecked")
+	/**
+	 * Get a clone of the current orders in the schedule.
+	 * @return a clone of the current orders.
+	 */
 	public LinkedList<Order> getOrdersClone(){
 		return (LinkedList<Order>) this.orders.clone();
 	}
 
+	/**
+	 * Return the AssemblyiLne of this scheduler.
+	 * 
+	 * @return the AssemblyLine of this scheduler.
+	 */
 	public AssemblyLine getAssemblyline() {
 		return assemblyline;
 	}
 
+	/**
+	 * A method to get the current time of this Scheduler.
+	 * 
+	 * @return
+	 */
 	public DateTime getCurrentTime(){
 		return this.currenttime;
 	}
 
+	/**
+	 * Returns the current orders of this scheduler.
+	 * 
+	 * @return
+	 */
 	protected LinkedList<Order> getOrders() {
 		return this.orders;
 	}
-
+	/**
+	 * Returns the shifts of this scheduler.
+	 * 
+	 * @return the shift of this scheduler.
+	 */
 	protected LinkedList<Shift> getShifts() {
 		return this.shifts;
 	}
 
+	/** 
+	 * A method to get the previous order that had been scheduled.
+	 * 
+	 * @param 	order
+	 * 			the current order.
+	 * @return	the previous order
+	 */
 	protected Order getPreviousOrder(Order order){
 		int index = this.getOrders().indexOf(order);
 		if(index-1 < 0)
@@ -158,14 +247,31 @@ public class Scheduler implements Subject {
 			return this.getOrders().get(index-1);
 	}
 
+	/**
+	 * A method that returns the current delay of this day scheduler.
+	 * 
+	 * @return
+	 */
 	protected int getDelay() {
 		return delay;
 	}
 
+	/**
+	 * A method that returns the OrderManager of this Scheduler.
+	 * 
+	 * @return
+	 */
 	protected OrderManager getOrdermanager() {
 		return this.ordermanager;
 	}
 
+	/**
+	 * Returns the next shift of the given shift.
+	 * 
+	 * @param 	shift
+	 * 			the shift you want the next shift from.
+	 * @return	the next shift
+	 */
 	protected Shift getNextShift(Shift shift){
 		int index = this.getShifts().indexOf(shift);
 		if(index + 1 >= this.getShifts().size() || this.getShifts().size() < 0)
@@ -174,9 +280,15 @@ public class Scheduler implements Subject {
 			return this.getShifts().get(index+1);
 	}
 
+	/**
+	 * Returns the next order that needs to be scheduled.
+	 * 
+	 * @return
+	 */
 	protected Order getNextOrderToSchedule(){
 		return this.getOrdermanager().getPendingOrders().poll();
 	}
+
 
 	private void updateCompletedOrders(){
 		if(this.getOrders().peekFirst()!= null && this.getOrders().peekFirst().isCompleted()){
@@ -273,7 +385,7 @@ public class Scheduler implements Subject {
 		return true;
 
 	}
-	
+
 	private void setOrdermanager(OrderManager ordermanager) throws IllegalArgumentException{
 		if(ordermanager == null)
 			throw new IllegalArgumentException("Not an ordermanager");

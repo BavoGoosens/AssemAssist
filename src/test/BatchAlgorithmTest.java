@@ -108,7 +108,7 @@ public class BatchAlgorithmTest {
 			
 			cmc.changeAlgorithm("sb",  new CarOption("medium engine",new Engine()));
 			try{
-				orderManager.getScheduler().changeAlgorithm("dsfsf",  new CarOption("medium engine",new Engine()));
+				cmc.changeAlgorithm("dsfsf",  new CarOption("medium engine",new Engine()));
 			}catch(IllegalSchedulingAlgorithmException ex){
 				ex.getMessage();
 			}
