@@ -20,11 +20,19 @@ public class AssemblyLine implements Subject{
 	 */
 	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
 
-	
+	/**
+	 * The time spent working on the current status of the AssemblyLine.
+	 */
 	private int timeCurrentStatus = 0;
-	
+
+	/**
+	 * Scheduler.
+	 */
 	private Scheduler scheduler;
 		
+	/**
+	 * List of observers who have subscribed to changes from the assembly line.
+	 */
 	private ArrayList<Observer> subscribers = new ArrayList<Observer>();
 
 	/**
@@ -98,6 +106,10 @@ public class AssemblyLine implements Subject{
 		return timeCurrentStatus;
 	}
 
+	/**
+	 * A method when a work post is completed.
+	 * @param timeCurrentStatus
+	 */
 	protected void WorkPostCompleted(int timeCurrentStatus) {
 		if(timeCurrentStatus > this.timeCurrentStatus)
 			this.timeCurrentStatus = timeCurrentStatus;
@@ -119,6 +131,9 @@ public class AssemblyLine implements Subject{
 	}
 
 
+	/**
+	 * A method to notify the scheduler if a work post is completed, if all work posts are completed the assembly line advances.
+	 */
 	private void notifyScheduler(){
 		boolean completed = true;
 		for(WorkPost wp: this.getWorkPosts()){
@@ -129,6 +144,9 @@ public class AssemblyLine implements Subject{
 			this.getScheduler().advance(this.timeCurrentStatus);
 	}
 
+	/**
+	 * A method to generate the work posts?.
+	 */
 	private void generateWorkPosts(){
 		WorkPost post1 = new WorkPost("Car Body Post", this);
 		WorkPost post2 = new WorkPost("Drivetrain Post", this);

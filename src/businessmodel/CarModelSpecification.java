@@ -88,12 +88,28 @@ public class CarModelSpecification {
 		this.options = (ArrayList<CarOption>) options.clone();
 	}
 	
+	/**
+	 * Method to check whether the restrictions for a car model are satisfied.
+	 * 
+	 * @param car
+	 * @return
+	 * @throws IllegalArgumentException
+	 * @throws UnsatisfiedRestrictionException
+	 */
 	public boolean checkRestrictions(Car car) throws IllegalArgumentException, UnsatisfiedRestrictionException {
 		if (car == null) throw new IllegalArgumentException("Bad car!");
 		RestrictionChecker checker = new RestrictionChecker();
 		return this.checkCarModel(car) && checker.check(car.getOptionsClone());
 	}
 	
+	/**
+	 * Method to check if a car model is valid.
+	 * 
+	 * @param car
+	 * @return
+	 * @throws IllegalArgumentException
+	 * @throws UnsatisfiedRestrictionException
+	 */
 	private boolean checkCarModel(Car car) throws IllegalArgumentException, UnsatisfiedRestrictionException {
 		if (car == null) throw new IllegalArgumentException("Bad car!");
 		ArrayList<CarOption> wrongOptions = new ArrayList<CarOption>();

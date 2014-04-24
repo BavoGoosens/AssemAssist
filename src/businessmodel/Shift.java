@@ -64,6 +64,12 @@ public abstract class Shift {
 		return temp;
 	}
 
+	/**
+	 * Method to add order to time slots
+	 * 
+	 * @param order
+	 * @param timeslots
+	 */
 	protected void addOrderToSlots(Order order, ArrayList<TimeSlot> timeslots){
 		int count = 0;
 		for(TimeSlot timeslot: timeslots){

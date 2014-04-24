@@ -7,8 +7,18 @@ import businessmodel.order.Order;
 
 public class FreeShift extends Shift{
 
+	/**
+	 * The next shift.
+	 */
 	private Shift nextShift;
 
+	/**
+	 * Creates a free shift with an amount of hours, number of work posts and a next shift.
+	 * 
+	 * @param hours
+	 * @param numberofworkposts
+	 * @param nextShift
+	 */
 	public FreeShift(int hours,int numberofworkposts, Shift nextShift) {
 		super(hours, numberofworkposts);
 		this.setNextShift(nextShift);
@@ -55,6 +65,11 @@ public class FreeShift extends Shift{
 		return timeslots;
 	}
 	
+	/**
+	 * Method to set the next shift.
+	 * 
+	 * @param nextShift
+	 */
 	private void setNextShift(Shift nextShift) {
 		this.nextShift = nextShift;
 	}
