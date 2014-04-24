@@ -1,5 +1,8 @@
 package businessmodel;
 
+import java.util.ArrayList;
+
+import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 
 /**
@@ -142,5 +145,9 @@ public class AssemblyTask {
 
 	public void setWorkpost(WorkPost workpost) {
 		this.workpost = workpost;
+	}
+
+	public ArrayList<CarOption> getInstallableOptions() {
+		return new Catalog().getAllOptions(this.category);
 	}
 }
