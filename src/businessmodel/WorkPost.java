@@ -96,12 +96,11 @@ public class WorkPost {
 	 * @param	orderInProcess
 	 * 			The new order the work post is currently working on.
 	 */
-	public void setOrder(Order order_in_process) {
-		this.orderInProcess = order_in_process;
+	public void PlaceOrderOnWorkPost(Order order_in_process) {
+		this.setOrder(order_in_process);
 		this.time_order_in_process = 0;
 	}
-
-
+	
 	/**
 	 * Returns whether the work post is in a completed state.
 	 * 
@@ -214,7 +213,7 @@ public class WorkPost {
 	 * @param   The order that this work post needs to start working on.
 	 */
 	protected void setNewOrder(Order order) {
-		this.setOrder(order);
+		this.PlaceOrderOnWorkPost(order);
 		this.refreshAssemblyTasks();
 	}
 
@@ -252,6 +251,10 @@ public class WorkPost {
 		if (name == null) 
 			throw new IllegalArgumentException();
 		this.name = name;
+	}
+
+	private void setOrder(Order order_in_process) {
+		this.orderInProcess = order_in_process;
 	}
 
 	/**
