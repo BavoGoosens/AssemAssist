@@ -37,19 +37,6 @@ public class TimeSlot {
 	}
 
 	/**
-	 * A method that generates the WorkSlot's of this TimeSlot.
-	 * @param	sizeworkposts
-	 * 			the number of WorkSlot's that will be generated.
-	 */
-	private void generateWorkSlots(int sizeworkposts){
-		this.workslots = new LinkedList<WorkSlot>();
-		for(int i = 0; i< sizeworkposts; i++){
-			WorkSlot temp = new WorkSlot();
-			this.getWorkSlots().add(temp);
-		}
-	}
-
-	/**
 	 * A method to get the WorkSlot's of this TimeSlot.
 	 * @return	this.workslots
 	 */
@@ -67,5 +54,18 @@ public class TimeSlot {
 
 	protected Order getNextOrder() {
 		return getWorkSlots().get(0).getOrder();
+	}
+
+	/**
+	 * A method that generates the WorkSlot's of this TimeSlot.
+	 * @param	sizeworkposts
+	 * 			the number of WorkSlot's that will be generated.
+	 */
+	private void generateWorkSlots(int sizeworkposts){
+		this.workslots = new LinkedList<WorkSlot>();
+		for(int i = 0; i< sizeworkposts; i++){
+			WorkSlot temp = new WorkSlot();
+			this.getWorkSlots().add(temp);
+		}
 	}
 }

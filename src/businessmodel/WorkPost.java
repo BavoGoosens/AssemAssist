@@ -121,27 +121,14 @@ public class WorkPost {
 	}
 
 	/**
-	 * Returns the tasks that are pending at the work post.
-	 * 
-	 * @return	The tasks that are pending at the work post
-	 */
-	protected ArrayList<AssemblyTask> getPendingTasks() {
-		return this.pendingTasks;
-	}
-
-	/**
 	 * Returns a cloned list of assembly tasks the work post is responsible for.
 	 * 
 	 * @return	A cloned list of assembly tasks the work post is responsible for.
 	 */
-
+	
 	@SuppressWarnings("unchecked")
 	public ArrayList<AssemblyTask> getResponsibleTasksClone() {
 		return (ArrayList<AssemblyTask>) this.getResponsibleTasks().clone();
-	}
-
-	protected ArrayList<AssemblyTask> getFinishedTasks() {
-		return this.finishedTasks;
 	}
 
 	/**
@@ -155,6 +142,19 @@ public class WorkPost {
 		Order temp = this.getOrder();
 		this.setNewOrder(order);
 		return temp;
+	}
+
+	/**
+	 * Returns the tasks that are pending at the work post.
+	 * 
+	 * @return	The tasks that are pending at the work post
+	 */
+	protected ArrayList<AssemblyTask> getPendingTasks() {
+		return this.pendingTasks;
+	}
+
+	protected ArrayList<AssemblyTask> getFinishedTasks() {
+		return this.finishedTasks;
 	}
 
 	/**
