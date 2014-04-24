@@ -154,7 +154,6 @@ public class ModelAFactory extends CarModelFactory {
 		return "Model A";
 	}
 
-
 	/**
 	 * Creates an A model.
 	 */
@@ -184,7 +183,6 @@ public class ModelAFactory extends CarModelFactory {
 		for (CarOption option: this.createWheels().getOptionsClone())
 			options.add(option);
 		
-		
 		CarModelSpecification cms = new CarModelSpecification(options);
 		return new CarModel(this.getName(), cms, this.getStandardTimeToFinish());
 	}
@@ -196,7 +194,4 @@ public class ModelAFactory extends CarModelFactory {
 		period = period.withHours(2);
 		return period;
 	}
-	
-	
-
 }

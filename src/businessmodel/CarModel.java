@@ -44,6 +44,7 @@ public class CarModel {
 		this.setCarmodel(name);
 		this.setCarModelSpecification(cms);
 		this.setStandardTimeToFinish(standardTimeToFinish);
+		this.setStandardTimeToFinish(standardTimeToFinish);
 	}
 	
 	/**
