@@ -32,7 +32,7 @@ public class WorkPost {
 	 * the tasks that are finished for this WorkPost.
 	 */
 	private ArrayList<AssemblyTask> finishedTasks;
-	
+
 	/**
 	 * The order the working post is currently handling.
 	 */
@@ -74,7 +74,10 @@ public class WorkPost {
 	 */
 	public void setResponsibletasks(ArrayList<AssemblyTask> responsibleTasks) throws IllegalArgumentException {
 		if (responsibleTasks == null) throw new IllegalArgumentException("Bad list of responsible tasks!");
-		this.responsibleAssemblyTasks = responsibleTasks;
+		for(AssemblyTask assem: responsibleTasks){
+			if(this.responsibleAssemblyTasks.contains(assem))
+				this.responsibleAssemblyTasks.add(assem);
+		}
 	}
 
 	/**
@@ -125,7 +128,7 @@ public class WorkPost {
 	 * 
 	 * @return	A cloned list of assembly tasks the work post is responsible for.
 	 */
-	
+
 	@SuppressWarnings("unchecked")
 	public ArrayList<AssemblyTask> getResponsibleTasksClone() {
 		return (ArrayList<AssemblyTask>) this.getResponsibleTasks().clone();
