@@ -61,7 +61,7 @@ public class WorkPostTest {
 	@Test
 	public void test() {
 		
-		assertEquals(om.getScheduler().getAssemblyline().getWorkPosts().get(0).getOrder(),om.getScheduler().getOrders().get(0));
+		assertEquals(om.getScheduler().getAssemblyline().getWorkPosts().get(0).getOrder(),om.getScheduler().getOrdersClone().get(0));
 	}
 
 }

@@ -55,10 +55,10 @@ public class OrderManagerTest {
 	public void test() {
 		try {
 			
-			assertTrue(om.getScheduler().getOrders().contains(order));
+			assertTrue(om.getScheduler().getOrdersClone().contains(order));
 			assertTrue(om.getPendingOrders(garageholder).contains(order));
 			om.finishedOrder(order);
-			assertTrue(om.getCompletedOrders().contains(order));
+			assertTrue(om.getCompletedOrdersClone().contains(order));
 			assertTrue(om.getCompletedOrders(garageholder).contains(order));
 			
 

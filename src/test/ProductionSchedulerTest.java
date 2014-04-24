@@ -75,7 +75,7 @@ public class ProductionSchedulerTest {
 			om.placeOrder(order);
 		
 		assertTrue(om.getCompletedOrders().isEmpty());
-		assertEquals(orders.get(0),om.getScheduler().getOrders().get(0));
+		assertEquals(orders.get(0),om.getScheduler().getOrdersClone().get(0));
 		om.getScheduler().ScheduleDay();
 		
 		for(Order order:this.orders){
@@ -121,7 +121,7 @@ public class ProductionSchedulerTest {
 			}
 			
 		}
-		assertTrue(om.getScheduler().getOrders().isEmpty());
+		assertTrue(om.getScheduler().getOrdersClone().isEmpty());
 	}
 
 }
