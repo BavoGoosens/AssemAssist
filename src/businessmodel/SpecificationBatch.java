@@ -21,6 +21,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	public void scheduleOrder(Order currentOrder) {
 		
 		ArrayList<Order> similarCarOptionsOrder = new ArrayList<Order>();
+		this.getScheduler().ScheduleDay();
 		orderList.add(currentOrder);
 	
 		if (orderList.size() != 0){

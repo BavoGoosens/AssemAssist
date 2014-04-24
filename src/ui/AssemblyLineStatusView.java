@@ -43,10 +43,10 @@ public class AssemblyLineStatusView extends View implements Observer {
 				finished.add(finishediter.next());
 			System.out.println("    > pending tasks:");
 			for (AssemblyTask task : pending)
-				System.out.println("    > " + task.toString());
+				System.out.println("        > " + task.toString());
 			System.out.println("    > finished tasks:");
 			for (AssemblyTask task: finished)
-				System.out.println("    > " + task.toString());	
+				System.out.println("        > " + task.toString());	
 		}
 		System.out.print(">> ");
 		String response = this.scan.nextLine();

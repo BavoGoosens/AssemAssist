@@ -87,7 +87,7 @@ public class CarMechanicView extends View {
 		System.out.println(assemblyTask.getDescription());
 		System.out.println("> Enter the number of minutes it took you to perform all the actions "
 				+ "and hit enter or enter CANCEL to go back to the overview");
-		System.out.println(">> ");
+		System.out.print(">> ");
 		String response = this.scan.nextLine();
 		this.check(response);
 		Pattern pattern = Pattern.compile("^\\d*$");
