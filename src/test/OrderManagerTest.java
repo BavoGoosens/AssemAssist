@@ -59,7 +59,7 @@ public class OrderManagerTest {
 			assertTrue(om.getPendingOrders(garageholder).contains(order));
 			om.finishedOrder(order);
 			assertTrue(om.getCompletedOrdersClone().contains(order));
-			assertTrue(om.getCompletedOrders(garageholder).contains(order));
+	
 			
 
 		} catch (IllegalArgumentException | NoClearanceException e) {

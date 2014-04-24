@@ -69,12 +69,12 @@ public class ProductionSchedulerTest {
 		CarManufacturingCompany cmc = new CarManufacturingCompany();
 		
 		Scheduler prodsched = om.getScheduler();
-		assertTrue(om.getCompletedOrders().isEmpty());
+		assertTrue(om.getCompletedOrdersClone().isEmpty());
 		
 		for(Order order: this.orders)
 			om.placeOrder(order);
 		
-		assertTrue(om.getCompletedOrders().isEmpty());
+		assertTrue(om.getCompletedOrdersClone().isEmpty());
 		assertEquals(orders.get(0),om.getScheduler().getOrdersClone().get(0));
 		om.getScheduler().ScheduleDay();
 		
