@@ -39,7 +39,7 @@ public class SchedulingView extends View {
 			System.out.println("> " + count++ + ") " + alg);
 		System.out.print(">> ");
 		String response = this.scan.nextLine();
-		Pattern pattern = Pattern.compile("^\\d*$");
+		Pattern pattern = Pattern.compile("^\\d+$");
 		this.check(response);
 		if (pattern.matcher(response).find()){
 			int choice = Integer.parseInt(response);
@@ -75,6 +75,8 @@ public class SchedulingView extends View {
 						System.out.println("! " + e.getMessage());
 						this.display();
 					}
+				} else {
+					this.error();
 				}
 			} else {
 				try {

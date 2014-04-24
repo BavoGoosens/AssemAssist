@@ -46,7 +46,7 @@ public class CustomShopManagerView extends View {
 		System.out.print(">> ");
 		String response = this.scan.nextLine();
 		this.check(response);
-		Pattern pattern = Pattern.compile("^\\d*$");
+		Pattern pattern = Pattern.compile("^\\d+$");
 		if (pattern.matcher(response).find()){
 			int choice = Integer.parseInt(response);
 			AssemblyTask chosen = null;
@@ -75,6 +75,8 @@ public class CustomShopManagerView extends View {
 						System.out.println("! Bad input. Please try again");
 						continue;
 					}
+				} else {
+					this.error();
 				}
 			}
 			ArrayList<CarOption> res = new ArrayList<CarOption>();
