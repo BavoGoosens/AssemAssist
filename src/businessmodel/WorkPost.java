@@ -62,6 +62,7 @@ public class WorkPost {
 		this.setAssemblyline(assemblyline);
 		this.responsibleAssemblyTasks = new ArrayList<AssemblyTask>();
 		this.pendingTasks = new ArrayList<AssemblyTask>();
+		this.finishedTasks = new ArrayList<AssemblyTask>();
 	}
 
 	/**
@@ -185,7 +186,7 @@ public class WorkPost {
 
 	protected void AssemblyTaskCompleted(AssemblyTask assem, int time) {
 		this.getPendingTasks().remove(assem);
-		this.getPendingTasks().add(assem);
+		this.finishedTasks.add(assem);
 		this.setTime_order_in_process(this.getTime_order_in_process()+time);
 		this.getAssemblyline().notifyObservers();
 		this.notifyAssemBlyLine();

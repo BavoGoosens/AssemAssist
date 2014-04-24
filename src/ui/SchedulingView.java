@@ -12,9 +12,9 @@ import control.SchedulingController;
 import control.SchedulingHandler;
 
 public class SchedulingView extends View {
-	
+
 	private Scanner scan = new Scanner(System.in);
-	
+
 	private SchedulingController controller;
 
 	public SchedulingView(Model cmc, User user) {
@@ -50,28 +50,45 @@ public class SchedulingView extends View {
 			ArrayList<CarOption> opts = new ArrayList<>();
 			while (optss.hasNext())
 				opts.add(optss.next());
-			System.out.println("> Enter the number of the car option you want to supply as a parameter");
-			int num = 1;
-			for (CarOption opt : opts)
-				System.out.println("> " + num ++ + ") " + opt);
-			System.out.print(">> ");
-			response = this.scan.nextLine();
-			this.check(response);
-			if (pattern.matcher(response).find()){
-				choice = Integer.parseInt(response);
-				if (choice < 1 || choice > opts.size())
-					this.error();
-				CarOption param = opts.get(choice - 1 );
+			if (algo.equals("SpecificationBatch")){
+				if (opts.isEmpty()){
+					System.out.println("! there are not enough orders available");
+					this.display();
+				}
+				System.out.println("> Enter the number of the car option you want to supply as a parameter");
+				int num = 1;
+				for (CarOption opt : opts)
+					System.out.println("> " + num ++ + ") " + opt);
+				System.out.print(">> ");
+				response = this.scan.nextLine();
+				this.check(response);
+				if (pattern.matcher(response).find()){
+					choice = Integer.parseInt(response);
+					if (choice < 1 || choice > opts.size())
+						this.error();
+					CarOption param = opts.get(choice - 1 );
+					try {
+						this.controller.selectAlgorithm(algo, param);
+						System.out.println("> Algorithm changed :)");
+						this.display();
+					} catch (Exception e){
+						System.out.println("! " + e.getMessage());
+						this.display();
+					}
+				}
+			} else {
 				try {
-					this.controller.selectAlgorithm(algo, param);
+					this.controller.selectAlgorithm(algo, null);
+					System.out.println("> Algorithm changed :)");
+					this.display();
 				} catch (Exception e){
 					System.out.println("! " + e.getMessage());
 					this.display();
 				}
 			}
-			
+		} else {
+			this.error();
 		}
-		this.error();
 	}
 
 	@Override

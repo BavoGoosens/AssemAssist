@@ -32,7 +32,7 @@ public class CarMechanicView extends View {
 		Iterator<WorkPost> temp = this.getModel().getWorkPosts(this.user);
 		while(temp.hasNext())
 			posts.add(temp.next());
-		System.out.println("> If you wish to chech the assembly line status enter STATUS");
+		System.out.println("> If you wish to check the assembly line status enter STATUS");
 		System.out.println("> If you want to perform pending assembly tasks enter the number of the workpost you are residing at");
 		System.out.println("> Available workposts");
 		int num  = 1;
@@ -87,7 +87,7 @@ public class CarMechanicView extends View {
 		System.out.println(assemblyTask.getDescription());
 		System.out.println("> Enter the number of minutes it took you to perform all the actions "
 				+ "and hit enter or enter CANCEL to go back to the overview");
-		System.out.println(">> ");
+		System.out.print(">> ");
 		String response = this.scan.nextLine();
 		this.check(response);
 		Pattern pattern = Pattern.compile("^\\d*$");

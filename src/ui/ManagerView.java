@@ -54,6 +54,6 @@ public class ManagerView extends View {
 
 	@Override
 	public void quit() {
-		new LoginView(this.getModel());
+		new LoginView(this.getModel()).display();
 	}
 }
