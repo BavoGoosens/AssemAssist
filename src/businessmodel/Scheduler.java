@@ -313,6 +313,7 @@ public class Scheduler implements Subject {
 	}
 
 	public String currentAlgoDescription() {
-		return this.algortime.getClass().getName();
+		String[] full = this.algortime.getClass().getName().split("\\.");
+		return full[1];
 	}
 }

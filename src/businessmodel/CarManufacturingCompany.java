@@ -75,7 +75,7 @@ public class CarManufacturingCompany implements Model{
 	public Iterator<String> getSchedulingAlgorithms(User user) {
 		ArrayList<String> algos = new ArrayList<String>(); 
 		algos.add("FIFO"); 
-		algos.add("Specification Batch"); 
+		algos.add("SpecificationBatch"); 
 		return algos.iterator();
 	}
 
