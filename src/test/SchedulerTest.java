@@ -13,6 +13,7 @@ import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Catalog;
 import businessmodel.OrderManager;
+import businessmodel.SystemTimer;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 import businessmodel.category.ModelAFactory;
@@ -85,8 +86,9 @@ public class SchedulerTest {
 		Order order16 = new StandardCarOrder(c16,chosen,modelA);
 		Order order17 = new StandardCarOrder(c17,chosen,modelA);
 		Order order18 = new StandardCarOrder(c18,chosen,modelA);
-		DateTime datetemp = new DateTime();
-		DateTime temp = new DateTime(datetemp.getYear(), datetemp.getMonthOfYear(), datetemp.getDayOfMonth()+1, 8, 0);
+		DateTime datetemp = SystemTimer.getCurrenTime();
+		DateTime temp = new DateTime(datetemp.getYear(), datetemp.getMonthOfYear(), datetemp.getDayOfMonth(), 8, 0);
+		temp = temp.plusDays(1);
 		Order order19 = new SingleTaskOrder(c19,chosen, temp);
 		Order order20 = new SingleTaskOrder(c20,chosen, temp);
 
