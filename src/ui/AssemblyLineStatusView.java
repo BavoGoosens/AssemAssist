@@ -18,10 +18,17 @@ public class AssemblyLineStatusView extends View implements Observer {
 
 	private Scanner scan = new Scanner(System.in);
 
+	private boolean active = false;
+
 	public AssemblyLineStatusView(Model cmc, User user) {
 		super(cmc);
 		setUser(user);
 		this.subject = cmc.registerAssemblyLineObserver(this);
+		this.setActive(true);
+	}
+
+	private void setActive(boolean b) {
+		this.active = b;
 	}
 
 	@Override
@@ -61,6 +68,7 @@ public class AssemblyLineStatusView extends View implements Observer {
 
 	@Override
 	public void cancel() {
+		this.setActive(false);
 		new CarMechanicView(this.getModel(), this.user).display();
 	}
 
@@ -79,7 +87,8 @@ public class AssemblyLineStatusView extends View implements Observer {
 	public void update(Subject subject) {
 		if (this.subject != subject)
 			this.subject = (AssemblyLine) subject;
-		this.display();
+		if (this.active)
+			this.display();
 	}
 
 }

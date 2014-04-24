@@ -90,17 +90,6 @@ public class WorkPost {
 	public Order getOrder() {
 		return this.orderInProcess;
 	}
-
-	/**
-	 * This method sets the order the work post is currently working on to the given order.
-	 * 
-	 * @param	orderInProcess
-	 * 			The new order the work post is currently working on.
-	 */
-	public void PlaceOrderOnWorkPost(Order order_in_process) {
-		this.setOrder(order_in_process);
-		this.time_order_in_process = 0;
-	}
 	
 	/**
 	 * Returns whether the work post is in a completed state.
@@ -214,7 +203,9 @@ public class WorkPost {
 	 * @param   The order that this work post needs to start working on.
 	 */
 	protected void setNewOrder(Order order) {
-		this.PlaceOrderOnWorkPost(order);
+		this.setOrder(order);
+		this.time_order_in_process = 0;
+		this.getFinishedTasks().clear();
 		this.refreshAssemblyTasks();
 	}
 
