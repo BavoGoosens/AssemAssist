@@ -16,6 +16,9 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
  */
 public class UltraEngineAircoRestriction extends Restriction {
 
+	/**
+	 * Creates a new restriction.	
+	 */
 	public UltraEngineAircoRestriction() {}
 
 	@Override

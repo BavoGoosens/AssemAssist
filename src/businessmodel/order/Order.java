@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import org.joda.time.DateTime;
-import org.joda.time.Period;
 
 import businessmodel.category.CarOption;
 import businessmodel.exceptions.NoClearanceException;

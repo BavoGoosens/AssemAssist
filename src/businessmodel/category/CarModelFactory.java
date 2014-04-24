@@ -60,6 +60,11 @@ public abstract class CarModelFactory {
 	 */
 	protected abstract String getName();
 
+	/**
+	 * Returns the standard time to finish the model.
+	 * 
+	 * @return The standard time to finish the model.
+	 */
 	protected abstract Period getStandardTimeToFinish();
 
 }

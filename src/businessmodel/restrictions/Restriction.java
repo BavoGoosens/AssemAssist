@@ -14,7 +14,7 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
 public abstract class Restriction {
 
 	/**
-	 * Creates a new restriction with a given name.	
+	 * Creates a new restriction.	
 	 */
 	public Restriction() {}
 	

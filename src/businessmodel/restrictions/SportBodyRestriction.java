@@ -17,6 +17,9 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
  */
 public class SportBodyRestriction extends Restriction {
 
+	/**
+	 * Creates a new restriction.	
+	 */
 	public SportBodyRestriction() {}
 
 	@Override

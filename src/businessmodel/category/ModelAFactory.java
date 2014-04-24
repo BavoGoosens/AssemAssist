@@ -186,7 +186,7 @@ public class ModelAFactory extends CarModelFactory {
 		CarModelSpecification cms = new CarModelSpecification(options);
 		return new CarModel(this.getName(), cms, this.getStandardTimeToFinish());
 	}
-
+	
 	@Override
 	protected Period getStandardTimeToFinish() {
 		Period period = new Period();

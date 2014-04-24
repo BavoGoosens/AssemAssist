@@ -18,6 +18,9 @@ public class DefaultMandatoryOptionRestriction extends Restriction {
 	
 	private ArrayList<CarOptionCategory> categories;
 
+	/**
+	 * Creates a new restriction.	
+	 */
 	public DefaultMandatoryOptionRestriction(ArrayList<CarOptionCategory> categories) throws IllegalArgumentException {
 		this.setCategories(categories);
 	}

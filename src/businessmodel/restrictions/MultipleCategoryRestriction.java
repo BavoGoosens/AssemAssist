@@ -13,6 +13,9 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
  */
 public class MultipleCategoryRestriction extends Restriction {
 
+	/**
+	 * Creates a new restriction.	
+	 */
 	public MultipleCategoryRestriction() {}
 
 	@Override
