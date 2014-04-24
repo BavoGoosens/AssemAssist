@@ -70,7 +70,7 @@ public class OrderManager implements Subject {
 	 */
 	public void placeOrder(Order order) throws IllegalArgumentException {
 		if (order == null) throw new IllegalArgumentException("Bad order!");
-		order.setTimestamp(this.getScheduler().getCurrentTime());
+		order.setTimestampOfOrder(this.getScheduler().getCurrentTime());
 		this.setEstimatedCompletionDateOfOrder(order);
 		if(this.getScheduler().canAddOrder())
 			this.getScheduler().addOrderToSchedule(order);
@@ -194,15 +194,15 @@ public class OrderManager implements Subject {
 	protected void setEstimatedCompletionDateOfOrder(Order order){
 		Order previousorder = this.getPreviousOrder(order);
 		if(previousorder != null) {
-			if(previousorder.getEstimateDate() == null){
-				order.setEstimateDate(this.getScheduler().getCurrentTime().plusHours(3));
-			}else if(previousorder.getEstimateDate().getHourOfDay() <= 21){
-				order.setEstimateDate(previousorder.getEstimateDate().plusHours(1));
+			if(previousorder.getEstimatedDeliveryDate() == null){
+				order.setEstimatedDeliveryDateOfOrder(this.getScheduler().getCurrentTime().plusHours(3));
+			}else if(previousorder.getEstimatedDeliveryDate().getHourOfDay() <= 21){
+				order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusHours(1));
 			}else {
-				order.setEstimateDate(previousorder.getEstimateDate().plusDays(1).withHourOfDay(11).withMinuteOfHour(0));
+				order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusDays(1).withHourOfDay(11).withMinuteOfHour(0));
 			}
 		}else{
-			order.setEstimateDate(this.getScheduler().getCurrentTime().plusHours(3));
+			order.setEstimatedDeliveryDateOfOrder(this.getScheduler().getCurrentTime().plusHours(3));
 		}
 	}
 
