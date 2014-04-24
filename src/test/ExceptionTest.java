@@ -8,10 +8,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.CarModel;
+import businessmodel.Catalog;
 import businessmodel.OrderManager;
 import businessmodel.category.Body;
 import businessmodel.category.CarOption;
+import businessmodel.category.CarOptionCategory;
 import businessmodel.category.Engine;
+import businessmodel.category.ModelAFactory;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.StandardCarOrder;
 import businessmodel.user.Manager;
@@ -21,6 +24,8 @@ import businessmodel.user.Manager;
 public class ExceptionTest {
 	private OrderManager orderManager;
 	private Manager manager;
+	private Catalog catalog;
+	private ArrayList<CarOptionCategory> categories;
 
 	@Before
 	public void setUp() throws Exception {
@@ -28,14 +33,20 @@ public class ExceptionTest {
 		orderManager = new OrderManager(carmodels);
 		manager = new Manager("bouwe", "ceunen", "bouwe");
 		
-		CarOption option = new CarOption("small engine", new Engine() );
-		CarOption option2 = new CarOption("big body", new Body() );
-		ArrayList<CarOption> options = new ArrayList<CarOption>();
-		options.add(option);
-		options.add(option2);
-		
+		this.catalog = new Catalog();
+		this.categories = this.catalog.getAllCategories();
+
+		CarModel modelA = new ModelAFactory().createModel();
+		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
+		for (CarOptionCategory category: this.categories) {
+			ArrayList<CarOption> options = modelA.getCarModelSpecification().getOptionsOfCategory(category);
+			if (options.size() > 0) {
+				chosen.add(options.get(0));
+			}
+
+		}
 		try{
-		orderManager.placeOrder(new StandardCarOrder(manager, options));
+		orderManager.placeOrder(new StandardCarOrder(manager, chosen,modelA));
 		
 		}catch (NoClearanceException ex){
 			assertEquals(ex.getUser(), manager);
