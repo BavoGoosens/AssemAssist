@@ -100,10 +100,9 @@ public class Scheduler implements Subject {
 		}else if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch")){
 
 			if (option == null) throw new IllegalArgumentException("No such option");
-
 			if (!this.checkOptionsForSpecificationBatch(option)) throw new IllegalArgumentException("Too little orders with that option ( less than 3 )");
+			
 			this.algortime = new SpecificationBatch(this,option);
-
 		}else{
 			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");
 		}
@@ -226,7 +225,8 @@ public class Scheduler implements Subject {
 		this.getAlgo().scheduleOrder(order);
 	}
 
-	private void generateShifts(){
+	protected void generateShifts(){
+		this.getShifts().clear();
 		Shift endshift = new EndShift(8,this.getAssemblyline().getNumberOfWorkPosts());
 		Shift currrentshift = new FreeShift(8,this.getAssemblyline().getNumberOfWorkPosts(), endshift);
 		this.getShifts().add(currrentshift);
@@ -245,7 +245,7 @@ public class Scheduler implements Subject {
 
 		int count = 0;
 		for(Order order: this.getOrders())
-			if (order.getOptions().toString().equals(option))
+			if (order.getOptions().toString().contains(option.toString()))
 				count++;
 
 		if (count < 3)
