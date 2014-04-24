@@ -118,7 +118,7 @@ public class SchedulerTest {
 		
 		ord.getScheduler().ScheduleDay();
 		
-		assertEquals(ord.getScheduler().getOrders().get(0),order1);
+		assertEquals(ord.getScheduler().getOrdersClone().get(0),order1);
 
 		try{
 		ord.getScheduler().advance(-1);

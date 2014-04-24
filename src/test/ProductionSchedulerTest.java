@@ -69,13 +69,13 @@ public class ProductionSchedulerTest {
 		CarManufacturingCompany cmc = new CarManufacturingCompany();
 		
 		Scheduler prodsched = om.getScheduler();
-		assertTrue(om.getCompletedOrders().isEmpty());
+		assertTrue(om.getCompletedOrdersClone().isEmpty());
 		
 		for(Order order: this.orders)
 			om.placeOrder(order);
 		
-		assertTrue(om.getCompletedOrders().isEmpty());
-		assertEquals(orders.get(0),om.getScheduler().getOrders().get(0));
+		assertTrue(om.getCompletedOrdersClone().isEmpty());
+		assertEquals(orders.get(0),om.getScheduler().getOrdersClone().get(0));
 		om.getScheduler().ScheduleDay();
 		
 		for(Order order:this.orders){
@@ -105,8 +105,8 @@ public class ProductionSchedulerTest {
 					
 				}
 			}
-			
 		}
+	
 		for(Order order:this.orders){
 			for(WorkPost wp: prodsched.getAssemblyline().getWorkPosts()){
 				if(wp.getOrder() != null){
@@ -121,7 +121,7 @@ public class ProductionSchedulerTest {
 			}
 			
 		}
-		assertTrue(om.getScheduler().getOrders().isEmpty());
+		assertTrue(om.getScheduler().getOrdersClone().isEmpty());
 	}
 
 }

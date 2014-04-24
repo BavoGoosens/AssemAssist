@@ -55,10 +55,11 @@ public class OrderTest {
 
 	@Test
 	public void test() {
-		
-		assertEquals(om.getScheduler().getOrders().get(0).getUser(),this.garageholder);
-		assertEquals(om.getScheduler().getOrders().get(0).getEstimatedDeliveryDate(),this.date);
-		assertEquals(om.getScheduler().getOrders().get(0).isCompleted(),false);
+
+		assertEquals(om.getScheduler().getOrdersClone().get(0).getUser(),this.garageholder);
+		assertEquals(om.getScheduler().getOrdersClone().get(0).getEstimatedDeliveryDate(),this.date);
+		assertEquals(om.getScheduler().getOrdersClone().get(0).isCompleted(),false);
+
 		
 	}
 

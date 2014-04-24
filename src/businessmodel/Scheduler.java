@@ -6,6 +6,10 @@ import java.util.LinkedList;
 
 import org.joda.time.DateTime;
 
+import businessmodel.AssemblyLine;
+import businessmodel.OrderManager;
+import businessmodel.WorkPost;
+
 import businessmodel.category.CarOption;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
@@ -260,6 +264,11 @@ public class Scheduler implements Subject {
 		this.ordermanager = ordermanager;
 	}
 
+	/**
+	 * Method to check if a CarOption occurs in more than 3 orders
+	 * @param maxNumber
+	 * @return
+	 */
 	public ArrayList<CarOption> getUnscheduledCarOptions(int maxNumber){
 
 		HashMap<String, Integer> list = new HashMap<String, Integer>();
