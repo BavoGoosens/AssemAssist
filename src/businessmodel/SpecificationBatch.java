@@ -46,9 +46,10 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 		}
 		
 		this.getScheduler().getOrders().clear();
-		for(Order order: orderList)
+		for(Order order: orderList){
+			this.getScheduler().getOrdermanager().setEstimatedCompletionDateOfOrder(order);
 			this.getScheduler().getOrders().add(order);
-		
+		}
 	}
 
 
