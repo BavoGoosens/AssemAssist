@@ -32,20 +32,16 @@ public class Scheduler implements Subject {
 
 	private AssemblyLine assemblyline;
 
-	private DateTime currenttime;
-
 	private ArrayList<Observer> observers;
 	
 	private int dayOrdersCount = 0;
 
-	public Scheduler(OrderManager ordermanager){
+	protected Scheduler(OrderManager ordermanager){
 		this.shifts = new LinkedList<Shift>();
 		this.orders = new LinkedList<Order>();
 		this.assemblyline = new AssemblyLine(this);
 		this.observers = new ArrayList<Observer>();
 		this.setOrdermanager(ordermanager);
-		DateTime datetemp = new DateTime();
-		this.currenttime = new DateTime(datetemp.getYear(), datetemp.getMonthOfYear(), datetemp.getDayOfMonth(), 8, 0);
 		this.changeAlgorithm("fifo", null);
 		this.setDelay(0);
 		this.generateShifts();
@@ -62,7 +58,8 @@ public class Scheduler implements Subject {
 	public void advance(int time) throws IllegalNumberException{
 		if (time < 0) throw new IllegalNumberException("Bad time!");
 		int delay = time - 60;
-		this.currenttime = this.getCurrentTime().plusMinutes(time);
+		DateTime currenttime = this.getCurrentTime().plusMinutes(time);
+		SystemTimer.updateTime(this, currenttime);
 		updateAssemblylineStatus();
 		updateCompletedOrders();
 		updateDelay(delay);
@@ -138,7 +135,7 @@ public class Scheduler implements Subject {
 	}
 
 	public DateTime getCurrentTime(){
-		return this.currenttime;
+		return SystemTimer.getCurrenTime();
 	}
 
 	protected LinkedList<Order> getOrders() {
@@ -227,8 +224,11 @@ public class Scheduler implements Subject {
 	}
 
 	private void updateCurrentTime() {
-		currenttime = new DateTime(currenttime.getYear(), currenttime.getMonthOfYear(), currenttime.getDayOfMonth(), 8, 0);
+		DateTime currenttime = new DateTime(SystemTimer.getCurrenTime().getYear(), 
+				SystemTimer.getCurrenTime().getMonthOfYear(), 
+				SystemTimer.getCurrenTime().getDayOfMonth(), 8, 0);
 		currenttime = currenttime.plusDays(1);
+		SystemTimer.updateTime(this, currenttime);
 	}
 
 	private void scheduleOrder(Order order){

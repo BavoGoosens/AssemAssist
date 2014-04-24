@@ -3,6 +3,8 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.joda.time.DateTime;
+
 import businessmodel.category.CarOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
@@ -145,6 +147,10 @@ public class CarManufacturingCompany implements Model{
 
 	public void placeOrder(Order order) throws IllegalArgumentException {
 		this.getOrderManager().placeOrder(order);
+	}
+	
+	public DateTime getSystemTime(){
+		return new DateTime(ordermanager.getScheduler().getCurrentTime());
 	}
 
 	private ArrayList<User> getUsers() {

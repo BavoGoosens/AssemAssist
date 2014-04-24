@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.joda.time.DateTime;
 
+import businessmodel.SystemTimer;
 import businessmodel.category.CarOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
@@ -36,7 +37,7 @@ public class SingleTaskOrder extends Order {
 	}
 	
 	private void setUserEndDate(DateTime userEndDate) throws IllegalArgumentException {
-		if (userEndDate == null) throw new IllegalArgumentException("Bad user end date!");
+		if (userEndDate == null || userEndDate.isBefore(SystemTimer.getCurrenTime())) throw new IllegalArgumentException("Bad user end date!");
 		this.userEndDate = userEndDate;
 	}
 }
