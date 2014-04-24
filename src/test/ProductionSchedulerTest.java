@@ -106,8 +106,8 @@ public class ProductionSchedulerTest {
 					
 				}
 			}
-			
 		}
+	
 		for(Order order:this.orders){
 			for(WorkPost wp: prodsched.getAssemblyline().getWorkPosts()){
 				if(wp.getOrder() != null){
