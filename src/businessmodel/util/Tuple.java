@@ -2,21 +2,28 @@ package businessmodel.util;
 
 public class Tuple <X , Y>{
 
-	private final X x;
+	private X x;
 
-	private final Y y;
+	private Y y;
 
+	// no setters for final variable
 	public Tuple(X x, Y y) {
-		this.x = x;
-		this.y = y;
+		this.setX(x);
+		this.setY(y);
 	}
 
-	public X getX() { return this.x; }
+	public X getX() { 
+		return this.x; 
+	}
 
-	public Y getY(){ return this.y; }
+	public Y getY(){ 
+		return this.y; 
+	}
 
 	@Override
-	public int hashCode() { return this.x.hashCode() ^ this.y.hashCode(); }
+	public int hashCode() { 
+		return this.x.hashCode() ^ this.y.hashCode();
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -28,5 +35,13 @@ public class Tuple <X , Y>{
 		Tuple<X , Y> pairo = (Tuple <X, Y>) o;
 		return this.x.equals(pairo.getX()) &&
 				this.y.equals(pairo.getY());
+	}
+
+	private void setX(X x) {
+		this.x = x;
+	}
+
+	private void setY(Y y) {
+		this.y = y;		
 	}
 }

@@ -7,11 +7,7 @@ public abstract class View {
 	private Model cmc;
 	
 	public View(Model cmc ){
-		this.cmc = cmc;
-	}
-	
-	protected Model getModel(){
-		return this.cmc;
+		this.setModel(cmc);
 	}
 	
 	public void helpOverview() {
@@ -33,6 +29,10 @@ public abstract class View {
 	
 	public abstract void error();
 
+	protected Model getModel(){
+		return this.cmc;
+	}
+
 	protected void check(String str) {
 		if (str.equalsIgnoreCase("quit"))
 			this.quit();
@@ -40,6 +40,10 @@ public abstract class View {
 			this.cancel();
 		if (str.equalsIgnoreCase("help"))
 			this.displayHelp();
+	}
+
+	private void setModel(Model cmc) {
+		this.cmc = cmc;		
 	}
 
 }
