@@ -15,6 +15,10 @@ public class TaskManager {
 
 	private ArrayList<AssemblyTask> singleTaskOrders;
 
+	/**
+	 * Creates a task manager with a list of work posts.
+	 * @param workposts
+	 */
 	public TaskManager(ArrayList<WorkPost> workposts){	
 		this.generateRepsonsibleAssemblyTasks(workposts);
 		this.generatePossibleSingleTasks();
