@@ -89,7 +89,7 @@ public class OrderStatistics implements Observer {
 		if (subject instanceof OrderManager) {
 			this.finishedOrders = new ArrayList<Tuple<Order, Integer>>();
 			OrderManager orderManager = (OrderManager) subject;
-			LinkedList<Order> finishedOrders = orderManager.getCompletedOrders();
+			LinkedList<Order> finishedOrders = orderManager.getCompletedOrdersClone();
 			for (Order order: finishedOrders) {
 				Period period = new Period(order.getOrder_placed_on_workpost(),
 						order.getCompletionDate());

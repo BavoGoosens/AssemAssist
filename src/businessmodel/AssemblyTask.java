@@ -76,7 +76,7 @@ public class AssemblyTask {
 		return workpost;
 	}
 
-	public void setWorkpost(WorkPost workpost) {
+	private void setWorkpost(WorkPost workpost) {
 		this.workpost = workpost;
 	}
 
