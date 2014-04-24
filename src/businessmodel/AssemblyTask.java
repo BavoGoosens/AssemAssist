@@ -55,12 +55,63 @@ public class AssemblyTask {
 		this.setDescription(description_of_actions);
 	}
 	
-	private void setDescription(String description_of_actions) {
-		this.action_description = description_of_actions;
+	public ArrayList<CarOption> getInstallableOptions() {
+		return new Catalog().getAllOptions(this.category);
 	}
-	
+
 	public String getDescription(){
 		return this.action_description;
+	}
+
+	/**
+	 * Checks if this assembly task is completed.
+	 * 
+	 * @return	True if the assembly task is completed.
+	 */
+	public boolean isCompleted(){
+		return this.completed;
+	}
+	
+	public WorkPost getWorkpost() {
+		return workpost;
+	}
+
+	public void setWorkpost(WorkPost workpost) {
+		this.workpost = workpost;
+	}
+
+	/**
+	 * A method to set this assembly task to completed.
+	 */
+	protected void completeAssemblytask(int time){
+		this.completed = true;
+		this.notifyWorkPost(time);
+	}
+
+	/**
+	 * Returns the name of this assembly task.
+	 * 
+	 * @return  The name of this assembly task.
+	 */
+	protected String getName() {
+		return this.name;
+	}
+
+	/**
+	 * Returns the category of the assembly task.
+	 * 
+	 * @return	The category of the assembly task.
+	 */
+	protected CarOptionCategory getCategory() {
+		return category;
+	}
+
+	private void notifyWorkPost(int time){
+		this.getWorkpost().AssemblyTaskCompleted(this,time);
+	}
+
+	private void setDescription(String description_of_actions) {
+		this.action_description = description_of_actions;
 	}
 
 	/**
@@ -77,50 +128,7 @@ public class AssemblyTask {
 			throw new IllegalArgumentException();
 		this.name = name;
 	}
-	
-	/**
-	 * Returns the name of this assembly task.
-	 * 
-	 * @return  The name of this assembly task.
-	 */
-	protected String getName() {
-		return this.name;
-	}
 
-	/**
-	 * A method to set this assembly task to completed.
-	 */
-	protected void completeAssemblytask(int time){
-		this.completed = true;
-		this.notifyWorkPost(time);
-	}
-	
-	/**
-	 * Checks if this assembly task is completed.
-	 * 
-	 * @return	True if the assembly task is completed.
-	 */
-	public boolean isCompleted(){
-		return this.completed;
-	}
-	
-	/**
-	 * Returns a string representation of the assembly task.
-	 */
-	@Override
-	public String toString(){
-		return this.getName();
-	}
-	
-	/**
-	 * Returns the category of the assembly task.
-	 * 
-	 * @return	The category of the assembly task.
-	 */
-	protected CarOptionCategory getCategory() {
-		return category;
-	}
-	
 	/**
 	 * Sets the category of the assembly task.
 	 * 
@@ -135,19 +143,11 @@ public class AssemblyTask {
 		this.category = category;
 	}
 
-	private void notifyWorkPost(int time){
-		this.getWorkpost().AssemblyTaskCompleted(this,time);
-	}
-
-	public WorkPost getWorkpost() {
-		return workpost;
-	}
-
-	public void setWorkpost(WorkPost workpost) {
-		this.workpost = workpost;
-	}
-
-	public ArrayList<CarOption> getInstallableOptions() {
-		return new Catalog().getAllOptions(this.category);
+	/**
+	 * Returns a string representation of the assembly task.
+	 */
+	@Override
+	public String toString(){
+		return this.getName();
 	}
 }

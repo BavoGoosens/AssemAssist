@@ -59,7 +59,7 @@ public class OrderManager implements Subject {
 	 * 			this.carmodels
 	 */
 	public ArrayList<CarModel> getCarmodels() {
-		return carmodels;
+		return (ArrayList<CarModel>) carmodels.clone();
 	}
 
 	/**

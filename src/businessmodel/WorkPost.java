@@ -32,7 +32,7 @@ public class WorkPost {
 	 * the tasks that are finished for this WorkPost.
 	 */
 	private ArrayList<AssemblyTask> finishedTasks;
-	
+
 	/**
 	 * The order the working post is currently handling.
 	 */
@@ -74,7 +74,10 @@ public class WorkPost {
 	 */
 	public void setResponsibletasks(ArrayList<AssemblyTask> responsibleTasks) throws IllegalArgumentException {
 		if (responsibleTasks == null) throw new IllegalArgumentException("Bad list of responsible tasks!");
-		this.responsibleAssemblyTasks = responsibleTasks;
+		for(AssemblyTask assem: responsibleTasks){
+			if(this.responsibleAssemblyTasks.contains(assem))
+				this.responsibleAssemblyTasks.add(assem);
+		}
 	}
 
 	/**
@@ -121,15 +124,6 @@ public class WorkPost {
 	}
 
 	/**
-	 * Returns the tasks that are pending at the work post.
-	 * 
-	 * @return	The tasks that are pending at the work post
-	 */
-	protected ArrayList<AssemblyTask> getPendingTasks() {
-		return this.pendingTasks;
-	}
-
-	/**
 	 * Returns a cloned list of assembly tasks the work post is responsible for.
 	 * 
 	 * @return	A cloned list of assembly tasks the work post is responsible for.
@@ -138,10 +132,6 @@ public class WorkPost {
 	@SuppressWarnings("unchecked")
 	public ArrayList<AssemblyTask> getResponsibleTasksClone() {
 		return (ArrayList<AssemblyTask>) this.getResponsibleTasks().clone();
-	}
-
-	protected ArrayList<AssemblyTask> getFinishedTasks() {
-		return this.finishedTasks;
 	}
 
 	/**
@@ -155,6 +145,19 @@ public class WorkPost {
 		Order temp = this.getOrder();
 		this.setNewOrder(order);
 		return temp;
+	}
+
+	/**
+	 * Returns the tasks that are pending at the work post.
+	 * 
+	 * @return	The tasks that are pending at the work post
+	 */
+	protected ArrayList<AssemblyTask> getPendingTasks() {
+		return this.pendingTasks;
+	}
+
+	protected ArrayList<AssemblyTask> getFinishedTasks() {
+		return this.finishedTasks;
 	}
 
 	/**
