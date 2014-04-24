@@ -4,6 +4,12 @@ import java.util.Comparator;
 
 import org.joda.time.LocalDate;
 
+/**
+ * A class representing a comparator for car tuples.
+ * 
+ * @author SWOP team 10 2013-2014
+ *
+ */
 public class CarTupleComperator implements Comparator<Tuple<LocalDate, Integer>> {
 
 	@Override

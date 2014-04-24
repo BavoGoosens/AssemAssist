@@ -6,6 +6,12 @@ import org.joda.time.DateTime;
 
 import businessmodel.order.Order;
 
+/**
+ * A class representing a comparator for orders.
+ * 
+ * @author SWOP team 10 2013-2014
+ * 
+ */
 public class OrderDateTimeComperator implements Comparator<Order> {
 
 	@Override

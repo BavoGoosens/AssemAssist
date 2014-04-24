@@ -4,6 +4,12 @@ import java.util.Comparator;
 
 import businessmodel.order.Order;
 
+/**
+ * A class representing a comparator for order tuples.
+ * 
+ * @author SWOP team 10 2013-2014
+ *
+ */
 public class OrderTupleComperator implements Comparator<Tuple<Order, Integer>> {
 
 	@Override
