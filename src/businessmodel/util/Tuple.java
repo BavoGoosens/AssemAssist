@@ -29,5 +29,4 @@ public class Tuple <X , Y>{
 		return this.x.equals(pairo.getX()) &&
 				this.y.equals(pairo.getY());
 	}
-
 }
