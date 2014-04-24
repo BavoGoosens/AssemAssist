@@ -116,6 +116,21 @@ public class CarManufacturingCompany implements Model{
 		return wp.getFinishedTasks().iterator();
 	}
 
+	@Override
+	public Iterator<AssemblyTask> getAvailableTasks(User user) {
+		return this.taskmanager.getSingleTaskOrders().iterator();
+	}
+
+	@Override
+	public Iterator<CarOption> getUnscheduledCarOptions() {
+		return this.getOrderManager().getScheduler().getUnscheduledCarOptions().iterator();
+	}
+
+	@Override
+	public String getCurrentAlgo() {
+		return this.ordermanager.getScheduler().currentAlgoDescription();
+	}
+
 	public OrderManager getOrderManager(){
 		return this.ordermanager;
 	}
@@ -152,16 +167,6 @@ public class CarManufacturingCompany implements Model{
 			if (user.getUsername().equals(username))
 				return user;
 		throw new IllegalArgumentException("Username doesn't exist!");
-	}
-
-	@Override
-	public Iterator<AssemblyTask> getAvailableTasks(User user) {
-		return this.taskmanager.getSingleTaskOrders().iterator();
-	}
-
-	@Override
-	public Iterator<CarOption> getUnscheduledCarOptions() {
-		return this.getOrderManager().getScheduler().getUnscheduledCarOptions().iterator();
 	}
 
 }

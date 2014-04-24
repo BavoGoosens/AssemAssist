@@ -1,5 +1,7 @@
 package ui;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import control.SchedulingController;
@@ -23,7 +25,11 @@ public class SchedulingView extends View {
 
 	@Override
 	public void display() {
-		this.getModel().getSchedulingAlgorithms(user);
+		Iterator<String> algoss = this.getModel().getSchedulingAlgorithms(user);
+		ArrayList<String> algos = new ArrayList<>();
+		while (algoss.hasNext())
+			algos.add(algoss.next());
+		String currentalgo = this.getModel().getCurrentAlgo();
 	}
 
 	@Override
