@@ -59,9 +59,13 @@ public class GarageHolderView extends View{
 		}else if (pattern.matcher(response).find()){
 			int number = Integer.parseInt(response);
 			if (number > size) {
-				int index = number - size - 1;
-				StandardCarOrder or = (StandardCarOrder) this.completed_orders.get(index);
-				this.check(or);
+				if ( ((number-size) <= this.completed_orders.size()) && ((number - size) < 1)){
+					int index = number - size - 1;
+					StandardCarOrder or = (StandardCarOrder) this.completed_orders.get(index);
+					this.check(or);
+				} else {
+					this.error();
+				}
 			} else {
 				StandardCarOrder or = (StandardCarOrder) this.pending_orders.get(number - 1);
 				this.check(or);
