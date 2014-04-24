@@ -33,7 +33,7 @@ public class SchedulingView extends View {
 		System.out.println("> The active algorithm: ");
 		System.out.println("> " + currentalgo);
 		System.out.println("> To choose an algorithm enter the corresponding number. "
-				+ "\n These are the available algorithms: ");
+				+ "\n> These are the available algorithms: ");
 		int count = 1;
 		for (String alg : algos )
 			System.out.println("> " + count++ + ") " + alg);
@@ -46,7 +46,7 @@ public class SchedulingView extends View {
 			if (choice < 1 || choice > algos.size())
 				this.error();
 			String algo = algos.get(choice - 1);
-			Iterator<CarOption> optss = this.getModel().getUnscheduledCarOptions();
+			Iterator<CarOption> optss = this.getModel().getUnscheduledCarOptions(3);
 			ArrayList<CarOption> opts = new ArrayList<>();
 			while (optss.hasNext())
 				opts.add(optss.next());

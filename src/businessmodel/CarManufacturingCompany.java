@@ -122,8 +122,8 @@ public class CarManufacturingCompany implements Model{
 	}
 
 	@Override
-	public Iterator<CarOption> getUnscheduledCarOptions() {
-		return this.getOrderManager().getScheduler().getUnscheduledCarOptions(3).iterator();
+	public Iterator<CarOption> getUnscheduledCarOptions(int num) {
+		return this.getOrderManager().getScheduler().getUnscheduledCarOptions(num).iterator();
 	}
 
 	@Override

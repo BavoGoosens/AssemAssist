@@ -18,7 +18,7 @@ public class ManagerView extends View {
 	public void display() {
 		System.out.println("> To view the statistics enter STATS");
 		System.out.println("> To view the available scheduling algorithms enter ALGO ");
-		System.out.println(">> ");
+		System.out.print(">> ");
 		String input = this.scan.nextLine();
 		this.check(input);
 		if (input.equalsIgnoreCase("stats"))
