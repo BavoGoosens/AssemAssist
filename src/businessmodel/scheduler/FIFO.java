@@ -3,7 +3,6 @@ package businessmodel.scheduler;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import businessmodel.category.CarOption;
 import businessmodel.order.Order;
 
 public class FIFO extends SchedulingAlgorithm {

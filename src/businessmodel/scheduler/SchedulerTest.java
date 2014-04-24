@@ -105,9 +105,7 @@ public class SchedulerTest {
 		ord.placeOrder(order4);
 		ord.placeOrder(order5);
 		ord.placeOrder(order6);
-
 		ord.placeOrder(order19);
-
 		ord.placeOrder(order7);
 		ord.placeOrder(order8);
 		ord.placeOrder(order9);
@@ -118,10 +116,10 @@ public class SchedulerTest {
 		ord.placeOrder(order14);
 		ord.placeOrder(order15);
 
-		//	ord.placeOrder(order20);
-		//	ord.placeOrder(order16);
-		//	ord.placeOrder(order17);
-		//	ord.placeOrder(order18);
+		ord.placeOrder(order20);
+		ord.placeOrder(order16);
+		ord.placeOrder(order17);
+		ord.placeOrder(order18);
 
 
 		// test
@@ -176,8 +174,6 @@ public class SchedulerTest {
 		    copy1.add(iter1.next());
 		for(AssemblyTask assem : copy1)
 				cmc.finishTask(assem, 20);
-		
-		
 		
 		wp = testassembly.getWorkPosts().get(1);
 
