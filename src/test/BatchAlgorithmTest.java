@@ -27,11 +27,11 @@ import businessmodel.user.GarageHolder;
 public class BatchAlgorithmTest {
 
 	@Test
-	public void test() {
+	public void test() throws IllegalArgumentException, NoClearanceException, UnsatisfiedRestrictionException {
 
-		try {
-
-			OrderManager orderManager = new CarManufacturingCompany().getOrderManager();
+		
+			CarManufacturingCompany cmc = new CarManufacturingCompany();
+			OrderManager orderManager = cmc.getOrderManager();
 
 			ArrayList<CarOption> options = new ArrayList<CarOption>();
 			options.add(new CarOption("Airco", new Airco()));
@@ -104,7 +104,7 @@ public class BatchAlgorithmTest {
 			for(CarOption option : orderManager.getScheduler().getUnscheduledCarOptions(3))
 				System.out.println(option);
 			
-			orderManager.getScheduler().changeAlgorithm("sb",  new CarOption("medium engine",new Engine()));
+			cmc.changeAlgorithm("sb",  new CarOption("medium engine",new Engine()));
 			try{
 				orderManager.getScheduler().changeAlgorithm("dsfsf",  new CarOption("medium engine",new Engine()));
 			}catch(IllegalSchedulingAlgorithmException ex){
@@ -112,19 +112,16 @@ public class BatchAlgorithmTest {
 			}
 			orderManager.getScheduler().ScheduleDay();
 
+			for(Order order: orderManager.getScheduler().getOrdersClone())
+				System.out.println(order.toString());
+			
 			assertEquals(orderManager.getScheduler().getOrdersClone().get(0),order2);
 			assertEquals(orderManager.getScheduler().getOrdersClone().get(1),order3);
 			assertEquals(orderManager.getScheduler().getOrdersClone().get(2),order5);
 			assertEquals(orderManager.getScheduler().getOrdersClone().get(3),order1);
 			assertEquals(orderManager.getScheduler().getOrdersClone().get(4),order4);
 
-		} catch (IllegalArgumentException e) {
-
-		} catch (NoClearanceException e) {
-
-		} catch (UnsatisfiedRestrictionException e) {
-			System.out.println(e.getMessage());
-		}
+		
 	}
 
 }

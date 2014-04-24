@@ -15,11 +15,15 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	public SpecificationBatch(Scheduler scheduler, CarOption option){
 		super(scheduler);
 		this.setOption(option);
+		ArrayList<Order> list = new ArrayList<Order>(this.getScheduler().getOrders());
+		for(Order order: list)
+			this.scheduleOrder(order);
+		
 	}
 
-	@Override
-	public void scheduleOrder(Order currentOrder) {
+	private void reschedule(Order currentOrder) {
 		
+		this.getScheduler().generateShifts();
 		ArrayList<Order> similarCarOptionsOrder = new ArrayList<Order>();
 		this.getScheduler().ScheduleDay();
 		orderList.add(currentOrder);
@@ -40,10 +44,20 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 		}else{
 			orderList.addLast(currentOrder);
 		}
-		this.reschedule();
+		
+		this.getScheduler().getOrders().clear();
+		for(Order order: orderList){
+			this.getScheduler().getOrdermanager().setEstimatedCompletionDateOfOrder(order);
+			this.getScheduler().getOrders().add(order);
+		}
 	}
 
-	private void reschedule() {
+
+	@Override
+	public void scheduleOrder(Order currentOrder) {
+		
+		this.reschedule(currentOrder);
+		
 		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();
 		for(Order order: orderList){
 			for (Shift sh: this.getScheduler().getShifts()){
