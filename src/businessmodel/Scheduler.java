@@ -194,7 +194,8 @@ public class Scheduler implements Subject {
 			Order nextorder = this.getNextOrderToSchedule();
 			if(nextorder!= null)
 				this.scheduleOrder(nextorder);
-			this.updateDelay(this.getDelay()+60);
+			this.updateDelay(60);
+			this.updateSchedule();
 
 		}else if (this.getDelay() >= 60){
 
@@ -203,7 +204,8 @@ public class Scheduler implements Subject {
 				this.getShifts().removeLast();
 			if(order!= null)
 				this.getOrdermanager().placeOrderInFront(order);
-			this.updateDelay(this.getDelay()-60);
+			this.updateDelay(-60);
+			this.updateSchedule();
 		}
 	}
 

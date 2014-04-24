@@ -98,9 +98,9 @@ public class AssemblyLine implements Subject{
 		return timeCurrentStatus;
 	}
 
-	protected void WorkPostCompleted(int time_order_in_process) {
-		if(time_order_in_process > this.timeCurrentStatus)
-			this.timeCurrentStatus = time_order_in_process;
+	protected void WorkPostCompleted(int timeCurrentStatus) {
+		if(timeCurrentStatus > this.timeCurrentStatus)
+			this.timeCurrentStatus = timeCurrentStatus;
 		this.notifyScheduler();
 	}
 
