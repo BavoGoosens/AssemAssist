@@ -35,13 +35,17 @@ public class CarStatistics implements Observer {
 	private ArrayList<Tuple<LocalDate, Integer>> numberOfCars;
 
 	/**
+	 * Creates a new car statistics object with a given subject it needs to observe.
 	 * 
-	 * @param subject
-	 * @throws IllegalArgumentException
+	 * @param 	subject
+	 * 			The subject the statistics need to observe.
+	 * @throws	IllegalArgumentException
+	 * 			| If the subject is equal to 'null' or if the subject isn't an order scheduler.
+	 * 			| subject == null || !(subject instanceof Scheduler)
 	 */
 	public CarStatistics(Subject subject) throws IllegalArgumentException {
-		subject.subscribeObserver(this);
 		if (subject == null || !(subject instanceof Scheduler)) throw new IllegalArgumentException("Bad subject!");
+		subject.subscribeObserver(this);
 		this.numberOfCars = new ArrayList<Tuple<LocalDate, Integer>>();
 	}
 
@@ -114,14 +118,13 @@ public class CarStatistics implements Observer {
 	 * 			| If the subject is equal to 'null' or if the subject isn't a scheduler
 	 * 			| subject == null or !(subject instanceof Scheduler)
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void update(Subject subject) throws IllegalArgumentException {
 		if (subject != null && subject instanceof Scheduler) {
 			Scheduler scheduler = (Scheduler) subject;
 			LocalDate date = scheduler.getCurrentTime().toLocalDate();
 			int dayOrdersCount = scheduler.getDayOrdersCount();
-			this.numberOfCars.add(new Tuple(date, dayOrdersCount));
+			this.numberOfCars.add(new Tuple<LocalDate, Integer>(date, dayOrdersCount));
 			this.updateAverage();
 			this.updateMedian();
 		} else {
