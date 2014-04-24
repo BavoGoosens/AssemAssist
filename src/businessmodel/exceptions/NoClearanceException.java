@@ -3,6 +3,9 @@ import businessmodel.user.User;
 
 public class NoClearanceException extends Exception {
 	
+	/**
+	 * The serial version UID.
+	 */
 	private static final long serialVersionUID = 2038156514090663821L;
 	private User user;
 	

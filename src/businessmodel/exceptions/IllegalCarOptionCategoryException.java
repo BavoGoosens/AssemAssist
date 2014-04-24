@@ -18,25 +18,52 @@ public class IllegalCarOptionCategoryException extends Exception {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * The wrong cate
+	 * The category that caused the exception.
 	 */
 	private CarOptionCategory category;
-
+	
+	/**
+	 * Creates a new illegal car option exception.
+	 */
 	public IllegalCarOptionCategoryException() {}
-
+	
+	/**
+	 * Creates a new illegal car option exception with a given message.
+	 * @param 	message
+	 * 			The message of the exception.
+	 */
 	public IllegalCarOptionCategoryException(String message) {
 		super(message);
 	}
 	
+	/**
+	 * Creates a new illegal car option exception with a given category.
+	 * 
+	 * @param 	category
+	 * 			The category of the exception.
+	 */
 	public IllegalCarOptionCategoryException(CarOptionCategory category) {
 		this.category = category;
 	}
 	
+	/**
+	 * Creates a new illegal car option exception with a given category and a given message.
+	 * 
+	 * @param	category
+	 * 			The category of the exception.
+	 * @param 	message
+	 * 			The message of the exception.
+	 */
 	public IllegalCarOptionCategoryException(CarOptionCategory category, String message) {
 		super(message);
 		this.category = category;
 	}
 	
+	/**
+	 * Returns the category of the exception.
+	 * 
+	 * @return	The category that caused the exception.
+	 */
 	public CarOptionCategory getCategory() {
 		return this.category;
 	}
