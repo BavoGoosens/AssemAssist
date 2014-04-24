@@ -112,6 +112,7 @@ public class CarMechanicView extends View {
 
 	@Override
 	public void cancel() {
+		this.selected_workpost = null;
 		this.displayHelp();
 		this.display();
 	}
