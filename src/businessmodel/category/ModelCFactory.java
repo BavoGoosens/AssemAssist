@@ -193,7 +193,9 @@ public class ModelCFactory extends CarModelFactory {
 	
 	@Override
 	protected Period getStandardTimeToFinish() {
-		return new Period(60*3);
+		Period period = new Period();
+		period = period.withHours(3);
+		return period;
 	}
 
 }

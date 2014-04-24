@@ -96,7 +96,8 @@ public class OrderStatistics implements Observer {
 							carOrder.getCompletionDate());
 					Period normalPeriod = carOrder.getStandardTimeToFinish();
 					Period delay = period.minus(normalPeriod);
-					this.finishedOrders.add(new Tuple(order, delay.getMinutes()));
+					int time = delay.getHours()*60+delay.getMinutes();
+					this.finishedOrders.add(new Tuple(order, time));
 				}
 			}
 			this.updateAverage();
