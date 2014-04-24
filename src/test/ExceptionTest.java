@@ -10,7 +10,6 @@ import org.junit.Test;
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Catalog;
-import businessmodel.OrderManager;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 import businessmodel.category.ModelAFactory;
@@ -21,7 +20,6 @@ import businessmodel.user.Manager;
 
 
 public class ExceptionTest {
-	private OrderManager orderManager;
 	private Manager manager;
 	private Catalog catalog;
 	private ArrayList<CarOptionCategory> categories;
@@ -30,8 +28,6 @@ public class ExceptionTest {
 	public void setUp() throws Exception {
 		CarManufacturingCompany cmc = new CarManufacturingCompany();
 
-		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
-		orderManager = new OrderManager(carmodels);
 		manager = new Manager("bouwe", "ceunen", "bouwe");
 		
 		this.catalog = new Catalog();

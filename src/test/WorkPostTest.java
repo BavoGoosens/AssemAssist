@@ -24,17 +24,14 @@ public class WorkPostTest {
 	private Order order;
 	private OrderManager om;
 	private Catalog catalog;
-	private ArrayList<Order> orders;
 	private ArrayList<CarOptionCategory> categories;
 
 	
 	@Before
 	public void setUp() throws Exception {
 		CarManufacturingCompany company = new CarManufacturingCompany();
-		ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
 		om = company.getOrderManager();
 		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
-		orders = new ArrayList<Order>();
 
 		this.catalog = new Catalog();
 		this.categories = this.catalog.getAllCategories();

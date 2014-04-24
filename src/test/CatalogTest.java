@@ -1,5 +1,7 @@
 package test;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -21,7 +23,7 @@ public class CatalogTest {
 		Catalog catalog = new Catalog();
 		ArrayList<CarOptionCategory> categories = catalog.getAllCategories();
 		for (CarOptionCategory category: categories) {
-//			System.out.println(category);
+			assertNotNull(category);
 		}
 	}
 	
@@ -30,7 +32,7 @@ public class CatalogTest {
 		Catalog catalog = new Catalog();
 		ArrayList<CarModel> models = catalog.getAvailaleModelsClone();
 		for (CarModel model: models) {
-//			System.out.println(model);
+			assertNotNull(model);
 		}
 	}
 

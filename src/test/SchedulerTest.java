@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
@@ -16,7 +15,6 @@ import businessmodel.OrderManager;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 import businessmodel.category.ModelAFactory;
-import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.order.Order;
 import businessmodel.order.SingleTaskOrder;
 import businessmodel.order.StandardCarOrder;
