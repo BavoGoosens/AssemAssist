@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import org.joda.time.Period;
 
 import businessmodel.OrderManager;
+import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
@@ -14,6 +15,12 @@ import businessmodel.order.StandardCarOrder;
 import businessmodel.util.OrderTupleComperator;
 import businessmodel.util.Tuple;
 
+/**
+ * A class representing the order statistics of the system.
+ * 
+ * @author SWOP team 10 2013-2014
+ *
+ */
 public class OrderStatistics implements Observer {
 	
 	/**
@@ -25,33 +32,70 @@ public class OrderStatistics implements Observer {
 	 * The median delay of all the finished orders.
 	 */
 	private int median;
-
+	
+	/**
+	 * A list of all finished orders with the delay time of each order.
+	 */
 	private ArrayList<Tuple<Order, Integer>> finishedOrders;
 	
-	public OrderStatistics(Subject subject){
+	/**
+	 * Creates a new order statistics object with a given subject it needs to observe.
+	 * 
+	 * @param 	subject
+	 * 			The subject the statistics need to observe.
+	 * @throws	IllegalArgumentException
+	 * 			| If the subject is equal to 'null' or if the subject isn't an order manager.
+	 * 			| subject == null || !(subject instanceof OrderManager)
+	 */
+	public OrderStatistics(Subject subject) throws IllegalArgumentException {
+		if (subject == null || !(subject instanceof OrderManager)) throw new IllegalArgumentException("Bad subject!");
 		this.finishedOrders = new ArrayList<Tuple<Order, Integer>>();
 		subject.subscribeObserver(this);
 	}
 	
+	/**
+	 * Returns the average delay of all finished orders.
+	 * 
+	 * @return The average delay of all the finished orders.
+	 */
 	public int getAverage() {
 		return this.average;
 	}
 	
+	/**
+	 * Returns the median delay of all finished orders.
+	 * 
+	 * @return The median delay of all the finished orders.
+	 */
 	public int getMedian() {
 		return this.median;
 	}
 	
-	public ArrayList<Tuple<Order, Integer>> getLastDays(int number_of_days) {
-		if (this.finishedOrders.size() > number_of_days){
-			ArrayList<Tuple<Order, Integer>> result = new ArrayList<Tuple<Order, Integer>>(number_of_days);
-			for(int i = this.finishedOrders.size(); i >= this.finishedOrders.size() - number_of_days ; i--){
+	/**
+	 * Returns the last 'number' orders and their delays.
+	 * 
+	 * @param 	number
+	 * 			The number of orders.
+	 * @return	The last orders (length: number) and the delays of those orders.
+	 * @throws	IllegalNumberException
+	 * 			| If the number is smaller than zero or if the number is higher or equal than the number of finished orders.
+	 * 			| number < 0 || number >= this.finishedOrders.size()
+	 * 
+	 */
+	public ArrayList<Tuple<Order, Integer>> getLast(int number) throws IllegalNumberException {
+		if (number < 0 || this.finishedOrders.size() > number){
+			ArrayList<Tuple<Order, Integer>> result = new ArrayList<Tuple<Order, Integer>>(number);
+			for(int i = this.finishedOrders.size(); i >= this.finishedOrders.size() - number ; i--){
 				result.add(this.finishedOrders.get(i));
 			}
 			return result;
 		} else 
-			throw new IllegalArgumentException("The supplied number of days is to large");
+			throw new IllegalNumberException("The supplied number of days is to large or too small");
 	}
-
+	
+	/**
+	 * Calculates and updates the average delay time.
+	 */
 	private void updateAverage(){
 		if (this.finishedOrders.size() > 0) {
 			int count = 0;
@@ -64,6 +108,9 @@ public class OrderStatistics implements Observer {
 		}
 	}
 	
+	/**
+	 * Calculates and updates the median delay time.
+	 */
 	@SuppressWarnings("unchecked")
 	private void updateMedian() {
 		if (this.finishedOrders.size() > 0) {
@@ -81,11 +128,16 @@ public class OrderStatistics implements Observer {
 			this.median = 0;
 		}
 	}
-
+	
+	/**
+	 * @throws	IllegalArgumentException
+	 * 			| If the subject is equal to 'null' or isn't an order manager
+	 * 			| subject == null || !(subject instanceof OrderManager)
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void update(Subject subject) {
-		if (subject instanceof OrderManager) {
+	public void update(Subject subject) throws IllegalArgumentException {
+		if (subject != null && subject instanceof OrderManager) {
 			this.finishedOrders = new ArrayList<Tuple<Order, Integer>>();
 			OrderManager orderManager = (OrderManager) subject;
 			LinkedList<Order> finishedOrders = orderManager.getCompletedOrdersClone();
@@ -102,6 +154,8 @@ public class OrderStatistics implements Observer {
 			}
 			this.updateAverage();
 			this.updateMedian();
+		} else {
+			throw new IllegalArgumentException("Bad subject!");
 		}
 	}
 

@@ -3,7 +3,6 @@ package businessmodel.statistics;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import businessmodel.Scheduler;
@@ -12,6 +11,12 @@ import businessmodel.observer.Subject;
 import businessmodel.util.CarTupleComperator;
 import businessmodel.util.Tuple;
 
+/**
+ * A class representing the car statistics of the system.
+ * 
+ * @author SWOP team 10 2013-2014
+ *
+ */
 public class CarStatistics implements Observer {
 
 	/**
@@ -23,46 +28,77 @@ public class CarStatistics implements Observer {
 	 * The median number of cars produced.
 	 */
 	private int median;
-	
-	DateTime beginTime;
 
-	private ArrayList<Tuple<LocalDate, Integer>> number_of_cars;
+	/**
+	 * The number of cars produced for each day.
+	 */
+	private ArrayList<Tuple<LocalDate, Integer>> numberOfCars;
 
+	/**
+	 * 
+	 * @param subject
+	 * @throws IllegalArgumentException
+	 */
 	public CarStatistics(Subject subject) throws IllegalArgumentException {
 		subject.subscribeObserver(this);
 		if (subject == null || !(subject instanceof Scheduler)) throw new IllegalArgumentException("Bad subject!");
-		this.number_of_cars = new ArrayList<Tuple<LocalDate, Integer>>();
+		this.numberOfCars = new ArrayList<Tuple<LocalDate, Integer>>();
 	}
 
+	/**
+	 * Returns the average number of cars produced.
+	 * 
+	 * @return The average number of cars produced.
+	 */
 	public int getAverage(){
 		return this.avarage;
 	}
-
+	
+	/**
+	 * Returns the median number of cars produced.
+	 * 
+	 * @return	The median number of cars produced.
+	 */
 	public int getMedian(){
 		return this.median;
 	}
 
-	public ArrayList<Tuple<LocalDate, Integer>> getLastDays(int number_of_days){
-		if (this.number_of_cars.size() > number_of_days){
-			ArrayList<Tuple<LocalDate, Integer>> result = new ArrayList<Tuple<LocalDate, Integer>>(number_of_days);
-			for(int i = this.number_of_cars.size(); i >= this.number_of_cars.size() - number_of_days ; i--){
-				result.add(this.number_of_cars.get(i));
+	/**
+	 * Returns the number of orders finished for the last 'numberOfDays' days.
+	 * 
+	 * @param 	numberOfDays
+	 * 			The number of days.
+	 * @return	The number of orders that are finished every day for the last 'numberOfDays' days.
+	 * 
+	 */
+	public ArrayList<Tuple<LocalDate, Integer>> getLastDays(int numberOfDays){
+		if (this.numberOfCars.size() > numberOfDays){
+			ArrayList<Tuple<LocalDate, Integer>> result = new ArrayList<Tuple<LocalDate, Integer>>(numberOfDays);
+			for(int i = this.numberOfCars.size(); i >= this.numberOfCars.size() - numberOfDays ; i--){
+				result.add(this.numberOfCars.get(i));
 			}
 			return result;
 		} else 
 			throw new IllegalArgumentException("The supplied number of days is to large");
 	}
 
+	/**
+	 * Calculates and updates the average number of cars produced per day.
+	 */
 	private void updateAverage(){
 		int count = 0;
-		for (Tuple<LocalDate, Integer> tup : this.number_of_cars){
+		for (Tuple<LocalDate, Integer> tup : this.numberOfCars){
 			count += tup.getY();
 		}		
-		this.avarage = (int) Math.floor(count / this.number_of_cars.size());
+		this.avarage = (int) Math.floor(count / this.numberOfCars.size());
 	}
 
+	/**
+	 * Calculates and updates the median number of cars produced per day.
+	 */
+	@SuppressWarnings("unchecked")
 	private void updateMedian(){
-		ArrayList<Tuple<LocalDate, Integer>> temp = (ArrayList<Tuple<LocalDate, Integer>>) this.number_of_cars.clone();
+		ArrayList<Tuple<LocalDate, Integer>> temp = (ArrayList<Tuple<LocalDate, Integer>>) this.numberOfCars.clone();
 		Collections.sort(temp, new CarTupleComperator());
 		if ( temp.size() % 2 == 0 ){
 			int fml = temp.get((temp.size()/2) -1).getY();
@@ -73,16 +109,23 @@ public class CarStatistics implements Observer {
 		}
 	}
 
+	/**
+	 * @throws	IllegalArgumentException
+	 * 			| If the subject is equal to 'null' or if the subject isn't a scheduler
+	 * 			| subject == null or !(subject instanceof Scheduler)
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void update(Subject subject) {
-		if (subject instanceof Scheduler) {
+	public void update(Subject subject) throws IllegalArgumentException {
+		if (subject != null && subject instanceof Scheduler) {
 			Scheduler scheduler = (Scheduler) subject;
 			LocalDate date = scheduler.getCurrentTime().toLocalDate();
 			int dayOrdersCount = scheduler.getDayOrdersCount();
-			this.number_of_cars.add(new Tuple(date, dayOrdersCount));
+			this.numberOfCars.add(new Tuple(date, dayOrdersCount));
 			this.updateAverage();
 			this.updateMedian();
+		} else {
+			throw new IllegalArgumentException("Bad subject!");
 		}
 	}
 

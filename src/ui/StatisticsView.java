@@ -29,7 +29,7 @@ public class StatisticsView extends View{
 		System.out.println("> Average delay on an Order: " + orderstats.getAverage() + " min");
 		System.out.println("> Median delay on an Order: " + orderstats.getAverage() + " min");
 		try{
-			ArrayList<Tuple<Order, Integer>> ords = orderstats.getLastDays(2);
+			ArrayList<Tuple<Order, Integer>> ords = orderstats.getLast(2);
 			System.out.println("> The last two production days:");
 			for (Tuple<Order, Integer> day : ords)
 				System.out.println("  > Order: " + day.getX() + "\n" 
