@@ -150,6 +150,14 @@ public class CarManufacturingCompany implements Model{
 
 	
 	/**
+	 * Method to get the current time of the system.
+	 * @return
+	 */
+	public DateTime getSystemTime(){
+		return new DateTime(ordermanager.getScheduler().getCurrentTime());
+	}
+
+	/**
 	 * Method to complete an assembly task.
 	 * @param task
 	 * @param time
@@ -176,14 +184,6 @@ public class CarManufacturingCompany implements Model{
 		this.getOrderManager().placeOrder(order);
 	}
 	
-	/**
-	 * Method to get the current time of the system.
-	 * @return
-	 */
-	public DateTime getSystemTime(){
-		return new DateTime(ordermanager.getScheduler().getCurrentTime());
-	}
-
 	/**
 	 * Method to get the users of the car manufacturing company.
 	 * @return
