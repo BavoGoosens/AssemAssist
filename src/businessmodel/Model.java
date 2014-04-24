@@ -40,7 +40,7 @@ public interface Model {
 
 	public Iterator<AssemblyTask> getFinishedTasks(WorkPost wp);
 	
-	public Iterator<CarOption> getUnscheduledCarOptions();
+	public Iterator<CarOption> getUnscheduledCarOptions(int num);
 
 	public String getCurrentAlgo();
 

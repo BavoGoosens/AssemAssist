@@ -32,7 +32,7 @@ public class CarMechanicView extends View {
 		Iterator<WorkPost> temp = this.getModel().getWorkPosts(this.user);
 		while(temp.hasNext())
 			posts.add(temp.next());
-		System.out.println("> If you wish to chech the assembly line status enter STATUS");
+		System.out.println("> If you wish to check the assembly line status enter STATUS");
 		System.out.println("> If you want to perform pending assembly tasks enter the number of the workpost you are residing at");
 		System.out.println("> Available workposts");
 		int num  = 1;

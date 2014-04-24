@@ -75,7 +75,7 @@ public class CarManufacturingCompany implements Model{
 	public Iterator<String> getSchedulingAlgorithms(User user) {
 		ArrayList<String> algos = new ArrayList<String>(); 
 		algos.add("FIFO"); 
-		algos.add("Specification Batch"); 
+		algos.add("SpecificationBatch"); 
 		return algos.iterator();
 	}
 
@@ -122,8 +122,8 @@ public class CarManufacturingCompany implements Model{
 	}
 
 	@Override
-	public Iterator<CarOption> getUnscheduledCarOptions() {
-		return this.getOrderManager().getScheduler().getUnscheduledCarOptions(3).iterator();
+	public Iterator<CarOption> getUnscheduledCarOptions(int num) {
+		return this.getOrderManager().getScheduler().getUnscheduledCarOptions(num).iterator();
 	}
 
 	@Override
