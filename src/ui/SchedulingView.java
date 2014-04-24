@@ -3,10 +3,12 @@ package ui;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import control.SchedulingController;
 import control.SchedulingHandler;
 import businessmodel.Model;
+import businessmodel.category.CarOption;
 import businessmodel.user.User;
 
 public class SchedulingView extends View {
@@ -30,6 +32,48 @@ public class SchedulingView extends View {
 		while (algoss.hasNext())
 			algos.add(algoss.next());
 		String currentalgo = this.getModel().getCurrentAlgo();
+		System.out.println("> The active algorithm: ");
+		System.out.println("> " + currentalgo);
+		System.out.println("> To choose an algorithm enter the corresponding number. "
+				+ "\n These are the available algorithms: ");
+		int count = 1;
+		for (String alg : algos )
+			System.out.println("> " + count++ + ") " + alg);
+		System.out.print(">> ");
+		String response = this.scan.nextLine();
+		Pattern pattern = Pattern.compile("^\\d*$");
+		this.check(response);
+		if (pattern.matcher(response).find()){
+			int choice = Integer.parseInt(response);
+			if (choice < 1 || choice > algos.size())
+				this.error();
+			String algo = algos.get(choice - 1);
+			Iterator<CarOption> optss = this.getModel().getUnscheduledCarOptions();
+			ArrayList<CarOption> opts = new ArrayList<>();
+			while (optss.hasNext())
+				opts.add(optss.next());
+			System.out.println("> Enter the number of the car option you want to supply as a parameter");
+			int num = 1;
+			for (CarOption opt : opts)
+				System.out.println("> " + num ++ + ") " + opt);
+			System.out.print(">> ");
+			response = this.scan.nextLine();
+			this.check(response);
+			if (pattern.matcher(response).find()){
+				choice = Integer.parseInt(response);
+				if (choice < 1 || choice > opts.size())
+					this.error();
+				CarOption param = opts.get(choice - 1 );
+				try {
+					this.controller.selectAlgorithm(algo, param);
+				} catch (Exception e){
+					System.out.println("! " + e.getMessage());
+					this.display();
+				}
+			}
+			
+		}
+		this.error();
 	}
 
 	@Override
@@ -39,8 +83,8 @@ public class SchedulingView extends View {
 
 	@Override
 	public void error() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("! You entered something wrong. Please try again");
+		this.display();	
 	}
 
 	@Override

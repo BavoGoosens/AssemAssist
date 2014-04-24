@@ -72,5 +72,16 @@ public class Catalog {
 		}
 		return categories;
 	}
+	
+	protected ArrayList<CarOption> getAllOptions(CarOptionCategory cat) {
+		ArrayList<CarOption> res = new ArrayList<>();
+		for (CarModel model: this.getAvailableModels()){
+			for (CarOption option: model.getPossibilities()) {
+				if (option.getCategory().equals(cat))
+					res.add(option);
+			}
+		}
+		return res;
+	}
 
 }

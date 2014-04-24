@@ -46,6 +46,7 @@ public class Scheduler implements Subject {
 		this.orders = new LinkedList<Order>();
 		this.assemblyline = new AssemblyLine(this);
 		this.observers = new ArrayList<Observer>();
+		this.ordermanager = ordermanager;
 		DateTime datetemp = new DateTime();
 		this.currenttime = new DateTime(datetemp.getYear(), datetemp.getMonthOfYear(), datetemp.getDayOfMonth(), 8, 0);
 		this.changeAlgorithm("fifo", null);
@@ -66,7 +67,7 @@ public class Scheduler implements Subject {
 		updateDelay(delay);
 		updateEstimatedTimeOfOrders(delay);
 		this.updateSchedule();
-		if (this.getShifts().getFirst().getTimeSlots().size() == 0)
+		if (this.getShifts().size() == 0)
 			this.ScheduleDay();
 	}
 
@@ -117,8 +118,10 @@ public class Scheduler implements Subject {
 		this.generateShifts();
 		this.updateCurrentTime();
 		int size = this.getNumberOfOrdersToSchedule();
-		for(Order order: this.getOrdermanager().getNbOrders(size))
+		for(Order order: this.getOrdermanager().getNbOrders(size)){
 			this.addOrderToSchedule(order);
+			this.getOrders().add(order);
+		}
 	}
 
 	public LinkedList<Order> getOrders() {

@@ -1,5 +1,6 @@
 package ui;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -12,6 +13,7 @@ import control.SingleTaskOrderController;
 import control.SingleTaskOrderHandler;
 import businessmodel.AssemblyTask;
 import businessmodel.Model;
+import businessmodel.category.CarOption;
 import businessmodel.user.User;
 
 public class CustomShopManagerView extends View {
@@ -30,11 +32,16 @@ public class CustomShopManagerView extends View {
 
 	@Override
 	public void display() {
-		Iterator<AssemblyTask> available = this.getModel().getAvailableTasks(this.user);
+		Iterator<AssemblyTask> availableiter = this.getModel().getAvailableTasks(this.user);
+		ArrayList<AssemblyTask> available = new ArrayList<>();
 		System.out.println("> These are the assembly tasks you can order: ");
 		int count = 1;
-		while(available.hasNext())
-			System.out.println("> " + count ++ + ") " + available.next());
+		while(availableiter.hasNext()){
+			AssemblyTask t = availableiter.next();
+			System.out.println("> " + count ++ + ") " + t );
+			available.add(t);
+		}
+
 		System.out.println("> Enter the number of the task you wish to order: ");
 		System.out.print(">> ");
 		String response = this.scan.nextLine();
@@ -42,6 +49,7 @@ public class CustomShopManagerView extends View {
 		Pattern pattern = Pattern.compile("^\\d*$");
 		if (pattern.matcher(response).find()){
 			int choice = Integer.parseInt(response);
+			AssemblyTask chosen = available.get(choice - 1);
 			DateTime deadline;
 			System.out.println("> Enter the deadline in dd/mm/yyyy/ format");
 			System.out.print(">> ");
@@ -52,9 +60,9 @@ public class CustomShopManagerView extends View {
 				int day = Integer.parseInt(mat.group(0));
 				int month = Integer.parseInt(mat.group(1));
 				int year = Integer.parseInt(mat.group(2));
-				deadline = new DateTime(year, month, day, 8, 0);
-				
+				deadline = new DateTime(year, month, day, 8, 0);		
 			}
+			ArrayList<CarOption> options = chosen.getInstallableOptions();
 		} else {
 			this.error();
 		}
