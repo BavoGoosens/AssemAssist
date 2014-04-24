@@ -77,7 +77,7 @@ public class OrderManager implements Subject {
 			this.getPendingOrders().add(order);
 	}
 
-	public LinkedList<Order> getPendingOrders(){
+	protected LinkedList<Order> getPendingOrders(){
 		return this.pendingorders;
 	}
 
@@ -113,7 +113,7 @@ public class OrderManager implements Subject {
 	 * 
 	 * @return  the completed orders of a given user of this order manager.
 	 */
-	public ArrayList<Order> getCompletedOrders(User user) throws IllegalArgumentException, NoClearanceException {
+	protected ArrayList<Order> getCompletedOrders(User user) throws IllegalArgumentException, NoClearanceException {
 		if (user == null) throw new IllegalArgumentException("Bad user!");
 		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
 		ArrayList<Order> completedorders = new ArrayList<Order>();
@@ -121,7 +121,7 @@ public class OrderManager implements Subject {
 			if (order.getUser() == user)
 				completedorders.add(order);
 		}
-		return (ArrayList<Order>) completedorders.clone();
+		return (ArrayList<Order>) completedorders;
 	}
 
 	/**
