@@ -35,6 +35,9 @@ public class OrderManager implements Subject {
 	 */
 	private Scheduler scheduler;
 
+	/**
+	 * List of the pending orders.
+	 */
 	private LinkedList<Order> pendingorders;
 
 	/**
@@ -183,14 +186,9 @@ public class OrderManager implements Subject {
 	}
 
 	/**
-	 * A method that returns the Scheduler for this OrderManager.
-	 * 
-	 * @return	this.scheduler
+	 * Method to set an estimated completion time for a particular order.
+	 * @param order
 	 */
-	public Scheduler getScheduler() {
-		return this.scheduler;
-	}
-
 	protected void setEstimatedCompletionDateOfOrder(Order order){
 		Order previousorder = this.getPreviousOrder(order);
 		if(previousorder != null) {
@@ -227,11 +225,21 @@ public class OrderManager implements Subject {
 	}
 	
 
+	/**
+	 * Method to set the car models
+	 * 
+	 * @param carmodels
+	 * @throws IllegalArgumentException
+	 */
 	private void setCarModels(ArrayList<CarModel> carmodels) throws IllegalArgumentException {
 		if (carmodels == null) throw new IllegalArgumentException("Bad list of car models!");
 		this.carmodels = carmodels;
 	}
 
+	/**
+	 * Method to return a list of the single task orders scheduled on the next day.
+	 * @return list of the single task orders scheduled on the next day.
+	 */
 	private LinkedList<Order> getSingleTaskOrdersNextDay() {
 		LinkedList<Order> temp = new LinkedList<Order>();
 	
@@ -247,6 +255,15 @@ public class OrderManager implements Subject {
 		return temp;
 	}
 
+	/**
+	 * A method that returns the Scheduler for this OrderManager.
+	 * 
+	 * @return	this.scheduler
+	 */
+	public Scheduler getScheduler() {
+		return this.scheduler;
+	}
+	
 	@Override
 	public void subscribeObserver(Observer observer) throws IllegalArgumentException {
 		if (observer == null) throw new IllegalArgumentException("Bad observer!");

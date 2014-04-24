@@ -19,6 +19,9 @@ public class AssemblyTask {
 	 */
 	private String name;
 	
+	/**
+	 * Description for the actions who have to be performed for completing the assembly task.
+	 */
 	private String action_description;
 
 	/**
@@ -31,6 +34,9 @@ public class AssemblyTask {
 	 */
 	private CarOptionCategory category;
 	
+	/**
+	 * The workpost of the assembly task
+	 */
 	private WorkPost workpost;
 
 	/**
@@ -50,12 +56,25 @@ public class AssemblyTask {
 		this.setDescription(description_of_actions);
 	}
 	
+	/**
+	 * Creates a new assembly task.
+	 * 
+	 * @param name
+	 * @param description_of_actions
+	 * @param category
+	 * @throws IllegalArgumentException
+	 */
 	public AssemblyTask(String name, String description_of_actions, CarOptionCategory category) throws IllegalArgumentException {
 		this.setName(name);
 		this.setCategory(category);
 		this.setDescription(description_of_actions);
 	}
 	
+	/**
+	 * Method to get a unique set of all the car options that can be installed.
+	 * 
+	 * @return
+	 */
 	public ArrayList<CarOption> getInstallableOptions() {
 		ArrayList<CarOption> oplist = new Catalog().getAllOptions(this.category);
 		
@@ -70,10 +89,7 @@ public class AssemblyTask {
 		return result;
 	}
 
-	public String getDescription(){
-		return this.action_description;
-	}
-
+	
 	/**
 	 * Checks if this assembly task is completed.
 	 * 
@@ -83,13 +99,6 @@ public class AssemblyTask {
 		return this.completed;
 	}
 	
-	public WorkPost getWorkpost() {
-		return workpost;
-	}
-
-	private void setWorkpost(WorkPost workpost) {
-		this.workpost = workpost;
-	}
 
 	/**
 	 * A method to set this assembly task to completed.
@@ -117,14 +126,30 @@ public class AssemblyTask {
 		return category;
 	}
 
+	/**
+	 * Notify the work post when an assembly task is completed.
+	 * @param time
+	 */
 	private void notifyWorkPost(int time){
 		this.getWorkpost().AssemblyTaskCompleted(this,time);
 	}
 
+	/**
+	 * Set actions for this assembly task.
+	 * @param description_of_actions
+	 */
 	private void setDescription(String description_of_actions) {
 		this.action_description = description_of_actions;
 	}
 
+	/**
+	 * Get actions for this assembly task.
+	 * @return action_description
+	 */
+	public String getDescription(){
+		return this.action_description;
+	}
+	
 	/**
 	 * Sets the name of this assembly task to the given name.
 	 * 
@@ -153,6 +178,15 @@ public class AssemblyTask {
 		if (category == null) throw new IllegalArgumentException("Bad category!");
 		this.category = category;
 	}
+
+	public WorkPost getWorkpost() {
+		return workpost;
+	}
+
+	private void setWorkpost(WorkPost workpost) {
+		this.workpost = workpost;
+	}
+	
 
 	/**
 	 * Returns a string representation of the assembly task.

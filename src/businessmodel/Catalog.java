@@ -64,6 +64,12 @@ public class Catalog {
 		return (ArrayList<CarModel>) this.getAvailableModels().clone();
 	}
 
+	/**
+	 * Method to get all the options of a car option category.
+	 * 
+	 * @param cat
+	 * @return
+	 */
 	protected ArrayList<CarOption> getAllOptions(CarOptionCategory cat) {
 		ArrayList<CarOption> res = new ArrayList<>();
 		for (CarModel model: this.getAvailableModels()){
@@ -75,16 +81,27 @@ public class Catalog {
 		return res;
 	}
 
+	/**
+	 * Method to create all the car models.
+	 */
 	private void createAllModels() {
 		for (CarModelFactory factory: this.getFactories()) {
 			this.getAvailableModels().add(factory.createModel());
 		}
 	}
 
+	/**
+	 * Get the factories.
+	 * @return the factories
+	 */
 	private ArrayList<CarModelFactory> getFactories() {
 		return this.factories;
 	}
 	
+	/**
+	 * Get the available car models.
+	 * @return the available car models
+	 */
 	private ArrayList<CarModel> getAvailableModels() {
 		return this.availableModels;
 	}

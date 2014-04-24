@@ -6,6 +6,12 @@ import businessmodel.order.Order;
 
 public class EndShift extends Shift {
 
+	/**
+	 * Create an end shift with an amount of hours and work posts.
+	 * 
+	 * @param hours
+	 * @param numberofworkposts
+	 */
 	public EndShift(int hours,int numberofworkposts) {
 		super(hours,numberofworkposts);
 	}
@@ -23,7 +29,7 @@ public class EndShift extends Shift {
 	}
 	
 	/**
-	 * A method to check if a number of Timeslo's are available to handle an order.
+	 * A method to check if a number of Timeslots are available to handle an order.
 	 * @param 	timeslot
 	 * 			the first slot to check.
 	 * @return	a list of slots if there is room. null if there is no place available.

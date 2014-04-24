@@ -21,14 +21,29 @@ import businessmodel.user.User;
 
 public class CarManufacturingCompany implements Model{
 
+	/**
+	 * List of the users.
+	 */
 	private ArrayList<User> users = new ArrayList<User>();
 	
+	/**
+	 * The order manager.
+	 */
 	private OrderManager ordermanager;
 	
+	/**
+	 * The task manager.
+	 */
 	private TaskManager taskmanager;
 	
+	/**
+	 * Statistics manager.
+	 */
 	private StatisticsManager statisticsmanager;
 	
+	/**
+	 * The catalog where all the available car models are stored.
+	 */
 	private Catalog catalog;
 
 	/**
@@ -133,30 +148,58 @@ public class CarManufacturingCompany implements Model{
 		return this.ordermanager.getScheduler().currentAlgoDescription();
 	}
 
-	public OrderManager getOrderManager(){
-		return this.ordermanager;
-	}
-
+	
+	/**
+	 * Method to complete an assembly task.
+	 * @param task
+	 * @param time
+	 */
 	public void finishTask(AssemblyTask task, int time) {
 		task.completeAssemblytask(time);
 	}
 
+	/**
+	 * Method to change the scheduling algorithm.
+	 * @param algo
+	 * @param option
+	 */
 	public void changeAlgorithm(String algo, CarOption option) {
 		this.getOrderManager().getScheduler().changeAlgorithm(algo, option);
 	}
 
+	/**
+	 * Method to place an order.
+	 * @param order
+	 * @throws IllegalArgumentException
+	 */
 	public void placeOrder(Order order) throws IllegalArgumentException {
 		this.getOrderManager().placeOrder(order);
 	}
 	
+	/**
+	 * Method to get the current time of the system.
+	 * @return
+	 */
 	public DateTime getSystemTime(){
 		return new DateTime(ordermanager.getScheduler().getCurrentTime());
 	}
 
+	/**
+	 * Method to get the users of the car manufacturing company.
+	 * @return
+	 */
 	private ArrayList<User> getUsers() {
 		return this.users;
 	}
 
+	/**
+	 * Get the order manager.
+	 * @return ordermanager
+	 */
+	public OrderManager getOrderManager(){
+		return this.ordermanager;
+	}
+	
 	/**
 	 * A method to set the order manager of this class to the given order manager.
 	 * 
@@ -168,6 +211,13 @@ public class CarManufacturingCompany implements Model{
 		this.ordermanager = ordermanager;
 	}
 
+	/**
+	 * Method to get the User given a username.
+	 * 
+	 * @param username
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
 	private User getUser(String username) throws IllegalArgumentException {
 		for(User user: this.getUsers())
 			if (user.getUsername().equals(username))

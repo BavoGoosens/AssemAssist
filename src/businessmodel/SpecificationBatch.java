@@ -12,6 +12,11 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	private LinkedList<Order> orderList = new LinkedList<Order>();
 	private CarOption option;
 
+	/**
+	 * Creates a specificationbatch algorithm with a scheduler and an option to schedule to options from.
+	 * @param scheduler
+	 * @param option
+	 */
 	public SpecificationBatch(Scheduler scheduler, CarOption option){
 		super(scheduler);
 		this.setOption(option);
