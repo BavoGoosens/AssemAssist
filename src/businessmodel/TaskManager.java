@@ -11,13 +11,20 @@ import businessmodel.category.Seats;
 import businessmodel.category.Spoiler;
 import businessmodel.category.Wheels;
 
+/**
+ * A class representing a task manager.
+ * 
+ * @author SWOP team 10 2013-2014
+ *
+ */
 public class TaskManager {
 
 	private ArrayList<AssemblyTask> singleTaskOrders;
 
 	/**
 	 * Creates a task manager with a list of work posts.
-	 * @param workposts
+	 * @param 	workposts
+	 * 			The list of work posts.
 	 */
 	public TaskManager(ArrayList<WorkPost> workposts){	
 		this.generateRepsonsibleAssemblyTasks(workposts);
