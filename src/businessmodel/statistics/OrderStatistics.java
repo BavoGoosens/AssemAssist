@@ -91,10 +91,10 @@ public class OrderStatistics implements Observer {
 			OrderManager orderManager = (OrderManager) subject;
 			LinkedList<Order> finishedOrders = orderManager.getCompletedOrdersClone();
 			for (Order order: finishedOrders) {
-				Period period = new Period(order.getOrder_placed_on_workpost(),
+				Period period = new Period(order.getOrderPlacedOnWorkPost(),
 						order.getCompletionDate());
-				Period normalPeriod = new Period(order.getOrder_placed_on_workpost(), 
-						order.getStandardtime_on_assemblyline());
+				Period normalPeriod = new Period(order.getOrderPlacedOnWorkPost(), 
+						order.getStandardTimeOnAssemblyLine());
 				Period delay = period.minus(normalPeriod);
 				this.finishedOrders.add(new Tuple(order, delay.getMinutes()));
 			}
