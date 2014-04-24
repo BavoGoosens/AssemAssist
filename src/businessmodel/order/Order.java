@@ -79,18 +79,16 @@ public abstract class Order {
 		this.completed = true;
 	}
 
-	public void setPlacedOnWorkpostOfOrder(DateTime placedOnWorkPost) {		
-		this.setOrderPlacedOnWorkPost(placedOnWorkPost);
+	public void setTimestampOfOrder(DateTime timestamp) {
+		this.setTimestamp(timestamp);
 	}
 
 	public void setCompletionDateOfOrder(DateTime deliverydate) throws IllegalArgumentException {
-		if(deliverydate == null) 
-			throw new IllegalArgumentException("Bad completion date!");
 		this.setCompletionDate(deliverydate);
 	}
 
-	public void setTimestampOfOrder(DateTime timestamp) {
-		this.setTimestamp(timestamp);
+	public void setPlacedOnWorkpostOfOrder(DateTime placedOnWorkPost) {		
+		this.setOrderPlacedOnWorkPost(placedOnWorkPost);
 	}
 
 	public void setOrderPlacedOnWorkPostOfOrder(DateTime orderPlacedOnWorkPost) throws IllegalArgumentException {
@@ -101,19 +99,27 @@ public abstract class Order {
 		this.setEstimatedDeliveryDate(estimatedDeliveryDate);
 	}
 
+	private void setTimestamp(DateTime timestamp){
+		this.timestamp = timestamp;
+	}
+
+	private void setCompletionDate(DateTime completionDate) throws IllegalArgumentException{
+	if(completionDate == null) 
+		throw new IllegalArgumentException("Bad completion date!");
+		this.completionDate = completionDate;
+	}
+
 	private void setEstimatedDeliveryDate(DateTime estimatedDeliveryDate) throws IllegalArgumentException {
 		if(estimatedDeliveryDate == null) 
 			throw new IllegalArgumentException("Bad estimated delivery date!");
 		this.estimatedDeliveryDate = estimatedDeliveryDate;
 	}
 
-	private void setTimestamp(DateTime timestamp){
-		this.timestamp = timestamp;
-	}
-
 	private void setUser(User user) throws IllegalArgumentException, NoClearanceException {
-		if (user == null) throw new IllegalArgumentException("Bad user!");
-		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
+		if (user == null) 
+			throw new IllegalArgumentException("Bad user!");
+		if (!user.canPlaceOrder()) 
+			throw new NoClearanceException(user);
 		this.user = user;
 	}
 
@@ -125,10 +131,6 @@ public abstract class Order {
 
 	private void setStandardTimeOnAssemblyLine(DateTime placedOnWorkPost) {
 		this.standardTimeOnAssemblyLine = placedOnWorkPost;
-	}
-
-	private void setCompletionDate(DateTime completionDate) {
-		this.completionDate = completionDate;
 	}
 
 	@Override
