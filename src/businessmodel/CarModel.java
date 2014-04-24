@@ -24,6 +24,9 @@ public class CarModel {
 	 */
 	private CarModelSpecification cms;
 	
+	/**
+	 * 
+	 */
 	private Period standardTimeToFinish;
 
 	/**
@@ -40,6 +43,7 @@ public class CarModel {
 			throws IllegalArgumentException {
 		this.setCarmodel(name);
 		this.setCarModelSpecification(cms);
+		this.setStandardTimeToFinish(standardTimeToFinish);
 		this.setStandardTimeToFinish(standardTimeToFinish);
 	}
 	
