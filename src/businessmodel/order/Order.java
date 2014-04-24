@@ -51,6 +51,18 @@ public abstract class Order {
 	
 	public abstract ArrayList<CarOption> getOptions();
 
+	public DateTime getTimestamp() {
+		return timestamp;
+	}
+
+	public DateTime getCompletionDate() {
+		return completionDate;
+	}
+
+	public DateTime getStandardTimeOnAssemblyLine() {
+		return standardTimeOnAssemblyLine;
+	}
+
 	public DateTime getUserEndDate() {
 		return null;
 	}
@@ -67,6 +79,16 @@ public abstract class Order {
 		this.completed = true;
 	}
 
+	public void setPlacedOnWorkpostOfOrder(DateTime placedOnWorkPost) {		
+		this.setOrderPlacedOnWorkPost(placedOnWorkPost);
+	}
+
+	public void setCompletionDateOfOrder(DateTime deliverydate) throws IllegalArgumentException {
+		if(deliverydate == null) 
+			throw new IllegalArgumentException("Bad completion date!");
+		this.setCompletionDate(deliverydate);
+	}
+
 	public void setTimestampOfOrder(DateTime timestamp) {
 		this.setTimestamp(timestamp);
 	}
@@ -75,23 +97,8 @@ public abstract class Order {
 		this.setOrderPlacedOnWorkPost(orderPlacedOnWorkPost);
 	}
 
-	private void setOrderPlacedOnWorkPost(DateTime orderPlacedOnWorkPost) throws IllegalArgumentException{
-		if(orderPlacedOnWorkPost == null) 
-			throw new IllegalArgumentException("Bad order placed on work post date!");
-		this.orderPlacedOnWorkPost = orderPlacedOnWorkPost;		
-	}
-
-	public DateTime getStandardTimeOnAssemblyLine() {
-		return standardTimeOnAssemblyLine;
-	}
-
 	public void setEstimatedDeliveryDateOfOrder(DateTime estimatedDeliveryDate) {
 		this.setEstimatedDeliveryDate(estimatedDeliveryDate);
-	}
-
-	@Override
-	public String toString() {
-		return "user: " + this.user.toString() + ", delivery date= " + this.estimatedDeliveryDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT); 
 	}
 
 	private void setEstimatedDeliveryDate(DateTime estimatedDeliveryDate) throws IllegalArgumentException {
@@ -110,23 +117,22 @@ public abstract class Order {
 		this.user = user;
 	}
 
-	private void setStandardTimeOnAssemblyLine(DateTime standardTimeOnAssemblyLine) {
-		this.standardTimeOnAssemblyLine = standardTimeOnAssemblyLine;
+	private void setOrderPlacedOnWorkPost(DateTime orderPlacedOnWorkPost) throws IllegalArgumentException{
+		if(orderPlacedOnWorkPost == null) 
+			throw new IllegalArgumentException("Bad order placed on work post date!");
+		this.orderPlacedOnWorkPost = orderPlacedOnWorkPost;		
 	}
 
-	private DateTime getCompletionDate() {
-		return completionDate;
+	private void setStandardTimeOnAssemblyLine(DateTime placedOnWorkPost) {
+		this.standardTimeOnAssemblyLine = placedOnWorkPost;
 	}
 
 	private void setCompletionDate(DateTime completionDate) {
 		this.completionDate = completionDate;
 	}
 
-	private DateTime getTimestamp() {
-		return timestamp;
-	}
-
-	private void setCompleted(boolean completed) {
-		this.completed = completed;
+	@Override
+	public String toString() {
+		return "user: " + this.user.toString() + ", delivery date= " + this.estimatedDeliveryDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT); 
 	}
 }

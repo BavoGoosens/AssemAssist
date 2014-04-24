@@ -76,7 +76,7 @@ public class Scheduler implements Subject {
 
 	public void addOrderToSchedule(Order order){
 		this.getAlgo().scheduleOrder(order);
-		order.setTimestamp(this.getCurrentTime());
+		order.setTimestampOfOrder(this.getCurrentTime());
 		this.getOrders().add(order);
 		boolean advance = true;
 		for(WorkPost wp : this.getAssemblyline().getWorkPosts()){
@@ -172,7 +172,7 @@ public class Scheduler implements Subject {
 	private void updateCompletedOrders(){
 		if(this.getOrders().peekFirst()!= null && this.getOrders().peekFirst().isCompleted()){
 			Order completedorder = this.getOrders().pollFirst();
-			completedorder.setCompletionDate(this.getCurrentTime());
+			completedorder.setCompletionDateOfOrder(this.getCurrentTime());
 			this.getOrdermanager().finishedOrder(completedorder);
 		}
 	}
@@ -208,7 +208,7 @@ public class Scheduler implements Subject {
 			this.getShifts().removeFirst();
 		this.getAssemblyline().advance(nextorder);
 		if(nextorder != null)
-			nextorder.setPlacedOnWorkpost(this.getCurrentTime());
+			nextorder.setPlacedOnWorkpostOfOrder(this.getCurrentTime());
 	}
 
 	private void updateEstimatedTimeOfOrders(int delay){
