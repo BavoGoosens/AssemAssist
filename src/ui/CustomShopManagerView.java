@@ -11,6 +11,9 @@ import org.joda.time.DateTime;
 import businessmodel.AssemblyTask;
 import businessmodel.Model;
 import businessmodel.category.CarOption;
+import businessmodel.exceptions.NoClearanceException;
+import businessmodel.exceptions.UnsatisfiedRestrictionException;
+import businessmodel.order.SingleTaskOrder;
 import businessmodel.user.User;
 import control.SingleTaskOrderController;
 import control.SingleTaskOrderHandler;
@@ -46,10 +49,43 @@ public class CustomShopManagerView extends View {
 		Pattern pattern = Pattern.compile("^\\d*$");
 		if (pattern.matcher(response).find()){
 			int choice = Integer.parseInt(response);
-			AssemblyTask chosen = available.get(choice - 1);
+			AssemblyTask chosen = null;
+			if (choice >= 1 && choice <= available.size()){
+				chosen = available.get(choice - 1);
+			} else {
+				System.out.println("! wrong input. Please try again");
+				this.display();
+			}
 			DateTime deadline = deadlineDialog();
 			ArrayList<CarOption> options = chosen.getInstallableOptions();
-
+			CarOption opt = null;
+			while (opt == null ){
+				System.out.println("> Enter the number of the specific option you want to order: ");
+				int num = 1;
+				for (CarOption op : options)
+					System.out.println("> " + num ++ + ") " + op);
+				System.out.print(">> ");
+				response = this.scan.nextLine();
+				this.check(response);
+				if (pattern.matcher(response).find()){
+					choice = Integer.parseInt(response);
+					if (choice >= 1 && choice <= options.size())
+						opt = options.get(choice - 1);
+					else {
+						System.out.println("! Bad input. Please try again");
+						continue;
+					}
+				}
+			}
+			ArrayList<CarOption> res = new ArrayList<CarOption>();
+			res.add(opt);
+			try {
+				this.controller.placeSingleTaskOrder(new SingleTaskOrder(this.user, res , deadline));
+				System.out.println("> Your order has been placed :)");
+			} catch (IllegalArgumentException | NoClearanceException
+					| UnsatisfiedRestrictionException e) {
+				this.error();
+			}
 
 		} else {
 			this.error();
@@ -57,39 +93,45 @@ public class CustomShopManagerView extends View {
 	}
 
 	private DateTime deadlineDialog(){
-		DateTime deadline;
-		System.out.println("> Enter the deadline in dd/mm/yyyy/ format");
-		System.out.print(">> ");
-		String response = this.scan.nextLine();
-		Pattern pat = Pattern.compile("(\\d+)/(\\d+)/(\\d+)");
-		Matcher mat = pat.matcher(response);
-		if (mat.find()){
-			int day = Integer.parseInt(mat.group(0));
-			int month = Integer.parseInt(mat.group(1));
-			int year = Integer.parseInt(mat.group(2));
-			deadline = new DateTime(year, month, day, 8, 0);
+		DateTime deadline = null;
+		while (deadline == null){
+			System.out.println("> Enter the deadline in dd/mm/yyyy/ format");
+			System.out.print(">> ");
+			String response = this.scan.nextLine();
+			this.check(response);
+			Pattern pat = Pattern.compile("(\\d+)/(\\d+)/(\\d+)");
+			Matcher mat = pat.matcher(response);
+			if (mat.find()){
+				int day = Integer.parseInt(mat.group(0));
+				int month = Integer.parseInt(mat.group(1));
+				int year = Integer.parseInt(mat.group(2));
+				deadline = new DateTime(year, month, day, 8, 0);
+				break;
+			}
 		}
-
-		@Override
-		public void displayHelp() {
-			this.helpOverview();
-		}
-
-		@Override
-		public void cancel() {
-			this.displayHelp();
-			this.display();
-		}
-
-		@Override
-		public void quit() {
-			new LoginView(getModel()).display();
-		}
-
-		@Override
-		public void error() {
-			System.out.println("! Something went wrong. Please try agian");
-			this.display();
-		}
-
+		return deadline;
 	}
+
+	@Override
+	public void displayHelp() {
+		this.helpOverview();
+	}
+
+	@Override
+	public void cancel() {
+		this.displayHelp();
+		this.display();
+	}
+
+	@Override
+	public void quit() {
+		new LoginView(getModel()).display();
+	}
+
+	@Override
+	public void error() {
+		System.out.println("! Something went wrong. Please try agian");
+		this.display();
+	}
+
+}
