@@ -2,6 +2,7 @@ package ui;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -97,6 +98,9 @@ public class CustomShopManagerView extends View {
 
 	private DateTime deadlineDialog(){
 		DateTime deadline = null;
+		DateTime systime = this.getModel().getSystemTime();
+		System.out.println("> The System's is: " + systime.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT));
+		System.out.println("> Make sure your entered deadline lies behind this time or your order may not be handled on time");
 		while (deadline == null){
 			System.out.println("> Enter the deadline in dd/mm/yyyy/ format");
 			System.out.print(">> ");

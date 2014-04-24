@@ -2,6 +2,8 @@ package businessmodel;
 
 import java.util.Iterator;
 
+import org.joda.time.DateTime;
+
 import businessmodel.category.CarOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
@@ -43,5 +45,7 @@ public interface Model {
 	public Iterator<CarOption> getUnscheduledCarOptions(int num);
 
 	public String getCurrentAlgo();
+
+	public DateTime getSystemTime();
 
 }

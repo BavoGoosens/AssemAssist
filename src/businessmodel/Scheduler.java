@@ -28,6 +28,8 @@ public class Scheduler implements Subject {
 
 	private int delay;
 
+	private DateTime currenttime;
+	
 	private OrderManager ordermanager;
 
 	private AssemblyLine assemblyline;
@@ -41,6 +43,9 @@ public class Scheduler implements Subject {
 		this.orders = new LinkedList<Order>();
 		this.assemblyline = new AssemblyLine(this);
 		this.observers = new ArrayList<Observer>();
+		this.currenttime = new DateTime(new DateTime().getYear(), 
+				new DateTime().getMonthOfYear(),
+				new DateTime().getDayOfMonth(), 8, 0);
 		this.setOrdermanager(ordermanager);
 		this.changeAlgorithm("fifo", null);
 		this.setDelay(0);
@@ -58,8 +63,7 @@ public class Scheduler implements Subject {
 	public void advance(int time) throws IllegalNumberException{
 		if (time < 0) throw new IllegalNumberException("Bad time!");
 		int delay = time - 60;
-		DateTime currenttime = this.getCurrentTime().plusMinutes(time);
-		SystemTimer.updateTime(this, currenttime);
+		this.currenttime = this.getCurrentTime().plusMinutes(time);
 		updateAssemblylineStatus();
 		updateCompletedOrders();
 		updateDelay(delay);
@@ -135,7 +139,7 @@ public class Scheduler implements Subject {
 	}
 
 	public DateTime getCurrentTime(){
-		return SystemTimer.getCurrenTime();
+		return this.currenttime;
 	}
 
 	protected LinkedList<Order> getOrders() {
@@ -226,11 +230,15 @@ public class Scheduler implements Subject {
 	}
 
 	private void updateCurrentTime() {
-		DateTime currenttime = new DateTime(SystemTimer.getCurrenTime().getYear(), 
-				SystemTimer.getCurrenTime().getMonthOfYear(), 
-				SystemTimer.getCurrenTime().getDayOfMonth(), 8, 0);
+		DateTime currenttime = new DateTime(this.getCurrentTime().getYear(), 
+				getCurrentTime().getMonthOfYear(), 
+				getCurrentTime().getDayOfMonth(), 8, 0);
 		currenttime = currenttime.plusDays(1);
-		SystemTimer.updateTime(this, currenttime);
+		this.setCurrentTime(currenttime);
+	}
+
+	private void setCurrentTime(DateTime currenttime) {
+		this.currenttime =currenttime;
 	}
 
 	private void scheduleOrder(Order order){
