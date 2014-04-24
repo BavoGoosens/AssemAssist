@@ -3,7 +3,7 @@ package businessmodel;
 import businessmodel.order.Order;
 
 /**
- * A class that represents a WorkSlot. Each TimeSlot has a number of WorkSlot's. Each WorkSlot represents a hour on an WorkPost.
+ * A class that represents a work slot. Each time slot has a number of work slots. Each work slot represents a hour on an work post.
  * 
  * @author SWOP 2014 team 10
  *
@@ -11,25 +11,25 @@ import businessmodel.order.Order;
 public class WorkSlot{
 	
 	/**
-	 * A variable that holds the current order of this WorkSlot.
+	 * The current order for the work slot.
 	 */
 	private Order order;
 	
 	/**
-	 * A boolean that represents if this WorkSlot is occupied.
+	 * A boolean that represents if the work slot is occupied.
 	 */
 	private boolean occupied;
 	
 	/**
-	 * A constructor to create a new WorkSlot.
+	 * Creates a new WorkSlot.
 	 */
 	public WorkSlot(){
 	}
 	
 	/**
-	 * A method to add a new Order.
+	 * Adds a new order to the work slot.
 	 * @param	order
-	 *       	the new order of this WorkSlot. 
+	 *       	The new order for the work slot. 
 	 */
 	protected void addOrder(Order order){
 		this.setOrder(order);
@@ -37,27 +37,28 @@ public class WorkSlot{
 	}
 	
 	/**
-	 * A method to check if this WorkSlot is occupied.
-	 * @return	this.occupied
+	 * Checks if the work slot is occupied.
+	 * @return	True if the work slot is occupied.
 	 */
 	protected boolean isOccupied(){
 		return this.getOccupied();
 	}
 
 	/**
-	 * A method to get the order of this WorkSlot.
-	 * @return	this.order
+	 * Returns the order of the work slot.
+	 * @return	The current order of the work slot.
 	 */
 	protected Order getOrder() {
 		return this.order;
 	}
 
 	/**
-	 * A method to set the order of this WorkSlot to the given order.
+	 * A method to set the order of this work slot to the given order.
 	 * @param	order
-	 * 			the new order of this WorkSlot.
+	 * 			The new order of this work slot.
 	 * @throws	IllegalArgumentException
-	 * 			order == null
+	 * 			| If the order is equal to 'null'
+	 * 			| order == null
 	 */
 	private void setOrder(Order order) throws IllegalArgumentException{
 		if (order == null)
@@ -66,11 +67,11 @@ public class WorkSlot{
 	}
 
 	/**
-	 * A method to adapt if this WorkSlot is occupied.
+	 * Sets the occupation of this work slot to the given occupation.
 	 * @param	occupied
-	 * 			True of false
+	 * 			True or false
 	 * @throws  IllegalArgumentException
-	 * 			if occupied is not a boolean
+	 * 			| If occupied is not a boolean
 	 */
 	private void setOccupied(boolean occupied) throws IllegalArgumentException{
 		if (occupied != false && occupied != true)
@@ -79,8 +80,8 @@ public class WorkSlot{
 	}	
 	
 	/**
-	 * A method to see if this WorkSlot in occupied.
-	 * @return	this.occupied
+	 * Checks if the work slot is occupied.
+	 * @return	True if the work slot is occupied.
 	 */
 	private boolean getOccupied(){
 		return this.occupied;

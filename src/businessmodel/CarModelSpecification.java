@@ -27,6 +27,8 @@ public class CarModelSpecification {
 	 * @param 	options
 	 * 			The options for the new car model specification.
 	 * @throws 	IllegalArgumentException
+	 * 			| If the list of options is equal to 'null'
+	 * 			| options == null
 	 * 		
 	 */
 	public CarModelSpecification(ArrayList<CarOption> options) throws IllegalArgumentException {
@@ -107,12 +109,16 @@ public class CarModelSpecification {
 	}
 	
 	/**
-	 * Method to check if a car model is valid.
+	 * Checks if a car model of the given car is valid.
 	 * 
-	 * @param car
-	 * @return
-	 * @throws IllegalArgumentException
-	 * @throws UnsatisfiedRestrictionException
+	 * @param 	car
+	 * 			The car that needs to be checked.
+	 * @return	True if the car model of the given car is valid.
+	 * @throws 	IllegalArgumentException
+	 * 			| If the given car is equal to 'null'
+	 * 			| car == null
+	 * @throws 	UnsatisfiedRestrictionException
+	 * 			| If the car model of the given car is not valid.
 	 */
 	private boolean checkCarModel(Car car) throws IllegalArgumentException, UnsatisfiedRestrictionException {
 		if (car == null) throw new IllegalArgumentException("Bad car!");
