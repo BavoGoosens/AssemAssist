@@ -42,4 +42,6 @@ public interface Model {
 	
 	public Iterator<CarOption> getUnscheduledCarOptions();
 
+	public String getCurrentAlgo();
+
 }

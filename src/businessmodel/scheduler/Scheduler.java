@@ -407,4 +407,8 @@ public class Scheduler implements Subject {
 			observer.update(this);
 		}
 	}
+
+	public String currentAlgoDescription() {
+		return this.algortime.getClass().getName();
+	}
 }
