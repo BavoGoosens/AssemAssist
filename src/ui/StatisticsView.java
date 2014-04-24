@@ -6,6 +6,7 @@ import java.util.Scanner;
 import org.joda.time.LocalDate;
 
 import businessmodel.Model;
+import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.order.Order;
 import businessmodel.statistics.CarStatistics;
 import businessmodel.statistics.OrderStatistics;
@@ -34,7 +35,7 @@ public class StatisticsView extends View{
 			for (Tuple<Order, Integer> day : ords)
 				System.out.println("  > Order: " + day.getX() + "\n" 
 						+"  > delay: " + day.getY() + "min");
-		} catch (IllegalArgumentException e) {
+		} catch (IllegalNumberException e) {
 			System.out.println("! The system has not been operational long enough to provide these statistics");
 		}
 		System.out.println("> Here are the car statistics:" );
