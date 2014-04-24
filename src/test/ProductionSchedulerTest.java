@@ -9,12 +9,12 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import businessmodel.AssemblyTask;
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
 import businessmodel.Catalog;
 import businessmodel.OrderManager;
+import businessmodel.Scheduler;
 import businessmodel.WorkPost;
 import businessmodel.category.Body;
 import businessmodel.category.CarOption;
@@ -23,7 +23,6 @@ import businessmodel.category.Engine;
 import businessmodel.category.ModelAFactory;
 import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
-import businessmodel.scheduler.Scheduler;
 import businessmodel.user.GarageHolder;
 
 public class ProductionSchedulerTest {

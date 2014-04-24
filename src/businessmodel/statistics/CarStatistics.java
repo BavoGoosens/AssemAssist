@@ -6,10 +6,10 @@ import java.util.Collections;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import businessmodel.Scheduler;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
-import businessmodel.scheduler.Scheduler;
 import businessmodel.util.CarTupleComperator;
 import businessmodel.util.Tuple;
 

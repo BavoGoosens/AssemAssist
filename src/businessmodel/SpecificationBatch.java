@@ -1,4 +1,4 @@
-package businessmodel.scheduler;
+package businessmodel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,15 +15,6 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	public SpecificationBatch(Scheduler scheduler, CarOption option){
 		super(scheduler);
 		this.option = option;
-	}
-
-	@Override
-	public LinkedList<Order> schedule(LinkedList<Order> orders){
-
-		for(Order order: orders)
-			this.scheduleOrder(order);
-		this.reschedule();
-		return orderList;
 	}
 
 	@Override

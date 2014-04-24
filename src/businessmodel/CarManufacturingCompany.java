@@ -123,7 +123,7 @@ public class CarManufacturingCompany implements Model{
 
 	@Override
 	public Iterator<CarOption> getUnscheduledCarOptions() {
-		return this.getOrderManager().getScheduler().getUnscheduledCarOptions().iterator();
+		return this.getOrderManager().getScheduler().getUnscheduledCarOptions(3).iterator();
 	}
 
 	@Override

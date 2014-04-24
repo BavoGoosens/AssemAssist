@@ -1,4 +1,4 @@
-package businessmodel.scheduler;
+package businessmodel;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,11 +11,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import businessmodel.AssemblyLine;
-import businessmodel.AssemblyTask;
-import businessmodel.CarManufacturingCompany;
-import businessmodel.OrderManager;
-import businessmodel.WorkPost;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
 import businessmodel.category.CarOption;

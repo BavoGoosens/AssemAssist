@@ -1,16 +1,11 @@
-package businessmodel.scheduler;
+package businessmodel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 
 import org.joda.time.DateTime;
 
-import sun.nio.cs.ext.TIS_620;
-import businessmodel.AssemblyLine;
-import businessmodel.OrderManager;
-import businessmodel.WorkPost;
 import businessmodel.category.CarOption;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;

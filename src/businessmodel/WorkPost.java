@@ -60,6 +60,7 @@ public class WorkPost {
 	public WorkPost(String name, AssemblyLine assemblyline) throws IllegalArgumentException {
 		this.setName(name);
 		this.setAssemblyline(assemblyline);
+		this.responsibleAssemblyTasks = new ArrayList<AssemblyTask>();
 		this.pendingTasks = new ArrayList<AssemblyTask>();
 	}
 
@@ -75,7 +76,7 @@ public class WorkPost {
 	public void setResponsibletasks(ArrayList<AssemblyTask> responsibleTasks) throws IllegalArgumentException {
 		if (responsibleTasks == null) throw new IllegalArgumentException("Bad list of responsible tasks!");
 		for(AssemblyTask assem: responsibleTasks){
-			if(this.responsibleAssemblyTasks.contains(assem))
+			if(!this.responsibleAssemblyTasks.contains(assem))
 				this.responsibleAssemblyTasks.add(assem);
 		}
 	}

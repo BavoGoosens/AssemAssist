@@ -1,4 +1,4 @@
-package businessmodel.scheduler;
+package businessmodel;
 
 import java.util.LinkedList;
 
@@ -13,9 +13,7 @@ public abstract class SchedulingAlgorithm {
 	public SchedulingAlgorithm(Scheduler scheduler){
 		this.scheduler = scheduler;
 	}
-	
-	public abstract LinkedList<Order> schedule(LinkedList<Order> orders);
-	
+
 	public abstract void scheduleOrder(Order order);
 	
 	protected Scheduler getScheduler(){

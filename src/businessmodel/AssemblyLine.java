@@ -2,10 +2,10 @@ package businessmodel;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
-import businessmodel.scheduler.Scheduler;
 
 /**
  * A class representing an assembly line. It currently holds 3 work post.
@@ -76,8 +76,9 @@ public class AssemblyLine implements Subject{
 	 * 
 	 * @return	The list of work posts at the assembly line.
 	 */
+	@SuppressWarnings("unchecked")
 	public ArrayList<WorkPost> getWorkPosts() {
-		return this.workposts;
+		return (ArrayList<WorkPost>) this.workposts.clone();
 	}
 
 	/**

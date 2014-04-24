@@ -8,7 +8,6 @@ import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
-import businessmodel.scheduler.Scheduler;
 import businessmodel.user.User;
 
 /**
@@ -122,7 +121,7 @@ public class OrderManager implements Subject {
 			if (order.getUser() == user)
 				completedorders.add(order);
 		}
-		return completedorders;
+		return (ArrayList<Order>) completedorders.clone();
 	}
 
 	/**
