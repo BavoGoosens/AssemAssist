@@ -2,6 +2,8 @@ package businessmodel.category;
 
 import java.util.ArrayList;
 
+import org.joda.time.Period;
+
 import businessmodel.CarModel;
 import businessmodel.CarModelSpecification;
 import businessmodel.exceptions.IllegalCarOptionCategoryException;
@@ -186,7 +188,12 @@ public class ModelCFactory extends CarModelFactory {
 		}
 		
 		CarModelSpecification cms = new CarModelSpecification(options);
-		return new CarModel(this.getName(), cms);
+		return new CarModel(this.getName(), cms, this.getStandardTimeToFinish());
+	}
+	
+	@Override
+	protected Period getStandardTimeToFinish() {
+		return new Period(60*3);
 	}
 
 }

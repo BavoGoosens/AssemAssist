@@ -10,6 +10,7 @@ import businessmodel.OrderManager;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
+import businessmodel.order.StandardCarOrder;
 import businessmodel.util.OrderTupleComperator;
 import businessmodel.util.Tuple;
 
@@ -89,12 +90,14 @@ public class OrderStatistics implements Observer {
 			OrderManager orderManager = (OrderManager) subject;
 			LinkedList<Order> finishedOrders = orderManager.getCompletedOrdersClone();
 			for (Order order: finishedOrders) {
-				Period period = new Period(order.getOrderPlacedOnWorkPost(),
-						order.getCompletionDate());
-				Period normalPeriod = new Period(order.getOrderPlacedOnWorkPost(), 
-						order.getStandardTimeOnAssemblyLine());
-				Period delay = period.minus(normalPeriod);
-				this.finishedOrders.add(new Tuple(order, delay.getMinutes()));
+				if (order instanceof StandardCarOrder) {
+					StandardCarOrder carOrder = (StandardCarOrder) order;
+					Period period = new Period(carOrder.getOrderPlacedOnWorkPost(),
+							carOrder.getCompletionDate());
+					Period normalPeriod = carOrder.getStandardTimeToFinish();
+					Period delay = period.minus(normalPeriod);
+					this.finishedOrders.add(new Tuple(order, delay.getMinutes()));
+				}
 			}
 			this.updateAverage();
 			this.updateMedian();

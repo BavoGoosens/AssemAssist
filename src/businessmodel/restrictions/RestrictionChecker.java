@@ -20,7 +20,7 @@ public class RestrictionChecker {
 	private ArrayList<Restriction> restrictions;
 	
 	/**
-	 * Creates a new restriction checker and creates the necessary restrictions.
+	 * Creates a new restriction checker.
 	 */
 	public RestrictionChecker() {
 		this.restrictions = new ArrayList<Restriction>();
@@ -39,7 +39,7 @@ public class RestrictionChecker {
 	/**
 	 * Creates the restrictions the restriction checker holds.
 	 */
-	private void generateRestrictions() {
+	public void generateRestrictions() {
 		this.addRestriction(new DefaultMandatoryOptionRestriction(new Catalog().getAllCategories()));
 		this.addRestriction(new SportBodyRestriction());
 		this.addRestriction(new UltraEngineAircoRestriction());

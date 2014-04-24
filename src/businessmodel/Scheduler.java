@@ -35,6 +35,8 @@ public class Scheduler implements Subject {
 	private DateTime currenttime;
 
 	private ArrayList<Observer> observers;
+	
+	private int dayOrdersCount = 0;
 
 	public Scheduler(OrderManager ordermanager){
 		this.shifts = new LinkedList<Shift>();
@@ -47,6 +49,10 @@ public class Scheduler implements Subject {
 		this.changeAlgorithm("fifo", null);
 		this.setDelay(0);
 		this.generateShifts();
+	}
+	
+	public int getDayOrdersCount() {
+		return this.dayOrdersCount;
 	}
 
 	public boolean canAdvance(){
@@ -62,8 +68,10 @@ public class Scheduler implements Subject {
 		updateDelay(delay);
 		updateEstimatedTimeOfOrders(delay);
 		this.updateSchedule();
-		if (this.getShifts().size() == 0)
+		if (this.getShifts().size() == 0) {
+			notifyObservers();
 			this.ScheduleDay();
+		}
 	}
 
 	public boolean canAddOrder(){
@@ -109,6 +117,7 @@ public class Scheduler implements Subject {
 	}
 
 	public void ScheduleDay(){
+		this.dayOrdersCount = 0;
 		this.generateShifts();
 		this.updateCurrentTime();
 		int size = this.getNumberOfOrdersToSchedule();
@@ -173,6 +182,7 @@ public class Scheduler implements Subject {
 			Order completedorder = this.getOrders().pollFirst();
 			completedorder.setCompletionDateOfOrder(this.getCurrentTime());
 			this.getOrdermanager().finishedOrder(completedorder);
+			this.dayOrdersCount++;
 		}
 	}
 

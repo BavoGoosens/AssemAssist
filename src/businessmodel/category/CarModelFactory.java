@@ -1,5 +1,7 @@
 package businessmodel.category;
 
+import org.joda.time.Period;
+
 import businessmodel.CarModel;
 
 /**
@@ -57,5 +59,7 @@ public abstract class CarModelFactory {
 	 * @return	The name of the car model factory.
 	 */
 	protected abstract String getName();
+	
+	protected abstract Period getStandardTimeToFinish();
 
 }

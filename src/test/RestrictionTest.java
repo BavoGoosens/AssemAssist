@@ -58,7 +58,8 @@ public class RestrictionTest {
 		}
 		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
-			new StandardCarOrder(gh, chosen);
+			new StandardCarOrder(gh, chosen, modelA);
+			System.out.println("Success!");
 		} catch (UnsatisfiedRestrictionException e) {
 			System.out.println(e.getMessage());
 		}
@@ -86,7 +87,8 @@ public class RestrictionTest {
 		}
 		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
-			new StandardCarOrder(gh, chosen);
+			new StandardCarOrder(gh, chosen, modelB);
+			System.out.println("Success!");
 		} catch (UnsatisfiedRestrictionException e) {
 			System.out.println(e.getMessage());
 		}
@@ -119,7 +121,8 @@ public class RestrictionTest {
 		}
 		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
-			new StandardCarOrder(gh, chosen);
+			new StandardCarOrder(gh, chosen, modelB);
+			System.out.println("Success!");
 		} catch (UnsatisfiedRestrictionException e) {
 			System.out.println(e.getMessage());
 		}
@@ -154,7 +157,8 @@ public class RestrictionTest {
 		}
 		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
-			new StandardCarOrder(gh, chosen);
+			new StandardCarOrder(gh, chosen, modelC);
+			System.out.println("Success!");
 		} catch (UnsatisfiedRestrictionException e) {
 			System.out.println(e.getMessage());
 		}
@@ -166,6 +170,7 @@ public class RestrictionTest {
 	 */
 	public void testDoubleRestriction() throws NoClearanceException {
 		CarModel modelC = this.cFactory.createModel();
+		CarModel modelA = this.aFactory.createModel();
 		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
 		for (CarOption option: modelC.getCarModelSpecification().getOptionsClone()) {
 			chosen.add(option);
@@ -176,7 +181,8 @@ public class RestrictionTest {
 				get(modelC.getCarModelSpecification().getOptionsClone().size()-1));
 		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
-			new StandardCarOrder(gh, chosen);
+			new StandardCarOrder(gh, chosen, modelC);
+			System.out.println("Success!");
 		} catch (UnsatisfiedRestrictionException e) {
 			System.out.println(e.getMessage());
 		}
