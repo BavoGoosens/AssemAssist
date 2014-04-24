@@ -110,6 +110,8 @@ public class BatchAlgorithmTest {
 			
 			//----------------------------------------------------------------------------------
 			
+			for(CarOption option : orderManager.getScheduler().getUnscheduledCarOptions(3))
+				System.out.println(option);
 			
 			orderManager.getScheduler().changeAlgorithm("sb",  new CarOption("medium engine",new Engine()));
 			try{
