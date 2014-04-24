@@ -41,81 +41,12 @@ public abstract class Order {
 		return this.user;
 	}
 	
-	// andere naam
-	public DateTime getEstimateDate() {
-		return this.estimatedDeliveryDate;
-	}
-	
-	public DateTime getTimestamp(){
-		return this.timestamp;
-	}
-	
-	// andere naam
-	public DateTime getOrder_placed_on_workpost() {
-		return this.orderPlacedOnWorkPost;
-	}
-	
-	// andere naam
-	public DateTime getStandardtime_on_assemblyline() {
-		return this.standardTimeOnAssemblyLine;
-	}
-	
-	// andere naam
-	public DateTime getCompletionDate(){
-		return this.completionDate;
-	}
-	
 	public boolean isCompleted() {
 		return this.completed;
 	}
 
-	private void setUser(User user) throws IllegalArgumentException, NoClearanceException {
-		if (user == null) throw new IllegalArgumentException("Bad user!");
-		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
-		this.user = user;
-	}
-	
-	// andere naam
-	public void setEstimateDate(DateTime estimatedDeliveryDate) throws IllegalArgumentException {
-		if(estimatedDeliveryDate == null) throw new IllegalArgumentException("Bad estimated delivery date!");
-		this.estimatedDeliveryDate = estimatedDeliveryDate;
-	}
-	
-	public void setTimestamp(DateTime timestamp) {
-		this.timestamp = timestamp;
-	}
-	
-	// andere naam en 1 vd 2 verwijderen
-	public void setPlacedOnWorkpost(DateTime date){
-		this.setOrder_placed_on_workpost(date);
-	}
-	
-	// andere naam en 1 vd 2 verwijderen
-	public void setOrder_placed_on_workpost(DateTime orderPlacedOnWorkPost) {
-		this.orderPlacedOnWorkPost = orderPlacedOnWorkPost;
-	}
-	
-	// andere naam
-	public void setStandardtime_on_assemblyline(DateTime standardTimeOnAssemblyLine) {
-		this.standardTimeOnAssemblyLine = standardTimeOnAssemblyLine;
-	}
-	
-	// andere naam en 1 vd 2 verwijderen
-	public void setCompletionDate(DateTime date){
-		this.completionDate = date;
-	}
-	
-	// andere naam en 1 vd 2 verwijderen
-	public void updateCompletionTime(DateTime date){
-		this.completionDate = date;
-	}
-	
 	public void updateEstimatedDate(int delay) {
-		this.getEstimateDate().plusMinutes(delay);		
-	}
-	
-	public void setCompleted() {
-		this.completed = true;
+		this.setEstimatedDeliveryDateOfOrder(this.getEstimatedDeliveryDate().plusMinutes(delay));		
 	}
 	
 	public abstract ArrayList<CarOption> getOptions();
@@ -124,8 +55,78 @@ public abstract class Order {
 		return null;
 	}
 	
+	public DateTime getEstimatedDeliveryDate() {
+		return estimatedDeliveryDate;
+	}
+
+	public DateTime getOrderPlacedOnWorkPost() {
+		return orderPlacedOnWorkPost;
+	}
+
+	public void setCompleted() {
+		this.completed = true;
+	}
+
+	public void setTimestampOfOrder(DateTime timestamp) {
+		this.setTimestamp(timestamp);
+	}
+
+	public void setOrderPlacedOnWorkPostOfOrder(DateTime orderPlacedOnWorkPost) throws IllegalArgumentException {
+		this.setOrderPlacedOnWorkPost(orderPlacedOnWorkPost);
+	}
+
+	private void setOrderPlacedOnWorkPost(DateTime orderPlacedOnWorkPost) throws IllegalArgumentException{
+		if(orderPlacedOnWorkPost == null) 
+			throw new IllegalArgumentException("Bad order placed on work post date!");
+		this.orderPlacedOnWorkPost = orderPlacedOnWorkPost;		
+	}
+
+	public DateTime getStandardTimeOnAssemblyLine() {
+		return standardTimeOnAssemblyLine;
+	}
+
+	public void setEstimatedDeliveryDateOfOrder(DateTime estimatedDeliveryDate) {
+		this.setEstimatedDeliveryDate(estimatedDeliveryDate);
+	}
+
 	@Override
 	public String toString() {
 		return "user: " + this.user.toString() + ", delivery date= " + this.estimatedDeliveryDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT); 
+	}
+
+	private void setEstimatedDeliveryDate(DateTime estimatedDeliveryDate) throws IllegalArgumentException {
+		if(estimatedDeliveryDate == null) 
+			throw new IllegalArgumentException("Bad estimated delivery date!");
+		this.estimatedDeliveryDate = estimatedDeliveryDate;
+	}
+
+	private void setTimestamp(DateTime timestamp){
+		this.timestamp = timestamp;
+	}
+
+	private void setUser(User user) throws IllegalArgumentException, NoClearanceException {
+		if (user == null) throw new IllegalArgumentException("Bad user!");
+		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
+		this.user = user;
+	}
+
+	private void setStandardTimeOnAssemblyLine(DateTime standardTimeOnAssemblyLine) {
+		this.standardTimeOnAssemblyLine = standardTimeOnAssemblyLine;
+	}
+
+	private DateTime getCompletionDate() {
+		return completionDate;
+	}
+
+	private void setCompletionDate(DateTime completionDate) {
+		this.completionDate = completionDate;
+	}
+
+	private DateTime getTimestamp() {
+		return timestamp;
+	}
+
+	private void setCompleted(boolean completed) {
+		this.completed = completed;
 	}
 }
