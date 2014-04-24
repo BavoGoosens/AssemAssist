@@ -14,7 +14,6 @@ public class FreeShift extends Shift{
 		this.setNextShift(nextShift);
 	}
 	
-	
 	@Override
 	protected ArrayList<TimeSlot> canAddOrder(Order order){
 		ArrayList<TimeSlot> timeslots= null;	
@@ -31,7 +30,6 @@ public class FreeShift extends Shift{
 		return timeslots;
 	}
 
-
 	/**
 	 * A method to get the next shift of the day.
 	 * @return	the next shift of the day
@@ -39,7 +37,6 @@ public class FreeShift extends Shift{
 	protected Shift getNextShift(){
 		return this.nextShift;
 	}
-
 
 	/**
 	 * A method to check if a number of Timeslot's are available to handle an order.
@@ -58,7 +55,6 @@ public class FreeShift extends Shift{
 		return timeslots;
 	}
 	
-
 	private void setNextShift(Shift nextShift) {
 		this.nextShift = nextShift;
 	}

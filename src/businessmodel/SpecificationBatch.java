@@ -14,7 +14,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 
 	public SpecificationBatch(Scheduler scheduler, CarOption option){
 		super(scheduler);
-		this.option = option;
+		this.setOption(option);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 		}else{
 			orderList.addLast(currentOrder);
 		}
-
+		this.reschedule();
 	}
 
 	private void reschedule() {
@@ -53,6 +53,12 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 				}
 			}
 		}
+	}
+
+	private void setOption(CarOption option) throws IllegalArgumentException {
+		if(option == null)
+			throw new IllegalArgumentException("Not an option");
+		this.option = option;
 	}
 
 }

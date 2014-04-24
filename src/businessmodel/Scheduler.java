@@ -41,7 +41,7 @@ public class Scheduler implements Subject {
 		this.orders = new LinkedList<Order>();
 		this.assemblyline = new AssemblyLine(this);
 		this.observers = new ArrayList<Observer>();
-		this.ordermanager = ordermanager;
+		this.setOrdermanager(ordermanager);
 		DateTime datetemp = new DateTime();
 		this.currenttime = new DateTime(datetemp.getYear(), datetemp.getMonthOfYear(), datetemp.getDayOfMonth(), 8, 0);
 		this.changeAlgorithm("fifo", null);
@@ -252,6 +252,12 @@ public class Scheduler implements Subject {
 			return false;
 		return true;
 
+	}
+	
+	private void setOrdermanager(OrderManager ordermanager) throws IllegalArgumentException{
+		if(ordermanager == null)
+			throw new IllegalArgumentException("Not an ordermanager");
+		this.ordermanager = ordermanager;
 	}
 
 	public ArrayList<CarOption> getUnscheduledCarOptions(int maxNumber){

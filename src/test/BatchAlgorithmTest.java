@@ -30,15 +30,10 @@ import businessmodel.user.GarageHolder;
 
 public class BatchAlgorithmTest {
 
-	private Catalog catalog;
-	private ArrayList<CarOptionCategory> categories;
-
 	@Test
 	public void test() {
 
 		try {
-			this.catalog = new Catalog();
-			this.categories = this.catalog.getAllCategories();
 
 			OrderManager orderManager = new CarManufacturingCompany().getOrderManager();
 
@@ -121,16 +116,11 @@ public class BatchAlgorithmTest {
 			}
 			orderManager.getScheduler().ScheduleDay();
 
-			assertEquals(orderManager.getScheduler().getOrders().get(0),order2);
-			assertEquals(orderManager.getScheduler().getOrders().get(1),order3);
-			assertEquals(orderManager.getScheduler().getOrders().get(2),order5);
-			assertEquals(orderManager.getScheduler().getOrders().get(3),order1);
-			assertEquals(orderManager.getScheduler().getOrders().get(4),order4);
-
-
-
-			//			algo.schedule();
-
+			assertEquals(orderManager.getScheduler().getOrdersClone().get(0),order2);
+			assertEquals(orderManager.getScheduler().getOrdersClone().get(1),order3);
+			assertEquals(orderManager.getScheduler().getOrdersClone().get(2),order5);
+			assertEquals(orderManager.getScheduler().getOrdersClone().get(3),order1);
+			assertEquals(orderManager.getScheduler().getOrdersClone().get(4),order4);
 
 		} catch (IllegalArgumentException e) {
 
