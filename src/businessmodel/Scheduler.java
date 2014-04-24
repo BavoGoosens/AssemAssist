@@ -119,8 +119,14 @@ public class Scheduler implements Subject {
 		}
 	}
 
-	public LinkedList<Order> getOrders() {
+	protected LinkedList<Order> getOrders() {
 		return this.orders;
+	}
+
+	// for testing
+	@SuppressWarnings("unchecked")
+	public LinkedList<Order> getOrdersClone(){
+		return (LinkedList<Order>) this.orders.clone();
 	}
 
 	public AssemblyLine getAssemblyline() {
@@ -172,17 +178,17 @@ public class Scheduler implements Subject {
 	}
 
 	private void updateSchedule(){
-	
+
 		if(this.getDelay() <= -60){
-	
+
 			this.getShifts().getLast().addTimeSlot();
 			Order nextorder = this.getNextOrderToSchedule();
 			if(nextorder!= null)
 				this.scheduleOrder(nextorder);
 			this.updateDelay(this.getDelay()+60);
-	
+
 		}else if (this.getDelay() >= 60){
-	
+
 			Order order = this.getShifts().getLast().removeLastTimeSlot();
 			if(this.getShifts().getLast().getTimeSlots().size() == 0)
 				this.getShifts().removeLast();
@@ -236,24 +242,24 @@ public class Scheduler implements Subject {
 	}
 
 	private boolean checkOptionsForSpecificationBatch(CarOption option) {
-	
+
 		int count = 0;
 		for(Order order: this.getOrders())
 			if (order.getOptions().toString().equals(option))
 				count++;
-	
+
 		if (count < 3)
 			return false;
 		return true;
-	
+
 	}
 
 	public ArrayList<CarOption> getUnscheduledCarOptions(int maxNumber){
-	
+
 		HashMap<String, Integer> list = new HashMap<String, Integer>();
 		ArrayList<String> options = new ArrayList<String>();
 		HashMap<String, CarOption> result = new HashMap<String, CarOption>();
-		
+
 		for(Order order: this.getOrders()){
 			for(CarOption option: order.getOptions()){
 				if (list.containsKey(option.getName())){
@@ -270,10 +276,10 @@ public class Scheduler implements Subject {
 		for (String optionName: options)
 			if (list.get(optionName) < 3)
 				result.remove(optionName);
-				
-			
+
+
 		return new ArrayList<CarOption>(result.values());
-	
+
 	}
 
 	@Override
