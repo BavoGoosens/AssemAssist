@@ -48,7 +48,7 @@ public class WorkPostTest {
 			}
 
 		}
-		order = new StandardCarOrder(garageholder, chosen);
+		order = new StandardCarOrder(garageholder, chosen,modelA);
 		om.placeOrder(order);
 		
 	}

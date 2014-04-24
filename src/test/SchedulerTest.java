@@ -67,24 +67,24 @@ public class SchedulerTest {
 			}
 
 		}
-		Order order1 = new StandardCarOrder(c1,chosen);
-		Order order2 = new StandardCarOrder(c2,chosen);
-		Order order3 = new StandardCarOrder(c3,chosen);
-		Order order4 = new StandardCarOrder(c4,chosen);
-		Order order5 = new StandardCarOrder(c5,chosen);
-		Order order6 = new StandardCarOrder(c6,chosen);
-		Order order7 = new StandardCarOrder(c7,chosen);
-		Order order8 = new StandardCarOrder(c8,chosen);
-		Order order9 = new StandardCarOrder(c9,chosen);
-		Order order10 = new StandardCarOrder(c10,chosen);
-		Order order11 = new StandardCarOrder(c11,chosen);
-		Order order12 = new StandardCarOrder(c12,chosen);
-		Order order13 = new StandardCarOrder(c13,chosen);
-		Order order14 = new StandardCarOrder(c14,chosen);
-		Order order15 = new StandardCarOrder(c15,chosen);
-		Order order16 = new StandardCarOrder(c16,chosen);
-		Order order17 = new StandardCarOrder(c17,chosen);
-		Order order18 = new StandardCarOrder(c18,chosen);
+		Order order1 = new StandardCarOrder(c1,chosen, modelA);
+		Order order2 = new StandardCarOrder(c2,chosen,modelA);
+		Order order3 = new StandardCarOrder(c3,chosen,modelA);
+		Order order4 = new StandardCarOrder(c4,chosen,modelA);
+		Order order5 = new StandardCarOrder(c5,chosen,modelA);
+		Order order6 = new StandardCarOrder(c6,chosen,modelA);
+		Order order7 = new StandardCarOrder(c7,chosen, modelA);
+		Order order8 = new StandardCarOrder(c8,chosen,modelA);
+		Order order9 = new StandardCarOrder(c9,chosen,modelA);
+		Order order10 = new StandardCarOrder(c10,chosen,modelA);
+		Order order11 = new StandardCarOrder(c11,chosen,modelA);
+		Order order12 = new StandardCarOrder(c12,chosen,modelA);
+		Order order13 = new StandardCarOrder(c13,chosen,modelA);
+		Order order14 = new StandardCarOrder(c14,chosen,modelA);
+		Order order15 = new StandardCarOrder(c15,chosen,modelA);
+		Order order16 = new StandardCarOrder(c16,chosen,modelA);
+		Order order17 = new StandardCarOrder(c17,chosen,modelA);
+		Order order18 = new StandardCarOrder(c18,chosen,modelA);
 		DateTime datetemp = new DateTime();
 		DateTime temp = new DateTime(datetemp.getYear(), datetemp.getMonthOfYear(), datetemp.getDayOfMonth()+1, 8, 0);
 		Order order19 = new SingleTaskOrder(c19,chosen, temp);

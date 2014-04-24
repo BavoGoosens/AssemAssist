@@ -45,7 +45,7 @@ public class OrderTest {
 			}
 
 		}
-		om.placeOrder(new StandardCarOrder(garageholder, chosen));
+		om.placeOrder(new StandardCarOrder(garageholder, chosen, modelA));
 		
 		date = om.getScheduler().getCurrentTime().plusHours(3);
 	}

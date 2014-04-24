@@ -1,6 +1,7 @@
 package businessmodel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
@@ -57,6 +58,16 @@ public class AssemblyTask {
 	
 	public ArrayList<CarOption> getInstallableOptions() {
 		ArrayList<CarOption> oplist = new Catalog().getAllOptions(this.category);
+		
+		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<CarOption> result = new ArrayList<CarOption>();
+		
+		for(CarOption option: oplist)
+			if(!list.contains(option.getName())){
+				result.add(option);
+				list.add(option.getName());
+			}
+		return result;
 	}
 
 	public String getDescription(){

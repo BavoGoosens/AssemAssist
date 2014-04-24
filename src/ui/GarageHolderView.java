@@ -53,7 +53,7 @@ public class GarageHolderView extends View{
 		System.out.print(">> ");
 		String response = this.scan.nextLine();
 		this.check(response);
-		Pattern pattern = Pattern.compile("^(\\d*)$");
+		Pattern pattern = Pattern.compile("^(\\d+)$");
 		if (response.equalsIgnoreCase("order")){
 			this.startNewOrder();
 		}else if (pattern.matcher(response).find()){
@@ -105,7 +105,7 @@ public class GarageHolderView extends View{
 		System.out.print(">> ");
 		String response = this.scan.nextLine();
 		this.check(response);
-		Pattern pattern = Pattern.compile("^(\\d*)$");
+		Pattern pattern = Pattern.compile("^(\\d+)$");
 		if (pattern.matcher(response).find()){
 			int number = Integer.parseInt(response);
 			if (number > this.available_carmodels.size() || number < 1){
@@ -115,6 +115,9 @@ public class GarageHolderView extends View{
 			number -= 1;
 			CarModel chosen = this.available_carmodels.get(number);				
 			displayOrderingForm(chosen);
+		} else {
+			System.out.println("! wrong input");
+			this.startNewOrder();
 		}
 
 	}
@@ -143,7 +146,7 @@ public class GarageHolderView extends View{
 			this.check(response);
 			Pattern remover = Pattern.compile("remove *(\\d*)",Pattern.CASE_INSENSITIVE);
 			Matcher matcher = remover.matcher(response);
-			Pattern pattern = Pattern.compile("^\\d*$");
+			Pattern pattern = Pattern.compile("^\\d+$");
 			if (pattern.matcher(response).find()){
 				int choice = Integer.parseInt(response);
 				if ( choice > available.size() || choice < 1){
@@ -182,6 +185,7 @@ public class GarageHolderView extends View{
 				}
 			} else {
 				System.out.println("! You entered something wrong. Please try again");
+				this.displayOrderingForm(model);
 			}
 		}
 		System.out.println("The order has been placed");

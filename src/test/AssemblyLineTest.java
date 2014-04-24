@@ -60,9 +60,9 @@ public class AssemblyLineTest {
 
 		}
 
-		order1 = new StandardCarOrder(new GarageHolder("1", "", ""), chosen);
-		order2 = new StandardCarOrder(new GarageHolder("2", "", ""), chosen);
-		order3 = new StandardCarOrder(new GarageHolder("3", "", ""), chosen);
+		order1 = new StandardCarOrder(new GarageHolder("1", "", ""), chosen, modelA);
+		order2 = new StandardCarOrder(new GarageHolder("2", "", ""), chosen, modelA);
+		order3 = new StandardCarOrder(new GarageHolder("3", "", ""), chosen, modelA);
 		
 
 		orders.add(order1);
