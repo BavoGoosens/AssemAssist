@@ -98,7 +98,7 @@ public class CarManufacturingCompany implements Model{
 
 	@Override
 	public OrderStatistics getOrderStatistics() {
-		return this.getOrderStatistics();
+		return this.statisticsmanager.getOrderStatistics();
 	}
 
 	@Override
