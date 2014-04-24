@@ -134,7 +134,6 @@ public class OrderStatistics implements Observer {
 	 * 			| If the subject is equal to 'null' or isn't an order manager
 	 * 			| subject == null || !(subject instanceof OrderManager)
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void update(Subject subject) throws IllegalArgumentException {
 		if (subject != null && subject instanceof OrderManager) {
@@ -149,7 +148,7 @@ public class OrderStatistics implements Observer {
 					Period normalPeriod = carOrder.getStandardTimeToFinish();
 					Period delay = period.minus(normalPeriod);
 					int time = delay.getHours()*60+delay.getMinutes();
-					this.finishedOrders.add(new Tuple(order, time));
+					this.finishedOrders.add(new Tuple<Order, Integer>(order, time));
 				}
 			}
 			this.updateAverage();

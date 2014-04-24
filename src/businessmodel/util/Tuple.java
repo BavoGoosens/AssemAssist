@@ -22,6 +22,14 @@ public class Tuple <X , Y>{
 	 */
 	private Y y;
 
+	/**
+	 * Creates a new tuple object with 2 given variables.
+	 * 
+	 * @param 	x
+	 * 			The first variable.
+	 * @param 	y
+	 * 			The second variable.
+	 */
 	// no setters for final variable
 	public Tuple(X x, Y y) {
 		this.setX(x);
