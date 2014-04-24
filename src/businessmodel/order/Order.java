@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import org.joda.time.DateTime;
+import org.joda.time.Period;
 
 import businessmodel.category.CarOption;
 import businessmodel.exceptions.NoClearanceException;
@@ -26,8 +27,6 @@ public abstract class Order {
 	private DateTime timestamp;
 
 	private DateTime orderPlacedOnWorkPost;
-
-	private DateTime standardTimeOnAssemblyLine;
 
 	private DateTime completionDate;
 
@@ -57,10 +56,6 @@ public abstract class Order {
 
 	public DateTime getCompletionDate() {
 		return completionDate;
-	}
-
-	public DateTime getStandardTimeOnAssemblyLine() {
-		return standardTimeOnAssemblyLine;
 	}
 
 	public DateTime getUserEndDate() {
@@ -127,11 +122,6 @@ public abstract class Order {
 		if(orderPlacedOnWorkPost == null) 
 			throw new IllegalArgumentException("Bad order placed on work post date!");
 		this.orderPlacedOnWorkPost = orderPlacedOnWorkPost;		
-	}
-
-	//TODO
-	private void setStandardTimeOnAssemblyLine(DateTime placedOnWorkPost) {
-		this.standardTimeOnAssemblyLine = placedOnWorkPost;
 	}
 
 	@Override

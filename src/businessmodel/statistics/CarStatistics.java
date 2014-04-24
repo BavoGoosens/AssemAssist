@@ -73,10 +73,16 @@ public class CarStatistics implements Observer {
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void update(Subject subject) {
 		if (subject instanceof Scheduler) {
-			
+			Scheduler scheduler = (Scheduler) subject;
+			LocalDate date = scheduler.getCurrentTime().toLocalDate();
+			int dayOrdersCount = scheduler.getDayOrdersCount();
+			this.number_of_cars.add(new Tuple(date, dayOrdersCount));
+			this.updateAverage();
+			this.updateMedian();
 		}
 	}
 
