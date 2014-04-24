@@ -8,7 +8,6 @@ import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
-import businessmodel.scheduler.Scheduler;
 import businessmodel.user.User;
 
 /**
@@ -78,7 +77,7 @@ public class OrderManager implements Subject {
 			this.getPendingOrders().add(order);
 	}
 
-	public LinkedList<Order> getPendingOrders(){
+	protected LinkedList<Order> getPendingOrders(){
 		return this.pendingorders;
 	}
 
@@ -105,7 +104,7 @@ public class OrderManager implements Subject {
 	 * 
 	 * @return  the completed orders of this order manager.
 	 */
-	public LinkedList<Order> getCompletedOrders(){
+	protected LinkedList<Order> getCompletedOrders(){
 		return this.completedorders;
 	}
 
@@ -114,7 +113,7 @@ public class OrderManager implements Subject {
 	 * 
 	 * @return  the completed orders of a given user of this order manager.
 	 */
-	public ArrayList<Order> getCompletedOrders(User user) throws IllegalArgumentException, NoClearanceException {
+	protected ArrayList<Order> getCompletedOrders(User user) throws IllegalArgumentException, NoClearanceException {
 		if (user == null) throw new IllegalArgumentException("Bad user!");
 		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
 		ArrayList<Order> completedorders = new ArrayList<Order>();
@@ -122,7 +121,7 @@ public class OrderManager implements Subject {
 			if (order.getUser() == user)
 				completedorders.add(order);
 		}
-		return completedorders;
+		return (ArrayList<Order>) completedorders;
 	}
 
 	/**
@@ -131,7 +130,6 @@ public class OrderManager implements Subject {
 	 * @param finished 
 	 * 		  The Order that needs to be moved.
 	 */
-	//TODO deze 3 methodes public of?? 
 	public void finishedOrder(Order finished) throws IllegalArgumentException {
 		if (finished == null) throw new IllegalArgumentException("Bad order!");
 		this.getCompletedOrders().add(finished);

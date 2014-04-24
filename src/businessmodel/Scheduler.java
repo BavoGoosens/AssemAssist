@@ -1,4 +1,4 @@
-package businessmodel.scheduler;
+package businessmodel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +9,7 @@ import org.joda.time.DateTime;
 import businessmodel.AssemblyLine;
 import businessmodel.OrderManager;
 import businessmodel.WorkPost;
+
 import businessmodel.category.CarOption;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
@@ -44,7 +45,7 @@ public class Scheduler implements Subject {
 		this.orders = new LinkedList<Order>();
 		this.assemblyline = new AssemblyLine(this);
 		this.observers = new ArrayList<Observer>();
-		this.ordermanager = ordermanager;
+		this.setOrdermanager(ordermanager);
 		DateTime datetemp = new DateTime();
 		this.currenttime = new DateTime(datetemp.getYear(), datetemp.getMonthOfYear(), datetemp.getDayOfMonth(), 8, 0);
 		this.changeAlgorithm("fifo", null);
@@ -122,8 +123,14 @@ public class Scheduler implements Subject {
 		}
 	}
 
-	public LinkedList<Order> getOrders() {
+	protected LinkedList<Order> getOrders() {
 		return this.orders;
+	}
+
+	// for testing
+	@SuppressWarnings("unchecked")
+	public LinkedList<Order> getOrdersClone(){
+		return (LinkedList<Order>) this.orders.clone();
 	}
 
 	public AssemblyLine getAssemblyline() {
@@ -175,17 +182,17 @@ public class Scheduler implements Subject {
 	}
 
 	private void updateSchedule(){
-	
+
 		if(this.getDelay() <= -60){
-	
+
 			this.getShifts().getLast().addTimeSlot();
 			Order nextorder = this.getNextOrderToSchedule();
 			if(nextorder!= null)
 				this.scheduleOrder(nextorder);
 			this.updateDelay(this.getDelay()+60);
-	
+
 		}else if (this.getDelay() >= 60){
-	
+
 			Order order = this.getShifts().getLast().removeLastTimeSlot();
 			if(this.getShifts().getLast().getTimeSlots().size() == 0)
 				this.getShifts().removeLast();
@@ -239,16 +246,22 @@ public class Scheduler implements Subject {
 	}
 
 	private boolean checkOptionsForSpecificationBatch(CarOption option) {
-	
+
 		int count = 0;
 		for(Order order: this.getOrders())
 			if (order.getOptions().toString().equals(option))
 				count++;
-	
+
 		if (count < 3)
 			return false;
 		return true;
+
+	}
 	
+	private void setOrdermanager(OrderManager ordermanager) throws IllegalArgumentException{
+		if(ordermanager == null)
+			throw new IllegalArgumentException("Not an ordermanager");
+		this.ordermanager = ordermanager;
 	}
 
 	/**
@@ -257,11 +270,11 @@ public class Scheduler implements Subject {
 	 * @return
 	 */
 	public ArrayList<CarOption> getUnscheduledCarOptions(int maxNumber){
-	
+
 		HashMap<String, Integer> list = new HashMap<String, Integer>();
 		ArrayList<String> options = new ArrayList<String>();
 		HashMap<String, CarOption> result = new HashMap<String, CarOption>();
-		
+
 		for(Order order: this.getOrders()){
 			for(CarOption option: order.getOptions()){
 				if (list.containsKey(option.getName())){
@@ -278,10 +291,10 @@ public class Scheduler implements Subject {
 		for (String optionName: options)
 			if (list.get(optionName) < 3)
 				result.remove(optionName);
-				
-			
+
+
 		return new ArrayList<CarOption>(result.values());
-	
+
 	}
 
 	@Override

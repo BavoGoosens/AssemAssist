@@ -18,7 +18,7 @@ public class IllegalCarOptionCategoryException extends Exception {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * The wrong cate
+	 * The wrong category
 	 */
 	private CarOptionCategory category;
 
@@ -29,16 +29,20 @@ public class IllegalCarOptionCategoryException extends Exception {
 	}
 	
 	public IllegalCarOptionCategoryException(CarOptionCategory category) {
-		this.category = category;
+		this.setCategory(category);
 	}
 	
 	public IllegalCarOptionCategoryException(CarOptionCategory category, String message) {
 		super(message);
-		this.category = category;
+		this.setCategory(category);
 	}
 	
 	public CarOptionCategory getCategory() {
 		return this.category;
+	}
+
+	private void setCategory(CarOptionCategory category) {
+		this.category = category;
 	}
 
 }

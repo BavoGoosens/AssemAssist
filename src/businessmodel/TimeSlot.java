@@ -1,4 +1,4 @@
-package businessmodel.scheduler;
+package businessmodel;
 
 import java.util.LinkedList;
 
