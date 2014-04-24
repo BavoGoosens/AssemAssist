@@ -73,8 +73,8 @@ public class OrderStatistics implements Observer {
 					(ArrayList<Tuple<Order, Integer>>) this.finishedOrders.clone();
 			Collections.sort(temp, new OrderTupleComperator());
 			if ( temp.size() % 2 == 0 ){
-				int fml = temp.get(temp.size()/2).getY();
-				int fol = temp.get(temp.size()/2 + 1).getY();
+				int fml = temp.get((temp.size()/2)-1).getY();
+				int fol = temp.get((temp.size()/2)).getY();
 				this.median = (fml + fol) / 2;
 			} else {
 				this.median = temp.get((int) Math.ceil(temp.size()/2)).getY();

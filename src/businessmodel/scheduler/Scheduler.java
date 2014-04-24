@@ -66,7 +66,7 @@ public class Scheduler implements Subject {
 		updateDelay(delay);
 		updateEstimatedTimeOfOrders(delay);
 		this.updateSchedule();
-		if (this.getShifts().getFirst().getTimeSlots().size() == 0)
+		if (this.getShifts().size() == 0)
 			this.ScheduleDay();
 	}
 

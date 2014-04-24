@@ -184,7 +184,7 @@ public class SchedulerTest {
 		for(AssemblyTask assem : copy11)
 				cmc.finishTask(assem, 20);
 		
-		for(int i=0; i < 3; i++){
+		for(int i=0; i < 16; i++){
 			for(WorkPost wp1 : ord.getScheduler().getAssemblyline().getWorkPosts()){
 				if(wp1.getOrder()!= null)
 					System.out.println(wp1.getOrder().getUser());
