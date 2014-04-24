@@ -7,7 +7,7 @@ import businessmodel.order.Order;
 
 public class FreeShift extends Shift{
 
-	private Shift nextShift;
+	private Shift nextShift = null;
 
 	public FreeShift(int hours,int numberofworkposts, Shift nextShift) {
 		super(hours, numberofworkposts);
