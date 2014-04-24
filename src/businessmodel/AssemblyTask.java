@@ -56,7 +56,7 @@ public class AssemblyTask {
 	}
 	
 	public ArrayList<CarOption> getInstallableOptions() {
-		return new Catalog().getAllOptions(this.category);
+		ArrayList<CarOption> oplist = new Catalog().getAllOptions(this.category);
 	}
 
 	public String getDescription(){

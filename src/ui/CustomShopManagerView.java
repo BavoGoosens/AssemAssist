@@ -102,9 +102,10 @@ public class CustomShopManagerView extends View {
 			Pattern pat = Pattern.compile("(\\d+)/(\\d+)/(\\d+)");
 			Matcher mat = pat.matcher(response);
 			if (mat.find()){
-				int day = Integer.parseInt(mat.group(0));
-				int month = Integer.parseInt(mat.group(1));
-				int year = Integer.parseInt(mat.group(2));
+				String[] parts = response.split("/");
+				int day = Integer.parseInt(parts[0]);
+				int month = Integer.parseInt(parts[1]);
+				int year = Integer.parseInt(parts[2]);
 				deadline = new DateTime(year, month, day, 8, 0);
 				break;
 			}
