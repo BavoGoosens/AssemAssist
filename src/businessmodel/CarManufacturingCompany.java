@@ -19,7 +19,7 @@ import businessmodel.user.Mechanic;
 import businessmodel.user.User;
 
 
-public class CarManufacturingCompany implements Model{
+public class CarManufacturingCompany implements Model {
 
 	/**
 	 * List of the users.
@@ -49,6 +49,7 @@ public class CarManufacturingCompany implements Model{
 	/**
 	 * A constructor for a car manufacturing company.
 	 * 
+	 * @throws	IllegalArgumentException
 	 */
 	public CarManufacturingCompany() throws IllegalArgumentException {
 		this.catalog = new Catalog();
@@ -150,51 +151,56 @@ public class CarManufacturingCompany implements Model{
 
 	
 	/**
-	 * Method to get the current time of the system.
-	 * @return
+	 * Returns the current time of the system.
+	 * @return The current time of the system.
 	 */
 	public DateTime getSystemTime(){
 		return new DateTime(ordermanager.getScheduler().getCurrentTime());
 	}
 
 	/**
-	 * Method to complete an assembly task.
-	 * @param task
-	 * @param time
+	 * Completes an assembly task with the given time.
+	 * 
+	 * @param 	task
+	 * 			The task that needs to be completed.
+	 * @param 	time
+	 * 			The time that was needed to complete the assembly task.
 	 */
 	public void finishTask(AssemblyTask task, int time) {
 		task.completeAssemblytask(time);
 	}
 
 	/**
-	 * Method to change the scheduling algorithm.
-	 * @param algo
-	 * @param option
+	 * Changes the scheduling algorithm to the given algorithm.
+	 * @param 	algo
+	 * 			The new algorithm
+	 * @param 	option
 	 */
 	public void changeAlgorithm(String algo, CarOption option) {
 		this.getOrderManager().getScheduler().changeAlgorithm(algo, option);
 	}
 
 	/**
-	 * Method to place an order.
-	 * @param order
-	 * @throws IllegalArgumentException
+	 * Places an order.
+	 * @param 	order
+	 * 			The order that needs to be placed.
+	 * @throws 	IllegalArgumentException
 	 */
 	public void placeOrder(Order order) throws IllegalArgumentException {
 		this.getOrderManager().placeOrder(order);
 	}
 	
 	/**
-	 * Method to get the users of the car manufacturing company.
-	 * @return
+	 * Returns the users of the car manufacturing company.
+	 * @return The users of the car manufacturing company.
 	 */
 	private ArrayList<User> getUsers() {
 		return this.users;
 	}
 
 	/**
-	 * Get the order manager.
-	 * @return ordermanager
+	 * Returns the order manager of the car manufacturing company.
+	 * @return The order manager of the car manufacturing company.
 	 */
 	public OrderManager getOrderManager(){
 		return this.ordermanager;

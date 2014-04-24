@@ -5,6 +5,12 @@ import java.util.LinkedList;
 
 import businessmodel.order.Order;
 
+/**
+ * A class representing a free shift.
+ * 
+ * @author SWOP team 10 2013-2014
+ *
+ */
 public class FreeShift extends Shift{
 
 	/**
@@ -15,9 +21,12 @@ public class FreeShift extends Shift{
 	/**
 	 * Creates a free shift with an amount of hours, number of work posts and a next shift.
 	 * 
-	 * @param hours
-	 * @param numberofworkposts
-	 * @param nextShift
+	 * @param 	hours
+	 * 			The amount of hours.
+	 * @param 	numberofworkposts
+	 * 			The number of work posts.
+	 * @param 	nextShift
+	 * 			The next shift.
 	 */
 	public FreeShift(int hours,int numberofworkposts, Shift nextShift) {
 		super(hours, numberofworkposts);

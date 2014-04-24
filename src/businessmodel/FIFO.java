@@ -4,12 +4,19 @@ import java.util.ArrayList;
 
 import businessmodel.order.Order;
 
+/**
+ * Class representing a first come first served algorithm.
+ * 
+ * @author SWOP team 10 2013-2014
+ *
+ */
 public class FIFO extends SchedulingAlgorithm {
 
 	/**
-	 * Create a first come first serve algorithm.
+	 * Create a first come first serve algorithm with a given scheduler.
 	 * 
-	 * @param scheduler
+	 * @param 	scheduler
+	 * 			The scheduler for the algorithm.
 	 */
 	public FIFO(Scheduler scheduler){
 		super(scheduler);

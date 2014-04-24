@@ -4,13 +4,21 @@ import java.util.ArrayList;
 
 import businessmodel.order.Order;
 
+/**
+ * Class representing an end shift.
+ * 
+ * @author SWOP team 10 2013-2014
+ *
+ */
 public class EndShift extends Shift {
 
 	/**
 	 * Create an end shift with an amount of hours and work posts.
 	 * 
-	 * @param hours
-	 * @param numberofworkposts
+	 * @param 	hours
+	 * 			The hours of the end shift.
+	 * @param 	numberofworkposts
+	 * 			The number of work posts of the end shift.
 	 */
 	public EndShift(int hours,int numberofworkposts) {
 		super(hours,numberofworkposts);
