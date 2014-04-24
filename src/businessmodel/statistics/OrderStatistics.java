@@ -92,7 +92,7 @@ public class OrderStatistics implements Observer {
 			for (Order order: finishedOrders) {
 				if (order instanceof StandardCarOrder) {
 					StandardCarOrder carOrder = (StandardCarOrder) order;
-					Period period = new Period(carOrder.getOrderPlacedOnWorkPost(),
+					Period period = new Period(carOrder.getOrderPlacedOnAssemblyLine(),
 							carOrder.getCompletionDate());
 					Period normalPeriod = carOrder.getStandardTimeToFinish();
 					Period delay = period.minus(normalPeriod);

@@ -219,7 +219,7 @@ public class Scheduler implements Subject {
 			this.getShifts().removeFirst();
 		this.getAssemblyline().advance(nextorder);
 		if(nextorder != null)
-			nextorder.setPlacedOnWorkpostOfOrder(this.getCurrentTime());
+			nextorder.setPlacedOnAssemblyLineOfOrder(this.getCurrentTime());
 	}
 
 	private void updateEstimatedTimeOfOrders(int delay){
