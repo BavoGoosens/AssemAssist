@@ -1,5 +1,12 @@
 businessmodel
-component
+businessmodel.category
+businessmodel.exceptions
+businessmodel.observer
+businessmodel.order
+businessmodel.restrictions
+businessmodel.statistics
+businessmodel.user
+businessmodel.util
 control
 test
 ui
