@@ -1,8 +1,10 @@
-package test;
+package businessmodel;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,23 +16,26 @@ import businessmodel.OrderManager;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 import businessmodel.category.ModelAFactory;
+import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;
 
-public class WorkPostTest {
-	
+public class OrderManagerTest {
+
+	private CarManufacturingCompany cmc;
+	private OrderManager om;
 	private GarageHolder garageholder;
 	private Order order;
-	private OrderManager om;
+	CarOption option;
+	CarOption option2;
 	private Catalog catalog;
 	private ArrayList<CarOptionCategory> categories;
 
-	
 	@Before
 	public void setUp() throws Exception {
-		CarManufacturingCompany company = new CarManufacturingCompany();
-		om = company.getOrderManager();
+		cmc = new CarManufacturingCompany();
+		om = cmc.getOrderManager();
 		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
 
 		this.catalog = new Catalog();
@@ -43,17 +48,27 @@ public class WorkPostTest {
 			if (options.size() > 0) {
 				chosen.add(options.get(0));
 			}
-
 		}
-		order = new StandardCarOrder(garageholder, chosen,modelA);
-		company.placeOrder(order);
-		
+		order = new StandardCarOrder(garageholder, chosen, modelA);
+		cmc.placeOrder(order);
 	}
 
 	@Test
 	public void test() {
-		
-		assertEquals(om.getScheduler().getAssemblyline().getWorkPosts().get(0).getOrder(),om.getScheduler().getOrdersClone().get(0));
+		try {
+			
+			assertTrue(om.getScheduler().getOrdersClone().contains(order));
+			Iterator<Order> iter = cmc.getPendingOrders(garageholder);
+			List<Order> copy = new ArrayList<Order>();
+			while (iter.hasNext())
+			    copy.add(iter.next());			
+			assertTrue(copy.contains(order));
+	
+			
+
+		} catch (IllegalArgumentException | NoClearanceException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 }

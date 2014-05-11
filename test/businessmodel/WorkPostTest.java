@@ -1,10 +1,9 @@
-package test;
+package businessmodel;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,24 +14,24 @@ import businessmodel.OrderManager;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 import businessmodel.category.ModelAFactory;
+import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;
 
-public class OrderTest {
+public class WorkPostTest {
 	
 	private GarageHolder garageholder;
-	private DateTime date;
-	private ArrayList<CarOptionCategory> categories;
-	private Catalog catalog;
+	private Order order;
 	private OrderManager om;
+	private Catalog catalog;
+	private ArrayList<CarOptionCategory> categories;
+
+	
 	@Before
 	public void setUp() throws Exception {
-		
-		CarManufacturingCompany cmc = new CarManufacturingCompany();
-		
-		om = cmc.getOrderManager();
+		CarManufacturingCompany company = new CarManufacturingCompany();
+		om = company.getOrderManager();
 		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
-		
 
 		this.catalog = new Catalog();
 		this.categories = this.catalog.getAllCategories();
@@ -46,19 +45,15 @@ public class OrderTest {
 			}
 
 		}
-		cmc.placeOrder(new StandardCarOrder(garageholder, chosen, modelA));
+		order = new StandardCarOrder(garageholder, chosen,modelA);
+		company.placeOrder(order);
 		
-		date = om.getScheduler().getCurrentTime().plusHours(3);
 	}
 
 	@Test
 	public void test() {
-
-		assertEquals(om.getScheduler().getOrdersClone().get(0).getUser(),this.garageholder);
-		assertEquals(om.getScheduler().getOrdersClone().get(0).getEstimatedDeliveryDate(),this.date);
-		assertEquals(om.getScheduler().getOrdersClone().get(0).isCompleted(),false);
-
 		
+		assertEquals(om.getScheduler().getAssemblyline().getWorkPosts().get(0).getOrder(),om.getScheduler().getOrdersClone().get(0));
 	}
 
 }

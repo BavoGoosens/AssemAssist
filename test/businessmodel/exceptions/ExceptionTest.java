@@ -1,4 +1,4 @@
-package test;
+package businessmodel.exceptions;
 
 import static org.junit.Assert.assertEquals;
 

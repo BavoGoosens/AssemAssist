@@ -1,11 +1,10 @@
-package test;
+package businessmodel;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,27 +15,24 @@ import businessmodel.OrderManager;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 import businessmodel.category.ModelAFactory;
-import businessmodel.exceptions.NoClearanceException;
-import businessmodel.order.Order;
 import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;
 
-public class OrderManagerTest {
-
-	private CarManufacturingCompany cmc;
-	private OrderManager om;
+public class OrderTest {
+	
 	private GarageHolder garageholder;
-	private Order order;
-	CarOption option;
-	CarOption option2;
-	private Catalog catalog;
+	private DateTime date;
 	private ArrayList<CarOptionCategory> categories;
-
+	private Catalog catalog;
+	private OrderManager om;
 	@Before
 	public void setUp() throws Exception {
-		cmc = new CarManufacturingCompany();
+		
+		CarManufacturingCompany cmc = new CarManufacturingCompany();
+		
 		om = cmc.getOrderManager();
 		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
+		
 
 		this.catalog = new Catalog();
 		this.categories = this.catalog.getAllCategories();
@@ -48,27 +44,21 @@ public class OrderManagerTest {
 			if (options.size() > 0) {
 				chosen.add(options.get(0));
 			}
+
 		}
-		order = new StandardCarOrder(garageholder, chosen, modelA);
-		cmc.placeOrder(order);
+		cmc.placeOrder(new StandardCarOrder(garageholder, chosen, modelA));
+		
+		date = om.getScheduler().getCurrentTime().plusHours(3);
 	}
 
 	@Test
 	public void test() {
-		try {
-			
-			assertTrue(om.getScheduler().getOrdersClone().contains(order));
-			Iterator<Order> iter = cmc.getPendingOrders(garageholder);
-			List<Order> copy = new ArrayList<Order>();
-			while (iter.hasNext())
-			    copy.add(iter.next());			
-			assertTrue(copy.contains(order));
-	
-			
 
-		} catch (IllegalArgumentException | NoClearanceException e) {
-			System.out.println(e.getMessage());
-		}
+		assertEquals(om.getScheduler().getOrdersClone().get(0).getUser(),this.garageholder);
+		assertEquals(om.getScheduler().getOrdersClone().get(0).getEstimatedDeliveryDate(),this.date);
+		assertEquals(om.getScheduler().getOrdersClone().get(0).isCompleted(),false);
+
+		
 	}
 
 }
