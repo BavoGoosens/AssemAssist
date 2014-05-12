@@ -21,11 +21,11 @@ import control.StandardOrderHandler;
 
 public class GarageHolderView extends View{
 
-	private ArrayList<Order> pending_orders = new ArrayList<>();
+	private ArrayList<Order> pending_orders = new ArrayList<Order>();
 
-	private ArrayList<Order> completed_orders = new ArrayList<>();
+	private ArrayList<Order> completed_orders = new ArrayList<Order>();
 
-	private ArrayList<VehicleModel> available_vehiclemodels = new ArrayList<>();
+	private ArrayList<VehicleModel> available_vehiclemodels = new ArrayList<VehicleModel>();
 
 	private StandardOrderController controller;
 
@@ -123,7 +123,7 @@ public class GarageHolderView extends View{
 	}
 
 	private void displayOrderingForm(VehicleModel model){
-		ArrayList <VehicleOption> chosen = new ArrayList<>();
+		ArrayList <VehicleOption> chosen = new ArrayList<VehicleOption>();
 		ArrayList <VehicleOption> available = model.getPossibilities();
 		StandardCarOrder validorder = null;
 		while (validorder == null){

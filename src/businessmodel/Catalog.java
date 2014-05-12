@@ -71,7 +71,7 @@ public class Catalog {
 	 * @return
 	 */
 	protected ArrayList<VehicleOption> getAllOptions(VehicleOptionCategory cat) {
-		ArrayList<VehicleOption> res = new ArrayList<>();
+		ArrayList<VehicleOption> res = new ArrayList<VehicleOption>();
 		for (VehicleModel model: this.getAvailableModels()){
 			for (VehicleOption option: model.getPossibilities()) {
 				if (option.getCategory().equals(cat))

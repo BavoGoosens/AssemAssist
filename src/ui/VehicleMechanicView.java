@@ -28,7 +28,7 @@ public class VehicleMechanicView extends View {
 
 	@Override
 	public void display() {
-		ArrayList<WorkPost> posts = new ArrayList<>();
+		ArrayList<WorkPost> posts = new ArrayList<WorkPost>();
 		Iterator<WorkPost> temp = this.getModel().getWorkPosts(this.user);
 		while(temp.hasNext())
 			posts.add(temp.next());
@@ -58,7 +58,7 @@ public class VehicleMechanicView extends View {
 
 	private void performTasks(WorkPost wp) {
 		Iterator<AssemblyTask> taskss = this.getModel().getPendingTasks(wp);
-		ArrayList<AssemblyTask> tasks = new ArrayList<>();
+		ArrayList<AssemblyTask> tasks = new ArrayList<AssemblyTask>();
 		while (taskss.hasNext())
 			tasks.add(taskss.next());
 		if (tasks.isEmpty()){
