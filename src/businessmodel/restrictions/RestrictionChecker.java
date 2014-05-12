@@ -44,6 +44,7 @@ public class RestrictionChecker {
 		this.addRestriction(new SportBodyRestriction());
 		this.addRestriction(new UltraEngineAircoRestriction());
 		this.addRestriction(new MultipleCategoryRestriction());
+		this.addRestriction(new PlatformBodyWheelsRestriction());
 	}
 	
 	/**

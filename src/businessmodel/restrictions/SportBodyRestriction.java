@@ -61,7 +61,7 @@ public class SportBodyRestriction extends Restriction {
 			}
 		}
 		throw new UnsatisfiedRestrictionException("If you choose a SPORT BODY, you must choose "
-				+ "a PERFORMANCE or ULTRA ENGINE");
+				+ "a PERFORMANCE or ULTRA ENGINE.");
 	}
 
 }
