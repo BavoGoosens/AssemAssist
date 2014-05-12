@@ -12,5 +12,6 @@
 .settings/*
 .idea/*
 *.iml
-.idea/
+/.idea/*
 .settings/
+.idea/workspace.xml
