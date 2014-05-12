@@ -84,7 +84,7 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
-	public Iterator<VehicleModel> getCarModels(User user) {
+	public Iterator<VehicleModel> getVehicleModels(User user) {
 		return this.catalog.getAvailaleModelsClone().iterator();
 	}
 

@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.CarManufacturingCompany;
-import businessmodel.CarModel;
+import businessmodel.VehicleModel;
 import businessmodel.Catalog;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
@@ -32,10 +32,10 @@ public class ExceptionTest {
 		this.catalog = new Catalog();
 		this.categories = this.catalog.getAllCategories();
 
-		CarModel modelA = new ModelAFactory().createModel();
+		VehicleModel modelA = new ModelAFactory().createModel();
 		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
 		for (CarOptionCategory category: this.categories) {
-			ArrayList<CarOption> options = modelA.getCarModelSpecification().getOptionsOfCategory(category);
+			ArrayList<CarOption> options = modelA.getVehicleModelSpecification().getOptionsOfCategory(category);
 			if (options.size() > 0) {
 				chosen.add(options.get(0));
 			}

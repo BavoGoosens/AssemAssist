@@ -5,27 +5,27 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.CarModel;
-import businessmodel.CarModelSpecification;
+import businessmodel.VehicleModel;
+import businessmodel.VehicleModelSpecification;
 import businessmodel.Catalog;
 
-public class CarModelTest {
+public class VehicleModelTest {
 	
-	private CarModel model;
-	private CarModelSpecification cms;
+	private VehicleModel model;
+	private VehicleModelSpecification cms;
 
 	@Before
 	public void setUp() throws Exception {
 	
 		Catalog catalog = new Catalog();
-		cms = catalog.getAvailaleModelsClone().get(0).getCarModelSpecification();
+		cms = catalog.getAvailaleModelsClone().get(0).getVehicleModelSpecification();
 		model = catalog.getAvailaleModelsClone().get(0);
 	}
 
 	@Test
 	public void test() {
 		assertEquals("Model A",this.model.getName());
-		assertEquals(this.cms,model.getCarModelSpecification());
+		assertEquals(this.cms,model.getVehicleModelSpecification());
 		assertEquals(model.toString(),"Car model: Model A");
 	}
 

@@ -46,9 +46,9 @@ public class StandardVehicleOrder extends Order {
 			throws IllegalArgumentException, NoClearanceException, UnsatisfiedRestrictionException {
 		super(user);
 		Vehicle car = new Vehicle(options);
-		model.getCarModelSpecification().checkRestrictions(car);
+		model.getVehicleModelSpecification().checkRestrictions(car);
 		this.setCar(car);
-		this.setCarModel(model);
+		this.setVehicleModel(model);
 	}
 	
 	/**
@@ -65,7 +65,7 @@ public class StandardVehicleOrder extends Order {
 	 * 
 	 * @return The car model that is ordered.
 	 */
-	public VehicleModel getCarModel() {
+	public VehicleModel getVehicleModel() {
 		return this.carModel;
 	}
 	
@@ -75,7 +75,7 @@ public class StandardVehicleOrder extends Order {
 	 * @return The standard time needed to finish the order of the specific model.
 	 */
 	public Period getStandardTimeToFinish() {
-		return this.getCarModel().getStandardTimeToFinish();
+		return this.getVehicleModel().getStandardTimeToFinish();
 	}
 	
 	/**
@@ -101,7 +101,7 @@ public class StandardVehicleOrder extends Order {
 	 * 			| If the car model is equal to 'null'
 	 * 			| model == null
 	 */
-	private void setCarModel(VehicleModel model) throws IllegalArgumentException {
+	private void setVehicleModel(VehicleModel model) throws IllegalArgumentException {
 		if (model == null) throw new IllegalArgumentException("Bad car model!");
 		this.carModel = model;
 	}

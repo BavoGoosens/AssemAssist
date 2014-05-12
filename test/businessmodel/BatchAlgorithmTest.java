@@ -8,8 +8,9 @@ import businessmodel.order.StandardVehicleOrder;
 import org.junit.Test;
 
 import businessmodel.CarManufacturingCompany;
-import businessmodel.CarModel;
-import businessmodel.CarModelSpecification;
+import businessmodel.VehicleModel;
+import businessmodel.VehicleModelSpecification;
+import businessmodel.OrderManager;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
 import businessmodel.category.CarOption;
@@ -46,7 +47,11 @@ public class BatchAlgorithmTest {
 			options.add(body);
 			options.add(engine);
 			
+<<<<<<< HEAD
 			Order order1 = new StandardVehicleOrder(new GarageHolder("bouwe", "", ""), options, new CarModel("lol", new CarModelSpecification(options)));
+=======
+			Order order1 = new StandardCarOrder(new GarageHolder("bouwe", "", ""), options, new VehicleModel("lol", new VehicleModelSpecification(options)));
+>>>>>>> 6195e12575253383c0105a029c43ce5513c4c2e5
 			cmc.placeOrder(order1);
 			
 			//---------------------------------------------------------------------------------
@@ -59,7 +64,11 @@ public class BatchAlgorithmTest {
 			options.add(engine);
 
 	
+<<<<<<< HEAD
 			Order order2 = new StandardVehicleOrder(new GarageHolder("sander", "", ""), options,new CarModel("lol", new CarModelSpecification(options)));
+=======
+			Order order2 = new StandardCarOrder(new GarageHolder("sander", "", ""), options,new VehicleModel("lol", new VehicleModelSpecification(options)));
+>>>>>>> 6195e12575253383c0105a029c43ce5513c4c2e5
 			cmc.placeOrder(order2);
 			
 			//---------------------------------------------------------------------------------
@@ -71,7 +80,11 @@ public class BatchAlgorithmTest {
 			options.add(body);
 			options.add(engine);
 
+<<<<<<< HEAD
 			Order order3 = new StandardVehicleOrder(new GarageHolder("bavo", "", ""), options,new CarModel("lol", new CarModelSpecification(options)));
+=======
+			Order order3 = new StandardCarOrder(new GarageHolder("bavo", "", ""), options,new VehicleModel("lol", new VehicleModelSpecification(options)));
+>>>>>>> 6195e12575253383c0105a029c43ce5513c4c2e5
 			cmc.placeOrder(order3);
 
 			//---------------------------------------------------------------------------------
@@ -83,7 +96,11 @@ public class BatchAlgorithmTest {
 			options.add(body);
 			options.add(engine);
 
+<<<<<<< HEAD
 			Order order4 = new StandardVehicleOrder(new GarageHolder("michiel", "", ""), options,new CarModel("lol", new CarModelSpecification(options)));
+=======
+			Order order4 = new StandardCarOrder(new GarageHolder("michiel", "", ""), options,new VehicleModel("lol", new VehicleModelSpecification(options)));
+>>>>>>> 6195e12575253383c0105a029c43ce5513c4c2e5
 			cmc.placeOrder(order4);
 
 			
@@ -96,7 +113,11 @@ public class BatchAlgorithmTest {
 			options.add(body);
 			options.add(engine);
 
+<<<<<<< HEAD
 			Order order5 = new StandardVehicleOrder(new GarageHolder("lol", "", ""), options,new CarModel("lol", new CarModelSpecification(options)));
+=======
+			Order order5 = new StandardCarOrder(new GarageHolder("lol", "", ""), options,new VehicleModel("lol", new VehicleModelSpecification(options)));
+>>>>>>> 6195e12575253383c0105a029c43ce5513c4c2e5
 			cmc.placeOrder(order5);
 
 			

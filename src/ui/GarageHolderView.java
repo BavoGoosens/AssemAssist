@@ -25,7 +25,7 @@ public class GarageHolderView extends View{
 
 	private ArrayList<Order> completed_orders = new ArrayList<Order>();
 
-	private ArrayList<VehicleModel> available_carmodels = new ArrayList<VehicleModel>();
+	private ArrayList<VehicleModel> available_vehiclemodels = new ArrayList<VehicleModel>();
 
 	private StandardOrderController controller;
 
@@ -94,13 +94,13 @@ public class GarageHolderView extends View{
 
 	private void startNewOrder() {
 		// choose the car model
-		this.available_carmodels.clear();
-		Iterator<VehicleModel> iter = this.getModel().getCarModels(this.user);
+		this.available_vehiclemodels.clear();
+		Iterator<VehicleModel> iter = this.getModel().getVehicleModels(this.user);
 		while (iter.hasNext())
-			this.available_carmodels.add(iter.next());
+			this.available_vehiclemodels.add(iter.next());
 		System.out.println("> Please enter the corresponding number of the car model you wish to order:");
 		int count = 1;
-		for (VehicleModel cm : this.available_carmodels)
+		for (VehicleModel cm : this.available_vehiclemodels)
 			System.out.println("> " + count ++ + ") "+ cm.toString());
 		System.out.print(">> ");
 		String response = this.scan.nextLine();
@@ -108,12 +108,12 @@ public class GarageHolderView extends View{
 		Pattern pattern = Pattern.compile("^(\\d+)$");
 		if (pattern.matcher(response).find()){
 			int number = Integer.parseInt(response);
-			if (number > this.available_carmodels.size() || number < 1){
+			if (number > this.available_vehiclemodels.size() || number < 1){
 				System.out.println("! You entered something wrong please try again");
 				this.startNewOrder();
 			}
 			number -= 1;
-			VehicleModel chosen = this.available_carmodels.get(number);				
+			VehicleModel chosen = this.available_vehiclemodels.get(number);				
 			displayOrderingForm(chosen);
 		} else {
 			System.out.println("! wrong input");

@@ -43,8 +43,8 @@ public class VehicleModel {
 	 */
 	public VehicleModel(String name,VehicleModelSpecification cms, Period standardTimeToFinish) 
 			throws IllegalArgumentException {
-		this.setCarmodel(name);
-		this.setCarModelSpecification(cms);
+		this.setVehicleModel(name);
+		this.setVehicleModelSpecification(cms);
 		this.setStandardTimeToFinish(standardTimeToFinish);
 		this.setStandardTimeToFinish(standardTimeToFinish);
 	}
@@ -60,8 +60,8 @@ public class VehicleModel {
 	 * 
 	 */
 	public VehicleModel(String name, VehicleModelSpecification cms) throws IllegalArgumentException {
-		this.setCarmodel(name);
-		this.setCarModelSpecification(cms);
+		this.setVehicleModel(name);
+		this.setVehicleModelSpecification(cms);
 		this.setStandardTimeToFinish(new Period(60*3));
 	}
 	
@@ -98,7 +98,7 @@ public class VehicleModel {
 	 * 
 	 * @return  The car model specification of the car model.
 	 */
-	public VehicleModelSpecification getCarModelSpecification() {
+	public VehicleModelSpecification getVehicleModelSpecification() {
 		return cms;
 	}
 
@@ -111,7 +111,7 @@ public class VehicleModel {
 	 * 			| If the car model specification is equal to 'null'
 	 * 			| cms == null
 	 */
-	private void setCarModelSpecification(VehicleModelSpecification cms) throws IllegalArgumentException {
+	private void setVehicleModelSpecification(VehicleModelSpecification cms) throws IllegalArgumentException {
 		if(cms == null) throw new IllegalArgumentException("Bad car model specification!");
 		this.cms = cms;
 	}
@@ -125,8 +125,8 @@ public class VehicleModel {
 	 * 			| If the name is equal to 'null' or is equal to the empty string
 	 * 			| name == null || name.equals("")
 	 */
-	private void setCarmodel(String name) throws IllegalArgumentException {
-		if (name == null || name.equals("")) throw new IllegalArgumentException("Bad name for carmodel!");
+	private void setVehicleModel(String name) throws IllegalArgumentException {
+		if (name == null || name.equals("")) throw new IllegalArgumentException("Bad name for vehiclemodel!");
 		this.name = name;
 	}
 	

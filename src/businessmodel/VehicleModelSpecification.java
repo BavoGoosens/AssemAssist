@@ -105,7 +105,7 @@ public class VehicleModelSpecification {
 	public boolean checkRestrictions(Vehicle car) throws IllegalArgumentException, UnsatisfiedRestrictionException {
 		if (car == null) throw new IllegalArgumentException("Bad car!");
 		RestrictionChecker checker = new RestrictionChecker();
-		return this.checkCarModel(car) && checker.check(car.getOptionsClone());
+		return this.checkVehicleModel(car) && checker.check(car.getOptionsClone());
 	}
 	
 	/**
@@ -120,7 +120,7 @@ public class VehicleModelSpecification {
 	 * @throws 	UnsatisfiedRestrictionException
 	 * 			| If the car model of the given car is not valid.
 	 */
-	private boolean checkCarModel(Vehicle car) throws IllegalArgumentException, UnsatisfiedRestrictionException {
+	private boolean checkVehicleModel(Vehicle car) throws IllegalArgumentException, UnsatisfiedRestrictionException {
 		if (car == null) throw new IllegalArgumentException("Bad car!");
 		ArrayList<VehicleOption> wrongOptions = new ArrayList<VehicleOption>();
 		for (VehicleOption option: car.getOptionsClone()) {
