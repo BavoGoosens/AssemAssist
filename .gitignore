@@ -12,3 +12,5 @@
 .settings/*
 .idea/*
 *.iml
+.idea/
+.settings/
