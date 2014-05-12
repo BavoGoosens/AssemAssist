@@ -2,12 +2,7 @@ package businessmodel;
 
 import java.util.ArrayList;
 
-import businessmodel.category.VehicleModelFactory;
-import businessmodel.category.VehicleOption;
-import businessmodel.category.VehicleOptionCategory;
-import businessmodel.category.ModelAFactory;
-import businessmodel.category.ModelBFactory;
-import businessmodel.category.ModelCFactory;
+import businessmodel.category.*;
 
 
 /**
@@ -33,6 +28,8 @@ public class Catalog {
 		this.factories.add(new ModelAFactory());
 		this.factories.add(new ModelBFactory());
 		this.factories.add(new ModelCFactory());
+        this.factories.add(new ModelXFactory());
+        this.factories.add(new ModelYFactory());
 		this.createAllModels();
 	}
 	

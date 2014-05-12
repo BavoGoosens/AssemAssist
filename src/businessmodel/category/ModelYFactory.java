@@ -141,8 +141,10 @@ public class ModelYFactory extends VehicleModelFactory {
 
 	@Override
 	protected Period getStandardTimeToFinish() {
-		// TODO Auto-generated method stub
-		return null;
+        Period period = new Period();
+        period = period.withMinutes(30);
+        period = period.withHours(2);
+        return period; // TODO: juiste periode hier zetten
 	}
 
 }
