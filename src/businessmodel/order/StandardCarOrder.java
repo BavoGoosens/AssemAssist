@@ -23,7 +23,7 @@ public class StandardCarOrder extends Order {
 	/**
 	 * The car of the order.
 	 */
-	private Vehicle car;
+	private Vehicle vehicle;
 	/**
 	 * The car model of the order.
 	 */
@@ -57,7 +57,7 @@ public class StandardCarOrder extends Order {
 	 * @return The car of the order.
 	 */
 	public Vehicle getCar() {
-		return this.car;
+		return this.vehicle;
 	}
 	
 	/**
@@ -89,7 +89,7 @@ public class StandardCarOrder extends Order {
 	 */
 	private void setCar(Vehicle car) throws IllegalArgumentException {
 		if (car == null) throw new IllegalArgumentException("Bad car!");
-		this.car = car;
+		this.vehicle = car;
 	}
 	
 	/**
