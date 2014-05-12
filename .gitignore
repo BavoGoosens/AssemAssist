@@ -9,6 +9,6 @@
 /bin
 .*~
 
-/.settings
-/.idea
+.settings/*
+.idea/*
 *.iml
