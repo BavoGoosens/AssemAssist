@@ -34,7 +34,7 @@ public class CustomShopManagerView extends View {
 	@Override
 	public void display() {
 		Iterator<AssemblyTask> availableiter = this.getModel().getAvailableTasks(this.user);
-		ArrayList<AssemblyTask> available = new ArrayList<>();
+		ArrayList<AssemblyTask> available = new ArrayList<AssemblyTask>();
 		System.out.println("> These are the assembly tasks you can order: ");
 		int count = 1;
 		while(availableiter.hasNext()){
@@ -85,11 +85,12 @@ public class CustomShopManagerView extends View {
 			try {
 				this.controller.placeSingleTaskOrder(new SingleTaskOrder(this.user, res , deadline));
 				System.out.println("> Your order has been placed :)");
-			} catch (IllegalArgumentException | NoClearanceException
-					| UnsatisfiedRestrictionException e) {
+			} catch (NoClearanceException e) {
 				System.out.println("! " + e.getMessage());
 				this.error();
-			}
+			} catch (UnsatisfiedRestrictionException e) {
+                System.out.println("! "+e.getMessage());
+            }
 
 		} else {
 			this.error();

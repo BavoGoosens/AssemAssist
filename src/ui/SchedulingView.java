@@ -26,7 +26,7 @@ public class SchedulingView extends View {
 	@Override
 	public void display() {
 		Iterator<String> algoss = this.getModel().getSchedulingAlgorithms(user);
-		ArrayList<String> algos = new ArrayList<>();
+		ArrayList<String> algos = new ArrayList<String>();
 		while (algoss.hasNext())
 			algos.add(algoss.next());
 		String currentalgo = this.getModel().getCurrentAlgo();
@@ -47,7 +47,7 @@ public class SchedulingView extends View {
 				this.error();
 			String algo = algos.get(choice - 1);
 			Iterator<VehicleOption> optss = this.getModel().getUnscheduledCarOptions(3);
-			ArrayList<VehicleOption> opts = new ArrayList<>();
+			ArrayList<VehicleOption> opts = new ArrayList<VehicleOption>();
 			while (optss.hasNext())
 				opts.add(optss.next());
 			if (algo.equals("SpecificationBatch")){
