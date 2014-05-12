@@ -52,7 +52,7 @@ public class AssemblyLine implements Subject{
 	protected boolean canAdvance() {
 		for(WorkPost wp : this.getWorkPosts()){
 			boolean ready = wp.isCompleted();
-			if (ready == false)
+			if (ready)
 				return false;
 		}
 		return true;
