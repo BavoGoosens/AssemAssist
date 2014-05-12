@@ -47,6 +47,11 @@ public abstract class VehicleModelFactory {
 	 * Creates the seats category of the model with the necessary car options.
 	 */
 	protected abstract Seats createSeats();
+	
+	/**
+	 * Creates the airco category of the model with the necessary car options.
+	 */
+	protected abstract Airco createAirco();
 
 	/**
 	 * Creates the wheels category of the model with the necessary car options.
