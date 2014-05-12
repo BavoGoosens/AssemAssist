@@ -1,17 +1,17 @@
 package control;
 
 
-import businessmodel.CarManufacturingCompany;
+import businessmodel.VehicleManufacturingCompany;
 import businessmodel.Model;
 import businessmodel.order.StandardCarOrder;
 
 public class StandardOrderHandler implements StandardOrderController{
 	
-	private CarManufacturingCompany cmc;
+	private VehicleManufacturingCompany cmc;
 	
 		
 	public StandardOrderHandler(Model model) {
-		this.cmc = (CarManufacturingCompany) model;
+		this.cmc = (VehicleManufacturingCompany) model;
 	}
 
 	@Override

@@ -7,9 +7,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import businessmodel.CarModel;
+import businessmodel.VehicleModel;
 import businessmodel.Model;
-import businessmodel.category.CarOption;
+import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.Order;
@@ -25,7 +25,7 @@ public class GarageHolderView extends View{
 
 	private ArrayList<Order> completed_orders = new ArrayList<>();
 
-	private ArrayList<CarModel> available_carmodels = new ArrayList<>();
+	private ArrayList<VehicleModel> available_carmodels = new ArrayList<>();
 
 	private StandardOrderController controller;
 
@@ -95,12 +95,12 @@ public class GarageHolderView extends View{
 	private void startNewOrder() {
 		// choose the car model
 		this.available_carmodels.clear();
-		Iterator<CarModel> iter = this.getModel().getCarModels(this.user);
+		Iterator<VehicleModel> iter = this.getModel().getCarModels(this.user);
 		while (iter.hasNext())
 			this.available_carmodels.add(iter.next());
 		System.out.println("> Please enter the corresponding number of the car model you wish to order:");
 		int count = 1;
-		for (CarModel cm : this.available_carmodels)
+		for (VehicleModel cm : this.available_carmodels)
 			System.out.println("> " + count ++ + ") "+ cm.toString());
 		System.out.print(">> ");
 		String response = this.scan.nextLine();
@@ -113,7 +113,7 @@ public class GarageHolderView extends View{
 				this.startNewOrder();
 			}
 			number -= 1;
-			CarModel chosen = this.available_carmodels.get(number);				
+			VehicleModel chosen = this.available_carmodels.get(number);				
 			displayOrderingForm(chosen);
 		} else {
 			System.out.println("! wrong input");
@@ -122,14 +122,14 @@ public class GarageHolderView extends View{
 
 	}
 
-	private void displayOrderingForm(CarModel model){
-		ArrayList <CarOption> chosen = new ArrayList<>();
-		ArrayList <CarOption> available = model.getPossibilities();
+	private void displayOrderingForm(VehicleModel model){
+		ArrayList <VehicleOption> chosen = new ArrayList<>();
+		ArrayList <VehicleOption> available = model.getPossibilities();
 		StandardCarOrder validorder = null;
 		while (validorder == null){
 			System.out.println("> Your chosen car options: ");
 			int rem = 1;
-			for (CarOption cho : chosen){
+			for (VehicleOption cho : chosen){
 				System.out.println("> " + rem + ") " + cho.toString());
 				rem ++;
 			}
@@ -137,7 +137,7 @@ public class GarageHolderView extends View{
 			System.out.println("> If you want to remove a chosen car option enter REMOVE followed by the number of the option");
 			System.out.println("> If you have chosen everything enter ORDER");
 			int number = 1;
-			for (CarOption opt : available){
+			for (VehicleOption opt : available){
 				System.out.println("> " + number + ") " + opt.toString());
 				number ++;
 			}
@@ -152,7 +152,7 @@ public class GarageHolderView extends View{
 				if ( choice > available.size() || choice < 1){
 					System.out.println("! You entered something wrong. Please try again");
 				} else {
-					CarOption want = available.remove(choice - 1);
+					VehicleOption want = available.remove(choice - 1);
 					chosen.add(want);
 				}
 			} else if (matcher.find()) {
@@ -163,7 +163,7 @@ public class GarageHolderView extends View{
 				if ( nam > chosen.size() || nam < 1){
 					System.out.println("! You entered something wrong. Please try again");
 				} else {
-					CarOption removed = chosen.remove(nam - 1);
+					VehicleOption removed = chosen.remove(nam - 1);
 					available.add(removed);
 				}
 			} else if (response.equalsIgnoreCase("order")){

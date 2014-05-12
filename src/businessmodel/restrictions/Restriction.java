@@ -2,7 +2,7 @@ package businessmodel.restrictions;
 
 import java.util.ArrayList;
 
-import businessmodel.category.CarOption;
+import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 
 /**
@@ -30,6 +30,6 @@ public abstract class Restriction {
 	 * @throws 	UnsatisfiedRestrictionException
 	 * 			| If the given set of options violates the restriction
 	 */
-	public abstract boolean check(ArrayList<CarOption> options) throws IllegalArgumentException, UnsatisfiedRestrictionException;
+	public abstract boolean check(ArrayList<VehicleOption> options) throws IllegalArgumentException, UnsatisfiedRestrictionException;
 
 }

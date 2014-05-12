@@ -8,7 +8,7 @@ import org.joda.time.LocalDate;
 import businessmodel.Scheduler;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
-import businessmodel.util.CarTupleComperator;
+import businessmodel.util.VehicleTupleComperator;
 import businessmodel.util.Tuple;
 
 /**
@@ -17,7 +17,7 @@ import businessmodel.util.Tuple;
  * @author SWOP team 10 2013-2014
  *
  */
-public class CarStatistics implements Observer {
+public class VehicleStatistics implements Observer {
 
 	/**
 	 * The average number of cars produced.
@@ -43,7 +43,7 @@ public class CarStatistics implements Observer {
 	 * 			| If the subject is equal to 'null' or if the subject isn't an order scheduler.
 	 * 			| subject == null || !(subject instanceof Scheduler)
 	 */
-	public CarStatistics(Subject subject) throws IllegalArgumentException {
+	public VehicleStatistics(Subject subject) throws IllegalArgumentException {
 		if (subject == null || !(subject instanceof Scheduler)) throw new IllegalArgumentException("Bad subject!");
 		subject.subscribeObserver(this);
 		this.numberOfCars = new ArrayList<Tuple<LocalDate, Integer>>();
@@ -103,7 +103,7 @@ public class CarStatistics implements Observer {
 	@SuppressWarnings("unchecked")
 	private void updateMedian(){
 		ArrayList<Tuple<LocalDate, Integer>> temp = (ArrayList<Tuple<LocalDate, Integer>>) this.numberOfCars.clone();
-		Collections.sort(temp, new CarTupleComperator());
+		Collections.sort(temp, new VehicleTupleComperator());
 		if ( temp.size() % 2 == 0 ){
 			int fml = temp.get((temp.size()/2) -1).getY();
 			int fol = temp.get((temp.size()/2)).getY();

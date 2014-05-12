@@ -2,7 +2,7 @@ package businessmodel;
 
 import java.util.ArrayList;
 
-import businessmodel.category.CarOption;
+import businessmodel.category.VehicleOption;
 import businessmodel.order.Order;
 
 /**
@@ -160,12 +160,12 @@ public class WorkPost {
 	 * @return 	The list of assembly tasks that this work post can carry out based on the 
 	 * 			given car options.
 	 */
-	protected ArrayList<AssemblyTask> possibleAssemblyTasks(ArrayList<CarOption> carOptions) throws IllegalArgumentException {
+	protected ArrayList<AssemblyTask> possibleAssemblyTasks(ArrayList<VehicleOption> carOptions) throws IllegalArgumentException {
 		if (carOptions == null) 
 			throw new IllegalArgumentException("Bad list of car parts!");
 		ArrayList<AssemblyTask> result = new ArrayList<AssemblyTask>();
 		for(AssemblyTask assem : this.getResponsibleTasks()){
-			for(CarOption option: carOptions){
+			for(VehicleOption option: carOptions){
 				if(option.getCategory().equals(assem.getCategory()))
 					result.add(new AssemblyTask(assem.getName(),assem.getDescription(),assem.getCategory(),this));
 			}
@@ -214,7 +214,7 @@ public class WorkPost {
 	 */
 	private void refreshAssemblyTasks() {
 		if (this.getOrder() != null) {
-			ArrayList<CarOption> carParts = this.getOrder().getOptions();
+			ArrayList<VehicleOption> carParts = this.getOrder().getOptions();
 			ArrayList<AssemblyTask> newPendingTasks = this.possibleAssemblyTasks(carParts);
 			this.setPendingTasks(newPendingTasks);
 		}

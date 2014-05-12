@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
-import businessmodel.category.CarOption;
+import businessmodel.category.VehicleOption;
 import businessmodel.order.Order;
 /**
  * A class representing a specification batch scheduling algorithm.
@@ -15,7 +15,7 @@ import businessmodel.order.Order;
 public class SpecificationBatch extends SchedulingAlgorithm {
 
 	private LinkedList<Order> orderList = new LinkedList<Order>();
-	private CarOption option;
+	private VehicleOption option;
 
 	/**
 	 * Creates a specification batch algorithm with a scheduler and an option to schedule to options from.
@@ -23,7 +23,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	 * 			The scheduler of the algorithm.
 	 * @param 	option
 	 */
-	public SpecificationBatch(Scheduler scheduler, CarOption option){
+	public SpecificationBatch(Scheduler scheduler, VehicleOption option){
 		super(scheduler);
 		this.setOption(option);
 		ArrayList<Order> list = new ArrayList<Order>(this.getScheduler().getOrders());
@@ -42,7 +42,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 		if (orderList.size() != 0){
 			
 			for(Order order: orderList)
-				for(CarOption option: order.getOptions())
+				for(VehicleOption option: order.getOptions())
 					if (option.toString().equals(this.option.toString()))
 						similarCarOptionsOrder.add(order);
 			
@@ -81,7 +81,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 		}
 	}
 
-	private void setOption(CarOption option) throws IllegalArgumentException {
+	private void setOption(VehicleOption option) throws IllegalArgumentException {
 		if(option == null)
 			throw new IllegalArgumentException("Not an option");
 		this.option = option;

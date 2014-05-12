@@ -10,7 +10,7 @@ import org.joda.time.LocalDate;
  * @author SWOP team 10 2013-2014
  *
  */
-public class CarTupleComperator implements Comparator<Tuple<LocalDate, Integer>> {
+public class VehicleTupleComperator implements Comparator<Tuple<LocalDate, Integer>> {
 
 	@Override
 	public int compare(Tuple<LocalDate, Integer> o1, Tuple<LocalDate, Integer> o2) {

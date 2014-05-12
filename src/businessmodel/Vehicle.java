@@ -2,7 +2,7 @@ package businessmodel;
 
 import java.util.ArrayList;
 
-import businessmodel.category.CarOption;
+import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 
 /**
@@ -11,12 +11,12 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
  * @author SWOP team 10 2014
  *
  */
-public class Car {
+public class Vehicle {
 
 	/**
 	 * A list that holds all the options of a car.
 	 */
-	private ArrayList<CarOption> options;
+	private ArrayList<VehicleOption> options;
 
 	/**
 	 * Creates a new car with a given list of options.
@@ -26,7 +26,7 @@ public class Car {
 	 * @throws	IllegalArgumentException
 	 * @throws 	UnsatisfiedRestrictionException 
 	 */
-	public Car(ArrayList<CarOption> options) throws IllegalArgumentException {
+	public Vehicle(ArrayList<VehicleOption> options) throws IllegalArgumentException {
 		this.setOptions(options);
 	}
 
@@ -36,8 +36,8 @@ public class Car {
 	 * @return	The options (clone) of the car.
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<CarOption> getOptionsClone() {
-		return (ArrayList<CarOption>) this.options.clone();
+	public ArrayList<VehicleOption> getOptionsClone() {
+		return (ArrayList<VehicleOption>) this.options.clone();
 	}
 	
 	/**
@@ -45,7 +45,7 @@ public class Car {
 	 *
 	 * @return  The options of the car.
 	 */
-	private ArrayList<CarOption> getOptions(){
+	private ArrayList<VehicleOption> getOptions(){
 		return this.options;
 	}
 
@@ -59,9 +59,9 @@ public class Car {
 	 * 			| options == null
 	 */
 	@SuppressWarnings("unchecked")
-	private void setOptions(ArrayList<CarOption> options) throws IllegalArgumentException {
+	private void setOptions(ArrayList<VehicleOption> options) throws IllegalArgumentException {
 		if(options == null) throw new IllegalArgumentException();
-		this.options = (ArrayList<CarOption>) options.clone();
+		this.options = (ArrayList<VehicleOption>) options.clone();
 	}
 
 	/**

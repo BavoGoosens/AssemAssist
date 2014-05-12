@@ -2,8 +2,8 @@ package businessmodel;
 
 import java.util.ArrayList;
 
-import businessmodel.category.CarOption;
-import businessmodel.category.CarOptionCategory;
+import businessmodel.category.VehicleOption;
+import businessmodel.category.VehicleOptionCategory;
 
 /**
  * A class representing an assembly task.
@@ -31,7 +31,7 @@ public class AssemblyTask {
 	/**
 	 * The category of the car options that this assembly task manages. 
 	 */
-	private CarOptionCategory category;
+	private VehicleOptionCategory category;
 	
 	/**
 	 * The workpost of the assembly task
@@ -52,7 +52,7 @@ public class AssemblyTask {
 	 * @throws 	IllegalArgumentException
 	 * 
 	 */
-	protected AssemblyTask(String name, String descriptionOfActions, CarOptionCategory category, WorkPost workpost) throws IllegalArgumentException {
+	protected AssemblyTask(String name, String descriptionOfActions, VehicleOptionCategory category, WorkPost workpost) throws IllegalArgumentException {
 		this.setWorkpost(workpost);
 		this.setName(name);
 		this.setCategory(category);
@@ -70,7 +70,7 @@ public class AssemblyTask {
 	 * 			The category for the assembly task.
 	 * @throws 	IllegalArgumentException
 	 */
-	protected AssemblyTask(String name, String descriptionOfActions, CarOptionCategory category) throws IllegalArgumentException {
+	protected AssemblyTask(String name, String descriptionOfActions, VehicleOptionCategory category) throws IllegalArgumentException {
 		this.setName(name);
 		this.setCategory(category);
 		this.setDescription(descriptionOfActions);
@@ -81,13 +81,13 @@ public class AssemblyTask {
 	 * 
 	 * @return A set of all the car options that can be installed.
 	 */
-	public ArrayList<CarOption> getInstallableOptions() {
-		ArrayList<CarOption> oplist = new Catalog().getAllOptions(this.category);
+	public ArrayList<VehicleOption> getInstallableOptions() {
+		ArrayList<VehicleOption> oplist = new Catalog().getAllOptions(this.category);
 		
 		ArrayList<String> list = new ArrayList<String>();
-		ArrayList<CarOption> result = new ArrayList<CarOption>();
+		ArrayList<VehicleOption> result = new ArrayList<VehicleOption>();
 		
-		for(CarOption option: oplist)
+		for(VehicleOption option: oplist)
 			if(!list.contains(option.getName())){
 				result.add(option);
 				list.add(option.getName());
@@ -128,7 +128,7 @@ public class AssemblyTask {
 	 * 
 	 * @return	The category of the assembly task.
 	 */
-	protected CarOptionCategory getCategory() {
+	protected VehicleOptionCategory getCategory() {
 		return category;
 	}
 
@@ -182,7 +182,7 @@ public class AssemblyTask {
 	 * 			| If the category is equal to 'null'
 	 * 			| category == null
 	 */
-	private void setCategory(CarOptionCategory category) throws IllegalArgumentException {
+	private void setCategory(VehicleOptionCategory category) throws IllegalArgumentException {
 		if (category == null) throw new IllegalArgumentException("Bad category!");
 		this.category = category;
 	}

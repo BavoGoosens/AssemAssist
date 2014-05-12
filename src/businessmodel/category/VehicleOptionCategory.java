@@ -3,7 +3,7 @@ package businessmodel.category;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import businessmodel.exceptions.IllegalCarOptionCategoryException;
+import businessmodel.exceptions.IllegalVehicleOptionCategoryException;
 
 /**
  * Class representing a car option category with the possible options 
@@ -12,18 +12,18 @@ import businessmodel.exceptions.IllegalCarOptionCategoryException;
  * @author SWOP team 10 2013-2014
  *
  */
-public abstract class CarOptionCategory {
+public abstract class VehicleOptionCategory {
 	
 	/**
 	 * Indicates the options of the category.
 	 */
-	private ArrayList<CarOption> options;
+	private ArrayList<VehicleOption> options;
 	
 	/**
 	 * Creates a new car option category.
 	 */
-	protected CarOptionCategory() {
-		this.options = new ArrayList<CarOption>();
+	protected VehicleOptionCategory() {
+		this.options = new ArrayList<VehicleOption>();
 	}
 	
 	/**
@@ -37,7 +37,7 @@ public abstract class CarOptionCategory {
 	 * 
 	 * @return	The options of the car option category.
 	 */
-	private ArrayList<CarOption> getOptions() {
+	private ArrayList<VehicleOption> getOptions() {
 		return this.options;
 	}
 	
@@ -47,8 +47,8 @@ public abstract class CarOptionCategory {
 	 * @return The options (clone) of the car option category.
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<CarOption> getOptionsClone() {
-		return (ArrayList<CarOption>) this.options.clone();
+	public ArrayList<VehicleOption> getOptionsClone() {
+		return (ArrayList<VehicleOption>) this.options.clone();
 	}
 	
 	/**
@@ -59,13 +59,13 @@ public abstract class CarOptionCategory {
 	 * @throws 	IllegalArgumentException
 	 * 			| If the option is equal to 'null'
 	 * 			| option == null
-	 * @throws 	IllegalCarOptionCategoryException
+	 * @throws 	IllegalVehicleOptionCategoryException
 	 * 			| If the option is not a valid option for this car option category.
 	 * 			| !this.canHaveAsOption(option)
 	 */
-	protected void addOption(CarOption option) throws IllegalArgumentException, IllegalCarOptionCategoryException {
+	protected void addOption(VehicleOption option) throws IllegalArgumentException, IllegalVehicleOptionCategoryException {
 		if (option == null) throw new IllegalArgumentException("Bad option!");
-		if (!this.canHaveAsOption(option)) throw new IllegalCarOptionCategoryException("Wrong category!");
+		if (!this.canHaveAsOption(option)) throw new IllegalVehicleOptionCategoryException("Wrong category!");
 		this.getOptions().add(option);
 	}
 	
@@ -78,7 +78,7 @@ public abstract class CarOptionCategory {
 	 * 			| If the option is equal to 'null'
 	 * 			| option == null
 	 */
-	protected void removeOption(CarOption option) throws IllegalArgumentException {
+	protected void removeOption(VehicleOption option) throws IllegalArgumentException {
 		if (option == null) throw new IllegalArgumentException("Bad option!");
 		this.getOptions().remove(option);
 	}
@@ -94,9 +94,9 @@ public abstract class CarOptionCategory {
 	 * 			| for this car option category.
 	 * 			| name == null
 	 */
-	protected CarOption getOptionWithName(String name) throws IllegalArgumentException {
+	protected VehicleOption getOptionWithName(String name) throws IllegalArgumentException {
 		if (name == null) throw new IllegalArgumentException("Bad name!");
-		for (CarOption option: this.getOptions()) {
+		for (VehicleOption option: this.getOptions()) {
 			if (option.getName().equalsIgnoreCase(name)) return option;
 		}
 		throw new IllegalArgumentException("No option found with that name!");
@@ -112,7 +112,7 @@ public abstract class CarOptionCategory {
 	 * 			| If the option is equal to 'null'
 	 * 			| option == null
 	 */
-	private boolean canHaveAsOption(CarOption option) throws IllegalArgumentException {
+	private boolean canHaveAsOption(VehicleOption option) throws IllegalArgumentException {
 		if (option == null) throw new IllegalArgumentException("Bad option!");
 		return this.equals(option.getCategory());
 	}
@@ -123,7 +123,7 @@ public abstract class CarOptionCategory {
 	@Override
 	public boolean equals(Object category) throws IllegalArgumentException {
 		if (category == null) throw new IllegalArgumentException("Bad category!");
-		return this.getKey().equals(((CarOptionCategory) category).getKey());
+		return this.getKey().equals(((VehicleOptionCategory) category).getKey());
 	}
 	
 	/**

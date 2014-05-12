@@ -35,7 +35,7 @@ public class LoginView extends View {
 			GarageHolderView view = new GarageHolderView(this.getModel(), this.user);
 			view.display();
 		} else if (this.user instanceof Mechanic) {
-			CarMechanicView view = new CarMechanicView(this.getModel(), this.user);
+			VehicleMechanicView view = new VehicleMechanicView(this.getModel(), this.user);
 			view.display();
 		} else if (this.user instanceof Manager) {
 			ManagerView view = new ManagerView(this.getModel(), this.user);

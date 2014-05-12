@@ -2,7 +2,7 @@ package businessmodel.category;
 
 import org.joda.time.Period;
 
-import businessmodel.CarModel;
+import businessmodel.VehicleModel;
 
 /**
  * Abstract class representing a car model factory.
@@ -11,17 +11,17 @@ import businessmodel.CarModel;
  * @author SWOP team 10 2013-2014
  *
  */
-public abstract class CarModelFactory {
+public abstract class VehicleModelFactory {
 
 	/**
 	 * Creates a new car model factory.
 	 */
-	public CarModelFactory() {}
+	public VehicleModelFactory() {}
 
 	/**
 	 * Creates a new car model with the necessary car options.
 	 */
-	public abstract CarModel createModel();
+	public abstract VehicleModel createModel();
 
 	/**
 	 * Creates the body category of the model with the necessary car options.

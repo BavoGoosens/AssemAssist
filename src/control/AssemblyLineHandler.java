@@ -1,15 +1,15 @@
 package control;
 
 import businessmodel.AssemblyTask;
-import businessmodel.CarManufacturingCompany;
+import businessmodel.VehicleManufacturingCompany;
 import businessmodel.Model;
 
 public class AssemblyLineHandler implements AssemblyLineController{
 
-	private CarManufacturingCompany cmc;
+	private VehicleManufacturingCompany cmc;
 
 	public AssemblyLineHandler (Model cmc) {
-		this.cmc = (CarManufacturingCompany) cmc;
+		this.cmc = (VehicleManufacturingCompany) cmc;
 	}
 
 	@Override

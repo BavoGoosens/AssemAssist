@@ -8,7 +8,7 @@ import java.util.UUID;
  * @author SWOP team 10 2013-2014
  *
  */
-public class Airco extends CarOptionCategory {
+public class Airco extends VehicleOptionCategory {
 	
 	/**
 	 * The unique key of the category.

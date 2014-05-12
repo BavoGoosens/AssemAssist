@@ -3,7 +3,7 @@ package businessmodel.restrictions;
 import java.util.ArrayList;
 
 import businessmodel.category.Airco;
-import businessmodel.category.CarOption;
+import businessmodel.category.VehicleOption;
 import businessmodel.category.Engine;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 
@@ -22,8 +22,8 @@ public class UltraEngineAircoRestriction extends Restriction {
 	public UltraEngineAircoRestriction() {}
 
 	@Override
-	public boolean check(ArrayList<CarOption> options) throws UnsatisfiedRestrictionException {
-		CarOption engineOption = getEngineOption(options);
+	public boolean check(ArrayList<VehicleOption> options) throws UnsatisfiedRestrictionException {
+		VehicleOption engineOption = getEngineOption(options);
 		if (engineOption == null) return false;
 		if (engineOption.getName().equalsIgnoreCase("ultra 3l v8")) {
 			return checkAirco(options);
@@ -31,8 +31,8 @@ public class UltraEngineAircoRestriction extends Restriction {
 		return true;
 	}
 	
-	private CarOption getEngineOption(ArrayList<CarOption> options) {
-		for (CarOption option: options) {
+	private VehicleOption getEngineOption(ArrayList<VehicleOption> options) {
+		for (VehicleOption option: options) {
 			if (option.getCategory().equals(new Engine())) {
 				return option;
 			}
@@ -40,8 +40,8 @@ public class UltraEngineAircoRestriction extends Restriction {
 		return null;
 	}
 	
-	private boolean checkAirco(ArrayList<CarOption> options) throws UnsatisfiedRestrictionException {
-		for (CarOption option: options) {
+	private boolean checkAirco(ArrayList<VehicleOption> options) throws UnsatisfiedRestrictionException {
+		for (VehicleOption option: options) {
 			if (option.getCategory().equals(new Airco())) {
 				if (option.getName().equalsIgnoreCase("manual")) return true;
 			}

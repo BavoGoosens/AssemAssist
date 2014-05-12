@@ -28,7 +28,7 @@ public class OrderManager implements Subject {
 	/**
 	 * A list that holds all the car models of a car manufacturing company.
 	 */
-	private ArrayList<CarModel> carmodels = new ArrayList<CarModel>();
+	private ArrayList<VehicleModel> carmodels = new ArrayList<VehicleModel>();
 
 	/**
 	 * A scheduler this Order Manager uses.
@@ -46,7 +46,7 @@ public class OrderManager implements Subject {
 	 * @param    carmodels
 	 *           the car models that a car manufacturing company offers.
 	 */
-	public OrderManager(ArrayList<CarModel> carmodels) throws IllegalArgumentException {
+	public OrderManager(ArrayList<VehicleModel> carmodels) throws IllegalArgumentException {
 		this.pendingorders = new LinkedList<Order>();
 		this.completedorders = new LinkedList<Order>();
 		this.scheduler = new Scheduler(this);
@@ -61,8 +61,8 @@ public class OrderManager implements Subject {
 	 * 			this.carmodels
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<CarModel> getCarmodels() {
-		return (ArrayList<CarModel>) carmodels.clone();
+	public ArrayList<VehicleModel> getCarmodels() {
+		return (ArrayList<VehicleModel>) carmodels.clone();
 	}
 
 	// for testing
@@ -231,7 +231,7 @@ public class OrderManager implements Subject {
 	 * @param carmodels
 	 * @throws IllegalArgumentException
 	 */
-	private void setCarModels(ArrayList<CarModel> carmodels) throws IllegalArgumentException {
+	private void setCarModels(ArrayList<VehicleModel> carmodels) throws IllegalArgumentException {
 		if (carmodels == null) throw new IllegalArgumentException("Bad list of car models!");
 		this.carmodels = carmodels;
 	}

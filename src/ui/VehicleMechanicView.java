@@ -12,7 +12,7 @@ import businessmodel.user.User;
 import control.AssemblyLineController;
 import control.AssemblyLineHandler;
 
-public class CarMechanicView extends View {
+public class VehicleMechanicView extends View {
 
 	private AssemblyLineController controller;
 
@@ -20,7 +20,7 @@ public class CarMechanicView extends View {
 	
 	private WorkPost selected_workpost;
 
-	public CarMechanicView(Model cmc, User user) {
+	public VehicleMechanicView(Model cmc, User user) {
 		super(cmc);
 		setUser(user);
 		this.controller = new AssemblyLineHandler(this.getModel());

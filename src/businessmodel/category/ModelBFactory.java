@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import org.joda.time.Period;
 
-import businessmodel.CarModel;
-import businessmodel.CarModelSpecification;
-import businessmodel.exceptions.IllegalCarOptionCategoryException;
+import businessmodel.VehicleModel;
+import businessmodel.VehicleModelSpecification;
+import businessmodel.exceptions.IllegalVehicleOptionCategoryException;
 
 /**
  * Class representing a factory that creates B model objects.
@@ -14,7 +14,7 @@ import businessmodel.exceptions.IllegalCarOptionCategoryException;
  * @author SWOP team 10 2013-2014
  *
  */
-public class ModelBFactory extends CarModelFactory {
+public class ModelBFactory extends VehicleModelFactory {
 
 	/**
 	 * Creates the body category of the B model with the necessary car options.
@@ -22,14 +22,14 @@ public class ModelBFactory extends CarModelFactory {
 	@Override
 	protected Body createBody() {
 		Body body = new Body();
-		CarOption body1 = new CarOption("sedan", body);
-		CarOption body2 = new CarOption("break", body);
-		CarOption body3 = new CarOption("sport", body);
+		VehicleOption body1 = new VehicleOption("sedan", body);
+		VehicleOption body2 = new VehicleOption("break", body);
+		VehicleOption body3 = new VehicleOption("sport", body);
 		try {
 			body.addOption(body1);
 			body.addOption(body2);
 			body.addOption(body3);
-		} catch (IllegalCarOptionCategoryException e) {
+		} catch (IllegalVehicleOptionCategoryException e) {
 			System.out.println(e.getMessage());
 		}
 		return body;
@@ -41,16 +41,16 @@ public class ModelBFactory extends CarModelFactory {
 	@Override
 	protected Color createColor() {
 		Color color = new Color();
-		CarOption color1 = new CarOption("red", color);
-		CarOption color2 = new CarOption("blue", color);
-		CarOption color3 = new CarOption("green", color);
-		CarOption color4 = new CarOption("yellow", color);
+		VehicleOption color1 = new VehicleOption("red", color);
+		VehicleOption color2 = new VehicleOption("blue", color);
+		VehicleOption color3 = new VehicleOption("green", color);
+		VehicleOption color4 = new VehicleOption("yellow", color);
 		try {
 			color.addOption(color1);
 			color.addOption(color2);
 			color.addOption(color3);
 			color.addOption(color4);
-		} catch (IllegalCarOptionCategoryException e) {
+		} catch (IllegalVehicleOptionCategoryException e) {
 			System.out.println(e.getMessage());
 		}
 		return color;
@@ -62,14 +62,14 @@ public class ModelBFactory extends CarModelFactory {
 	@Override
 	protected Engine createEngine() {
 		Engine engine = new Engine();
-		CarOption engine1 = new CarOption("standard 2l v4", engine);
-		CarOption engine2 = new CarOption("performance 2.5l v6", engine);
-		CarOption engine3 = new CarOption("ultra 3l v8", engine);
+		VehicleOption engine1 = new VehicleOption("standard 2l v4", engine);
+		VehicleOption engine2 = new VehicleOption("performance 2.5l v6", engine);
+		VehicleOption engine3 = new VehicleOption("ultra 3l v8", engine);
 		try {
 			engine.addOption(engine1);
 			engine.addOption(engine2);
 			engine.addOption(engine3);
-		} catch (IllegalCarOptionCategoryException e) {
+		} catch (IllegalVehicleOptionCategoryException e) {
 			System.out.println(e.getMessage());
 		}
 		return engine;
@@ -81,14 +81,14 @@ public class ModelBFactory extends CarModelFactory {
 	@Override
 	protected Gearbox createGearbox() {
 		Gearbox gearbox = new Gearbox();
-		CarOption gearbox1 = new CarOption("6 speed manual", gearbox);
-		CarOption gearbox2 = new CarOption("5 speed manual", gearbox);
-		CarOption gearbox3 = new CarOption("5 speed automatic", gearbox);
+		VehicleOption gearbox1 = new VehicleOption("6 speed manual", gearbox);
+		VehicleOption gearbox2 = new VehicleOption("5 speed manual", gearbox);
+		VehicleOption gearbox3 = new VehicleOption("5 speed automatic", gearbox);
 		try {
 			gearbox.addOption(gearbox1);
 			gearbox.addOption(gearbox2);
 			gearbox.addOption(gearbox3);
-		} catch (IllegalCarOptionCategoryException e) {
+		} catch (IllegalVehicleOptionCategoryException e) {
 			System.out.println(e.getMessage());
 		}
 		return gearbox;
@@ -100,14 +100,14 @@ public class ModelBFactory extends CarModelFactory {
 	@Override
 	protected Seats createSeats() {
 		Seats seats = new Seats();
-		CarOption seats1 = new CarOption("leather white", seats);
-		CarOption seats2 = new CarOption("leather black", seats);
-		CarOption seats3 = new CarOption("vinyl grey", seats);
+		VehicleOption seats1 = new VehicleOption("leather white", seats);
+		VehicleOption seats2 = new VehicleOption("leather black", seats);
+		VehicleOption seats3 = new VehicleOption("vinyl grey", seats);
 		try {
 			seats.addOption(seats1);
 			seats.addOption(seats2);
 			seats.addOption(seats3);
-		} catch (IllegalCarOptionCategoryException e) {
+		} catch (IllegalVehicleOptionCategoryException e) {
 			System.out.println(e.getMessage());
 		}
 		return seats;
@@ -118,12 +118,12 @@ public class ModelBFactory extends CarModelFactory {
 	 */
 	protected Airco createAirco() {
 		Airco airco = new Airco();
-		CarOption airco1 = new CarOption("manual", airco);
-		CarOption airco2 = new CarOption("automatic", airco);
+		VehicleOption airco1 = new VehicleOption("manual", airco);
+		VehicleOption airco2 = new VehicleOption("automatic", airco);
 		try {
 			airco.addOption(airco1);
 			airco.addOption(airco2);
-		} catch (IllegalCarOptionCategoryException e) {
+		} catch (IllegalVehicleOptionCategoryException e) {
 			System.out.println(e.getMessage());
 		}
 		return airco;
@@ -135,14 +135,14 @@ public class ModelBFactory extends CarModelFactory {
 	@Override
 	protected Wheels createWheels() {
 		Wheels wheels = new Wheels();
-		CarOption wheels1 = new CarOption("winter", wheels);
-		CarOption wheels2 = new CarOption("comfort", wheels);
-		CarOption wheels3 = new CarOption("sports", wheels);
+		VehicleOption wheels1 = new VehicleOption("winter", wheels);
+		VehicleOption wheels2 = new VehicleOption("comfort", wheels);
+		VehicleOption wheels3 = new VehicleOption("sports", wheels);
 		try {
 			wheels.addOption(wheels1);
 			wheels.addOption(wheels2);
 			wheels.addOption(wheels3);
-		} catch (IllegalCarOptionCategoryException e) {
+		} catch (IllegalVehicleOptionCategoryException e) {
 			System.out.println(e.getMessage());
 		}
 		return wheels;
@@ -153,10 +153,10 @@ public class ModelBFactory extends CarModelFactory {
 	 */
 	protected Spoiler createSpoiler() {
 		Spoiler spoiler = new Spoiler();
-		CarOption spoiler1 = new CarOption("low", spoiler);
+		VehicleOption spoiler1 = new VehicleOption("low", spoiler);
 		try {
 			spoiler.addOption(spoiler1);
-		} catch (IllegalCarOptionCategoryException e) {
+		} catch (IllegalVehicleOptionCategoryException e) {
 			System.out.println(e.getMessage());
 		}
 		return spoiler;
@@ -176,35 +176,35 @@ public class ModelBFactory extends CarModelFactory {
 	 * Creates a B model.
 	 */
 	@Override
-	public CarModel createModel() {
-		ArrayList<CarOption> options = new ArrayList<CarOption>();
-		for (CarOption option: this.createBody().getOptionsClone()) {
+	public VehicleModel createModel() {
+		ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();
+		for (VehicleOption option: this.createBody().getOptionsClone()) {
 			options.add(option);
 		}
-		for (CarOption option: this.createColor().getOptionsClone()) {
+		for (VehicleOption option: this.createColor().getOptionsClone()) {
 			options.add(option);
 		}
-		for (CarOption option: this.createEngine().getOptionsClone()) {
+		for (VehicleOption option: this.createEngine().getOptionsClone()) {
 			options.add(option);
 		}
-		for (CarOption option: this.createGearbox().getOptionsClone()) {
+		for (VehicleOption option: this.createGearbox().getOptionsClone()) {
 			options.add(option);
 		}
-		for (CarOption option: this.createSeats().getOptionsClone()) {
+		for (VehicleOption option: this.createSeats().getOptionsClone()) {
 			options.add(option);
 		}
-		for (CarOption option: this.createAirco().getOptionsClone()) {
+		for (VehicleOption option: this.createAirco().getOptionsClone()) {
 			options.add(option);
 		}
-		for (CarOption option: this.createWheels().getOptionsClone()) {
+		for (VehicleOption option: this.createWheels().getOptionsClone()) {
 			options.add(option);
 		}
-		for (CarOption option: this.createSpoiler().getOptionsClone()) {
+		for (VehicleOption option: this.createSpoiler().getOptionsClone()) {
 			options.add(option);
 		}
 		
-		CarModelSpecification cms = new CarModelSpecification(options);
-		return new CarModel(this.getName(), cms, this.getStandardTimeToFinish());
+		VehicleModelSpecification cms = new VehicleModelSpecification(options);
+		return new VehicleModel(this.getName(), cms, this.getStandardTimeToFinish());
 	}
 	
 	@Override

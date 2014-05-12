@@ -4,11 +4,11 @@ import java.util.Iterator;
 
 import org.joda.time.DateTime;
 
-import businessmodel.category.CarOption;
+import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
 import businessmodel.order.Order;
-import businessmodel.statistics.CarStatistics;
+import businessmodel.statistics.VehicleStatistics;
 import businessmodel.statistics.OrderStatistics;
 import businessmodel.user.User;
 
@@ -59,7 +59,7 @@ public interface Model {
 	 * 			The given user.
 	 * @return	The car models for the given user.
 	 */
-	public Iterator<CarModel> getCarModels(User user);
+	public Iterator<VehicleModel> getCarModels(User user);
 	
 	/**
 	 * Returns an iterator over the available assembly tasks for the given user.
@@ -111,7 +111,7 @@ public interface Model {
 	 * Returns the car statistics of the model.
 	 * @return The car statistics of the model.
 	 */
-	public CarStatistics getCarStatistics();
+	public VehicleStatistics getCarStatistics();
 
 	/**
 	 * Returns the order statistics of the model.
@@ -148,7 +148,7 @@ public interface Model {
 	 * 
 	 * @return The unscheduled car options of the model.
 	 */
-	public Iterator<CarOption> getUnscheduledCarOptions(int num);
+	public Iterator<VehicleOption> getUnscheduledCarOptions(int num);
 
 	/**
 	 * Returns a string representation of the current algorithm in the model.

@@ -11,7 +11,7 @@ import org.joda.time.DateTime;
 
 import businessmodel.AssemblyTask;
 import businessmodel.Model;
-import businessmodel.category.CarOption;
+import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.SingleTaskOrder;
@@ -58,12 +58,12 @@ public class CustomShopManagerView extends View {
 				this.display();
 			}
 			DateTime deadline = deadlineDialog();
-			ArrayList<CarOption> options = chosen.getInstallableOptions();
-			CarOption opt = null;
+			ArrayList<VehicleOption> options = chosen.getInstallableOptions();
+			VehicleOption opt = null;
 			while (opt == null ){
 				System.out.println("> Enter the number of the specific option you want to order: ");
 				int num = 1;
-				for (CarOption op : options)
+				for (VehicleOption op : options)
 					System.out.println("> " + num ++ + ") " + op);
 				System.out.print(">> ");
 				response = this.scan.nextLine();
@@ -80,7 +80,7 @@ public class CustomShopManagerView extends View {
 					this.error();
 				}
 			}
-			ArrayList<CarOption> res = new ArrayList<CarOption>();
+			ArrayList<VehicleOption> res = new ArrayList<VehicleOption>();
 			res.add(opt);
 			try {
 				this.controller.placeSingleTaskOrder(new SingleTaskOrder(this.user, res , deadline));
