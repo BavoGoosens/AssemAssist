@@ -6,7 +6,7 @@ import java.util.Locale;
 
 import org.joda.time.DateTime;
 
-import businessmodel.category.CarOption;
+import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.user.User;
@@ -90,7 +90,7 @@ public abstract class Order {
 		this.setEstimatedDeliveryDateOfOrder(this.getEstimatedDeliveryDate().plusMinutes(delay));		
 	}
 	
-	public abstract ArrayList<CarOption> getOptions();
+	public abstract ArrayList<VehicleOption> getOptions();
 
 	/**
 	 * Returns the time the order was placed.

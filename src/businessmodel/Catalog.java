@@ -2,9 +2,9 @@ package businessmodel;
 
 import java.util.ArrayList;
 
-import businessmodel.category.CarModelFactory;
-import businessmodel.category.CarOption;
-import businessmodel.category.CarOptionCategory;
+import businessmodel.category.VehicleModelFactory;
+import businessmodel.category.VehicleOption;
+import businessmodel.category.VehicleOptionCategory;
 import businessmodel.category.ModelAFactory;
 import businessmodel.category.ModelBFactory;
 import businessmodel.category.ModelCFactory;
@@ -20,16 +20,16 @@ import businessmodel.category.ModelCFactory;
 public class Catalog {
 	
 
-	private ArrayList<CarModel> availableModels;
-	private ArrayList<CarModelFactory> factories;
+	private ArrayList<VehicleModel> availableModels;
+	private ArrayList<VehicleModelFactory> factories;
 
 	/**
 	 * Creates a new catalog.
 	 */
 	public Catalog() {
 
-		this.availableModels = new ArrayList<CarModel>();
-		this.factories = new ArrayList<CarModelFactory>();
+		this.availableModels = new ArrayList<VehicleModel>();
+		this.factories = new ArrayList<VehicleModelFactory>();
 		this.factories.add(new ModelAFactory());
 		this.factories.add(new ModelBFactory());
 		this.factories.add(new ModelCFactory());
@@ -41,11 +41,11 @@ public class Catalog {
 	 * 
 	 * @return	A list of all car option categories that exist within the available car models.
 	 */
-	public ArrayList<CarOptionCategory> getAllCategories() {
-		ArrayList<CarOptionCategory> categories = new ArrayList<CarOptionCategory>();
-		for (CarModel model: this.getAvailableModels()) {
-			for (CarOption option: model.getPossibilities()) {
-				CarOptionCategory category = option.getCategory();
+	public ArrayList<VehicleOptionCategory> getAllCategories() {
+		ArrayList<VehicleOptionCategory> categories = new ArrayList<VehicleOptionCategory>();
+		for (VehicleModel model: this.getAvailableModels()) {
+			for (VehicleOption option: model.getPossibilities()) {
+				VehicleOptionCategory category = option.getCategory();
 				if (!categories.contains(category)) {
 					categories.add(category);
 				}
@@ -60,8 +60,8 @@ public class Catalog {
 	 * @return A cloned list of all available models.
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<CarModel> getAvailaleModelsClone() {
-		return (ArrayList<CarModel>) this.getAvailableModels().clone();
+	public ArrayList<VehicleModel> getAvailaleModelsClone() {
+		return (ArrayList<VehicleModel>) this.getAvailableModels().clone();
 	}
 
 	/**
@@ -70,10 +70,10 @@ public class Catalog {
 	 * @param cat
 	 * @return
 	 */
-	protected ArrayList<CarOption> getAllOptions(CarOptionCategory cat) {
-		ArrayList<CarOption> res = new ArrayList<>();
-		for (CarModel model: this.getAvailableModels()){
-			for (CarOption option: model.getPossibilities()) {
+	protected ArrayList<VehicleOption> getAllOptions(VehicleOptionCategory cat) {
+		ArrayList<VehicleOption> res = new ArrayList<>();
+		for (VehicleModel model: this.getAvailableModels()){
+			for (VehicleOption option: model.getPossibilities()) {
 				if (option.getCategory().equals(cat))
 					res.add(option);
 			}
@@ -85,7 +85,7 @@ public class Catalog {
 	 * Method to create all the car models.
 	 */
 	private void createAllModels() {
-		for (CarModelFactory factory: this.getFactories()) {
+		for (VehicleModelFactory factory: this.getFactories()) {
 			this.getAvailableModels().add(factory.createModel());
 		}
 	}
@@ -94,7 +94,7 @@ public class Catalog {
 	 * Returns the factories.
 	 * @return The factories in the catalog.
 	 */
-	private ArrayList<CarModelFactory> getFactories() {
+	private ArrayList<VehicleModelFactory> getFactories() {
 		return this.factories;
 	}
 	
@@ -102,7 +102,7 @@ public class Catalog {
 	 * Returns the available car models.
 	 * @return The available car models in the catalog.
 	 */
-	private ArrayList<CarModel> getAvailableModels() {
+	private ArrayList<VehicleModel> getAvailableModels() {
 		return this.availableModels;
 	}
 

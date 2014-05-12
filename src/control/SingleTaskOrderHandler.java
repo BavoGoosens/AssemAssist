@@ -1,16 +1,16 @@
 package control;
 
-import businessmodel.CarManufacturingCompany;
+import businessmodel.VehicleManufacturingCompany;
 import businessmodel.Model;
 import businessmodel.order.SingleTaskOrder;
 
 public class SingleTaskOrderHandler implements SingleTaskOrderController {
 
 
-	private CarManufacturingCompany cmc;
+	private VehicleManufacturingCompany cmc;
 
 	public SingleTaskOrderHandler(Model cmc) {
-		this.cmc = (CarManufacturingCompany) cmc;
+		this.cmc = (VehicleManufacturingCompany) cmc;
 	}
 
 	@Override

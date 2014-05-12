@@ -3,7 +3,7 @@ package businessmodel.restrictions;
 import java.util.ArrayList;
 
 import businessmodel.category.Body;
-import businessmodel.category.CarOption;
+import businessmodel.category.VehicleOption;
 import businessmodel.category.Engine;
 import businessmodel.category.Spoiler;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
@@ -23,9 +23,9 @@ public class SportBodyRestriction extends Restriction {
 	public SportBodyRestriction() {}
 
 	@Override
-	public boolean check(ArrayList<CarOption> options) throws UnsatisfiedRestrictionException {
+	public boolean check(ArrayList<VehicleOption> options) throws UnsatisfiedRestrictionException {
 		if (options == null) throw new IllegalArgumentException("Bad list of options!");
-		CarOption bodyOption = this.getBodyOption(options);
+		VehicleOption bodyOption = this.getBodyOption(options);
 		if (bodyOption == null) return true; // als er geen body is, is deze restrictie wel voldaan
 		if (bodyOption.getName().equalsIgnoreCase("sport")) {
 			checkForSpoiler(options);
@@ -34,8 +34,8 @@ public class SportBodyRestriction extends Restriction {
 		return true;
 	}
 
-	private CarOption getBodyOption(ArrayList<CarOption> options) {
-		for (CarOption option: options) {
+	private VehicleOption getBodyOption(ArrayList<VehicleOption> options) {
+		for (VehicleOption option: options) {
 			if (option.getCategory().equals(new Body())) {
 				return option;
 			}
@@ -43,8 +43,8 @@ public class SportBodyRestriction extends Restriction {
 		return null;
 	}
 
-	private boolean checkForSpoiler(ArrayList<CarOption> options) throws UnsatisfiedRestrictionException {
-		for (CarOption option: options) {
+	private boolean checkForSpoiler(ArrayList<VehicleOption> options) throws UnsatisfiedRestrictionException {
+		for (VehicleOption option: options) {
 			if (option.getCategory().equals(new Spoiler())) {
 				return true;
 			}
@@ -53,8 +53,8 @@ public class SportBodyRestriction extends Restriction {
 				+ "choose a SPOILER option.");
 	}
 
-	private boolean checkEngine(ArrayList<CarOption> options) throws UnsatisfiedRestrictionException {
-		for (CarOption option: options) {
+	private boolean checkEngine(ArrayList<VehicleOption> options) throws UnsatisfiedRestrictionException {
+		for (VehicleOption option: options) {
 			if (option.getCategory().equals(new Engine())) {
 				if (option.getName().equalsIgnoreCase("performance 2.5l v6") ||
 						option.getName().equalsIgnoreCase("ultra 3l v8")) return true;

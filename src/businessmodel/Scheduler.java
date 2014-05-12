@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 import org.joda.time.DateTime;
 
-import businessmodel.category.CarOption;
+import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
 import businessmodel.observer.Observer;
@@ -198,7 +198,7 @@ public class Scheduler implements Subject {
 	 * 
 	 * @throws 	IllegalArgumentException
 	 */
-	protected void changeAlgorithm(String algoname, CarOption option) throws IllegalSchedulingAlgorithmException, IllegalArgumentException{
+	protected void changeAlgorithm(String algoname, VehicleOption option) throws IllegalSchedulingAlgorithmException, IllegalArgumentException{
 
 		if (algoname == null){
 			throw new NullPointerException("No scheduling algorithm supplied");
@@ -373,7 +373,7 @@ public class Scheduler implements Subject {
 		this.delay = delay;
 	}
 
-	private boolean checkOptionsForSpecificationBatch(CarOption option) {
+	private boolean checkOptionsForSpecificationBatch(VehicleOption option) {
 
 		int count = 0;
 		for(Order order: this.getOrders())
@@ -397,14 +397,14 @@ public class Scheduler implements Subject {
 	 * @param maxNumber
 	 * @return
 	 */
-	public ArrayList<CarOption> getUnscheduledCarOptions(int maxNumber){
+	public ArrayList<VehicleOption> getUnscheduledCarOptions(int maxNumber){
 
 		HashMap<String, Integer> list = new HashMap<String, Integer>();
 		ArrayList<String> options = new ArrayList<String>();
-		HashMap<String, CarOption> result = new HashMap<String, CarOption>();
+		HashMap<String, VehicleOption> result = new HashMap<String, VehicleOption>();
 
 		for(Order order: this.getOrders()){
-			for(CarOption option: order.getOptions()){
+			for(VehicleOption option: order.getOptions()){
 				if (list.containsKey(option.getName())){
 					int count = list.get(option.getName());
 					list.remove(option.getName());
@@ -421,7 +421,7 @@ public class Scheduler implements Subject {
 				result.remove(optionName);
 
 
-		return new ArrayList<CarOption>(result.values());
+		return new ArrayList<VehicleOption>(result.values());
 
 	}
 

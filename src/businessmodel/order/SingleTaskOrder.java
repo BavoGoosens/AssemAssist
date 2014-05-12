@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.joda.time.DateTime;
 
-import businessmodel.category.CarOption;
+import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.user.User;
@@ -25,7 +25,7 @@ public class SingleTaskOrder extends Order {
 	/**
 	 * The options that are ordered.
 	 */
-	private ArrayList<CarOption> options;
+	private ArrayList<VehicleOption> options;
 	
 	/**
 	 * Creates a new single task order with a given user, set of options and user end date.
@@ -40,7 +40,7 @@ public class SingleTaskOrder extends Order {
 	 * @throws 	NoClearanceException
 	 * @throws 	UnsatisfiedRestrictionException
 	 */
-	public SingleTaskOrder(User user, ArrayList<CarOption> options, DateTime userEndDate) throws IllegalArgumentException, NoClearanceException, UnsatisfiedRestrictionException {
+	public SingleTaskOrder(User user, ArrayList<VehicleOption> options, DateTime userEndDate) throws IllegalArgumentException, NoClearanceException, UnsatisfiedRestrictionException {
 		super(user);
 		this.setOptions(options);
 		this.setUserEndDate(userEndDate);
@@ -52,8 +52,8 @@ public class SingleTaskOrder extends Order {
 	 * @return The options (clone) that are ordered.
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<CarOption> getOptions() {
-		return (ArrayList<CarOption>) this.options.clone();
+	public ArrayList<VehicleOption> getOptions() {
+		return (ArrayList<VehicleOption>) this.options.clone();
 	}
 	
 	/**
@@ -74,9 +74,9 @@ public class SingleTaskOrder extends Order {
 	 * 			| options == null
 	 */
 	@SuppressWarnings("unchecked")
-	private void setOptions(ArrayList<CarOption> options) throws IllegalArgumentException {
+	private void setOptions(ArrayList<VehicleOption> options) throws IllegalArgumentException {
 		if (options == null) throw new IllegalArgumentException("Bad list of options!");
-		this.options = (ArrayList<CarOption>) options.clone();
+		this.options = (ArrayList<VehicleOption>) options.clone();
 	}
 	
 	/**

@@ -5,11 +5,11 @@ import java.util.Iterator;
 
 import org.joda.time.DateTime;
 
-import businessmodel.category.CarOption;
+import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
 import businessmodel.order.Order;
-import businessmodel.statistics.CarStatistics;
+import businessmodel.statistics.VehicleStatistics;
 import businessmodel.statistics.OrderStatistics;
 import businessmodel.statistics.StatisticsManager;
 import businessmodel.user.CustomShopManager;
@@ -19,7 +19,7 @@ import businessmodel.user.Mechanic;
 import businessmodel.user.User;
 
 
-public class CarManufacturingCompany implements Model {
+public class VehicleManufacturingCompany implements Model {
 
 	/**
 	 * List of the users.
@@ -51,7 +51,7 @@ public class CarManufacturingCompany implements Model {
 	 * 
 	 * @throws	IllegalArgumentException
 	 */
-	public CarManufacturingCompany() throws IllegalArgumentException {
+	public VehicleManufacturingCompany() throws IllegalArgumentException {
 		this.catalog = new Catalog();
 		this.setOrderManager(new OrderManager(this.catalog.getAvailaleModelsClone()));
 		this.taskmanager = new TaskManager(this.getOrderManager().getScheduler().getAssemblyline().getWorkPosts());
@@ -84,7 +84,7 @@ public class CarManufacturingCompany implements Model {
 	}
 
 	@Override
-	public Iterator<CarModel> getCarModels(User user) {
+	public Iterator<VehicleModel> getCarModels(User user) {
 		return this.catalog.getAvailaleModelsClone().iterator();
 	}
 
@@ -110,7 +110,7 @@ public class CarManufacturingCompany implements Model {
 	}
 
 	@Override
-	public CarStatistics getCarStatistics() {
+	public VehicleStatistics getCarStatistics() {
 		return this.statisticsmanager.getCarStatistics();
 	}
 
@@ -140,7 +140,7 @@ public class CarManufacturingCompany implements Model {
 	}
 
 	@Override
-	public Iterator<CarOption> getUnscheduledCarOptions(int num) {
+	public Iterator<VehicleOption> getUnscheduledCarOptions(int num) {
 		return this.getOrderManager().getScheduler().getUnscheduledCarOptions(num).iterator();
 	}
 
@@ -176,7 +176,7 @@ public class CarManufacturingCompany implements Model {
 	 * 			The new algorithm
 	 * @param 	option
 	 */
-	public void changeAlgorithm(String algo, CarOption option) {
+	public void changeAlgorithm(String algo, VehicleOption option) {
 		this.getOrderManager().getScheduler().changeAlgorithm(algo, option);
 	}
 

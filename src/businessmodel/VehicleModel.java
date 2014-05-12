@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.joda.time.Period;
 
-import businessmodel.category.CarOption;
+import businessmodel.category.VehicleOption;
 
 /**
  * A class representing a car model. 
@@ -12,7 +12,7 @@ import businessmodel.category.CarOption;
  * @author SWOP Team 10 2014
  *
  */
-public class CarModel {
+public class VehicleModel {
 
 	/**
 	 * The name of the car model.
@@ -22,7 +22,7 @@ public class CarModel {
 	/**
 	 * The car model specification of the car model.
 	 */
-	private CarModelSpecification cms;
+	private VehicleModelSpecification cms;
 	
 	/**
 	 * The standard time to finish this car model.
@@ -41,7 +41,7 @@ public class CarModel {
 	 * @throws	IllegalArgumentException
 	 * 
 	 */
-	public CarModel(String name,CarModelSpecification cms, Period standardTimeToFinish) 
+	public VehicleModel(String name,VehicleModelSpecification cms, Period standardTimeToFinish) 
 			throws IllegalArgumentException {
 		this.setCarmodel(name);
 		this.setCarModelSpecification(cms);
@@ -59,7 +59,7 @@ public class CarModel {
 	 * @throws	IllegalArgumentException
 	 * 
 	 */
-	public CarModel(String name, CarModelSpecification cms) throws IllegalArgumentException {
+	public VehicleModel(String name, VehicleModelSpecification cms) throws IllegalArgumentException {
 		this.setCarmodel(name);
 		this.setCarModelSpecification(cms);
 		this.setStandardTimeToFinish(new Period(60*3));
@@ -71,7 +71,7 @@ public class CarModel {
 	 * @return	List of all the possible options of the car model.
 	 * 			This depends on the car model specification.
 	 */
-	public ArrayList<CarOption> getPossibilities(){
+	public ArrayList<VehicleOption> getPossibilities(){
 		return this.cms.getOptionsClone();
 	}
 
@@ -98,7 +98,7 @@ public class CarModel {
 	 * 
 	 * @return  The car model specification of the car model.
 	 */
-	public CarModelSpecification getCarModelSpecification() {
+	public VehicleModelSpecification getCarModelSpecification() {
 		return cms;
 	}
 
@@ -111,7 +111,7 @@ public class CarModel {
 	 * 			| If the car model specification is equal to 'null'
 	 * 			| cms == null
 	 */
-	private void setCarModelSpecification(CarModelSpecification cms) throws IllegalArgumentException {
+	private void setCarModelSpecification(VehicleModelSpecification cms) throws IllegalArgumentException {
 		if(cms == null) throw new IllegalArgumentException("Bad car model specification!");
 		this.cms = cms;
 	}

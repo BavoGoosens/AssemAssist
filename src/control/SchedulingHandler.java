@@ -1,20 +1,20 @@
 package control;
 
-import businessmodel.CarManufacturingCompany;
+import businessmodel.VehicleManufacturingCompany;
 import businessmodel.Model;
-import businessmodel.category.CarOption;
+import businessmodel.category.VehicleOption;
 
 public class SchedulingHandler implements SchedulingController{
 
 
-	private CarManufacturingCompany cmc;
+	private VehicleManufacturingCompany cmc;
 
 	public SchedulingHandler(Model cmc) {
-		this.cmc = (CarManufacturingCompany) cmc;
+		this.cmc = (VehicleManufacturingCompany) cmc;
 	}
 
 	@Override
-	public void selectAlgorithm(String algo, CarOption args) {
+	public void selectAlgorithm(String algo, VehicleOption args) {
 		this.cmc.changeAlgorithm(algo, args);
 	}
 

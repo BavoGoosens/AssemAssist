@@ -1,9 +1,9 @@
 package control;
 
-import businessmodel.category.CarOption;
+import businessmodel.category.VehicleOption;
 
 public interface SchedulingController {
 
-	public void selectAlgorithm(String algo, CarOption args);
+	public void selectAlgorithm(String algo, VehicleOption args);
 	
 }

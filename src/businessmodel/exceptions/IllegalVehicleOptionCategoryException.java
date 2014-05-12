@@ -1,6 +1,6 @@
 package businessmodel.exceptions;
 
-import businessmodel.category.CarOptionCategory;
+import businessmodel.category.VehicleOptionCategory;
 
 /**
  * A class representing an illegal car option category exception.
@@ -9,7 +9,7 @@ import businessmodel.category.CarOptionCategory;
  * @author SWOP team 10 2013-2014
  *
  */
-public class IllegalCarOptionCategoryException extends Exception {
+public class IllegalVehicleOptionCategoryException extends Exception {
 	
 	
 	/**
@@ -20,19 +20,19 @@ public class IllegalCarOptionCategoryException extends Exception {
 	/**
 	 * The category that caused the exception.
 	 */
-	private CarOptionCategory category;
+	private VehicleOptionCategory category;
 	
 	/**
 	 * Creates a new illegal car option exception.
 	 */
-	public IllegalCarOptionCategoryException() {}
+	public IllegalVehicleOptionCategoryException() {}
 	
 	/**
 	 * Creates a new illegal car option exception with a given message.
 	 * @param 	message
 	 * 			The message of the exception.
 	 */
-	public IllegalCarOptionCategoryException(String message) {
+	public IllegalVehicleOptionCategoryException(String message) {
 		super(message);
 	}
 	
@@ -42,7 +42,7 @@ public class IllegalCarOptionCategoryException extends Exception {
 	 * @param 	category
 	 * 			The category of the exception.
 	 */
-	public IllegalCarOptionCategoryException(CarOptionCategory category) {
+	public IllegalVehicleOptionCategoryException(VehicleOptionCategory category) {
 		this.setCategory(category);
 	}
 	
@@ -54,7 +54,7 @@ public class IllegalCarOptionCategoryException extends Exception {
 	 * @param 	message
 	 * 			The message of the exception.
 	 */
-	public IllegalCarOptionCategoryException(CarOptionCategory category, String message) {
+	public IllegalVehicleOptionCategoryException(VehicleOptionCategory category, String message) {
 		super(message);
 		this.setCategory(category);
 	}
@@ -64,11 +64,11 @@ public class IllegalCarOptionCategoryException extends Exception {
 	 * 
 	 * @return	The category that caused the exception.
 	 */
-	public CarOptionCategory getCategory() {
+	public VehicleOptionCategory getCategory() {
 		return this.category;
 	}
 
-	private void setCategory(CarOptionCategory category) {
+	private void setCategory(VehicleOptionCategory category) {
 		this.category = category;
 	}
 

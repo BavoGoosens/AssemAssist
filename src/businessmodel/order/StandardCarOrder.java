@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import org.joda.time.Period;
 
-import businessmodel.Car;
-import businessmodel.CarModel;
-import businessmodel.category.CarOption;
+import businessmodel.Vehicle;
+import businessmodel.VehicleModel;
+import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.user.User;
@@ -23,11 +23,11 @@ public class StandardCarOrder extends Order {
 	/**
 	 * The car of the order.
 	 */
-	private Car car;
+	private Vehicle car;
 	/**
 	 * The car model of the order.
 	 */
-	private CarModel carModel;
+	private VehicleModel carModel;
 	
 	/**
 	 * Creates a new standard car order with a given user, a set of options and a car model.
@@ -42,10 +42,10 @@ public class StandardCarOrder extends Order {
 	 * @throws 	NoClearanceException
 	 * @throws 	UnsatisfiedRestrictionException
 	 */
-	public StandardCarOrder(User user, ArrayList<CarOption> options, CarModel model)
+	public StandardCarOrder(User user, ArrayList<VehicleOption> options, VehicleModel model)
 			throws IllegalArgumentException, NoClearanceException, UnsatisfiedRestrictionException {
 		super(user);
-		Car car = new Car(options);
+		Vehicle car = new Vehicle(options);
 		model.getCarModelSpecification().checkRestrictions(car);
 		this.setCar(car);
 		this.setCarModel(model);
@@ -56,7 +56,7 @@ public class StandardCarOrder extends Order {
 	 * 
 	 * @return The car of the order.
 	 */
-	public Car getCar() {
+	public Vehicle getCar() {
 		return this.car;
 	}
 	
@@ -65,7 +65,7 @@ public class StandardCarOrder extends Order {
 	 * 
 	 * @return The car model that is ordered.
 	 */
-	public CarModel getCarModel() {
+	public VehicleModel getCarModel() {
 		return this.carModel;
 	}
 	
@@ -87,7 +87,7 @@ public class StandardCarOrder extends Order {
 	 * 			| If the car is equal to 'null'
 	 * 			| car == null
 	 */
-	private void setCar(Car car) throws IllegalArgumentException {
+	private void setCar(Vehicle car) throws IllegalArgumentException {
 		if (car == null) throw new IllegalArgumentException("Bad car!");
 		this.car = car;
 	}
@@ -101,7 +101,7 @@ public class StandardCarOrder extends Order {
 	 * 			| If the car model is equal to 'null'
 	 * 			| model == null
 	 */
-	private void setCarModel(CarModel model) throws IllegalArgumentException {
+	private void setCarModel(VehicleModel model) throws IllegalArgumentException {
 		if (model == null) throw new IllegalArgumentException("Bad car model!");
 		this.carModel = model;
 	}
@@ -111,7 +111,7 @@ public class StandardCarOrder extends Order {
 	 * 
 	 * @return	The options of the car that is ordered.
 	 */
-	public ArrayList<CarOption> getOptions() {
+	public ArrayList<VehicleOption> getOptions() {
 		return this.getCar().getOptionsClone();
 	}
 }

@@ -69,7 +69,7 @@ public class AssemblyLineStatusView extends View implements Observer {
 	@Override
 	public void cancel() {
 		this.setActive(false);
-		new CarMechanicView(this.getModel(), this.user).display();
+		new VehicleMechanicView(this.getModel(), this.user).display();
 	}
 
 	@Override

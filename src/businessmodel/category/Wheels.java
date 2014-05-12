@@ -8,7 +8,7 @@ import java.util.UUID;
  * @author SWOP team 10 2013-2014
  *
  */
-public class Wheels extends CarOptionCategory {
+public class Wheels extends VehicleOptionCategory {
 	
 	/**
 	 * The unique key of the category.

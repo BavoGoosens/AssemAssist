@@ -8,7 +8,7 @@ import java.util.UUID;
  * @author SWOP team 10 2013-2014
  *
  */
-public class CarOption {
+public class VehicleOption {
 	
 	/**
 	 * Indicates the name of the car option.
@@ -17,7 +17,7 @@ public class CarOption {
 	/**
 	 * Indicates the car option category of the car option.
 	 */
-	private final CarOptionCategory category;
+	private final VehicleOptionCategory category;
 	
 	/**
 	 * Creates a new car option.
@@ -30,7 +30,7 @@ public class CarOption {
 	 * 			| If category is equal to 'null'
 	 * 			| category == null
 	 */
-	public CarOption(String name, CarOptionCategory category) throws IllegalArgumentException {
+	public VehicleOption(String name, VehicleOptionCategory category) throws IllegalArgumentException {
 		if (category == null) throw new IllegalArgumentException("Bad category!");
 		this.category = category;
 		this.setName(name);
@@ -50,7 +50,7 @@ public class CarOption {
 	 * 
 	 * @return	The car option category of the car option.
 	 */
-	public CarOptionCategory getCategory() {
+	public VehicleOptionCategory getCategory() {
 		return this.category;
 	}
 	
@@ -87,8 +87,8 @@ public class CarOption {
 	
 	@Override
 	public boolean equals(Object carOption) throws IllegalArgumentException {
-		if (carOption == null || !(carOption instanceof CarOption)) throw new IllegalArgumentException("Cannot compare this object: "+carOption+" to a car option!");
-		CarOption option = (CarOption) carOption;
+		if (carOption == null || !(carOption instanceof VehicleOption)) throw new IllegalArgumentException("Cannot compare this object: "+carOption+" to a car option!");
+		VehicleOption option = (VehicleOption) carOption;
 		return option.getCategory().equals(this.getCategory()) && option.getName().equalsIgnoreCase(this.getName());
 	}
 

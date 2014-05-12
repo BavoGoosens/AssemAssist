@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import businessmodel.Model;
-import businessmodel.category.CarOption;
+import businessmodel.category.VehicleOption;
 import businessmodel.user.User;
 import control.SchedulingController;
 import control.SchedulingHandler;
@@ -46,8 +46,8 @@ public class SchedulingView extends View {
 			if (choice < 1 || choice > algos.size())
 				this.error();
 			String algo = algos.get(choice - 1);
-			Iterator<CarOption> optss = this.getModel().getUnscheduledCarOptions(3);
-			ArrayList<CarOption> opts = new ArrayList<>();
+			Iterator<VehicleOption> optss = this.getModel().getUnscheduledCarOptions(3);
+			ArrayList<VehicleOption> opts = new ArrayList<>();
 			while (optss.hasNext())
 				opts.add(optss.next());
 			if (algo.equals("SpecificationBatch")){
@@ -57,7 +57,7 @@ public class SchedulingView extends View {
 				}
 				System.out.println("> Enter the number of the car option you want to supply as a parameter");
 				int num = 1;
-				for (CarOption opt : opts)
+				for (VehicleOption opt : opts)
 					System.out.println("> " + num ++ + ") " + opt);
 				System.out.print(">> ");
 				response = this.scan.nextLine();
@@ -66,7 +66,7 @@ public class SchedulingView extends View {
 					choice = Integer.parseInt(response);
 					if (choice < 1 || choice > opts.size())
 						this.error();
-					CarOption param = opts.get(choice - 1 );
+					VehicleOption param = opts.get(choice - 1 );
 					try {
 						this.controller.selectAlgorithm(algo, param);
 						System.out.println("> Algorithm changed :)");
