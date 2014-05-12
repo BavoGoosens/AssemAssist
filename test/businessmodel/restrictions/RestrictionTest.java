@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.CarModel;
+import businessmodel.VehicleModel;
 import businessmodel.Catalog;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
@@ -46,11 +46,11 @@ public class RestrictionTest {
 	 * Test for car without an engine
 	 */
 	public void testDefaultMandatoryOptions() throws NoClearanceException {
-		CarModel modelA = this.aFactory.createModel();
+		VehicleModel modelA = this.aFactory.createModel();
 		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
 		for (CarOptionCategory category: this.categories) {
 			if (!category.equals(new Engine()) && !category.equals(new Color())) {
-				ArrayList<CarOption> options = modelA.getCarModelSpecification().getOptionsOfCategory(category);
+				ArrayList<CarOption> options = modelA.getVehicleModelSpecification().getOptionsOfCategory(category);
 				if (options.size() > 0) {
 					chosen.add(options.get(0));
 				}
@@ -70,10 +70,10 @@ public class RestrictionTest {
 	 * Test for a car with a sport body without a spoiler
 	 */
 	public void testSportBodyRestriction() throws NoClearanceException {
-		CarModel modelB = this.bFactory.createModel();
+		VehicleModel modelB = this.bFactory.createModel();
 		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
 		for (CarOptionCategory category: this.categories) {
-			ArrayList<CarOption> options = modelB.getCarModelSpecification().getOptionsOfCategory(category);
+			ArrayList<CarOption> options = modelB.getVehicleModelSpecification().getOptionsOfCategory(category);
 			if (category.equals(new Body())) {
 				for (CarOption option: options) {
 					if (option.getName().equalsIgnoreCase("sport")) {
@@ -99,10 +99,10 @@ public class RestrictionTest {
 	 * Test for a car with a sport body with a standard engine
 	 */
 	public void testSportBodyRestriction2() throws NoClearanceException {
-		CarModel modelB = this.bFactory.createModel();
+		VehicleModel modelB = this.bFactory.createModel();
 		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
 		for (CarOptionCategory category: categories) {
-			ArrayList<CarOption> options = modelB.getCarModelSpecification().getOptionsOfCategory(category);
+			ArrayList<CarOption> options = modelB.getVehicleModelSpecification().getOptionsOfCategory(category);
 			if (category.equals(new Body())) {
 				for (CarOption option: options) {
 					if (option.getName().equalsIgnoreCase("sport")) {
@@ -135,10 +135,10 @@ public class RestrictionTest {
 	 * Test for a car with an ultra engine and an automatic airco
 	 */
 	public void testUltraEngineAircoRestriction() throws NoClearanceException {
-		CarModel modelC = this.cFactory.createModel();
+		VehicleModel modelC = this.cFactory.createModel();
 		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
 		for (CarOptionCategory category: categories) {
-			ArrayList<CarOption> options = modelC.getCarModelSpecification().getOptionsOfCategory(category);
+			ArrayList<CarOption> options = modelC.getVehicleModelSpecification().getOptionsOfCategory(category);
 			if (category.equals(new Engine())) {
 				for (CarOption option: options) {
 					if (option.getName().equalsIgnoreCase("ultra 3l v8")) {
@@ -169,16 +169,16 @@ public class RestrictionTest {
 	 * Test for a car with an ultra engine and an automatic airco
 	 */
 	public void testDoubleRestriction() throws NoClearanceException {
-		CarModel modelC = this.cFactory.createModel();
-		CarModel modelA = this.aFactory.createModel();
+		VehicleModel modelC = this.cFactory.createModel();
+		VehicleModel modelA = this.aFactory.createModel();
 		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
-		for (CarOption option: modelC.getCarModelSpecification().getOptionsClone()) {
+		for (CarOption option: modelC.getVehicleModelSpecification().getOptionsClone()) {
 			chosen.add(option);
 		}
-		chosen.add(modelC.getCarModelSpecification().getOptionsClone().
-				get(modelC.getCarModelSpecification().getOptionsClone().size()-1));
-		chosen.add(modelC.getCarModelSpecification().getOptionsClone().
-				get(modelC.getCarModelSpecification().getOptionsClone().size()-1));
+		chosen.add(modelC.getVehicleModelSpecification().getOptionsClone().
+				get(modelC.getVehicleModelSpecification().getOptionsClone().size()-1));
+		chosen.add(modelC.getVehicleModelSpecification().getOptionsClone().
+				get(modelC.getVehicleModelSpecification().getOptionsClone().size()-1));
 //		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
 			new StandardCarOrder(gh, chosen, modelC);
@@ -194,9 +194,9 @@ public class RestrictionTest {
 		Restriction restriction2 = new SportBodyRestriction("Test2", this.catalog);
 		Restriction restriction3 = new UltraEngineAircoRestriction("Test3", this.catalog);
 		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
-		CarModel modelA = this.aFactory.createModel();
+		VehicleModel modelA = this.aFactory.createModel();
 		for (CarOptionCategory category: categories) {
-			ArrayList<CarOption> options = modelA.getCarModelSpecification().getOptionsOfCategory(category);
+			ArrayList<CarOption> options = modelA.getVehicleModelSpecification().getOptionsOfCategory(category);
 			if (options.size() > 0) {
 				chosen.add(options.get(0));
 			}

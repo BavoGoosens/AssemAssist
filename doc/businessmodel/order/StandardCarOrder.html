@@ -125,9 +125,9 @@ extends <a href="../../businessmodel/order/Order.html" title="class in businessm
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../businessmodel/order/StandardCarOrder.html#StandardCarOrder(businessmodel.user.User, java.util.ArrayList, businessmodel.CarModel)">StandardCarOrder</a></strong>(<a href="../../businessmodel/user/User.html" title="class in businessmodel.user">User</a>&nbsp;user,
+<td class="colOne"><code><strong><a href="../../businessmodel/order/StandardCarOrder.html#StandardCarOrder(businessmodel.user.User, java.util.ArrayList, businessmodel.VehicleModel)">StandardCarOrder</a></strong>(<a href="../../businessmodel/user/User.html" title="class in businessmodel.user">User</a>&nbsp;user,
                 java.util.ArrayList&lt;<a href="../../businessmodel/category/CarOption.html" title="class in businessmodel.category">CarOption</a>&gt;&nbsp;options,
-                <a href="../../businessmodel/CarModel.html" title="class in businessmodel">CarModel</a>&nbsp;model)</code>
+                <a href="../../businessmodel/VehicleModel.html" title="class in businessmodel">VehicleModel</a>&nbsp;model)</code>
 <div class="block">Creates a new standard car order with a given user, a set of options and a car model.</div>
 </td>
 </tr>
@@ -153,8 +153,8 @@ extends <a href="../../businessmodel/order/Order.html" title="class in businessm
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../businessmodel/CarModel.html" title="class in businessmodel">CarModel</a></code></td>
-<td class="colLast"><code><strong><a href="../../businessmodel/order/StandardCarOrder.html#getCarModel()">getCarModel</a></strong>()</code>
+<td class="colFirst"><code><a href="../../businessmodel/VehicleModel.html" title="class in businessmodel">VehicleModel</a></code></td>
+<td class="colLast"><code><strong><a href="../../businessmodel/order/StandardCarOrder.html#getVehicleModel()">getVehicleModel</a></strong>()</code>
 <div class="block">Returns the car model that is ordered.</div>
 </td>
 </tr>
@@ -199,7 +199,7 @@ extends <a href="../../businessmodel/order/Order.html" title="class in businessm
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="StandardCarOrder(businessmodel.user.User, java.util.ArrayList, businessmodel.CarModel)">
+<a name="StandardCarOrder(businessmodel.user.User, java.util.ArrayList, businessmodel.VehicleModel)">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -207,7 +207,7 @@ extends <a href="../../businessmodel/order/Order.html" title="class in businessm
 <h4>StandardCarOrder</h4>
 <pre>public&nbsp;StandardCarOrder(<a href="../../businessmodel/user/User.html" title="class in businessmodel.user">User</a>&nbsp;user,
                 java.util.ArrayList&lt;<a href="../../businessmodel/category/CarOption.html" title="class in businessmodel.category">CarOption</a>&gt;&nbsp;options,
-                <a href="../../businessmodel/CarModel.html" title="class in businessmodel">CarModel</a>&nbsp;model)
+                <a href="../../businessmodel/VehicleModel.html" title="class in businessmodel">VehicleModel</a>&nbsp;model)
                  throws java.lang.IllegalArgumentException,
                         <a href="../../businessmodel/exceptions/NoClearanceException.html" title="class in businessmodel.exceptions">NoClearanceException</a>,
                         <a href="../../businessmodel/exceptions/UnsatisfiedRestrictionException.html" title="class in businessmodel.exceptions">UnsatisfiedRestrictionException</a></pre>
@@ -238,13 +238,13 @@ extends <a href="../../businessmodel/order/Order.html" title="class in businessm
 <dl><dt><span class="strong">Returns:</span></dt><dd>The car of the order.</dd></dl>
 </li>
 </ul>
-<a name="getCarModel()">
+<a name="getVehicleModel()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getCarModel</h4>
-<pre>public&nbsp;<a href="../../businessmodel/CarModel.html" title="class in businessmodel">CarModel</a>&nbsp;getCarModel()</pre>
+<h4>getVehicleModel</h4>
+<pre>public&nbsp;<a href="../../businessmodel/VehicleModel.html" title="class in businessmodel">VehicleModel</a>&nbsp;getVehicleModel()</pre>
 <div class="block">Returns the car model that is ordered.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>The car model that is ordered.</dd></dl>
 </li>

@@ -5,23 +5,23 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.CarModel;
-import businessmodel.CarModelSpecification;
+import businessmodel.VehicleModel;
+import businessmodel.VehicleModelSpecification;
 import businessmodel.Catalog;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 
-public class CarModelSpecificationTest {
+public class VehicleModelSpecificationTest {
 	
 	private Catalog inventory;
-	private CarModelSpecification modelASpec;
+	private VehicleModelSpecification modelASpec;
 
 	@Before
 	public void setUp() {
 		inventory = new Catalog();
-		CarModel model = inventory.getAvailaleModelsClone().get(0);
+		VehicleModel model = inventory.getAvailaleModelsClone().get(0);
 		
-		modelASpec = model.getCarModelSpecification();
+		modelASpec = model.getVehicleModelSpecification();
 		
 	}
 	

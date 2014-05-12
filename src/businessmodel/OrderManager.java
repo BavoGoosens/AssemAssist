@@ -28,7 +28,7 @@ public class OrderManager implements Subject {
 	/**
 	 * A list that holds all the car models of a car manufacturing company.
 	 */
-	private ArrayList<VehicleModel> carmodels = new ArrayList<VehicleModel>();
+	private ArrayList<VehicleModel> vehiclemodels = new ArrayList<VehicleModel>();
 
 	/**
 	 * A scheduler this Order Manager uses.
@@ -43,26 +43,26 @@ public class OrderManager implements Subject {
 	/**
 	 * A constructor for the class OrderManager.
 	 * 
-	 * @param    carmodels
+	 * @param    vehiclemodels
 	 *           the car models that a car manufacturing company offers.
 	 */
-	public OrderManager(ArrayList<VehicleModel> carmodels) throws IllegalArgumentException {
+	public OrderManager(ArrayList<VehicleModel> vehiclemodels) throws IllegalArgumentException {
 		this.pendingorders = new LinkedList<Order>();
 		this.completedorders = new LinkedList<Order>();
 		this.scheduler = new Scheduler(this);
 		this.observers = new ArrayList<Observer>();
-		this.setCarModels(carmodels);
+		this.setVehicleModels(vehiclemodels);
 	}
 
 	/**
 	 * A method to get the car models of this order manager.
 	 * 
-	 * @return  ArrayList<CarModel> 
-	 * 			this.carmodels
+	 * @return  ArrayList<VehicleModel> 
+	 * 			this.vehiclemodels
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<VehicleModel> getCarmodels() {
-		return (ArrayList<VehicleModel>) carmodels.clone();
+	public ArrayList<VehicleModel> getVehicleModels() {
+		return (ArrayList<VehicleModel>) vehiclemodels.clone();
 	}
 
 	// for testing
@@ -228,12 +228,12 @@ public class OrderManager implements Subject {
 	/**
 	 * Method to set the car models
 	 * 
-	 * @param carmodels
+	 * @param vehiclemodels
 	 * @throws IllegalArgumentException
 	 */
-	private void setCarModels(ArrayList<VehicleModel> carmodels) throws IllegalArgumentException {
-		if (carmodels == null) throw new IllegalArgumentException("Bad list of car models!");
-		this.carmodels = carmodels;
+	private void setVehicleModels(ArrayList<VehicleModel> vehiclemodels) throws IllegalArgumentException {
+		if (vehiclemodels == null) throw new IllegalArgumentException("Bad list of car models!");
+		this.vehiclemodels = vehiclemodels;
 	}
 
 	/**

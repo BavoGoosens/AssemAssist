@@ -59,7 +59,7 @@ public interface Model {
 	 * 			The given user.
 	 * @return	The car models for the given user.
 	 */
-	public Iterator<VehicleModel> getCarModels(User user);
+	public Iterator<VehicleModel> getVehicleModels(User user);
 	
 	/**
 	 * Returns an iterator over the available assembly tasks for the given user.

@@ -125,7 +125,7 @@ implements <a href="../businessmodel/observer/Subject.html" title="interface in 
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../businessmodel/OrderManager.html#OrderManager(java.util.ArrayList)">OrderManager</a></strong>(java.util.ArrayList&lt;<a href="../businessmodel/CarModel.html" title="class in businessmodel">CarModel</a>&gt;&nbsp;carmodels)</code>
+<td class="colOne"><code><strong><a href="../businessmodel/OrderManager.html#OrderManager(java.util.ArrayList)">OrderManager</a></strong>(java.util.ArrayList&lt;<a href="../businessmodel/VehicleModel.html" title="class in businessmodel">VehicleModel</a>&gt;&nbsp;vehiclemodels)</code>
 <div class="block">A constructor for the class OrderManager.</div>
 </td>
 </tr>
@@ -145,8 +145,8 @@ implements <a href="../businessmodel/observer/Subject.html" title="interface in 
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>java.util.ArrayList&lt;<a href="../businessmodel/CarModel.html" title="class in businessmodel">CarModel</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../businessmodel/OrderManager.html#getCarmodels()">getCarmodels</a></strong>()</code>
+<td class="colFirst"><code>java.util.ArrayList&lt;<a href="../businessmodel/VehicleModel.html" title="class in businessmodel">VehicleModel</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../businessmodel/OrderManager.html#getVehicleModels()">getVehicleModels</a></strong>()</code>
 <div class="block">A method to get the car models of this order manager.</div>
 </td>
 </tr>
@@ -207,10 +207,10 @@ implements <a href="../businessmodel/observer/Subject.html" title="interface in 
 <ul class="blockListLast">
 <li class="blockList">
 <h4>OrderManager</h4>
-<pre>public&nbsp;OrderManager(java.util.ArrayList&lt;<a href="../businessmodel/CarModel.html" title="class in businessmodel">CarModel</a>&gt;&nbsp;carmodels)
+<pre>public&nbsp;OrderManager(java.util.ArrayList&lt;<a href="../businessmodel/VehicleModel.html" title="class in businessmodel">VehicleModel</a>&gt;&nbsp;vehiclemodels)
              throws java.lang.IllegalArgumentException</pre>
 <div class="block">A constructor for the class OrderManager.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>carmodels</code> - the car models that a car manufacturing company offers.</dd>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>vehiclemodels</code> - the car models that a car manufacturing company offers.</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code>java.lang.IllegalArgumentException</code></dd></dl>
 </li>
@@ -223,16 +223,16 @@ implements <a href="../businessmodel/observer/Subject.html" title="interface in 
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getCarmodels()">
+<a name="getVehicleModels()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getCarmodels</h4>
-<pre>public&nbsp;java.util.ArrayList&lt;<a href="../businessmodel/CarModel.html" title="class in businessmodel">CarModel</a>&gt;&nbsp;getCarmodels()</pre>
+<h4>getVehicleModels</h4>
+<pre>public&nbsp;java.util.ArrayList&lt;<a href="../businessmodel/VehicleModel.html" title="class in businessmodel">VehicleModel</a>&gt;&nbsp;getVehicleModels()</pre>
 <div class="block">A method to get the car models of this order manager.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd>ArrayList<CarModel> 
-                        this.carmodels</dd></dl>
+<dl><dt><span class="strong">Returns:</span></dt><dd>ArrayList<VehicleModel> 
+                        this.vehiclemodels</dd></dl>
 </li>
 </ul>
 <a name="getCompletedOrdersClone()">
