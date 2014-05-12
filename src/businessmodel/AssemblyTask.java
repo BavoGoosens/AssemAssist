@@ -2,6 +2,7 @@ package businessmodel;
 
 import java.util.ArrayList;
 
+import businessmodel.scheduler.WorkPost;
 import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
 

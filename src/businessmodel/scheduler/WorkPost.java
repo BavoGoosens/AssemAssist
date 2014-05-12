@@ -1,7 +1,8 @@
-package businessmodel;
+package businessmodel.scheduler;
 
 import java.util.ArrayList;
 
+import businessmodel.AssemblyTask;
 import businessmodel.category.VehicleOption;
 import businessmodel.order.Order;
 

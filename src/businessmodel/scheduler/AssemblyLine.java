@@ -1,8 +1,9 @@
-package businessmodel;
+package businessmodel.scheduler;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import businessmodel.Scheduler;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;

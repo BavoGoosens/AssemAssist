@@ -2,6 +2,7 @@ package businessmodel;
 
 import java.util.ArrayList;
 
+import businessmodel.scheduler.WorkPost;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
 import businessmodel.category.Color;

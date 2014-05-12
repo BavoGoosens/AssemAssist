@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import businessmodel.AssemblyTask;
 import businessmodel.Model;
-import businessmodel.WorkPost;
+import businessmodel.scheduler.WorkPost;
 import businessmodel.user.User;
 import control.AssemblyLineController;
 import control.AssemblyLineHandler;

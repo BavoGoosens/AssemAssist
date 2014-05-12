@@ -6,15 +6,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import businessmodel.scheduler.AssemblyLine;
 import businessmodel.order.StandardVehicleOrder;
 import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.CarManufacturingCompany;
-import businessmodel.VehicleModel;
-import businessmodel.Catalog;
-import businessmodel.OrderManager;
-import businessmodel.WorkPost;
+import businessmodel.scheduler.WorkPost;
 import businessmodel.category.ModelAFactory;
 import businessmodel.order.Order;
 import businessmodel.user.GarageHolder;
