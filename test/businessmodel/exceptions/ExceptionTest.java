@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
+import businessmodel.order.StandardVehicleOrder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,8 +14,6 @@ import businessmodel.Catalog;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 import businessmodel.category.ModelAFactory;
-import businessmodel.exceptions.NoClearanceException;
-import businessmodel.order.StandardCarOrder;
 import businessmodel.user.Manager;
 
 
@@ -43,7 +42,7 @@ public class ExceptionTest {
 
 		}
 		try{
-		cmc.placeOrder(new StandardCarOrder(manager, chosen,modelA));
+		cmc.placeOrder(new StandardVehicleOrder(manager, chosen,modelA));
 		
 		}catch (NoClearanceException ex){
 			assertEquals(ex.getUser(), manager);

@@ -4,20 +4,18 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
+import businessmodel.order.StandardVehicleOrder;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
-import businessmodel.Catalog;
-import businessmodel.OrderManager;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 import businessmodel.category.ModelAFactory;
 import businessmodel.order.Order;
 import businessmodel.order.SingleTaskOrder;
-import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;
 
 public class SchedulerTest {
@@ -66,24 +64,24 @@ public class SchedulerTest {
 			}
 
 		}
-		Order order1 = new StandardCarOrder(c1,chosen, modelA);
-		Order order2 = new StandardCarOrder(c2,chosen,modelA);
-		Order order3 = new StandardCarOrder(c3,chosen,modelA);
-		Order order4 = new StandardCarOrder(c4,chosen,modelA);
-		Order order5 = new StandardCarOrder(c5,chosen,modelA);
-		Order order6 = new StandardCarOrder(c6,chosen,modelA);
-		Order order7 = new StandardCarOrder(c7,chosen, modelA);
-		Order order8 = new StandardCarOrder(c8,chosen,modelA);
-		Order order9 = new StandardCarOrder(c9,chosen,modelA);
-		Order order10 = new StandardCarOrder(c10,chosen,modelA);
-		Order order11 = new StandardCarOrder(c11,chosen,modelA);
-		Order order12 = new StandardCarOrder(c12,chosen,modelA);
-		Order order13 = new StandardCarOrder(c13,chosen,modelA);
-		Order order14 = new StandardCarOrder(c14,chosen,modelA);
-		Order order15 = new StandardCarOrder(c15,chosen,modelA);
-		Order order16 = new StandardCarOrder(c16,chosen,modelA);
-		Order order17 = new StandardCarOrder(c17,chosen,modelA);
-		Order order18 = new StandardCarOrder(c18,chosen,modelA);
+		Order order1 = new StandardVehicleOrder(c1,chosen, modelA);
+		Order order2 = new StandardVehicleOrder(c2,chosen,modelA);
+		Order order3 = new StandardVehicleOrder(c3,chosen,modelA);
+		Order order4 = new StandardVehicleOrder(c4,chosen,modelA);
+		Order order5 = new StandardVehicleOrder(c5,chosen,modelA);
+		Order order6 = new StandardVehicleOrder(c6,chosen,modelA);
+		Order order7 = new StandardVehicleOrder(c7,chosen, modelA);
+		Order order8 = new StandardVehicleOrder(c8,chosen,modelA);
+		Order order9 = new StandardVehicleOrder(c9,chosen,modelA);
+		Order order10 = new StandardVehicleOrder(c10,chosen,modelA);
+		Order order11 = new StandardVehicleOrder(c11,chosen,modelA);
+		Order order12 = new StandardVehicleOrder(c12,chosen,modelA);
+		Order order13 = new StandardVehicleOrder(c13,chosen,modelA);
+		Order order14 = new StandardVehicleOrder(c14,chosen,modelA);
+		Order order15 = new StandardVehicleOrder(c15,chosen,modelA);
+		Order order16 = new StandardVehicleOrder(c16,chosen,modelA);
+		Order order17 = new StandardVehicleOrder(c17,chosen,modelA);
+		Order order18 = new StandardVehicleOrder(c18,chosen,modelA);
 		DateTime datetemp = ord.getScheduler().getCurrentTime();
 		DateTime temp = new DateTime(datetemp.getYear(), datetemp.getMonthOfYear(), datetemp.getDayOfMonth(), 8, 0);
 		temp = temp.plusDays(1);

@@ -6,29 +6,24 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import businessmodel.order.StandardVehicleOrder;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.AssemblyLine;
-import businessmodel.AssemblyTask;
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
-import businessmodel.Catalog;
-import businessmodel.OrderManager;
-import businessmodel.WorkPost;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 import businessmodel.category.ModelAFactory;
 import businessmodel.order.Order;
-import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;
 
 public class AssemblyLineTest {
 
 	private ArrayList<Order> orders;
-	private StandardCarOrder order1;
-	private StandardCarOrder order2;
-	private StandardCarOrder order3;
+	private StandardVehicleOrder order1;
+	private StandardVehicleOrder order2;
+	private StandardVehicleOrder order3;
 
 	private OrderManager om;
 
@@ -60,9 +55,9 @@ public class AssemblyLineTest {
 
 		}
 
-		order1 = new StandardCarOrder(new GarageHolder("1", "", ""), chosen, modelA);
-		order2 = new StandardCarOrder(new GarageHolder("2", "", ""), chosen, modelA);
-		order3 = new StandardCarOrder(new GarageHolder("3", "", ""), chosen, modelA);
+		order1 = new StandardVehicleOrder(new GarageHolder("1", "", ""), chosen, modelA);
+		order2 = new StandardVehicleOrder(new GarageHolder("2", "", ""), chosen, modelA);
+		order3 = new StandardVehicleOrder(new GarageHolder("3", "", ""), chosen, modelA);
 
 
 		orders.add(order1);

@@ -18,7 +18,7 @@ import businessmodel.user.User;
  * @author SWOP team 10 2013-2014
  *
  */
-public class StandardCarOrder extends Order {
+public class StandardVehicleOrder extends Order {
 	
 	/**
 	 * The car of the order.
@@ -42,7 +42,7 @@ public class StandardCarOrder extends Order {
 	 * @throws 	NoClearanceException
 	 * @throws 	UnsatisfiedRestrictionException
 	 */
-	public StandardCarOrder(User user, ArrayList<VehicleOption> options, VehicleModel model)
+	public StandardVehicleOrder(User user, ArrayList<VehicleOption> options, VehicleModel model)
 			throws IllegalArgumentException, NoClearanceException, UnsatisfiedRestrictionException {
 		super(user);
 		Vehicle car = new Vehicle(options);

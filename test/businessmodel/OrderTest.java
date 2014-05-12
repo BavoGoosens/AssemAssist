@@ -4,18 +4,16 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
+import businessmodel.order.StandardVehicleOrder;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
-import businessmodel.Catalog;
-import businessmodel.OrderManager;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 import businessmodel.category.ModelAFactory;
-import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;
 
 public class OrderTest {
@@ -46,7 +44,7 @@ public class OrderTest {
 			}
 
 		}
-		cmc.placeOrder(new StandardCarOrder(garageholder, chosen, modelA));
+		cmc.placeOrder(new StandardVehicleOrder(garageholder, chosen, modelA));
 		
 		date = om.getScheduler().getCurrentTime().plusHours(3);
 	}

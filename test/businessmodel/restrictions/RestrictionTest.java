@@ -2,6 +2,7 @@ package businessmodel.restrictions;
 
 import java.util.ArrayList;
 
+import businessmodel.order.StandardVehicleOrder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +20,6 @@ import businessmodel.category.ModelCFactory;
 import businessmodel.category.Spoiler;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
-import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;
 
 public class RestrictionTest {
@@ -58,7 +58,7 @@ public class RestrictionTest {
 		}
 //		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
-			new StandardCarOrder(gh, chosen, modelA);
+			new StandardVehicleOrder(gh, chosen, modelA);
 //			System.out.println("Success!");
 		} catch (UnsatisfiedRestrictionException e) {
 //			System.out.println(e.getMessage());
@@ -87,7 +87,7 @@ public class RestrictionTest {
 		}
 //		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
-			new StandardCarOrder(gh, chosen, modelB);
+			new StandardVehicleOrder(gh, chosen, modelB);
 //			System.out.println("Success!");
 		} catch (UnsatisfiedRestrictionException e) {
 //			System.out.println(e.getMessage());
@@ -121,7 +121,7 @@ public class RestrictionTest {
 		}
 //		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
-			new StandardCarOrder(gh, chosen, modelB);
+			new StandardVehicleOrder(gh, chosen, modelB);
 //			System.out.println("Success!");
 		} catch (UnsatisfiedRestrictionException e) {
 //			System.out.println(e.getMessage());
@@ -157,7 +157,7 @@ public class RestrictionTest {
 		}
 //		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
-			new StandardCarOrder(gh, chosen, modelC);
+			new StandardVehicleOrder(gh, chosen, modelC);
 //			System.out.println("Success!");
 		} catch (UnsatisfiedRestrictionException e) {
 //			System.out.println(e.getMessage());
@@ -181,7 +181,7 @@ public class RestrictionTest {
 				get(modelC.getCarModelSpecification().getOptionsClone().size()-1));
 //		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
-			new StandardCarOrder(gh, chosen, modelC);
+			new StandardVehicleOrder(gh, chosen, modelC);
 //			System.out.println("Success!");
 		} catch (UnsatisfiedRestrictionException e) {
 //			System.out.println(e.getMessage());

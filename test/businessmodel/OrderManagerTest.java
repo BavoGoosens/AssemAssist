@@ -6,19 +6,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import businessmodel.order.StandardVehicleOrder;
 import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
-import businessmodel.Catalog;
-import businessmodel.OrderManager;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 import businessmodel.category.ModelAFactory;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.Order;
-import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;
 
 public class OrderManagerTest {
@@ -49,7 +47,7 @@ public class OrderManagerTest {
 				chosen.add(options.get(0));
 			}
 		}
-		order = new StandardCarOrder(garageholder, chosen, modelA);
+		order = new StandardVehicleOrder(garageholder, chosen, modelA);
 		cmc.placeOrder(order);
 	}
 

@@ -9,13 +9,11 @@ import org.junit.Test;
 
 import businessmodel.CarManufacturingCompany;
 import businessmodel.CarModel;
-import businessmodel.Catalog;
-import businessmodel.OrderManager;
 import businessmodel.category.CarOption;
 import businessmodel.category.CarOptionCategory;
 import businessmodel.category.ModelAFactory;
 import businessmodel.order.Order;
-import businessmodel.order.StandardCarOrder;
+import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
 
 public class WorkPostTest {
@@ -45,7 +43,7 @@ public class WorkPostTest {
 			}
 
 		}
-		order = new StandardCarOrder(garageholder, chosen,modelA);
+		order = new StandardVehicleOrder(garageholder, chosen,modelA);
 		company.placeOrder(order);
 		
 	}

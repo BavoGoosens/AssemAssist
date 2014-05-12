@@ -1,9 +1,9 @@
 package control;
 
-import businessmodel.order.StandardCarOrder;
+import businessmodel.order.StandardVehicleOrder;
 
 public interface StandardOrderController {
  
-	public void placeOrder(StandardCarOrder or);
+	public void placeOrder(StandardVehicleOrder or);
 	
 }

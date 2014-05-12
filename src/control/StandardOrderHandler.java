@@ -3,7 +3,7 @@ package control;
 
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.Model;
-import businessmodel.order.StandardCarOrder;
+import businessmodel.order.StandardVehicleOrder;
 
 public class StandardOrderHandler implements StandardOrderController{
 	
@@ -15,7 +15,7 @@ public class StandardOrderHandler implements StandardOrderController{
 	}
 
 	@Override
-	public void placeOrder(StandardCarOrder or) {
+	public void placeOrder(StandardVehicleOrder or) {
 		this.cmc.placeOrder(or);
 	}
 
