@@ -23,7 +23,6 @@ public class AssemblyLine implements Subject{
 	private AssemblyLineState state;
 	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
 	private int timeCurrentStatus = 0;
-
 	private Scheduler scheduler;
 	private ArrayList<Observer> subscribers = new ArrayList<Observer>();
 
@@ -35,7 +34,7 @@ public class AssemblyLine implements Subject{
 		this.broken = new BrokenState(this);
 		this.maintenance  = new MaintenanceState(this);
 		this.operational  = new OperationalState(this);
-		this.state = operational;
+		this.setState(operational);
 		
 		this.setScheduler(scheduler);
 		this.generateWorkPosts();
