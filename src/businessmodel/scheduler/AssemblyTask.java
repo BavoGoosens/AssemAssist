@@ -1,7 +1,8 @@
-package businessmodel;
+package businessmodel.scheduler;
 
 import java.util.ArrayList;
 
+import businessmodel.Catalog;
 import businessmodel.scheduler.WorkPost;
 import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
@@ -76,6 +77,24 @@ public class AssemblyTask {
 		this.setCategory(category);
 		this.setDescription(descriptionOfActions);
 	}
+
+    /**
+     * Creates a new assembly task with a given name, a description of the actions, a category and a work post.
+     *
+     * @param 	name
+     * 			The name for the assembly task.
+     * @param	descriptionOfActions
+     * 			The description of all the actions needed for the task.
+     * @param	workpost
+     * 			The work post of the assembly task.
+     * @throws 	IllegalArgumentException
+     *
+     */
+    protected AssemblyTask(String name, String descriptionOfActions, WorkPost workpost) throws IllegalArgumentException {
+        this.setWorkpost(workpost);
+        this.setName(name);
+        this.setDescription(descriptionOfActions);
+    }
 	
 	/**
 	 * Returns a unique set of all the car options that can be installed.

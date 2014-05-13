@@ -2,6 +2,7 @@ package businessmodel;
 
 import java.util.ArrayList;
 
+import businessmodel.scheduler.AssemblyTask;
 import businessmodel.scheduler.WorkPost;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
