@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import businessmodel.Catalog;
+import businessmodel.OrderManager;
+import businessmodel.VehicleManufacturingCompany;
+import businessmodel.VehicleModel;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.assemblyline.AssemblyTask;
@@ -14,6 +18,7 @@ import org.junit.Test;
 
 import businessmodel.assemblyline.WorkPost;
 import businessmodel.category.ModelAFactory;
+import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
 import businessmodel.order.Order;
 import businessmodel.user.GarageHolder;
