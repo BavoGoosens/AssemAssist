@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import businessmodel.*;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.WorkPost;
 import org.joda.time.DateTime;
@@ -24,7 +25,7 @@ import businessmodel.order.Order;
  */
 public class Scheduler implements Subject {
 
-	private LinkedList<Shift> shifts; 
+	private LinkedList<Shift> shifts;
 
 	private LinkedList<Order> orders;
 
