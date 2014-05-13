@@ -1,4 +1,4 @@
-package businessmodel.scheduler;
+package businessmodel.assemblyline;
 
 import businessmodel.category.Airco;
 import businessmodel.category.Seats;

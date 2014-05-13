@@ -1,4 +1,4 @@
-package businessmodel.scheduler;
+package businessmodel.assemblyline;
 
 public class BrokenState implements AssemblyLineState {
 

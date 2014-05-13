@@ -1,6 +1,6 @@
 package control;
 
-import businessmodel.scheduler.AssemblyTask;
+import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.Model;
 

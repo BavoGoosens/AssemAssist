@@ -1,4 +1,4 @@
-package businessmodel.scheduler;
+package businessmodel.assemblyline;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -34,7 +34,7 @@ public class AssemblyLine implements Subject{
 	private int timeCurrentStatus = 0;
 
 	/**
-	 * The scheduler of the assembly line.
+	 * The assemblyline of the assembly line.
 	 */
 	private Scheduler scheduler;
 		
@@ -121,7 +121,7 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
-	 * Updates the work post and the scheduler with the current status.
+	 * Updates the work post and the assemblyline with the current status.
 	 * 
 	 * @param 	timeCurrentStatus
 	 * 			The current status.		
@@ -148,7 +148,7 @@ public class AssemblyLine implements Subject{
 
 
 	/**
-	 * Notifies the scheduler if a work post is completed, if all work posts are completed the assembly line advances.
+	 * Notifies the assemblyline if a work post is completed, if all work posts are completed the assembly line advances.
 	 */
 	private void notifyScheduler(){
 		boolean completed = true;

@@ -2,8 +2,8 @@ package businessmodel;
 
 import java.util.ArrayList;
 
-import businessmodel.scheduler.AssemblyTask;
-import businessmodel.scheduler.WorkPost;
+import businessmodel.assemblyline.AssemblyTask;
+import businessmodel.assemblyline.WorkPost;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
 import businessmodel.category.Color;

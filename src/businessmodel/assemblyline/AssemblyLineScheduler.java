@@ -1,4 +1,4 @@
-package businessmodel.scheduler;
+package businessmodel.assemblyline;
 
 /**
  * @author Team 10

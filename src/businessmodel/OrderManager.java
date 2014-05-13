@@ -31,7 +31,7 @@ public class OrderManager implements Subject {
 	private ArrayList<VehicleModel> vehiclemodels = new ArrayList<VehicleModel>();
 
 	/**
-	 * A scheduler this Order Manager uses.
+	 * A assemblyline this Order Manager uses.
 	 */
 	private Scheduler scheduler;
 
@@ -258,7 +258,7 @@ public class OrderManager implements Subject {
 	/**
 	 * A method that returns the Scheduler for this OrderManager.
 	 * 
-	 * @return	this.scheduler
+	 * @return	this.assemblyline
 	 */
 	public Scheduler getScheduler() {
 		return this.scheduler;

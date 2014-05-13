@@ -1,4 +1,4 @@
-package businessmodel.scheduler;
+package businessmodel.assemblyline;
 
 import businessmodel.category.Engine;
 import businessmodel.category.Gearbox;

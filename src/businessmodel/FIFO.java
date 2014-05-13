@@ -13,10 +13,10 @@ import businessmodel.order.Order;
 public class FIFO extends SchedulingAlgorithm {
 
 	/**
-	 * Create a first come first serve algorithm with a given scheduler.
+	 * Create a first come first serve algorithm with a given assemblyline.
 	 * 
 	 * @param 	scheduler
-	 * 			The scheduler for the algorithm.
+	 * 			The assemblyline for the algorithm.
 	 */
 	protected FIFO(Scheduler scheduler){
 		super(scheduler);

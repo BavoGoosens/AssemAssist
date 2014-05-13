@@ -1,4 +1,4 @@
-package businessmodel.scheduler;
+package businessmodel.assemblyline;
 
 import businessmodel.category.Body;
 import businessmodel.category.Color;

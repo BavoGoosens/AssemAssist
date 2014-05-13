@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 import org.joda.time.DateTime;
 
-import businessmodel.scheduler.AssemblyTask;
+import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.Model;
 import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;

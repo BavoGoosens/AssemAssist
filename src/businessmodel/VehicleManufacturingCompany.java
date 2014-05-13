@@ -3,9 +3,9 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import businessmodel.scheduler.AssemblyLine;
-import businessmodel.scheduler.AssemblyTask;
-import businessmodel.scheduler.WorkPost;
+import businessmodel.assemblyline.AssemblyLine;
+import businessmodel.assemblyline.AssemblyTask;
+import businessmodel.assemblyline.WorkPost;
 import org.joda.time.DateTime;
 
 import businessmodel.category.VehicleOption;

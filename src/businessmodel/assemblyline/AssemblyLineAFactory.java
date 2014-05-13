@@ -1,15 +1,15 @@
-package businessmodel.scheduler;
+package businessmodel.assemblyline;
 
 import businessmodel.VehicleModel;
 
 import java.util.List;
 
 /**
- * This concrete factory can be used to create AssemblyLine 3.
+ * This concrete factory can be used to create AssemblyLine 1 and 2 since they are essentially the same.
  *
  * @author Team 10
  */
-public class AssemblyLineBFactory extends AssemblyLineFactory {
+public class AssemblyLineAFactory extends AssemblyLineFactory {
 
     @Override
     public AssemblyLine createAssemblyLine() {
