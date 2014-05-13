@@ -1,9 +1,7 @@
-package businessmodel;
+package businessmodel.category;
 
 import java.util.ArrayList;
 
-import businessmodel.category.VehicleOption;
-import businessmodel.category.VehicleOptionCategory;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.restrictions.RestrictionChecker;
 

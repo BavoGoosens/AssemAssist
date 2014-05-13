@@ -7,10 +7,8 @@ import java.util.ArrayList;
 import businessmodel.order.StandardVehicleOrder;
 import org.junit.Test;
 
-import businessmodel.VehicleManufacturingCompany;
-import businessmodel.VehicleModel;
-import businessmodel.VehicleModelSpecification;
-import businessmodel.OrderManager;
+import businessmodel.category.VehicleModel;
+import businessmodel.category.VehicleModelSpecification;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
 import businessmodel.category.VehicleOption;

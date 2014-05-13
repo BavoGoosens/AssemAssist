@@ -7,7 +7,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import businessmodel.VehicleModel;
+import businessmodel.category.VehicleModel;
 import businessmodel.Model;
 import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;

@@ -3,9 +3,9 @@ package businessmodel.statistics;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import businessmodel.assemblyline.AssemblyLineScheduler;
 import org.joda.time.LocalDate;
 
-import businessmodel.Scheduler;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.util.VehicleTupleComperator;
@@ -41,10 +41,10 @@ public class VehicleStatistics implements Observer {
 	 * 			The subject the statistics need to observe.
 	 * @throws	IllegalArgumentException
 	 * 			| If the subject is equal to 'null' or if the subject isn't an order assemblyline.
-	 * 			| subject == null || !(subject instanceof Scheduler)
+	 * 			| subject == null || !(subject instanceof AssemblyLineScheduler)
 	 */
 	public VehicleStatistics(Subject subject) throws IllegalArgumentException {
-		if (subject == null || !(subject instanceof Scheduler)) throw new IllegalArgumentException("Bad subject!");
+		if (subject == null || !(subject instanceof AssemblyLineScheduler)) throw new IllegalArgumentException("Bad subject!");
 		subject.subscribeObserver(this);
 		this.numberOfVehicles = new ArrayList<Tuple<LocalDate, Integer>>();
 	}
@@ -116,12 +116,12 @@ public class VehicleStatistics implements Observer {
 	/**
 	 * @throws	IllegalArgumentException
 	 * 			| If the subject is equal to 'null' or if the subject isn't a assemblyline
-	 * 			| subject == null or !(subject instanceof Scheduler)
+	 * 			| subject == null or !(subject instanceof AssemblyLineScheduler)
 	 */
 	@Override
 	public void update(Subject subject) throws IllegalArgumentException {
-		if (subject != null && subject instanceof Scheduler) {
-			Scheduler scheduler = (Scheduler) subject;
+		if (subject != null && subject instanceof AssemblyLineScheduler) {
+			AssemblyLineScheduler scheduler = (AssemblyLineScheduler) subject;
 			LocalDate date = scheduler.getCurrentTime().toLocalDate();
 			int dayOrdersCount = scheduler.getDayOrdersCount();
 			this.numberOfVehicles.add(new Tuple<LocalDate, Integer>(date, dayOrdersCount));

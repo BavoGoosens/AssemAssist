@@ -1,6 +1,7 @@
-package businessmodel;
+package businessmodel.assemblyline;
 
 
+import businessmodel.assemblyline.AssemblyLineScheduler;
 import businessmodel.order.Order;
 
 //Interface for subclasses.
@@ -15,14 +16,14 @@ public abstract class SchedulingAlgorithm {
 	/**
 	 * The assemblyline of the scheduling algorithm.
 	 */
-	private Scheduler scheduler;
+	private AssemblyLineScheduler scheduler;
 
 	/**
 	 * Creates a scheduling algorithm with a assemblyline.
 	 * @param 	scheduler
 	 * 			The assemblyline for the scheduling algorithm.
 	 */
-	protected SchedulingAlgorithm(Scheduler scheduler){
+	protected SchedulingAlgorithm(AssemblyLineScheduler scheduler){
 		this.setScheduler(scheduler);
 	}
 
@@ -37,7 +38,7 @@ public abstract class SchedulingAlgorithm {
 	 * Returns the assemblyline.
 	 * @return 	The assemblyline of the scheduling algorithm.
 	 */
-	protected Scheduler getScheduler(){
+	protected AssemblyLineScheduler getScheduler(){
 		return this.scheduler;
 	}
 	
@@ -47,7 +48,7 @@ public abstract class SchedulingAlgorithm {
 	 * @param 	scheduler
 	 * @throws	IllegalArgumentException
 	 */
-	private void setScheduler(Scheduler scheduler) throws IllegalArgumentException {
+	private void setScheduler(AssemblyLineScheduler scheduler) throws IllegalArgumentException {
 		if(scheduler == null)
 			throw new IllegalArgumentException("Not a assemblyline");
 		this.scheduler = scheduler;

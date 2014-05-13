@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import org.joda.time.Period;
 
-import businessmodel.VehicleModel;
-import businessmodel.VehicleModelSpecification;
 import businessmodel.exceptions.IllegalVehicleOptionCategoryException;
 
 public class ModelXFactory extends VehicleModelFactory {

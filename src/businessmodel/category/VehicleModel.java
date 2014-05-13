@@ -1,10 +1,8 @@
-package businessmodel;
+package businessmodel.category;
 
 import java.util.ArrayList;
 
 import org.joda.time.Period;
-
-import businessmodel.category.VehicleOption;
 
 /**
  * A class representing a car model. 

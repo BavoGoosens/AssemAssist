@@ -7,10 +7,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.VehicleManufacturingCompany;
-import businessmodel.VehicleModel;
-import businessmodel.Catalog;
-import businessmodel.OrderManager;
+import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
 import businessmodel.category.ModelAFactory;

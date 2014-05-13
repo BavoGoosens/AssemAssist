@@ -6,6 +6,7 @@ import java.util.Iterator;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
+import businessmodel.category.VehicleModel;
 import org.joda.time.DateTime;
 
 import businessmodel.category.VehicleOption;

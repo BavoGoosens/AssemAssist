@@ -6,7 +6,7 @@ import businessmodel.order.StandardVehicleOrder;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.VehicleModel;
+import businessmodel.category.VehicleModel;
 import businessmodel.Catalog;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;

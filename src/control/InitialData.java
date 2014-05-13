@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 import businessmodel.VehicleManufacturingCompany;
-import businessmodel.VehicleModel;
+import businessmodel.category.VehicleModel;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
 import businessmodel.category.Color;

@@ -3,7 +3,6 @@ package businessmodel.assemblyline;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import businessmodel.Scheduler;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
@@ -23,13 +22,13 @@ public class AssemblyLine implements Subject{
 	private AssemblyLineState state;
 	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
 	private int timeCurrentStatus = 0;
-	private Scheduler scheduler;
+	private AssemblyLineScheduler scheduler;
 	private ArrayList<Observer> subscribers = new ArrayList<Observer>();
 
 	/**
 	 * Creates a new assembly line.
 	 */
-	protected AssemblyLine(Scheduler scheduler) throws IllegalArgumentException {
+	protected AssemblyLine(AssemblyLineScheduler scheduler) throws IllegalArgumentException {
 		
 		this.broken = new BrokenState(this);
 		this.maintenance  = new MaintenanceState(this);
@@ -156,11 +155,11 @@ public class AssemblyLine implements Subject{
 	}
 
 
-	private Scheduler getScheduler() {
+	private AssemblyLineScheduler getScheduler() {
 		return scheduler;
 	}
 
-	private void setScheduler(Scheduler scheduler) {
+	private void setScheduler(AssemblyLineScheduler scheduler) {
 		this.scheduler = scheduler;
 	}
 

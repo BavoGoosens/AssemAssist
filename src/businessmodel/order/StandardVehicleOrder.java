@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import org.joda.time.Period;
 
-import businessmodel.Vehicle;
-import businessmodel.VehicleModel;
+import businessmodel.category.Vehicle;
+import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;

@@ -1,5 +1,7 @@
-package businessmodel.assemblyline;
+package businessmodel.assemblyline.factory;
 
+import businessmodel.assemblyline.AssemblyTask;
+import businessmodel.assemblyline.WorkPost;
 import businessmodel.category.Airco;
 import businessmodel.category.Seats;
 import businessmodel.category.Spoiler;

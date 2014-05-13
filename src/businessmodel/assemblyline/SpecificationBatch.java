@@ -1,4 +1,4 @@
-package businessmodel;
+package businessmodel.assemblyline;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +23,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	 * 			The assemblyline of the algorithm.
 	 * @param 	option
 	 */
-	public SpecificationBatch(Scheduler scheduler, VehicleOption option){
+	public SpecificationBatch(AssemblyLineScheduler scheduler, VehicleOption option){
 		super(scheduler);
 		this.setOption(option);
 		ArrayList<Order> list = new ArrayList<Order>(this.getScheduler().getOrders());

@@ -3,6 +3,8 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import businessmodel.assemblyline.AssemblyLineScheduler;
+import businessmodel.category.VehicleModel;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
@@ -33,7 +35,7 @@ public class OrderManager implements Subject {
 	/**
 	 * A assemblyline this Order Manager uses.
 	 */
-	private Scheduler scheduler;
+	private AssemblyLineScheduler scheduler;
 
 	/**
 	 * List of the pending orders.
@@ -49,7 +51,7 @@ public class OrderManager implements Subject {
 	public OrderManager(ArrayList<VehicleModel> vehiclemodels) throws IllegalArgumentException {
 		this.pendingorders = new LinkedList<Order>();
 		this.completedorders = new LinkedList<Order>();
-		this.scheduler = new Scheduler(this);
+		this.scheduler = new AssemblyLineScheduler(this);
 		this.observers = new ArrayList<Observer>();
 		this.setVehicleModels(vehiclemodels);
 	}
@@ -256,11 +258,11 @@ public class OrderManager implements Subject {
 	}
 
 	/**
-	 * A method that returns the Scheduler for this OrderManager.
+	 * A method that returns the AssemblyLineScheduler for this OrderManager.
 	 * 
 	 * @return	this.assemblyline
 	 */
-	public Scheduler getScheduler() {
+	public AssemblyLineScheduler getScheduler() {
 		return this.scheduler;
 	}
 	

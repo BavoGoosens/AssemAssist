@@ -2,8 +2,6 @@ package businessmodel.category;
 
 import org.joda.time.Period;
 
-import businessmodel.VehicleModel;
-
 /**
  * Abstract class representing a car model factory.
  * This factory creates car model objects.

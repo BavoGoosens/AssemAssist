@@ -1,6 +1,9 @@
-package businessmodel.assemblyline;
+package businessmodel.assemblyline.factory;
 
-import businessmodel.VehicleModel;
+import businessmodel.MainScheduler;
+import businessmodel.category.VehicleModel;
+import businessmodel.assemblyline.AssemblyLine;
+import businessmodel.assemblyline.WorkPost;
 
 import java.util.List;
 
@@ -17,7 +20,7 @@ public class AssemblyLineBFactory extends AssemblyLineFactory {
     }
 
     @Override
-    protected AssemblyLineScheduler createScheduler() {
+    protected MainScheduler createScheduler() {
         return null;
     }
 

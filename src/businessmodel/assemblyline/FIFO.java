@@ -1,4 +1,4 @@
-package businessmodel;
+package businessmodel.assemblyline;
 
 import java.util.ArrayList;
 
@@ -18,7 +18,7 @@ public class FIFO extends SchedulingAlgorithm {
 	 * @param 	scheduler
 	 * 			The assemblyline for the algorithm.
 	 */
-	protected FIFO(Scheduler scheduler){
+	protected FIFO(AssemblyLineScheduler scheduler){
 		super(scheduler);
 	}
 	

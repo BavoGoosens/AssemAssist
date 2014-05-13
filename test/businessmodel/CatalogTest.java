@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.VehicleModel;
-import businessmodel.Catalog;
+import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOptionCategory;
 
 public class CatalogTest {
