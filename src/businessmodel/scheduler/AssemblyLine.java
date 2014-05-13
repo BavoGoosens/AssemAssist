@@ -17,30 +17,13 @@ import businessmodel.order.Order;
 public class AssemblyLine implements Subject{
 
 	
-	
-	AssemblyLineState broken;
-	AssemblyLineState maintenance;
-	AssemblyLineState operational;
-	AssemblyLineState state;
-	
-	/**
-	 * List of work posts at the assembly line.
-	 */
+	private AssemblyLineState broken;
+	private AssemblyLineState maintenance;
+	private AssemblyLineState operational;
+	private AssemblyLineState state;
 	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
-
-	/**
-	 * The time spent working on the current status of the assembly line.
-	 */
 	private int timeCurrentStatus = 0;
-
-	/**
-	 * The scheduler of the assembly line.
-	 */
 	private Scheduler scheduler;
-		
-	/**
-	 * List of observers who have subscribed to changes from the assembly line.
-	 */
 	private ArrayList<Observer> subscribers = new ArrayList<Observer>();
 
 	/**

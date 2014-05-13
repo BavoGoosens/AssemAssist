@@ -15,6 +15,7 @@ import org.junit.Test;
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.scheduler.WorkPost;
 import businessmodel.category.ModelAFactory;
+import businessmodel.category.VehicleOptionCategory;
 import businessmodel.order.Order;
 import businessmodel.user.GarageHolder;
 

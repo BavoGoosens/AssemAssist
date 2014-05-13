@@ -16,6 +16,8 @@ import businessmodel.category.ModelAFactory;
 import businessmodel.category.ModelBFactory;
 import businessmodel.category.ModelCFactory;
 import businessmodel.category.Spoiler;
+import businessmodel.category.VehicleOption;
+import businessmodel.category.VehicleOptionCategory;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.user.GarageHolder;
@@ -23,7 +25,7 @@ import businessmodel.user.GarageHolder;
 public class RestrictionTest {
 
 	private Catalog catalog;
-	private ArrayList<vehicleOptionCategory> categories;
+	private ArrayList<VehicleOptionCategory> categories;
 	private ModelAFactory aFactory;
 	private ModelBFactory bFactory;
 	private ModelCFactory cFactory;
@@ -45,10 +47,10 @@ public class RestrictionTest {
 	 */
 	public void testDefaultMandatoryOptions() throws NoClearanceException {
 		VehicleModel modelA = this.aFactory.createModel();
-		ArrayList<vehicleOption> chosen = new ArrayList<vehicleOption>();
-		for (vehicleOptionCategory category: this.categories) {
+		ArrayList<VehicleOption> chosen = new ArrayList<VehicleOption>();
+		for (VehicleOptionCategory category: this.categories) {
 			if (!category.equals(new Engine()) && !category.equals(new Color())) {
-				ArrayList<vehicleOption> options = modelA.getVehicleModelSpecification().getOptionsOfCategory(category);
+				ArrayList<VehicleOption> options = modelA.getVehicleModelSpecification().getOptionsOfCategory(category);
 				if (options.size() > 0) {
 					chosen.add(options.get(0));
 				}
@@ -69,11 +71,11 @@ public class RestrictionTest {
 	 */
 	public void testSportBodyRestriction() throws NoClearanceException {
 		VehicleModel modelB = this.bFactory.createModel();
-		ArrayList<vehicleOption> chosen = new ArrayList<vehicleOption>();
-		for (vehicleOptionCategory category: this.categories) {
-			ArrayList<vehicleOption> options = modelB.getVehicleModelSpecification().getOptionsOfCategory(category);
+		ArrayList<VehicleOption> chosen = new ArrayList<VehicleOption>();
+		for (VehicleOptionCategory category: this.categories) {
+			ArrayList<VehicleOption> options = modelB.getVehicleModelSpecification().getOptionsOfCategory(category);
 			if (category.equals(new Body())) {
-				for (vehicleOption option: options) {
+				for (VehicleOption option: options) {
 					if (option.getName().equalsIgnoreCase("sport")) {
 						chosen.add(option);
 					}
@@ -98,17 +100,17 @@ public class RestrictionTest {
 	 */
 	public void testSportBodyRestriction2() throws NoClearanceException {
 		VehicleModel modelB = this.bFactory.createModel();
-		ArrayList<vehicleOption> chosen = new ArrayList<vehicleOption>();
-		for (vehicleOptionCategory category: categories) {
-			ArrayList<vehicleOption> options = modelB.getVehicleModelSpecification().getOptionsOfCategory(category);
+		ArrayList<VehicleOption> chosen = new ArrayList<VehicleOption>();
+		for (VehicleOptionCategory category: categories) {
+			ArrayList<VehicleOption> options = modelB.getVehicleModelSpecification().getOptionsOfCategory(category);
 			if (category.equals(new Body())) {
-				for (vehicleOption option: options) {
+				for (VehicleOption option: options) {
 					if (option.getName().equalsIgnoreCase("sport")) {
 						chosen.add(option);
 					}
 				}
 			} else if (category.equals(new Engine())) {
-				for (vehicleOption option: options) {
+				for (VehicleOption option: options) {
 					if (option.getName().equalsIgnoreCase("standard 2l v4")) {
 						chosen.add(option);
 					}
@@ -134,17 +136,17 @@ public class RestrictionTest {
 	 */
 	public void testUltraEngineAircoRestriction() throws NoClearanceException {
 		VehicleModel modelC = this.cFactory.createModel();
-		ArrayList<vehicleOption> chosen = new ArrayList<vehicleOption>();
-		for (vehicleOptionCategory category: categories) {
-			ArrayList<vehicleOption> options = modelC.getVehicleModelSpecification().getOptionsOfCategory(category);
+		ArrayList<VehicleOption> chosen = new ArrayList<VehicleOption>();
+		for (VehicleOptionCategory category: categories) {
+			ArrayList<VehicleOption> options = modelC.getVehicleModelSpecification().getOptionsOfCategory(category);
 			if (category.equals(new Engine())) {
-				for (vehicleOption option: options) {
+				for (VehicleOption option: options) {
 					if (option.getName().equalsIgnoreCase("ultra 3l v8")) {
 						chosen.add(option);
 					}
 				}
 			} else if (category.equals(new Airco())) {
-				for (vehicleOption option: options) {
+				for (VehicleOption option: options) {
 					if (option.getName().equalsIgnoreCase("automatic")) {
 						chosen.add(option);
 					}
@@ -169,8 +171,8 @@ public class RestrictionTest {
 	public void testDoubleRestriction() throws NoClearanceException {
 		VehicleModel modelC = this.cFactory.createModel();
 		VehicleModel modelA = this.aFactory.createModel();
-		ArrayList<vehicleOption> chosen = new ArrayList<vehicleOption>();
-		for (vehicleOption option: modelC.getVehicleModelSpecification().getOptionsClone()) {
+		ArrayList<VehicleOption> chosen = new ArrayList<VehicleOption>();
+		for (VehicleOption option: modelC.getVehicleModelSpecification().getOptionsClone()) {
 			chosen.add(option);
 		}
 		chosen.add(modelC.getVehicleModelSpecification().getOptionsClone().
@@ -191,10 +193,10 @@ public class RestrictionTest {
 		Restriction restriction1 = new DefaultMandatoryOptionRestriction("Test1", this.catalog);
 		Restriction restriction2 = new SportBodyRestriction("Test2", this.catalog);
 		Restriction restriction3 = new UltraEngineAircoRestriction("Test3", this.catalog);
-		ArrayList<vehicleOption> chosen = new ArrayList<vehicleOption>();
+		ArrayList<VehicleOption> chosen = new ArrayList<VehicleOption>();
 		VehicleModel modelA = this.aFactory.createModel();
-		for (vehicleOptionCategory category: categories) {
-			ArrayList<vehicleOption> options = modelA.getVehicleModelSpecification().getOptionsOfCategory(category);
+		for (VehicleOptionCategory category: categories) {
+			ArrayList<VehicleOption> options = modelA.getVehicleModelSpecification().getOptionsOfCategory(category);
 			if (options.size() > 0) {
 				chosen.add(options.get(0));
 			}

@@ -14,8 +14,14 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		VehicleManufacturingCompany cmc = new VehicleManufacturingCompany();
-		View view = new LoginView(cmc);
+		
+		VehicleManufacturingCompany vmc = new VehicleManufacturingCompany();
+		int nbOrders = 10;
+		new InitialData(nbOrders).initialize(vmc);
+		
+		View view = new LoginView(vmc);
 		view.display();
+		
+		
 	}
 }
