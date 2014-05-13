@@ -18,6 +18,7 @@ public class MaintenanceState implements AssemblyLineState {
 	
 	@Override
 	public void AssemblyLineIsBroken() {
+		this.assemblyLine.setState(this.assemblyLine.getBrokenState());
 		// wait indefinitely
 	}
 

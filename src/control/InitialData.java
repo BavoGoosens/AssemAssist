@@ -82,10 +82,8 @@ public class InitialData {
 			for(int j=0; j < spoiler.size()-1; j++) chosen.add(spoiler.get(rnd.nextInt(spoiler.size())));
 			for(int j=0; j < wheels.size()-1; j++) chosen.add(wheels.get(rnd.nextInt(wheels.size())));
 		 
-			
-			StandardVehicleOrder order;
 			try {
-				order = new StandardVehicleOrder(user, chosen, vehicleModel);
+				StandardVehicleOrder order = new StandardVehicleOrder(user, chosen, vehicleModel);
 				controller.placeOrder(order);
 			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
 				e.printStackTrace();

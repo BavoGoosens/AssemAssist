@@ -27,6 +27,7 @@ public class BrokenState implements AssemblyLineState {
 
 	@Override
 	public void AssemblyLineIsMaintenance() {
+		this.assemblyLine.setState(this.assemblyLine.getMaintenanceState());
 		//wait four hours
 		
 	}
