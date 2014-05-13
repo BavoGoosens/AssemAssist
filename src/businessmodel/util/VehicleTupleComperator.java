@@ -14,11 +14,11 @@ public class VehicleTupleComperator implements Comparator<Tuple<LocalDate, Integ
 
 	@Override
 	public int compare(Tuple<LocalDate, Integer> o1, Tuple<LocalDate, Integer> o2) {
-		int nb_cars_1 = o1.getY();
-		int nb_cars_2 = o2.getY();
-		if (nb_cars_1 > nb_cars_2)
+		int nb_vehicles_1 = o1.getY();
+		int nb_vehicles_2 = o2.getY();
+		if (nb_vehicles_1 > nb_vehicles_2)
 			return 1;
-		else if (nb_cars_1 < nb_cars_2)
+		else if (nb_vehicles_1 < nb_vehicles_2)
 			return -1;
 		else
 			return 0;

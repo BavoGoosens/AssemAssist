@@ -120,7 +120,7 @@ extends java.lang.Object</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../businessmodel/VehicleModelSpecification.html#VehicleModelSpecification(java.util.ArrayList)">VehicleModelSpecification</a></strong>(java.util.ArrayList&lt;<a href="../businessmodel/category/CarOption.html" title="class in businessmodel.category">CarOption</a>&gt;&nbsp;options)</code>
+<td class="colOne"><code><strong><a href="../businessmodel/VehicleModelSpecification.html#VehicleModelSpecification(java.util.ArrayList)">VehicleModelSpecification</a></strong>(java.util.ArrayList&lt;<a href="../businessmodel/category/VehicleOption.html" title="class in businessmodel.category">VehicleOption</a>&gt;&nbsp;options)</code>
 <div class="block">Creates a new car model specification with a given list of options.</div>
 </td>
 </tr>
@@ -141,19 +141,19 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../businessmodel/VehicleModelSpecification.html#checkRestrictions(businessmodel.Car)">checkRestrictions</a></strong>(<a href="../businessmodel/Car.html" title="class in businessmodel">Car</a>&nbsp;car)</code>
+<td class="colLast"><code><strong><a href="../businessmodel/VehicleModelSpecification.html#checkRestrictions(businessmodel.Vehicle)">checkRestrictions</a></strong>(<a href="../businessmodel/Vehicle.html" title="class in businessmodel">Vehicle</a>&nbsp;car)</code>
 <div class="block">Checks whether the restrictions for a car are satisfied.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>java.util.ArrayList&lt;<a href="../businessmodel/category/CarOption.html" title="class in businessmodel.category">CarOption</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.ArrayList&lt;<a href="../businessmodel/category/VehicleOption.html" title="class in businessmodel.category">VehicleOption</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../businessmodel/VehicleModelSpecification.html#getOptionsClone()">getOptionsClone</a></strong>()</code>
 <div class="block">Returns a cloned object of the list of options of the car model specification.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>java.util.ArrayList&lt;<a href="../businessmodel/category/CarOption.html" title="class in businessmodel.category">CarOption</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../businessmodel/VehicleModelSpecification.html#getOptionsOfCategory(businessmodel.category.CarOptionCategory)">getOptionsOfCategory</a></strong>(<a href="../businessmodel/category/CarOptionCategory.html" title="class in businessmodel.category">CarOptionCategory</a>&nbsp;category)</code>
+<td class="colFirst"><code>java.util.ArrayList&lt;<a href="../businessmodel/category/VehicleOption.html" title="class in businessmodel.category">VehicleOption</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../businessmodel/VehicleModelSpecification.html#getOptionsOfCategory(businessmodel.category.VehicleOptionCategory)">getOptionsOfCategory</a></strong>(<a href="../businessmodel/category/VehicleOptionCategory.html" title="class in businessmodel.category">VehicleOptionCategory</a>&nbsp;category)</code>
 <div class="block">Returns a list of options with a given category of the car model specification.</div>
 </td>
 </tr>
@@ -185,7 +185,7 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>VehicleModelSpecification</h4>
-<pre>public&nbsp;VehicleModelSpecification(java.util.ArrayList&lt;<a href="../businessmodel/category/CarOption.html" title="class in businessmodel.category">CarOption</a>&gt;&nbsp;options)
+<pre>public&nbsp;VehicleModelSpecification(java.util.ArrayList&lt;<a href="../businessmodel/category/VehicleOption.html" title="class in businessmodel.category">VehicleOption</a>&gt;&nbsp;options)
                       throws java.lang.IllegalArgumentException</pre>
 <div class="block">Creates a new car model specification with a given list of options.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>options</code> - The options for the new car model specification.</dd>
@@ -208,18 +208,18 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getOptionsClone</h4>
-<pre>public&nbsp;java.util.ArrayList&lt;<a href="../businessmodel/category/CarOption.html" title="class in businessmodel.category">CarOption</a>&gt;&nbsp;getOptionsClone()</pre>
+<pre>public&nbsp;java.util.ArrayList&lt;<a href="../businessmodel/category/VehicleOption.html" title="class in businessmodel.category">VehicleOption</a>&gt;&nbsp;getOptionsClone()</pre>
 <div class="block">Returns a cloned object of the list of options of the car model specification.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>A cloned list of the options of the car model specification.</dd></dl>
 </li>
 </ul>
-<a name="getOptionsOfCategory(businessmodel.category.CarOptionCategory)">
+<a name="getOptionsOfCategory(businessmodel.category.VehicleOptionCategory)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getOptionsOfCategory</h4>
-<pre>public&nbsp;java.util.ArrayList&lt;<a href="../businessmodel/category/CarOption.html" title="class in businessmodel.category">CarOption</a>&gt;&nbsp;getOptionsOfCategory(<a href="../businessmodel/category/CarOptionCategory.html" title="class in businessmodel.category">CarOptionCategory</a>&nbsp;category)
+<pre>public&nbsp;java.util.ArrayList&lt;<a href="../businessmodel/category/VehicleOption.html" title="class in businessmodel.category">VehicleOption</a>&gt;&nbsp;getOptionsOfCategory(<a href="../businessmodel/category/VehicleOptionCategory.html" title="class in businessmodel.category">VehicleOptionCategory</a>&nbsp;category)
                                                     throws java.lang.IllegalArgumentException</pre>
 <div class="block">Returns a list of options with a given category of the car model specification.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>category</code> - The category of the options.</dd>
@@ -229,13 +229,13 @@ extends java.lang.Object</pre>
                         | category == null</dd></dl>
 </li>
 </ul>
-<a name="checkRestrictions(businessmodel.Car)">
+<a name="checkRestrictions(businessmodel.Vehicle)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>checkRestrictions</h4>
-<pre>public&nbsp;boolean&nbsp;checkRestrictions(<a href="../businessmodel/Car.html" title="class in businessmodel">Car</a>&nbsp;car)
+<pre>public&nbsp;boolean&nbsp;checkRestrictions(<a href="../businessmodel/Vehicle.html" title="class in businessmodel">Vehicle</a>&nbsp;car)
                           throws java.lang.IllegalArgumentException,
                                  <a href="../businessmodel/exceptions/UnsatisfiedRestrictionException.html" title="class in businessmodel.exceptions">UnsatisfiedRestrictionException</a></pre>
 <div class="block">Checks whether the restrictions for a car are satisfied.</div>

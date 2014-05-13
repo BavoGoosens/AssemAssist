@@ -151,7 +151,7 @@ public class AssemblyLine implements Subject{
 	 * Generates work posts.
 	 */
 	private void generateWorkPosts(){
-		WorkPost post1 = new WorkPost("Car Body Post", this);
+		WorkPost post1 = new WorkPost("Vehicle Body Post", this);
 		WorkPost post2 = new WorkPost("Drivetrain Post", this);
 		WorkPost post3 = new WorkPost("Accesoires Post", this);	
 		this.workposts.add(post1);

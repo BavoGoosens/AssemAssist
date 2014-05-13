@@ -8,8 +8,8 @@ import org.junit.Test;
 import businessmodel.VehicleModel;
 import businessmodel.VehicleModelSpecification;
 import businessmodel.Catalog;
-import businessmodel.category.CarOption;
-import businessmodel.category.CarOptionCategory;
+import businessmodel.category.VehicleOption;
+import businessmodel.category.VehicleOptionCategory;
 
 public class VehicleModelSpecificationTest {
 	
@@ -27,8 +27,8 @@ public class VehicleModelSpecificationTest {
 	
 	@Test
 	public void testModel() {
-		ArrayList<CarOption> options = new ArrayList<CarOption>();
-		for (CarOptionCategory category: inventory.getAllCategories()) {
+		ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();
+		for (VehicleOptionCategory category: inventory.getAllCategories()) {
 			options.addAll(modelASpec.getOptionsOfCategory(category));
 		}
 	}

@@ -109,7 +109,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="strong">VehicleModelSpecification.</span><code><strong><a href="../../../businessmodel/VehicleModelSpecification.html#checkRestrictions(businessmodel.Car)">checkRestrictions</a></strong>(<a href="../../../businessmodel/Car.html" title="class in businessmodel">Car</a>&nbsp;car)</code>
+<td class="colLast"><span class="strong">VehicleModelSpecification.</span><code><strong><a href="../../../businessmodel/VehicleModelSpecification.html#checkRestrictions(businessmodel.Vehicle)">checkRestrictions</a></strong>(<a href="../../../businessmodel/Vehicle.html" title="class in businessmodel">Vehicle</a>&nbsp;car)</code>
 <div class="block">Checks whether the restrictions for a car are satisfied.</div>
 </td>
 </tr>
@@ -133,14 +133,14 @@
 </tr>
 <tr class="rowColor">
 <td class="colLast"><code><strong><a href="../../../businessmodel/order/SingleTaskOrder.html#SingleTaskOrder(businessmodel.user.User, java.util.ArrayList, org.joda.time.DateTime)">SingleTaskOrder</a></strong>(<a href="../../../businessmodel/user/User.html" title="class in businessmodel.user">User</a>&nbsp;user,
-               java.util.ArrayList&lt;<a href="../../../businessmodel/category/CarOption.html" title="class in businessmodel.category">CarOption</a>&gt;&nbsp;options,
+               java.util.ArrayList&lt;<a href="../../../businessmodel/category/VehicleOption.html" title="class in businessmodel.category">VehicleOption</a>&gt;&nbsp;options,
                org.joda.time.DateTime&nbsp;userEndDate)</code>
 <div class="block">Creates a new single task order with a given user, set of options and user end date.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../businessmodel/order/StandardCarOrder.html#StandardCarOrder(businessmodel.user.User, java.util.ArrayList, businessmodel.VehicleModel)">StandardCarOrder</a></strong>(<a href="../../../businessmodel/user/User.html" title="class in businessmodel.user">User</a>&nbsp;user,
-                java.util.ArrayList&lt;<a href="../../../businessmodel/category/CarOption.html" title="class in businessmodel.category">CarOption</a>&gt;&nbsp;options,
+<td class="colLast"><code><strong><a href="../../../businessmodel/order/StandardVehicleOrder.html#StandardVehicleOrder(businessmodel.user.User, java.util.ArrayList, businessmodel.VehicleModel)">StandardVehicleOrder</a></strong>(<a href="../../../businessmodel/user/User.html" title="class in businessmodel.user">User</a>&nbsp;user,
+                java.util.ArrayList&lt;<a href="../../../businessmodel/category/VehicleOption.html" title="class in businessmodel.category">VehicleOption</a>&gt;&nbsp;options,
                 <a href="../../../businessmodel/VehicleModel.html" title="class in businessmodel">VehicleModel</a>&nbsp;model)</code>
 <div class="block">Creates a new standard car order with a given user, a set of options and a car model.</div>
 </td>
@@ -161,31 +161,31 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="strong">UltraEngineAircoRestriction.</span><code><strong><a href="../../../businessmodel/restrictions/UltraEngineAircoRestriction.html#check(java.util.ArrayList)">check</a></strong>(java.util.ArrayList&lt;<a href="../../../businessmodel/category/CarOption.html" title="class in businessmodel.category">CarOption</a>&gt;&nbsp;options)</code>&nbsp;</td>
+<td class="colLast"><span class="strong">UltraEngineAircoRestriction.</span><code><strong><a href="../../../businessmodel/restrictions/UltraEngineAircoRestriction.html#check(java.util.ArrayList)">check</a></strong>(java.util.ArrayList&lt;<a href="../../../businessmodel/category/VehicleOption.html" title="class in businessmodel.category">VehicleOption</a>&gt;&nbsp;options)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="strong">SportBodyRestriction.</span><code><strong><a href="../../../businessmodel/restrictions/SportBodyRestriction.html#check(java.util.ArrayList)">check</a></strong>(java.util.ArrayList&lt;<a href="../../../businessmodel/category/CarOption.html" title="class in businessmodel.category">CarOption</a>&gt;&nbsp;options)</code>&nbsp;</td>
+<td class="colLast"><span class="strong">SportBodyRestriction.</span><code><strong><a href="../../../businessmodel/restrictions/SportBodyRestriction.html#check(java.util.ArrayList)">check</a></strong>(java.util.ArrayList&lt;<a href="../../../businessmodel/category/VehicleOption.html" title="class in businessmodel.category">VehicleOption</a>&gt;&nbsp;options)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="strong">RestrictionChecker.</span><code><strong><a href="../../../businessmodel/restrictions/RestrictionChecker.html#check(java.util.ArrayList)">check</a></strong>(java.util.ArrayList&lt;<a href="../../../businessmodel/category/CarOption.html" title="class in businessmodel.category">CarOption</a>&gt;&nbsp;options)</code>
+<td class="colLast"><span class="strong">RestrictionChecker.</span><code><strong><a href="../../../businessmodel/restrictions/RestrictionChecker.html#check(java.util.ArrayList)">check</a></strong>(java.util.ArrayList&lt;<a href="../../../businessmodel/category/VehicleOption.html" title="class in businessmodel.category">VehicleOption</a>&gt;&nbsp;options)</code>
 <div class="block">Checks the given set of options against all the restrictions it holds.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>abstract boolean</code></td>
-<td class="colLast"><span class="strong">Restriction.</span><code><strong><a href="../../../businessmodel/restrictions/Restriction.html#check(java.util.ArrayList)">check</a></strong>(java.util.ArrayList&lt;<a href="../../../businessmodel/category/CarOption.html" title="class in businessmodel.category">CarOption</a>&gt;&nbsp;options)</code>
+<td class="colLast"><span class="strong">Restriction.</span><code><strong><a href="../../../businessmodel/restrictions/Restriction.html#check(java.util.ArrayList)">check</a></strong>(java.util.ArrayList&lt;<a href="../../../businessmodel/category/VehicleOption.html" title="class in businessmodel.category">VehicleOption</a>&gt;&nbsp;options)</code>
 <div class="block">Checks whether the given set of options violates the restriction or not.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="strong">MultipleCategoryRestriction.</span><code><strong><a href="../../../businessmodel/restrictions/MultipleCategoryRestriction.html#check(java.util.ArrayList)">check</a></strong>(java.util.ArrayList&lt;<a href="../../../businessmodel/category/CarOption.html" title="class in businessmodel.category">CarOption</a>&gt;&nbsp;options)</code>&nbsp;</td>
+<td class="colLast"><span class="strong">MultipleCategoryRestriction.</span><code><strong><a href="../../../businessmodel/restrictions/MultipleCategoryRestriction.html#check(java.util.ArrayList)">check</a></strong>(java.util.ArrayList&lt;<a href="../../../businessmodel/category/VehicleOption.html" title="class in businessmodel.category">VehicleOption</a>&gt;&nbsp;options)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="strong">DefaultMandatoryOptionRestriction.</span><code><strong><a href="../../../businessmodel/restrictions/DefaultMandatoryOptionRestriction.html#check(java.util.ArrayList)">check</a></strong>(java.util.ArrayList&lt;<a href="../../../businessmodel/category/CarOption.html" title="class in businessmodel.category">CarOption</a>&gt;&nbsp;options)</code>&nbsp;</td>
+<td class="colLast"><span class="strong">DefaultMandatoryOptionRestriction.</span><code><strong><a href="../../../businessmodel/restrictions/DefaultMandatoryOptionRestriction.html#check(java.util.ArrayList)">check</a></strong>(java.util.ArrayList&lt;<a href="../../../businessmodel/category/VehicleOption.html" title="class in businessmodel.category">VehicleOption</a>&gt;&nbsp;options)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
