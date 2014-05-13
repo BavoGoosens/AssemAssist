@@ -20,19 +20,19 @@ import businessmodel.util.Tuple;
 public class VehicleStatistics implements Observer {
 
 	/**
-	 * The average number of cars produced.
+	 * The average number of vehicles produced.
 	 */
 	private int avarage;
 
 	/**
-	 * The median number of cars produced.
+	 * The median number of vehicles produced.
 	 */
 	private int median;
 
 	/**
-	 * The number of cars produced for each day.
+	 * The number of vehicles produced for each day.
 	 */
-	private ArrayList<Tuple<LocalDate, Integer>> numberOfCars;
+	private ArrayList<Tuple<LocalDate, Integer>> numberOfVehicles;
 
 	/**
 	 * Creates a new car statistics object with a given subject it needs to observe.
@@ -46,22 +46,22 @@ public class VehicleStatistics implements Observer {
 	public VehicleStatistics(Subject subject) throws IllegalArgumentException {
 		if (subject == null || !(subject instanceof Scheduler)) throw new IllegalArgumentException("Bad subject!");
 		subject.subscribeObserver(this);
-		this.numberOfCars = new ArrayList<Tuple<LocalDate, Integer>>();
+		this.numberOfVehicles = new ArrayList<Tuple<LocalDate, Integer>>();
 	}
 
 	/**
-	 * Returns the average number of cars produced.
+	 * Returns the average number of vehicles produced.
 	 * 
-	 * @return The average number of cars produced.
+	 * @return The average number of vehicles produced.
 	 */
 	public int getAverage(){
 		return this.avarage;
 	}
 	
 	/**
-	 * Returns the median number of cars produced.
+	 * Returns the median number of vehicles produced.
 	 * 
-	 * @return	The median number of cars produced.
+	 * @return	The median number of vehicles produced.
 	 */
 	public int getMedian(){
 		return this.median;
@@ -76,10 +76,10 @@ public class VehicleStatistics implements Observer {
 	 * 
 	 */
 	public ArrayList<Tuple<LocalDate, Integer>> getLastDays(int numberOfDays){
-		if (this.numberOfCars.size() > numberOfDays){
+		if (this.numberOfVehicles.size() > numberOfDays){
 			ArrayList<Tuple<LocalDate, Integer>> result = new ArrayList<Tuple<LocalDate, Integer>>(numberOfDays);
-			for(int i = this.numberOfCars.size(); i >= this.numberOfCars.size() - numberOfDays ; i--){
-				result.add(this.numberOfCars.get(i));
+			for(int i = this.numberOfVehicles.size(); i >= this.numberOfVehicles.size() - numberOfDays ; i--){
+				result.add(this.numberOfVehicles.get(i));
 			}
 			return result;
 		} else 
@@ -87,22 +87,22 @@ public class VehicleStatistics implements Observer {
 	}
 
 	/**
-	 * Calculates and updates the average number of cars produced per day.
+	 * Calculates and updates the average number of vehicles produced per day.
 	 */
 	private void updateAverage(){
 		int count = 0;
-		for (Tuple<LocalDate, Integer> tup : this.numberOfCars){
+		for (Tuple<LocalDate, Integer> tup : this.numberOfVehicles){
 			count += tup.getY();
 		}		
-		this.avarage = (int) Math.floor(count / this.numberOfCars.size());
+		this.avarage = (int) Math.floor(count / this.numberOfVehicles.size());
 	}
 
 	/**
-	 * Calculates and updates the median number of cars produced per day.
+	 * Calculates and updates the median number of vehicles produced per day.
 	 */
 	@SuppressWarnings("unchecked")
 	private void updateMedian(){
-		ArrayList<Tuple<LocalDate, Integer>> temp = (ArrayList<Tuple<LocalDate, Integer>>) this.numberOfCars.clone();
+		ArrayList<Tuple<LocalDate, Integer>> temp = (ArrayList<Tuple<LocalDate, Integer>>) this.numberOfVehicles.clone();
 		Collections.sort(temp, new VehicleTupleComperator());
 		if ( temp.size() % 2 == 0 ){
 			int fml = temp.get((temp.size()/2) -1).getY();
@@ -124,7 +124,7 @@ public class VehicleStatistics implements Observer {
 			Scheduler scheduler = (Scheduler) subject;
 			LocalDate date = scheduler.getCurrentTime().toLocalDate();
 			int dayOrdersCount = scheduler.getDayOrdersCount();
-			this.numberOfCars.add(new Tuple<LocalDate, Integer>(date, dayOrdersCount));
+			this.numberOfVehicles.add(new Tuple<LocalDate, Integer>(date, dayOrdersCount));
 			this.updateAverage();
 			this.updateMedian();
 		} else {

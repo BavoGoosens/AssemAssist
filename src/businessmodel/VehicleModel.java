@@ -145,7 +145,7 @@ public class VehicleModel {
 	 */
 	@Override
 	public String toString() {
-		return "Car model: " + name;
+		return "Vehicle model: " + name;
 	}
 
 }

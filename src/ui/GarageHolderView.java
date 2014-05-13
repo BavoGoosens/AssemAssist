@@ -13,7 +13,7 @@ import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.Order;
-import businessmodel.order.StandardCarOrder;
+import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.User;
 import businessmodel.util.OrderDateTimeComperator;
 import control.StandardOrderController;
@@ -61,13 +61,13 @@ public class GarageHolderView extends View{
 			if (number > size) {
 				if ( ((number-size) <= this.completed_orders.size()) && ((number - size) < 1)){
 					int index = number - size - 1;
-					StandardCarOrder or = (StandardCarOrder) this.completed_orders.get(index);
+					StandardVehicleOrder or = (StandardVehicleOrder) this.completed_orders.get(index);
 					this.check(or);
 				} else {
 					this.error();
 				}
 			} else {
-				StandardCarOrder or = (StandardCarOrder) this.pending_orders.get(number - 1);
+				StandardVehicleOrder or = (StandardVehicleOrder) this.pending_orders.get(number - 1);
 				this.check(or);
 			}
 		} else {
@@ -75,7 +75,7 @@ public class GarageHolderView extends View{
 		}
 	}
 
-	private void check(StandardCarOrder or) {
+	private void check(StandardVehicleOrder or) {
 		this.displayHelp();
 		System.out.println("> Here are the order details: ");
 		// kan gedetailleerder worden gemaakt
@@ -125,7 +125,7 @@ public class GarageHolderView extends View{
 	private void displayOrderingForm(VehicleModel model){
 		ArrayList <VehicleOption> chosen = new ArrayList<VehicleOption>();
 		ArrayList <VehicleOption> available = model.getPossibilities();
-		StandardCarOrder validorder = null;
+		StandardVehicleOrder validorder = null;
 		while (validorder == null){
 			System.out.println("> Your chosen car options: ");
 			int rem = 1;
@@ -170,7 +170,7 @@ public class GarageHolderView extends View{
 				// try placing the order 
 				// errors get thrown if it does not comply to the restrictions
 				try{
-					validorder = new StandardCarOrder(this.user, chosen, model);
+					validorder = new StandardVehicleOrder(this.user, chosen, model);
 				} catch (UnsatisfiedRestrictionException e){
 					String message = e.getMessage();
 					System.out.println("! Your requested selection of car options "

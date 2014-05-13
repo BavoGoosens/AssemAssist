@@ -8,3 +8,10 @@
 .project
 /bin
 .*~
+
+.settings/*
+.idea/*
+*.iml
+/.idea/*
+.settings/
+.idea/workspace.xml

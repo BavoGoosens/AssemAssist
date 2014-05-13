@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import businessmodel.scheduler.AssemblyLine;
+import businessmodel.scheduler.WorkPost;
 import org.joda.time.DateTime;
 
 import businessmodel.category.VehicleOption;
@@ -390,11 +392,11 @@ public class Scheduler implements Subject {
 	}
 
 	/**
-	 * Method to check if a CarOption occurs in more than 3 orders
+	 * Method to check if a VehicleOption occurs in more than 3 orders
 	 * @param maxNumber
 	 * @return
 	 */
-	public ArrayList<VehicleOption> getUnscheduledCarOptions(int maxNumber){
+	public ArrayList<VehicleOption> getUnscheduledVehicleOptions(int maxNumber){
 		HashMap<String, Integer> list = new HashMap<String, Integer>();
 		ArrayList<String> options = new ArrayList<String>();
 		HashMap<String, VehicleOption> result = new HashMap<String, VehicleOption>();

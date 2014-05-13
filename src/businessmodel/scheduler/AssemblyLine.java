@@ -1,8 +1,9 @@
-package businessmodel;
+package businessmodel.scheduler;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import businessmodel.Scheduler;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
@@ -15,6 +16,13 @@ import businessmodel.order.Order;
  */
 public class AssemblyLine implements Subject{
 
+	
+	
+	AssemblyLineState broken;
+	AssemblyLineState maintenance;
+	AssemblyLineState operational;
+	AssemblyLineState state;
+	
 	/**
 	 * List of work posts at the assembly line.
 	 */
@@ -39,6 +47,12 @@ public class AssemblyLine implements Subject{
 	 * Creates a new assembly line.
 	 */
 	protected AssemblyLine(Scheduler scheduler) throws IllegalArgumentException {
+		
+		this.broken = new BrokenState(this);
+		this.maintenance  = new MaintenanceState(this);
+		this.operational  = new OperationalState(this);
+		this.state = operational;
+		
 		this.setScheduler(scheduler);
 		this.generateWorkPosts();
 	}
@@ -150,7 +164,7 @@ public class AssemblyLine implements Subject{
 	 * Generates work posts.
 	 */
 	private void generateWorkPosts(){
-		WorkPost post1 = new WorkPost("Car Body Post", this);
+		WorkPost post1 = new WorkPost("Vehicle Body Post", this);
 		WorkPost post2 = new WorkPost("Drivetrain Post", this);
 		WorkPost post3 = new WorkPost("Accesoires Post", this);	
 		this.workposts.add(post1);
@@ -186,4 +200,37 @@ public class AssemblyLine implements Subject{
 		for (Observer obs : this.subscribers)
 			obs.update(this);
 	}
+
+	/**
+	 * @return broken state assembly line
+	 */
+	public AssemblyLineState getBrokenState() {
+		return this.broken;
+	}
+
+
+	/**
+	 * @return operational state assembly line
+	 */
+	public AssemblyLineState getOperationalState() {
+		return this.operational;
+	}
+
+
+	/**
+	 * @return maintenance state assembly line
+	 */
+	public AssemblyLineState getMaintenanceState() {
+		return maintenance;
+	}
+
+
+	/**
+	 * Method to set the state of an assembly line
+	 * @param state
+	 */
+	public void setState(AssemblyLineState state) {
+		this.state = state;
+	}
+
 }

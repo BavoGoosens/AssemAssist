@@ -6,29 +6,24 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import businessmodel.scheduler.AssemblyLine;
+import businessmodel.order.StandardVehicleOrder;
+import businessmodel.scheduler.AssemblyTask;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.AssemblyLine;
-import businessmodel.AssemblyTask;
-import businessmodel.CarManufacturingCompany;
-import businessmodel.VehicleModel;
-import businessmodel.Catalog;
-import businessmodel.OrderManager;
-import businessmodel.WorkPost;
-import businessmodel.category.CarOption;
-import businessmodel.category.CarOptionCategory;
+import businessmodel.VehicleManufacturingCompany;
+import businessmodel.scheduler.WorkPost;
 import businessmodel.category.ModelAFactory;
 import businessmodel.order.Order;
-import businessmodel.order.StandardCarOrder;
 import businessmodel.user.GarageHolder;
 
 public class AssemblyLineTest {
 
 	private ArrayList<Order> orders;
-	private StandardCarOrder order1;
-	private StandardCarOrder order2;
-	private StandardCarOrder order3;
+	private StandardVehicleOrder order1;
+	private StandardVehicleOrder order2;
+	private StandardVehicleOrder order3;
 
 	private OrderManager om;
 
@@ -36,14 +31,14 @@ public class AssemblyLineTest {
 	private Catalog catalog;
 
 
-	private ArrayList<CarOptionCategory> categories;
+	private ArrayList<VehicleOptionCategory> categories;
 
 
-	private CarManufacturingCompany cmc = new CarManufacturingCompany();
+	private VehicleManufacturingCompany cmc = new VehicleManufacturingCompany();
 
 	@Before
 	public void setUp() throws Exception {
-		CarManufacturingCompany cmc = new CarManufacturingCompany();
+		VehicleManufacturingCompany cmc = new VehicleManufacturingCompany();
 		om = cmc.getOrderManager();
 		orders = new ArrayList<Order>();
 
@@ -51,18 +46,18 @@ public class AssemblyLineTest {
 		this.categories = this.catalog.getAllCategories();
 
 		VehicleModel modelA = new ModelAFactory().createModel();
-		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
-		for (CarOptionCategory category: this.categories) {
-			ArrayList<CarOption> options = modelA.getVehicleModelSpecification().getOptionsOfCategory(category);
+		ArrayList<VehicleOption> chosen = new ArrayList<VehicleOption>();
+		for (VehicleOptionCategory category: this.categories) {
+			ArrayList<VehicleOption> options = modelA.getVehicleModelSpecification().getOptionsOfCategory(category);
 			if (options.size() > 0) {
 				chosen.add(options.get(0));
 			}
 
 		}
 
-		order1 = new StandardCarOrder(new GarageHolder("1", "", ""), chosen, modelA);
-		order2 = new StandardCarOrder(new GarageHolder("2", "", ""), chosen, modelA);
-		order3 = new StandardCarOrder(new GarageHolder("3", "", ""), chosen, modelA);
+		order1 = new StandardVehicleOrder(new GarageHolder("1", "", ""), chosen, modelA);
+		order2 = new StandardVehicleOrder(new GarageHolder("2", "", ""), chosen, modelA);
+		order3 = new StandardVehicleOrder(new GarageHolder("3", "", ""), chosen, modelA);
 
 
 		orders.add(order1);
@@ -79,7 +74,7 @@ public class AssemblyLineTest {
 	public void test() {
 		AssemblyLine testassembly = om.getScheduler().getAssemblyline();
 
-		assertEquals(testassembly.getWorkPosts().get(0).getResponsibleTasksClone().get(0).toString(),"Assembly Car Body");
+		assertEquals(testassembly.getWorkPosts().get(0).getResponsibleTasksClone().get(0).toString(),"Assembly Vehicle Body");
 
 		for(WorkPost wp1 : om.getScheduler().getAssemblyline().getWorkPosts()){
 			if(wp1.getOrder()!= null);

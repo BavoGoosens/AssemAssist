@@ -18,7 +18,7 @@ import businessmodel.user.User;
  * @author SWOP team 10 2013-2014
  *
  */
-public class StandardCarOrder extends Order {
+public class StandardVehicleOrder extends Order {
 	
 	/**
 	 * The car of the order.
@@ -42,12 +42,12 @@ public class StandardCarOrder extends Order {
 	 * @throws 	NoClearanceException
 	 * @throws 	UnsatisfiedRestrictionException
 	 */
-	public StandardCarOrder(User user, ArrayList<VehicleOption> options, VehicleModel model)
+	public StandardVehicleOrder(User user, ArrayList<VehicleOption> options, VehicleModel model)
 			throws IllegalArgumentException, NoClearanceException, UnsatisfiedRestrictionException {
 		super(user);
 		Vehicle car = new Vehicle(options);
 		model.getVehicleModelSpecification().checkRestrictions(car);
-		this.setCar(car);
+		this.setVehicle(car);
 		this.setVehicleModel(model);
 	}
 	
@@ -56,7 +56,7 @@ public class StandardCarOrder extends Order {
 	 * 
 	 * @return The car of the order.
 	 */
-	public Vehicle getCar() {
+	public Vehicle getVehicle() {
 		return this.vehicle;
 	}
 	
@@ -87,7 +87,7 @@ public class StandardCarOrder extends Order {
 	 * 			| If the car is equal to 'null'
 	 * 			| car == null
 	 */
-	private void setCar(Vehicle car) throws IllegalArgumentException {
+	private void setVehicle(Vehicle car) throws IllegalArgumentException {
 		if (car == null) throw new IllegalArgumentException("Bad car!");
 		this.vehicle = car;
 	}
@@ -112,6 +112,6 @@ public class StandardCarOrder extends Order {
 	 * @return	The options of the car that is ordered.
 	 */
 	public ArrayList<VehicleOption> getOptions() {
-		return this.getCar().getOptionsClone();
+		return this.getVehicle().getOptionsClone();
 	}
 }

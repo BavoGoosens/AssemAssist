@@ -2,6 +2,8 @@ package businessmodel;
 
 import java.util.ArrayList;
 
+import businessmodel.scheduler.AssemblyTask;
+import businessmodel.scheduler.WorkPost;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
 import businessmodel.category.Color;
@@ -43,8 +45,8 @@ public class TaskManager {
 		WorkPost workpost1 = workposts.get(0);
 		WorkPost workpost2 = workposts.get(1);
 		WorkPost workpost3 = workposts.get(2);
-		tasks_workPost_1.add(new AssemblyTask("Assembly Car Body", "Place the body on the car", new Body(),workpost1));
-		tasks_workPost_1.add(new AssemblyTask("Paint Car","Paint the car", new Color(),workpost1));
+		tasks_workPost_1.add(new AssemblyTask("Assembly Vehicle Body", "Place the body on the car", new Body(),workpost1));
+		tasks_workPost_1.add(new AssemblyTask("Paint Vehicle","Paint the car", new Color(),workpost1));
 		tasks_workPost_2.add(new AssemblyTask("Insert Engine", "insert engine into the car", new Engine(),workpost2));
 		tasks_workPost_2.add(new AssemblyTask("Insert Gearbox","insert gearbox into the car", new Gearbox(),workpost2));
 		tasks_workPost_3.add(new AssemblyTask("Install Seats", "insert seats into the car", new Seats(),workpost3));
@@ -58,7 +60,7 @@ public class TaskManager {
 
 	private void generatePossibleSingleTasks() {
 		this.singleTaskOrders = new ArrayList<AssemblyTask>();
-		singleTaskOrders.add(new AssemblyTask("Paint Car","paint blabla", new Color()));
+		singleTaskOrders.add(new AssemblyTask("Paint Vehicle","paint blabla", new Color()));
 		singleTaskOrders.add(new AssemblyTask("Install Seats", "insert seats blabla", new Seats()));
 	}
 }

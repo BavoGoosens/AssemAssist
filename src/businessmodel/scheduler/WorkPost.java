@@ -1,4 +1,4 @@
-package businessmodel;
+package businessmodel.scheduler;
 
 import java.util.ArrayList;
 

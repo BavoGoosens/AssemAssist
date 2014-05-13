@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
-import businessmodel.AssemblyLine;
-import businessmodel.AssemblyTask;
+import businessmodel.scheduler.AssemblyLine;
+import businessmodel.scheduler.AssemblyTask;
 import businessmodel.Model;
-import businessmodel.WorkPost;
+import businessmodel.scheduler.WorkPost;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.user.User;

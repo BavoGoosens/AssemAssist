@@ -46,7 +46,7 @@ public class SchedulingView extends View {
 			if (choice < 1 || choice > algos.size())
 				this.error();
 			String algo = algos.get(choice - 1);
-			Iterator<VehicleOption> optss = this.getModel().getUnscheduledCarOptions(3);
+			Iterator<VehicleOption> optss = this.getModel().getUnscheduledVehicleOptions(3);
 			ArrayList<VehicleOption> opts = new ArrayList<VehicleOption>();
 			while (optss.hasNext())
 				opts.add(optss.next());
