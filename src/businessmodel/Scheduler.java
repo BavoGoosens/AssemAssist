@@ -395,11 +395,11 @@ public class Scheduler implements Subject {
 	}
 
 	/**
-	 * Method to check if a CarOption occurs in more than 3 orders
+	 * Method to check if a VehicleOption occurs in more than 3 orders
 	 * @param maxNumber
 	 * @return
 	 */
-	public ArrayList<VehicleOption> getUnscheduledCarOptions(int maxNumber){
+	public ArrayList<VehicleOption> getUnscheduledVehicleOptions(int maxNumber){
 
 		HashMap<String, Integer> list = new HashMap<String, Integer>();
 		ArrayList<String> options = new ArrayList<String>();

@@ -112,8 +112,8 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
-	public VehicleStatistics getCarStatistics() {
-		return this.statisticsmanager.getCarStatistics();
+	public VehicleStatistics getVehicleStatistics() {
+		return this.statisticsmanager.getVehicleStatistics();
 	}
 
 	@Override
@@ -142,8 +142,8 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
-	public Iterator<VehicleOption> getUnscheduledCarOptions(int num) {
-		return this.getOrderManager().getScheduler().getUnscheduledCarOptions(num).iterator();
+	public Iterator<VehicleOption> getUnscheduledVehicleOptions(int num) {
+		return this.getOrderManager().getScheduler().getUnscheduledVehicleOptions(num).iterator();
 	}
 
 	@Override

@@ -113,7 +113,7 @@ public interface Model {
 	 * Returns the car statistics of the model.
 	 * @return The car statistics of the model.
 	 */
-	public VehicleStatistics getCarStatistics();
+	public VehicleStatistics getVehicleStatistics();
 
 	/**
 	 * Returns the order statistics of the model.
@@ -150,7 +150,7 @@ public interface Model {
 	 * 
 	 * @return The unscheduled car options of the model.
 	 */
-	public Iterator<VehicleOption> getUnscheduledCarOptions(int num);
+	public Iterator<VehicleOption> getUnscheduledVehicleOptions(int num);
 
 	/**
 	 * Returns a string representation of the current algorithm in the model.

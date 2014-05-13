@@ -24,7 +24,7 @@ public class StatisticsView extends View{
 
 	@Override
 	public void display() {
-		VehicleStatistics carstats = this.getModel().getCarStatistics();
+		VehicleStatistics vehiclestats = this.getModel().getVehicleStatistics();
 		OrderStatistics orderstats = this.getModel().getOrderStatistics();
 		System.out.println("> Here are the order statistics:" );
 		System.out.println("> Average delay on an Order: " + orderstats.getAverage() + " min");
@@ -39,14 +39,14 @@ public class StatisticsView extends View{
 			System.out.println("! The system has not been operational long enough to provide these statistics");
 		}
 		System.out.println("> Here are the car statistics:" );
-		System.out.println("> Average number of cars finished per day: " + carstats.getAverage());
-		System.out.println("> Median number of cars finished per day: " + carstats.getAverage());
+		System.out.println("> Average number of vehicles finished per day: " + vehiclestats.getAverage());
+		System.out.println("> Median number of vehicles finished per day: " + vehiclestats.getAverage());
 		try{
-			ArrayList<Tuple<LocalDate, Integer>> lastdays = carstats.getLastDays(2);
+			ArrayList<Tuple<LocalDate, Integer>> lastdays = vehiclestats.getLastDays(2);
 			System.out.println("> The last two production days:");
 			for (Tuple<LocalDate, Integer> day : lastdays)
 				System.out.println("  > Date: " + day.getX() + "\n" 
-						+"  > number of cars : " + day.getY());
+						+"  > number of vehicles : " + day.getY());
 		} catch (IllegalArgumentException e) {
 			System.out.println("! The system has not been operational long enough to provide these statistics");
 		}

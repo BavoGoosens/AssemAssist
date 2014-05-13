@@ -13,7 +13,7 @@ public class StatisticsManager {
 	/**
 	 * The car statistics.
 	 */
-	private VehicleStatistics carStatistics;
+	private VehicleStatistics vehicleStatistics;
 	
 	/**
 	 * The order statistics.
@@ -31,7 +31,7 @@ public class StatisticsManager {
 	 */
 	public StatisticsManager(OrderManager ordermanager) throws IllegalArgumentException {
 		if (ordermanager == null) throw new IllegalArgumentException("Bad order manager!");
-		this.carStatistics = new VehicleStatistics(ordermanager.getScheduler());
+		this.vehicleStatistics = new VehicleStatistics(ordermanager.getScheduler());
 		this.orderStatistics = new OrderStatistics(ordermanager);
 	}
 	
@@ -40,8 +40,8 @@ public class StatisticsManager {
 	 * 
 	 * @return	The car statistics.
 	 */
-	public VehicleStatistics getCarStatistics() {
-		return carStatistics;
+	public VehicleStatistics getVehicleStatistics() {
+		return vehicleStatistics;
 	}
 
 	/**

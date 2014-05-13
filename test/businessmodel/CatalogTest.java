@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import businessmodel.VehicleModel;
 import businessmodel.Catalog;
-import businessmodel.category.CarOptionCategory;
+import businessmodel.category.VehicleOptionCategory;
 
 public class CatalogTest {
 
@@ -21,8 +21,8 @@ public class CatalogTest {
 	@Test
 	public void test() {
 		Catalog catalog = new Catalog();
-		ArrayList<CarOptionCategory> categories = catalog.getAllCategories();
-		for (CarOptionCategory category: categories) {
+		ArrayList<VehicleOptionCategory> categories = catalog.getAllCategories();
+		for (VehicleOptionCategory category: categories) {
 			assertNotNull(category);
 		}
 	}

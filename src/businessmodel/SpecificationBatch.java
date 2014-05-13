@@ -35,7 +35,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	private void reschedule(Order currentOrder) {
 		
 		this.getScheduler().generateShifts();
-		ArrayList<Order> similarCarOptionsOrder = new ArrayList<Order>();
+		ArrayList<Order> similarVehicleOptionsOrder = new ArrayList<Order>();
 		this.getScheduler().ScheduleDay();
 		orderList.add(currentOrder);
 	
@@ -44,12 +44,12 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 			for(Order order: orderList)
 				for(VehicleOption option: order.getOptions())
 					if (option.toString().equals(this.option.toString()))
-						similarCarOptionsOrder.add(order);
+						similarVehicleOptionsOrder.add(order);
 			
-			for(Order ord: similarCarOptionsOrder)
+			for(Order ord: similarVehicleOptionsOrder)
 				orderList.remove(ord);
-			Collections.reverse(similarCarOptionsOrder);
-			for(Order ord: similarCarOptionsOrder)
+			Collections.reverse(similarVehicleOptionsOrder);
+			for(Order ord: similarVehicleOptionsOrder)
 				orderList.addFirst(ord);
 
 		}else{
