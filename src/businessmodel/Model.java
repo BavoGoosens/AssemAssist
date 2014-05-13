@@ -3,6 +3,7 @@ package businessmodel;
 import java.util.Iterator;
 
 import businessmodel.scheduler.AssemblyLine;
+import businessmodel.scheduler.AssemblyTask;
 import businessmodel.scheduler.WorkPost;
 import org.joda.time.DateTime;
 

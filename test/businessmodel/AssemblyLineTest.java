@@ -8,6 +8,7 @@ import java.util.List;
 
 import businessmodel.scheduler.AssemblyLine;
 import businessmodel.order.StandardVehicleOrder;
+import businessmodel.scheduler.AssemblyTask;
 import org.junit.Before;
 import org.junit.Test;
 
