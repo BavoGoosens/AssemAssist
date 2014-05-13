@@ -18,9 +18,9 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	private VehicleOption option;
 
 	/**
-	 * Creates a specification batch algorithm with a scheduler and an option to schedule to options from.
+	 * Creates a specification batch algorithm with a assemblyline and an option to schedule to options from.
 	 * @param 	scheduler
-	 * 			The scheduler of the algorithm.
+	 * 			The assemblyline of the algorithm.
 	 * @param 	option
 	 */
 	public SpecificationBatch(Scheduler scheduler, VehicleOption option){

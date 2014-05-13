@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import businessmodel.scheduler.AssemblyLine;
-import businessmodel.scheduler.WorkPost;
+import businessmodel.*;
+import businessmodel.assemblyline.AssemblyLine;
+import businessmodel.assemblyline.WorkPost;
 import org.joda.time.DateTime;
 
 import businessmodel.category.VehicleOption;
@@ -16,7 +17,7 @@ import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 
 /**
- * A Class that represents a scheduler for an AssymblyLine.
+ * A Class that represents a assemblyline for an AssymblyLine.
  * It makes a schedule for the assemblyLine.
  * When the schedule has been complete a new day schedule is created
  * @author SWOP team 10
@@ -24,7 +25,7 @@ import businessmodel.order.Order;
  */
 public class Scheduler implements Subject {
 
-	private LinkedList<Shift> shifts; 
+	private LinkedList<Shift> shifts;
 
 	private LinkedList<Order> orders;
 
@@ -47,7 +48,7 @@ public class Scheduler implements Subject {
 	 * Shifts are created and the standard algorithm is set.
 	 * 
 	 * @param 	ordermanager
-	 * 			the OrderManager from this scheduler.
+	 * 			the OrderManager from this assemblyline.
 	 */
 	protected Scheduler(OrderManager ordermanager){
 		this.shifts = new LinkedList<Shift>();
@@ -97,9 +98,9 @@ public class Scheduler implements Subject {
 	}
 
 	/**
-	 * Return the AssemblyiLne of this scheduler.
+	 * Return the AssemblyiLne of this assemblyline.
 	 * 
-	 * @return the AssemblyLine of this scheduler.
+	 * @return the AssemblyLine of this assemblyline.
 	 */
 	public AssemblyLine getAssemblyline() {
 		return assemblyline;
@@ -218,7 +219,7 @@ public class Scheduler implements Subject {
 	}
 
 	/**
-	 * Returns the current orders of this scheduler.
+	 * Returns the current orders of this assemblyline.
 	 * 
 	 * @return
 	 */
@@ -226,9 +227,9 @@ public class Scheduler implements Subject {
 		return this.orders;
 	}
 	/**
-	 * Returns the shifts of this scheduler.
+	 * Returns the shifts of this assemblyline.
 	 * 
-	 * @return the shift of this scheduler.
+	 * @return the shift of this assemblyline.
 	 */
 	protected LinkedList<Shift> getShifts() {
 		return this.shifts;
@@ -250,7 +251,7 @@ public class Scheduler implements Subject {
 	}
 
 	/**
-	 * A method that returns the current delay of this day scheduler.
+	 * A method that returns the current delay of this day assemblyline.
 	 * 
 	 * @return
 	 */
@@ -376,16 +377,13 @@ public class Scheduler implements Subject {
 	}
 
 	private boolean checkOptionsForSpecificationBatch(VehicleOption option) {
-
 		int count = 0;
 		for(Order order: this.getOrders())
 			if (order.getOptions().toString().contains(option.toString()))
 				count++;
-
 		if (count < 3)
 			return false;
 		return true;
-
 	}
 
 	private void setOrdermanager(OrderManager ordermanager) throws IllegalArgumentException{
@@ -400,11 +398,9 @@ public class Scheduler implements Subject {
 	 * @return
 	 */
 	public ArrayList<VehicleOption> getUnscheduledVehicleOptions(int maxNumber){
-
 		HashMap<String, Integer> list = new HashMap<String, Integer>();
 		ArrayList<String> options = new ArrayList<String>();
 		HashMap<String, VehicleOption> result = new HashMap<String, VehicleOption>();
-
 		for(Order order: this.getOrders()){
 			for(VehicleOption option: order.getOptions()){
 				if (list.containsKey(option.getName())){
@@ -421,10 +417,7 @@ public class Scheduler implements Subject {
 		for (String optionName: options)
 			if (list.get(optionName) < 3)
 				result.remove(optionName);
-
-
 		return new ArrayList<VehicleOption>(result.values());
-
 	}
 
 	@Override

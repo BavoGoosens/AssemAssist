@@ -1,4 +1,4 @@
-package businessmodel.scheduler;
+package businessmodel.assemblyline;
 
 import java.util.ArrayList;
 
@@ -178,10 +178,10 @@ public class WorkPost {
 		this.finishedTasks.add(assem);
 		this.setTimeOrderInProcess(this.getTimeOrderInProcess()+time);
 		this.getAssemblyline().notifyObservers();
-		this.notifyAssemBlyLine();
+		this.notifyAssemblyLine();
 	}
 
-	protected void notifyAssemBlyLine(){
+	protected void notifyAssemblyLine(){
 		boolean completed= true;
 		for(AssemblyTask assemblytask: this.getPendingTasks()){
 			if(!assemblytask.isCompleted())

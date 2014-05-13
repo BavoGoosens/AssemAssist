@@ -13,14 +13,14 @@ import businessmodel.order.Order;
 public abstract class SchedulingAlgorithm {
 
 	/**
-	 * The scheduler of the scheduling algorithm.
+	 * The assemblyline of the scheduling algorithm.
 	 */
 	private Scheduler scheduler;
 
 	/**
-	 * Creates a scheduling algorithm with a scheduler.
+	 * Creates a scheduling algorithm with a assemblyline.
 	 * @param 	scheduler
-	 * 			The scheduler for the scheduling algorithm.
+	 * 			The assemblyline for the scheduling algorithm.
 	 */
 	protected SchedulingAlgorithm(Scheduler scheduler){
 		this.setScheduler(scheduler);
@@ -34,22 +34,22 @@ public abstract class SchedulingAlgorithm {
 	protected abstract void scheduleOrder(Order order);
 	
 	/**
-	 * Returns the scheduler.
-	 * @return 	The scheduler of the scheduling algorithm.
+	 * Returns the assemblyline.
+	 * @return 	The assemblyline of the scheduling algorithm.
 	 */
 	protected Scheduler getScheduler(){
 		return this.scheduler;
 	}
 	
 	/**
-	 * Sets the scheduler.
+	 * Sets the assemblyline.
 	 * 
 	 * @param 	scheduler
 	 * @throws	IllegalArgumentException
 	 */
 	private void setScheduler(Scheduler scheduler) throws IllegalArgumentException {
 		if(scheduler == null)
-			throw new IllegalArgumentException("Not a scheduler");
+			throw new IllegalArgumentException("Not a assemblyline");
 		this.scheduler = scheduler;
 	}
 }

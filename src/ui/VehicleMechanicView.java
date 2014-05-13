@@ -5,9 +5,9 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import businessmodel.scheduler.AssemblyTask;
+import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.Model;
-import businessmodel.scheduler.WorkPost;
+import businessmodel.assemblyline.WorkPost;
 import businessmodel.user.User;
 import control.AssemblyLineController;
 import control.AssemblyLineHandler;

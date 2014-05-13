@@ -40,7 +40,7 @@ public class VehicleStatistics implements Observer {
 	 * @param 	subject
 	 * 			The subject the statistics need to observe.
 	 * @throws	IllegalArgumentException
-	 * 			| If the subject is equal to 'null' or if the subject isn't an order scheduler.
+	 * 			| If the subject is equal to 'null' or if the subject isn't an order assemblyline.
 	 * 			| subject == null || !(subject instanceof Scheduler)
 	 */
 	public VehicleStatistics(Subject subject) throws IllegalArgumentException {
@@ -115,7 +115,7 @@ public class VehicleStatistics implements Observer {
 
 	/**
 	 * @throws	IllegalArgumentException
-	 * 			| If the subject is equal to 'null' or if the subject isn't a scheduler
+	 * 			| If the subject is equal to 'null' or if the subject isn't a assemblyline
 	 * 			| subject == null or !(subject instanceof Scheduler)
 	 */
 	@Override

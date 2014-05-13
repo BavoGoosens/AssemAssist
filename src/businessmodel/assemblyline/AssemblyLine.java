@@ -1,4 +1,4 @@
-package businessmodel.scheduler;
+package businessmodel.assemblyline;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -23,6 +23,7 @@ public class AssemblyLine implements Subject{
 	private AssemblyLineState state;
 	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
 	private int timeCurrentStatus = 0;
+
 	private Scheduler scheduler;
 	private ArrayList<Observer> subscribers = new ArrayList<Observer>();
 
@@ -49,7 +50,7 @@ public class AssemblyLine implements Subject{
 	protected boolean canAdvance() {
 		for(WorkPost wp : this.getWorkPosts()){
 			boolean ready = wp.isCompleted();
-			if (ready == false)
+			if (ready)
 				return false;
 		}
 		return true;
@@ -104,7 +105,7 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
-	 * Updates the work post and the scheduler with the current status.
+	 * Updates the work post and the assemblyline with the current status.
 	 * 
 	 * @param 	timeCurrentStatus
 	 * 			The current status.		
@@ -131,7 +132,7 @@ public class AssemblyLine implements Subject{
 
 
 	/**
-	 * Notifies the scheduler if a work post is completed, if all work posts are completed the assembly line advances.
+	 * Notifies the assemblyline if a work post is completed, if all work posts are completed the assembly line advances.
 	 */
 	private void notifyScheduler(){
 		boolean completed = true;
