@@ -8,10 +8,11 @@ import java.util.List;
 
 import businessmodel.scheduler.AssemblyLine;
 import businessmodel.order.StandardVehicleOrder;
+import businessmodel.scheduler.AssemblyTask;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.CarManufacturingCompany;
+import businessmodel.VehicleManufacturingCompany;
 import businessmodel.scheduler.WorkPost;
 import businessmodel.category.ModelAFactory;
 import businessmodel.order.Order;
@@ -30,14 +31,14 @@ public class AssemblyLineTest {
 	private Catalog catalog;
 
 
-	private ArrayList<CarOptionCategory> categories;
+	private ArrayList<VehicleOptionCategory> categories;
 
 
-	private CarManufacturingCompany cmc = new CarManufacturingCompany();
+	private VehicleManufacturingCompany cmc = new VehicleManufacturingCompany();
 
 	@Before
 	public void setUp() throws Exception {
-		CarManufacturingCompany cmc = new CarManufacturingCompany();
+		VehicleManufacturingCompany cmc = new VehicleManufacturingCompany();
 		om = cmc.getOrderManager();
 		orders = new ArrayList<Order>();
 
@@ -45,9 +46,9 @@ public class AssemblyLineTest {
 		this.categories = this.catalog.getAllCategories();
 
 		VehicleModel modelA = new ModelAFactory().createModel();
-		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
-		for (CarOptionCategory category: this.categories) {
-			ArrayList<CarOption> options = modelA.getVehicleModelSpecification().getOptionsOfCategory(category);
+		ArrayList<VehicleOption> chosen = new ArrayList<VehicleOption>();
+		for (VehicleOptionCategory category: this.categories) {
+			ArrayList<VehicleOption> options = modelA.getVehicleModelSpecification().getOptionsOfCategory(category);
 			if (options.size() > 0) {
 				chosen.add(options.get(0));
 			}
@@ -73,7 +74,7 @@ public class AssemblyLineTest {
 	public void test() {
 		AssemblyLine testassembly = om.getScheduler().getAssemblyline();
 
-		assertEquals(testassembly.getWorkPosts().get(0).getResponsibleTasksClone().get(0).toString(),"Assembly Car Body");
+		assertEquals(testassembly.getWorkPosts().get(0).getResponsibleTasksClone().get(0).toString(),"Assembly Vehicle Body");
 
 		for(WorkPost wp1 : om.getScheduler().getAssemblyline().getWorkPosts()){
 			if(wp1.getOrder()!= null);

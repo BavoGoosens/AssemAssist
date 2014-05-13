@@ -9,12 +9,12 @@ import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.CarManufacturingCompany;
+import businessmodel.VehicleManufacturingCompany;
 import businessmodel.VehicleModel;
 import businessmodel.Catalog;
 import businessmodel.OrderManager;
-import businessmodel.category.CarOption;
-import businessmodel.category.CarOptionCategory;
+import businessmodel.category.VehicleOption;
+import businessmodel.category.VehicleOptionCategory;
 import businessmodel.category.ModelAFactory;
 import businessmodel.user.GarageHolder;
 
@@ -22,13 +22,13 @@ public class OrderTest {
 	
 	private GarageHolder garageholder;
 	private DateTime date;
-	private ArrayList<CarOptionCategory> categories;
+	private ArrayList<VehicleOptionCategory> categories;
 	private Catalog catalog;
 	private OrderManager om;
 	@Before
 	public void setUp() throws Exception {
 		
-		CarManufacturingCompany cmc = new CarManufacturingCompany();
+		VehicleManufacturingCompany cmc = new VehicleManufacturingCompany();
 		
 		om = cmc.getOrderManager();
 		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
@@ -38,9 +38,9 @@ public class OrderTest {
 		this.categories = this.catalog.getAllCategories();
 
 		VehicleModel modelA = new ModelAFactory().createModel();
-		ArrayList<CarOption> chosen = new ArrayList<CarOption>();
-		for (CarOptionCategory category: this.categories) {
-			ArrayList<CarOption> options = modelA.getVehicleModelSpecification().getOptionsOfCategory(category);
+		ArrayList<VehicleOption> chosen = new ArrayList<VehicleOption>();
+		for (VehicleOptionCategory category: this.categories) {
+			ArrayList<VehicleOption> options = modelA.getVehicleModelSpecification().getOptionsOfCategory(category);
 			if (options.size() > 0) {
 				chosen.add(options.get(0));
 			}

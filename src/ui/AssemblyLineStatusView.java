@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 import businessmodel.scheduler.AssemblyLine;
-import businessmodel.AssemblyTask;
+import businessmodel.scheduler.AssemblyTask;
 import businessmodel.Model;
 import businessmodel.scheduler.WorkPost;
 import businessmodel.observer.Observer;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import businessmodel.scheduler.AssemblyLine;
+import businessmodel.scheduler.AssemblyTask;
 import businessmodel.scheduler.WorkPost;
 import org.joda.time.DateTime;
 
@@ -112,8 +113,8 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
-	public VehicleStatistics getCarStatistics() {
-		return this.statisticsmanager.getCarStatistics();
+	public VehicleStatistics getVehicleStatistics() {
+		return this.statisticsmanager.getVehicleStatistics();
 	}
 
 	@Override
@@ -142,8 +143,8 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
-	public Iterator<VehicleOption> getUnscheduledCarOptions(int num) {
-		return this.getOrderManager().getScheduler().getUnscheduledCarOptions(num).iterator();
+	public Iterator<VehicleOption> getUnscheduledVehicleOptions(int num) {
+		return this.getOrderManager().getScheduler().getUnscheduledVehicleOptions(num).iterator();
 	}
 
 	@Override

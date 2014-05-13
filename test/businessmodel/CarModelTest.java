@@ -26,7 +26,7 @@ public class VehicleModelTest {
 	public void test() {
 		assertEquals("Model A",this.model.getName());
 		assertEquals(this.cms,model.getVehicleModelSpecification());
-		assertEquals(model.toString(),"Car model: Model A");
+		assertEquals(model.toString(),"Vehicle model: Model A");
 	}
 
 }

@@ -1,6 +1,6 @@
 package control;
 
-import businessmodel.AssemblyTask;
+import businessmodel.scheduler.AssemblyTask;
 
 public interface AssemblyLineController{
 	
