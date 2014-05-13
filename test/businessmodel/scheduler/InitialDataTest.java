@@ -25,7 +25,7 @@ public class InitialDataTest {
 	public void test() {
 		VehicleManufacturingCompany vmc = new VehicleManufacturingCompany();
 		int nbOrders = 10;
-		new InitialData(nbOrders).initialize(vmc);
+		new InitialData().initialize(vmc);
 		User user = vmc.login("wow", "");
 		int count = 0;
 		try {
