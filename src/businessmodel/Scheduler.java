@@ -374,16 +374,13 @@ public class Scheduler implements Subject {
 	}
 
 	private boolean checkOptionsForSpecificationBatch(VehicleOption option) {
-
 		int count = 0;
 		for(Order order: this.getOrders())
 			if (order.getOptions().toString().contains(option.toString()))
 				count++;
-
 		if (count < 3)
 			return false;
 		return true;
-
 	}
 
 	private void setOrdermanager(OrderManager ordermanager) throws IllegalArgumentException{
@@ -398,11 +395,9 @@ public class Scheduler implements Subject {
 	 * @return
 	 */
 	public ArrayList<VehicleOption> getUnscheduledCarOptions(int maxNumber){
-
 		HashMap<String, Integer> list = new HashMap<String, Integer>();
 		ArrayList<String> options = new ArrayList<String>();
 		HashMap<String, VehicleOption> result = new HashMap<String, VehicleOption>();
-
 		for(Order order: this.getOrders()){
 			for(VehicleOption option: order.getOptions()){
 				if (list.containsKey(option.getName())){
@@ -419,10 +414,7 @@ public class Scheduler implements Subject {
 		for (String optionName: options)
 			if (list.get(optionName) < 3)
 				result.remove(optionName);
-
-
 		return new ArrayList<VehicleOption>(result.values());
-
 	}
 
 	@Override
