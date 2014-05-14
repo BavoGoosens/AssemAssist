@@ -10,8 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.Catalog;
-import businessmodel.OrderManager;
-import businessmodel.VehicleManufacturingCompany;
 import businessmodel.category.ModelAFactory;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
@@ -26,25 +24,12 @@ public class AssemblyLineTest {
 	private StandardVehicleOrder order1;
 	private StandardVehicleOrder order2;
 	private StandardVehicleOrder order3;
-
-	private OrderManager om;
-
-
 	private Catalog catalog;
-
-
 	private ArrayList<VehicleOptionCategory> categories;
-
-
-	private VehicleManufacturingCompany cmc = new VehicleManufacturingCompany();
 
 	@Before
 	public void setUp() throws Exception {
-		VehicleManufacturingCompany cmc = new VehicleManufacturingCompany();
-		om = cmc.getOrderManager();
 		orders = new ArrayList<Order>();
-
-		this.catalog = new Catalog();
 		this.categories = this.catalog.getAllCategories();
 
 		VehicleModel modelA = new ModelAFactory().createModel();

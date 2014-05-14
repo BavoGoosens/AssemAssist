@@ -1,10 +1,11 @@
-package businessmodel;
+package businessmodel.category;
 
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import businessmodel.Catalog;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleModelSpecification;
 import businessmodel.category.VehicleOption;
