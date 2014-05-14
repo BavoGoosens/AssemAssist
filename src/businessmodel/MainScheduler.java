@@ -8,6 +8,7 @@ import businessmodel.assemblyline.AssemblyLineAFactory;
 import businessmodel.assemblyline.AssemblyLineBFactory;
 import businessmodel.assemblyline.AssemblyLineCFactory;
 import businessmodel.assemblyline.BodyWorkPostFactory;
+import businessmodel.category.VehicleOption;
 import businessmodel.order.Order;
 
 public class MainScheduler {
@@ -87,4 +88,8 @@ public class MainScheduler {
 	private void setAssemblylines(ArrayList<AssemblyLine> assemblylines) {
 		this.assemblylines = assemblylines;
 	}
+
+    protected void changeAlgorithm(String algo, VehicleOption option) {
+
+    }
 }

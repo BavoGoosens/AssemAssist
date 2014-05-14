@@ -55,7 +55,7 @@ public interface Model {
 	 * 			The given user.
 	 * @return	The work posts for the given user.
 	 */
-	public Iterator<WorkPost> getWorkPosts(User user);
+	public Iterator<WorkPost> getWorkPosts(User user, AssemblyLine assemblyLine);
 	
 	/**
 	 * Returns an iterator over the car models for the given user.
@@ -102,15 +102,6 @@ public interface Model {
 	 * 			The user that needs to be registered.
 	 */
 	public void register(User user);
-	
-	/**
-	 * Registers the given observer to the assembly line.
-	 * 
-	 * @param 	observer
-	 * 			The observer that needs to be subscribed to the assembly line.
-	 * @return	The assembly line the observer is subscribed to.
-	 */
-	public AssemblyLine registerAssemblyLineObserver(Observer observer);
 
 	/**
 	 * Returns the car statistics of the model.
