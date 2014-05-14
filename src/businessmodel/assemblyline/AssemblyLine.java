@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import businessmodel.category.VehicleModel;
 import org.joda.time.DateTime;
 
 import businessmodel.MainScheduler;
-import businessmodel.OrderManager;
+import businessmodel.category.VehicleModel;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;

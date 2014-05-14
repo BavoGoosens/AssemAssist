@@ -1,7 +1,5 @@
 package businessmodel.assemblyline;
 
-import static org.junit.Assert.fail;
-
 import org.junit.Before;
 import org.junit.Test;
 

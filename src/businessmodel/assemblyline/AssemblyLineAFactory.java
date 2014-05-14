@@ -1,9 +1,7 @@
 package businessmodel.assemblyline;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import businessmodel.category.Vehicle;
 import businessmodel.category.VehicleModel;
 
 /**

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import businessmodel.assemblyline.AssemblyLine;
-import businessmodel.assemblyline.Shift;
 import businessmodel.order.Order;
 
 public class MainScheduler {

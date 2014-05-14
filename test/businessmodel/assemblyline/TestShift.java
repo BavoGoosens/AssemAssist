@@ -1,7 +1,6 @@
 package businessmodel.assemblyline;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 
@@ -9,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.order.Order;
-import businessmodel.order.StandardVehicleOrder;
 
 public class TestShift {
 	
