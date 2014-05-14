@@ -11,7 +11,6 @@ import businessmodel.assemblyline.WorkPost;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
-import businessmodel.observer.Observer;
 import businessmodel.order.Order;
 import businessmodel.statistics.OrderStatistics;
 import businessmodel.statistics.VehicleStatistics;
@@ -116,12 +115,6 @@ public interface Model {
 	public OrderStatistics getOrderStatistics();
 
 	/**
-	 * Returns an iterator over the work posts of the model.
-	 * @return The work posts of the model.
-	 */
-	public Iterator<WorkPost> getWorkPosts(AssemblyLine line);
-
-	/**
 	 * Returns an iterator over the pending tasks at a given work post.
 	 * 
 	 * @param 	wp
@@ -151,7 +144,7 @@ public interface Model {
 	 * 
 	 * @return	The current algorithm in the model.
 	 */
-	public String getCurrentAlgo();
+	public String getCurrentSystemWideAlgo();
 
 	/**
 	 * Returns the system time.

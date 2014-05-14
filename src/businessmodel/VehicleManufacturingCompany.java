@@ -11,7 +11,6 @@ import businessmodel.assemblyline.WorkPost;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
-import businessmodel.observer.Observer;
 import businessmodel.order.Order;
 import businessmodel.statistics.OrderStatistics;
 import businessmodel.statistics.StatisticsManager;
@@ -114,7 +113,7 @@ public class VehicleManufacturingCompany implements Model {
 		return this.statisticsmanager.getOrderStatistics();
 	}
 
-	@Override
+    @Override
 	public Iterator<AssemblyTask> getPendingTasks(WorkPost wp) {
 		return wp.getPendingTasks().iterator();
 	}
@@ -135,9 +134,8 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
-	// TODO via de UI per assemblyline of ?
-	public String getCurrentAlgo() {
-		return this.ordermanager.getMainScheduler().currentAlgoDescription();
+	public String getCurrentSystemWideAlgo() {
+		return this.ordermanager.getMainScheduler().currentSystemWideAlgoDescription();
 	}
 
 	
@@ -175,8 +173,8 @@ public class VehicleManufacturingCompany implements Model {
 	 * @param 	option
 	 */
 	// TODO Alle assemblyline veranderen?
-	public void changeAlgorithm(String algo, VehicleOption option) {
-		this.getOrderManager().getMainScheduler().changeAlgorithm(algo, option);
+	public void changeSystemWideAlgorithm(String algo, VehicleOption option) {
+		this.getOrderManager().getMainScheduler().changeSystemWideAlgorithm(algo, option);
 	}
 
 	/**

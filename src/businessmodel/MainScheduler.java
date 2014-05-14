@@ -16,8 +16,10 @@ public class MainScheduler {
 	private OrderManager ordermanager;
 	
 	private ArrayList<AssemblyLine> assemblylines;
-	
-	public MainScheduler(OrderManager ordermanager){
+
+    private String systemWideAlgo;
+
+    public MainScheduler(OrderManager ordermanager){
 		this.setOrdermanager(ordermanager);
 		this.generateAssemblyLines();
 	}
@@ -89,9 +91,14 @@ public class MainScheduler {
 		this.assemblylines = assemblylines;
 	}
 
-    protected void changeAlgorithm(String algo, VehicleOption option) {
+    protected void changeSystemWideAlgorithm(String algo, VehicleOption option) {
+        this.systemWideAlgo = algo;
         for (AssemblyLine assemblyLine: this.getAssemblylines()) {
             assemblyLine.getAssemblyLineScheduler().changeAlgorithm(algo, option);
         }
+    }
+
+    public String currentSystemWideAlgoDescription() {
+        return this.systemWideAlgo;
     }
 }
