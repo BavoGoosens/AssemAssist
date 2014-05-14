@@ -225,7 +225,7 @@ public class OrderManager implements Subject {
 		return temp;
 	}
 
-	protected MainScheduler getMainScheduler() {
+	public MainScheduler getMainScheduler() {
 		return this.mainscheduler;
 	}
 
