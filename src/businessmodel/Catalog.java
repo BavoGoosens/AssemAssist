@@ -2,7 +2,15 @@ package businessmodel;
 
 import java.util.ArrayList;
 
-import businessmodel.category.*;
+import businessmodel.category.ModelAFactory;
+import businessmodel.category.ModelBFactory;
+import businessmodel.category.ModelCFactory;
+import businessmodel.category.ModelXFactory;
+import businessmodel.category.ModelYFactory;
+import businessmodel.category.VehicleModel;
+import businessmodel.category.VehicleModelFactory;
+import businessmodel.category.VehicleOption;
+import businessmodel.category.VehicleOptionCategory;
 
 
 /**

@@ -3,19 +3,19 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.joda.time.DateTime;
+
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
 import businessmodel.category.VehicleModel;
-import org.joda.time.DateTime;
-
 import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
 import businessmodel.order.Order;
-import businessmodel.statistics.VehicleStatistics;
 import businessmodel.statistics.OrderStatistics;
 import businessmodel.statistics.StatisticsManager;
+import businessmodel.statistics.VehicleStatistics;
 import businessmodel.user.CustomShopManager;
 import businessmodel.user.GarageHolder;
 import businessmodel.user.Manager;

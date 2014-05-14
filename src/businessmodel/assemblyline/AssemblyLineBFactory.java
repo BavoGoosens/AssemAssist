@@ -1,11 +1,8 @@
-package businessmodel.assemblyline.factory;
-
-import businessmodel.MainScheduler;
-import businessmodel.category.VehicleModel;
-import businessmodel.assemblyline.AssemblyLine;
-import businessmodel.assemblyline.WorkPost;
+package businessmodel.assemblyline;
 
 import java.util.List;
+
+import businessmodel.category.VehicleModel;
 
 /**
  * This concrete factory can be used to create AssemblyLine 3.
@@ -20,7 +17,7 @@ public class AssemblyLineBFactory extends AssemblyLineFactory {
     }
 
     @Override
-    protected MainScheduler createScheduler() {
+    protected AssemblyLineScheduler createScheduler() {
         return null;
     }
 

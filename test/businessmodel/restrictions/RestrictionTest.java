@@ -2,11 +2,9 @@ package businessmodel.restrictions;
 
 import java.util.ArrayList;
 
-import businessmodel.order.StandardVehicleOrder;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.category.VehicleModel;
 import businessmodel.Catalog;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
@@ -16,10 +14,12 @@ import businessmodel.category.ModelAFactory;
 import businessmodel.category.ModelBFactory;
 import businessmodel.category.ModelCFactory;
 import businessmodel.category.Spoiler;
+import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
+import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
 
 public class RestrictionTest {

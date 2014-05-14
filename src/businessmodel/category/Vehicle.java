@@ -2,7 +2,6 @@ package businessmodel.category;
 
 import java.util.ArrayList;
 
-import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 
 /**

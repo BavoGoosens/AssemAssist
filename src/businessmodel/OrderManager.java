@@ -190,7 +190,7 @@ public class OrderManager implements Subject {
 	 * @param order
 	 */
 	// TODO nakijken of dit werkt
-	protected void setEstimatedCompletionDateOfOrder(Order order, AssemblyLine line){
+	public void setEstimatedCompletionDateOfOrder(Order order, AssemblyLine line){
 		Order previousorder = this.getPreviousOrder(order, line);
 		if(previousorder != null) {
 			if(previousorder.getEstimatedDeliveryDate() == null){

@@ -1,7 +1,7 @@
 package control;
 
-import businessmodel.VehicleManufacturingCompany;
 import businessmodel.Model;
+import businessmodel.VehicleManufacturingCompany;
 import businessmodel.category.VehicleOption;
 
 public class SchedulingHandler implements SchedulingController{

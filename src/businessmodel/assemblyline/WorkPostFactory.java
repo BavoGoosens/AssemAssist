@@ -1,8 +1,4 @@
-package businessmodel.assemblyline.factory;
-
-import businessmodel.assemblyline.AssemblyLine;
-import businessmodel.assemblyline.AssemblyTask;
-import businessmodel.assemblyline.WorkPost;
+package businessmodel.assemblyline;
 
 import java.util.ArrayList;
 

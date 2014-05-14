@@ -1,13 +1,11 @@
-package businessmodel.assemblyline.factory;
+package businessmodel.assemblyline;
 
-import businessmodel.assemblyline.AssemblyTask;
-import businessmodel.assemblyline.WorkPost;
+import java.util.ArrayList;
+
 import businessmodel.category.Airco;
 import businessmodel.category.Seats;
 import businessmodel.category.Spoiler;
 import businessmodel.category.Wheels;
-
-import java.util.ArrayList;
 
 /**
  * Created by michielvandendriessche on 13/05/14.

@@ -3,13 +3,13 @@ package businessmodel.statistics;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import businessmodel.assemblyline.AssemblyLineScheduler;
 import org.joda.time.LocalDate;
 
+import businessmodel.assemblyline.AssemblyLineScheduler;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
-import businessmodel.util.VehicleTupleComperator;
 import businessmodel.util.Tuple;
+import businessmodel.util.VehicleTupleComperator;
 
 /**
  * A class representing the car statistics of the system.

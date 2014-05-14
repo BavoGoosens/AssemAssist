@@ -1,13 +1,10 @@
-package businessmodel.assemblyline.factory;
-
-import businessmodel.Catalog;
-import businessmodel.MainScheduler;
-import businessmodel.category.VehicleModel;
-import businessmodel.assemblyline.AssemblyLine;
-import businessmodel.assemblyline.WorkPost;
+package businessmodel.assemblyline;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import businessmodel.Catalog;
+import businessmodel.category.VehicleModel;
 
 /**
  * @author Team 10
@@ -18,7 +15,7 @@ public abstract class AssemblyLineFactory {
 
     public abstract AssemblyLine createAssemblyLine();
 
-    protected abstract MainScheduler createScheduler();
+    protected abstract AssemblyLineScheduler createScheduler();
 
     protected abstract List<WorkPost> createWorkPosts();
 

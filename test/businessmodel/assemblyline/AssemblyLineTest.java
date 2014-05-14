@@ -6,22 +6,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import businessmodel.Catalog;
-import businessmodel.OrderManager;
-import businessmodel.VehicleManufacturingCompany;
-import businessmodel.assemblyline.AssemblyLine;
-import businessmodel.category.VehicleModel;
-import businessmodel.order.StandardVehicleOrder;
-import businessmodel.assemblyline.AssemblyTask;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.assemblyline.WorkPost;
+import businessmodel.Catalog;
+import businessmodel.OrderManager;
+import businessmodel.VehicleManufacturingCompany;
 import businessmodel.category.ModelAFactory;
+import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
 import businessmodel.order.Order;
+import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
 
 public class AssemblyLineTest {

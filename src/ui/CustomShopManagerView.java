@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
 
 import org.joda.time.DateTime;
 
-import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.Model;
+import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;

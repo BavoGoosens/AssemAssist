@@ -4,26 +4,25 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-import businessmodel.OrderManager;
-import businessmodel.VehicleManufacturingCompany;
-import businessmodel.order.StandardVehicleOrder;
-
 import org.junit.Test;
 
-import businessmodel.category.VehicleModel;
-import businessmodel.category.VehicleModelSpecification;
+import businessmodel.OrderManager;
+import businessmodel.VehicleManufacturingCompany;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
-import businessmodel.category.VehicleOption;
 import businessmodel.category.Color;
 import businessmodel.category.Engine;
 import businessmodel.category.Gearbox;
 import businessmodel.category.Seats;
+import businessmodel.category.VehicleModel;
+import businessmodel.category.VehicleModelSpecification;
+import businessmodel.category.VehicleOption;
 import businessmodel.category.Wheels;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.Order;
+import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
 
 

@@ -1,11 +1,9 @@
-package businessmodel.assemblyline.factory;
-
-import businessmodel.assemblyline.AssemblyTask;
-import businessmodel.assemblyline.WorkPost;
-import businessmodel.category.Body;
-import businessmodel.category.Color;
+package businessmodel.assemblyline;
 
 import java.util.ArrayList;
+
+import businessmodel.category.Body;
+import businessmodel.category.Color;
 
 /**
  * Created by michielvandendriessche on 12/05/14.

@@ -1,7 +1,7 @@
 package control;
 
-import businessmodel.VehicleManufacturingCompany;
 import businessmodel.Model;
+import businessmodel.VehicleManufacturingCompany;
 import businessmodel.order.SingleTaskOrder;
 
 public class SingleTaskOrderHandler implements SingleTaskOrderController {

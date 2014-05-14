@@ -5,8 +5,8 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.Model;
+import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
 import businessmodel.user.User;
 import control.AssemblyLineController;

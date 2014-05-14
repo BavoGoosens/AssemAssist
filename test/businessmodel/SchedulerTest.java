@@ -4,17 +4,17 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-import businessmodel.order.StandardVehicleOrder;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
+import businessmodel.category.ModelAFactory;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
-import businessmodel.category.ModelAFactory;
 import businessmodel.order.Order;
 import businessmodel.order.SingleTaskOrder;
+import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
 
 public class SchedulerTest {

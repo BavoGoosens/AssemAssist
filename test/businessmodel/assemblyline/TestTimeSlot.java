@@ -13,25 +13,38 @@ public class TestTimeSlot {
 	private TestOrder testorder;
 	
 	@Before
+	// TODO iets doen met de catch
 	public void setUp() throws Exception {
+		testorder = new TestOrder();
+		
 		try {this.timeslot = new TimeSlot(-1);}
 		catch (IllegalArgumentException e) {
-			e.printStackTrace();
+			
 		}
 		try {this.timeslot = new TimeSlot(0);}
 		catch (IllegalArgumentException e) {
-			e.printStackTrace();
+			
 		}
 		this.timeslot = new TimeSlot(4);
 	}
 
 	@Test
-	// nagaan of andere methodes getest worden door andere tests
+	// TODO iets doen met de catch
 	public void testAddOrder() {
 		assertEquals(4,this.timeslot.getWorkSlots().size());
-		this.timeslot.addOrderToWorkSlot(testorder.getOrder(), -1);
-		this.timeslot.addOrderToWorkSlot(testorder.getOrder(), 10);
-		this.timeslot.addOrderToWorkSlot(testorder.getOrder(), 1);
-		assertTrue(this.timeslot.workSlotOccupied(1));
+		try {this.timeslot.addOrderToWorkSlot(testorder.getOrder(), -1);}
+		catch (IllegalArgumentException e) {
+			
+		}
+		try {this.timeslot.addOrderToWorkSlot(testorder.getOrder(), 10);}
+		catch (IllegalArgumentException e) {
+			
+		}
+		this.timeslot.addOrderToWorkSlot(testorder.getOrder(), 3);
+		this.timeslot.addOrderToWorkSlot(testorder.getOrder(), 0);
+		assertTrue(this.timeslot.workSlotOccupied(3));
+		
+		assertEquals(testorder.getOrder(),this.timeslot.getLastOrderOfLastWorkSLot());
+		assertEquals(testorder.getOrder(),this.timeslot.getNextOrder());
 		}
 }

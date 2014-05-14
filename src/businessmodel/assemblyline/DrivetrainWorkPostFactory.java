@@ -1,11 +1,9 @@
-package businessmodel.assemblyline.factory;
-
-import businessmodel.assemblyline.AssemblyTask;
-import businessmodel.assemblyline.WorkPost;
-import businessmodel.category.Engine;
-import businessmodel.category.Gearbox;
+package businessmodel.assemblyline;
 
 import java.util.ArrayList;
+
+import businessmodel.category.Engine;
+import businessmodel.category.Gearbox;
 
 /**
  * Created by michielvandendriessche on 13/05/14.
