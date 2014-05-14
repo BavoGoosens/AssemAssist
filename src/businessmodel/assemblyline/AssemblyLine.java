@@ -1,6 +1,7 @@
 package businessmodel.assemblyline;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class AssemblyLine implements Subject{
 
     protected void setWorkPosts( List<WorkPost> workPosts){
         if (workPosts != null)
-            this.workposts = workposts;
+            this.workposts = (ArrayList<WorkPost>) workPosts;
         else
             throw new IllegalArgumentException("There were no workposts supplied");
     }
@@ -70,6 +71,10 @@ public class AssemblyLine implements Subject{
             this.responsibleModels = models;
         else
             throw  new IllegalArgumentException("There were no models supplied");
+    }
+    
+    protected Iterator<VehicleModel> getResponsibleModelsIterator() {
+    	return this.responsibleModels.iterator();
     }
 
 	/**
