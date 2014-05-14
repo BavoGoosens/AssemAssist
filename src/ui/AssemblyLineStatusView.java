@@ -18,12 +18,17 @@ public class AssemblyLineStatusView extends View implements Observer {
 
 	private Scanner scan = new Scanner(System.in);
 
+    private AssemblyLine selectedAssemblyLine;
+
 	private boolean active = false;
 
-	public AssemblyLineStatusView(Model cmc, User user) {
+	public AssemblyLineStatusView(Model cmc, User user, AssemblyLine line) {
 		super(cmc);
+        this.selectedAssemblyLine = line;
+        line.subscribeObserver(this);
 		setUser(user);
-		this.subject = cmc.registerAssemblyLineObserver(this);
+        // TODO: moet niet meer via het model
+		// this.subject = cmc.registerAssemblyLineObserver(this);
 		this.setActive(true);
 	}
 
@@ -33,7 +38,7 @@ public class AssemblyLineStatusView extends View implements Observer {
 
 	@Override
 	public void display() {
-		Iterator<WorkPost> postss =  this.getModel().getWorkPosts();
+		Iterator<WorkPost> postss =  this.getModel().getWorkPosts(this.selectedAssemblyLine);
 		ArrayList<WorkPost> posts = new ArrayList<WorkPost>();
 		while(postss.hasNext())
 			posts.add(postss.next());
@@ -69,7 +74,7 @@ public class AssemblyLineStatusView extends View implements Observer {
 	@Override
 	public void cancel() {
 		this.setActive(false);
-		new VehicleMechanicView(this.getModel(), this.user).display();
+		new VehicleMechanicView(this.getModel(), this.user, this.selectedAssemblyLine).display();
 	}
 
 	@Override

@@ -163,7 +163,12 @@ public class VehicleManufacturingCompany implements Model {
 		return new DateTime(ordermanager.getScheduler().getCurrentTime());
 	}
 
-	/**
+    @Override
+    public Iterator<AssemblyLine> getAssemblyLines() {
+        return null;
+    }
+
+    /**
 	 * Completes an assembly task with the given time.
 	 * 
 	 * @param 	task
