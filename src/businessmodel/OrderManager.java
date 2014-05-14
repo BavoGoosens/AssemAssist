@@ -69,7 +69,7 @@ public class OrderManager implements Subject {
 	 *          the order that needs to be added.
 	 */
 	// TODO nakijken welke AssemblyLineScheduler het snelste gaat. opslitsen in kleinere methodes.
-	protected void placeOrder(Order order) throws IllegalArgumentException {
+	public void placeOrder(Order order) throws IllegalArgumentException {
 		if (order == null) 
 			throw new IllegalArgumentException("Bad order!");
 		AssemblyLine fastestassem = this.getAssemblylines().get(0);
