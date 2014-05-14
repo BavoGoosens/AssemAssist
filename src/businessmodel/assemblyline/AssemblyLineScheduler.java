@@ -73,7 +73,7 @@ public class AssemblyLineScheduler implements Subject {
 		this.generateShifts();
 		this.updateCurrentTime();
 		int size = this.getNumberOfOrdersToSchedule();
-		for(Order order:this.getAssemblyline().getOrderManager().getNbOrders(size, this.getAssemblyline())){
+		for(Order order:this.getAssemblyline().getMainScheduler().getNbOrders(size, this.getAssemblyline())){
 			this.addOrderToSchedule(order);
 			this.getOrders().add(order);
 		}
@@ -274,7 +274,7 @@ public class AssemblyLineScheduler implements Subject {
 	 */
 	// TODO rekening houden met de singleTaskOrders
 	protected Order getNextOrderToSchedule(){
-		return this.getAssemblyline().getOrderManager().getPendingOrders().poll();
+		return this.getAssemblyline().getMainScheduler().getPendingOrders().poll();
 	}
 
 
@@ -282,7 +282,7 @@ public class AssemblyLineScheduler implements Subject {
 		if(this.getOrders().peekFirst()!= null && this.getOrders().peekFirst().isCompleted()){
 			Order completedorder = this.getOrders().pollFirst();
 			completedorder.setCompletionDateOfOrder(this.getCurrentTime());
-			this.getAssemblyline().getOrderManager().finishedOrder(completedorder);
+			this.getAssemblyline().getMainScheduler().finishedOrder(completedorder);
 			this.dayOrdersCount++;
 		}
 	}
@@ -304,7 +304,7 @@ public class AssemblyLineScheduler implements Subject {
 			if(this.getShifts().getLast().getTimeSlots().size() == 0)
 				this.getShifts().removeLast();
 			if(order!= null)
-				this.getAssemblyline().getOrderManager().placeOrderInFront(order);
+				this.getAssemblyline().getMainScheduler().placeOrderInFront(order);
 			this.updateDelay(-60);
 			this.updateSchedule();
 		}

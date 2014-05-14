@@ -249,4 +249,8 @@ public class AssemblyLine implements Subject{
 	public DateTime getEstimatedCompletionTimeOfNewOrder() {
 		return this.getAssemblyLineScheduler().getEstimatedCompletionTimeOfNewOrder();
 	}
+	
+	protected MainScheduler getMainScheduler(){
+		return this.mainscheduler;
+	}
 }

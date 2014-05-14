@@ -1,8 +1,10 @@
 package businessmodel;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import businessmodel.assemblyline.AssemblyLine;
+import businessmodel.assemblyline.Shift;
 import businessmodel.order.Order;
 
 public class MainScheduler {
@@ -47,6 +49,22 @@ public class MainScheduler {
 	}
 	
 	private void generateAssemblyLines() {
+		
+	}
+
+	public ArrayList<Order> getNbOrders(int size, AssemblyLine assemblyline) {
+		return null;
+	}
+
+	public LinkedList<Order> getPendingOrders() {
+		return null;
+	}
+
+	public void finishedOrder(Order completedorder) {
+		
+	}
+
+	public void placeOrderInFront(Order order) {		
 		
 	}
 }

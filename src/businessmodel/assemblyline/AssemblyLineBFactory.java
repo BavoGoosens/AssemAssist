@@ -29,7 +29,7 @@ public class AssemblyLineBFactory extends AssemblyLineFactory {
 
     @Override
     protected void createWorkPosts(AssemblyLine line) {
-        ArrayList<WorkPost> posts = new ArrayList<>();
+        ArrayList<WorkPost> posts = new ArrayList<WorkPost>();
 
         BodyWorkPostFactory factoryA = new BodyWorkPostFactory();
         DrivetrainWorkPostFactory factoryB = new DrivetrainWorkPostFactory();
@@ -48,7 +48,7 @@ public class AssemblyLineBFactory extends AssemblyLineFactory {
 
     @Override
     protected void createResponsibleModels(AssemblyLine line) {
-        ArrayList<VehicleModel> responsibleModels = new ArrayList<>();
+        ArrayList<VehicleModel> responsibleModels = new ArrayList<VehicleModel>();
 
         for (VehicleModel model : super.models){
             if (model.getName().contains("Model A") || model.getName().contains("Model B")
