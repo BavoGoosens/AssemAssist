@@ -67,7 +67,6 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * The shift are cleared and new orders are added if possible.
 	 */
-    // TODO: moet via de MainScheduler gaan.
 	public void ScheduleDay(){
 		this.dayOrdersCount = 0;
 		this.generateShifts();
@@ -75,7 +74,6 @@ public class AssemblyLineScheduler implements Subject {
 		int size = this.getNumberOfOrdersToSchedule();
 		for(Order order:this.getAssemblyline().getMainScheduler().getNbOrders(size, this.getAssemblyline())){
 			this.addOrderToSchedule(order);
-			this.getOrders().add(order);
 		}
 	}
 
@@ -127,7 +125,8 @@ public class AssemblyLineScheduler implements Subject {
 	 * 			if(time < 0)
 	 */
 	protected void advance(int time) throws IllegalNumberException{
-		if (time < 0) throw new IllegalNumberException("Bad time!");
+		if (time < 0) 
+			throw new IllegalNumberException("Bad time!");
 		int delay = time - 60;
 		this.currenttime = this.getCurrentTime().plusMinutes(time);
 		updateAssemblylineStatus();
@@ -219,6 +218,7 @@ public class AssemblyLineScheduler implements Subject {
 	protected LinkedList<Order> getOrders() {
 		return this.orders;
 	}
+	
 	/**
 	 * Returns the shifts of this assemblyline.
 	 * 
@@ -276,7 +276,6 @@ public class AssemblyLineScheduler implements Subject {
 	protected Order getNextOrderToSchedule(){
 		return this.getAssemblyline().getMainScheduler().getPendingOrders().poll();
 	}
-
 
 	private void updateCompletedOrders(){
 		if(this.getOrders().peekFirst()!= null && this.getOrders().peekFirst().isCompleted()){
@@ -423,8 +422,8 @@ public class AssemblyLineScheduler implements Subject {
 		return full[1];
 	}
 
-	// Nieuw naam verzinnen + implementeren
+	// TODO rekening houden met de Standard Completion Date
 	protected DateTime getEstimatedCompletionTimeOfNewOrder() {
-		return null;
+		return this.getOrders().getLast().getEstimatedDeliveryDate().plusHours(1);
 	}
 }
