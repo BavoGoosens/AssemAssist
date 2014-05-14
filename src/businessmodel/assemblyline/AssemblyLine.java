@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import org.joda.time.DateTime;
 
+import businessmodel.MainScheduler;
 import businessmodel.OrderManager;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
@@ -22,7 +23,7 @@ public class AssemblyLine implements Subject{
 	private AssemblyLineState maintenance;
 	private AssemblyLineState operational;
 	private AssemblyLineState state;
-	private OrderManager ordermanager;
+	private MainScheduler mainscheduler;
 	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
 	private int timeCurrentStatus = 0;
 	private AssemblyLineScheduler assemblylineScheduler;
@@ -31,13 +32,13 @@ public class AssemblyLine implements Subject{
 	/**
 	 * Creates a new assembly line.
 	 */
-	protected AssemblyLine(AssemblyLineScheduler scheduler, OrderManager ordermanager) throws IllegalArgumentException {
+	protected AssemblyLine(AssemblyLineScheduler scheduler, MainScheduler mainscheduler) throws IllegalArgumentException {
 		
 		this.broken = new BrokenState(this);
 		this.maintenance  = new MaintenanceState(this);
 		this.operational  = new OperationalState(this);
 		this.setState(operational);
-		this.ordermanager = ordermanager;
+		this.mainscheduler = mainscheduler;
 		this.setScheduler(scheduler);
 		this.generateWorkPosts();
 	}
