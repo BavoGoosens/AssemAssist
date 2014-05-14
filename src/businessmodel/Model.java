@@ -1,5 +1,6 @@
 package businessmodel;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.joda.time.DateTime;
@@ -167,4 +168,5 @@ public interface Model {
 	 */
 	public DateTime getSystemTime();
 
+    public Iterator<AssemblyLine> getAssemblyLines();
 }
