@@ -24,7 +24,6 @@ public class TestOrder {
 		makeOrder();
 	}
 	
-	// TODO aanmaken van juist order.
 	private void makeOrder(){
 		GarageHolder holder = new GarageHolder("Sander","Geijsen","Test");
 		ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();

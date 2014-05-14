@@ -24,6 +24,7 @@ public class WorkSlot{
 	 * Creates a new WorkSlot.
 	 */
 	public WorkSlot(){
+		this.order = null;
 	}
 	
 	/**

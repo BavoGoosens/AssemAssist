@@ -67,15 +67,13 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * The shift are cleared and new orders are added if possible.
 	 */
-    // TODO: moet via de MainScheduler gaan.
 	public void ScheduleDay(){
 		this.dayOrdersCount = 0;
 		this.generateShifts();
 		this.updateCurrentTime();
 		int size = this.getNumberOfOrdersToSchedule();
-		for(Order order:this.getAssemblyline().getOrderManager().getNbOrders(size, this.getAssemblyline())){
+		for(Order order:this.getAssemblyline().getMainScheduler().getNbOrders(size, this.getAssemblyline())){
 			this.addOrderToSchedule(order);
-			this.getOrders().add(order);
 		}
 	}
 
@@ -127,7 +125,8 @@ public class AssemblyLineScheduler implements Subject {
 	 * 			if(time < 0)
 	 */
 	protected void advance(int time) throws IllegalNumberException{
-		if (time < 0) throw new IllegalNumberException("Bad time!");
+		if (time < 0) 
+			throw new IllegalNumberException("Bad time!");
 		int delay = time - 60;
 		this.currenttime = this.getCurrentTime().plusMinutes(time);
 		updateAssemblylineStatus();
@@ -219,6 +218,7 @@ public class AssemblyLineScheduler implements Subject {
 	protected LinkedList<Order> getOrders() {
 		return this.orders;
 	}
+	
 	/**
 	 * Returns the shifts of this assemblyline.
 	 * 
@@ -274,15 +274,14 @@ public class AssemblyLineScheduler implements Subject {
 	 */
 	// TODO rekening houden met de singleTaskOrders
 	protected Order getNextOrderToSchedule(){
-		return this.getAssemblyline().getOrderManager().getPendingOrders().poll();
+		return this.getAssemblyline().getMainScheduler().getPendingOrders().poll();
 	}
-
 
 	private void updateCompletedOrders(){
 		if(this.getOrders().peekFirst()!= null && this.getOrders().peekFirst().isCompleted()){
 			Order completedorder = this.getOrders().pollFirst();
 			completedorder.setCompletionDateOfOrder(this.getCurrentTime());
-			this.getAssemblyline().getOrderManager().finishedOrder(completedorder);
+			this.getAssemblyline().getMainScheduler().finishedOrder(completedorder);
 			this.dayOrdersCount++;
 		}
 	}
@@ -304,7 +303,7 @@ public class AssemblyLineScheduler implements Subject {
 			if(this.getShifts().getLast().getTimeSlots().size() == 0)
 				this.getShifts().removeLast();
 			if(order!= null)
-				this.getAssemblyline().getOrderManager().placeOrderInFront(order);
+				this.getAssemblyline().getMainScheduler().placeOrderInFront(order);
 			this.updateDelay(-60);
 			this.updateSchedule();
 		}
@@ -423,8 +422,8 @@ public class AssemblyLineScheduler implements Subject {
 		return full[1];
 	}
 
-	// Nieuw naam verzinnen + implementeren
+	// TODO rekening houden met de Standard Completion Date
 	protected DateTime getEstimatedCompletionTimeOfNewOrder() {
-		return null;
+		return this.getOrders().getLast().getEstimatedDeliveryDate().plusHours(1);
 	}
 }
