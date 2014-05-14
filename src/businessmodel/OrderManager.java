@@ -26,7 +26,7 @@ public class OrderManager implements Subject {
 
 	private ArrayList<VehicleModel> vehiclemodels = new ArrayList<VehicleModel>();
 
-	private ArrayList<AssemblyLine> assemblylines;
+	private MainScheduler mainscheduler;
 
 	private LinkedList<Order> pendingorders;
 
@@ -39,7 +39,7 @@ public class OrderManager implements Subject {
 	public OrderManager(ArrayList<VehicleModel> vehiclemodels) throws IllegalArgumentException {
 		this.pendingorders = new LinkedList<Order>();
 		this.completedorders = new LinkedList<Order>();
-		this.assemblylines = new ArrayList<AssemblyLine>();
+		this.mainscheduler = new MainScheduler(this);
 		this.generateAssemblyLine();
 		this.observers = new ArrayList<Observer>();
 		this.setVehicleModels(vehiclemodels);
@@ -72,18 +72,13 @@ public class OrderManager implements Subject {
 	protected void placeOrder(Order order) throws IllegalArgumentException {
 		if (order == null) 
 			throw new IllegalArgumentException("Bad order!");
-		AssemblyLine fastestassem = this.getAssemblylines().get(0);
-		for(AssemblyLine assem2 : this.getAssemblylines()){
-			if(assem2.getEstimatedCompletionTimeOfNewOrder().isBefore(fastestassem.getEstimatedCompletionTimeOfNewOrder()))
-				fastestassem = assem2;
-		}
-		order.setTimestampOfOrder(fastestassem.getAssemblyLineScheduler().getCurrentTime());
-		this.setEstimatedCompletionDateOfOrder(order, fastestassem);
-		if(fastestassem.getAssemblyLineScheduler().canAddOrder())
-			fastestassem.getAssemblyLineScheduler().addOrderToSchedule(order);
-		else
-			// try different assemblyLine.
+		AssemblyLine line = this.getMainScheduler().placeOrder(order);
+		if(line!= null){
+			order.setTimestampOfOrder(line.getAssemblyLineScheduler().getCurrentTime());
+			this.setEstimatedCompletionDateOfOrder(order, line);}
+		else{
 			this.getPendingOrders().add(order);
+		}
 	}
 
 	public LinkedList<Order> getPendingOrders(){
@@ -101,7 +96,7 @@ public class OrderManager implements Subject {
 		if (user == null) throw new IllegalArgumentException("Bad user!");
 		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
 		ArrayList<Order> pendingorders = new ArrayList<Order>();
-		for(AssemblyLine line: this.getAssemblylines()){
+		for(AssemblyLine line: this.getMainScheduler().getAssemblylines()){
 			pendingorders.addAll(line.getAssemblyLineScheduler().getOrdersClone());
 			for (Order order: this.getPendingOrders()){
 				if (order.getUser() == user)
@@ -261,8 +256,8 @@ public class OrderManager implements Subject {
 		return temp;
 	}
 
-	private ArrayList<AssemblyLine> getAssemblylines() {
-		return this.assemblylines;
+	protected MainScheduler getMainScheduler() {
+		return this.mainscheduler;
 	}
 
 	@Override

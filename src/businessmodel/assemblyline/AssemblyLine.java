@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import businessmodel.category.VehicleModel;
 import org.joda.time.DateTime;
 
-import businessmodel.OrderManager;
+import businessmodel.MainScheduler;
+import businessmodel.category.VehicleModel;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
@@ -25,7 +25,7 @@ public class AssemblyLine implements Subject{
 	private AssemblyLineState maintenance;
 	private AssemblyLineState operational;
 	private AssemblyLineState state;
-	private OrderManager ordermanager;
+	private MainScheduler mainscheduler;
 	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
 	private int timeCurrentStatus = 0;
 	private AssemblyLineScheduler assemblylineScheduler;
@@ -34,13 +34,12 @@ public class AssemblyLine implements Subject{
 	/**
 	 * Creates a new assembly line.
 	 */
-	protected AssemblyLine(AssemblyLineScheduler scheduler, OrderManager ordermanager) throws IllegalArgumentException {
-
+	protected AssemblyLine(AssemblyLineScheduler scheduler, MainScheduler mainscheduler) throws IllegalArgumentException {
 		this.broken = new BrokenState(this);
 		this.maintenance  = new MaintenanceState(this);
 		this.operational  = new OperationalState(this);
 		this.setState(operational);
-		this.ordermanager = ordermanager;
+		this.mainscheduler = mainscheduler;
 		this.setScheduler(scheduler);
 		this.generateWorkPosts();
 	}
@@ -231,15 +230,13 @@ public class AssemblyLine implements Subject{
 		return this.operational;
 	}
 
-
 	/**
 	 * @return maintenance state assembly line
 	 */
 	public AssemblyLineState getMaintenanceState() {
 		return maintenance;
 	}
-
-
+	
 	/**
 	 * Method to set the state of an assembly line
 	 * @param state
@@ -247,14 +244,12 @@ public class AssemblyLine implements Subject{
 	public void setState(AssemblyLineState state) {
 		this.state = state;
 	}
-
-
+	
 	public DateTime getEstimatedCompletionTimeOfNewOrder() {
 		return this.getAssemblyLineScheduler().getEstimatedCompletionTimeOfNewOrder();
 	}
 	
-	protected OrderManager getOrderManager() {
-		return ordermanager;
+	protected MainScheduler getMainScheduler(){
+		return this.mainscheduler;
 	}
-
 }

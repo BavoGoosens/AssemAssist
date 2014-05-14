@@ -17,7 +17,7 @@ public abstract class Shift {
 	 * A list that holds all the TimeSlot's of this shift.
 	 */
 	private LinkedList<TimeSlot> timeslots;
-	
+
 	/**
 	 * A variable that holds the number of WorkPost's that a AssymblyLine has.
 	 */
@@ -83,12 +83,11 @@ public abstract class Shift {
 	 * 			the current TimeSlot.
 	 * @return	the TimeSlot that comes after the given TimeSlot.
 	 */
-	protected TimeSlot getNextTimeSlot(TimeSlot timeslot){
+	protected TimeSlot getNextTimeSlot(TimeSlot timeslot) throws IndexOutOfBoundsException {
 		int index = this.getTimeSlots().indexOf(timeslot);
-		if(index + 1 >= this.getTimeSlots().size() || this.getTimeSlots().size() < 0)
-			return null;
-		else
-			return this.getTimeSlots().get(index+1);
+		if(index + 1 >= this.getTimeSlots().size())
+			throw new IndexOutOfBoundsException("Henk");
+		return this.getTimeSlots().get(index+1);
 	}
 
 	/**
@@ -96,12 +95,9 @@ public abstract class Shift {
 	 */
 	protected Order getNextOrderForAssemblyLine() {
 		TimeSlot newtimeslot = this.getTimeSlots().pollFirst();
-		if(!newtimeslot.getWorkSlots().isEmpty())
 			return newtimeslot.getNextOrder();
-		else
-			return null;
 	}
-	
+
 	/**
 	 * A method to get the TimeSlots of this Shift.
 	 * @return the TimeSlot's of this shift.
