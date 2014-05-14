@@ -1,4 +1,4 @@
-package businessmodel;
+package businessmodel.assemblyline;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,6 +8,9 @@ import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
+import businessmodel.Catalog;
+import businessmodel.OrderManager;
+import businessmodel.VehicleManufacturingCompany;
 import businessmodel.category.ModelAFactory;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;

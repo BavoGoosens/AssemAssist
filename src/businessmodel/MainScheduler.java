@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import businessmodel.assemblyline.AssemblyLine;
+import businessmodel.assemblyline.AssemblyLineAFactory;
+import businessmodel.assemblyline.AssemblyLineBFactory;
+import businessmodel.assemblyline.AssemblyLineCFactory;
+import businessmodel.assemblyline.BodyWorkPostFactory;
 import businessmodel.order.Order;
 
 public class MainScheduler {
@@ -35,22 +39,10 @@ public class MainScheduler {
 		return fastestassem;
 	}
 
-	private OrderManager getOrdermanager() {
-		return ordermanager;
-	}
-
-	private void setOrdermanager(OrderManager ordermanager) {
-		this.ordermanager = ordermanager;
-	}
-
 	protected ArrayList<AssemblyLine> getAssemblylines() {
-		return assemblylines;
+		return this.assemblylines;
 	}
 	
-	private void generateAssemblyLines() {
-		
-	}
-
 	public ArrayList<Order> getNbOrders(int size, AssemblyLine assemblyline) {
 		return null;
 	}
@@ -65,5 +57,34 @@ public class MainScheduler {
 
 	public void placeOrderInFront(Order order) {		
 		
+	}
+
+	private void generateAssemblyLines() {
+		ArrayList<AssemblyLine> assemblylines = new ArrayList<AssemblyLine>();
+	    AssemblyLineAFactory factoryA = new AssemblyLineAFactory();
+	    AssemblyLineBFactory factoryB = new AssemblyLineBFactory();
+	    AssemblyLineCFactory factoryC = new AssemblyLineCFactory();
+	
+	    AssemblyLine line1 = factoryA.createAssemblyLine();
+	    AssemblyLine line2 = factoryB.createAssemblyLine();
+	    AssemblyLine line3 = factoryC.createAssemblyLine();
+	    
+	    assemblylines.add(line1);
+	    assemblylines.add(line2);
+	    assemblylines.add(line3);
+	    
+	    this.setAssemblylines(assemblylines);
+	}
+
+	private OrderManager getOrdermanager() {
+		return ordermanager;
+	}
+
+	private void setOrdermanager(OrderManager ordermanager) {
+		this.ordermanager = ordermanager;
+	}
+
+	private void setAssemblylines(ArrayList<AssemblyLine> assemblylines) {
+		this.assemblylines = assemblylines;
 	}
 }

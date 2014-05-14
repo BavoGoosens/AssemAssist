@@ -1,10 +1,11 @@
-package businessmodel;
+package businessmodel.category;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import businessmodel.Catalog;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleModelSpecification;
 
@@ -27,5 +28,4 @@ public class VehicleModelTest {
 		assertEquals(this.cms,model.getVehicleModelSpecification());
 		assertEquals(model.toString(),"Vehicle model: Model A");
 	}
-
 }
