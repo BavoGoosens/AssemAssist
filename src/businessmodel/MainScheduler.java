@@ -90,6 +90,8 @@ public class MainScheduler {
 	}
 
     protected void changeAlgorithm(String algo, VehicleOption option) {
-
+        for (AssemblyLine assemblyLine: this.getAssemblylines()) {
+            assemblyLine.getAssemblyLineScheduler().changeAlgorithm(algo, option);
+        }
     }
 }
