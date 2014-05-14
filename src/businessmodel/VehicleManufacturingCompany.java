@@ -58,7 +58,6 @@ public class VehicleManufacturingCompany implements Model {
 	public VehicleManufacturingCompany() throws IllegalArgumentException {
 		this.catalog = new Catalog();
 		this.setOrderManager(new OrderManager(this.catalog.getAvailaleModelsClone()));
-		this.taskmanager = new TaskManager(this.getOrderManager().getScheduler().getAssemblyline().getWorkPosts());
 		this.statisticsmanager = new StatisticsManager(this.getOrderManager());
 		// for ease of use
 		this.users.add(new GarageHolder("wow", "wow", "wow"));
@@ -124,8 +123,8 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
-	public Iterator<WorkPost> getWorkPosts() {
-		return this.getOrderManager().getScheduler().getAssemblyline().getWorkPosts().iterator();
+	public Iterator<WorkPost> getWorkPosts(AssemblyLine line) {
+		return line.getWorkPosts().iterator();
 	}
 
 	@Override
@@ -149,6 +148,7 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
+	// TODO via de UI per assemblyline of ?
 	public String getCurrentAlgo() {
 		return this.ordermanager.getScheduler().currentAlgoDescription();
 	}
@@ -158,6 +158,7 @@ public class VehicleManufacturingCompany implements Model {
 	 * Returns the current time of the system.
 	 * @return The current time of the system.
 	 */
+	// TODO
 	public DateTime getSystemTime(){
 		return new DateTime(ordermanager.getScheduler().getCurrentTime());
 	}
@@ -170,6 +171,7 @@ public class VehicleManufacturingCompany implements Model {
 	 * @param 	time
 	 * 			The time that was needed to complete the assembly task.
 	 */
+	// TODO andere package. public zetten?
 	public void finishTask(AssemblyTask task, int time) {
 		task.completeAssemblytask(time);
 	}
@@ -180,6 +182,7 @@ public class VehicleManufacturingCompany implements Model {
 	 * 			The new algorithm
 	 * @param 	option
 	 */
+	// TODO Alle assemblyline veranderen?
 	public void changeAlgorithm(String algo, VehicleOption option) {
 		this.getOrderManager().getScheduler().changeAlgorithm(algo, option);
 	}

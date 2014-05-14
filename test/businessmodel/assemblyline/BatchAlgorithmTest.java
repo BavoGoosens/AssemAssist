@@ -1,10 +1,13 @@
-package businessmodel;
+package businessmodel.assemblyline;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
+import businessmodel.OrderManager;
+import businessmodel.VehicleManufacturingCompany;
 import businessmodel.order.StandardVehicleOrder;
+
 import org.junit.Test;
 
 import businessmodel.category.VehicleModel;

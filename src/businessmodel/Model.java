@@ -127,7 +127,7 @@ public interface Model {
 	 * Returns an iterator over the work posts of the model.
 	 * @return The work posts of the model.
 	 */
-	public Iterator<WorkPost> getWorkPosts();
+	public Iterator<WorkPost> getWorkPosts(AssemblyLine line);
 
 	/**
 	 * Returns an iterator over the pending tasks at a given work post.

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public abstract class WorkPostFactory {
     protected WorkPost createWorkPost(AssemblyLine assemblyLine) {
         WorkPost workPost = new WorkPost(this.createName(), assemblyLine);
-        workPost.setResponsibletasks(this.createAssemblyTasks(workPost));
+        workPost.setResponsibleTasks(this.createAssemblyTasks(workPost));
         return workPost;
     }
     protected abstract ArrayList<AssemblyTask> createAssemblyTasks(WorkPost workPost);

@@ -74,7 +74,7 @@ public class AssemblyLineScheduler implements Subject {
 		this.generateShifts();
 		this.updateCurrentTime();
 		int size = this.getNumberOfOrdersToSchedule();
-		for(Order order: this.getOrdermanager().getNbOrders(size)){
+		for(Order order:this.getAssemblyline().getOrderManager().getNbOrders(size, this.getAssemblyline())){
 			this.addOrderToSchedule(order);
 			this.getOrders().add(order);
 		}
@@ -147,7 +147,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @return true if an order can be added.
 	 */
-	protected boolean canAddOrder(){
+	public boolean canAddOrder(){
 		int count = 0;
 		for(Shift shift: this.getShifts())
 			count += shift.getTimeSlots().size();
@@ -162,7 +162,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * @param 	order
 	 * 			the order that needs to be added.
 	 */
-	protected void addOrderToSchedule(Order order){
+	public void addOrderToSchedule(Order order){
 		this.getAlgo().scheduleOrder(order);
 		order.setTimestampOfOrder(this.getCurrentTime());
 		this.getOrders().add(order);
@@ -180,7 +180,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @return the number of order that can be scheduled.
 	 */
-	protected int getNumberOfOrdersToSchedule() {
+	public int getNumberOfOrdersToSchedule() {
 		return this.getShifts().size()*this.getShifts().getFirst().getTimeSlots().size()-(this.getAssemblyline().getNumberOfWorkPosts()-1);
 	}
 
@@ -254,15 +254,6 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	/**
-	 * A method that returns the OrderManager of this AssemblyLineScheduler.
-	 * 
-	 * @return
-	 */
-	protected OrderManager getOrdermanager() {
-		return this.ordermanager;
-	}
-
-	/**
 	 * Returns the next shift of the given shift.
 	 * 
 	 * @param 	shift
@@ -282,8 +273,9 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @return
 	 */
+	// TODO rekening houden met de singleTaskOrders
 	protected Order getNextOrderToSchedule(){
-		return this.getOrdermanager().getPendingOrders().poll();
+		return this.getAssemblyline().getOrderManager().getPendingOrders().poll();
 	}
 
 
@@ -291,7 +283,7 @@ public class AssemblyLineScheduler implements Subject {
 		if(this.getOrders().peekFirst()!= null && this.getOrders().peekFirst().isCompleted()){
 			Order completedorder = this.getOrders().pollFirst();
 			completedorder.setCompletionDateOfOrder(this.getCurrentTime());
-			this.getOrdermanager().finishedOrder(completedorder);
+			this.getAssemblyline().getOrderManager().finishedOrder(completedorder);
 			this.dayOrdersCount++;
 		}
 	}
@@ -313,7 +305,7 @@ public class AssemblyLineScheduler implements Subject {
 			if(this.getShifts().getLast().getTimeSlots().size() == 0)
 				this.getShifts().removeLast();
 			if(order!= null)
-				this.getOrdermanager().placeOrderInFront(order);
+				this.getAssemblyline().getOrderManager().placeOrderInFront(order);
 			this.updateDelay(-60);
 			this.updateSchedule();
 		}
@@ -380,12 +372,6 @@ public class AssemblyLineScheduler implements Subject {
 		return true;
 	}
 
-	private void setOrdermanager(OrderManager ordermanager) throws IllegalArgumentException{
-		if(ordermanager == null)
-			throw new IllegalArgumentException("Not an ordermanager");
-		this.ordermanager = ordermanager;
-	}
-
 	/**
 	 * Method to check if a VehicleOption occurs in more than 3 orders
 	 * @param maxNumber
@@ -436,5 +422,10 @@ public class AssemblyLineScheduler implements Subject {
 	public String currentAlgoDescription() {
 		String[] full = this.algortime.getClass().getName().split("\\.");
 		return full[1];
+	}
+
+	// Nieuw naam verzinnen + implementeren
+	protected DateTime getEstimatedCompletionTimeOfNewOrder() {
+		return null;
 	}
 }

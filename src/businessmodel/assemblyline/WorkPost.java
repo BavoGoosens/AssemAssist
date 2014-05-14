@@ -74,7 +74,7 @@ public class WorkPost {
 	 * 			| If the list of responsible tasks is equal to 'null'
 	 * 			| responsibleTasks == null
 	 */
-	protected void setResponsibletasks(ArrayList<AssemblyTask> responsibleTasks) throws IllegalArgumentException {
+	protected void setResponsibleTasks(ArrayList<AssemblyTask> responsibleTasks) throws IllegalArgumentException {
 		if (responsibleTasks == null) throw new IllegalArgumentException("Bad list of responsible tasks!");
 		for(AssemblyTask assem: responsibleTasks){
 			if(!this.responsibleAssemblyTasks.contains(assem))

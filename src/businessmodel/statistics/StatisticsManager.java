@@ -29,6 +29,7 @@ public class StatisticsManager {
 	 * 			| If the order manager is equal to 'null'
 	 * 			| ordermanager == null
 	 */
+	// TODO Rekening houden met meerdere AssemblyLines
 	public StatisticsManager(OrderManager ordermanager) throws IllegalArgumentException {
 		if (ordermanager == null) throw new IllegalArgumentException("Bad order manager!");
 		this.vehicleStatistics = new VehicleStatistics(ordermanager.getScheduler());

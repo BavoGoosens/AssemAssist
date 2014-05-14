@@ -3,6 +3,9 @@ package businessmodel.assemblyline;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import org.joda.time.DateTime;
+
+import businessmodel.OrderManager;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
@@ -14,27 +17,27 @@ import businessmodel.order.Order;
  *
  */
 public class AssemblyLine implements Subject{
-
 	
 	private AssemblyLineState broken;
 	private AssemblyLineState maintenance;
 	private AssemblyLineState operational;
 	private AssemblyLineState state;
+	private OrderManager ordermanager;
 	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
 	private int timeCurrentStatus = 0;
-	private AssemblyLineScheduler scheduler;
+	private AssemblyLineScheduler assemblylineScheduler;
 	private ArrayList<Observer> subscribers = new ArrayList<Observer>();
 
 	/**
 	 * Creates a new assembly line.
 	 */
-	protected AssemblyLine(AssemblyLineScheduler scheduler) throws IllegalArgumentException {
+	protected AssemblyLine(AssemblyLineScheduler scheduler, OrderManager ordermanager) throws IllegalArgumentException {
 		
 		this.broken = new BrokenState(this);
 		this.maintenance  = new MaintenanceState(this);
 		this.operational  = new OperationalState(this);
 		this.setState(operational);
-		
+		this.ordermanager = ordermanager;
 		this.setScheduler(scheduler);
 		this.generateWorkPosts();
 	}
@@ -139,7 +142,7 @@ public class AssemblyLine implements Subject{
 				completed = false;
 		}
 		if(completed)
-			this.getScheduler().advance(this.timeCurrentStatus);
+			this.getAssemblyLineScheduler().advance(this.timeCurrentStatus);
 	}
 
 	/**
@@ -155,12 +158,12 @@ public class AssemblyLine implements Subject{
 	}
 
 
-	private AssemblyLineScheduler getScheduler() {
-		return scheduler;
+	public AssemblyLineScheduler getAssemblyLineScheduler() {
+		return assemblylineScheduler;
 	}
 
 	private void setScheduler(AssemblyLineScheduler scheduler) {
-		this.scheduler = scheduler;
+		this.assemblylineScheduler = scheduler;
 	}
 
 	@Override
@@ -213,6 +216,15 @@ public class AssemblyLine implements Subject{
 	 */
 	public void setState(AssemblyLineState state) {
 		this.state = state;
+	}
+
+
+	public DateTime getEstimatedCompletionTimeOfNewOrder() {
+		return this.getAssemblyLineScheduler().getEstimatedCompletionTimeOfNewOrder();
+	}
+	
+	protected OrderManager getOrderManager() {
+		return ordermanager;
 	}
 
 }

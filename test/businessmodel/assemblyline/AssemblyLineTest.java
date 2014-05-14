@@ -1,4 +1,4 @@
-package businessmodel;
+package businessmodel.assemblyline;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,10 +6,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import businessmodel.Catalog;
+import businessmodel.OrderManager;
+import businessmodel.VehicleManufacturingCompany;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.category.VehicleModel;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.assemblyline.AssemblyTask;
+
 import org.junit.Before;
 import org.junit.Test;
 
