@@ -2,7 +2,9 @@ package businessmodel.assemblyline;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
+import businessmodel.category.VehicleModel;
 import org.joda.time.DateTime;
 
 import businessmodel.OrderManager;
@@ -17,8 +19,9 @@ import businessmodel.order.Order;
  *
  */
 public class AssemblyLine implements Subject{
-	
-	private AssemblyLineState broken;
+
+    private List<VehicleModel> responsibleModels;
+    private AssemblyLineState broken;
 	private AssemblyLineState maintenance;
 	private AssemblyLineState operational;
 	private AssemblyLineState state;
@@ -32,7 +35,7 @@ public class AssemblyLine implements Subject{
 	 * Creates a new assembly line.
 	 */
 	protected AssemblyLine(AssemblyLineScheduler scheduler, OrderManager ordermanager) throws IllegalArgumentException {
-		
+
 		this.broken = new BrokenState(this);
 		this.maintenance  = new MaintenanceState(this);
 		this.operational  = new OperationalState(this);
@@ -42,6 +45,33 @@ public class AssemblyLine implements Subject{
 		this.generateWorkPosts();
 	}
 
+    protected AssemblyLine(){
+        this.broken = new BrokenState(this);
+        this.maintenance  = new MaintenanceState(this);
+        this.operational  = new OperationalState(this);
+        this.setState(operational);
+    }
+
+    protected void setAssemblylineScheduler(AssemblyLineScheduler scheduler){
+        if (scheduler != null)
+            this.assemblylineScheduler = scheduler;
+        else
+            throw new IllegalArgumentException("There was no scheduler supplied");
+    }
+
+    protected void setWorkPosts( List<WorkPost> workPosts){
+        if (workPosts != null)
+            this.workposts = workposts;
+        else
+            throw new IllegalArgumentException("There were no workposts supplied");
+    }
+
+    protected  void setResponsibleModels( List<VehicleModel> models){
+        if (models != null)
+            this.responsibleModels = models;
+        else
+            throw  new IllegalArgumentException("There were no models supplied");
+    }
 
 	/**
 	 * Checks whether the assembly line can move forward.

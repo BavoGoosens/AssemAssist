@@ -15,10 +15,10 @@ public abstract class AssemblyLineFactory {
 
     public abstract AssemblyLine createAssemblyLine();
 
-    protected abstract AssemblyLineScheduler createScheduler();
+    protected abstract void createScheduler(AssemblyLine line);
 
-    protected abstract List<WorkPost> createWorkPosts();
+    protected abstract void createWorkPosts(AssemblyLine line);
 
-    protected abstract List<VehicleModel> createResponsibleModels();
+    protected abstract void createResponsibleModels(AssemblyLine line);
 
 }

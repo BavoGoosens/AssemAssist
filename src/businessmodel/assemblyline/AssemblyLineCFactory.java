@@ -1,18 +1,13 @@
 package businessmodel.assemblyline;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import businessmodel.category.Vehicle;
 import businessmodel.category.VehicleModel;
 
-/**
- * This concrete factory can be used to create AssemblyLine 1 and 2 since they are essentially the same.
- *
- * @author Team 10
- */
-public class AssemblyLineAFactory extends AssemblyLineFactory {
+import java.util.ArrayList;
 
+/**
+ *@author Team 10
+ */
+public class AssemblyLineCFactory extends AssemblyLineFactory {
     @Override
     public AssemblyLine createAssemblyLine() {
         AssemblyLine line = new AssemblyLine();
@@ -33,27 +28,34 @@ public class AssemblyLineAFactory extends AssemblyLineFactory {
         ArrayList<WorkPost> posts = new ArrayList<>();
 
         BodyWorkPostFactory factoryA = new BodyWorkPostFactory();
-        DrivetrainWorkPostFactory factoryB = new DrivetrainWorkPostFactory();
-        AccessoriesWorkPostFactory factoryC = new AccessoriesWorkPostFactory();
+        CargoWorkPostFactory factoryB = new CargoWorkPostFactory();
+        DrivetrainWorkPostFactory factoryC = new DrivetrainWorkPostFactory();
+        AccessoriesWorkPostFactory factoryD = new AccessoriesWorkPostFactory();
+        CertificationWorkPostFactory factoryE = new CertificationWorkPostFactory();
 
         WorkPost bodyPost = factoryA.createWorkPost(line);
-        WorkPost drivetrainPost = factoryB.createWorkPost(line);
-        WorkPost accessoriesPost = factoryC.createWorkPost(line);
+        WorkPost cargoPost = factoryB.createWorkPost(line);
+        WorkPost drivetrainPost = factoryC.createWorkPost(line);
+        WorkPost accessoriesPost = factoryD.createWorkPost(line);
+        WorkPost certificationPost = factoryE.createWorkPost(line);
 
         posts.add(bodyPost);
+        posts.add(cargoPost);
         posts.add(drivetrainPost);
         posts.add(accessoriesPost);
+        posts.add(certificationPost);
 
         line.setWorkPosts(posts);
     }
 
     @Override
-    //TODO: debuggen om te checken of dit juist gebeurt of werken met een techniek.
     protected void createResponsibleModels(AssemblyLine line) {
         ArrayList<VehicleModel> responsibleModels = new ArrayList<>();
 
         for (VehicleModel model : super.models){
-            if (model.getName().contains("Model A") || model.getName().contains("Model B"))
+            if (model.getName().contains("Model A") || model.getName().contains("Model B")
+                    || model.getName().contains("Model C") || model.getName().contains("Model X")
+                    || model.getName().contains("Model Y"))
                 responsibleModels.add(model);
         }
 
