@@ -15,7 +15,7 @@ public class SchedulingHandler implements SchedulingController{
 
 	@Override
 	public void selectAlgorithm(String algo, VehicleOption args) {
-		this.cmc.changeAlgorithm(algo, args);
+		this.cmc.changeSystemWideAlgorithm(algo, args);
 	}
 
 }

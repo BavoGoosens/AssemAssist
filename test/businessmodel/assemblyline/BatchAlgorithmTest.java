@@ -105,9 +105,9 @@ public class BatchAlgorithmTest {
 //			for(VehicleOption option : orderManager.getScheduler().getUnscheduledVehicleOptions(3))
 //				System.out.println(option);
 			
-			cmc.changeAlgorithm("sb",  new VehicleOption("medium engine",new Engine()));
+			cmc.changeSystemWideAlgorithm("sb", new VehicleOption("medium engine", new Engine()));
 			try{
-				cmc.changeAlgorithm("dsfsf",  new VehicleOption("medium engine",new Engine()));
+				cmc.changeSystemWideAlgorithm("dsfsf", new VehicleOption("medium engine", new Engine()));
 			}catch(IllegalSchedulingAlgorithmException ex){
 				ex.getMessage();
 			}
