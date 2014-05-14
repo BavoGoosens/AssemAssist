@@ -18,7 +18,12 @@ import businessmodel.user.GarageHolder;
 import businessmodel.user.User;
 
 public class AssemblyLineSchedulerTest {
-
+	/**
+	 * 
+	 * SETUP VOOR 3 ORDERS!
+	 * DE TEST ZELF IS NOG NIET GESCHREVEN!
+	 * 
+	 */
 	@Before
 	public void setUp() throws Exception {
 		Catalog catalog = new Catalog();
