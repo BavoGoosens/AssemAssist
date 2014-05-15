@@ -28,22 +28,22 @@ public class VehicleManufacturingCompany implements Model {
 	 * List of the users.
 	 */
 	private ArrayList<User> users = new ArrayList<User>();
-	
+
 	/**
 	 * The order manager.
 	 */
 	private OrderManager ordermanager;
-	
+
 	/**
 	 * The task manager.
 	 */
 	private TaskManager taskmanager;
-	
+
 	/**
 	 * Statistics manager.
 	 */
 	private StatisticsManager statisticsmanager;
-	
+
 	/**
 	 * The catalog where all the available car models are stored.
 	 */
@@ -51,7 +51,7 @@ public class VehicleManufacturingCompany implements Model {
 
 	/**
 	 * A constructor for a car manufacturing company.
-	 * 
+	 *
 	 * @throws	IllegalArgumentException
 	 */
 	public VehicleManufacturingCompany() throws IllegalArgumentException {
@@ -74,7 +74,7 @@ public class VehicleManufacturingCompany implements Model {
 	public Iterator<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
 		return this.getOrderManager().getPendingOrders(user).iterator();
 	}
-	
+
 	@Override
 	public void register(User user) {
 		this.users.add(user);
@@ -92,9 +92,9 @@ public class VehicleManufacturingCompany implements Model {
 
 	@Override
 	public Iterator<String> getSchedulingAlgorithms(User user) {
-		ArrayList<String> algos = new ArrayList<String>(); 
-		algos.add("FIFO"); 
-		algos.add("SpecificationBatch"); 
+		ArrayList<String> algos = new ArrayList<String>();
+		algos.add("FIFO");
+		algos.add("SpecificationBatch");
 		return algos.iterator();
 	}
 
@@ -116,13 +116,13 @@ public class VehicleManufacturingCompany implements Model {
     @Override
     // TODO public of?
 	public Iterator<AssemblyTask> getPendingTasks(WorkPost wp) {
-		return wp.getPendingTasksIterator();
+		return wp.getPendingTasks();
 	}
 
 	@Override
 	// TODO public of?
 	public Iterator<AssemblyTask> getFinishedTasks(WorkPost wp) {
-		return wp.getFinishedTasksIterator();
+		return wp.getFinishedTasks();
 	}
 
 	@Override
@@ -140,7 +140,7 @@ public class VehicleManufacturingCompany implements Model {
 		return this.getOrderManager().getMainScheduler().currentSystemWideAlgorithmDescription();
 	}
 
-	
+
 	/**
 	 * Returns the current time of the system.
 	 * @return The current time of the system.
@@ -156,7 +156,7 @@ public class VehicleManufacturingCompany implements Model {
 
     /**
 	 * Completes an assembly task with the given time.
-	 * 
+	 *
 	 * @param 	task
 	 * 			The task that needs to be completed.
 	 * @param 	time
@@ -185,7 +185,7 @@ public class VehicleManufacturingCompany implements Model {
 	public void placeOrder(Order order) throws IllegalArgumentException {
 		this.getOrderManager().placeOrder(order);
 	}
-	
+
 	/**
 	 * Returns the users of the car manufacturing company.
 	 * @return The users of the car manufacturing company.
@@ -201,10 +201,10 @@ public class VehicleManufacturingCompany implements Model {
 	public OrderManager getOrderManager(){
 		return this.ordermanager;
 	}
-	
+
 	/**
 	 * A method to set the order manager of this class to the given order manager.
-	 * 
+	 *
 	 * @param 	ordermanager
 	 * 			the new order manager of this car manufacturing company.
 	 */
@@ -215,7 +215,7 @@ public class VehicleManufacturingCompany implements Model {
 
 	/**
 	 * Method to get the User given a username.
-	 * 
+	 *
 	 * @param username
 	 * @return
 	 * @throws IllegalArgumentException
