@@ -201,9 +201,9 @@ public class OrderManager implements Subject {
 				return this.getPendingOrders().get(index-1);
 		}
 		else
-			if(line.getAssemblyLineScheduler().getOrders().size()== 0)
+			if(line.getAssemblyLineScheduler().getOrders().size() <= 1)
 				return null;
-		return line.getAssemblyLineScheduler().getOrders().getLast();
+		return line.getAssemblyLineScheduler().getOrders().get(line.getAssemblyLineScheduler().getOrders().size()-2);
 	}
 	
 	/**
@@ -223,14 +223,7 @@ public class OrderManager implements Subject {
 		return temp;
 	}
 
-<<<<<<< HEAD
-=======
-	public MainScheduler getMainScheduler() {
-		return this.mainscheduler;
-	}
-
->>>>>>> 197779e3c52a31471082fd617be522b465bb3ebf
-	@Override
+@Override
 	public void subscribeObserver(Observer observer) throws IllegalArgumentException {
 		if (observer == null) throw new IllegalArgumentException("Bad observer!");
 		this.observers.add(observer);
