@@ -84,7 +84,7 @@ public class VehicleMechanicView extends View {
 
     private void selectWorkPost(){
         ArrayList<WorkPost> posts = new ArrayList<WorkPost>();
-        Iterator<WorkPost> temp = this.getModel().getWorkPosts(this.user);
+        Iterator<WorkPost> temp = this.getModel().getWorkPosts(this.user, this.selectedAssemblyLine);
         while(temp.hasNext())
             posts.add(temp.next());
         System.out.println("> Please enter the number of the work post you are residing at");

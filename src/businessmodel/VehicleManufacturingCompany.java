@@ -130,12 +130,12 @@ public class VehicleManufacturingCompany implements Model {
 
 	@Override
 	public Iterator<VehicleOption> getUnscheduledVehicleOptions(int num) {
-		return this.getOrderManager().getMainScheduler().getUnscheduledVehicleOptions(num).iterator();
+		return this.getOrderManager().getMainScheduler().getUnscheduledVehicleOptions(num);
 	}
 
 	@Override
 	public String getCurrentSystemWideAlgo() {
-		return this.ordermanager.getMainScheduler().currentSystemWideAlgoDescription();
+		return this.ordermanager.getMainScheduler().currentSystemWideAlgorithmDescription();
 	}
 
 	
@@ -144,8 +144,8 @@ public class VehicleManufacturingCompany implements Model {
 	 * @return The current time of the system.
 	 */
 	// TODO
-	public DateTime getSystemTime(){
-		return new DateTime(ordermanager.getMainScheduler().getCurrentTime());
+	public DateTime getSystemTime(AssemblyLine assemblyLine){
+		return new DateTime(assemblyLine.getAssemblyLineScheduler().getCurrentTime());
 	}
 
     @Override

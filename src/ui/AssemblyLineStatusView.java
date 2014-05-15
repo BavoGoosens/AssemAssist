@@ -36,7 +36,7 @@ public class AssemblyLineStatusView extends View implements Observer {
 
 	@Override
 	public void display() {
-		Iterator<WorkPost> postss =  this.getModel().getWorkPosts(this.selectedAssemblyLine);
+		Iterator<WorkPost> postss =  this.getModel().getWorkPosts(this.user, this.selectedAssemblyLine);
 		ArrayList<WorkPost> posts = new ArrayList<WorkPost>();
 		while(postss.hasNext())
 			posts.add(postss.next());

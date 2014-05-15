@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import businessmodel.assemblyline.AssemblyLine;
-import businessmodel.category.VehicleModel;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
@@ -80,7 +79,7 @@ public class OrderManager implements Subject {
 		if (user == null) throw new IllegalArgumentException("Bad user!");
 		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
 		ArrayList<Order> pendingorders = new ArrayList<Order>();
-		for(AssemblyLine line: this.getMainScheduler().getAssemblylines()){
+		for(AssemblyLine line: this.getMainScheduler().getAssemblyLines()){
 			pendingorders.addAll(line.getAssemblyLineScheduler().getOrdersClone());
 			for (Order order: this.getPendingOrders()){
 				if (order.getUser() == user)
