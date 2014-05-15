@@ -40,7 +40,7 @@ public class TestScheduling {
 
 		}
 
-		for(AssemblyLine assem: ordermanager.getMainScheduler().getAssemblylines()){
+		for(AssemblyLine assem: ordermanager.getMainScheduler().getAssemblyLines()){
 			System.out.println("-----------------New Assem");
 			for(TimeSlot timeslot : assem.getAssemblyLineScheduler().getShifts().get(0).getTimeSlots()){
 				System.out.println("--------New TimeSlot");
