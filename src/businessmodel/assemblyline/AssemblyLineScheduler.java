@@ -83,7 +83,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * Get a clone of the current orders in the schedule.
 	 * @return a clone of the current orders.
 	 */
-    // TODO: werken met iterators
+	// TODO: werken met iterators
 	public LinkedList<Order> getOrdersClone(){
 		return (LinkedList<Order>) this.orders.clone();
 	}
@@ -193,7 +193,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @throws 	IllegalArgumentException
 	 */
-	public void changeAlgorithm(String algoname, VehicleOption option) throws IllegalSchedulingAlgorithmException, IllegalArgumentException{
+	public void changeAlgorithm(String algoname, ArrayList<VehicleOption> options) throws IllegalSchedulingAlgorithmException, IllegalArgumentException{
 
 		if (algoname == null){
 			throw new NullPointerException("No scheduling algorithm supplied");
@@ -201,10 +201,10 @@ public class AssemblyLineScheduler implements Subject {
 			this.algortime = new FIFO(this);
 		}else if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch")){
 
-			if (option == null) throw new IllegalArgumentException("No such option");
-			if (!this.checkOptionsForSpecificationBatch(option)) throw new IllegalArgumentException("Too little orders with that option ( less than 3 )");
+			if (options == null) throw new IllegalArgumentException("No such option");
+			if (!this.checkOptionsForSpecificationBatch(options)) throw new IllegalArgumentException("Too little orders with that option ( less than 3 )");
 
-			this.algortime = new SpecificationBatch(this,option);
+			this.algortime = new SpecificationBatch(this,options);
 		}else{
 			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");
 		}
@@ -218,7 +218,7 @@ public class AssemblyLineScheduler implements Subject {
 	public LinkedList<Order> getOrders() {
 		return this.orders;
 	}
-	
+
 	/**
 	 * Returns the shifts of this assemblyline.
 	 * 
@@ -361,11 +361,13 @@ public class AssemblyLineScheduler implements Subject {
 		this.delay = delay;
 	}
 
-	private boolean checkOptionsForSpecificationBatch(VehicleOption option) {
+	private boolean checkOptionsForSpecificationBatch(ArrayList<VehicleOption> options) {
 		int count = 0;
 		for(Order order: this.getOrders())
-			if (order.getOptions().toString().contains(option.toString()))
-				count++;
+			for(VehicleOption opt: options)
+				for(VehicleOption opt2: order.getOptions())
+					if (opt.toString().equals(opt2.toString()))
+						count++;
 		if (count < 3)
 			return false;
 		return true;
@@ -376,10 +378,13 @@ public class AssemblyLineScheduler implements Subject {
 	 * @param maxNumber
 	 * @return
 	 */
+	//TODO check this shit
 	public ArrayList<VehicleOption> getUnscheduledVehicleOptions(int maxNumber){
+		
 		HashMap<String, Integer> list = new HashMap<String, Integer>();
 		ArrayList<String> options = new ArrayList<String>();
 		HashMap<String, VehicleOption> result = new HashMap<String, VehicleOption>();
+		
 		for(Order order: this.getOrders()){
 			for(VehicleOption option: order.getOptions()){
 				if (list.containsKey(option.getName())){
@@ -393,6 +398,7 @@ public class AssemblyLineScheduler implements Subject {
 				}
 			}
 		}
+		
 		for (String optionName: options)
 			if (list.get(optionName) < 3)
 				result.remove(optionName);

@@ -14,9 +14,9 @@ public class MainScheduler {
 
 	private ArrayList<AssemblyLine> assemblylines;
 
-    private String systemWideAlgo;
+	private String systemWideAlgo;
 
-    public MainScheduler(OrderManager ordermanager){
+	public MainScheduler(OrderManager ordermanager){
 		this.setOrderManager(ordermanager);
 		this.generateAssemblyLines();
 	}
@@ -43,13 +43,13 @@ public class MainScheduler {
 		return this.assemblylines;
 	}
 
-    public ArrayList<AssemblyLineScheduler> getAssemblyLineSchedulers() {
-        ArrayList<AssemblyLineScheduler> schedulers = new ArrayList<AssemblyLineScheduler>();
-        for (AssemblyLine assemblyLine: this.getAssemblyLines()) {
-            schedulers.add(assemblyLine.getAssemblyLineScheduler());
-        }
-        return schedulers;
-    }
+	public ArrayList<AssemblyLineScheduler> getAssemblyLineSchedulers() {
+		ArrayList<AssemblyLineScheduler> schedulers = new ArrayList<AssemblyLineScheduler>();
+		for (AssemblyLine assemblyLine: this.getAssemblyLines()) {
+			schedulers.add(assemblyLine.getAssemblyLineScheduler());
+		}
+		return schedulers;
+	}
 
 	public ArrayList<Order> getNbOrders(int size, AssemblyLine assemblyline) {
 		return null;
@@ -70,19 +70,19 @@ public class MainScheduler {
 
 	private void generateAssemblyLines() {
 		ArrayList<AssemblyLine> assemblylines = new ArrayList<AssemblyLine>();
-	    AssemblyLineAFactory factoryA = new AssemblyLineAFactory();
-	    AssemblyLineBFactory factoryB = new AssemblyLineBFactory();
-	    AssemblyLineCFactory factoryC = new AssemblyLineCFactory();
+		AssemblyLineAFactory factoryA = new AssemblyLineAFactory();
+		AssemblyLineBFactory factoryB = new AssemblyLineBFactory();
+		AssemblyLineCFactory factoryC = new AssemblyLineCFactory();
 
-	    AssemblyLine line1 = factoryA.createAssemblyLine();
-	    AssemblyLine line2 = factoryB.createAssemblyLine();
-	    AssemblyLine line3 = factoryC.createAssemblyLine();
+		AssemblyLine line1 = factoryA.createAssemblyLine();
+		AssemblyLine line2 = factoryB.createAssemblyLine();
+		AssemblyLine line3 = factoryC.createAssemblyLine();
 
-	    assemblylines.add(line1);
-	    assemblylines.add(line2);
-	    assemblylines.add(line3);
+		assemblylines.add(line1);
+		assemblylines.add(line2);
+		assemblylines.add(line3);
 
-	    this.setAssemblyLines(assemblylines);
+		this.setAssemblyLines(assemblylines);
 	}
 
 	public OrderManager getOrderManager() {
@@ -97,27 +97,35 @@ public class MainScheduler {
 		this.assemblylines = assemblylines;
 	}
 
-    protected void changeSystemWideAlgorithm(String algo, VehicleOption option) {
-        this.systemWideAlgo = algo;
-        for (AssemblyLine assemblyLine: this.getAssemblyLines()) {
-            assemblyLine.getAssemblyLineScheduler().changeAlgorithm(algo, option);
-        }
-    }
+	protected void changeSystemWideAlgorithm(String algo, ArrayList<VehicleOption> options) {
+		this.systemWideAlgo = algo;
+		for (AssemblyLine assemblyLine: this.getAssemblyLines()) {
+			assemblyLine.getAssemblyLineScheduler().changeAlgorithm(algo, options);
+		}
+	}
 
-    public String currentSystemWideAlgorithmDescription() {
-        return this.systemWideAlgo;
-    }
+	public String currentSystemWideAlgorithmDescription() {
+		return this.systemWideAlgo;
+	}
 
-    public Iterator<VehicleOption> getUnscheduledVehicleOptions(int num) {
-        ArrayList<VehicleOption> choices = new ArrayList<VehicleOption>();
-        for (AssemblyLine line : this.assemblylines){
-            ArrayList<VehicleOption> assOptions = line.getAssemblyLineScheduler().getUnscheduledVehicleOptions(num);
-            for (VehicleOption option : assOptions){
-                if (!choices.contains(option))
-                    choices.add(option);
-            }
-        }
-        return  choices.iterator();
-    }
+	//TODO moet nog getest worden
+	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions(int num) {
+		
+		ArrayList<ArrayList<VehicleOption>> choices = new ArrayList<ArrayList<VehicleOption>>();
+		for (AssemblyLine line : this.assemblylines){
+			ArrayList<VehicleOption> assOptions = line.getAssemblyLineScheduler().getUnscheduledVehicleOptions(num);
+			for(ArrayList<VehicleOption> opt: choices){
+				int count=0;
+				for (VehicleOption option : assOptions){
+					for(VehicleOption opt2: opt){
+						count++;
+					}
+				}
+				if (count!=opt.size())
+					choices.add(opt);
+			}
+		}
+		return  choices.iterator();
+	}
 
 }

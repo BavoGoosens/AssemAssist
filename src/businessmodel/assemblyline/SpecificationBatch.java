@@ -45,16 +45,17 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 
 			for(Order order: orderList){
 				int count = 0;
-				for (VehicleOption option2: this.options){
-					for(VehicleOption option: order.getOptions()){
-						count++;
+				for (VehicleOption option: this.options){
+					for(VehicleOption option2: order.getOptions()){
+						if (option.toString().equals(option2.toString()))
+							count++;
 					}
 				}
 				if (count == this.options.size()){
 					similarVehicleOptionsOrder.add(order);
 				}
 			}
-			
+
 			for(Order ord: similarVehicleOptionsOrder)
 				orderList.remove(ord);
 			Collections.reverse(similarVehicleOptionsOrder);
