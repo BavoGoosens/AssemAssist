@@ -85,7 +85,7 @@ public class MainScheduler {
 	    this.setAssemblyLines(assemblylines);
 	}
 
-	private OrderManager getOrderManager() {
+	public OrderManager getOrderManager() {
 		return ordermanager;
 	}
 

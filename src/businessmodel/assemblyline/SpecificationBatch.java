@@ -2,6 +2,7 @@ package businessmodel.assemblyline;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import businessmodel.category.VehicleOption;
@@ -15,7 +16,7 @@ import businessmodel.order.Order;
 public class SpecificationBatch extends SchedulingAlgorithm {
 
 	private LinkedList<Order> orderList = new LinkedList<Order>();
-	private VehicleOption option;
+	private ArrayList<VehicleOption> options;
 
 	/**
 	 * Creates a specification batch algorithm with a assemblyline and an option to schedule to options from.
@@ -23,28 +24,36 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	 * 			The assemblyline of the algorithm.
 	 * @param 	option
 	 */
-	public SpecificationBatch(AssemblyLineScheduler scheduler, VehicleOption option){
+	public SpecificationBatch(AssemblyLineScheduler scheduler, ArrayList<VehicleOption> options){
 		super(scheduler);
-		this.setOption(option);
+		this.setOptions(options);
 		ArrayList<Order> list = new ArrayList<Order>(this.getScheduler().getOrders());
 		for(Order order: list)
 			this.scheduleOrder(order);
-		
+
 	}
 
 	private void reschedule(Order currentOrder) {
-		
+
 		this.getScheduler().generateShifts();
 		ArrayList<Order> similarVehicleOptionsOrder = new ArrayList<Order>();
 		this.getScheduler().ScheduleDay();
 		orderList.add(currentOrder);
-	
+
 		if (orderList.size() != 0){
-			
-			for(Order order: orderList)
-				for(VehicleOption option: order.getOptions())
-					if (option.toString().equals(this.option.toString()))
-						similarVehicleOptionsOrder.add(order);
+
+
+			for(Order order: orderList){
+				int count = 0;
+				for (VehicleOption option2: this.options){
+					for(VehicleOption option: order.getOptions()){
+						count++;
+					}
+				}
+				if (count == this.options.size()){
+					similarVehicleOptionsOrder.add(order);
+				}
+			}
 			
 			for(Order ord: similarVehicleOptionsOrder)
 				orderList.remove(ord);
@@ -55,10 +64,10 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 		}else{
 			orderList.addLast(currentOrder);
 		}
-		
+
 		this.getScheduler().getOrders().clear();
 		for(Order order: orderList){
-			this.getScheduler().getAssemblyline().getOrderManager().setEstimatedCompletionDateOfOrder(order, this.getScheduler().getAssemblyline());
+			this.getScheduler().getAssemblyline().getMainScheduler().getOrderManager().setEstimatedCompletionDateOfOrder(order, this.getScheduler().getAssemblyline());
 			this.getScheduler().getOrders().add(order);
 		}
 	}
@@ -66,9 +75,9 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 
 	@Override
 	public void scheduleOrder(Order currentOrder) {
-		
+
 		this.reschedule(currentOrder);
-		
+
 		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();
 		for(Order order: orderList){
 			for (Shift sh: this.getScheduler().getShifts()){
@@ -81,10 +90,10 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 		}
 	}
 
-	private void setOption(VehicleOption option) throws IllegalArgumentException {
-		if(option == null)
-			throw new IllegalArgumentException("Not an option");
-		this.option = option;
+	private void setOptions(ArrayList<VehicleOption> options) throws IllegalArgumentException {
+		if(options == null)
+			throw new IllegalArgumentException("Not valid options");
+		this.options = options;
 	}
 
 }
