@@ -137,7 +137,7 @@ public interface Model {
 	 * 
 	 * @return The unscheduled car options of the model.
 	 */
-	public Iterator<VehicleOption> getUnscheduledVehicleOptions(int num);
+	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions(int num);
 
 	/**
 	 * Returns the system time.

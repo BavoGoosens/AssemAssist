@@ -102,6 +102,7 @@ public class InitialData {
 		}
 	}
 
+	// TODO
 	private void processOrders() {
 
 		Iterator<AssemblyLine> assemblylines = this.vmc.getAssemblyLines();
@@ -112,6 +113,7 @@ public class InitialData {
 				for(WorkPost wp: assem.getWorkPosts()){
 					Iterator<AssemblyTask> iter1 = this.vmc.getPendingTasks(wp);
 					List<AssemblyTask> copy1 = new ArrayList<AssemblyTask>();
+					// Deze iterator blijft lopen
 					while (iter1.hasNext()){
 						AssemblyTask task = iter1.next();
 						copy1.add(task);

@@ -126,7 +126,7 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
-	public Iterator<VehicleOption> getUnscheduledVehicleOptions(int num) {
+	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions(int num) {
 		return this.getOrderManager().getMainScheduler().getUnscheduledVehicleOptions(num);
 	}
 
@@ -175,8 +175,8 @@ public class VehicleManufacturingCompany implements Model {
 	 * 			The new algorithm
 	 * @param 	option
 	 */
-	public void changeSystemWideAlgorithm(String algo, VehicleOption option) {
-		this.getOrderManager().getMainScheduler().changeSystemWideAlgorithm(algo, option);
+	public void changeSystemWideAlgorithm(String algo, ArrayList<VehicleOption> options) {
+		this.getOrderManager().getMainScheduler().changeSystemWideAlgorithm(algo, options);
 	}
 
 	/**

@@ -1,5 +1,7 @@
 package control;
 
+import java.util.ArrayList;
+
 import businessmodel.Model;
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.category.VehicleOption;
@@ -14,8 +16,8 @@ public class SchedulingHandler implements SchedulingController{
 	}
 
 	@Override
-	public void selectAlgorithm(String algo, VehicleOption args) {
-		this.cmc.changeSystemWideAlgorithm(algo, args);
+	public void selectAlgorithm(String algo, ArrayList<VehicleOption> options) {
+		this.cmc.changeSystemWideAlgorithm(algo, options);
 	}
 
 }
