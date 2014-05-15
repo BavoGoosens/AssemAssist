@@ -228,5 +228,5 @@ public abstract class Order {
 	@Override
 	public String toString() {
 		return "user: " + this.user.toString() + ", delivery date= " + this.estimatedDeliveryDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT); 
-	}
+	}	
 }
