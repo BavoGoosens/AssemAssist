@@ -63,6 +63,7 @@ public class MainScheduler {
 
 	}
 
+	// TODO orders proberen schedulen op andere line.
 	public void placeOrderInFront(Order order) {
 
 	}

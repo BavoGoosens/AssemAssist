@@ -1,15 +1,17 @@
 package businessmodel.assemblyline;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
+import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.order.Order;
 import businessmodel.util.SafeIterator;
 
 /**
  * A class representing a work post.
- * 
+ *
  * @author SWOP Team 10 2014
  *
  */
@@ -69,7 +71,7 @@ public class WorkPost {
 
 	/**
 	 * Sets the list of assembly tasks this work post is responsible for.
-	 * 
+	 *
 	 * @param 	responsibleTasks
 	 * 		  	The new list with all the assembly tasks the work post is responsible for.
 	 * @throws	IllegalArgumentException
@@ -86,16 +88,16 @@ public class WorkPost {
 
 	/**
 	 * Returns the order the work post is currently working on.
-	 * 
+	 *
 	 * @return The order the work post is currently working on.
 	 */
 	public Order getOrder() {
 		return this.orderInProcess;
 	}
-	
+
 	/**
 	 * Returns whether the work post is in a completed state.
-	 * 
+	 *
 	 * @return True if all tasks that are pending at the work post are completed.
 	 */
 	public boolean isCompleted(){
@@ -108,7 +110,7 @@ public class WorkPost {
 
 	/**
 	 * Returns the name of the work post.
-	 * 
+	 *
 	 * @return	The name of the work post.
 	 */
 	public String getName() {
@@ -117,7 +119,7 @@ public class WorkPost {
 
 	/**
 	 * Returns a cloned list of assembly tasks the work post is responsible for.
-	 * 
+	 *
 	 * @return	A cloned list of assembly tasks the work post is responsible for.
 	 */
 
@@ -128,7 +130,7 @@ public class WorkPost {
 
 	/**
 	 * Refreshes the order the work post is currently working on an returns the previous order.
-	 * 
+	 *
 	 * @param	order
 	 * 			The new order the work post needs to start working on.
 	 * @return	The order the work post was previously working on.
@@ -141,7 +143,7 @@ public class WorkPost {
 
 	/**
 	 * Returns the tasks that are pending at the work post.
-	 * 
+	 *
 	 * @return	The tasks that are pending at the work post
 	 */
 	public Iterator<AssemblyTask> getPendingTasks() {
@@ -156,18 +158,27 @@ public class WorkPost {
         return safe;
 	}
 
+	public Iterator<AssemblyTask> getPendingTasksIterator(){
+		return this.getPendingTasks().iterator();
+	}
+
+	public Iterator<AssemblyTask> getFinishedTasksIterator(){
+		return this.getFinishedTasks().iterator();
+	}
+
+
 	/**
-	 * Returns the list of assembly tasks that this work post can carry out based on 
+	 * Returns the list of assembly tasks that this work post can carry out based on
 	 * the given car options.
-	 * 
+	 *
 	 * @param 	carOptions
 	 * 		  	A list of options that need to be installed.
-	 * 
-	 * @return 	The list of assembly tasks that this work post can carry out based on the 
+	 *
+	 * @return 	The list of assembly tasks that this work post can carry out based on the
 	 * 			given car options.
 	 */
 	protected ArrayList<AssemblyTask> possibleAssemblyTasks(ArrayList<VehicleOption> carOptions) throws IllegalArgumentException {
-		if (carOptions == null) 
+		if (carOptions == null)
 			throw new IllegalArgumentException("Bad list of car parts!");
 		ArrayList<AssemblyTask> result = new ArrayList<AssemblyTask>();
 		for(AssemblyTask assem : this.getResponsibleTasks()){
@@ -178,7 +189,7 @@ public class WorkPost {
 		}
 		return result;
 	}
-	
+
 	protected void AssemblyTaskCompleted(AssemblyTask assem, int time) {
 		this.getPendingTasks().remove(assem);
 		this.finishedTasks.add(assem);
@@ -203,9 +214,9 @@ public class WorkPost {
 	}
 
 	/**
-	 * This method sets the order the work post is currently working on to 
+	 * This method sets the order the work post is currently working on to
 	 * the given order and refreshes the assembly tasks.
-	 * 
+	 *
 	 * @param   The order that this work post needs to start working on.
 	 */
 	protected void setNewOrder(Order order) {
@@ -216,7 +227,7 @@ public class WorkPost {
 	}
 
 	/**
-	 * This method refreshes the pending tasks that need to be done for the current order. 
+	 * This method refreshes the pending tasks that need to be done for the current order.
 	 */
 	private void refreshAssemblyTasks() {
 		if (this.getOrder() != null) {
@@ -237,16 +248,16 @@ public class WorkPost {
 
 	/**
 	 * This method sets the name of the work post to the given name.
-	 * 
+	 *
 	 * @param	name
 	 * 			The name of the work post
-	 * 
+	 *
 	 * @throws 	IllegalArgumentException
 	 * 			| If the name is equal to 'null'
 	 * 			| name == null
 	 */
 	private void setName(String name) throws IllegalArgumentException {
-		if (name == null) 
+		if (name == null)
 			throw new IllegalArgumentException();
 		this.name = name;
 	}
@@ -257,7 +268,7 @@ public class WorkPost {
 
 	/**
 	 * This method sets the tasks that are pending at the work post.
-	 * 
+	 *
 	 * @param	tasks
 	 * 			The tasks that are pending at the work post.
 	 * @throws 	IllegalArgumentException
@@ -272,7 +283,7 @@ public class WorkPost {
 
 	/**
 	 * Returns the list of assembly tasks the work post is responsible for.
-	 * 
+	 *
 	 * @return The list with all the assembly tasks this work post is responsible for.
 	 */
 	private ArrayList<AssemblyTask> getResponsibleTasks() {

@@ -1,6 +1,7 @@
 package businessmodel.assemblyline;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import businessmodel.category.Airco;
 import businessmodel.category.Seats;

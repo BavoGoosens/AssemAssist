@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import businessmodel.assemblyline.AssemblyLine;
+import businessmodel.assemblyline.WorkPost;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
@@ -44,24 +45,6 @@ public class OrderManager implements Subject {
 	@SuppressWarnings("unchecked")
 	public LinkedList<Order> getCompletedOrdersClone(){
 		return (LinkedList<Order>) this.completedorders.clone();
-	}
-
-	/**
-	 * A method to add an order to this order manager.
-	 *
-	 * @param   order
-	 *          the order that needs to be added.
-	 */
-	protected void placeOrder(Order order) throws IllegalArgumentException {
-		if (order == null)
-			throw new IllegalArgumentException("Bad order!");
-		AssemblyLine line = this.getMainScheduler().placeOrder(order);
-		if(line!= null){
-			order.setTimestampOfOrder(line.getAssemblyLineScheduler().getCurrentTime());
-			this.setEstimatedCompletionDateOfOrder(order, line);}
-		else{
-			this.getPendingOrders().add(order);
-		}
 	}
 
 	public LinkedList<Order> getPendingOrders(){
@@ -167,7 +150,7 @@ public class OrderManager implements Subject {
 	 * @param order
 	 */
 	public void setEstimatedCompletionDateOfOrder(Order order, AssemblyLine line){
-
+	
 		Order previousorder = this.getPreviousOrder(order, line);
 		if(previousorder != null) {
 			if(previousorder.getEstimatedDeliveryDate() == null){
@@ -182,6 +165,24 @@ public class OrderManager implements Subject {
 		}
 	}
 
+	/**
+	 * A method to add an order to this order manager.
+	 *
+	 * @param   order
+	 *          the order that needs to be added.
+	 */
+	protected void placeOrder(Order order) throws IllegalArgumentException {
+		if (order == null)
+			throw new IllegalArgumentException("Bad order!");
+		AssemblyLine line = this.getMainScheduler().placeOrder(order);
+		if(line!= null){
+			order.setTimestampOfOrder(line.getAssemblyLineScheduler().getCurrentTime());
+			this.setEstimatedCompletionDateOfOrder(order, line);}
+		else{
+			this.getPendingOrders().add(order);
+		}
+	}
+
 	public MainScheduler getMainScheduler() {
 		return this.mainscheduler;
 	}
@@ -192,7 +193,6 @@ public class OrderManager implements Subject {
 	 * 			the current order.
 	 * @return	the previous order of the current order.
 	 */
-	// Nakijken of het werkt met de clone
 	protected Order getPreviousOrder(Order order, AssemblyLine line){
 		if(line.getAssemblyLineScheduler().getOrders().size() > line.getAssemblyLineScheduler().getNumberOfOrdersToSchedule()){
 			int index = this.getPendingOrders().indexOf(order);

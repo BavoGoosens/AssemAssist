@@ -8,7 +8,6 @@ import java.util.List;
 import org.joda.time.DateTime;
 
 import businessmodel.MainScheduler;
-import businessmodel.OrderManager;
 import businessmodel.category.VehicleModel;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
@@ -43,6 +42,7 @@ public class AssemblyLine implements Subject{
 		this.setState(operational);
 		this.mainscheduler = mainscheduler;
 		this.setScheduler(scheduler);
+		this.generateWorkPosts();
 	}
 
     protected AssemblyLine(){
@@ -179,6 +179,18 @@ public class AssemblyLine implements Subject{
 			this.getAssemblyLineScheduler().advance(this.timeCurrentStatus);
 	}
 
+	/**
+	 * Generates work posts.
+	 */
+	private void generateWorkPosts(){
+		WorkPost post1 = new WorkPost("Vehicle Body Post", this);
+		WorkPost post2 = new WorkPost("Drivetrain Post", this);
+		WorkPost post3 = new WorkPost("Accesoires Post", this);	
+		this.workposts.add(post1);
+		this.workposts.add(post2);
+		this.workposts.add(post3);
+	}
+
 
 	public AssemblyLineScheduler getAssemblyLineScheduler() {
 		return assemblylineScheduler;
@@ -215,7 +227,6 @@ public class AssemblyLine implements Subject{
 		return this.broken;
 	}
 
-
 	/**
 	 * @return operational state assembly line
 	 */
@@ -245,6 +256,4 @@ public class AssemblyLine implements Subject{
 	protected MainScheduler getMainScheduler(){
 		return this.mainscheduler;
 	}
-
-	
 }
