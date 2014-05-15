@@ -21,15 +21,12 @@ public class TestOrder {
 	private StandardVehicleOrder order;
 	GarageHolder holder;
 
-	public TestOrder(){
-	}
-	
-	public void setUser(GarageHolder holder){
+	public TestOrder(GarageHolder holder, String name){
 		this.holder = holder;
-		makeOrder();
+		makeOrder(holder,name);
 	}
 
-	private void makeOrder(){
+	private void makeOrder(GarageHolder holder, String name){
 		ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();
 		VehicleOption option1 = new VehicleOption("Seats",new Seats());
 		VehicleOption option2 = new VehicleOption("Body",new Body());
@@ -43,7 +40,7 @@ public class TestOrder {
 		options.add(option4);
 		options.add(option5);
 		options.add(option6);
-		VehicleModel vehiclemodel = new VehicleModel("Test", new VehicleModelSpecification(options));
+		VehicleModel vehiclemodel = new VehicleModel(name, new VehicleModelSpecification(options));
 		try {
 			order = new StandardVehicleOrder(holder,options, vehiclemodel);
 		} catch (IllegalArgumentException e) {

@@ -6,6 +6,8 @@ import java.util.Locale;
 
 import org.joda.time.DateTime;
 
+import businessmodel.category.Vehicle;
+import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
@@ -48,6 +50,11 @@ public abstract class Order {
 	 * Indicates whether the order is completed.
 	 */
 	private boolean completed;
+	
+	/**
+	 * The car model of the order.
+	 */
+	private VehicleModel carModel;
 
 	/**
 	 * Creates a new order with a given user.
@@ -58,8 +65,9 @@ public abstract class Order {
 	 * @throws 	NoClearanceException
 	 * @throws 	UnsatisfiedRestrictionException
 	 */
-	public Order(User user) throws IllegalArgumentException, NoClearanceException, UnsatisfiedRestrictionException {
+	public Order(User user, VehicleModel model) throws IllegalArgumentException, NoClearanceException, UnsatisfiedRestrictionException {
 		setUser(user);
+		setVehicleModel(model);
 	}
 	
 	/**
@@ -223,6 +231,25 @@ public abstract class Order {
 		if(orderPlacedOnAssemblyLine == null) 
 			throw new IllegalArgumentException("Bad order placed on assembly line date!");
 		this.orderPlacedOnAssemblyLine = orderPlacedOnAssemblyLine;		
+	}
+	
+	/**
+	 * Sets the car model of the order to the given car model.
+	 * 
+	 * @param 	model
+	 * 			The car model that is ordered.
+	 */
+	private void setVehicleModel(VehicleModel model) throws IllegalArgumentException {
+		this.carModel = model;
+	}
+	
+	/**
+	 * Returns the car model that is ordered.
+	 * 
+	 * @return The car model that is ordered.
+	 */
+	public VehicleModel getVehicleModel() {
+		return this.carModel;
 	}
 
 	@Override
