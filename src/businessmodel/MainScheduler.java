@@ -45,7 +45,7 @@ public class MainScheduler {
 
     public ArrayList<AssemblyLineScheduler> getAssemblyLineSchedulers() {
         ArrayList<AssemblyLineScheduler> schedulers = new ArrayList<AssemblyLineScheduler>();
-        for (AssemblyLine assemblyLine: this.getAssemblylines()) {
+        for (AssemblyLine assemblyLine: this.getAssemblyLines()) {
             schedulers.add(assemblyLine.getAssemblyLineScheduler());
         }
         return schedulers;
@@ -118,4 +118,5 @@ public class MainScheduler {
         }
         return  choices.iterator();
     }
+
 }

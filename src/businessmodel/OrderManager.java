@@ -86,7 +86,7 @@ public class OrderManager implements Subject {
 			}
 		}
 		return pendingorders;
-	}
+	};
 
 	/**
 	 * A method to get the completed orders of this order manager.
@@ -182,7 +182,7 @@ public class OrderManager implements Subject {
 		}
 	}
 
-	protected MainScheduler getMainScheduler() {
+	public MainScheduler getMainScheduler() {
 		return this.mainscheduler;
 	}
 
