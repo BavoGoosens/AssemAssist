@@ -1,7 +1,6 @@
 package businessmodel.assemblyline;
 
 
-import businessmodel.assemblyline.AssemblyLineScheduler;
 import businessmodel.order.Order;
 
 //Interface for subclasses.

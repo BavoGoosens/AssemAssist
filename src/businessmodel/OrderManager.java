@@ -3,7 +3,7 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import businessmodel.assemblyline.AssemblyLineScheduler;
+import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.category.VehicleModel;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
@@ -21,25 +21,11 @@ import businessmodel.user.User;
 public class OrderManager implements Subject {
 
 	private ArrayList<Observer> observers;
-	
-	/**
-	 * A list that holds all the completed orders of a car manufacturing company.
-	 */
+
 	private LinkedList<Order> completedorders;
 
-	/**
-	 * A list that holds all the car models of a car manufacturing company.
-	 */
-	private ArrayList<VehicleModel> vehiclemodels = new ArrayList<VehicleModel>();
+	private MainScheduler mainscheduler;
 
-	/**
-	 * A assemblyline this Order Manager uses.
-	 */
-	private AssemblyLineScheduler scheduler;
-
-	/**
-	 * List of the pending orders.
-	 */
 	private LinkedList<Order> pendingorders;
 
 	/**
@@ -48,23 +34,12 @@ public class OrderManager implements Subject {
 	 * @param    vehiclemodels
 	 *           the car models that a car manufacturing company offers.
 	 */
-	public OrderManager(ArrayList<VehicleModel> vehiclemodels) throws IllegalArgumentException {
+	public OrderManager() throws IllegalArgumentException {
 		this.pendingorders = new LinkedList<Order>();
 		this.completedorders = new LinkedList<Order>();
-		this.scheduler = new AssemblyLineScheduler(this);
+		this.mainscheduler = new MainScheduler(this);
+		this.generateAssemblyLine();
 		this.observers = new ArrayList<Observer>();
-		this.setVehicleModels(vehiclemodels);
-	}
-
-	/**
-	 * A method to get the car models of this order manager.
-	 * 
-	 * @return  ArrayList<VehicleModel> 
-	 * 			this.vehiclemodels
-	 */
-	@SuppressWarnings("unchecked")
-	public ArrayList<VehicleModel> getVehicleModels() {
-		return (ArrayList<VehicleModel>) vehiclemodels.clone();
 	}
 
 	// for testing
@@ -80,16 +55,18 @@ public class OrderManager implements Subject {
 	 *          the order that needs to be added.
 	 */
 	protected void placeOrder(Order order) throws IllegalArgumentException {
-		if (order == null) throw new IllegalArgumentException("Bad order!");
-		order.setTimestampOfOrder(this.getScheduler().getCurrentTime());
-		this.setEstimatedCompletionDateOfOrder(order);
-		if(this.getScheduler().canAddOrder())
-			this.getScheduler().addOrderToSchedule(order);
-		else
+		if (order == null) 
+			throw new IllegalArgumentException("Bad order!");
+		AssemblyLine line = this.getMainScheduler().placeOrder(order);
+		if(line!= null){
+			order.setTimestampOfOrder(line.getAssemblyLineScheduler().getCurrentTime());
+			this.setEstimatedCompletionDateOfOrder(order, line);}
+		else{
 			this.getPendingOrders().add(order);
+		}
 	}
 
-	protected LinkedList<Order> getPendingOrders(){
+	public LinkedList<Order> getPendingOrders(){
 		return this.pendingorders;
 	}
 
@@ -103,10 +80,12 @@ public class OrderManager implements Subject {
 		if (user == null) throw new IllegalArgumentException("Bad user!");
 		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
 		ArrayList<Order> pendingorders = new ArrayList<Order>();
-		pendingorders.addAll(this.getScheduler().getOrders());
-		for (Order order: this.getPendingOrders()){
-			if (order.getUser() == user)
-				pendingorders.add(order);
+		for(AssemblyLine line: this.getMainScheduler().getAssemblylines()){
+			pendingorders.addAll(line.getAssemblyLineScheduler().getOrdersClone());
+			for (Order order: this.getPendingOrders()){
+				if (order.getUser() == user)
+					pendingorders.add(order);
+			}
 		}
 		return pendingorders;
 	}
@@ -119,7 +98,7 @@ public class OrderManager implements Subject {
 	protected LinkedList<Order> getCompletedOrders(){
 		return this.completedorders;
 	}
-	
+
 	/**
 	 * A method to get the completed orders of a given user of this order manager.
 	 * 
@@ -142,8 +121,9 @@ public class OrderManager implements Subject {
 	 * @param finished 
 	 * 		  The Order that needs to be moved.
 	 */
-	protected void finishedOrder(Order finished) throws IllegalArgumentException {
-		if (finished == null) throw new IllegalArgumentException("Bad order!");
+	public void finishedOrder(Order finished) throws IllegalArgumentException {
+		if (finished == null) 
+			throw new IllegalArgumentException("Bad order!");
 		this.getCompletedOrders().add(finished);
 		this.notifyObservers();
 	}
@@ -157,20 +137,17 @@ public class OrderManager implements Subject {
 	 * @return LinkedList<Order>
 	 * 		   A list with the requested orders.
 	 */
-	protected LinkedList<Order> getNbOrders(int nb) {
-
-		if (nb < 0) throw new IllegalNumberException(nb, "Bad number!");
-
+	public LinkedList<Order> getNbOrders(int nb, AssemblyLine line) {
+		if (nb < 0)
+			throw new IllegalNumberException(nb, "Bad number!");
 		LinkedList<Order> res = new LinkedList<Order>();
-		LinkedList<Order> single_task_orders = getSingleTaskOrdersNextDay();
-
+		LinkedList<Order> single_task_orders = getSingleTaskOrdersNextDay(line);
 		if(single_task_orders!= null){
 			for(Order order: single_task_orders){
 				res.add(order);
 				getPendingOrders().remove(order);
 			}
 		}
-
 		for (int i = 0; i < (nb - single_task_orders.size()); i++){
 			Order order = getPendingOrders().poll();
 			if (order != null)
@@ -183,7 +160,7 @@ public class OrderManager implements Subject {
 	 * A method to place an order in front of the pending orders.
 	 * @param order
 	 */
-	protected void placeOrderInFront(Order order) {
+	public void placeOrderInFront(Order order) {
 		this.getPendingOrders().add(order);		
 	}
 
@@ -191,18 +168,18 @@ public class OrderManager implements Subject {
 	 * Method to set an estimated completion time for a particular order.
 	 * @param order
 	 */
-	protected void setEstimatedCompletionDateOfOrder(Order order){
-		Order previousorder = this.getPreviousOrder(order);
+	public void setEstimatedCompletionDateOfOrder(Order order, AssemblyLine line){
+		Order previousorder = this.getPreviousOrder(order, line);
 		if(previousorder != null) {
 			if(previousorder.getEstimatedDeliveryDate() == null){
-				order.setEstimatedDeliveryDateOfOrder(this.getScheduler().getCurrentTime().plusHours(3));
+				order.setEstimatedDeliveryDateOfOrder(line.getAssemblyLineScheduler().getCurrentTime().plusHours(3));
 			}else if(previousorder.getEstimatedDeliveryDate().getHourOfDay() <= 21){
 				order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusHours(1));
 			}else {
 				order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusDays(1).withHourOfDay(11).withMinuteOfHour(0));
 			}
 		}else{
-			order.setEstimatedDeliveryDateOfOrder(this.getScheduler().getCurrentTime().plusHours(3));
+			order.setEstimatedDeliveryDateOfOrder(line.getAssemblyLineScheduler().getCurrentTime().plusHours(3));
 		}
 	}
 
@@ -212,8 +189,9 @@ public class OrderManager implements Subject {
 	 * 			the current order.
 	 * @return	the previous order of the current order.
 	 */
-	protected Order getPreviousOrder(Order order){
-		if(this.getScheduler().getOrders().size() > this.getScheduler().getNumberOfOrdersToSchedule()){
+	// Nakijken of het werkt met de clone
+	protected Order getPreviousOrder(Order order, AssemblyLine line){
+		if(line.getAssemblyLineScheduler().getOrdersClone().size() > line.getAssemblyLineScheduler().getNumberOfOrdersToSchedule()){
 			int index = this.getPendingOrders().indexOf(order);
 			if(index-1 < 0)
 				return null;
@@ -221,51 +199,36 @@ public class OrderManager implements Subject {
 				return this.getPendingOrders().get(index-1);
 		}
 		else
-			if(this.getScheduler().getOrders().size()== 0)
+			if(line.getAssemblyLineScheduler().getOrdersClone().size()== 0)
 				return null;
-			return this.getScheduler().getOrders().getLast();
+		return line.getAssemblyLineScheduler().getOrdersClone().getLast();
 	}
-	
 
-	/**
-	 * Method to set the car models
-	 * 
-	 * @param vehiclemodels
-	 * @throws IllegalArgumentException
-	 */
-	private void setVehicleModels(ArrayList<VehicleModel> vehiclemodels) throws IllegalArgumentException {
-		if (vehiclemodels == null) throw new IllegalArgumentException("Bad list of car models!");
-		this.vehiclemodels = vehiclemodels;
+	private void generateAssemblyLine() {
+
 	}
 
 	/**
 	 * Method to return a list of the single task orders scheduled on the next day.
 	 * @return list of the single task orders scheduled on the next day.
 	 */
-	private LinkedList<Order> getSingleTaskOrdersNextDay() {
+	private LinkedList<Order> getSingleTaskOrdersNextDay(AssemblyLine line) {
 		LinkedList<Order> temp = new LinkedList<Order>();
-	
 		for(Order order: this.getPendingOrders()){
 			if(order.getUserEndDate()!= null){
-				if(order.getUserEndDate().getDayOfWeek()-1 == this.getScheduler().getCurrentTime().getDayOfWeek()){
+				if(order.getUserEndDate().getDayOfWeek()-1 == line.getAssemblyLineScheduler().getCurrentTime().getDayOfWeek()){
 					int index = this.getPendingOrders().indexOf(order);
 					temp.add(this.getPendingOrders().get(index));
 				}
 			}
 		}
-	
 		return temp;
 	}
 
-	/**
-	 * A method that returns the AssemblyLineScheduler for this OrderManager.
-	 * 
-	 * @return	this.assemblyline
-	 */
-	public AssemblyLineScheduler getScheduler() {
-		return this.scheduler;
+	public MainScheduler getMainScheduler() {
+		return this.mainscheduler;
 	}
-	
+
 	@Override
 	public void subscribeObserver(Observer observer) throws IllegalArgumentException {
 		if (observer == null) throw new IllegalArgumentException("Bad observer!");

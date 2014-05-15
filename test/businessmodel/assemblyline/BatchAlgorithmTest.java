@@ -1,26 +1,28 @@
-package businessmodel;
+package businessmodel.assemblyline;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-import businessmodel.order.StandardVehicleOrder;
 import org.junit.Test;
 
-import businessmodel.category.VehicleModel;
-import businessmodel.category.VehicleModelSpecification;
+import businessmodel.OrderManager;
+import businessmodel.VehicleManufacturingCompany;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
-import businessmodel.category.VehicleOption;
 import businessmodel.category.Color;
 import businessmodel.category.Engine;
 import businessmodel.category.Gearbox;
 import businessmodel.category.Seats;
+import businessmodel.category.VehicleModel;
+import businessmodel.category.VehicleModelSpecification;
+import businessmodel.category.VehicleOption;
 import businessmodel.category.Wheels;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.Order;
+import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
 
 
@@ -103,9 +105,9 @@ public class BatchAlgorithmTest {
 //			for(VehicleOption option : orderManager.getScheduler().getUnscheduledVehicleOptions(3))
 //				System.out.println(option);
 			
-			cmc.changeAlgorithm("sb",  new VehicleOption("medium engine",new Engine()));
+			cmc.changeSystemWideAlgorithm("sb", new VehicleOption("medium engine", new Engine()));
 			try{
-				cmc.changeAlgorithm("dsfsf",  new VehicleOption("medium engine",new Engine()));
+				cmc.changeSystemWideAlgorithm("dsfsf", new VehicleOption("medium engine", new Engine()));
 			}catch(IllegalSchedulingAlgorithmException ex){
 				ex.getMessage();
 			}

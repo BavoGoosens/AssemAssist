@@ -3,9 +3,9 @@ package businessmodel.restrictions;
 import java.util.ArrayList;
 
 import businessmodel.category.Body;
-import businessmodel.category.VehicleOption;
 import businessmodel.category.Engine;
 import businessmodel.category.Spoiler;
+import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 
 /**

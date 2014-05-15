@@ -5,10 +5,12 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.Model;
+import businessmodel.assemblyline.AssemblyLine;
+import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
 import businessmodel.user.User;
+import businessmodel.util.IteratorConverter;
 import control.AssemblyLineController;
 import control.AssemblyLineHandler;
 
@@ -17,6 +19,8 @@ public class VehicleMechanicView extends View {
 	private AssemblyLineController controller;
 
 	private Scanner scan = new Scanner(System.in);
+
+    private AssemblyLine selectedAssemblyLine;
 	
 	private WorkPost selected_workpost;
 
@@ -26,35 +30,82 @@ public class VehicleMechanicView extends View {
 		this.controller = new AssemblyLineHandler(this.getModel());
 	}
 
+    public VehicleMechanicView(Model cmc, User user, AssemblyLine line){
+        super(cmc);
+        setUser(user);
+        this.controller = new AssemblyLineHandler(this.getModel());
+        this.selectedAssemblyLine = line;
+    }
+
 	@Override
 	public void display() {
-		ArrayList<WorkPost> posts = new ArrayList<WorkPost>();
-		Iterator<WorkPost> temp = this.getModel().getWorkPosts(this.user);
-		while(temp.hasNext())
-			posts.add(temp.next());
-		System.out.println("> If you wish to check the assembly line status enter STATUS");
-		System.out.println("> If you want to perform pending assembly tasks enter the number of the workpost you are residing at");
-		System.out.println("> Available workposts");
-		int num  = 1;
-		for (WorkPost wp : posts)
-			System.out.println("> " + num++ + ") " + wp.toString());
-		System.out.print(">> ");
-		String response = this.scan.nextLine();
-		Pattern pattern = Pattern.compile("^\\d+$");
-		this.check(response);
-		if (response.equalsIgnoreCase("status")){
-			View view = new AssemblyLineStatusView(this.getModel(), this.user);
-			view.display();
-		} else if (pattern.matcher(response).find()){
-			int choice = Integer.parseInt(response);
-			if (choice < 1 || choice > posts.size())
-				this.error();
-			this.selected_workpost = posts.get(choice - 1);
-			this.performTasks(this.selected_workpost);
-		} else {
-			this.error();
-		}	
+        if (this.selectedAssemblyLine == null){
+            this.selectAssemblyLine();
+        }
+        this.displayOptions();
 	}
+
+    private void displayOptions() {
+        System.out.println("> If you wish to check the assembly line status enter STATUS");
+        System.out.println("> If you want to perform pending assembly tasks enter PERFORM");
+        System.out.print(">> ");
+        String response = this.scan.nextLine();
+        this.check(response);
+        if (response.equalsIgnoreCase("status")){
+            View view = new AssemblyLineStatusView(this.getModel(), this.user, this.selectedAssemblyLine);
+            view.display();
+        } else if (response.equalsIgnoreCase("perform")) {
+            this.selectWorkPost();
+        } else {
+            this.error();
+        }
+    }
+
+    private void selectAssemblyLine(){
+        IteratorConverter<AssemblyLine> converter = new IteratorConverter<AssemblyLine>();
+        ArrayList<AssemblyLine> lines = (ArrayList<AssemblyLine>) converter.convert(this.getModel().getAssemblyLines());
+        System.out.println("> Please enter the number of the assembly line you are residing at: ");
+        int num  = 1;
+        for (AssemblyLine line : lines)
+            System.out.println("> " + num++ + ") " + line.toString());
+        System.out.print(">> ");
+        String response = this.scan.nextLine();
+        Pattern pattern = Pattern.compile("^\\d+$");
+        this.check(response);
+        if (pattern.matcher(response).find()){
+            int choice = Integer.parseInt(response);
+            if (choice < 1 || choice > lines.size())
+                this.error();
+            this.selectedAssemblyLine = lines.get(choice - 1);
+        } else {
+            this.error();
+        }
+    }
+
+    private void selectWorkPost(){
+        ArrayList<WorkPost> posts = new ArrayList<WorkPost>();
+        Iterator<WorkPost> temp = this.getModel().getWorkPosts(this.user);
+        while(temp.hasNext())
+            posts.add(temp.next());
+        System.out.println("> Please enter the number of the work post you are residing at");
+        System.out.println("> Available work posts: ");
+        int num  = 1;
+        for (WorkPost wp : posts)
+            System.out.println("> " + num++ + ") " + wp.toString());
+        System.out.print(">> ");
+        String response = this.scan.nextLine();
+        Pattern pattern = Pattern.compile("^\\d+$");
+        this.check(response);
+        if (pattern.matcher(response).find()){
+            int choice = Integer.parseInt(response);
+            if (choice < 1 || choice > posts.size())
+                this.error();
+            this.selected_workpost = posts.get(choice - 1);
+            this.performTasks(this.selected_workpost);
+        } else {
+            this.error();
+        }
+    }
 
 	private void performTasks(WorkPost wp) {
 		Iterator<AssemblyTask> taskss = this.getModel().getPendingTasks(wp);

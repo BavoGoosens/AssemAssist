@@ -3,8 +3,8 @@ package businessmodel.restrictions;
 import java.util.ArrayList;
 
 import businessmodel.category.Airco;
-import businessmodel.category.VehicleOption;
 import businessmodel.category.Engine;
+import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 
 /**

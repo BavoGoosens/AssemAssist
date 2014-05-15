@@ -4,16 +4,16 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-import businessmodel.order.StandardVehicleOrder;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.VehicleManufacturingCompany;
-import businessmodel.category.VehicleModel;
 import businessmodel.Catalog;
+import businessmodel.VehicleManufacturingCompany;
+import businessmodel.category.ModelAFactory;
+import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
-import businessmodel.category.ModelAFactory;
+import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.Manager;
 
 

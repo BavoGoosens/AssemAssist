@@ -1,8 +1,14 @@
 package businessmodel.assemblyline;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
+import org.joda.time.DateTime;
+
+import businessmodel.MainScheduler;
+import businessmodel.category.VehicleModel;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
@@ -15,30 +21,61 @@ import businessmodel.order.Order;
  */
 public class AssemblyLine implements Subject{
 
-	
-	private AssemblyLineState broken;
+    private List<VehicleModel> responsibleModels;
+    private AssemblyLineState broken;
 	private AssemblyLineState maintenance;
 	private AssemblyLineState operational;
 	private AssemblyLineState state;
+	private MainScheduler mainscheduler;
 	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
 	private int timeCurrentStatus = 0;
-	private AssemblyLineScheduler scheduler;
+	private AssemblyLineScheduler assemblylineScheduler;
 	private ArrayList<Observer> subscribers = new ArrayList<Observer>();
 
 	/**
 	 * Creates a new assembly line.
 	 */
-	protected AssemblyLine(AssemblyLineScheduler scheduler) throws IllegalArgumentException {
-		
+	protected AssemblyLine(AssemblyLineScheduler scheduler, MainScheduler mainscheduler) throws IllegalArgumentException {
 		this.broken = new BrokenState(this);
 		this.maintenance  = new MaintenanceState(this);
 		this.operational  = new OperationalState(this);
 		this.setState(operational);
-		
+		this.mainscheduler = mainscheduler;
 		this.setScheduler(scheduler);
 		this.generateWorkPosts();
 	}
 
+    protected AssemblyLine(){
+        this.broken = new BrokenState(this);
+        this.maintenance  = new MaintenanceState(this);
+        this.operational  = new OperationalState(this);
+        this.setState(operational);
+    }
+
+    protected void setAssemblylineScheduler(AssemblyLineScheduler scheduler){
+        if (scheduler != null)
+            this.assemblylineScheduler = scheduler;
+        else
+            throw new IllegalArgumentException("There was no scheduler supplied");
+    }
+
+    protected void setWorkPosts( List<WorkPost> workPosts){
+        if (workPosts != null)
+            this.workposts = (ArrayList<WorkPost>) workPosts;
+        else
+            throw new IllegalArgumentException("There were no workposts supplied");
+    }
+
+    protected  void setResponsibleModels( List<VehicleModel> models){
+        if (models != null)
+            this.responsibleModels = models;
+        else
+            throw  new IllegalArgumentException("There were no models supplied");
+    }
+    
+    protected Iterator<VehicleModel> getResponsibleModelsIterator() {
+    	return this.responsibleModels.iterator();
+    }
 
 	/**
 	 * Checks whether the assembly line can move forward.
@@ -139,7 +176,7 @@ public class AssemblyLine implements Subject{
 				completed = false;
 		}
 		if(completed)
-			this.getScheduler().advance(this.timeCurrentStatus);
+			this.getAssemblyLineScheduler().advance(this.timeCurrentStatus);
 	}
 
 	/**
@@ -155,12 +192,12 @@ public class AssemblyLine implements Subject{
 	}
 
 
-	private AssemblyLineScheduler getScheduler() {
-		return scheduler;
+	public AssemblyLineScheduler getAssemblyLineScheduler() {
+		return assemblylineScheduler;
 	}
 
 	private void setScheduler(AssemblyLineScheduler scheduler) {
-		this.scheduler = scheduler;
+		this.assemblylineScheduler = scheduler;
 	}
 
 	@Override
@@ -198,15 +235,13 @@ public class AssemblyLine implements Subject{
 		return this.operational;
 	}
 
-
 	/**
 	 * @return maintenance state assembly line
 	 */
 	public AssemblyLineState getMaintenanceState() {
 		return maintenance;
 	}
-
-
+	
 	/**
 	 * Method to set the state of an assembly line
 	 * @param state
@@ -214,5 +249,12 @@ public class AssemblyLine implements Subject{
 	public void setState(AssemblyLineState state) {
 		this.state = state;
 	}
-
+	
+	public DateTime getEstimatedCompletionTimeOfNewOrder() {
+		return this.getAssemblyLineScheduler().getEstimatedCompletionTimeOfNewOrder();
+	}
+	
+	protected MainScheduler getMainScheduler(){
+		return this.mainscheduler;
+	}
 }

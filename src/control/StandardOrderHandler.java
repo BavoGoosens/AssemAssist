@@ -1,8 +1,8 @@
 package control;
 
 
-import businessmodel.VehicleManufacturingCompany;
 import businessmodel.Model;
+import businessmodel.VehicleManufacturingCompany;
 import businessmodel.order.StandardVehicleOrder;
 
 public class StandardOrderHandler implements StandardOrderController{

@@ -1,5 +1,6 @@
 package businessmodel.user;
 
+
 /**
  * A class representing a garage holder.
  * 

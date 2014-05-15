@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import businessmodel.*;
 import org.joda.time.DateTime;
 
 import businessmodel.category.VehicleOption;
@@ -68,15 +67,13 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * The shift are cleared and new orders are added if possible.
 	 */
-    // TODO: moet via de MainScheduler gaan.
 	public void ScheduleDay(){
 		this.dayOrdersCount = 0;
 		this.generateShifts();
 		this.updateCurrentTime();
 		int size = this.getNumberOfOrdersToSchedule();
-		for(Order order: this.getOrdermanager().getNbOrders(size)){
+		for(Order order:this.getAssemblyline().getMainScheduler().getNbOrders(size, this.getAssemblyline())){
 			this.addOrderToSchedule(order);
-			this.getOrders().add(order);
 		}
 	}
 
@@ -128,7 +125,8 @@ public class AssemblyLineScheduler implements Subject {
 	 * 			if(time < 0)
 	 */
 	protected void advance(int time) throws IllegalNumberException{
-		if (time < 0) throw new IllegalNumberException("Bad time!");
+		if (time < 0) 
+			throw new IllegalNumberException("Bad time!");
 		int delay = time - 60;
 		this.currenttime = this.getCurrentTime().plusMinutes(time);
 		updateAssemblylineStatus();
@@ -147,7 +145,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @return true if an order can be added.
 	 */
-	protected boolean canAddOrder(){
+	public boolean canAddOrder(){
 		int count = 0;
 		for(Shift shift: this.getShifts())
 			count += shift.getTimeSlots().size();
@@ -162,7 +160,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * @param 	order
 	 * 			the order that needs to be added.
 	 */
-	protected void addOrderToSchedule(Order order){
+	public void addOrderToSchedule(Order order){
 		this.getAlgo().scheduleOrder(order);
 		order.setTimestampOfOrder(this.getCurrentTime());
 		this.getOrders().add(order);
@@ -180,7 +178,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @return the number of order that can be scheduled.
 	 */
-	protected int getNumberOfOrdersToSchedule() {
+	public int getNumberOfOrdersToSchedule() {
 		return this.getShifts().size()*this.getShifts().getFirst().getTimeSlots().size()-(this.getAssemblyline().getNumberOfWorkPosts()-1);
 	}
 
@@ -195,7 +193,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @throws 	IllegalArgumentException
 	 */
-	protected void changeAlgorithm(String algoname, VehicleOption option) throws IllegalSchedulingAlgorithmException, IllegalArgumentException{
+	public void changeAlgorithm(String algoname, VehicleOption option) throws IllegalSchedulingAlgorithmException, IllegalArgumentException{
 
 		if (algoname == null){
 			throw new NullPointerException("No scheduling algorithm supplied");
@@ -220,6 +218,7 @@ public class AssemblyLineScheduler implements Subject {
 	protected LinkedList<Order> getOrders() {
 		return this.orders;
 	}
+	
 	/**
 	 * Returns the shifts of this assemblyline.
 	 * 
@@ -254,15 +253,6 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	/**
-	 * A method that returns the OrderManager of this AssemblyLineScheduler.
-	 * 
-	 * @return
-	 */
-	protected OrderManager getOrdermanager() {
-		return this.ordermanager;
-	}
-
-	/**
 	 * Returns the next shift of the given shift.
 	 * 
 	 * @param 	shift
@@ -282,16 +272,16 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @return
 	 */
+	// TODO rekening houden met de singleTaskOrders
 	protected Order getNextOrderToSchedule(){
-		return this.getOrdermanager().getPendingOrders().poll();
+		return this.getAssemblyline().getMainScheduler().getPendingOrders().poll();
 	}
-
 
 	private void updateCompletedOrders(){
 		if(this.getOrders().peekFirst()!= null && this.getOrders().peekFirst().isCompleted()){
 			Order completedorder = this.getOrders().pollFirst();
 			completedorder.setCompletionDateOfOrder(this.getCurrentTime());
-			this.getOrdermanager().finishedOrder(completedorder);
+			this.getAssemblyline().getMainScheduler().finishedOrder(completedorder);
 			this.dayOrdersCount++;
 		}
 	}
@@ -313,7 +303,7 @@ public class AssemblyLineScheduler implements Subject {
 			if(this.getShifts().getLast().getTimeSlots().size() == 0)
 				this.getShifts().removeLast();
 			if(order!= null)
-				this.getOrdermanager().placeOrderInFront(order);
+				this.getAssemblyline().getMainScheduler().placeOrderInFront(order);
 			this.updateDelay(-60);
 			this.updateSchedule();
 		}
@@ -380,12 +370,6 @@ public class AssemblyLineScheduler implements Subject {
 		return true;
 	}
 
-	private void setOrdermanager(OrderManager ordermanager) throws IllegalArgumentException{
-		if(ordermanager == null)
-			throw new IllegalArgumentException("Not an ordermanager");
-		this.ordermanager = ordermanager;
-	}
-
 	/**
 	 * Method to check if a VehicleOption occurs in more than 3 orders
 	 * @param maxNumber
@@ -436,5 +420,10 @@ public class AssemblyLineScheduler implements Subject {
 	public String currentAlgoDescription() {
 		String[] full = this.algortime.getClass().getName().split("\\.");
 		return full[1];
+	}
+
+	// TODO rekening houden met de Standard Completion Date
+	protected DateTime getEstimatedCompletionTimeOfNewOrder() {
+		return this.getOrders().getLast().getEstimatedDeliveryDate().plusHours(1);
 	}
 }

@@ -2,7 +2,9 @@ package businessmodel.restrictions;
 
 import java.util.ArrayList;
 
-import businessmodel.category.*;
+import businessmodel.category.Body;
+import businessmodel.category.VehicleOption;
+import businessmodel.category.Wheels;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 
 public class PlatformBodyWheelsRestriction extends Restriction {

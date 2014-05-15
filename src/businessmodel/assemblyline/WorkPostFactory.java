@@ -1,8 +1,4 @@
-package businessmodel.assemblyline.factory;
-
-import businessmodel.assemblyline.AssemblyLine;
-import businessmodel.assemblyline.AssemblyTask;
-import businessmodel.assemblyline.WorkPost;
+package businessmodel.assemblyline;
 
 import java.util.ArrayList;
 
@@ -12,7 +8,7 @@ import java.util.ArrayList;
 public abstract class WorkPostFactory {
     protected WorkPost createWorkPost(AssemblyLine assemblyLine) {
         WorkPost workPost = new WorkPost(this.createName(), assemblyLine);
-        workPost.setResponsibletasks(this.createAssemblyTasks(workPost));
+        workPost.setResponsibleTasks(this.createAssemblyTasks(workPost));
         return workPost;
     }
     protected abstract ArrayList<AssemblyTask> createAssemblyTasks(WorkPost workPost);

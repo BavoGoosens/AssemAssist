@@ -3,13 +3,13 @@ package businessmodel.statistics;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import businessmodel.assemblyline.AssemblyLineScheduler;
 import org.joda.time.LocalDate;
 
+import businessmodel.assemblyline.AssemblyLineScheduler;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
-import businessmodel.util.VehicleTupleComperator;
 import businessmodel.util.Tuple;
+import businessmodel.util.VehicleTupleComperator;
 
 /**
  * A class representing the car statistics of the system.
@@ -37,15 +37,18 @@ public class VehicleStatistics implements Observer {
 	/**
 	 * Creates a new car statistics object with a given subject it needs to observe.
 	 * 
-	 * @param 	subject
-	 * 			The subject the statistics need to observe.
+	 * @param 	subjects
+	 * 			The list of subjects the statistics need to observe.
 	 * @throws	IllegalArgumentException
 	 * 			| If the subject is equal to 'null' or if the subject isn't an order assemblyline.
 	 * 			| subject == null || !(subject instanceof AssemblyLineScheduler)
 	 */
-	public VehicleStatistics(Subject subject) throws IllegalArgumentException {
-		if (subject == null || !(subject instanceof AssemblyLineScheduler)) throw new IllegalArgumentException("Bad subject!");
-		subject.subscribeObserver(this);
+	public VehicleStatistics(ArrayList<Subject> subjects) throws IllegalArgumentException {
+		if (subjects == null || subjects.size() == 0) throw new IllegalArgumentException("Bad list of subjects!");
+        for (Subject subject: subjects) {
+            if (subject == null || !(subject instanceof AssemblyLineScheduler)) throw new IllegalArgumentException("Bad subject!");
+            subject.subscribeObserver(this);
+        }
 		this.numberOfVehicles = new ArrayList<Tuple<LocalDate, Integer>>();
 	}
 

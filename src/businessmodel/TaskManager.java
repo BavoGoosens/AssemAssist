@@ -53,9 +53,9 @@ public class TaskManager {
 		tasks_workPost_3.add(new AssemblyTask("Install Airco", "insert airco into the car", new Airco(),workpost3));
 		tasks_workPost_3.add(new AssemblyTask("Mount Wheels", "mount wheels on the car", new Wheels(),workpost3));
 		tasks_workPost_3.add(new AssemblyTask("Install Spoiler","install spoiler on the car", new Spoiler(),workpost3));
-		workpost1.setResponsibletasks(tasks_workPost_1);
-		workpost2.setResponsibletasks(tasks_workPost_2);
-		workpost3.setResponsibletasks(tasks_workPost_3);
+		workpost1.setResponsibleTasks(tasks_workPost_1);
+		workpost2.setResponsibleTasks(tasks_workPost_2);
+		workpost3.setResponsibleTasks(tasks_workPost_3);
 	}
 
 	private void generatePossibleSingleTasks() {

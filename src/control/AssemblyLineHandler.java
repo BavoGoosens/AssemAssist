@@ -1,8 +1,8 @@
 package control;
 
-import businessmodel.assemblyline.AssemblyTask;
-import businessmodel.VehicleManufacturingCompany;
 import businessmodel.Model;
+import businessmodel.VehicleManufacturingCompany;
+import businessmodel.assemblyline.AssemblyTask;
 
 public class AssemblyLineHandler implements AssemblyLineController{
 

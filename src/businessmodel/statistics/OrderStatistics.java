@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
-import businessmodel.order.StandardVehicleOrder;
 import org.joda.time.Period;
 
 import businessmodel.OrderManager;
@@ -12,6 +11,7 @@ import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
+import businessmodel.order.StandardVehicleOrder;
 import businessmodel.util.OrderTupleComperator;
 import businessmodel.util.Tuple;
 

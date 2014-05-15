@@ -1,4 +1,4 @@
-package businessmodel;
+package businessmodel.assemblyline;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,18 +6,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import businessmodel.assemblyline.AssemblyLine;
-import businessmodel.category.VehicleModel;
-import businessmodel.order.StandardVehicleOrder;
-import businessmodel.assemblyline.AssemblyTask;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.assemblyline.WorkPost;
+import businessmodel.Catalog;
 import businessmodel.category.ModelAFactory;
+import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
 import businessmodel.order.Order;
+import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
 
 public class AssemblyLineTest {
@@ -26,25 +24,12 @@ public class AssemblyLineTest {
 	private StandardVehicleOrder order1;
 	private StandardVehicleOrder order2;
 	private StandardVehicleOrder order3;
-
-	private OrderManager om;
-
-
 	private Catalog catalog;
-
-
 	private ArrayList<VehicleOptionCategory> categories;
-
-
-	private VehicleManufacturingCompany cmc = new VehicleManufacturingCompany();
 
 	@Before
 	public void setUp() throws Exception {
-		VehicleManufacturingCompany cmc = new VehicleManufacturingCompany();
-		om = cmc.getOrderManager();
 		orders = new ArrayList<Order>();
-
-		this.catalog = new Catalog();
 		this.categories = this.catalog.getAllCategories();
 
 		VehicleModel modelA = new ModelAFactory().createModel();

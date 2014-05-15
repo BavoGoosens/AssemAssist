@@ -6,10 +6,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.user.GarageHolder;
-import businessmodel.user.Manager;
-import businessmodel.user.Mechanic;
-
 public class UserManagementTest {
 	
 	private Mechanic mechanic;

@@ -8,8 +8,8 @@ import org.joda.time.LocalDate;
 import businessmodel.Model;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.order.Order;
-import businessmodel.statistics.VehicleStatistics;
 import businessmodel.statistics.OrderStatistics;
+import businessmodel.statistics.VehicleStatistics;
 import businessmodel.user.User;
 import businessmodel.util.Tuple;
 

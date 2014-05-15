@@ -24,6 +24,7 @@ public class WorkSlot{
 	 * Creates a new WorkSlot.
 	 */
 	public WorkSlot(){
+		this.order = null;
 	}
 	
 	/**
@@ -68,14 +69,8 @@ public class WorkSlot{
 
 	/**
 	 * Sets the occupation of this work slot to the given occupation.
-	 * @param	occupied
-	 * 			True or false
-	 * @throws  IllegalArgumentException
-	 * 			| If occupied is not a boolean
-	 */
-	private void setOccupied(boolean occupied) throws IllegalArgumentException{
-		if (occupied != false && occupied != true)
-			throw new IllegalArgumentException("Not a boolean");
+	*/
+	private void setOccupied(boolean occupied){
 		this.occupied = occupied;
 	}	
 	

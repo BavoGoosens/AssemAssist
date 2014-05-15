@@ -3,19 +3,18 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.joda.time.DateTime;
+
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
 import businessmodel.category.VehicleModel;
-import org.joda.time.DateTime;
-
 import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
-import businessmodel.observer.Observer;
 import businessmodel.order.Order;
-import businessmodel.statistics.VehicleStatistics;
 import businessmodel.statistics.OrderStatistics;
 import businessmodel.statistics.StatisticsManager;
+import businessmodel.statistics.VehicleStatistics;
 import businessmodel.user.CustomShopManager;
 import businessmodel.user.GarageHolder;
 import businessmodel.user.Manager;
@@ -57,8 +56,7 @@ public class VehicleManufacturingCompany implements Model {
 	 */
 	public VehicleManufacturingCompany() throws IllegalArgumentException {
 		this.catalog = new Catalog();
-		this.setOrderManager(new OrderManager(this.catalog.getAvailaleModelsClone()));
-		this.taskmanager = new TaskManager(this.getOrderManager().getScheduler().getAssemblyline().getWorkPosts());
+		this.setOrderManager(new OrderManager());
 		this.statisticsmanager = new StatisticsManager(this.getOrderManager());
 		// for ease of use
 		this.users.add(new GarageHolder("wow", "wow", "wow"));
@@ -83,8 +81,8 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
-	public Iterator<WorkPost> getWorkPosts(User user) {
-		return this.getOrderManager().getScheduler().getAssemblyline().getWorkPosts().iterator();
+	public Iterator<WorkPost> getWorkPosts(User user, AssemblyLine assemblyLine) {
+		return assemblyLine.getWorkPosts().iterator();
 	}
 
 	@Override
@@ -93,7 +91,6 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
-	//TODO nakijken
 	public Iterator<String> getSchedulingAlgorithms(User user) {
 		ArrayList<String> algos = new ArrayList<String>(); 
 		algos.add("FIFO"); 
@@ -107,13 +104,6 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
-	public AssemblyLine registerAssemblyLineObserver(Observer observer) {
-		AssemblyLine line = this.getOrderManager().getScheduler().getAssemblyline();
-		line.subscribeObserver(observer);
-		return line;
-	}
-
-	@Override
 	public VehicleStatistics getVehicleStatistics() {
 		return this.statisticsmanager.getVehicleStatistics();
 	}
@@ -123,12 +113,7 @@ public class VehicleManufacturingCompany implements Model {
 		return this.statisticsmanager.getOrderStatistics();
 	}
 
-	@Override
-	public Iterator<WorkPost> getWorkPosts() {
-		return this.getOrderManager().getScheduler().getAssemblyline().getWorkPosts().iterator();
-	}
-
-	@Override
+    @Override
 	public Iterator<AssemblyTask> getPendingTasks(WorkPost wp) {
 		return wp.getPendingTasks().iterator();
 	}
@@ -145,12 +130,12 @@ public class VehicleManufacturingCompany implements Model {
 
 	@Override
 	public Iterator<VehicleOption> getUnscheduledVehicleOptions(int num) {
-		return this.getOrderManager().getScheduler().getUnscheduledVehicleOptions(num).iterator();
+		return this.getOrderManager().getMainScheduler().getUnscheduledVehicleOptions(num).iterator();
 	}
 
 	@Override
-	public String getCurrentAlgo() {
-		return this.ordermanager.getScheduler().currentAlgoDescription();
+	public String getCurrentSystemWideAlgo() {
+		return this.ordermanager.getMainScheduler().currentSystemWideAlgoDescription();
 	}
 
 	
@@ -158,11 +143,17 @@ public class VehicleManufacturingCompany implements Model {
 	 * Returns the current time of the system.
 	 * @return The current time of the system.
 	 */
+	// TODO
 	public DateTime getSystemTime(){
-		return new DateTime(ordermanager.getScheduler().getCurrentTime());
+		return new DateTime(ordermanager.getMainScheduler().getCurrentTime());
 	}
 
-	/**
+    @Override
+    public Iterator<AssemblyLine> getAssemblyLines() {
+        return null;
+    }
+
+    /**
 	 * Completes an assembly task with the given time.
 	 * 
 	 * @param 	task
@@ -170,6 +161,7 @@ public class VehicleManufacturingCompany implements Model {
 	 * @param 	time
 	 * 			The time that was needed to complete the assembly task.
 	 */
+	// TODO andere package. public zetten?
 	public void finishTask(AssemblyTask task, int time) {
 		task.completeAssemblytask(time);
 	}
@@ -180,8 +172,9 @@ public class VehicleManufacturingCompany implements Model {
 	 * 			The new algorithm
 	 * @param 	option
 	 */
-	public void changeAlgorithm(String algo, VehicleOption option) {
-		this.getOrderManager().getScheduler().changeAlgorithm(algo, option);
+	// TODO Alle assemblyline veranderen?
+	public void changeSystemWideAlgorithm(String algo, VehicleOption option) {
+		this.getOrderManager().getMainScheduler().changeSystemWideAlgorithm(algo, option);
 	}
 
 	/**
