@@ -22,7 +22,7 @@ public class OperationalState implements AssemblyLineState {
 
 	@Override
 	public void AssemblyLineIsOperational() {
-		// TODO Auto-generated method stub
+		
 	}
 
 	@Override

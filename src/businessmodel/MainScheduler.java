@@ -5,8 +5,6 @@ import java.util.LinkedList;
 
 import businessmodel.assemblyline.*;
 import businessmodel.category.VehicleOption;
-import businessmodel.observer.Observer;
-import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 
 public class MainScheduler {
