@@ -115,12 +115,12 @@ public class VehicleManufacturingCompany implements Model {
 
     @Override
 	public Iterator<AssemblyTask> getPendingTasks(WorkPost wp) {
-		return wp.getPendingTasks().iterator();
+		return wp.getPendingTasks();
 	}
 
 	@Override
 	public Iterator<AssemblyTask> getFinishedTasks(WorkPost wp) {
-		return wp.getFinishedTasks().iterator();
+		return wp.getFinishedTasks();
 	}
 
 	@Override

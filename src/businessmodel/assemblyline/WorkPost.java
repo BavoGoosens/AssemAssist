@@ -1,9 +1,11 @@
 package businessmodel.assemblyline;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import businessmodel.category.VehicleOption;
 import businessmodel.order.Order;
+import businessmodel.util.SafeIterator;
 
 /**
  * A class representing a work post.
@@ -142,12 +144,16 @@ public class WorkPost {
 	 * 
 	 * @return	The tasks that are pending at the work post
 	 */
-	protected ArrayList<AssemblyTask> getPendingTasks() {
-		return this.pendingTasks;
+	public Iterator<AssemblyTask> getPendingTasks() {
+        SafeIterator<AssemblyTask> safe = new SafeIterator<AssemblyTask>();
+        safe.convertIterator(this.pendingTasks.iterator());
+        return safe;
 	}
 
-	protected ArrayList<AssemblyTask> getFinishedTasks() {
-		return this.finishedTasks;
+	public Iterator<AssemblyTask> getFinishedTasks() {
+		SafeIterator<AssemblyTask> safe = new SafeIterator<AssemblyTask>();
+        safe.convertIterator(this.finishedTasks.iterator());
+        return safe;
 	}
 
 	/**
