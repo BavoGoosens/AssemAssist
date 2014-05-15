@@ -11,7 +11,6 @@ import businessmodel.assemblyline.WorkPost;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
-import businessmodel.observer.Observer;
 import businessmodel.order.Order;
 import businessmodel.statistics.OrderStatistics;
 import businessmodel.statistics.StatisticsManager;
@@ -57,7 +56,7 @@ public class VehicleManufacturingCompany implements Model {
 	 */
 	public VehicleManufacturingCompany() throws IllegalArgumentException {
 		this.catalog = new Catalog();
-		this.setOrderManager(new OrderManager(this.catalog.getAvailaleModelsClone()));
+		this.setOrderManager(new OrderManager());
 		this.statisticsmanager = new StatisticsManager(this.getOrderManager());
 		// for ease of use
 		this.users.add(new GarageHolder("wow", "wow", "wow"));
@@ -82,8 +81,8 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
-	public Iterator<WorkPost> getWorkPosts(User user) {
-		return this.getOrderManager().getScheduler().getAssemblyline().getWorkPosts().iterator();
+	public Iterator<WorkPost> getWorkPosts(User user, AssemblyLine assemblyLine) {
+		return assemblyLine.getWorkPosts().iterator();
 	}
 
 	@Override
@@ -92,7 +91,6 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
-	//TODO nakijken
 	public Iterator<String> getSchedulingAlgorithms(User user) {
 		ArrayList<String> algos = new ArrayList<String>(); 
 		algos.add("FIFO"); 
@@ -106,13 +104,6 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
-	public AssemblyLine registerAssemblyLineObserver(Observer observer) {
-		AssemblyLine line = this.getOrderManager().getScheduler().getAssemblyline();
-		line.subscribeObserver(observer);
-		return line;
-	}
-
-	@Override
 	public VehicleStatistics getVehicleStatistics() {
 		return this.statisticsmanager.getVehicleStatistics();
 	}
@@ -122,12 +113,7 @@ public class VehicleManufacturingCompany implements Model {
 		return this.statisticsmanager.getOrderStatistics();
 	}
 
-	@Override
-	public Iterator<WorkPost> getWorkPosts(AssemblyLine line) {
-		return line.getWorkPosts().iterator();
-	}
-
-	@Override
+    @Override
 	public Iterator<AssemblyTask> getPendingTasks(WorkPost wp) {
 		return wp.getPendingTasks().iterator();
 	}
@@ -144,13 +130,12 @@ public class VehicleManufacturingCompany implements Model {
 
 	@Override
 	public Iterator<VehicleOption> getUnscheduledVehicleOptions(int num) {
-		return this.getOrderManager().getScheduler().getUnscheduledVehicleOptions(num).iterator();
+		return this.getOrderManager().getMainScheduler().getUnscheduledVehicleOptions(num).iterator();
 	}
 
 	@Override
-	// TODO via de UI per assemblyline of ?
-	public String getCurrentAlgo() {
-		return this.ordermanager.getScheduler().currentAlgoDescription();
+	public String getCurrentSystemWideAlgo() {
+		return this.ordermanager.getMainScheduler().currentSystemWideAlgoDescription();
 	}
 
 	
@@ -160,7 +145,7 @@ public class VehicleManufacturingCompany implements Model {
 	 */
 	// TODO
 	public DateTime getSystemTime(){
-		return new DateTime(ordermanager.getScheduler().getCurrentTime());
+		return new DateTime(ordermanager.getMainScheduler().getCurrentTime());
 	}
 
     @Override
@@ -188,8 +173,8 @@ public class VehicleManufacturingCompany implements Model {
 	 * @param 	option
 	 */
 	// TODO Alle assemblyline veranderen?
-	public void changeAlgorithm(String algo, VehicleOption option) {
-		this.getOrderManager().getScheduler().changeAlgorithm(algo, option);
+	public void changeSystemWideAlgorithm(String algo, VehicleOption option) {
+		this.getOrderManager().getMainScheduler().changeSystemWideAlgorithm(algo, option);
 	}
 
 	/**

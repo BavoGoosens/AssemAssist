@@ -1,6 +1,10 @@
 package businessmodel.statistics;
 
 import businessmodel.OrderManager;
+import businessmodel.assemblyline.AssemblyLineScheduler;
+import businessmodel.observer.Subject;
+
+import java.util.ArrayList;
 
 /**
  * Class representing a statistics manager for the system, which holds the statistics objects.
@@ -32,7 +36,12 @@ public class StatisticsManager {
 	// TODO Rekening houden met meerdere AssemblyLines
 	public StatisticsManager(OrderManager ordermanager) throws IllegalArgumentException {
 		if (ordermanager == null) throw new IllegalArgumentException("Bad order manager!");
-		this.vehicleStatistics = new VehicleStatistics(ordermanager.getScheduler());
+        // deze for moet gedaan worden omdat een ArrayList van AssemblyLineScheduler geen subklasse is van een ArrayList van Subject
+        ArrayList<Subject> subjects = new ArrayList<Subject>();
+        for (AssemblyLineScheduler scheduler: ordermanager.getMainScheduler().getAssemblyLineSchedulers()) {
+            subjects.add(scheduler);
+        }
+		this.vehicleStatistics = new VehicleStatistics(subjects);
 		this.orderStatistics = new OrderStatistics(ordermanager);
 	}
 	

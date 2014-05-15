@@ -193,7 +193,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @throws 	IllegalArgumentException
 	 */
-	protected void changeAlgorithm(String algoname, VehicleOption option) throws IllegalSchedulingAlgorithmException, IllegalArgumentException{
+	public void changeAlgorithm(String algoname, VehicleOption option) throws IllegalSchedulingAlgorithmException, IllegalArgumentException{
 
 		if (algoname == null){
 			throw new NullPointerException("No scheduling algorithm supplied");

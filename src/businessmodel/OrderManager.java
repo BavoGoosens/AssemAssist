@@ -223,6 +223,13 @@ public class OrderManager implements Subject {
 		return temp;
 	}
 
+<<<<<<< HEAD
+=======
+	public MainScheduler getMainScheduler() {
+		return this.mainscheduler;
+	}
+
+>>>>>>> 197779e3c52a31471082fd617be522b465bb3ebf
 	@Override
 	public void subscribeObserver(Observer observer) throws IllegalArgumentException {
 		if (observer == null) throw new IllegalArgumentException("Bad observer!");

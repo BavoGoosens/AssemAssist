@@ -3,11 +3,10 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import businessmodel.assemblyline.AssemblyLine;
-import businessmodel.assemblyline.AssemblyLineAFactory;
-import businessmodel.assemblyline.AssemblyLineBFactory;
-import businessmodel.assemblyline.AssemblyLineCFactory;
-import businessmodel.assemblyline.BodyWorkPostFactory;
+import businessmodel.assemblyline.*;
+import businessmodel.category.VehicleOption;
+import businessmodel.observer.Observer;
+import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 
 public class MainScheduler {
@@ -15,8 +14,10 @@ public class MainScheduler {
 	private OrderManager ordermanager;
 	
 	private ArrayList<AssemblyLine> assemblylines;
-	
-	public MainScheduler(OrderManager ordermanager){
+
+    private String systemWideAlgo;
+
+    public MainScheduler(OrderManager ordermanager){
 		this.setOrdermanager(ordermanager);
 		this.generateAssemblyLines();
 	}
@@ -42,6 +43,14 @@ public class MainScheduler {
 	protected ArrayList<AssemblyLine> getAssemblylines() {
 		return this.assemblylines;
 	}
+
+    public ArrayList<AssemblyLineScheduler> getAssemblyLineSchedulers() {
+        ArrayList<AssemblyLineScheduler> schedulers = new ArrayList<AssemblyLineScheduler>();
+        for (AssemblyLine assemblyLine: this.getAssemblylines()) {
+            schedulers.add(assemblyLine.getAssemblyLineScheduler());
+        }
+        return schedulers;
+    }
 	
 	public ArrayList<Order> getNbOrders(int size, AssemblyLine assemblyline) {
 		return null;
@@ -85,6 +94,17 @@ public class MainScheduler {
 	}
 
 	private void setAssemblylines(ArrayList<AssemblyLine> assemblylines) {
-		this.assemblylines = assemblylines;
+        this.assemblylines = assemblylines;
 	}
+
+    protected void changeSystemWideAlgorithm(String algo, VehicleOption option) {
+        this.systemWideAlgo = algo;
+        for (AssemblyLine assemblyLine: this.getAssemblylines()) {
+            assemblyLine.getAssemblyLineScheduler().changeAlgorithm(algo, option);
+        }
+    }
+
+    public String currentSystemWideAlgoDescription() {
+        return this.systemWideAlgo;
+    }
 }

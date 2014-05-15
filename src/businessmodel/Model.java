@@ -11,7 +11,6 @@ import businessmodel.assemblyline.WorkPost;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
-import businessmodel.observer.Observer;
 import businessmodel.order.Order;
 import businessmodel.statistics.OrderStatistics;
 import businessmodel.statistics.VehicleStatistics;
@@ -55,7 +54,7 @@ public interface Model {
 	 * 			The given user.
 	 * @return	The work posts for the given user.
 	 */
-	public Iterator<WorkPost> getWorkPosts(User user);
+	public Iterator<WorkPost> getWorkPosts(User user, AssemblyLine assemblyLine);
 	
 	/**
 	 * Returns an iterator over the car models for the given user.
@@ -102,15 +101,6 @@ public interface Model {
 	 * 			The user that needs to be registered.
 	 */
 	public void register(User user);
-	
-	/**
-	 * Registers the given observer to the assembly line.
-	 * 
-	 * @param 	observer
-	 * 			The observer that needs to be subscribed to the assembly line.
-	 * @return	The assembly line the observer is subscribed to.
-	 */
-	public AssemblyLine registerAssemblyLineObserver(Observer observer);
 
 	/**
 	 * Returns the car statistics of the model.
@@ -123,12 +113,6 @@ public interface Model {
 	 * @return The order statistics of the model.
 	 */
 	public OrderStatistics getOrderStatistics();
-
-	/**
-	 * Returns an iterator over the work posts of the model.
-	 * @return The work posts of the model.
-	 */
-	public Iterator<WorkPost> getWorkPosts(AssemblyLine line);
 
 	/**
 	 * Returns an iterator over the pending tasks at a given work post.
@@ -160,7 +144,7 @@ public interface Model {
 	 * 
 	 * @return	The current algorithm in the model.
 	 */
-	public String getCurrentAlgo();
+	public String getCurrentSystemWideAlgo();
 
 	/**
 	 * Returns the system time.

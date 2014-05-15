@@ -27,8 +27,6 @@ public class AssemblyLineStatusView extends View implements Observer {
         this.selectedAssemblyLine = line;
         line.subscribeObserver(this);
 		setUser(user);
-        // TODO: moet niet meer via het model
-		// this.subject = cmc.registerAssemblyLineObserver(this);
 		this.setActive(true);
 	}
 
