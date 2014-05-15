@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import businessmodel.assemblyline.AssemblyLine;
+import businessmodel.assemblyline.WorkPost;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;

@@ -1,7 +1,9 @@
 package businessmodel.assemblyline;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.order.Order;
 
@@ -64,7 +66,7 @@ public class WorkPost {
 		this.pendingTasks = new ArrayList<AssemblyTask>();
 		this.finishedTasks = new ArrayList<AssemblyTask>();
 	}
-
+	
 	/**
 	 * Sets the list of assembly tasks this work post is responsible for.
 	 * 

@@ -1,6 +1,7 @@
 package businessmodel.assemblyline;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by michielvandendriessche on 13/05/14.
