@@ -100,6 +100,7 @@ public class OrderManager implements Subject {
 	 * @param order
 	 */
 	public void setEstimatedCompletionDateOfOrder(Order order, AssemblyLine line){
+		
 		Order previousorder = this.getPreviousOrder(order, line);
 		if(previousorder != null) {
 			if(previousorder.getEstimatedDeliveryDate() == null){
@@ -199,10 +200,10 @@ public class OrderManager implements Subject {
 				return null;
 			else
 				return this.getPendingOrders().get(index-1);
-		}
-		else
-			if(line.getAssemblyLineScheduler().getOrders().size()== 0)
+		}else{
+			if(line.getAssemblyLineScheduler().getOrders().size() <= 1)
 				return null;
+		}
 		return line.getAssemblyLineScheduler().getOrders().getLast();
 	}
 	
@@ -223,13 +224,7 @@ public class OrderManager implements Subject {
 		return temp;
 	}
 
-<<<<<<< HEAD
-=======
-	public MainScheduler getMainScheduler() {
-		return this.mainscheduler;
-	}
 
->>>>>>> 197779e3c52a31471082fd617be522b465bb3ebf
 	@Override
 	public void subscribeObserver(Observer observer) throws IllegalArgumentException {
 		if (observer == null) throw new IllegalArgumentException("Bad observer!");
