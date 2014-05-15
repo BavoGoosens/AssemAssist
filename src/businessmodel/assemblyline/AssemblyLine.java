@@ -42,7 +42,6 @@ public class AssemblyLine implements Subject{
 		this.setState(operational);
 		this.mainscheduler = mainscheduler;
 		this.setScheduler(scheduler);
-		this.generateWorkPosts();
 	}
 
     protected AssemblyLine(){
@@ -177,18 +176,6 @@ public class AssemblyLine implements Subject{
 		}
 		if(completed)
 			this.getAssemblyLineScheduler().advance(this.timeCurrentStatus);
-	}
-
-	/**
-	 * Generates work posts.
-	 */
-	private void generateWorkPosts(){
-		WorkPost post1 = new WorkPost("Vehicle Body Post", this);
-		WorkPost post2 = new WorkPost("Drivetrain Post", this);
-		WorkPost post3 = new WorkPost("Accesoires Post", this);	
-		this.workposts.add(post1);
-		this.workposts.add(post2);
-		this.workposts.add(post3);
 	}
 
 
