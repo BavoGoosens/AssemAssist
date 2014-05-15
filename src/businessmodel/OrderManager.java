@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import businessmodel.assemblyline.AssemblyLine;
-import businessmodel.category.VehicleModel;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
@@ -38,7 +37,6 @@ public class OrderManager implements Subject {
 		this.pendingorders = new LinkedList<Order>();
 		this.completedorders = new LinkedList<Order>();
 		this.mainscheduler = new MainScheduler(this);
-		this.generateAssemblyLine();
 		this.observers = new ArrayList<Observer>();
 	}
 
@@ -46,6 +44,78 @@ public class OrderManager implements Subject {
 	@SuppressWarnings("unchecked")
 	public LinkedList<Order> getCompletedOrdersClone(){
 		return (LinkedList<Order>) this.completedorders.clone();
+	}
+
+	/**
+	 * A method that moves a finished order from the pending list to the finished list.
+	 * 
+	 * @param finished 
+	 * 		  The Order that needs to be moved.
+	 */
+	public void finishedOrder(Order finished) throws IllegalArgumentException {
+		if (finished == null) 
+			throw new IllegalArgumentException("Bad order!");
+		this.getCompletedOrders().add(finished);
+		this.notifyObservers();
+	}
+
+	/**
+	 * This method returns the number of specified pending orders if possible.
+	 * 
+	 * @param nb
+	 * 		  The number of orders 
+	 * 
+	 * @return LinkedList<Order>
+	 * 		   A list with the requested orders.
+	 */
+	public LinkedList<Order> getNbOrders(int nb, AssemblyLine line) {
+		if (nb < 0)
+			throw new IllegalNumberException("Bad number!");
+		LinkedList<Order> res = new LinkedList<Order>();
+		LinkedList<Order> single_task_orders = getSingleTaskOrdersNextDay(line);
+		if(single_task_orders!= null){
+			for(Order order: single_task_orders){
+				res.add(order);
+				getPendingOrders().remove(order);
+			}
+		}
+		for (int i = 0; i < (nb - single_task_orders.size()); i++){
+			Order order = getPendingOrders().poll();
+			if (order != null)
+				res.add(order);
+		}
+		return res;
+	}
+
+	/**
+	 * A method to place an order in front of the pending orders.
+	 * @param order
+	 */
+	public void placeOrderInFront(Order order) {
+		this.getPendingOrders().add(order);		
+	}
+
+	/**
+	 * Method to set an estimated completion time for a particular order.
+	 * @param order
+	 */
+	public void setEstimatedCompletionDateOfOrder(Order order, AssemblyLine line){
+		Order previousorder = this.getPreviousOrder(order, line);
+		if(previousorder != null) {
+			if(previousorder.getEstimatedDeliveryDate() == null){
+				order.setEstimatedDeliveryDateOfOrder(line.getAssemblyLineScheduler().getCurrentTime().plusHours(3));
+			}else if(previousorder.getEstimatedDeliveryDate().getHourOfDay() <= 21){
+				order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusHours(1));
+			}else {
+				order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusDays(1).withHourOfDay(11).withMinuteOfHour(0));
+			}
+		}else{
+			order.setEstimatedDeliveryDateOfOrder(line.getAssemblyLineScheduler().getCurrentTime().plusHours(3));
+		}
+	}
+
+	public LinkedList<Order> getPendingOrders(){
+		return this.pendingorders;
 	}
 
 	/**
@@ -64,10 +134,6 @@ public class OrderManager implements Subject {
 		else{
 			this.getPendingOrders().add(order);
 		}
-	}
-
-	public LinkedList<Order> getPendingOrders(){
-		return this.pendingorders;
 	}
 
 	/**
@@ -115,72 +181,8 @@ public class OrderManager implements Subject {
 		return (ArrayList<Order>) completedorders;
 	}
 
-	/**
-	 * A method that moves a finished order from the pending list to the finished list.
-	 * 
-	 * @param finished 
-	 * 		  The Order that needs to be moved.
-	 */
-	public void finishedOrder(Order finished) throws IllegalArgumentException {
-		if (finished == null) 
-			throw new IllegalArgumentException("Bad order!");
-		this.getCompletedOrders().add(finished);
-		this.notifyObservers();
-	}
-
-	/**
-	 * This method returns the number of specified pending orders if possible.
-	 * 
-	 * @param nb
-	 * 		  The number of orders 
-	 * 
-	 * @return LinkedList<Order>
-	 * 		   A list with the requested orders.
-	 */
-	public LinkedList<Order> getNbOrders(int nb, AssemblyLine line) {
-		if (nb < 0)
-			throw new IllegalNumberException(nb, "Bad number!");
-		LinkedList<Order> res = new LinkedList<Order>();
-		LinkedList<Order> single_task_orders = getSingleTaskOrdersNextDay(line);
-		if(single_task_orders!= null){
-			for(Order order: single_task_orders){
-				res.add(order);
-				getPendingOrders().remove(order);
-			}
-		}
-		for (int i = 0; i < (nb - single_task_orders.size()); i++){
-			Order order = getPendingOrders().poll();
-			if (order != null)
-				res.add(order);
-		}
-		return res;
-	}
-
-	/**
-	 * A method to place an order in front of the pending orders.
-	 * @param order
-	 */
-	public void placeOrderInFront(Order order) {
-		this.getPendingOrders().add(order);		
-	}
-
-	/**
-	 * Method to set an estimated completion time for a particular order.
-	 * @param order
-	 */
-	public void setEstimatedCompletionDateOfOrder(Order order, AssemblyLine line){
-		Order previousorder = this.getPreviousOrder(order, line);
-		if(previousorder != null) {
-			if(previousorder.getEstimatedDeliveryDate() == null){
-				order.setEstimatedDeliveryDateOfOrder(line.getAssemblyLineScheduler().getCurrentTime().plusHours(3));
-			}else if(previousorder.getEstimatedDeliveryDate().getHourOfDay() <= 21){
-				order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusHours(1));
-			}else {
-				order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusDays(1).withHourOfDay(11).withMinuteOfHour(0));
-			}
-		}else{
-			order.setEstimatedDeliveryDateOfOrder(line.getAssemblyLineScheduler().getCurrentTime().plusHours(3));
-		}
+	protected MainScheduler getMainScheduler() {
+		return this.mainscheduler;
 	}
 
 	/**
@@ -191,7 +193,7 @@ public class OrderManager implements Subject {
 	 */
 	// Nakijken of het werkt met de clone
 	protected Order getPreviousOrder(Order order, AssemblyLine line){
-		if(line.getAssemblyLineScheduler().getOrdersClone().size() > line.getAssemblyLineScheduler().getNumberOfOrdersToSchedule()){
+		if(line.getAssemblyLineScheduler().getOrders().size() > line.getAssemblyLineScheduler().getNumberOfOrdersToSchedule()){
 			int index = this.getPendingOrders().indexOf(order);
 			if(index-1 < 0)
 				return null;
@@ -199,15 +201,11 @@ public class OrderManager implements Subject {
 				return this.getPendingOrders().get(index-1);
 		}
 		else
-			if(line.getAssemblyLineScheduler().getOrdersClone().size()== 0)
+			if(line.getAssemblyLineScheduler().getOrders().size()== 0)
 				return null;
-		return line.getAssemblyLineScheduler().getOrdersClone().getLast();
+		return line.getAssemblyLineScheduler().getOrders().getLast();
 	}
-
-	private void generateAssemblyLine() {
-
-	}
-
+	
 	/**
 	 * Method to return a list of the single task orders scheduled on the next day.
 	 * @return list of the single task orders scheduled on the next day.
@@ -223,10 +221,6 @@ public class OrderManager implements Subject {
 			}
 		}
 		return temp;
-	}
-
-	protected MainScheduler getMainScheduler() {
-		return this.mainscheduler;
 	}
 
 	@Override
