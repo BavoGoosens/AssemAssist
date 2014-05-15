@@ -289,6 +289,7 @@ public class WorkPost {
 	}
 	
 	public int getStandardTimeOfModel(VehicleModel model){
+		System.out.println(model.getName());
 		return this.getStandardtimes().get(model.getName());
 	}
 	private HashMap<String, Integer> getStandardtimes() {

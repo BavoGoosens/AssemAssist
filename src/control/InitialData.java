@@ -112,8 +112,10 @@ public class InitialData {
 				for(WorkPost wp: assem.getWorkPosts()){
 					Iterator<AssemblyTask> iter1 = this.vmc.getPendingTasks(wp);
 					List<AssemblyTask> copy1 = new ArrayList<AssemblyTask>();
-					while (iter1.hasNext())
-						copy1.add(iter1.next());
+					while (iter1.hasNext()){
+						AssemblyTask task = iter1.next();
+						copy1.add(task);
+					}
 					for(AssemblyTask assembly : copy1)
 						this.vmc.finishTask(assembly, 20);
 				}

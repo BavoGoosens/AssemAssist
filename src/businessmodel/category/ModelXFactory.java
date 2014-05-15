@@ -136,7 +136,7 @@ public class ModelXFactory extends VehicleModelFactory {
 
 	@Override
 	protected String getName() {
-		return "Truck model X";
+		return "Vehicle Model X";
 	}
 
 	@Override
