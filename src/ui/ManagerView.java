@@ -18,6 +18,7 @@ public class ManagerView extends View {
 	public void display() {
 		System.out.println("> To view the statistics enter STATS");
 		System.out.println("> To view the available scheduling algorithms enter ALGO ");
+        System.out.println("> To change the assmembly lines status enter LINE");
 		System.out.print(">> ");
 		String input = this.scan.nextLine();
 		this.check(input);
@@ -25,10 +26,16 @@ public class ManagerView extends View {
 			this.checkStatistics();
 		if (input.equalsIgnoreCase("algo"))
 			this.changeAlgorithm();
+        if (input.equalsIgnoreCase("line"))
+            this.changeOperationalStatus();
 		this.error();
 	}
 
-	private void changeAlgorithm() {
+    private void changeOperationalStatus() {
+        new OperationalStatusView(this.getModel(), this.user).display();
+    }
+
+    private void changeAlgorithm() {
 		new SchedulingView(this.getModel(), this.user).display();
 	}
 

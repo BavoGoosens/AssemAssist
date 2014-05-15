@@ -150,7 +150,7 @@ public interface Model {
 	 * Returns the system time.
 	 * @return	The system time.
 	 */
-	public DateTime getSystemTime();
+	public DateTime getSystemTime(AssemblyLine assemblyLine);
 
     public Iterator<AssemblyLine> getAssemblyLines();
 }

@@ -1,6 +1,7 @@
 package businessmodel;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import businessmodel.assemblyline.*;
@@ -10,19 +11,19 @@ import businessmodel.order.Order;
 public class MainScheduler {
 
 	private OrderManager ordermanager;
-	
+
 	private ArrayList<AssemblyLine> assemblylines;
 
     private String systemWideAlgo;
 
     public MainScheduler(OrderManager ordermanager){
-		this.setOrdermanager(ordermanager);
+		this.setOrderManager(ordermanager);
 		this.generateAssemblyLines();
 	}
-	
+
 	protected AssemblyLine placeOrder(Order order){
 		ArrayList<AssemblyLine> possiblelines = new ArrayList<AssemblyLine>();
-		for(AssemblyLine assem : this.getAssemblylines()){
+		for(AssemblyLine assem : this.getAssemblyLines()){
 			if(assem.getAssemblyLineScheduler().canAddOrder())
 				possiblelines.add(assem);
 		}
@@ -38,7 +39,7 @@ public class MainScheduler {
 		return fastestassem;
 	}
 
-	protected ArrayList<AssemblyLine> getAssemblylines() {
+	protected ArrayList<AssemblyLine> getAssemblyLines() {
 		return this.assemblylines;
 	}
 
@@ -49,7 +50,7 @@ public class MainScheduler {
         }
         return schedulers;
     }
-	
+
 	public ArrayList<Order> getNbOrders(int size, AssemblyLine assemblyline) {
 		return null;
 	}
@@ -59,11 +60,11 @@ public class MainScheduler {
 	}
 
 	public void finishedOrder(Order completedorder) {
-		
+
 	}
 
-	public void placeOrderInFront(Order order) {		
-		
+	public void placeOrderInFront(Order order) {
+
 	}
 
 	private void generateAssemblyLines() {
@@ -71,38 +72,50 @@ public class MainScheduler {
 	    AssemblyLineAFactory factoryA = new AssemblyLineAFactory();
 	    AssemblyLineBFactory factoryB = new AssemblyLineBFactory();
 	    AssemblyLineCFactory factoryC = new AssemblyLineCFactory();
-	
+
 	    AssemblyLine line1 = factoryA.createAssemblyLine();
 	    AssemblyLine line2 = factoryB.createAssemblyLine();
 	    AssemblyLine line3 = factoryC.createAssemblyLine();
-	    
+
 	    assemblylines.add(line1);
 	    assemblylines.add(line2);
 	    assemblylines.add(line3);
-	    
-	    this.setAssemblylines(assemblylines);
+
+	    this.setAssemblyLines(assemblylines);
 	}
 
-	private OrderManager getOrdermanager() {
+	private OrderManager getOrderManager() {
 		return ordermanager;
 	}
 
-	private void setOrdermanager(OrderManager ordermanager) {
+	private void setOrderManager(OrderManager ordermanager) {
 		this.ordermanager = ordermanager;
 	}
 
-	private void setAssemblylines(ArrayList<AssemblyLine> assemblylines) {
-        this.assemblylines = assemblylines;
+	private void setAssemblyLines(ArrayList<AssemblyLine> assemblylines) {
+		this.assemblylines = assemblylines;
 	}
 
     protected void changeSystemWideAlgorithm(String algo, VehicleOption option) {
         this.systemWideAlgo = algo;
-        for (AssemblyLine assemblyLine: this.getAssemblylines()) {
+        for (AssemblyLine assemblyLine: this.getAssemblyLines()) {
             assemblyLine.getAssemblyLineScheduler().changeAlgorithm(algo, option);
         }
     }
 
-    public String currentSystemWideAlgoDescription() {
+    public String currentSystemWideAlgorithmDescription() {
         return this.systemWideAlgo;
+    }
+
+    public Iterator<VehicleOption> getUnscheduledVehicleOptions(int num) {
+        ArrayList<VehicleOption> choices = new ArrayList<VehicleOption>();
+        for (AssemblyLine line : this.assemblylines){
+            ArrayList<VehicleOption> assOptions = line.getAssemblyLineScheduler().getUnscheduledVehicleOptions(num);
+            for (VehicleOption option : assOptions){
+                if (!choices.contains(option))
+                    choices.add(option);
+            }
+        }
+        return  choices.iterator();
     }
 }
