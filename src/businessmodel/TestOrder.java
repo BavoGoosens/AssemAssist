@@ -1,4 +1,4 @@
-package businessmodel.assemblyline;
+package businessmodel;
 
 import java.util.ArrayList;
 
@@ -19,13 +19,17 @@ import businessmodel.user.GarageHolder;
 public class TestOrder {
 
 	private StandardVehicleOrder order;
-	
+	GarageHolder holder;
+
 	public TestOrder(){
-		makeOrder();
 	}
 	
+	public void setUser(GarageHolder holder){
+		this.holder = holder;
+		makeOrder();
+	}
+
 	private void makeOrder(){
-		GarageHolder holder = new GarageHolder("Sander","Geijsen","Test");
 		ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();
 		VehicleOption option1 = new VehicleOption("Seats",new Seats());
 		VehicleOption option2 = new VehicleOption("Body",new Body());

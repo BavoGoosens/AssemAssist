@@ -32,7 +32,7 @@ public class MainScheduler {
 			return null;
 		AssemblyLine fastestassem = possiblelines.get(0);
 		for(AssemblyLine assem2 : possiblelines){
-			if(assem2.getEstimatedCompletionTimeOfNewOrder().isBefore(fastestassem.getEstimatedCompletionTimeOfNewOrder()))
+			if(assem2.getEstimatedCompletionTimeOfNewOrder(order).isBefore(fastestassem.getEstimatedCompletionTimeOfNewOrder(order)))
 				if(assem2.getAssemblyLineScheduler().canAddOrder())
 					fastestassem = assem2;
 		}

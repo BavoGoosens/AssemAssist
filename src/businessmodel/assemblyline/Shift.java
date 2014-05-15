@@ -83,11 +83,12 @@ public abstract class Shift {
 	 * 			the current TimeSlot.
 	 * @return	the TimeSlot that comes after the given TimeSlot.
 	 */
-	protected TimeSlot getNextTimeSlot(TimeSlot timeslot) throws IndexOutOfBoundsException {
+	protected TimeSlot getNextTimeSlot(TimeSlot timeslot){
 		int index = this.getTimeSlots().indexOf(timeslot);
-		if(index + 1 >= this.getTimeSlots().size())
-			throw new IndexOutOfBoundsException("Henk");
-		return this.getTimeSlots().get(index+1);
+		if(index + 1 >= this.getTimeSlots().size()|| this.getTimeSlots().size() < 0)
+			return null;
+		else
+			return this.getTimeSlots().get(index+1);
 	}
 
 	/**
@@ -95,14 +96,15 @@ public abstract class Shift {
 	 */
 	protected Order getNextOrderForAssemblyLine() {
 		TimeSlot newtimeslot = this.getTimeSlots().pollFirst();
-			return newtimeslot.getNextOrder();
+		return newtimeslot.getNextOrder();
 	}
 
 	/**
 	 * A method to get the TimeSlots of this Shift.
 	 * @return the TimeSlot's of this shift.
 	 */
-	protected LinkedList<TimeSlot> getTimeSlots() {
+	// TODO protected maken
+	public LinkedList<TimeSlot> getTimeSlots() {
 		return timeslots;
 	}
 

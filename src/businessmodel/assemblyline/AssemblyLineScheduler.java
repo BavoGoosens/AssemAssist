@@ -215,7 +215,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @return
 	 */
-	protected LinkedList<Order> getOrders() {
+	public LinkedList<Order> getOrders() {
 		return this.orders;
 	}
 	
@@ -224,7 +224,8 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @return the shift of this assemblyline.
 	 */
-	protected LinkedList<Shift> getShifts() {
+	// TODO protected maken
+	public LinkedList<Shift> getShifts() {
 		return this.shifts;
 	}
 
@@ -423,7 +424,10 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	// TODO rekening houden met de Standard Completion Date
-	protected DateTime getEstimatedCompletionTimeOfNewOrder() {
-		return this.getOrders().getLast().getEstimatedDeliveryDate().plusHours(1);
+	protected DateTime getEstimatedCompletionTimeOfNewOrder(Order order) {
+		if(this.getOrders().size() > 0)
+			return this.getOrders().getLast().getEstimatedDeliveryDate().plusHours(1);
+		else
+			return this.currenttime.plusHours(3);
 	}
 }
