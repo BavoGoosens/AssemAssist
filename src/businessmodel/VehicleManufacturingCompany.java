@@ -114,18 +114,20 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
     @Override
+    // TODO public of?
 	public Iterator<AssemblyTask> getPendingTasks(WorkPost wp) {
-		return wp.getPendingTasks().iterator();
+		return wp.getPendingTasksIterator();
 	}
 
 	@Override
+	// TODO public of?
 	public Iterator<AssemblyTask> getFinishedTasks(WorkPost wp) {
-		return wp.getFinishedTasks().iterator();
+		return wp.getFinishedTasksIterator();
 	}
 
 	@Override
 	public Iterator<AssemblyTask> getAvailableTasks(User user) {
-		return this.taskmanager.getSingleTaskOrders().iterator();
+		return this.taskmanager.getSingleTaskOrders()
 	}
 
 	@Override
@@ -143,7 +145,6 @@ public class VehicleManufacturingCompany implements Model {
 	 * Returns the current time of the system.
 	 * @return The current time of the system.
 	 */
-	// TODO
 	public DateTime getSystemTime(AssemblyLine assemblyLine){
 		return new DateTime(assemblyLine.getAssemblyLineScheduler().getCurrentTime());
 	}
@@ -161,7 +162,6 @@ public class VehicleManufacturingCompany implements Model {
 	 * @param 	time
 	 * 			The time that was needed to complete the assembly task.
 	 */
-	// TODO andere package. public zetten?
 	public void finishTask(AssemblyTask task, int time) {
 		task.completeAssemblytask(time);
 	}
@@ -172,7 +172,6 @@ public class VehicleManufacturingCompany implements Model {
 	 * 			The new algorithm
 	 * @param 	option
 	 */
-	// TODO Alle assemblyline veranderen?
 	public void changeSystemWideAlgorithm(String algo, VehicleOption option) {
 		this.getOrderManager().getMainScheduler().changeSystemWideAlgorithm(algo, option);
 	}

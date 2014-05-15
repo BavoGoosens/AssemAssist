@@ -2,6 +2,7 @@ package businessmodel.assemblyline;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
@@ -151,6 +152,15 @@ public class WorkPost {
 	protected ArrayList<AssemblyTask> getFinishedTasks() {
 		return this.finishedTasks;
 	}
+	
+	public Iterator<AssemblyTask> getPendingTasksIterator(){
+		return this.getPendingTasks().iterator();
+	}
+	
+	public Iterator<AssemblyTask> getFinishedTasksIterator(){
+		return this.getFinishedTasks().iterator();
+	}
+	
 
 	/**
 	 * Returns the list of assembly tasks that this work post can carry out based on 
