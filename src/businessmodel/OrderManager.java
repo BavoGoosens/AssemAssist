@@ -14,7 +14,7 @@ import businessmodel.user.User;
 /**
  * A class that represents an order manager.
  * This class handles all the orders for a car manufacturing company.
- * 
+ *
  * @author   SWOP team 10
  */
 public class OrderManager implements Subject {
@@ -29,7 +29,7 @@ public class OrderManager implements Subject {
 
 	/**
 	 * A constructor for the class OrderManager.
-	 * 
+	 *
 	 * @param    vehiclemodels
 	 *           the car models that a car manufacturing company offers.
 	 */
@@ -37,7 +37,6 @@ public class OrderManager implements Subject {
 		this.pendingorders = new LinkedList<Order>();
 		this.completedorders = new LinkedList<Order>();
 		this.mainscheduler = new MainScheduler(this);
-		this.generateAssemblyLine();
 		this.observers = new ArrayList<Observer>();
 	}
 
@@ -49,12 +48,12 @@ public class OrderManager implements Subject {
 
 	/**
 	 * A method to add an order to this order manager.
-	 * 
+	 *
 	 * @param   order
 	 *          the order that needs to be added.
 	 */
 	protected void placeOrder(Order order) throws IllegalArgumentException {
-		if (order == null) 
+		if (order == null)
 			throw new IllegalArgumentException("Bad order!");
 		AssemblyLine line = this.getMainScheduler().placeOrder(order);
 		if(line!= null){
@@ -71,7 +70,7 @@ public class OrderManager implements Subject {
 
 	/**
 	 * A method to get the pending orders of a given user of this order manager.
-	 * 
+	 *
 	 * @return 	ArrayList<Order>
 	 * 			the pending orders of a given user managed by this order manager.
 	 */
@@ -91,7 +90,7 @@ public class OrderManager implements Subject {
 
 	/**
 	 * A method to get the completed orders of this order manager.
-	 * 
+	 *
 	 * @return  the completed orders of this order manager.
 	 */
 	protected LinkedList<Order> getCompletedOrders(){
@@ -100,7 +99,7 @@ public class OrderManager implements Subject {
 
 	/**
 	 * A method to get the completed orders of a given user of this order manager.
-	 * 
+	 *
 	 * @return  the completed orders of a given user of this order manager.
 	 */
 	protected ArrayList<Order> getCompletedOrders(User user) throws IllegalArgumentException, NoClearanceException {
@@ -116,12 +115,12 @@ public class OrderManager implements Subject {
 
 	/**
 	 * A method that moves a finished order from the pending list to the finished list.
-	 * 
-	 * @param finished 
+	 *
+	 * @param finished
 	 * 		  The Order that needs to be moved.
 	 */
 	public void finishedOrder(Order finished) throws IllegalArgumentException {
-		if (finished == null) 
+		if (finished == null)
 			throw new IllegalArgumentException("Bad order!");
 		this.getCompletedOrders().add(finished);
 		this.notifyObservers();
@@ -129,16 +128,16 @@ public class OrderManager implements Subject {
 
 	/**
 	 * This method returns the number of specified pending orders if possible.
-	 * 
+	 *
 	 * @param nb
-	 * 		  The number of orders 
-	 * 
+	 * 		  The number of orders
+	 *
 	 * @return LinkedList<Order>
 	 * 		   A list with the requested orders.
 	 */
 	public LinkedList<Order> getNbOrders(int nb, AssemblyLine line) {
 		if (nb < 0)
-			throw new IllegalNumberException(nb, "Bad number!");
+			throw new IllegalNumberException("Bad number!");
 		LinkedList<Order> res = new LinkedList<Order>();
 		LinkedList<Order> single_task_orders = getSingleTaskOrdersNextDay(line);
 		if(single_task_orders!= null){
@@ -160,7 +159,7 @@ public class OrderManager implements Subject {
 	 * @param order
 	 */
 	public void placeOrderInFront(Order order) {
-		this.getPendingOrders().add(order);		
+		this.getPendingOrders().add(order);
 	}
 
 	/**
@@ -168,6 +167,7 @@ public class OrderManager implements Subject {
 	 * @param order
 	 */
 	public void setEstimatedCompletionDateOfOrder(Order order, AssemblyLine line){
+
 		Order previousorder = this.getPreviousOrder(order, line);
 		if(previousorder != null) {
 			if(previousorder.getEstimatedDeliveryDate() == null){
@@ -182,6 +182,77 @@ public class OrderManager implements Subject {
 		}
 	}
 
+	public LinkedList<Order> getPendingOrders(){
+		return this.pendingorders;
+	}
+
+	/**
+	 * A method to add an order to this order manager.
+	 *
+	 * @param   order
+	 *          the order that needs to be added.
+	 */
+	protected void placeOrder(Order order) throws IllegalArgumentException {
+		if (order == null) 
+			throw new IllegalArgumentException("Bad order!");
+		AssemblyLine line = this.getMainScheduler().placeOrder(order);
+		if(line!= null){
+			order.setTimestampOfOrder(line.getAssemblyLineScheduler().getCurrentTime());
+			this.setEstimatedCompletionDateOfOrder(order, line);}
+		else{
+			this.getPendingOrders().add(order);
+		}
+	}
+
+	/**
+	 * A method to get the pending orders of a given user of this order manager.
+	 *
+	 * @return 	ArrayList<Order>
+	 * 			the pending orders of a given user managed by this order manager.
+	 */
+	protected ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
+		if (user == null) throw new IllegalArgumentException("Bad user!");
+		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
+		ArrayList<Order> pendingorders = new ArrayList<Order>();
+		for(AssemblyLine line: this.getMainScheduler().getAssemblylines()){
+			pendingorders.addAll(line.getAssemblyLineScheduler().getOrdersClone());
+			for (Order order: this.getPendingOrders()){
+				if (order.getUser() == user)
+					pendingorders.add(order);
+			}
+		}
+		return pendingorders;
+	}
+
+	/**
+	 * A method to get the completed orders of this order manager.
+	 *
+	 * @return  the completed orders of this order manager.
+	 */
+	protected LinkedList<Order> getCompletedOrders(){
+		return this.completedorders;
+	}
+
+	/**
+	 * A method to get the completed orders of a given user of this order manager.
+	 *
+	 * @return  the completed orders of a given user of this order manager.
+	 */
+	protected ArrayList<Order> getCompletedOrders(User user) throws IllegalArgumentException, NoClearanceException {
+		if (user == null) throw new IllegalArgumentException("Bad user!");
+		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
+		ArrayList<Order> completedorders = new ArrayList<Order>();
+		for (Order order: this.getCompletedOrders()){
+			if (order.getUser() == user)
+				completedorders.add(order);
+		}
+		return (ArrayList<Order>) completedorders;
+	}
+
+	protected MainScheduler getMainScheduler() {
+		return this.mainscheduler;
+	}
+
 	/**
 	 * A method to get the previous order in the list.
 	 * @param 	order
@@ -190,21 +261,18 @@ public class OrderManager implements Subject {
 	 */
 	// Nakijken of het werkt met de clone
 	protected Order getPreviousOrder(Order order, AssemblyLine line){
-		if(line.getAssemblyLineScheduler().getOrdersClone().size() > line.getAssemblyLineScheduler().getNumberOfOrdersToSchedule()){
+		if(line.getAssemblyLineScheduler().getOrders().size() > line.getAssemblyLineScheduler().getNumberOfOrdersToSchedule()){
 			int index = this.getPendingOrders().indexOf(order);
 			if(index-1 < 0)
 				return null;
 			else
 				return this.getPendingOrders().get(index-1);
-		}
-		else
-			if(line.getAssemblyLineScheduler().getOrdersClone().size()== 0)
+		}else{
+			if(line.getAssemblyLineScheduler().getOrders().size() <= 1)
 				return null;
-		return line.getAssemblyLineScheduler().getOrdersClone().getLast();
-	}
+		}
 
-	private void generateAssemblyLine() {
-
+		return line.getAssemblyLineScheduler().getOrders().get(line.getAssemblyLineScheduler().getOrders().size()-2);
 	}
 
 	/**
@@ -222,10 +290,6 @@ public class OrderManager implements Subject {
 			}
 		}
 		return temp;
-	}
-
-	protected MainScheduler getMainScheduler() {
-		return this.mainscheduler;
 	}
 
 	@Override

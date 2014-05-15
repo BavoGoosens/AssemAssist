@@ -1,5 +1,7 @@
 package businessmodel.restrictions;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -13,12 +15,14 @@ import businessmodel.category.Engine;
 import businessmodel.category.ModelAFactory;
 import businessmodel.category.ModelBFactory;
 import businessmodel.category.ModelCFactory;
+import businessmodel.category.ModelXFactory;
 import businessmodel.category.Spoiler;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
+import businessmodel.order.Order;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
 
@@ -29,6 +33,7 @@ public class RestrictionTest {
 	private ModelAFactory aFactory;
 	private ModelBFactory bFactory;
 	private ModelCFactory cFactory;
+	private ModelXFactory xFactory;
 	private GarageHolder gh;
 	
 	@Before
@@ -38,6 +43,7 @@ public class RestrictionTest {
 		this.aFactory = new ModelAFactory();
 		this.bFactory = new ModelBFactory();
 		this.cFactory = new ModelCFactory();
+		this.xFactory = new ModelXFactory();
 		this.gh = new GarageHolder("Michiel", "Vandendriessche", "MichielVDD");
 	}
 
@@ -56,12 +62,12 @@ public class RestrictionTest {
 				}
 			}
 		}
-//		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
-			new StandardVehicleOrder(gh, chosen, modelA);
-//			System.out.println("Success!");
+			Order order = new StandardVehicleOrder(gh, chosen, modelA);
+			assertNull(order);
 		} catch (UnsatisfiedRestrictionException e) {
-//			System.out.println(e.getMessage());
+			assertEquals(e.getMessage(), "You haven't chosen an option of the following "
+					+ "mandatory categories:\n- COLOR\n- ENGINE\n");
 		}
 	}
 	
@@ -85,12 +91,11 @@ public class RestrictionTest {
 				chosen.add(options.get(0));
 			}
 		}
-//		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
-			new StandardVehicleOrder(gh, chosen, modelB);
-//			System.out.println("Success!");
+			Order order = new StandardVehicleOrder(gh, chosen, modelB);
+			assertNull(order);
 		} catch (UnsatisfiedRestrictionException e) {
-//			System.out.println(e.getMessage());
+			assertEquals(e.getMessage(), "If you choose a SPORT BODY, you must choose a SPOILER option.");
 		}
 	} 
 	
@@ -119,12 +124,11 @@ public class RestrictionTest {
 				chosen.add(options.get(0));
 			}
 		}
-//		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
-			new StandardVehicleOrder(gh, chosen, modelB);
-//			System.out.println("Success!");
+			Order order = new StandardVehicleOrder(gh, chosen, modelB);
+			assertNull(order);
 		} catch (UnsatisfiedRestrictionException e) {
-//			System.out.println(e.getMessage());
+			assertEquals(e.getMessage(), "If you choose a SPORT BODY, you must choose a PERFORMANCE or ULTRA ENGINE.");
 		}
 	}
 	
@@ -155,12 +159,31 @@ public class RestrictionTest {
 				chosen.add(options.get(0));
 			}
 		}
-//		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
-			new StandardVehicleOrder(gh, chosen, modelC);
-//			System.out.println("Success!");
+			Order order = new StandardVehicleOrder(gh, chosen, modelC);
+			assertNull(order);
 		} catch (UnsatisfiedRestrictionException e) {
-//			System.out.println(e.getMessage());
+			assertEquals(e.getMessage(), "If you choose an ULTRA ENGINE, you must choose the MANUAL AIRCO");
+		}
+	}
+	
+	@Test
+	/**
+	 * Test for a vehicle with an ultra engine and an automatic airco
+	 */
+	public void testPlarformBodyWheelsRestriction() throws NoClearanceException {
+		VehicleModel modelX = this.xFactory.createModel();
+		ArrayList<VehicleOption> chosen = new ArrayList<VehicleOption>();
+		for (VehicleOptionCategory category: this.categories) {
+			if (!category.equals(new Spoiler())) {
+				chosen.add(modelX.getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
+			}
+		}
+		try {
+			Order order = new StandardVehicleOrder(gh, chosen, modelX);
+			assertNull(order);
+		} catch (UnsatisfiedRestrictionException e) {
+			assertEquals(e.getMessage(), "If you choose a PLATFORM BODY, you must choose HEAVY DUTY wheels.");
 		}
 	}
 	
@@ -170,7 +193,6 @@ public class RestrictionTest {
 	 */
 	public void testDoubleRestriction() throws NoClearanceException {
 		VehicleModel modelC = this.cFactory.createModel();
-		VehicleModel modelA = this.aFactory.createModel();
 		ArrayList<VehicleOption> chosen = new ArrayList<VehicleOption>();
 		for (VehicleOption option: modelC.getVehicleModelSpecification().getOptionsClone()) {
 			chosen.add(option);
@@ -179,12 +201,12 @@ public class RestrictionTest {
 				get(modelC.getVehicleModelSpecification().getOptionsClone().size()-1));
 		chosen.add(modelC.getVehicleModelSpecification().getOptionsClone().
 				get(modelC.getVehicleModelSpecification().getOptionsClone().size()-1));
-//		System.out.println("\nChosen options: "+chosen+"\n");
 		try {
-			new StandardVehicleOrder(gh, chosen, modelC);
-//			System.out.println("Success!");
+			Order order = new StandardVehicleOrder(gh, chosen, modelC);
+			assertNull(order);
 		} catch (UnsatisfiedRestrictionException e) {
-//			System.out.println(e.getMessage());
+			assertEquals(e.getMessage(), "You cannot choose multiple options for the "
+					+ "following categories:\n- COLOR\n- ENGINE\n- SEATS\n- AIRCO\n- WHEELS\n- SPOILER\n");
 		}
 	}
 	

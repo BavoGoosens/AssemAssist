@@ -85,7 +85,7 @@ public class AssemblyLine implements Subject{
 	protected boolean canAdvance() {
 		for(WorkPost wp : this.getWorkPosts()){
 			boolean ready = wp.isCompleted();
-			if (ready)
+			if (!ready)
 				return false;
 		}
 		return true;
@@ -250,8 +250,8 @@ public class AssemblyLine implements Subject{
 		this.state = state;
 	}
 	
-	public DateTime getEstimatedCompletionTimeOfNewOrder() {
-		return this.getAssemblyLineScheduler().getEstimatedCompletionTimeOfNewOrder();
+	public DateTime getEstimatedCompletionTimeOfNewOrder(Order order) {
+		return this.getAssemblyLineScheduler().getEstimatedCompletionTimeOfNewOrder(order);
 	}
 	
 	protected MainScheduler getMainScheduler(){

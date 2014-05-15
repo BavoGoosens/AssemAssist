@@ -49,7 +49,8 @@ public class WorkSlot{
 	 * Returns the order of the work slot.
 	 * @return	The current order of the work slot.
 	 */
-	protected Order getOrder() {
+	// protected maken
+	public Order getOrder() {
 		return this.order;
 	}
 
