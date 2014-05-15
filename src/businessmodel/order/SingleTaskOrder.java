@@ -41,7 +41,7 @@ public class SingleTaskOrder extends Order {
 	 * @throws 	UnsatisfiedRestrictionException
 	 */
 	public SingleTaskOrder(User user, ArrayList<VehicleOption> options, DateTime userEndDate) throws IllegalArgumentException, NoClearanceException, UnsatisfiedRestrictionException {
-		super(user);
+		super(user,null);
 		this.setOptions(options);
 		this.setUserEndDate(userEndDate);
 	}

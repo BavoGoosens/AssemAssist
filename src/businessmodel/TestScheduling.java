@@ -3,6 +3,7 @@ package businessmodel;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,12 +27,27 @@ public class TestScheduling {
 			GarageHolder holder = new GarageHolder(Integer.toString(i),"Geijsen","Test");
 			holders.add(holder);
 		}
-
+		
+		String name1 = "Vehicle Model A";
+		String name2 = "Vehicle Model B";
+		String name3 = "Vehicle Model C";
+		String name4 = "Vehicle Model X";
+		String name5 = "Vehicle Model Y";
+		ArrayList<String> names = new ArrayList<String>();
+		names.add(name1);
+		names.add(name2);
+		names.add(name3);
+		names.add(name4);
+		names.add(name5);
+		
+		Random ram = new Random();
+		
+		
 		OrderManager ordermanager = new OrderManager();
 		ArrayList<Order> orders = new ArrayList<Order>();		
 		for (int i =0 ; i< 12; i++){
-			TestOrder ord = new TestOrder();
-			ord.setUser(holders.get(i));
+			int j = ram.nextInt(4-0);
+			TestOrder ord = new TestOrder(holders.get(i), names.get(j));
 			orders.add(ord.getOrder());
 		}
 

@@ -154,17 +154,32 @@ public class OrderManager implements Subject {
 		Order previousorder = this.getPreviousOrder(order, line);
 		if(previousorder != null) {
 			if(previousorder.getEstimatedDeliveryDate() == null){
-				order.setEstimatedDeliveryDateOfOrder(line.getAssemblyLineScheduler().getCurrentTime().plusHours(3));
+				order.setEstimatedDeliveryDateOfOrder(line.getAssemblyLineScheduler().getCurrentTime().plusMinutes(calculateMinutes(order,line)));
 			}else if(previousorder.getEstimatedDeliveryDate().getHourOfDay() <= 21){
-				order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusHours(1));
+				order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusMinutes(minutesLastWorkPost(order, line)));
 			}else {
-				order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusDays(1).withHourOfDay(11).withMinuteOfHour(0));
+				order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusDays(1).withHourOfDay(8).withMinuteOfHour(0));
+				order.getEstimatedDeliveryDate().plusMinutes(calculateMinutes(order,line));
 			}
 		}else{
-			order.setEstimatedDeliveryDateOfOrder(line.getAssemblyLineScheduler().getCurrentTime().plusHours(3));
+			order.setEstimatedDeliveryDateOfOrder(line.getAssemblyLineScheduler().getCurrentTime().plusMinutes(calculateMinutes(order,line)));
 		}
 	}
 
+	private int calculateMinutes(Order order, AssemblyLine line){
+		if(order.getVehicleModel() == null)
+			return line.getWorkPosts().size()*60;
+		int minutes = 0;
+		for(WorkPost wp : line.getWorkPosts()){
+			minutes += wp.getStandardTimeOfModel(order.getVehicleModel());
+		}
+		return minutes;
+	}
+	
+	private int minutesLastWorkPost(Order order,AssemblyLine line) {
+		return line.getWorkPosts().get(line.getWorkPosts().size()-1).getStandardTimeOfModel(order.getVehicleModel());
+	}
+	
 	/**
 	 * A method to add an order to this order manager.
 	 *

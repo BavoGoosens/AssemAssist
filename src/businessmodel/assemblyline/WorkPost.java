@@ -51,6 +51,9 @@ public class WorkPost {
 	 * The AssemblyLine that this WorkPost is a part of.
 	 */
 	private AssemblyLine assemblyline;
+	
+	private HashMap<String,Integer> standardtimes;
+
 
 	/**
 	 * This method constructs a new work post with a given name and a given set of assembly tasks.
@@ -101,7 +104,7 @@ public class WorkPost {
 	 * @return True if all tasks that are pending at the work post are completed.
 	 */
 	public boolean isCompleted(){
-		for(AssemblyTask task: this.getPendingTasks()){
+		for(AssemblyTask task: this.pendingTasks){
 			if(!task.isCompleted())
 				return false;
 		}
@@ -157,16 +160,7 @@ public class WorkPost {
         safe.convertIterator(this.finishedTasks.iterator());
         return safe;
 	}
-
-	public Iterator<AssemblyTask> getPendingTasksIterator(){
-		return this.getPendingTasks().iterator();
-	}
-
-	public Iterator<AssemblyTask> getFinishedTasksIterator(){
-		return this.getFinishedTasks().iterator();
-	}
-
-
+	
 	/**
 	 * Returns the list of assembly tasks that this work post can carry out based on
 	 * the given car options.
@@ -191,7 +185,7 @@ public class WorkPost {
 	}
 
 	protected void AssemblyTaskCompleted(AssemblyTask assem, int time) {
-		this.getPendingTasks().remove(assem);
+		this.pendingTasks.remove(assem);
 		this.finishedTasks.add(assem);
 		this.setTimeOrderInProcess(this.getTimeOrderInProcess()+time);
 		this.getAssemblyline().notifyObservers();
@@ -200,7 +194,7 @@ public class WorkPost {
 
 	protected void notifyAssemblyLine(){
 		boolean completed= true;
-		for(AssemblyTask assemblytask: this.getPendingTasks()){
+		for(AssemblyTask assemblytask: this.pendingTasks){
 			if(!assemblytask.isCompleted())
 				completed = false;
 		}
@@ -222,7 +216,7 @@ public class WorkPost {
 	protected void setNewOrder(Order order) {
 		this.setOrder(order);
 		this.timeOrderInProcess = 0;
-		this.getFinishedTasks().clear();
+		this.pendingTasks.clear();
 		this.refreshAssemblyTasks();
 	}
 
@@ -292,6 +286,17 @@ public class WorkPost {
 
 	private void setAssemblyline(AssemblyLine assemblyline) {
 		this.assemblyline = assemblyline;
+	}
+	
+	public int getStandardTimeOfModel(VehicleModel model){
+		return this.getStandardtimes().get(model.getName());
+	}
+	private HashMap<String, Integer> getStandardtimes() {
+		return standardtimes;
+	}
+
+	protected void setStandardtimes(HashMap<String, Integer> standardtimes) {
+		this.standardtimes = standardtimes;
 	}
 
 	/**
