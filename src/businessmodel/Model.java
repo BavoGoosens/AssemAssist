@@ -140,17 +140,12 @@ public interface Model {
 	public Iterator<VehicleOption> getUnscheduledVehicleOptions(int num);
 
 	/**
-	 * Returns a string representation of the current algorithm in the model.
-	 * 
-	 * @return	The current algorithm in the model.
-	 */
-	public String getCurrentSystemWideAlgo();
-
-	/**
 	 * Returns the system time.
 	 * @return	The system time.
 	 */
-	public DateTime getSystemTime(AssemblyLine assemblyLine);
+	public DateTime getSystemTime();
 
     public Iterator<AssemblyLine> getAssemblyLines();
+
+    public String getCurrentSystemWideAlgorithm();
 }

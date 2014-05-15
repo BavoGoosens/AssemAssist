@@ -203,8 +203,9 @@ public class AssemblyLineScheduler implements Subject {
 
 			if (option == null) throw new IllegalArgumentException("No such option");
 			if (!this.checkOptionsForSpecificationBatch(option)) throw new IllegalArgumentException("Too little orders with that option ( less than 3 )");
-
-			this.algortime = new SpecificationBatch(this,option);
+            ArrayList<VehicleOption> list = new ArrayList<VehicleOption>();
+            list.add(option);
+			this.algortime = new SpecificationBatch(this,list);
 		}else{
 			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");
 		}

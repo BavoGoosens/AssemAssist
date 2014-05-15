@@ -35,11 +35,6 @@ public class VehicleManufacturingCompany implements Model {
 	private OrderManager ordermanager;
 
 	/**
-	 * The task manager.
-	 */
-	private TaskManager taskmanager;
-
-	/**
 	 * Statistics manager.
 	 */
 	private StatisticsManager statisticsmanager;
@@ -124,9 +119,10 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
-    // TODO:
+    // TODO: safe maken
+    // TODO: taskmanager weg en ophalen uit workposts.
 	public Iterator<AssemblyTask> getAvailableTasks(User user) {
-		return this.taskmanager.getSingleTaskOrders();
+        return null;
 	}
 
 	@Override
@@ -134,23 +130,31 @@ public class VehicleManufacturingCompany implements Model {
 		return this.getOrderManager().getMainScheduler().getUnscheduledVehicleOptions(num);
 	}
 
-	@Override
-	public String getCurrentSystemWideAlgo() {
-		return this.getOrderManager().getMainScheduler().currentSystemWideAlgorithmDescription();
-	}
-
-
 	/**
 	 * Returns the current time of the system.
 	 * @return The current time of the system.
 	 */
-	public DateTime getSystemTime(AssemblyLine assemblyLine){
-		return new DateTime(assemblyLine.getAssemblyLineScheduler().getCurrentTime());
+	public DateTime getSystemTime(){
+        DateTime tijd = null;
+        Iterator<AssemblyLine> iter = this.getAssemblyLines();
+        while (iter.hasNext()){
+            DateTime time = iter.next().getAssemblyLineScheduler().getCurrentTime();
+            if (tijd == null | time.isAfter(tijd)){
+                tijd = time;
+            }
+        }
+		return tijd;
 	}
 
     @Override
+    // TODO: safe maken
     public Iterator<AssemblyLine> getAssemblyLines() {
         return this.getOrderManager().getMainScheduler().getAssemblyLines().iterator();
+    }
+
+    @Override
+    public String getCurrentSystemWideAlgorithm() {
+        return this.getOrderManager().getMainScheduler().getAlgorithm();
     }
 
     /**

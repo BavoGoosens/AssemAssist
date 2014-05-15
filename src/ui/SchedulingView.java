@@ -29,7 +29,7 @@ public class SchedulingView extends View {
 		ArrayList<String> algos = new ArrayList<String>();
 		while (algoss.hasNext())
 			algos.add(algoss.next());
-		String currentalgo = this.getModel().getCurrentSystemWideAlgo();
+		String currentalgo = this.getModel().getCurrentSystemWideAlgorithm();
 		System.out.println("> The active algorithm: ");
 		System.out.println("> " + currentalgo);
 		System.out.println("> To choose an algorithm enter the corresponding number. "

@@ -120,4 +120,7 @@ public class MainScheduler {
         return  choices.iterator();
     }
 
+    public String getAlgorithm() {
+        return systemWideAlgo;
+    }
 }
