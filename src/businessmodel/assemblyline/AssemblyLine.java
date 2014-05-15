@@ -227,7 +227,6 @@ public class AssemblyLine implements Subject{
 		return this.broken;
 	}
 
-
 	/**
 	 * @return operational state assembly line
 	 */

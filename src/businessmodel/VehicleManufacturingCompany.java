@@ -67,7 +67,7 @@ public class VehicleManufacturingCompany implements Model {
 
 	@Override
 	public Iterator<Order> getCompletedOrders(User user) throws IllegalArgumentException, NoClearanceException {
-		return ordermanager.getCompletedOrders(user).iterator();
+		return this.getOrderManager().getCompletedOrders(user).iterator();
 	}
 
 	@Override
@@ -137,7 +137,7 @@ public class VehicleManufacturingCompany implements Model {
 
 	@Override
 	public String getCurrentSystemWideAlgo() {
-		return this.ordermanager.getMainScheduler().currentSystemWideAlgorithmDescription();
+		return this.getOrderManager().getMainScheduler().currentSystemWideAlgorithmDescription();
 	}
 
 	
@@ -151,7 +151,7 @@ public class VehicleManufacturingCompany implements Model {
 
     @Override
     public Iterator<AssemblyLine> getAssemblyLines() {
-        return null;
+        return this.getOrderManager().getMainScheduler().getAssemblyLines().iterator();
     }
 
     /**

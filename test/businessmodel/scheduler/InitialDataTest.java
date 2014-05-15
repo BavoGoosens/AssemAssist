@@ -2,12 +2,15 @@ package businessmodel.scheduler;
 
 import static org.junit.Assert.*;
 
+import java.util.Iterator;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.exceptions.NoClearanceException;
+import businessmodel.order.Order;
 import businessmodel.user.User;
 import control.InitialData;
 
@@ -29,12 +32,22 @@ public class InitialDataTest {
 		User user = vmc.login("wow", "");
 		int count = 0;
 		try {
-			while(vmc.getPendingOrders(user).hasNext())
+			Iterator<Order> it = vmc.getPendingOrders(user);
+			while(it.hasNext()){
+				it.next();
 				count++;
+			}
 		} catch (IllegalArgumentException | NoClearanceException e) {
 			e.printStackTrace();
 		}
+		
 		assertEquals(nbOrders,count);
+		
+		try {
+			assertEquals(nbOrders, vmc.getCompletedOrders(user));
+		} catch (IllegalArgumentException | NoClearanceException e) {
+			e.printStackTrace();
+		}
 		
 	}
 

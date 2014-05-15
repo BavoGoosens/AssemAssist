@@ -52,6 +52,51 @@ public class OrderManager implements Subject {
 	}
 
 	/**
+	 * A method to get the pending orders of a given user of this order manager.
+	 *
+	 * @return 	ArrayList<Order>
+	 * 			the pending orders of a given user managed by this order manager.
+	 */
+	protected ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
+		if (user == null) throw new IllegalArgumentException("Bad user!");
+		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
+		ArrayList<Order> pendingorders = new ArrayList<Order>();
+		for(AssemblyLine line: this.getMainScheduler().getAssemblyLines()){
+			pendingorders.addAll(line.getAssemblyLineScheduler().getOrdersClone());
+			for (Order order: this.getPendingOrders()){
+				if (order.getUser() == user)
+					pendingorders.add(order);
+			}
+		}
+		return pendingorders;
+	};
+
+	/**
+	 * A method to get the completed orders of this order manager.
+	 *
+	 * @return  the completed orders of this order manager.
+	 */
+	protected LinkedList<Order> getCompletedOrders(){
+		return this.completedorders;
+	}
+
+	/**
+	 * A method to get the completed orders of a given user of this order manager.
+	 *
+	 * @return  the completed orders of a given user of this order manager.
+	 */
+	protected ArrayList<Order> getCompletedOrders(User user) throws IllegalArgumentException, NoClearanceException {
+		if (user == null) throw new IllegalArgumentException("Bad user!");
+		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
+		ArrayList<Order> completedorders = new ArrayList<Order>();
+		for (Order order: this.getCompletedOrders()){
+			if (order.getUser() == user)
+				completedorders.add(order);
+		}
+		return (ArrayList<Order>) completedorders;
+	}
+
+	/**
 	 * A method that moves a finished order from the pending list to the finished list.
 	 *
 	 * @param finished
@@ -138,52 +183,7 @@ public class OrderManager implements Subject {
 		}
 	}
 
-	/**
-	 * A method to get the pending orders of a given user of this order manager.
-	 *
-	 * @return 	ArrayList<Order>
-	 * 			the pending orders of a given user managed by this order manager.
-	 */
-	protected ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
-		if (user == null) throw new IllegalArgumentException("Bad user!");
-		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
-		ArrayList<Order> pendingorders = new ArrayList<Order>();
-		for(AssemblyLine line: this.getMainScheduler().getAssemblyLines()){
-			pendingorders.addAll(line.getAssemblyLineScheduler().getOrdersClone());
-			for (Order order: this.getPendingOrders()){
-				if (order.getUser() == user)
-					pendingorders.add(order);
-			}
-		}
-		return pendingorders;
-	}
-
-	/**
-	 * A method to get the completed orders of this order manager.
-	 *
-	 * @return  the completed orders of this order manager.
-	 */
-	protected LinkedList<Order> getCompletedOrders(){
-		return this.completedorders;
-	}
-
-	/**
-	 * A method to get the completed orders of a given user of this order manager.
-	 *
-	 * @return  the completed orders of a given user of this order manager.
-	 */
-	protected ArrayList<Order> getCompletedOrders(User user) throws IllegalArgumentException, NoClearanceException {
-		if (user == null) throw new IllegalArgumentException("Bad user!");
-		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
-		ArrayList<Order> completedorders = new ArrayList<Order>();
-		for (Order order: this.getCompletedOrders()){
-			if (order.getUser() == user)
-				completedorders.add(order);
-		}
-		return (ArrayList<Order>) completedorders;
-	}
-
-	protected MainScheduler getMainScheduler() {
+	public MainScheduler getMainScheduler() {
 		return this.mainscheduler;
 	}
 
