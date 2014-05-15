@@ -128,7 +128,7 @@ public class AssemblyTask {
 	/**
 	 * Sets the assembly task to completed.
 	 */
-	protected void completeAssemblytask(int time){
+	public void completeAssemblytask(int time){
 		this.completed = true;
 		this.notifyWorkPost(time);
 	}

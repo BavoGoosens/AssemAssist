@@ -114,20 +114,19 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
     @Override
-    // TODO public of?
 	public Iterator<AssemblyTask> getPendingTasks(WorkPost wp) {
 		return wp.getPendingTasks();
 	}
 
 	@Override
-	// TODO public of?
 	public Iterator<AssemblyTask> getFinishedTasks(WorkPost wp) {
 		return wp.getFinishedTasks();
 	}
 
 	@Override
+    // TODO:
 	public Iterator<AssemblyTask> getAvailableTasks(User user) {
-		return this.taskmanager.getSingleTaskOrders()
+		return this.taskmanager.getSingleTaskOrders();
 	}
 
 	@Override
