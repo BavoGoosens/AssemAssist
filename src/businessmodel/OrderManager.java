@@ -225,12 +225,7 @@ public class OrderManager implements Subject {
 		return temp;
 	}
 
-<<<<<<< HEAD
-
 	@Override
-=======
-@Override
->>>>>>> bd6ec101b7aa2b0e15ef7e1a8d5ae0d37ff3c011
 	public void subscribeObserver(Observer observer) throws IllegalArgumentException {
 		if (observer == null) throw new IllegalArgumentException("Bad observer!");
 		this.observers.add(observer);
