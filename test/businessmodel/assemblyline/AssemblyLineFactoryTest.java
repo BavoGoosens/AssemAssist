@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
+import businessmodel.MainScheduler;
+import businessmodel.OrderManager;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,9 +20,10 @@ public class AssemblyLineFactoryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		aLine = new AssemblyLineAFactory().createAssemblyLine();
-		bLine = new AssemblyLineBFactory().createAssemblyLine();
-		cLine = new AssemblyLineCFactory().createAssemblyLine();
+        MainScheduler scheduler = new MainScheduler(new OrderManager());
+		aLine = new AssemblyLineAFactory().createAssemblyLine(scheduler);
+		bLine = new AssemblyLineBFactory().createAssemblyLine(scheduler);
+		cLine = new AssemblyLineCFactory().createAssemblyLine(scheduler);
 	}
 
 	@Test

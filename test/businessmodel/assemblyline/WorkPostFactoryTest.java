@@ -2,6 +2,8 @@ package businessmodel.assemblyline;
 
 import static org.junit.Assert.*;
 
+import businessmodel.MainScheduler;
+import businessmodel.OrderManager;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +17,7 @@ public class WorkPostFactoryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		AssemblyLine line = new AssemblyLineCFactory().createAssemblyLine();
+		AssemblyLine line = new AssemblyLineCFactory().createAssemblyLine(new MainScheduler(new OrderManager()));
 		bodyPost = new BodyWorkPostFactory().createWorkPost(line);
 		drivetrainPost = new DrivetrainWorkPostFactory().createWorkPost(line);
 		accessoriesPost = new AccessoriesWorkPostFactory().createWorkPost(line);

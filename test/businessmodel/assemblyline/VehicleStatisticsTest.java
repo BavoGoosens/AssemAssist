@@ -1,7 +1,5 @@
 package businessmodel.assemblyline;
-
 import java.util.ArrayList;
-
 import org.junit.Before;
 
 import businessmodel.Catalog;
@@ -17,7 +15,6 @@ public class VehicleStatisticsTest {
         Catalog catalog = new Catalog();
         ArrayList<VehicleModel> models = catalog.getAvailaleModelsClone();
         for (VehicleModel model: models) {
-        	if ()
         }
     }
 }

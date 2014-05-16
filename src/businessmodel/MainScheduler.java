@@ -86,9 +86,9 @@ public class MainScheduler {
 		AssemblyLineBFactory factoryB = new AssemblyLineBFactory();
 		AssemblyLineCFactory factoryC = new AssemblyLineCFactory();
 	
-		AssemblyLine line1 = factoryA.createAssemblyLine();
-		AssemblyLine line2 = factoryB.createAssemblyLine();
-		AssemblyLine line3 = factoryC.createAssemblyLine();
+		AssemblyLine line1 = factoryA.createAssemblyLine(this);
+		AssemblyLine line2 = factoryB.createAssemblyLine(this);
+		AssemblyLine line3 = factoryC.createAssemblyLine(this);
 	
 		assemblylines.add(line1);
 		assemblylines.add(line2);
