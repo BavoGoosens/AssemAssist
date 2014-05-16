@@ -27,11 +27,11 @@ public class BodyWorkPostFactory extends WorkPostFactory {
 	@Override
 	protected HashMap<String, Integer> createStandardTimes() {
 		HashMap<String,Integer> times = new HashMap<String,Integer>();
-		times.put("Vehicle Model A", 50);
-		times.put("Vehicle Model B", 70);
-		times.put("Vehicle Model C", 60);
-		times.put("Vehicle Model X", 90);
-		times.put("Vehicle Model Y", 120);
+		times.put("Car Model A", 50);
+		times.put("Car Model B", 70);
+		times.put("Car Model C", 60);
+		times.put("Truck Model X", 90);
+		times.put("Truck Model Y", 120);
 		return times;	
 	}
 }
