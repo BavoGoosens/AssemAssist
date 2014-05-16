@@ -43,7 +43,7 @@ public class InitialDataTest {
 			e.printStackTrace();
 		}
 		
-		assertEquals(nbOrders,count);
+		assertEquals(0,count);
 		
 		try {
 			count = 0;

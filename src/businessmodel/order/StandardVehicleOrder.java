@@ -45,7 +45,7 @@ public class StandardVehicleOrder extends Order {
 	public StandardVehicleOrder(User user, ArrayList<VehicleOption> options, VehicleModel model)
 			throws IllegalArgumentException, NoClearanceException, UnsatisfiedRestrictionException {
 		super(user, model);
-		Vehicle car = new Vehicle(options);
+		Vehicle car = new Vehicle(options, model);
 		model.getVehicleModelSpecification().checkRestrictions(car);
 		this.setVehicle(car);
 	}

@@ -65,6 +65,9 @@ public class InitialData {
 
 		this.vmc = vmc;
 		this.garageholder = vmc.login("wow", "");
+		this.mechanic = vmc.login("woww", "");
+		this.customsManager = vmc.login("wowwww", "");	
+		
 		this.controllerStandard = new StandardOrderHandler(vmc);
 
 		this.controllerSingleTask = new SingleTaskOrderHandler(vmc);
@@ -82,9 +85,7 @@ public class InitialData {
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
 		}
-
-
-		this.customsManager = vmc.login("wowwww", "");	
+		
 		this.processOrders();
 
 		orders = false;
@@ -96,8 +97,7 @@ public class InitialData {
 		}
 
 		orders = false;
-		this.garageholder = vmc.login("wow", "");
-
+		
 		for(int i=0; i < 3; i++){
 			orders = this.randomOrderGenerator("standard",-1);
 			if (!orders)
@@ -118,7 +118,7 @@ public class InitialData {
 	// TODO
 	private void processOrders() {
 
-		this.mechanic = vmc.login("woww", "");
+		
 		try{
 			Iterator<AssemblyLine> assemblylines = this.vmc.getAssemblyLines(this.mechanic);
 
@@ -131,11 +131,13 @@ public class InitialData {
 						while (iter11.hasNext())
 							copy11.add(iter11.next());
 						for(AssemblyTask assembly : copy11)
-							assembly.completeAssemblytask(20);
+							vmc.finishTask(assembly, 20);
 					}
 				}
 			}
-		}catch(NoClearanceException ex){}
+		}catch(NoClearanceException ex){
+			System.out.println(ex.toString());
+		}
 
 	}
 

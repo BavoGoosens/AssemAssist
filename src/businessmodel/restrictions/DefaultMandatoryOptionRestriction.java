@@ -48,8 +48,7 @@ public class DefaultMandatoryOptionRestriction extends Restriction {
 			categories.remove(option.getCategory());
 		}
 		for (VehicleOptionCategory category: categories) {
-			if (!category.equals(new Spoiler()) && !category.equals(new Airco()) 
-					&& !category.equals(new Certification()) && !category.equals(new Protection()) && !category.equals(new Storage())) {
+			if (!category.equals(new Spoiler()) && !category.equals(new Airco()) ) {
 				unimplementedMandatoryCategories.add(category);
 			}
 		}
