@@ -142,6 +142,8 @@ public class OrderManager implements Subject {
 	 * @param order
 	 */
 	public void placeOrderInFront(Order order) {
+		if(this.getPendingOrders().size()==0)
+			
 		this.getPendingOrders().add(order);
 	}
 
@@ -177,6 +179,8 @@ public class OrderManager implements Subject {
 	}
 	
 	private int minutesLastWorkPost(Order order,AssemblyLine line) {
+		if(order.getVehicleModel() == null)
+			return 60;
 		return line.getWorkPosts().get(line.getWorkPosts().size()-1).getStandardTimeOfModel(order.getVehicleModel());
 	}
 	
