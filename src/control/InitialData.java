@@ -120,13 +120,13 @@ public class InitialData {
 
 		this.mechanic = vmc.login("woww", "");
 		try{
-			Iterator<AssemblyLine> assemblylines = this.vmc.getAssemblyLines(this.customsManager);
+			Iterator<AssemblyLine> assemblylines = this.vmc.getAssemblyLines(this.mechanic);
 
 			for (int i=0; i<15; i++){
 				while(assemblylines.hasNext()){
 					AssemblyLine assem = assemblylines.next();
 					for(WorkPost wp: assem.getWorkPosts()){
-						Iterator<AssemblyTask> iter11 = vmc.getPendingTasks(this.customsManager,wp);
+						Iterator<AssemblyTask> iter11 = vmc.getPendingTasks(this.mechanic,wp);
 						List<AssemblyTask> copy11 = new ArrayList<AssemblyTask>();
 						while (iter11.hasNext())
 							copy11.add(iter11.next());

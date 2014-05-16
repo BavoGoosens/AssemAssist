@@ -385,8 +385,9 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @return
 	 */
+	// TODO rekening houden met de singleTaskOrders
 	protected Order getNextOrderToSchedule(){
-		return this.getAssemblyline().getMainScheduler().getNbOrders(1, this.getAssemblyline()).getFirst();
+		return this.getAssemblyline().getMainScheduler().getPendingOrders().poll();
 	}
 
 	/**
@@ -447,6 +448,7 @@ public class AssemblyLineScheduler implements Subject {
 		return full[1];
 	}
 
+	// TODO rekening houden met de Standard Completion Date
 	protected DateTime getEstimatedCompletionTimeOfNewOrder(Order order) {
 		if(this.getOrders().size() > 0)
 			return this.getOrders().getLast().getEstimatedDeliveryDate().plusHours(1);

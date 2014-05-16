@@ -18,6 +18,7 @@ import businessmodel.assemblyline.WorkPost;
 import businessmodel.assemblyline.WorkSlot;
 import businessmodel.order.Order;
 import businessmodel.user.GarageHolder;
+import businessmodel.user.Mechanic;
 
 
 public class TestScheduling {
@@ -31,7 +32,7 @@ public class TestScheduling {
 			GarageHolder holder = new GarageHolder(Integer.toString(i),"Geijsen","Test");
 			holders.add(holder);
 		}
-
+		Mechanic man = new Mechanic("henk","","");
 		String name1 = "Car Model A";
 		String name2 = "Car Model B";
 		String name3 = "Car Model C";
@@ -47,7 +48,7 @@ public class TestScheduling {
 		Random ram = new Random();
 
 
-		OrderManager ordermanager = new OrderManager();
+		VehicleManufacturingCompany vhc = new VehicleManufacturingCompany();
 		ArrayList<Order> orders = new ArrayList<Order>();		
 		for (int i =0 ; i< 12; i++){
 			int j = ram.nextInt(4-0);
@@ -56,11 +57,13 @@ public class TestScheduling {
 		}
 
 		for(int i =0 ; i< orders.size()-1;i++){
-			ordermanager.placeOrder(orders.get(i));
+			vhc.placeOrder(orders.get(i));
 
 		}
 
-		for(AssemblyLine assem: ordermanager.getMainScheduler().getAssemblyLines()){
+		Iterator<AssemblyLine> iter = vhc.getAssemblyLines(man);
+		while(iter.hasNext()){
+			AssemblyLine assem = iter.next();
 			System.out.println("-----------------New Assem");
 			for(TimeSlot timeslot : assem.getAssemblyLineScheduler().getShifts().get(0).getTimeSlots()){
 				System.out.println("--------New TimeSlot");
@@ -76,21 +79,51 @@ public class TestScheduling {
 			}
 		}
 
-		for(int i = 0; i < 15 ; i ++){
-			for(AssemblyLine assem: ordermanager.getMainScheduler().getAssemblyLines()){
+
+		Iterator<AssemblyLine> iter1 = vhc.getAssemblyLines(man);
+		while(iter1.hasNext()){
+			AssemblyLine assem = iter1.next();
+
+			WorkPost wp1 = assem.getWorkPosts().get(0);
+			Iterator<AssemblyTask> iter2 = vhc.getPendingTasks(man, wp1);
+			while (iter2.hasNext()){
+				AssemblyTask task = iter2.next();
+				vhc.finishTask(task, 20);
+			}
+			wp1 = assem.getWorkPosts().get(0);
+			iter2 = vhc.getPendingTasks(man, wp1);
+			while (iter2.hasNext()){
+				AssemblyTask task = iter2.next();
+				vhc.finishTask(task, 20);
+			}
+			wp1 = assem.getWorkPosts().get(1);
+			iter2 = vhc.getPendingTasks(man, wp1);
+			while (iter2.hasNext()){
+				AssemblyTask task = iter2.next();
+				vhc.finishTask(task, 20);
+			}
+			for(int i = 0; i < 14 ; i ++){
 				for(WorkPost wp: assem.getWorkPosts()){
-					Iterator<AssemblyTask> iter1 = wp.getPendingTasks();
-					while (iter1.hasNext()){
-						AssemblyTask task = iter1.next();
-						task.completeAssemblytask(20);
+					Iterator<AssemblyTask> iter3 = vhc.getPendingTasks(man, wp);
+					while (iter3.hasNext()){
+						AssemblyTask task = iter3.next();
+						vhc.finishTask(task, 20);
 					}
 				}
 			}
 		}
 
-		System.out.println(ordermanager.getCompletedOrders().size());
-		System.out.println(ordermanager.getPendingOrders().size());
+		int count = 0;
 
+		for (GarageHolder holder: holders){
+			Iterator<Order> henk =  vhc.getCompletedOrders(holder);
+
+			while(henk.hasNext()){
+				henk.next();
+				count++;
+			}
+		}
+		System.out.println(count);
 	}
 
 	@Test
