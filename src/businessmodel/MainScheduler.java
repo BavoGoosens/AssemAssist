@@ -65,7 +65,7 @@ public class MainScheduler {
 				if(assem2.getAssemblyLineScheduler().canAddOrder())
 					fastestassem = assem2;
 		}
-		fastestassem.getAssemblyLineScheduler().addOrderToSchedule(order);
+		fastestassem.getAssemblyLineScheduler().addOrder(order);
 		return fastestassem;
 	}
 

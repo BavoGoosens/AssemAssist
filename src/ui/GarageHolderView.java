@@ -94,9 +94,12 @@ public class GarageHolderView extends View{
 
 	private void startNewOrder() {
 		// choose the car model
-		this.available_vehiclemodels.clear();
-		Iterator<VehicleModel> iter = this.getModel().getVehicleModels(this.user);
-		while (iter.hasNext())
+        try {
+        this.available_vehiclemodels.clear();
+        Iterator<VehicleModel> iter = null;
+
+            iter = this.getModel().getVehicleModels(this.user);
+        while (iter.hasNext())
 			this.available_vehiclemodels.add(iter.next());
 		System.out.println("> Please enter the corresponding number of the car model you wish to order:");
 		int count = 1;
@@ -119,7 +122,9 @@ public class GarageHolderView extends View{
 			System.out.println("! wrong input");
 			this.startNewOrder();
 		}
-
+        } catch (NoClearanceException e) {
+            e.printStackTrace();
+        }
 	}
 
 	private void displayOrderingForm(VehicleModel model){
@@ -189,7 +194,7 @@ public class GarageHolderView extends View{
 			}
 		}
 		System.out.println("The order has been placed");
-		this.controller.placeOrder(validorder);
+		this.controller.placeOrder(this.user, validorder);
 		this.display();
 	}
 

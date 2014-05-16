@@ -3,6 +3,7 @@ package control;
 import businessmodel.Model;
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.order.SingleTaskOrder;
+import businessmodel.user.User;
 
 public class SingleTaskOrderHandler implements SingleTaskOrderController {
 
@@ -14,7 +15,7 @@ public class SingleTaskOrderHandler implements SingleTaskOrderController {
 	}
 
 	@Override
-	public void placeSingleTaskOrder(SingleTaskOrder order) {
+	public void placeSingleTaskOrder(User user, SingleTaskOrder order) {
 		this.cmc.placeOrder(order);
 	}
 

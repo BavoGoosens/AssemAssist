@@ -8,6 +8,7 @@ import businessmodel.Model;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
+import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.user.User;
@@ -36,6 +37,7 @@ public class AssemblyLineStatusView extends View implements Observer {
 
 	@Override
 	public void display() {
+        try{
 		Iterator<WorkPost> postss =  this.getModel().getWorkPosts(this.user, this.selectedAssemblyLine);
 		ArrayList<WorkPost> posts = new ArrayList<WorkPost>();
 		while(postss.hasNext())
@@ -43,11 +45,11 @@ public class AssemblyLineStatusView extends View implements Observer {
 		System.out.println("> This is the assembly line status: ");
 		for (WorkPost wp : posts){
 			System.out.println("  > " + wp.getName() + "status: " );
-			Iterator<AssemblyTask> pendingiter = this.getModel().getPendingTasks(wp);
+			Iterator<AssemblyTask> pendingiter = this.getModel().getPendingTasks(this.user, wp);
 			ArrayList<AssemblyTask> pending = new ArrayList<AssemblyTask>();
 			while (pendingiter.hasNext())
 				pending.add(pendingiter.next());
-			Iterator<AssemblyTask> finishediter = this.getModel().getFinishedTasks(wp);
+			Iterator<AssemblyTask> finishediter = this.getModel().getFinishedTasks(this.user, wp);
 			ArrayList<AssemblyTask> finished = new ArrayList<AssemblyTask>();
 			while (finishediter.hasNext())
 				finished.add(finishediter.next());
@@ -62,6 +64,9 @@ public class AssemblyLineStatusView extends View implements Observer {
 		String response = this.scan.nextLine();
 		this.check(response);
 		this.error();
+        } catch (NoClearanceException e){
+            this.quit();
+        }
 	}
 
 	@Override

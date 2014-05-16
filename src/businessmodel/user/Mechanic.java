@@ -28,4 +28,9 @@ public class Mechanic extends User {
 	public boolean canPerfomAssemblyTask(){
 		return true;
 	}
+
+    @Override
+    public boolean canViewAssemblyLines() {
+        return true;
+    }
 }
