@@ -28,11 +28,11 @@ public class TestScheduling {
 			holders.add(holder);
 		}
 		
-		String name1 = "Vehicle Model A";
-		String name2 = "Vehicle Model B";
-		String name3 = "Vehicle Model C";
-		String name4 = "Vehicle Model X";
-		String name5 = "Vehicle Model Y";
+		String name1 = "Vehicle model A";
+		String name2 = "Vehicle model B";
+		String name3 = "Vehicle model C";
+		String name4 = "Vehicle model X";
+		String name5 = "Vehicle model Y";
 		ArrayList<String> names = new ArrayList<String>();
 		names.add(name1);
 		names.add(name2);
