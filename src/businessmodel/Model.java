@@ -54,7 +54,7 @@ public interface Model {
 	 * 			The given user.
 	 * @return	The work posts for the given user.
 	 */
-	public Iterator<WorkPost> getWorkPosts(User user, AssemblyLine assemblyLine);
+	public Iterator<WorkPost> getWorkPosts(User user, AssemblyLine assemblyLine) throws IllegalArgumentException, NoClearanceException;
 	
 	/**
 	 * Returns an iterator over the car models for the given user.
@@ -63,7 +63,7 @@ public interface Model {
 	 * 			The given user.
 	 * @return	The car models for the given user.
 	 */
-	public Iterator<VehicleModel> getVehicleModels(User user);
+	public Iterator<VehicleModel> getVehicleModels(User user) throws IllegalArgumentException, NoClearanceException;
 	
 	/**
 	 * Returns an iterator over the available assembly tasks for the given user.
@@ -72,7 +72,7 @@ public interface Model {
 	 * 			The given user
 	 * @return	The available assembly tasks for the given user.
 	 */
-	public Iterator<AssemblyTask> getAvailableTasks(User user);
+	public Iterator<AssemblyTask> getAvailableTasks(User user) throws IllegalArgumentException, NoClearanceException;
 	
 	/**
 	 * Returns an iterator over the scheduling algorithms for the given user.
@@ -81,7 +81,7 @@ public interface Model {
 	 * 			The given user.
 	 * @return	The scheduling algorithms for the given user.
 	 */
-	public Iterator<String> getSchedulingAlgorithms(User user);
+	public Iterator<String> getSchedulingAlgorithms(User user) throws IllegalArgumentException, NoClearanceException;
 
 	/**
 	 * Returns the user with the given user name and password. If that exists.
@@ -106,13 +106,13 @@ public interface Model {
 	 * Returns the car statistics of the model.
 	 * @return The car statistics of the model.
 	 */
-	public VehicleStatistics getVehicleStatistics();
+	public VehicleStatistics getVehicleStatistics(User user) throws IllegalArgumentException, NoClearanceException;
 
 	/**
 	 * Returns the order statistics of the model.
 	 * @return The order statistics of the model.
 	 */
-	public OrderStatistics getOrderStatistics();
+	public OrderStatistics getOrderStatistics(User user) throws IllegalArgumentException, NoClearanceException;
 
 	/**
 	 * Returns an iterator over the pending tasks at a given work post.
@@ -121,7 +121,7 @@ public interface Model {
 	 * 			The given work post.
 	 * @return	The pending tasks at the given work post.
 	 */
-	public Iterator<AssemblyTask> getPendingTasks(WorkPost wp);
+	public Iterator<AssemblyTask> getPendingTasks(User user, WorkPost wp) throws IllegalArgumentException, NoClearanceException;
 
 	/**
 	 * Returns an iterator over the finished tasks at a given work post.
@@ -130,14 +130,14 @@ public interface Model {
 	 * 			The given work post.
 	 * @return	The finished tasks at a given work post.
 	 */
-	public Iterator<AssemblyTask> getFinishedTasks(WorkPost wp);
+	public Iterator<AssemblyTask> getFinishedTasks(User user, WorkPost wp) throws IllegalArgumentException, NoClearanceException;
 	
 	/**
 	 * Returns an iterator over the unscheduled car options of the model.
 	 * 
 	 * @return The unscheduled car options of the model.
 	 */
-	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions(int num);
+	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions(User user, int num) throws IllegalArgumentException, NoClearanceException;
 
 	/**
 	 * Returns the system time.
@@ -145,7 +145,7 @@ public interface Model {
 	 */
 	public DateTime getSystemTime();
 
-    public Iterator<AssemblyLine> getAssemblyLines();
+    public Iterator<AssemblyLine> getAssemblyLines(User user) throws NoClearanceException;
 
-    public String getCurrentSystemWideAlgorithm();
+    public String getCurrentSystemWideAlgorithm(User user) throws NoClearanceException;
 }

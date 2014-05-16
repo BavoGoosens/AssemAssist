@@ -99,23 +99,35 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
-	public VehicleStatistics getVehicleStatistics() {
-		return this.statisticsmanager.getVehicleStatistics();
+	public VehicleStatistics getVehicleStatistics(User user) throws NoClearanceException{
+		if(user.canViewStatistics())
+            return this.statisticsmanager.getVehicleStatistics();
+        else
+            throw new NoClearanceException();
 	}
 
 	@Override
-	public OrderStatistics getOrderStatistics() {
-		return this.statisticsmanager.getOrderStatistics();
+	public OrderStatistics getOrderStatistics(User user) throws NoClearanceException{
+		if (user.canViewStatistics())
+            return this.statisticsmanager.getOrderStatistics();
+        else
+            throw new NoClearanceException();
 	}
 
     @Override
-	public Iterator<AssemblyTask> getPendingTasks(WorkPost wp) {
-		return wp.getPendingTasks();
+	public Iterator<AssemblyTask> getPendingTasks(User user, WorkPost wp) throws NoClearanceException{
+        if (user.canPerfomAssemblyTask())
+            return wp.getPendingTasks();
+        else
+            throw new NoClearanceException();
 	}
 
 	@Override
-	public Iterator<AssemblyTask> getFinishedTasks(WorkPost wp) {
-		return wp.getFinishedTasks();
+	public Iterator<AssemblyTask> getFinishedTasks(User user, WorkPost wp) throws NoClearanceException{
+        if (user.canPerfomAssemblyTask())
+            return wp.getFinishedTasks();
+        else
+            throw new NoClearanceException();
 	}
 
 	@Override
@@ -126,8 +138,11 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
-	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions(int num) {
-		return this.getOrderManager().getMainScheduler().getUnscheduledVehicleOptions(num);
+	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions(User user, int num) throws NoClearanceException{
+		if (user.canChangeAlgorithm())
+            return this.getOrderManager().getMainScheduler().getUnscheduledVehicleOptions(num);
+        else
+            throw new NoClearanceException();
 	}
 
 	/**
@@ -136,7 +151,7 @@ public class VehicleManufacturingCompany implements Model {
 	 */
 	public DateTime getSystemTime(){
         DateTime tijd = null;
-        Iterator<AssemblyLine> iter = this.getAssemblyLines();
+        Iterator<AssemblyLine> iter = this.getOrderManager().getMainScheduler().getAssemblyLines().iterator();
         while (iter.hasNext()){
             DateTime time = iter.next().getAssemblyLineScheduler().getCurrentTime();
             if (tijd == null | time.isAfter(tijd)){
@@ -148,13 +163,19 @@ public class VehicleManufacturingCompany implements Model {
 
     @Override
     // TODO: safe maken
-    public Iterator<AssemblyLine> getAssemblyLines() {
-        return this.getOrderManager().getMainScheduler().getAssemblyLines().iterator();
+    public Iterator<AssemblyLine> getAssemblyLines(User user) throws NoClearanceException {
+        if (user.canViewAssemblyLines())
+            return this.getOrderManager().getMainScheduler().getAssemblyLines().iterator();
+        else
+            throw new NoClearanceException();
     }
 
     @Override
-    public String getCurrentSystemWideAlgorithm() {
-        return this.getOrderManager().getMainScheduler().getAlgorithm();
+    public String getCurrentSystemWideAlgorithm(User user) throws NoClearanceException {
+        if (user.canChangeAlgorithm())
+            return this.getOrderManager().getMainScheduler().getAlgorithm();
+        else
+            throw new NoClearanceException();
     }
 
     /**
@@ -173,7 +194,7 @@ public class VehicleManufacturingCompany implements Model {
 	 * Changes the scheduling algorithm to the given algorithm.
 	 * @param 	algo
 	 * 			The new algorithm
-	 * @param 	option
+	 * @param 	options
 	 */
 	public void changeSystemWideAlgorithm(String algo, ArrayList<VehicleOption> options) {
 		this.getOrderManager().getMainScheduler().changeSystemWideAlgorithm(algo, options);

@@ -22,9 +22,19 @@ public class Manager extends User {
 	public Manager(String firstname, String lastname, String username) throws IllegalArgumentException {
 		super(firstname,lastname,username);
 	}
-	
-	@Override
-	public boolean canAdvanceAssemblyLine(){
-		return true;
-	}
+
+    @Override
+    public boolean canViewStatistics() {
+        return true;
+    }
+
+    @Override
+    public boolean canViewAssemblyLines() {
+        return true;
+    }
+
+    @Override
+    public boolean canChangeAlgorithm() {
+        return true;
+    }
 }
