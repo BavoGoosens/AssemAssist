@@ -66,7 +66,7 @@ public class InitialData {
 		this.vmc = vmc;
 		this.garageholder = vmc.login("wow", "");
 		this.controllerStandard = new StandardOrderHandler(vmc);
-		
+
 		this.controllerSingleTask = new SingleTaskOrderHandler(vmc);
 		this.iter = vmc.getVehicleModels(this.garageholder);
 		this.available_vehiclemodels = new ArrayList<VehicleModel>();
@@ -76,65 +76,67 @@ public class InitialData {
 			this.available_vehiclemodels.add(this.iter.next());
 
 		Boolean orders = false;
-		
+
 		for(int i=0; i < 10; i++){
 			orders = this.randomOrderGenerator("standard",0);
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
 		}
-		
 
-//		this.mechanic = vmc.login("woww", "");
-//		this.processOrders();
-//		
-//		orders = false;
-//		this.customsManager = vmc.login("wowwww", "");	
-//		
-//		for(int i=0; i < 3; i++){
-//			orders = this.randomOrderGenerator("singleTask",-1);
-//			if (!orders)
-//				this.randomOrderGenerator("singleTask", 0);
-//		}
-//		
-//		orders = false;
-//		this.garageholder = vmc.login("wow", "");
-//		
-//		for(int i=0; i < 3; i++){
-//			orders = this.randomOrderGenerator("standard",-1);
-//			if (!orders)
-//				this.randomOrderGenerator("standard", 0);
-//		}
-//		
-//		orders = false;
-//		
-//		for(int i=0; i < 3; i++){
-//			orders = this.randomOrderGenerator("standard",-1);
-//			if (!orders)
-//				this.randomOrderGenerator("standard", 0);
-//		}
-//		
-		
+
+		//		this.mechanic = vmc.login("woww", "");
+		//		this.processOrders();
+		//		
+		//		orders = false;
+		//		this.customsManager = vmc.login("wowwww", "");	
+		//		
+		//		for(int i=0; i < 3; i++){
+		//			orders = this.randomOrderGenerator("singleTask",-1);
+		//			if (!orders)
+		//				this.randomOrderGenerator("singleTask", 0);
+		//		}
+		//		
+		//		orders = false;
+		//		this.garageholder = vmc.login("wow", "");
+		//		
+		//		for(int i=0; i < 3; i++){
+		//			orders = this.randomOrderGenerator("standard",-1);
+		//			if (!orders)
+		//				this.randomOrderGenerator("standard", 0);
+		//		}
+		//		
+		//		orders = false;
+		//		
+		//		for(int i=0; i < 3; i++){
+		//			orders = this.randomOrderGenerator("standard",-1);
+		//			if (!orders)
+		//				this.randomOrderGenerator("standard", 0);
+		//		}
+		//		
+
 	}
 
 	// TODO
 	private void processOrders() {
 
-		Iterator<AssemblyLine> assemblylines = this.vmc.getAssemblyLines();
+		try{
+			Iterator<AssemblyLine> assemblylines = this.vmc.getAssemblyLines(this.customsManager);
 
-		for (int i=0; i<15; i++){
-			while(assemblylines.hasNext()){
-				AssemblyLine assem = assemblylines.next();
-				for(WorkPost wp: assem.getWorkPosts()){
-					Iterator<AssemblyTask> iter11 = vmc.getPendingTasks(wp);
-					List<AssemblyTask> copy11 = new ArrayList<AssemblyTask>();
-					while (iter11.hasNext())
-						copy11.add(iter11.next());
-					for(AssemblyTask assembly : copy11)
-						assembly.completeAssemblytask(20);
+			for (int i=0; i<15; i++){
+				while(assemblylines.hasNext()){
+					AssemblyLine assem = assemblylines.next();
+					for(WorkPost wp: assem.getWorkPosts()){
+						Iterator<AssemblyTask> iter11 = vmc.getPendingTasks(this.customsManager,wp);
+						List<AssemblyTask> copy11 = new ArrayList<AssemblyTask>();
+						while (iter11.hasNext())
+							copy11.add(iter11.next());
+						for(AssemblyTask assembly : copy11)
+							assembly.completeAssemblytask(20);
+					}
 				}
 			}
-		}
-		
+		}catch(NoClearanceException ex){}
+
 	}
 
 	private boolean randomOrderGenerator(String orders, int model){
@@ -193,7 +195,7 @@ public class InitialData {
 		if (orders.equals("standard")){
 			try {
 				StandardVehicleOrder order = new StandardVehicleOrder(this.garageholder, this.chosen, vehicleModel);
-				this.controllerStandard.placeOrder(order);
+				this.controllerStandard.placeOrder(this.garageholder,order);
 				return true;
 			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
 				if (model == 0)
@@ -203,7 +205,7 @@ public class InitialData {
 			try {
 				DateTime time = new DateTime(new DateTime().getYear(), new DateTime().getMonthOfYear(),new DateTime().getDayOfMonth(), 8, 0);
 				SingleTaskOrder order = new SingleTaskOrder(this.customsManager, this.chosen, time.plusDays(1));
-				this.controllerSingleTask.placeSingleTaskOrder(order);
+				this.controllerSingleTask.placeSingleTaskOrder(this.customsManager,order);
 				return true;
 			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
 				if (model == 0)
