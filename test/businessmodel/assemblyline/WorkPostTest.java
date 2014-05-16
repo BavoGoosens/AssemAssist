@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
+import businessmodel.MainScheduler;
+import businessmodel.OrderManager;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +21,7 @@ public class WorkPostTest {
 	public void setUp() throws Exception {
 		testorder = new TestOrder();
 		AssemblyLineAFactory factory = new AssemblyLineAFactory();
-		this.workpost = new WorkPost("CarBodyPost", factory.createAssemblyLine());
+		this.workpost = new WorkPost("CarBodyPost", factory.createAssemblyLine(new MainScheduler(new OrderManager())));
 		assertEquals("CarBodyPost", this.workpost.getName());
 	}
 

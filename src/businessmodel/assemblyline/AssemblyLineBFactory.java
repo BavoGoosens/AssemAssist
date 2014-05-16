@@ -2,6 +2,7 @@ package businessmodel.assemblyline;
 
 import java.util.ArrayList;
 
+import businessmodel.MainScheduler;
 import businessmodel.category.VehicleModel;
 
 /**
@@ -12,8 +13,9 @@ import businessmodel.category.VehicleModel;
 public class AssemblyLineBFactory extends AssemblyLineFactory {
 
     @Override
-    public AssemblyLine createAssemblyLine() {
+    public AssemblyLine createAssemblyLine(MainScheduler scheduler) {
         AssemblyLine line = new AssemblyLine();
+        line.setMainScheduler(scheduler);
         this.createWorkPosts(line);
         this.createResponsibleModels(line);
         this.createScheduler(line);
