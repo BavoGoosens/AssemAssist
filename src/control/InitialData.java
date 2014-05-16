@@ -81,36 +81,36 @@ public class InitialData {
 		Boolean orders = false;
 
 		for(int i=0; i < 10; i++){
-			orders = this.randomOrderGenerator("standard",0);
+			orders = this.randomOrderGenerator("standard",-1);
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
 		}
 		
 		this.processOrders();
 
-		orders = false;
-		
-		for(int i=0; i < 3; i++){
-			orders = this.randomOrderGenerator("singleTask",-1);
-			if (!orders)
-				this.randomOrderGenerator("singleTask", 0);
-		}
-
-		orders = false;
-		
-		for(int i=0; i < 3; i++){
-			orders = this.randomOrderGenerator("standard",-1);
-			if (!orders)
-				this.randomOrderGenerator("standard", 0);
-		}
-
-		orders = false;
-
-		for(int i=0; i < 3; i++){
-			orders = this.randomOrderGenerator("standard",-1);
-			if (!orders)
-				this.randomOrderGenerator("standard", 0);
-		}
+//		orders = false;
+//		
+//		for(int i=0; i < 3; i++){
+//			orders = this.randomOrderGenerator("singleTask",-1);
+//			if (!orders)
+//				this.randomOrderGenerator("singleTask", 0);
+//		}
+//
+//		orders = false;
+//		
+//		for(int i=0; i < 3; i++){
+//			orders = this.randomOrderGenerator("standard",-1);
+//			if (!orders)
+//				this.randomOrderGenerator("standard", 0);
+//		}
+//
+//		orders = false;
+//
+//		for(int i=0; i < 3; i++){
+//			orders = this.randomOrderGenerator("standard",-1);
+//			if (!orders)
+//				this.randomOrderGenerator("standard", 0);
+//		}
 
 
 	}
@@ -118,26 +118,40 @@ public class InitialData {
 	// TODO
 	private void processOrders() {
 
-		
 		try{
-			Iterator<AssemblyLine> assemblylines = this.vmc.getAssemblyLines(this.mechanic);
+		Iterator<AssemblyLine> iter1 = vmc.getAssemblyLines(this.mechanic);
+		while(iter1.hasNext()){
+			AssemblyLine assem = iter1.next();
 
-			for (int i=0; i<15; i++){
-				while(assemblylines.hasNext()){
-					AssemblyLine assem = assemblylines.next();
-					for(WorkPost wp: assem.getWorkPosts()){
-						Iterator<AssemblyTask> iter11 = vmc.getPendingTasks(this.mechanic,wp);
-						List<AssemblyTask> copy11 = new ArrayList<AssemblyTask>();
-						while (iter11.hasNext())
-							copy11.add(iter11.next());
-						for(AssemblyTask assembly : copy11)
-							vmc.finishTask(assembly, 20);
+			WorkPost wp1 = assem.getWorkPosts().get(0);
+			Iterator<AssemblyTask> iter2 = vmc.getPendingTasks(this.mechanic, wp1);
+			while (iter2.hasNext()){
+				AssemblyTask task = iter2.next();
+				vmc.finishTask(task, 20);
+			}
+			wp1 = assem.getWorkPosts().get(0);
+			iter2 = vmc.getPendingTasks(this.mechanic, wp1);
+			while (iter2.hasNext()){
+				AssemblyTask task = iter2.next();
+				vmc.finishTask(task, 20);
+			}
+			wp1 = assem.getWorkPosts().get(1);
+			iter2 = vmc.getPendingTasks(this.mechanic, wp1);
+			while (iter2.hasNext()){
+				AssemblyTask task = iter2.next();
+				vmc.finishTask(task, 20);
+			}
+			for(int i = 0; i < 14 ; i ++){
+				for(WorkPost wp: assem.getWorkPosts()){
+					Iterator<AssemblyTask> iter3 = vmc.getPendingTasks(this.mechanic, wp);
+					while (iter3.hasNext()){
+						AssemblyTask task = iter3.next();
+						vmc.finishTask(task, 20);
 					}
 				}
 			}
-		}catch(NoClearanceException ex){
-			System.out.println(ex.toString());
 		}
+		}catch(NoClearanceException ex){System.out.println(ex.toString());}
 
 	}
 
