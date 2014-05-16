@@ -222,7 +222,7 @@ public class VehicleManufacturingCompany implements Model {
 	 * Returns the order manager of the car manufacturing company.
 	 * @return The order manager of the car manufacturing company.
 	 */
-	public OrderManager getOrderManager(){
+	private OrderManager getOrderManager(){
 		return this.ordermanager;
 	}
 

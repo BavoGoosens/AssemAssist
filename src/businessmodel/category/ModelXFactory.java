@@ -33,6 +33,15 @@ public class ModelXFactory extends VehicleModelFactory {
 		for (VehicleOption option: this.createWheels().getOptionsClone())
 			options.add(option);
 		
+		for (VehicleOption option: this.createProtection().getOptionsClone())
+			options.add(option);
+		
+		for (VehicleOption option: this.createStorage().getOptionsClone())
+			options.add(option);
+		
+		for (VehicleOption option: this.createCertification().getOptionsClone())
+			options.add(option);
+		
 		VehicleModelSpecification cms = new VehicleModelSpecification(options);
 		return new VehicleModel(this.getName(), cms, this.getStandardTimeToFinish());
 	}
@@ -132,6 +141,39 @@ public class ModelXFactory extends VehicleModelFactory {
 			System.out.println(e.getMessage());
 		}
 		return wheels;
+	}
+	
+	protected Protection createProtection() {
+		Protection protection = new Protection();
+		VehicleOption protection1 = new VehicleOption("cargo protection", protection);
+		try {
+			protection.addOption(protection1);
+		} catch (IllegalVehicleOptionCategoryException e) {
+			System.out.println(e.getMessage());
+		}
+		return protection;
+	}
+	
+	protected Storage createStorage() {
+		Storage storage = new Storage();
+		VehicleOption storage1 = new VehicleOption("tool storage", storage);
+		try {
+			storage.addOption(storage1);
+		} catch (IllegalVehicleOptionCategoryException e) {
+			System.out.println(e.getMessage());
+		}
+		return storage;
+	}
+	
+	protected Certification createCertification() {
+		Certification certification = new Certification();
+		VehicleOption certification1 = new VehicleOption("maximum cargo load certification", certification);
+		try {
+			certification.addOption(certification1);
+		} catch (IllegalVehicleOptionCategoryException e) {
+			System.out.println(e.getMessage());
+		}
+		return certification;
 	}
 
 	@Override

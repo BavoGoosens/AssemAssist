@@ -56,13 +56,6 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	/**
-	 *Get the number of orders that has been scheduled so far for this day.
-	 */
-	public int getDayOrdersCount() {
-		return this.dayOrdersCount;
-	}
-
-	/**
 	 * A method to schedule a new day.
 	 * 
 	 * The shift are cleared and new orders are added if possible.
@@ -75,35 +68,6 @@ public class AssemblyLineScheduler implements Subject {
 		for(Order order:this.getAssemblyline().getMainScheduler().getNbOrders(size, this.getAssemblyline())){
 			this.addOrderToSchedule(order);
 		}
-	}
-
-	// for testing
-	@SuppressWarnings("unchecked")
-	/**
-	 * Get a clone of the current orders in the schedule.
-	 * @return a clone of the current orders.
-	 */
-	// TODO: werken met iterators
-	public LinkedList<Order> getOrdersClone(){
-		return (LinkedList<Order>) this.orders.clone();
-	}
-
-	/**
-	 * Return the AssemblyiLne of this assemblyline.
-	 * 
-	 * @return the AssemblyLine of this assemblyline.
-	 */
-	public AssemblyLine getAssemblyline() {
-		return assemblyline;
-	}
-
-	/**
-	 * A method to get the current time of this AssemblyLineScheduler.
-	 * 
-	 * @return
-	 */
-	public DateTime getCurrentTime(){
-		return this.currenttime;
 	}
 
 	/**
@@ -211,75 +175,6 @@ public class AssemblyLineScheduler implements Subject {
 		}
 	}
 
-	/**
-	 * Returns the current orders of this assemblyline.
-	 * 
-	 * @return
-	 */
-	//TODO Protected maken
-	public LinkedList<Order> getOrders() {
-		return this.orders;
-	}
-
-	/**
-	 * Returns the shifts of this assemblyline.
-	 * 
-	 * @return the shift of this assemblyline.
-	 */
-	// TODO protected maken
-	public LinkedList<Shift> getShifts() {
-		return this.shifts;
-	}
-
-	/** 
-	 * A method to get the previous order that had been scheduled.
-	 * 
-	 * @param 	order
-	 * 			the current order.
-	 * @return	the previous order
-	 */
-	protected Order getPreviousOrder(Order order){
-		int index = this.getOrders().indexOf(order);
-		if(index-1 < 0)
-			return null;
-		else
-			return this.getOrders().get(index-1);
-	}
-
-	/**
-	 * A method that returns the current delay of this day assemblyline.
-	 * 
-	 * @return
-	 */
-	protected int getDelay() {
-		return delay;
-	}
-
-	/**
-	 * Returns the next shift of the given shift.
-	 * 
-	 * @param 	shift
-	 * 			the shift you want the next shift from.
-	 * @return	the next shift
-	 */
-	protected Shift getNextShift(Shift shift){
-		int index = this.getShifts().indexOf(shift);
-		if(index + 1 >= this.getShifts().size() || this.getShifts().size() < 0)
-			return null;
-		else
-			return this.getShifts().get(index+1);
-	}
-
-	/**
-	 * Returns the next order that needs to be scheduled.
-	 * 
-	 * @return
-	 */
-	// TODO rekening houden met de singleTaskOrders
-	protected Order getNextOrderToSchedule(){
-		return this.getAssemblyline().getMainScheduler().getPendingOrders().poll();
-	}
-
 	private void updateCompletedOrders(){
 		if(this.getOrders().peekFirst()!= null && this.getOrders().peekFirst().isCompleted()){
 			Order completedorder = this.getOrders().pollFirst();
@@ -381,6 +276,111 @@ public class AssemblyLineScheduler implements Subject {
 		if (orderCount < 3)
 			return false;
 		return true;
+	}
+
+	/**
+	 *Get the number of orders that has been scheduled so far for this day.
+	 */
+	public int getDayOrdersCount() {
+		return this.dayOrdersCount;
+	}
+
+	// for testing
+	@SuppressWarnings("unchecked")
+	/**
+	 * Get a clone of the current orders in the schedule.
+	 * @return a clone of the current orders.
+	 */
+	// TODO: werken met iterators
+	public LinkedList<Order> getOrdersClone(){
+		return (LinkedList<Order>) this.orders.clone();
+	}
+
+	/**
+	 * Return the AssemblyiLne of this assemblyline.
+	 * 
+	 * @return the AssemblyLine of this assemblyline.
+	 */
+	public AssemblyLine getAssemblyline() {
+		return assemblyline;
+	}
+
+	/**
+	 * A method to get the current time of this AssemblyLineScheduler.
+	 * 
+	 * @return
+	 */
+	public DateTime getCurrentTime(){
+		return this.currenttime;
+	}
+
+	/**
+	 * Returns the current orders of this assemblyline.
+	 * 
+	 * @return
+	 */
+	//TODO Protected maken
+	public LinkedList<Order> getOrders() {
+		return this.orders;
+	}
+
+	/**
+	 * Returns the shifts of this assemblyline.
+	 * 
+	 * @return the shift of this assemblyline.
+	 */
+	// TODO protected maken
+	public LinkedList<Shift> getShifts() {
+		return this.shifts;
+	}
+
+	/** 
+	 * A method to get the previous order that had been scheduled.
+	 * 
+	 * @param 	order
+	 * 			the current order.
+	 * @return	the previous order
+	 */
+	protected Order getPreviousOrder(Order order){
+		int index = this.getOrders().indexOf(order);
+		if(index-1 < 0)
+			return null;
+		else
+			return this.getOrders().get(index-1);
+	}
+
+	/**
+	 * A method that returns the current delay of this day assemblyline.
+	 * 
+	 * @return
+	 */
+	protected int getDelay() {
+		return delay;
+	}
+
+	/**
+	 * Returns the next shift of the given shift.
+	 * 
+	 * @param 	shift
+	 * 			the shift you want the next shift from.
+	 * @return	the next shift
+	 */
+	protected Shift getNextShift(Shift shift){
+		int index = this.getShifts().indexOf(shift);
+		if(index + 1 >= this.getShifts().size() || this.getShifts().size() < 0)
+			return null;
+		else
+			return this.getShifts().get(index+1);
+	}
+
+	/**
+	 * Returns the next order that needs to be scheduled.
+	 * 
+	 * @return
+	 */
+	// TODO rekening houden met de singleTaskOrders
+	protected Order getNextOrderToSchedule(){
+		return this.getAssemblyline().getMainScheduler().getPendingOrders().poll();
 	}
 
 	/**
