@@ -84,41 +84,41 @@ public class InitialData {
 		}
 
 
-		//		this.mechanic = vmc.login("woww", "");
-		//		this.processOrders();
-		//		
-		//		orders = false;
-		//		this.customsManager = vmc.login("wowwww", "");	
-		//		
-		//		for(int i=0; i < 3; i++){
-		//			orders = this.randomOrderGenerator("singleTask",-1);
-		//			if (!orders)
-		//				this.randomOrderGenerator("singleTask", 0);
-		//		}
-		//		
-		//		orders = false;
-		//		this.garageholder = vmc.login("wow", "");
-		//		
-		//		for(int i=0; i < 3; i++){
-		//			orders = this.randomOrderGenerator("standard",-1);
-		//			if (!orders)
-		//				this.randomOrderGenerator("standard", 0);
-		//		}
-		//		
-		//		orders = false;
-		//		
-		//		for(int i=0; i < 3; i++){
-		//			orders = this.randomOrderGenerator("standard",-1);
-		//			if (!orders)
-		//				this.randomOrderGenerator("standard", 0);
-		//		}
-		//		
+		this.customsManager = vmc.login("wowwww", "");	
+		this.processOrders();
+
+		orders = false;
+		
+		for(int i=0; i < 3; i++){
+			orders = this.randomOrderGenerator("singleTask",-1);
+			if (!orders)
+				this.randomOrderGenerator("singleTask", 0);
+		}
+
+		orders = false;
+		this.garageholder = vmc.login("wow", "");
+
+		for(int i=0; i < 3; i++){
+			orders = this.randomOrderGenerator("standard",-1);
+			if (!orders)
+				this.randomOrderGenerator("standard", 0);
+		}
+
+		orders = false;
+
+		for(int i=0; i < 3; i++){
+			orders = this.randomOrderGenerator("standard",-1);
+			if (!orders)
+				this.randomOrderGenerator("standard", 0);
+		}
+
 
 	}
 
 	// TODO
 	private void processOrders() {
 
+		this.mechanic = vmc.login("woww", "");
 		try{
 			Iterator<AssemblyLine> assemblylines = this.vmc.getAssemblyLines(this.customsManager);
 

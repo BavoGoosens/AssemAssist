@@ -2,8 +2,13 @@ package businessmodel.restrictions;
 
 import java.util.ArrayList;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 import businessmodel.category.Airco;
+import businessmodel.category.Certification;
+import businessmodel.category.Protection;
 import businessmodel.category.Spoiler;
+import businessmodel.category.Storage;
 import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
@@ -43,7 +48,8 @@ public class DefaultMandatoryOptionRestriction extends Restriction {
 			categories.remove(option.getCategory());
 		}
 		for (VehicleOptionCategory category: categories) {
-			if (!category.equals(new Spoiler()) && !category.equals(new Airco())) {
+			if (!category.equals(new Spoiler()) && !category.equals(new Airco()) 
+					&& !category.equals(new Certification()) && !category.equals(new Protection()) && !category.equals(new Storage())) {
 				unimplementedMandatoryCategories.add(category);
 			}
 		}
