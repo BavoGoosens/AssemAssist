@@ -9,6 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import businessmodel.VehicleManufacturingCompany;
+import businessmodel.assemblyline.AssemblyLineScheduler;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.Order;
 import businessmodel.user.User;
@@ -48,6 +49,12 @@ public class InitialDataTest {
 		} catch (IllegalArgumentException | NoClearanceException e) {
 			e.printStackTrace();
 		}
+		
+		int orderCount = 0;
+		for(AssemblyLineScheduler assemSched: vmc.getOrderManager().getMainScheduler().getAssemblyLineSchedulers())
+				orderCount += assemSched.getOrdersClone().size();
+		
+		assertEquals(orderCount, 9);
 		
 	}
 
