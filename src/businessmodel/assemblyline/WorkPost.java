@@ -7,6 +7,7 @@ import java.util.Iterator;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.order.Order;
+import businessmodel.order.StandardVehicleOrder;
 import businessmodel.util.SafeIterator;
 
 /**
@@ -171,14 +172,18 @@ public class WorkPost {
 	 * @return 	The list of assembly tasks that this work post can carry out based on the
 	 * 			given car options.
 	 */
-	protected ArrayList<AssemblyTask> possibleAssemblyTasks(ArrayList<VehicleOption> carOptions) throws IllegalArgumentException {
-		if (carOptions == null)
-			throw new IllegalArgumentException("Bad list of car parts!");
+	protected ArrayList<AssemblyTask> possibleAssemblyTasks(Order order) throws IllegalArgumentException {
+		if (order == null)
+			throw new IllegalArgumentException("Bad order!");
 		ArrayList<AssemblyTask> result = new ArrayList<AssemblyTask>();
 		for(AssemblyTask assem : this.getResponsibleTasks()){
-			for(VehicleOption option: carOptions){
-				if(option.getCategory().equals(assem.getCategory()))
+			for(VehicleOption option: order.getOptions()){
+				if (assem.getCategory() == null && order instanceof StandardVehicleOrder && 
+						((StandardVehicleOrder) order).getVehicleModel().getName().contains("Truck")) {
+					result.add(new AssemblyTask(assem.getName(), assem.getDescription(), this));
+				} else if(option.getCategory().equals(assem.getCategory())) {
 					result.add(new AssemblyTask(assem.getName(),assem.getDescription(),assem.getCategory(),this));
+				}
 			}
 		}
 		return result;
@@ -225,8 +230,7 @@ public class WorkPost {
 	 */
 	private void refreshAssemblyTasks() {
 		if (this.getOrder() != null) {
-			ArrayList<VehicleOption> carParts = this.getOrder().getOptions();
-			ArrayList<AssemblyTask> newPendingTasks = this.possibleAssemblyTasks(carParts);
+			ArrayList<AssemblyTask> newPendingTasks = this.possibleAssemblyTasks(this.getOrder());
 			this.setPendingTasks(newPendingTasks);
 		}
 	}

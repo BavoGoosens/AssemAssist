@@ -16,7 +16,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		VehicleManufacturingCompany vmc = new VehicleManufacturingCompany();
-		// new InitialData().initialize(vmc);
+		 new InitialData().initialize(vmc);
 		
 		View view = new LoginView(vmc);
 		view.display();
