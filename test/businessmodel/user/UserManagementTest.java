@@ -26,10 +26,6 @@ public class UserManagementTest {
 		assertFalse(mechanic.canPlaceOrder());
 		assertFalse(manager.canPlaceOrder());
 		assertTrue(garageholder.canPlaceOrder());
-		assertFalse(mechanic.canAdvanceAssemblyLine());
-		assertFalse(garageholder.canAdvanceAssemblyLine());
-		assertTrue(manager.canAdvanceAssemblyLine());
-	
 	}
 
 }
