@@ -60,13 +60,13 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * The shift are cleared and new orders are added if possible.
 	 */
-	public void ScheduleDay(){
+	protected void ScheduleDay(){
 		this.dayOrdersCount = 0;
 		this.generateShifts();
 		this.updateCurrentTime();
 		int size = this.getNumberOfOrdersToSchedule();
 		for(Order order:this.getAssemblyline().getMainScheduler().getNbOrders(size, this.getAssemblyline())){
-			this.addOrderToSchedule(order);
+			this.addOrder(order);
 		}
 	}
 
@@ -97,18 +97,16 @@ public class AssemblyLineScheduler implements Subject {
 		updateCompletedOrders();
 		updateDelay(delay);
 		updateEstimatedTimeOfOrders(delay);
-		this.updateSchedule();
-		if (this.getShifts().size() == 0) {
-			notifyObservers();
-			this.ScheduleDay();
-		}
+		updateSchedule();
+		checkNewDay();
 	}
-
+	
 	/**
 	 * Returns true if an order can be added to the current day.
 	 * 
 	 * @return true if an order can be added.
 	 */
+	// TODO cannAddOrder moet aan assemblyLine worden opgevraagd. Die method moet dan deze methode opvragen.
 	public boolean canAddOrder(){
 		int count = 0;
 		for(Shift shift: this.getShifts())
@@ -124,17 +122,11 @@ public class AssemblyLineScheduler implements Subject {
 	 * @param 	order
 	 * 			the order that needs to be added.
 	 */
-	public void addOrderToSchedule(Order order){
-		this.getAlgo().scheduleOrder(order);
+	public void addOrder(Order order){
+		getAlgo().scheduleOrder(order);
 		order.setTimestampOfOrder(this.getCurrentTime());
-		this.getOrders().add(order);
-		boolean advance = true;
-		for(WorkPost wp : this.getAssemblyline().getWorkPosts()){
-			if(wp.getOrder() != null)
-				advance = false;
-		}
-		if(advance)
-			this.updateAssemblylineStatus();
+		getOrders().add(order);
+		CheckIfAssemblyLineIsEmpty();
 	}
 
 	/**
@@ -173,6 +165,16 @@ public class AssemblyLineScheduler implements Subject {
 		}else{
 			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");
 		}
+	}
+
+	private void CheckIfAssemblyLineIsEmpty() {
+		boolean advance = true;
+		for(WorkPost wp : this.getAssemblyline().getWorkPosts()){
+			if(wp.getOrder() != null)
+				advance = false;
+		}
+		if(advance)
+			this.updateAssemblylineStatus();		
 	}
 
 	private void updateCompletedOrders(){
@@ -232,6 +234,13 @@ public class AssemblyLineScheduler implements Subject {
 				getCurrentTime().getDayOfMonth(), 8, 0);
 		currenttime = currenttime.plusDays(1);
 		this.setCurrentTime(currenttime);
+	}
+
+	private void checkNewDay(){
+		if (this.getShifts().size() == 0) {
+			notifyObservers();
+			this.ScheduleDay();
+		}
 	}
 
 	private void setCurrentTime(DateTime currenttime) {
@@ -319,7 +328,6 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @return
 	 */
-	//TODO Protected maken
 	public LinkedList<Order> getOrders() {
 		return this.orders;
 	}
@@ -329,8 +337,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @return the shift of this assemblyline.
 	 */
-	// TODO protected maken
-	public LinkedList<Shift> getShifts() {
+	protected LinkedList<Shift> getShifts() {
 		return this.shifts;
 	}
 
@@ -378,9 +385,8 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @return
 	 */
-	// TODO rekening houden met de singleTaskOrders
 	protected Order getNextOrderToSchedule(){
-		return this.getAssemblyline().getMainScheduler().getPendingOrders().poll();
+		return this.getAssemblyline().getMainScheduler().getNbOrders(1, this.getAssemblyline()).getFirst();
 	}
 
 	/**
@@ -441,7 +447,6 @@ public class AssemblyLineScheduler implements Subject {
 		return full[1];
 	}
 
-	// TODO rekening houden met de Standard Completion Date
 	protected DateTime getEstimatedCompletionTimeOfNewOrder(Order order) {
 		if(this.getOrders().size() > 0)
 			return this.getOrders().getLast().getEstimatedDeliveryDate().plusHours(1);
