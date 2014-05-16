@@ -30,7 +30,7 @@ public class InitialDataTest {
 		VehicleManufacturingCompany vmc = new VehicleManufacturingCompany();
 		int nbOrders = 10;
 		new InitialData().initialize(vmc);
-		User user = vmc.login("wow", "");
+		User user = vmc.login("woww", "");
 		int count = 0;
 		try {
 			Iterator<Order> it = vmc.getPendingOrders(user);
