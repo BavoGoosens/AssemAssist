@@ -21,7 +21,7 @@ public abstract class User {
 	 * The user name of the user.
 	 */
 	private String username;
-	
+
 
 	/**
 	 * Creates a user with a given first name, last name and user name.
@@ -108,13 +108,21 @@ public abstract class User {
 	public boolean canOrderSingleTask(){
 		return false;
 	}
-	
-	
-	/**
+
+    public boolean canViewStatistics() {return false;}
+
+    public boolean canViewAssemblyLines(){return false;}
+
+    public boolean canChangeAlgorithm() {
+        return false;
+    }
+
+    /**
 	 * Returns a string representation of the user.
 	 */
 	@Override
 	public String toString() {
 		return "firstname= " + firstname + ", lastname= " + lastname;
 	}
+
 }

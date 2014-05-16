@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import businessmodel.Model;
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.category.VehicleOption;
+import businessmodel.user.User;
 
 public class SchedulingHandler implements SchedulingController{
 
@@ -16,7 +17,7 @@ public class SchedulingHandler implements SchedulingController{
 	}
 
 	@Override
-	public void selectAlgorithm(String algo, ArrayList<VehicleOption> options) {
+	public void selectAlgorithm(User user, String algo, ArrayList<VehicleOption> options) {
 		this.cmc.changeSystemWideAlgorithm(algo, options);
 	}
 
