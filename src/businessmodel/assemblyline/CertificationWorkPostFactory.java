@@ -1,6 +1,8 @@
 package businessmodel.assemblyline;
 
 import java.util.ArrayList;
+
+import businessmodel.category.*;
 import java.util.HashMap;
 
 /**
@@ -11,7 +13,7 @@ public class CertificationWorkPostFactory extends WorkPostFactory {
     @Override
     protected ArrayList<AssemblyTask> createAssemblyTasks(WorkPost workPost) {
         ArrayList<AssemblyTask> tasks = new ArrayList<AssemblyTask>();
-        tasks.add(new AssemblyTask("Certify Maximum Cargo Load", "add certification for maximum cargo load", workPost));
+        tasks.add(new AssemblyTask("Certify Maximum Cargo Load", "add certification for maximum cargo load", new Certification(), workPost));
         return tasks;
     }
 
