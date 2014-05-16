@@ -108,27 +108,30 @@ public class MainScheduler {
 		return this.systemWideAlgo;
 	}
 
-	//TODO moet nog getest worden
+	//TODO moet nog getest worden, ookal hebben meerdere assembly lines dezelfde sets, alleen maar unieke teruggeven voor de UI
 	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions(int num) {
-		
+
 		ArrayList<ArrayList<VehicleOption>> choices = new ArrayList<ArrayList<VehicleOption>>();
+
 		for (AssemblyLine line : this.assemblylines){
+
 			ArrayList<VehicleOption> assOptions = line.getAssemblyLineScheduler().getUnscheduledVehicleOptions(num);
 			for(ArrayList<VehicleOption> opt: choices){
 				int count=0;
 				for (VehicleOption option : assOptions){
 					for(VehicleOption opt2: opt){
-						count++;
+						if (option.toString().equals(opt2.toString()))	count++;
 					}
 				}
-				if (count!=opt.size())
-					choices.add(opt);
+				if (count!=opt.size()) choices.add(assOptions);
 			}
+
 		}
+
 		return  choices.iterator();
 	}
 
-    public String getAlgorithm() {
-        return systemWideAlgo;
-    }
+	public String getAlgorithm() {
+		return systemWideAlgo;
+	}
 }

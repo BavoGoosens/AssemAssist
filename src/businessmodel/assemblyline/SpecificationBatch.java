@@ -47,8 +47,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 				int count = 0;
 				for (VehicleOption option: this.options){
 					for(VehicleOption option2: order.getOptions()){
-						if (option.toString().equals(option2.toString()))
-							count++;
+						if (option.toString().equals(option2.toString())) count++;
 					}
 				}
 				if (count == this.options.size()){

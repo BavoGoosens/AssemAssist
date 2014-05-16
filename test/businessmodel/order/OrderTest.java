@@ -48,15 +48,15 @@ public class OrderTest {
 		}
 		cmc.placeOrder(new StandardVehicleOrder(garageholder, chosen, modelA));
 		
-		date = om.getScheduler().getCurrentTime().plusHours(3);
+		date = om.getMainScheduler().getAssemblyLineSchedulers().get(0).getCurrentTime().plusHours(3);
 	}
 
 	@Test
 	public void test() {
 
-		assertEquals(om.getScheduler().getOrdersClone().get(0).getUser(),this.garageholder);
-		assertEquals(om.getScheduler().getOrdersClone().get(0).getEstimatedDeliveryDate(),this.date);
-		assertEquals(om.getScheduler().getOrdersClone().get(0).isCompleted(),false);
+		assertEquals(om.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(0).getUser(),this.garageholder);
+		assertEquals(om.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(0).getEstimatedDeliveryDate(),this.date);
+		assertEquals(om.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(0).isCompleted(),false);
 
 		
 	}

@@ -216,6 +216,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @return
 	 */
+	//TODO Protected maken
 	public LinkedList<Order> getOrders() {
 		return this.orders;
 	}
@@ -362,14 +363,22 @@ public class AssemblyLineScheduler implements Subject {
 		this.delay = delay;
 	}
 
+	//TODO
 	private boolean checkOptionsForSpecificationBatch(ArrayList<VehicleOption> options) {
-		int count = 0;
-		for(Order order: this.getOrders())
-			for(VehicleOption opt: options)
-				for(VehicleOption opt2: order.getOptions())
-					if (opt.toString().equals(opt2.toString()))
-						count++;
-		if (count < 3)
+		
+		int orderCount = 0;
+		
+		for(Order order: this.getOrders()){
+			int count = 0;
+			for(VehicleOption opt: options){
+				for(VehicleOption opt2: order.getOptions()){
+					if (opt.toString().equals(opt2.toString())) count++;
+				}
+			}
+			if (count == order.getOptions().size()) orderCount++;
+		}
+		
+		if (orderCount < 3)
 			return false;
 		return true;
 	}
@@ -379,11 +388,12 @@ public class AssemblyLineScheduler implements Subject {
 	 * @param maxNumber
 	 * @return
 	 */
-	//TODO check this shit
+	//TODO check this shit, moet alle sets teruggeven die in meer dan of gelijk aan 3 orders komen
 	public ArrayList<VehicleOption> getUnscheduledVehicleOptions(int maxNumber){
 		
 		HashMap<String, Integer> list = new HashMap<String, Integer>();
 		ArrayList<String> options = new ArrayList<String>();
+		//arraylist vehicleoption
 		HashMap<String, VehicleOption> result = new HashMap<String, VehicleOption>();
 		
 		for(Order order: this.getOrders()){
@@ -403,6 +413,7 @@ public class AssemblyLineScheduler implements Subject {
 		for (String optionName: options)
 			if (list.get(optionName) < 3)
 				result.remove(optionName);
+		
 		return new ArrayList<VehicleOption>(result.values());
 	}
 

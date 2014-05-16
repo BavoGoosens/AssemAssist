@@ -46,8 +46,8 @@ public class SchedulingView extends View {
 			if (choice < 1 || choice > algos.size())
 				this.error();
 			String algo = algos.get(choice - 1);
-			Iterator<VehicleOption> optss = this.getModel().getUnscheduledVehicleOptions(3);
-			ArrayList<VehicleOption> opts = new ArrayList<VehicleOption>();
+			Iterator<ArrayList<VehicleOption>> optss = this.getModel().getUnscheduledVehicleOptions(3);
+			ArrayList<ArrayList<VehicleOption>> opts = new ArrayList<ArrayList<VehicleOption>>();
 			while (optss.hasNext())
 				opts.add(optss.next());
 			if (algo.equals("SpecificationBatch")){
@@ -57,8 +57,8 @@ public class SchedulingView extends View {
 				}
 				System.out.println("> Enter the number of the car option you want to supply as a parameter");
 				int num = 1;
-				for (VehicleOption opt : opts)
-					System.out.println("> " + num ++ + ") " + opt);
+				for (ArrayList<VehicleOption> opt : opts)
+					System.out.println("> " + num ++ + ") " + opt.toString());
 				System.out.print(">> ");
 				response = this.scan.nextLine();
 				this.check(response);
@@ -66,7 +66,7 @@ public class SchedulingView extends View {
 					choice = Integer.parseInt(response);
 					if (choice < 1 || choice > opts.size())
 						this.error();
-					VehicleOption param = opts.get(choice - 1 );
+					ArrayList<VehicleOption> param = opts.get(choice - 1 );
 					try {
 						this.controller.selectAlgorithm(algo, param);
 						System.out.println("> Algorithm changed :)");

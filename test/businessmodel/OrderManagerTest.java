@@ -54,7 +54,7 @@ public class OrderManagerTest {
 	public void test() {
 		try {
 			
-			assertTrue(om.getScheduler().getOrdersClone().contains(order));
+			assertTrue(om.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().contains(order));
 			Iterator<Order> iter = cmc.getPendingOrders(garageholder);
 			List<Order> copy = new ArrayList<Order>();
 			while (iter.hasNext())

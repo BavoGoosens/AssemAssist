@@ -84,7 +84,7 @@ public class SchedulerTest {
 		Order order16 = new StandardVehicleOrder(c16,chosen,modelA);
 		Order order17 = new StandardVehicleOrder(c17,chosen,modelA);
 		Order order18 = new StandardVehicleOrder(c18,chosen,modelA);
-		DateTime datetemp = ord.getScheduler().getCurrentTime();
+		DateTime datetemp = ord.getMainScheduler().getAssemblyLineSchedulers().get(0).getCurrentTime();
 		DateTime temp = new DateTime(datetemp.getYear(), datetemp.getMonthOfYear(), datetemp.getDayOfMonth(), 8, 0);
 		temp = temp.plusDays(1);
 		Order order19 = new SingleTaskOrder(c19,chosen, temp);
@@ -112,8 +112,10 @@ public class SchedulerTest {
 		cmc.placeOrder(order17);
 		cmc.placeOrder(order18);
 		
-		ord.getScheduler().ScheduleDay();
+		ord.getMainScheduler().getAssemblyLineSchedulers().get(0).ScheduleDay();
+		ord.getMainScheduler().getAssemblyLineSchedulers().get(1).ScheduleDay();
+		ord.getMainScheduler().getAssemblyLineSchedulers().get(2).ScheduleDay();
 		
-		assertEquals(ord.getScheduler().getOrdersClone().get(0),order1);
+		assertEquals(ord.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(0),order1);
 	}
 }
