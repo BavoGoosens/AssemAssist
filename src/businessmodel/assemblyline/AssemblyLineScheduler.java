@@ -337,7 +337,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @return the shift of this assemblyline.
 	 */
-	protected LinkedList<Shift> getShifts() {
+	public LinkedList<Shift> getShifts() {
 		return this.shifts;
 	}
 
