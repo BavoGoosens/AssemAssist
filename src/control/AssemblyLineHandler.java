@@ -4,6 +4,7 @@ import businessmodel.Model;
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
+import businessmodel.user.User;
 
 public class AssemblyLineHandler implements AssemblyLineController{
 
@@ -14,12 +15,12 @@ public class AssemblyLineHandler implements AssemblyLineController{
 	}
 
 	@Override
-	public void finishTask(AssemblyTask task, int time) {
+	public void finishTask(User user, AssemblyTask task, int time) {
 		this.cmc.finishTask(task, time);
 	}
 
     @Override
-    public void changeOperationalStatus(AssemblyLine assemblyLine) {
+    public void changeOperationalStatus(User user, AssemblyLine assemblyLine) {
         // TODO: Maken ajaaa
 
     }

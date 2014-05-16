@@ -33,68 +33,72 @@ public class CustomShopManagerView extends View {
 
 	@Override
 	public void display() {
-		Iterator<AssemblyTask> availableiter = this.getModel().getAvailableTasks(this.user);
-		ArrayList<AssemblyTask> available = new ArrayList<AssemblyTask>();
-		System.out.println("> These are the assembly tasks you can order: ");
-		int count = 1;
-		while(availableiter.hasNext()){
-			AssemblyTask t = availableiter.next();
-			System.out.println("> " + count ++ + ") " + t );
-			available.add(t);
-		}
-
-		System.out.println("> Enter the number of the task you wish to order: ");
-		System.out.print(">> ");
-		String response = this.scan.nextLine();
-		this.check(response);
-		Pattern pattern = Pattern.compile("^\\d+$");
-		if (pattern.matcher(response).find()){
-			int choice = Integer.parseInt(response);
-			AssemblyTask chosen = null;
-			if (choice >= 1 && choice <= available.size()){
-				chosen = available.get(choice - 1);
-			} else {
-				System.out.println("! wrong input. Please try again");
-				this.display();
-			}
-			DateTime deadline = deadlineDialog();
-			ArrayList<VehicleOption> options = chosen.getInstallableOptions();
-			VehicleOption opt = null;
-			while (opt == null ){
-				System.out.println("> Enter the number of the specific option you want to order: ");
-				int num = 1;
-				for (VehicleOption op : options)
-					System.out.println("> " + num ++ + ") " + op);
-				System.out.print(">> ");
-				response = this.scan.nextLine();
-				this.check(response);
-				if (pattern.matcher(response).find()){
-					choice = Integer.parseInt(response);
-					if (choice >= 1 && choice <= options.size())
-						opt = options.get(choice - 1);
-					else {
-						System.out.println("! Bad input. Please try again");
-						continue;
-					}
-				} else {
-					this.error();
-				}
-			}
-			ArrayList<VehicleOption> res = new ArrayList<VehicleOption>();
-			res.add(opt);
-			try {
-				this.controller.placeSingleTaskOrder(new SingleTaskOrder(this.user, res , deadline));
-				System.out.println("> Your order has been placed :)");
-			} catch (NoClearanceException e) {
-				System.out.println("! " + e.getMessage());
-				this.error();
-			} catch (UnsatisfiedRestrictionException e) {
-                System.out.println("! "+e.getMessage());
+        try {
+            Iterator<AssemblyTask> availableiter = this.getModel().getAvailableTasks(this.user);
+            ArrayList<AssemblyTask> available = new ArrayList<AssemblyTask>();
+            System.out.println("> These are the assembly tasks you can order: ");
+            int count = 1;
+            while (availableiter.hasNext()) {
+                AssemblyTask t = availableiter.next();
+                System.out.println("> " + count++ + ") " + t);
+                available.add(t);
             }
 
-		} else {
-			this.error();
-		}
+            System.out.println("> Enter the number of the task you wish to order: ");
+            System.out.print(">> ");
+            String response = this.scan.nextLine();
+            this.check(response);
+            Pattern pattern = Pattern.compile("^\\d+$");
+            if (pattern.matcher(response).find()) {
+                int choice = Integer.parseInt(response);
+                AssemblyTask chosen = null;
+                if (choice >= 1 && choice <= available.size()) {
+                    chosen = available.get(choice - 1);
+                } else {
+                    System.out.println("! wrong input. Please try again");
+                    this.display();
+                }
+                DateTime deadline = deadlineDialog();
+                ArrayList<VehicleOption> options = chosen.getInstallableOptions();
+                VehicleOption opt = null;
+                while (opt == null) {
+                    System.out.println("> Enter the number of the specific option you want to order: ");
+                    int num = 1;
+                    for (VehicleOption op : options)
+                        System.out.println("> " + num++ + ") " + op);
+                    System.out.print(">> ");
+                    response = this.scan.nextLine();
+                    this.check(response);
+                    if (pattern.matcher(response).find()) {
+                        choice = Integer.parseInt(response);
+                        if (choice >= 1 && choice <= options.size())
+                            opt = options.get(choice - 1);
+                        else {
+                            System.out.println("! Bad input. Please try again");
+                            continue;
+                        }
+                    } else {
+                        this.error();
+                    }
+                }
+                ArrayList<VehicleOption> res = new ArrayList<VehicleOption>();
+                res.add(opt);
+                try {
+                    this.controller.placeSingleTaskOrder(this.user, new SingleTaskOrder(this.user, res, deadline));
+                    System.out.println("> Your order has been placed :)");
+                } catch (NoClearanceException e) {
+                    System.out.println("! " + e.getMessage());
+                    this.error();
+                } catch (UnsatisfiedRestrictionException e) {
+                    System.out.println("! " + e.getMessage());
+                }
+
+            } else {
+                this.error();
+            }
+        }catch (NoClearanceException e){
+            this.quit();
+        }
 	}
 
 	private DateTime deadlineDialog(){

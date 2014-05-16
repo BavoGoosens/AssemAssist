@@ -11,6 +11,9 @@ import businessmodel.VehicleManufacturingCompany;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
+import businessmodel.category.Certification;
+import businessmodel.category.Protection;
+import businessmodel.category.Storage;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
@@ -31,15 +34,16 @@ import businessmodel.user.User;
 public class InitialData {
 
 	private Random rnd = new Random();
-	private User user;
-	private User user2;
 	private StandardOrderHandler controllerStandard;
 	private SingleTaskOrderHandler controllerSingleTask;
 	private Iterator<VehicleModel> iter;
 	private ArrayList<VehicleModel> available_vehiclemodels;
 	private ArrayList<VehicleOption> chosen;
-	private ArrayList<VehicleOption> airco, body, color, engine, gearbox, seats, spoiler, wheels;
+	private ArrayList<VehicleOption> airco, body, color, engine, gearbox, seats, spoiler, wheels, certification, protection, storage;
 	private VehicleManufacturingCompany vmc;
+	private User mechanic;
+	private User garageholder;
+	private User customsManager;
 
 	public InitialData(){
 
@@ -51,17 +55,20 @@ public class InitialData {
 		this.seats = new ArrayList<VehicleOption>();
 		this.spoiler = new ArrayList<VehicleOption>();
 		this.wheels = new ArrayList<VehicleOption>();
+		this.certification = new ArrayList<VehicleOption>();
+		this.protection = new ArrayList<VehicleOption>();
+		this.storage = new ArrayList<VehicleOption>();
 
 	}
 
 	public void initialize(VehicleManufacturingCompany vmc){
 
 		this.vmc = vmc;
-		this.user = vmc.login("wow", "");
+		this.garageholder = vmc.login("wow", "");
 		this.controllerStandard = new StandardOrderHandler(vmc);
-		this.user2 = vmc.login("wow", "");
+
 		this.controllerSingleTask = new SingleTaskOrderHandler(vmc);
-		this.iter = vmc.getVehicleModels(user);
+		this.iter = vmc.getVehicleModels(this.garageholder);
 		this.available_vehiclemodels = new ArrayList<VehicleModel>();
 		this.chosen = new ArrayList<VehicleOption>();
 
@@ -69,14 +76,17 @@ public class InitialData {
 			this.available_vehiclemodels.add(this.iter.next());
 
 		Boolean orders = false;
-		
+
 		for(int i=0; i < 10; i++){
-			orders = this.randomOrderGenerator("standard",-1);
+			orders = this.randomOrderGenerator("standard",0);
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
 		}
-		
+
+
+		this.customsManager = vmc.login("wowwww", "");	
 		this.processOrders();
+
 		orders = false;
 		
 		for(int i=0; i < 3; i++){
@@ -84,46 +94,49 @@ public class InitialData {
 			if (!orders)
 				this.randomOrderGenerator("singleTask", 0);
 		}
-		
+
 		orders = false;
-		
+		this.garageholder = vmc.login("wow", "");
+
 		for(int i=0; i < 3; i++){
 			orders = this.randomOrderGenerator("standard",-1);
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
 		}
-		
+
 		orders = false;
-		
+
 		for(int i=0; i < 3; i++){
 			orders = this.randomOrderGenerator("standard",-1);
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
 		}
-		
-		
+
+
 	}
 
 	// TODO
 	private void processOrders() {
 
-		Iterator<AssemblyLine> assemblylines = this.vmc.getAssemblyLines();
+		this.mechanic = vmc.login("woww", "");
+		try{
+			Iterator<AssemblyLine> assemblylines = this.vmc.getAssemblyLines(this.customsManager);
 
-		for (int i=0; i<13; i++){
-			while(assemblylines.hasNext()){
-				AssemblyLine assem = assemblylines.next();
-				for(WorkPost wp: assem.getWorkPosts()){
-					Iterator<AssemblyTask> iter1 = this.vmc.getPendingTasks(wp);
-					List<AssemblyTask> copy1 = new ArrayList<AssemblyTask>();
-					while (iter1.hasNext()){
-						AssemblyTask task = iter1.next();
-						copy1.add(task);
+			for (int i=0; i<15; i++){
+				while(assemblylines.hasNext()){
+					AssemblyLine assem = assemblylines.next();
+					for(WorkPost wp: assem.getWorkPosts()){
+						Iterator<AssemblyTask> iter11 = vmc.getPendingTasks(this.customsManager,wp);
+						List<AssemblyTask> copy11 = new ArrayList<AssemblyTask>();
+						while (iter11.hasNext())
+							copy11.add(iter11.next());
+						for(AssemblyTask assembly : copy11)
+							assembly.completeAssemblytask(20);
 					}
-					for(AssemblyTask assembly : copy1)
-						this.vmc.finishTask(assembly, 20);
 				}
 			}
-		}
+		}catch(NoClearanceException ex){}
+
 	}
 
 	private boolean randomOrderGenerator(String orders, int model){
@@ -137,7 +150,8 @@ public class InitialData {
 			vehicleModel = this.available_vehiclemodels.get(model);
 
 		ArrayList <VehicleOption> available = vehicleModel.getPossibilities();
-		airco.clear(); body.clear(); color.clear();engine.clear();gearbox.clear(); seats.clear(); spoiler.clear();wheels.clear(); this.chosen.clear();
+		airco.clear(); body.clear(); color.clear();engine.clear();gearbox.clear(); seats.clear(); 
+		spoiler.clear();wheels.clear(); this.chosen.clear(); protection.clear(); certification.clear(); storage.clear();
 
 		for(VehicleOption option: available){
 			if (option.getCategory().equals(new Airco())){
@@ -156,6 +170,12 @@ public class InitialData {
 				spoiler.add(option);
 			}else if (option.getCategory().equals(new Wheels())){
 				wheels.add(option);
+			}else if (option.getCategory().equals(new Protection())){
+				certification.add(option);
+			}else if (option.getCategory().equals(new Storage())){
+				protection.add(option);
+			}else if (option.getCategory().equals(new Certification())){
+				storage.add(option);
 			}else{}
 		}
 
@@ -167,12 +187,15 @@ public class InitialData {
 		if (this.seats.size() != 0)this.chosen.add(this.seats.get(rnd.nextInt(this.seats.size())));
 		if (this.spoiler.size() != 0)this.chosen.add(this.spoiler.get(rnd.nextInt(this.spoiler.size())));
 		if (this.wheels.size() != 0)this.chosen.add(this.wheels.get(rnd.nextInt(this.wheels.size())));
+		if (this.certification.size() != 0)this.chosen.add(this.certification.get(rnd.nextInt(this.certification.size())));
+		if (this.protection.size() != 0)this.chosen.add(this.protection.get(rnd.nextInt(this.protection.size())));
+		if (this.storage.size() != 0)this.chosen.add(this.storage.get(rnd.nextInt(this.storage.size())));
 
 
 		if (orders.equals("standard")){
 			try {
-				StandardVehicleOrder order = new StandardVehicleOrder(this.user, this.chosen, vehicleModel);
-				this.controllerStandard.placeOrder(order);
+				StandardVehicleOrder order = new StandardVehicleOrder(this.garageholder, this.chosen, vehicleModel);
+				this.controllerStandard.placeOrder(this.garageholder,order);
 				return true;
 			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
 				if (model == 0)
@@ -181,8 +204,8 @@ public class InitialData {
 		}else if (orders.equals("singleTask")){
 			try {
 				DateTime time = new DateTime(new DateTime().getYear(), new DateTime().getMonthOfYear(),new DateTime().getDayOfMonth(), 8, 0);
-				SingleTaskOrder order = new SingleTaskOrder(this.user2, this.chosen, time.plusDays(1));
-				this.controllerSingleTask.placeSingleTaskOrder(order);
+				SingleTaskOrder order = new SingleTaskOrder(this.customsManager, this.chosen, time.plusDays(1));
+				this.controllerSingleTask.placeSingleTaskOrder(this.customsManager,order);
 				return true;
 			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
 				if (model == 0)

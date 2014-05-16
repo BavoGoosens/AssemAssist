@@ -122,7 +122,8 @@ public abstract class VehicleOptionCategory {
 	 */
 	@Override
 	public boolean equals(Object category) throws IllegalArgumentException {
-		if (category == null) return false;
+		
+		if (category == null) throw new IllegalArgumentException("Bad category!");
 		return this.getKey().equals(((VehicleOptionCategory) category).getKey());
 	}
 	
