@@ -27,6 +27,7 @@ public class InitialDataTest {
 
 	@Test
 	public void test() {
+		
 		VehicleManufacturingCompany vmc = new VehicleManufacturingCompany();
 		int nbOrders = 10;
 		new InitialData().initialize(vmc);
@@ -45,10 +46,12 @@ public class InitialDataTest {
 		assertEquals(nbOrders,count);
 		
 		try {
+			System.out.println(vmc.getOrderManager().getCompletedOrdersClone().size());
 			assertEquals(nbOrders, vmc.getCompletedOrders(user));
 		} catch (IllegalArgumentException | NoClearanceException e) {
 			e.printStackTrace();
 		}
+		
 		
 		int orderCount = 0;
 		for(AssemblyLineScheduler assemSched: vmc.getOrderManager().getMainScheduler().getAssemblyLineSchedulers())
