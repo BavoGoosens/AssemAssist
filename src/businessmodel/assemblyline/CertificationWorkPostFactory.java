@@ -23,10 +23,10 @@ public class CertificationWorkPostFactory extends WorkPostFactory {
 	@Override
 	protected HashMap<String, Integer> createStandardTimes() {
 		HashMap<String,Integer> times = new HashMap<String,Integer>();
-		times.put("Vehicle Model A", 50);
-		times.put("Vehicle Model B", 70);
-		times.put("Vehicle Model C", 60);
-		times.put("Vehicle Model X", 30);
-		times.put("Vehicle Model Y", 45);
+		times.put("Vehicle model A", 50);
+		times.put("Vehicle model B", 70);
+		times.put("Vehicle model C", 60);
+		times.put("Vehicle model X", 30);
+		times.put("Vehicle model Y", 45);
 		return times;		}
 }
