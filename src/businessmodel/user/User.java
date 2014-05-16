@@ -81,17 +81,8 @@ public abstract class User {
 	public boolean canPlaceOrder(){
 		return false;
 	}
-	
-	/**
-	 * Returns whether the user can advance the assembly line.
-	 * 
-	 * @return True if the user can advance the assembly line.
-	 */
-	public boolean canAdvanceAssemblyLine(){
-		return false;
-	}
-	
-	/**
+
+    /**
 	 * Returns whether the user can perform an assembly task.
 	 * 
 	 * @return True if the user can perform an assembly task.
