@@ -42,20 +42,31 @@ public class InitialDataTest {
 		} catch (IllegalArgumentException | NoClearanceException e) {
 			e.printStackTrace();
 		}
-		
-		assertEquals(0,count);
-		
+		assertEquals(1,count);
 		try {
 			count = 0;
-			Iterator<Order> it = vmc.getPendingOrders(user);
+			Iterator<Order> it = vmc.getCompletedOrders(user);
 			while(it.hasNext()){
 				it.next();
 				count++;
 			}
-			assertEquals(9, count);
 		} catch (IllegalArgumentException | NoClearanceException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		assertEquals(10,count);
+		
+//		try {
+//			count = 0;
+//			Iterator<Order> it = vmc.getPendingOrders(user);
+//			while(it.hasNext()){
+//				it.next();
+//				count++;
+//			}
+//			assertEquals(9, count);
+//		} catch (IllegalArgumentException | NoClearanceException e) {
+//			e.printStackTrace();
+//		}
 		
 		
 		
