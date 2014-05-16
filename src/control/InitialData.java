@@ -11,6 +11,9 @@ import businessmodel.VehicleManufacturingCompany;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
+import businessmodel.category.Certification;
+import businessmodel.category.Protection;
+import businessmodel.category.Storage;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
@@ -36,7 +39,7 @@ public class InitialData {
 	private Iterator<VehicleModel> iter;
 	private ArrayList<VehicleModel> available_vehiclemodels;
 	private ArrayList<VehicleOption> chosen;
-	private ArrayList<VehicleOption> airco, body, color, engine, gearbox, seats, spoiler, wheels;
+	private ArrayList<VehicleOption> airco, body, color, engine, gearbox, seats, spoiler, wheels, certification, protection, storage;
 	private VehicleManufacturingCompany vmc;
 	private User mechanic;
 	private User garageholder;
@@ -52,6 +55,9 @@ public class InitialData {
 		this.seats = new ArrayList<VehicleOption>();
 		this.spoiler = new ArrayList<VehicleOption>();
 		this.wheels = new ArrayList<VehicleOption>();
+		this.certification = new ArrayList<VehicleOption>();
+		this.protection = new ArrayList<VehicleOption>();
+		this.storage = new ArrayList<VehicleOption>();
 
 	}
 
@@ -72,41 +78,41 @@ public class InitialData {
 		Boolean orders = false;
 		
 		for(int i=0; i < 10; i++){
-			orders = this.randomOrderGenerator("standard",-1);
+			orders = this.randomOrderGenerator("standard",0);
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
 		}
 		
 
-		this.mechanic = vmc.login("woww", "");
-		this.processOrders();
-		
-		orders = false;
-		this.customsManager = vmc.login("wowwww", "");	
-		
-		for(int i=0; i < 3; i++){
-			orders = this.randomOrderGenerator("singleTask",-1);
-			if (!orders)
-				this.randomOrderGenerator("singleTask", 0);
-		}
-		
-		orders = false;
-		this.garageholder = vmc.login("wow", "");
-		
-		for(int i=0; i < 3; i++){
-			orders = this.randomOrderGenerator("standard",-1);
-			if (!orders)
-				this.randomOrderGenerator("standard", 0);
-		}
-		
-		orders = false;
-		
-		for(int i=0; i < 3; i++){
-			orders = this.randomOrderGenerator("standard",-1);
-			if (!orders)
-				this.randomOrderGenerator("standard", 0);
-		}
-		
+//		this.mechanic = vmc.login("woww", "");
+//		this.processOrders();
+//		
+//		orders = false;
+//		this.customsManager = vmc.login("wowwww", "");	
+//		
+//		for(int i=0; i < 3; i++){
+//			orders = this.randomOrderGenerator("singleTask",-1);
+//			if (!orders)
+//				this.randomOrderGenerator("singleTask", 0);
+//		}
+//		
+//		orders = false;
+//		this.garageholder = vmc.login("wow", "");
+//		
+//		for(int i=0; i < 3; i++){
+//			orders = this.randomOrderGenerator("standard",-1);
+//			if (!orders)
+//				this.randomOrderGenerator("standard", 0);
+//		}
+//		
+//		orders = false;
+//		
+//		for(int i=0; i < 3; i++){
+//			orders = this.randomOrderGenerator("standard",-1);
+//			if (!orders)
+//				this.randomOrderGenerator("standard", 0);
+//		}
+//		
 		
 	}
 
@@ -115,7 +121,7 @@ public class InitialData {
 
 		Iterator<AssemblyLine> assemblylines = this.vmc.getAssemblyLines();
 
-		for (int i=0; i<13; i++){
+		for (int i=0; i<15; i++){
 			while(assemblylines.hasNext()){
 				AssemblyLine assem = assemblylines.next();
 				for(WorkPost wp: assem.getWorkPosts()){
@@ -142,7 +148,8 @@ public class InitialData {
 			vehicleModel = this.available_vehiclemodels.get(model);
 
 		ArrayList <VehicleOption> available = vehicleModel.getPossibilities();
-		airco.clear(); body.clear(); color.clear();engine.clear();gearbox.clear(); seats.clear(); spoiler.clear();wheels.clear(); this.chosen.clear();
+		airco.clear(); body.clear(); color.clear();engine.clear();gearbox.clear(); seats.clear(); 
+		spoiler.clear();wheels.clear(); this.chosen.clear(); protection.clear(); certification.clear(); storage.clear();
 
 		for(VehicleOption option: available){
 			if (option.getCategory().equals(new Airco())){
@@ -161,6 +168,12 @@ public class InitialData {
 				spoiler.add(option);
 			}else if (option.getCategory().equals(new Wheels())){
 				wheels.add(option);
+			}else if (option.getCategory().equals(new Protection())){
+				certification.add(option);
+			}else if (option.getCategory().equals(new Storage())){
+				protection.add(option);
+			}else if (option.getCategory().equals(new Certification())){
+				storage.add(option);
 			}else{}
 		}
 
@@ -172,6 +185,9 @@ public class InitialData {
 		if (this.seats.size() != 0)this.chosen.add(this.seats.get(rnd.nextInt(this.seats.size())));
 		if (this.spoiler.size() != 0)this.chosen.add(this.spoiler.get(rnd.nextInt(this.spoiler.size())));
 		if (this.wheels.size() != 0)this.chosen.add(this.wheels.get(rnd.nextInt(this.wheels.size())));
+		if (this.certification.size() != 0)this.chosen.add(this.certification.get(rnd.nextInt(this.certification.size())));
+		if (this.protection.size() != 0)this.chosen.add(this.protection.get(rnd.nextInt(this.protection.size())));
+		if (this.storage.size() != 0)this.chosen.add(this.storage.get(rnd.nextInt(this.storage.size())));
 
 
 		if (orders.equals("standard")){
