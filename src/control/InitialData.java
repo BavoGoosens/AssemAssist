@@ -31,8 +31,6 @@ import businessmodel.user.User;
 public class InitialData {
 
 	private Random rnd = new Random();
-	private User user;
-	private User user2;
 	private StandardOrderHandler controllerStandard;
 	private SingleTaskOrderHandler controllerSingleTask;
 	private Iterator<VehicleModel> iter;
@@ -40,6 +38,9 @@ public class InitialData {
 	private ArrayList<VehicleOption> chosen;
 	private ArrayList<VehicleOption> airco, body, color, engine, gearbox, seats, spoiler, wheels;
 	private VehicleManufacturingCompany vmc;
+	private User mechanic;
+	private User garageholder;
+	private User customsManager;
 
 	public InitialData(){
 
@@ -57,11 +58,11 @@ public class InitialData {
 	public void initialize(VehicleManufacturingCompany vmc){
 
 		this.vmc = vmc;
-		this.user = vmc.login("wow", "");
+		this.garageholder = vmc.login("wow", "");
 		this.controllerStandard = new StandardOrderHandler(vmc);
-		this.user2 = vmc.login("wow", "");
+		
 		this.controllerSingleTask = new SingleTaskOrderHandler(vmc);
-		this.iter = vmc.getVehicleModels(user);
+		this.iter = vmc.getVehicleModels(this.garageholder);
 		this.available_vehiclemodels = new ArrayList<VehicleModel>();
 		this.chosen = new ArrayList<VehicleOption>();
 
@@ -76,8 +77,12 @@ public class InitialData {
 				this.randomOrderGenerator("standard", 0);
 		}
 		
+
+		this.mechanic = vmc.login("woww", "");
 		this.processOrders();
+		
 		orders = false;
+		this.customsManager = vmc.login("wowwww", "");	
 		
 		for(int i=0; i < 3; i++){
 			orders = this.randomOrderGenerator("singleTask",-1);
@@ -86,6 +91,7 @@ public class InitialData {
 		}
 		
 		orders = false;
+		this.garageholder = vmc.login("wow", "");
 		
 		for(int i=0; i < 3; i++){
 			orders = this.randomOrderGenerator("standard",-1);
@@ -113,17 +119,16 @@ public class InitialData {
 			while(assemblylines.hasNext()){
 				AssemblyLine assem = assemblylines.next();
 				for(WorkPost wp: assem.getWorkPosts()){
-					Iterator<AssemblyTask> iter1 = this.vmc.getPendingTasks(wp);
-					List<AssemblyTask> copy1 = new ArrayList<AssemblyTask>();
-					while (iter1.hasNext()){
-						AssemblyTask task = iter1.next();
-						copy1.add(task);
-					}
-					for(AssemblyTask assembly : copy1)
-						this.vmc.finishTask(assembly, 20);
+					Iterator<AssemblyTask> iter11 = vmc.getPendingTasks(wp);
+					List<AssemblyTask> copy11 = new ArrayList<AssemblyTask>();
+					while (iter11.hasNext())
+						copy11.add(iter11.next());
+					for(AssemblyTask assembly : copy11)
+						assembly.completeAssemblytask(20);
 				}
 			}
 		}
+		
 	}
 
 	private boolean randomOrderGenerator(String orders, int model){
@@ -171,7 +176,7 @@ public class InitialData {
 
 		if (orders.equals("standard")){
 			try {
-				StandardVehicleOrder order = new StandardVehicleOrder(this.user, this.chosen, vehicleModel);
+				StandardVehicleOrder order = new StandardVehicleOrder(this.garageholder, this.chosen, vehicleModel);
 				this.controllerStandard.placeOrder(order);
 				return true;
 			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
@@ -181,7 +186,7 @@ public class InitialData {
 		}else if (orders.equals("singleTask")){
 			try {
 				DateTime time = new DateTime(new DateTime().getYear(), new DateTime().getMonthOfYear(),new DateTime().getDayOfMonth(), 8, 0);
-				SingleTaskOrder order = new SingleTaskOrder(this.user2, this.chosen, time.plusDays(1));
+				SingleTaskOrder order = new SingleTaskOrder(this.customsManager, this.chosen, time.plusDays(1));
 				this.controllerSingleTask.placeSingleTaskOrder(order);
 				return true;
 			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
