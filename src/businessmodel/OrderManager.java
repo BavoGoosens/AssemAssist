@@ -1,10 +1,12 @@
 package businessmodel;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 
 import businessmodel.assemblyline.AssemblyLine;
-import businessmodel.assemblyline.WorkPost;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
@@ -21,7 +23,7 @@ public class OrderManager implements Subject {
 
 	private ArrayList<Observer> observers;
 
-	private LinkedList<Order> completedorders;
+	private PriorityQueue<Order> completedorders;
 
 	private MainScheduler mainscheduler;
 
@@ -35,7 +37,8 @@ public class OrderManager implements Subject {
 	 */
 	public OrderManager() throws IllegalArgumentException {
 		this.pendingorders = new LinkedList<Order>();
-		this.completedorders = new LinkedList<Order>();
+		Comparator<Order> comparator = new EndDateOfOrderComparator();
+		this.completedorders = new PriorityQueue<Order>(20, comparator);
 		this.mainscheduler = new MainScheduler(this);
 		this.observers = new ArrayList<Observer>();
 	}
@@ -68,7 +71,7 @@ public class OrderManager implements Subject {
 			placeOrder(order);
 		this.getPendingOrders().add(order);
 	}
-	
+
 	/**
 	 * A method that moves a finished order from the pending list to the finished list.
 	 *
@@ -78,7 +81,7 @@ public class OrderManager implements Subject {
 	public void finishedOrder(Order finished) throws IllegalArgumentException {
 		if (finished == null)
 			throw new IllegalArgumentException("Bad order!");
-		this.getCompletedOrders().add(finished);
+		this.completedorders.add(finished);
 		this.notifyObservers();
 	}
 
@@ -114,7 +117,7 @@ public class OrderManager implements Subject {
 	// for testing
 	@SuppressWarnings("unchecked")
 	public LinkedList<Order> getCompletedOrdersClone(){
-		return (LinkedList<Order>) this.completedorders.clone();
+		return (LinkedList<Order>) this.getCompletedOrders().clone();
 	}
 
 	public LinkedList<Order> getPendingOrders(){
@@ -151,7 +154,12 @@ public class OrderManager implements Subject {
 	 * @return  the completed orders of this order manager.
 	 */
 	protected LinkedList<Order> getCompletedOrders(){
-		return this.completedorders;
+		LinkedList<Order> temp = new LinkedList<Order>();
+		Iterator<Order> henk =  this.completedorders.iterator();
+		while(henk.hasNext()){
+			temp.add(henk.next());
+		}
+		return temp;
 	}
 
 	/**
