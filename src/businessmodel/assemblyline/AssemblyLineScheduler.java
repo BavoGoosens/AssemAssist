@@ -216,6 +216,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @return
 	 */
+	//TODO Protected maken
 	public LinkedList<Order> getOrders() {
 		return this.orders;
 	}

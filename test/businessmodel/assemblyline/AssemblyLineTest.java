@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.Catalog;
+import businessmodel.OrderManager;
+import businessmodel.VehicleManufacturingCompany;
 import businessmodel.category.ModelAFactory;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
@@ -26,10 +28,15 @@ public class AssemblyLineTest {
 	private StandardVehicleOrder order3;
 	private Catalog catalog;
 	private ArrayList<VehicleOptionCategory> categories;
-
+	private VehicleManufacturingCompany vmc;
+	private OrderManager om;
 	@Before
 	public void setUp() throws Exception {
+		
+		vmc = new VehicleManufacturingCompany();
+		om = new OrderManager();
 		orders = new ArrayList<Order>();
+		this.catalog = new Catalog();
 		this.categories = this.catalog.getAllCategories();
 
 		VehicleModel modelA = new ModelAFactory().createModel();
@@ -53,17 +60,17 @@ public class AssemblyLineTest {
 
 
 		for(Order order: orders)
-			cmc.placeOrder(order);
+			vmc.placeOrder(order);
 
 	}
 
 	@Test
 	public void test() {
-		AssemblyLine testassembly = om.getScheduler().getAssemblyline();
+		AssemblyLine testassembly = om.getMainScheduler().getAssemblyLineSchedulers().get(0).getAssemblyline();
 
 		assertEquals(testassembly.getWorkPosts().get(0).getResponsibleTasksClone().get(0).toString(),"Assembly Vehicle Body");
 
-		for(WorkPost wp1 : om.getScheduler().getAssemblyline().getWorkPosts()){
+		for(WorkPost wp1 : om.getMainScheduler().getAssemblyLineSchedulers().get(0).getAssemblyline().getWorkPosts()){
 			if(wp1.getOrder()!= null);
 //				System.out.println(wp1.getOrder().getUser());
 			else;
@@ -77,19 +84,19 @@ public class AssemblyLineTest {
 //		System.out.println("===========");
 		WorkPost wp = testassembly.getWorkPosts().get(0);
 
-		Iterator<AssemblyTask> iter = cmc.getPendingTasks(wp);
+		Iterator<AssemblyTask> iter = vmc.getPendingTasks(wp);
 		List<AssemblyTask> copy = new ArrayList<AssemblyTask>();
 		while (iter.hasNext())
 			copy.add(iter.next());
 		for(AssemblyTask assem : copy)
-			cmc.finishTask(assem, 20);
+			vmc.finishTask(assem, 20);
 
 
 		assertEquals(testassembly.getWorkPosts().get(0).getOrder(),orders.get(1));
 		assertEquals(testassembly.getWorkPosts().get(1).getOrder(),orders.get(0));
 		assertEquals(testassembly.getWorkPosts().get(2).getOrder(),null);
 
-		for(WorkPost wp1 : om.getScheduler().getAssemblyline().getWorkPosts()){
+		for(WorkPost wp1 : om.getMainScheduler().getAssemblyLineSchedulers().get(0).getAssemblyline().getWorkPosts()){
 			if(wp1.getOrder()!= null);
 //				System.out.println(wp1.getOrder().getUser());
 			else;
@@ -98,30 +105,30 @@ public class AssemblyLineTest {
 
 		wp = testassembly.getWorkPosts().get(0);
 
-		Iterator<AssemblyTask> iter1 = cmc.getPendingTasks(wp);
+		Iterator<AssemblyTask> iter1 = vmc.getPendingTasks(wp);
 		List<AssemblyTask> copy1 = new ArrayList<AssemblyTask>();
 		while (iter1.hasNext())
 			copy1.add(iter1.next());
 		for(AssemblyTask assem : copy1)
-			cmc.finishTask(assem, 20);
+			vmc.finishTask(assem, 20);
 
 
 
 		wp = testassembly.getWorkPosts().get(1);
 
-		Iterator<AssemblyTask> iter11 = cmc.getPendingTasks(wp);
+		Iterator<AssemblyTask> iter11 = vmc.getPendingTasks(wp);
 		List<AssemblyTask> copy11 = new ArrayList<AssemblyTask>();
 		while (iter11.hasNext())
 			copy11.add(iter11.next());
 		for(AssemblyTask assem : copy11)
-			cmc.finishTask(assem, 20);
+			vmc.finishTask(assem, 20);
 
 		assertEquals(testassembly.getWorkPosts().get(0).getOrder(),orders.get(2));
 		assertEquals(testassembly.getWorkPosts().get(1).getOrder(),orders.get(1));
 		assertEquals(testassembly.getWorkPosts().get(2).getOrder(),orders.get(0));
 
 		for(int i=0; i < 3; i++){
-			for(WorkPost wp1 : om.getScheduler().getAssemblyline().getWorkPosts()){
+			for(WorkPost wp1 : om.getMainScheduler().getAssemblyLineSchedulers().get(0).getAssemblyline().getWorkPosts()){
 				if(wp1.getOrder()!= null);
 //					System.out.println(wp1.getOrder().getUser());
 				else;
@@ -131,12 +138,12 @@ public class AssemblyLineTest {
 
 			for(WorkPost wp1: testassembly.getWorkPosts()){
 
-				Iterator<AssemblyTask> iter111 = cmc.getPendingTasks(wp1);
+				Iterator<AssemblyTask> iter111 = vmc.getPendingTasks(wp1);
 				List<AssemblyTask> copy111 = new ArrayList<AssemblyTask>();
 				while (iter111.hasNext())
 					copy111.add(iter111.next());
 				for(AssemblyTask assem : copy111)
-					cmc.finishTask(assem, 20);
+					vmc.finishTask(assem, 20);
 			}
 		}
 

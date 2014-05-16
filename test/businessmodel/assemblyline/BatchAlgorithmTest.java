@@ -47,7 +47,7 @@ public class BatchAlgorithmTest {
 			options.add(body);
 			options.add(engine);
 			
-			Order order1 = new StandardVehicleOrder(new GarageHolder("bouwe", "", ""), options, new VehicleModel("lol", new VehicleModelSpecification(options)));
+			Order order1 = new StandardVehicleOrder(new GarageHolder("bouwe", "", ""), options, new VehicleModel("Vehicle Model A", new VehicleModelSpecification(options)));
 			cmc.placeOrder(order1);
 			
 			//---------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ public class BatchAlgorithmTest {
 			options.add(body);
 			options.add(engine);
 
-			Order order2 = new StandardVehicleOrder(new GarageHolder("sander", "", ""), options,new VehicleModel("lol", new VehicleModelSpecification(options)));
+			Order order2 = new StandardVehicleOrder(new GarageHolder("sander", "", ""), options,new VehicleModel("Vehicle Model A", new VehicleModelSpecification(options)));
 			cmc.placeOrder(order2);
 			
 			//---------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ public class BatchAlgorithmTest {
 			options.add(body);
 			options.add(engine);
 
-			Order order3 = new StandardVehicleOrder(new GarageHolder("bavo", "", ""), options,new VehicleModel("lol", new VehicleModelSpecification(options)));
+			Order order3 = new StandardVehicleOrder(new GarageHolder("bavo", "", ""), options,new VehicleModel("Vehicle Model A", new VehicleModelSpecification(options)));
 			cmc.placeOrder(order3);
 
 			//---------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ public class BatchAlgorithmTest {
 			options.add(body);
 			options.add(engine);
 
-			Order order4 = new StandardVehicleOrder(new GarageHolder("michiel", "", ""), options,new VehicleModel("lol", new VehicleModelSpecification(options)));
+			Order order4 = new StandardVehicleOrder(new GarageHolder("michiel", "", ""), options,new VehicleModel("Vehicle Model A", new VehicleModelSpecification(options)));
 			cmc.placeOrder(order4);
 
 			
@@ -96,7 +96,7 @@ public class BatchAlgorithmTest {
 			options.add(body);
 			options.add(engine);
 
-			Order order5 = new StandardVehicleOrder(new GarageHolder("lol", "", ""), options,new VehicleModel("lol", new VehicleModelSpecification(options)));
+			Order order5 = new StandardVehicleOrder(new GarageHolder("lol", "", ""), options,new VehicleModel("Vehicle Model A", new VehicleModelSpecification(options)));
 			cmc.placeOrder(order5);
 
 			
@@ -113,16 +113,19 @@ public class BatchAlgorithmTest {
 			}catch(IllegalSchedulingAlgorithmException ex){
 				ex.getMessage();
 			}
-			orderManager.getScheduler().ScheduleDay();
+			
+			orderManager.getMainScheduler().getAssemblyLineSchedulers().get(0).ScheduleDay();
+			orderManager.getMainScheduler().getAssemblyLineSchedulers().get(1).ScheduleDay();
+			orderManager.getMainScheduler().getAssemblyLineSchedulers().get(2).ScheduleDay();
 
 //			for(Order order: orderManager.getScheduler().getOrdersClone())
 //				System.out.println(order.toString());
 			
-			assertEquals(orderManager.getScheduler().getOrdersClone().get(0),order2);
-			assertEquals(orderManager.getScheduler().getOrdersClone().get(1),order3);
-			assertEquals(orderManager.getScheduler().getOrdersClone().get(2),order5);
-			assertEquals(orderManager.getScheduler().getOrdersClone().get(3),order1);
-			assertEquals(orderManager.getScheduler().getOrdersClone().get(4),order4);
+			assertEquals(orderManager.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(0),order2);
+			assertEquals(orderManager.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(1),order3);
+			assertEquals(orderManager.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(2),order5);
+			assertEquals(orderManager.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(3),order1);
+			assertEquals(orderManager.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(4),order4);
 
 		
 	}
