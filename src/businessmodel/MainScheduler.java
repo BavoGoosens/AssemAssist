@@ -51,21 +51,21 @@ public class MainScheduler {
 		return schedulers;
 	}
 
-	public ArrayList<Order> getNbOrders(int size, AssemblyLine assemblyline) {
-		return null;
+	public LinkedList<Order> getNbOrders(int size, AssemblyLine assemblyline) {
+		return this.ordermanager.getNbOrders(size, assemblyline);
 	}
 
 	public LinkedList<Order> getPendingOrders() {
-		return null;
+		return this.ordermanager.getPendingOrders();
 	}
 
 	public void finishedOrder(Order completedorder) {
-
+		this.ordermanager.finishedOrder(completedorder);
 	}
 
 	// TODO orders proberen schedulen op andere line.
 	public void placeOrderInFront(Order order) {
-
+		this.ordermanager.placeOrderInFront(order);
 	}
 
 	private void generateAssemblyLines() {
