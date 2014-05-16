@@ -8,12 +8,12 @@ import java.util.List;
  */
 public class SafeIterator <Type> implements Iterator{
 
-    private List<Type> list;
+    private Iterator<Type> list;
 
     @Override
     public boolean hasNext() {
         if (list != null)
-            return list.iterator().hasNext();
+            return list.hasNext();
         else
             throw new RuntimeException("You need to use the convertIterator method first");
     }
@@ -21,7 +21,7 @@ public class SafeIterator <Type> implements Iterator{
     @Override
     public Type next() {
         if (list != null)
-            return list.iterator().next();
+            return list.next();
         else
             throw new RuntimeException("You need to use the convertIterator method first");
     }
@@ -33,6 +33,6 @@ public class SafeIterator <Type> implements Iterator{
 
     public void convertIterator(Iterator<Type> iter){
         IteratorConverter<Type> converter = new IteratorConverter<Type>();
-        this.list = converter.convert(iter);
+        this.list = converter.convert(iter).iterator();
     }
 }
