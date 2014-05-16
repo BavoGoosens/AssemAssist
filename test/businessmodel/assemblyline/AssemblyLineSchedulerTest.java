@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import businessmodel.Catalog;
 import businessmodel.OrderManager;
+import businessmodel.VehicleManufacturingCompany;
 import businessmodel.category.*;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
@@ -26,10 +27,12 @@ public class AssemblyLineSchedulerTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		
+		VehicleManufacturingCompany vmc = new VehicleManufacturingCompany();
 		Catalog catalog = new Catalog();
         ArrayList<VehicleModel> models = catalog.getAvailaleModelsClone();
         GarageHolder michiel = new GarageHolder("Michiel", "Vandendriessche", "michielvdd");
-        OrderManager om = new OrderManager(models);
+        OrderManager om = new OrderManager();
         VehicleModel AModel = null;
         VehicleModel BModel = null;
         VehicleModel CModel = null;
@@ -41,9 +44,9 @@ public class AssemblyLineSchedulerTest {
         Order orderA = extractAOrder(michiel, AModel);
         Order orderB = extractBOrder(michiel, BModel);
         Order orderC = extractCOrder(michiel, CModel);
-        om.placeOrder(orderA);
-        om.placeOrder(orderB);
-        om.placeOrder(orderC);
+        vmc.placeOrder(orderA);
+        vmc.placeOrder(orderB);
+        vmc.placeOrder(orderC);
 	}
 	
 	private Order extractAOrder(User user, VehicleModel model) {
