@@ -46,18 +46,18 @@ public class InitialDataTest {
 		assertEquals(nbOrders,count);
 		
 		try {
-			System.out.println(vmc.getOrderManager().getCompletedOrdersClone().size());
-			assertEquals(nbOrders, vmc.getCompletedOrders(user));
+			count = 0;
+			Iterator<Order> it = vmc.getPendingOrders(user);
+			while(it.hasNext()){
+				it.next();
+				count++;
+			}
+			assertEquals(9, count);
 		} catch (IllegalArgumentException | NoClearanceException e) {
 			e.printStackTrace();
 		}
 		
 		
-		int orderCount = 0;
-		for(AssemblyLineScheduler assemSched: vmc.getOrderManager().getMainScheduler().getAssemblyLineSchedulers())
-				orderCount += assemSched.getOrdersClone().size();
-		
-		assertEquals(orderCount, 9);
 		
 	}
 
