@@ -52,6 +52,12 @@ public class AssemblyLine implements Subject{
         this.setState(operational);
     }
 
+    protected  void setMainScheduler(MainScheduler scheduler){
+        if (scheduler != null)
+            this.mainscheduler = scheduler;
+        else
+            throw new IllegalArgumentException("There was no MainScheduler supplied");
+    }
     protected void setAssemblylineScheduler(AssemblyLineScheduler scheduler){
         if (scheduler != null)
             this.assemblylineScheduler = scheduler;
