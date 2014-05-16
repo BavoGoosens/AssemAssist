@@ -21,30 +21,47 @@ import businessmodel.order.Order;
  */
 public class AssemblyLine implements Subject{
 
-    private List<VehicleModel> responsibleModels;
-    private AssemblyLineState broken;
-	private AssemblyLineState maintenance;
-	private AssemblyLineState operational;
-	private AssemblyLineState state;
-	private MainScheduler mainscheduler;
-	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
-	private int timeCurrentStatus = 0;
-	private AssemblyLineScheduler assemblylineScheduler;
-	private ArrayList<Observer> subscribers = new ArrayList<Observer>();
-
 	/**
-	 * Creates a new assembly line.
+	 * the models this AssemblyLine can handle.
 	 */
-	protected AssemblyLine(AssemblyLineScheduler scheduler, MainScheduler mainscheduler) throws IllegalArgumentException {
-		this.broken = new BrokenState(this);
-		this.maintenance  = new MaintenanceState(this);
-		this.operational  = new OperationalState(this);
-		this.setState(operational);
-		this.mainscheduler = mainscheduler;
-		this.setScheduler(scheduler);
-		this.generateWorkPosts();
-	}
+    private List<VehicleModel> responsibleModels;
+    
+    private AssemblyLineState broken;
 
+	private AssemblyLineState maintenance;
+	
+	private AssemblyLineState operational;
+
+	private AssemblyLineState state;
+	
+	/**
+	 * The AssemblyLineScheduler that schedules the orders for this AssemblyLine.
+	 */
+	private AssemblyLineScheduler assemblylineScheduler;
+	
+	/**
+	 * The MainScheduler that holds this AssemblyLine.
+	 */
+	private MainScheduler mainscheduler;
+	
+	/**
+	 * The time that it took to process all the orders that are current set on the WorkPosts.
+	 */
+	private int timeCurrentStatus = 0;
+	
+	/**
+	 * The WorkPosts of this AssemblyLine.
+	 */
+	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
+	
+	/**
+	 * The subsribers of this AssemblyLine.
+	 */
+	private ArrayList<Observer> subscribers = new ArrayList<Observer>();
+	
+	/**
+	 * A Constructor for the class AssemblyLine.
+	 */
     protected AssemblyLine(){
         this.broken = new BrokenState(this);
         this.maintenance  = new MaintenanceState(this);
@@ -52,50 +69,19 @@ public class AssemblyLine implements Subject{
         this.setState(operational);
     }
 
-    protected  void setMainScheduler(MainScheduler scheduler){
-        if (scheduler != null)
-            this.mainscheduler = scheduler;
-        else
-            throw new IllegalArgumentException("There was no MainScheduler supplied");
-    }
-    protected void setAssemblylineScheduler(AssemblyLineScheduler scheduler){
-        if (scheduler != null)
-            this.assemblylineScheduler = scheduler;
-        else
-            throw new IllegalArgumentException("There was no scheduler supplied");
-    }
-
-    protected void setWorkPosts( List<WorkPost> workPosts){
-        if (workPosts != null)
-            this.workposts = (ArrayList<WorkPost>) workPosts;
-        else
-            throw new IllegalArgumentException("There were no workposts supplied");
-    }
-
-    protected  void setResponsibleModels( List<VehicleModel> models){
-        if (models != null)
-            this.responsibleModels = models;
-        else
-            throw  new IllegalArgumentException("There were no models supplied");
-    }
-    
-    protected Iterator<VehicleModel> getResponsibleModelsIterator() {
-    	return this.responsibleModels.iterator();
-    }
-
-	/**
+    /**
 	 * Checks whether the assembly line can move forward.
 	 * 
 	 * @return True if the assembly line can move forward.
 	 */
 	protected boolean canAdvance() {
+		boolean ready = true;
 		for(WorkPost wp : this.getWorkPosts()){
-			boolean ready = wp.isCompleted();
-			if (!ready)
-				return false;
+			if (!wp.isCompleted())
+				ready = false;
 		}
-		return true;
-	}		
+		return ready;
+	}
 
 	/**
 	 * Advances the assembly line and adds a new order to the assembly line.
@@ -119,6 +105,31 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
+	 * Updates the work post and the AssemblyLine with the current status.
+	 * 
+	 * @param 	timeCurrentStatus
+	 * 			The current status.		
+	 */
+	protected void workPostCompleted(int timeCurrentStatus) {
+		if(timeCurrentStatus > this.timeCurrentStatus)
+			this.timeCurrentStatus = timeCurrentStatus;
+		this.notifyScheduler();
+	}
+
+	/**
+	 * Notifies the AssemblyLine if a work post is completed, if all work posts are completed the assembly line advances.
+	 */
+	private void notifyScheduler(){
+		boolean completed = true;
+		for(WorkPost wp: this.getWorkPosts()){
+			if(!wp.isCompleted())
+				completed = false;
+		}
+		if(completed)
+			this.getAssemblyLineScheduler().advance(this.timeCurrentStatus);
+	}
+
+	/**
 	 * Returns the list of work posts at the assembly line.
 	 * 
 	 * @return	The list of work posts at the assembly line.
@@ -126,6 +137,18 @@ public class AssemblyLine implements Subject{
 	@SuppressWarnings("unchecked")
 	public ArrayList<WorkPost> getWorkPosts() {
 		return (ArrayList<WorkPost>) this.workposts.clone();
+	}
+
+	/**
+	 * Returns the AssemblyLineScheduler of this AssemblyLine.
+	 * @return 
+	 */
+	public AssemblyLineScheduler getAssemblyLineScheduler() {
+		return assemblylineScheduler;
+	}
+
+	protected Iterator<VehicleModel> getResponsibleModelsIterator() {
+		return this.responsibleModels.iterator();
 	}
 
 	/**
@@ -146,19 +169,6 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
-	 * Updates the work post and the assemblyline with the current status.
-	 * 
-	 * @param 	timeCurrentStatus
-	 * 			The current status.		
-	 */
-	protected void workPostCompleted(int timeCurrentStatus) {
-		if(timeCurrentStatus > this.timeCurrentStatus)
-			this.timeCurrentStatus = timeCurrentStatus;
-		this.notifyScheduler();
-	}
-
-
-	/**
 	 * Returns all the orders that are on the assembly line.
 	 * 
 	 * @return  A list with all the orders that are currently on the assembly line.
@@ -171,39 +181,32 @@ public class AssemblyLine implements Subject{
 		return orders;
 	}
 
-
-	/**
-	 * Notifies the assemblyline if a work post is completed, if all work posts are completed the assembly line advances.
-	 */
-	private void notifyScheduler(){
-		boolean completed = true;
-		for(WorkPost wp: this.getWorkPosts()){
-			if(!wp.isCompleted())
-				completed = false;
-		}
-		if(completed)
-			this.getAssemblyLineScheduler().advance(this.timeCurrentStatus);
+	protected  void setMainScheduler(MainScheduler scheduler){
+	    if (scheduler != null)
+	        this.mainscheduler = scheduler;
+	    else
+	        throw new IllegalArgumentException("There was no MainScheduler supplied");
 	}
 
-	/**
-	 * Generates work posts.
-	 */
-	private void generateWorkPosts(){
-		WorkPost post1 = new WorkPost("Vehicle Body Post", this);
-		WorkPost post2 = new WorkPost("Drivetrain Post", this);
-		WorkPost post3 = new WorkPost("Accesoires Post", this);	
-		this.workposts.add(post1);
-		this.workposts.add(post2);
-		this.workposts.add(post3);
+	protected void setAssemblylineScheduler(AssemblyLineScheduler scheduler){
+	    if (scheduler != null)
+	        this.assemblylineScheduler = scheduler;
+	    else
+	        throw new IllegalArgumentException("There was no scheduler supplied");
 	}
 
-
-	public AssemblyLineScheduler getAssemblyLineScheduler() {
-		return assemblylineScheduler;
+	protected void setWorkPosts( List<WorkPost> workPosts){
+	    if (workPosts != null)
+	        this.workposts = (ArrayList<WorkPost>) workPosts;
+	    else
+	        throw new IllegalArgumentException("There were no workposts supplied");
 	}
 
-	private void setScheduler(AssemblyLineScheduler scheduler) {
-		this.assemblylineScheduler = scheduler;
+	protected  void setResponsibleModels( List<VehicleModel> models){
+	    if (models != null)
+	        this.responsibleModels = models;
+	    else
+	        throw  new IllegalArgumentException("There were no models supplied");
 	}
 
 	@Override

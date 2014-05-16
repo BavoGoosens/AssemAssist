@@ -9,14 +9,14 @@ import org.junit.Test;
 
 import businessmodel.order.Order;
 
-public class TestShift {
+public class ShiftTest {
 	
-	private TestOrder testorder;
+	private OrderTest testorder;
 	private Shift shift;
 
 	@Before
 	public void setUp() throws Exception {
-		this.testorder = new TestOrder();
+		this.testorder = new OrderTest();
 		EndShift shift1 = new EndShift(8,3);
 		this.shift = new FreeShift(8,3,shift1);
 	}

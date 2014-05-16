@@ -65,7 +65,7 @@ public class FreeShift extends Shift{
 	 */
 	private ArrayList<TimeSlot> checkTimeSlots(TimeSlot timeslot){
 		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();
-		for(int numberofworkslot = 0; numberofworkslot < this.getNumberofworkposts(); numberofworkslot++){
+		for(int numberofworkslot = 0; numberofworkslot < this.getNumberOfWorkPosts(); numberofworkslot++){
 			if (timeslot.workSlotOccupied(numberofworkslot))
 				return null;
 			timeslots.add(timeslot);

@@ -50,7 +50,7 @@ public abstract class Shift {
 	 * A method to expand the shift. A new TimeSlot will be created and added to the shift.
 	 */
 	protected void addTimeSlot(){
-		TimeSlot slot = new TimeSlot(this.getNumberofworkposts());
+		TimeSlot slot = new TimeSlot(this.getNumberOfWorkPosts());
 		this.getTimeSlots().add(slot);
 	}
 
@@ -112,7 +112,7 @@ public abstract class Shift {
 	 * A method to get the number of WorkPost's.
 	 * @return the number of WorkPost's.
 	 */
-	protected int getNumberofworkposts() {
+	protected int getNumberOfWorkPosts() {
 		return this.numberofworkposts;
 	}
 
@@ -125,7 +125,7 @@ public abstract class Shift {
 	private void generateTimeSlots(int hours){
 		this.timeslots = new LinkedList<TimeSlot>();
 		for(int i = 0;i < hours;i++){
-			TimeSlot slot = new TimeSlot(this.getNumberofworkposts());
+			TimeSlot slot = new TimeSlot(this.getNumberOfWorkPosts());
 			this.getTimeSlots().add(slot);
 		}
 	}

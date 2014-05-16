@@ -16,11 +16,11 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
 
-public class TestOrder {
+public class OrderTest {
 
 	private StandardVehicleOrder order;
 	
-	public TestOrder(){
+	public OrderTest(){
 		makeOrder();
 	}
 	

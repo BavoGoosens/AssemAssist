@@ -47,7 +47,7 @@ public class AssemblyLineScheduler implements Subject {
 		this.orders = new LinkedList<Order>();
 		this.assemblyline = assemblyline;
 		this.observers = new ArrayList<Observer>();
-		this.currenttime = new DateTime(new DateTime().getYear(), 
+		this.currenttime = new DateTime(new DateTime().getYear(),
 				new DateTime().getMonthOfYear(),
 				new DateTime().getDayOfMonth(), 8, 0);
 		this.changeAlgorithm("fifo", null);
@@ -100,7 +100,7 @@ public class AssemblyLineScheduler implements Subject {
 		updateSchedule();
 		checkNewDay();
 	}
-	
+
 	/**
 	 * Returns true if an order can be added to the current day.
 	 * 
@@ -116,17 +116,15 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	/**
-	 * Add this order to the schedule of this day.
-	 * the timestamp of this order is set. This is the time that the order is scheduled.
-	 * If it is the first order it will be placed on the AssemblyLine.
-	 * @param 	order
-	 * 			the order that needs to be added.
+	 * 
+	 * @param order
 	 */
 	public void addOrder(Order order){
 		getAlgo().scheduleOrder(order);
 		order.setTimestampOfOrder(this.getCurrentTime());
 		getOrders().add(order);
 		CheckIfAssemblyLineIsEmpty();
+		order.setTimestampOfOrder(this.getCurrentTime());
 	}
 
 	/**
@@ -135,7 +133,8 @@ public class AssemblyLineScheduler implements Subject {
 	 * @return the number of order that can be scheduled.
 	 */
 	public int getNumberOfOrdersToSchedule() {
-		return this.getShifts().size()*this.getShifts().getFirst().getTimeSlots().size()-(this.getAssemblyline().getNumberOfWorkPosts()-1);
+		return this.getShifts().size()*this.getShifts().getFirst().getTimeSlots().size()-
+				(this.getAssemblyline().getNumberOfWorkPosts()-1);
 	}
 
 	/**
@@ -150,21 +149,18 @@ public class AssemblyLineScheduler implements Subject {
 	 * @throws 	IllegalArgumentException
 	 */
 	public void changeAlgorithm(String algoname, ArrayList<VehicleOption> options) throws IllegalSchedulingAlgorithmException, IllegalArgumentException{
-
 		if (algoname == null){
-			throw new NullPointerException("No scheduling algorithm supplied");
-		}else if (algoname.equalsIgnoreCase("fifo") || algoname.equalsIgnoreCase("first in first out") ){
-			this.algortime = new FIFO(this);
-		}else if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch")){
-
-			if (options == null) throw new IllegalArgumentException("No such option");
-			if (!this.checkOptionsForSpecificationBatch(options)) throw new IllegalArgumentException("Too little orders with that option ( less than 3 )");
-
-			this.algortime = new SpecificationBatch(this,options);
-
-		}else{
-			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");
-		}
+			throw new NullPointerException("No scheduling algorithm supplied");}
+		else if (algoname.equalsIgnoreCase("fifo") || algoname.equalsIgnoreCase("first in first out") ){
+			this.algortime = new FIFO(this);}
+		else if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch")){
+			if (options == null) 
+				throw new IllegalArgumentException("No such option");
+			if (!this.checkOptionsForSpecificationBatch(options)) 
+				throw new IllegalArgumentException("Too little orders with that option ( less than 3 )");
+			this.algortime = new SpecificationBatch(this,options);}
+		else
+			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");	
 	}
 
 	private void CheckIfAssemblyLineIsEmpty() {
@@ -187,18 +183,15 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	private void updateSchedule(){
-
 		if(this.getDelay() <= -60){
-
 			this.getShifts().getLast().addTimeSlot();
 			Order nextorder = this.getNextOrderToSchedule();
 			if(nextorder!= null)
 				this.scheduleOrder(nextorder);
 			this.updateDelay(60);
 			this.updateSchedule();
-
-		}else if (this.getDelay() >= 60){
-
+		}
+		else if (this.getDelay() >= 60){
 			Order order = this.getShifts().getLast().removeLastTimeSlot();
 			if(this.getShifts().getLast().getTimeSlots().size() == 0)
 				this.getShifts().removeLast();
@@ -267,42 +260,11 @@ public class AssemblyLineScheduler implements Subject {
 		this.delay = delay;
 	}
 
-	//TODO
-	private boolean checkOptionsForSpecificationBatch(ArrayList<VehicleOption> options) {
-		
-		int orderCount = 0;
-		
-		for(Order order: this.getOrders()){
-			int count = 0;
-			for(VehicleOption opt: options){
-				for(VehicleOption opt2: order.getOptions()){
-					if (opt.toString().equals(opt2.toString())) count++;
-				}
-			}
-			if (count == order.getOptions().size()) orderCount++;
-		}
-		
-		if (orderCount < 3)
-			return false;
-		return true;
-	}
-
 	/**
 	 *Get the number of orders that has been scheduled so far for this day.
 	 */
 	public int getDayOrdersCount() {
 		return this.dayOrdersCount;
-	}
-
-	// for testing
-	@SuppressWarnings("unchecked")
-	/**
-	 * Get a clone of the current orders in the schedule.
-	 * @return a clone of the current orders.
-	 */
-	// TODO: werken met iterators
-	public LinkedList<Order> getOrdersClone(){
-		return (LinkedList<Order>) this.orders.clone();
 	}
 
 	/**
@@ -390,6 +352,23 @@ public class AssemblyLineScheduler implements Subject {
 		return this.getAssemblyline().getMainScheduler().getPendingOrders().poll();
 	}
 
+	//TODO
+	private boolean checkOptionsForSpecificationBatch(ArrayList<VehicleOption> options) {
+		int orderCount = 0;
+		for(Order order: this.getOrders()){
+			int count = 0;
+			for(VehicleOption opt: options){
+				for(VehicleOption opt2: order.getOptions()){
+					if (opt.toString().equals(opt2.toString())) count++;
+				}
+			}
+			if (count == order.getOptions().size()) orderCount++;
+		}
+		if (orderCount < 3)
+			return false;
+		return true;
+	}
+
 	/**
 	 * Method to check if a VehicleOption occurs in more than 3 orders
 	 * @param maxNumber
@@ -397,12 +376,12 @@ public class AssemblyLineScheduler implements Subject {
 	 */
 	//TODO check this shit, moet alle sets teruggeven die in meer dan of gelijk aan 3 orders komen
 	public ArrayList<VehicleOption> getUnscheduledVehicleOptions(int maxNumber){
-		
+
 		HashMap<String, Integer> list = new HashMap<String, Integer>();
 		ArrayList<String> options = new ArrayList<String>();
 		//arraylist vehicleoption
 		HashMap<String, VehicleOption> result = new HashMap<String, VehicleOption>();
-		
+
 		for(Order order: this.getOrders()){
 			for(VehicleOption option: order.getOptions()){
 				if (list.containsKey(option.getName())){
@@ -416,11 +395,11 @@ public class AssemblyLineScheduler implements Subject {
 				}
 			}
 		}
-		
+
 		for (String optionName: options)
 			if (list.get(optionName) < 3)
 				result.remove(optionName);
-		
+
 		return new ArrayList<VehicleOption>(result.values());
 	}
 
@@ -448,11 +427,11 @@ public class AssemblyLineScheduler implements Subject {
 		return full[1];
 	}
 
-	// TODO rekening houden met de Standard Completion Date
 	protected DateTime getEstimatedCompletionTimeOfNewOrder(Order order) {
 		if(this.getOrders().size() > 0)
-			return this.getOrders().getLast().getEstimatedDeliveryDate().plusHours(1);
+			return this.getOrders().getLast().getEstimatedDeliveryDate().plusMinutes(
+					order.minutesLastWorkPost(this.getAssemblyline()));
 		else
-			return this.currenttime.plusHours(3);
-	}
+			return this.currenttime.plusMinutes(order.calculateMinutes(this.getAssemblyline()));
+	}	
 }

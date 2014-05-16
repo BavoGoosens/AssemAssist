@@ -58,7 +58,6 @@ public class TestScheduling {
 
 		for(int i =0 ; i< orders.size()-1;i++){
 			vhc.placeOrder(orders.get(i));
-
 		}
 
 		Iterator<AssemblyLine> iter = vhc.getAssemblyLines(man);

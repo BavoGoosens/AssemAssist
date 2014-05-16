@@ -7,15 +7,15 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestTimeSlot {
+public class TimeSlotTest {
 	
 	private TimeSlot timeslot;
-	private TestOrder testorder;
+	private OrderTest testorder;
 	
 	@Before
 	// TODO iets doen met de catch
 	public void setUp() throws Exception {
-		testorder = new TestOrder();
+		testorder = new OrderTest();
 		
 		try {this.timeslot = new TimeSlot(-1);}
 		catch (IllegalArgumentException e) {

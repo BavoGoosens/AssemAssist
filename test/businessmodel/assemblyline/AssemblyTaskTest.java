@@ -1,12 +1,12 @@
 package businessmodel.assemblyline;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class TestEndShift {
+public class AssemblyTaskTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {

@@ -6,6 +6,8 @@ import java.util.Locale;
 
 import org.joda.time.DateTime;
 
+import businessmodel.assemblyline.AssemblyLine;
+import businessmodel.assemblyline.WorkPost;
 import businessmodel.category.Vehicle;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
@@ -20,7 +22,7 @@ import businessmodel.user.User;
  *
  */
 public abstract class Order {
-	
+
 	/**
 	 * The user that placed the order.
 	 */
@@ -30,27 +32,27 @@ public abstract class Order {
 	 * The estimated delivery date of the order.
 	 */
 	private DateTime estimatedDeliveryDate;
-	
+
 	/**
 	 * The time the order was placed.
 	 */
 	private DateTime timestamp;
-	
+
 	/**
 	 * The time the order was placed on the assembly line.
 	 */
 	private DateTime orderPlacedOnAssemblyLine;
-	
+
 	/**
 	 * The time the order was completed.
 	 */
 	private DateTime completionDate;
-	
+
 	/**
 	 * Indicates whether the order is completed.
 	 */
 	private boolean completed;
-	
+
 	/**
 	 * The car model of the order.
 	 */
@@ -69,7 +71,7 @@ public abstract class Order {
 		setUser(user);
 		setVehicleModel(model);
 	}
-	
+
 	/**
 	 * Returns the user that placed the order.
 	 * 
@@ -78,7 +80,7 @@ public abstract class Order {
 	public User getUser() {
 		return this.user;
 	}
-	
+
 	/**
 	 * Returns whether the order is completed.
 	 * 
@@ -97,7 +99,7 @@ public abstract class Order {
 	public void updateEstimatedDate(int delay) {
 		this.setEstimatedDeliveryDateOfOrder(this.getEstimatedDeliveryDate().plusMinutes(delay));		
 	}
-	
+
 	public abstract ArrayList<VehicleOption> getOptions();
 
 	/**
@@ -127,7 +129,7 @@ public abstract class Order {
 	public DateTime getUserEndDate() {
 		return null;
 	}
-	
+
 	/**
 	 * Returns the estimated delivery date of the order.
 	 * 
@@ -136,7 +138,7 @@ public abstract class Order {
 	public DateTime getEstimatedDeliveryDate() {
 		return estimatedDeliveryDate;
 	}
-	
+
 	/**
 	 * Returns the time the order was placed on the assembly line.
 	 * 
@@ -208,8 +210,8 @@ public abstract class Order {
 	}
 
 	private void setCompletionDate(DateTime completionDate) throws IllegalArgumentException{
-	if(completionDate == null) 
-		throw new IllegalArgumentException("Bad completion date!");
+		if(completionDate == null) 
+			throw new IllegalArgumentException("Bad completion date!");
 		this.completionDate = completionDate;
 	}
 
@@ -232,7 +234,7 @@ public abstract class Order {
 			throw new IllegalArgumentException("Bad order placed on assembly line date!");
 		this.orderPlacedOnAssemblyLine = orderPlacedOnAssemblyLine;		
 	}
-	
+
 	/**
 	 * Sets the car model of the order to the given car model.
 	 * 
@@ -242,7 +244,7 @@ public abstract class Order {
 	private void setVehicleModel(VehicleModel model) throws IllegalArgumentException {
 		this.carModel = model;
 	}
-	
+
 	/**
 	 * Returns the car model that is ordered.
 	 * 
@@ -256,4 +258,39 @@ public abstract class Order {
 	public String toString() {
 		return "user: " + this.user.toString() + ", delivery date= " + this.estimatedDeliveryDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT); 
 	}	
+
+	/**
+	 * Method to set an estimated completion time for a particular order.
+	 * @param order
+	 */
+	public void setEstimatedCompletionDateOfOrder(Order previousorder,AssemblyLine line){
+		if(previousorder != null) {
+			if(previousorder.getEstimatedDeliveryDate() == null){
+				this.setEstimatedDeliveryDateOfOrder(line.getAssemblyLineScheduler().getCurrentTime().plusMinutes(calculateMinutes(line)));
+			}else if(previousorder.getEstimatedDeliveryDate().getHourOfDay() <= 21){
+				this.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusMinutes(minutesLastWorkPost(line)));
+			}else {
+				this.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusDays(1).withHourOfDay(8).withMinuteOfHour(0));
+				this.getEstimatedDeliveryDate().plusMinutes(calculateMinutes(line));
+			}
+		}else{
+			this.setEstimatedDeliveryDateOfOrder(line.getAssemblyLineScheduler().getCurrentTime().plusMinutes(calculateMinutes(line)));
+		}
+	}
+
+	public int calculateMinutes(AssemblyLine line){
+		if(this.getVehicleModel() == null)
+			return line.getWorkPosts().size()*60;
+		int minutes = 0;
+		for(WorkPost wp : line.getWorkPosts()){
+			minutes += wp.getStandardTimeOfModel(this.getVehicleModel());
+		}
+		return minutes;
+	}
+
+	public int minutesLastWorkPost(AssemblyLine line) {
+		if(this.getVehicleModel() == null)
+			return 60;
+		return line.getWorkPosts().get(line.getWorkPosts().size()-1).getStandardTimeOfModel(this.getVehicleModel());
+	}
 }
