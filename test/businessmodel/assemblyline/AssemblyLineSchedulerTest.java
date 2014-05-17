@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -133,13 +134,15 @@ public class AssemblyLineSchedulerTest {
 		}
 
 		for(int i = 0; i < 14 ; i ++){
-			for(WorkPost wp: assemblyLine.getWorkPosts()){
+			CopyOnWriteArrayList<WorkPost> workposts = new CopyOnWriteArrayList<WorkPost>(assemblyLine.getWorkPosts());
+			for(WorkPost wp: workposts){
 				Iterator<AssemblyTask> iter3 = wp.getPendingTasks();
 				ArrayList<AssemblyTask> tasks = new ArrayList<AssemblyTask>();
 				while (iter3.hasNext()){
 					tasks.add(iter3.next());
 				}
-				for(AssemblyTask task1: tasks)
+				CopyOnWriteArrayList<AssemblyTask> tasks2 = new CopyOnWriteArrayList<AssemblyTask>(tasks);
+				for(AssemblyTask task1: tasks2)
 					task1.completeAssemblytask(time);
 			}
 			if(i == 0){

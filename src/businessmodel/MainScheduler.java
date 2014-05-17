@@ -61,14 +61,14 @@ public class MainScheduler {
 	}
 
 	protected AssemblyLine placeOrder(Order order){
-		ArrayList<AssemblyLine> possiblelines = getPossibleAssemblyLinesToPlaceOrder(order);
-		AssemblyLine fastestassem = possiblelines.get(0);
+		ArrayList<AssemblyLine> possibleAssemblyLines = getPossibleAssemblyLinesToPlaceOrder(order);
+		AssemblyLine fastestAssemblyLine = possibleAssemblyLines.get(0);
 		for(AssemblyLine assem2 : getPossibleAssemblyLinesToPlaceOrder(order)){
-			if(assem2.getEstimatedCompletionTimeOfNewOrder(order).isBefore(fastestassem.getEstimatedCompletionTimeOfNewOrder(order)))
-				fastestassem = assem2;
+			if(assem2.getEstimatedCompletionTimeOfNewOrder(order).isBefore(fastestAssemblyLine.getEstimatedCompletionTimeOfNewOrder(order)))
+				fastestAssemblyLine = assem2;
 		}
-		fastestassem.getAssemblyLineScheduler().addOrder(order);
-		return fastestassem;
+		fastestAssemblyLine.getAssemblyLineScheduler().addOrder(order);
+		return fastestAssemblyLine;
 	}
 	
 	protected ArrayList<AssemblyLine> getAssemblyLines() {
