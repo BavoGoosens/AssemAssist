@@ -148,4 +148,8 @@ public interface Model {
     public Iterator<AssemblyLine> getAssemblyLines(User user) throws NoClearanceException;
 
     public String getCurrentSystemWideAlgorithm(User user) throws NoClearanceException;
+
+    public String getCurrentAssemblyLineStatus(User user, AssemblyLine selectedAssemblyLine) throws NoClearanceException;
+
+    public Iterator<String> getAvailableAssemblyLineStatus(User user, AssemblyLine selectedAssemblyLine) throws NoClearanceException;
 }

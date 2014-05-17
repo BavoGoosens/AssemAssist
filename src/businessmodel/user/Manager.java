@@ -37,4 +37,9 @@ public class Manager extends User {
     public boolean canChangeAlgorithm() {
         return true;
     }
+
+    @Override
+    public boolean canChangeOperationalStatus() {
+        return true;
+    }
 }
