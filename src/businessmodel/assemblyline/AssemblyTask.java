@@ -2,8 +2,6 @@ package businessmodel.assemblyline;
 
 import java.util.ArrayList;
 
-import org.hamcrest.DiagnosingMatcher;
-
 import businessmodel.Catalog;
 import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
