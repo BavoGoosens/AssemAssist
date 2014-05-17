@@ -56,8 +56,12 @@ public class OrderManager implements Subject {
 			throw new IllegalArgumentException("Bad order!");
 		AssemblyLine line = this.getMainScheduler().placeOrder(order);
 		if(line == null)
-			this.getPendingOrders().add(order);
-		// set Completion Date;
+			addOrderToPendingOrders(order);
+	}
+
+	// TODO estimated completion Date moet nog gezet worden.d
+	private void addOrderToPendingOrders(Order order) {
+		this.getPendingOrders().add(order);
 	}
 
 	/**
