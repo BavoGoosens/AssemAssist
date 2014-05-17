@@ -12,12 +12,12 @@ import businessmodel.user.GarageHolder;
 public class TimeSlotTest {
 	
 	private TimeSlot timeslot;
-	private TestOrder testorder;
+	private TestStandardVehicleOrder testorder;
 	
 	@Before
 	// TODO iets doen met de catch
 	public void setUp() throws Exception {
-		testorder = new TestOrder(new GarageHolder("","",""),"");
+		testorder = new TestStandardVehicleOrder(new GarageHolder("","",""),"");
 		
 		try {this.timeslot = new TimeSlot(-1);}
 		catch (IllegalArgumentException e) {

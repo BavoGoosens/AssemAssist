@@ -106,7 +106,7 @@ public class AssemblyLineScheduler implements Subject {
 		scheduleOrder(order);
 		order.setTimestampOfOrder(this.getCurrentTime());
 		getOrders().add(order);
-		CheckIfAssemblyLineIsEmpty();
+		CheckIfAssemblyLineCanAdvance();
 		order.setTimestampOfOrder(this.getCurrentTime());
 		setEstimatedCompletionDateOfOrder(getPreviousOrder(order), order);
 	}
@@ -137,13 +137,8 @@ public class AssemblyLineScheduler implements Subject {
 			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");	
 	}
 
-	private void CheckIfAssemblyLineIsEmpty() {
-		boolean advance = true;
-		for(WorkPost wp : this.getAssemblyline().getWorkPosts()){
-			if(wp.getOrder() != null)
-				advance = false;
-		}
-		if(advance)
+	private void CheckIfAssemblyLineCanAdvance() {
+		if(this.getAssemblyline().canAdvance())
 			this.updateAssemblylineStatus();		
 	}
 

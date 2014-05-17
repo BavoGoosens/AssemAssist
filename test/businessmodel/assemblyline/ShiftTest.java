@@ -12,12 +12,12 @@ import businessmodel.user.GarageHolder;
 
 public class ShiftTest {
 	
-	private TestOrder testorder;
+	private TestStandardVehicleOrder testorder;
 	private Shift shift;
 
 	@Before
 	public void setUp() throws Exception {
-		this.testorder = new TestOrder(new GarageHolder("","",""),"");
+		this.testorder = new TestStandardVehicleOrder(new GarageHolder("","",""),"");
 		EndShift shift1 = new EndShift(8,3);
 		this.shift = new FreeShift(8,3,shift1);
 	}

@@ -11,12 +11,12 @@ import businessmodel.user.GarageHolder;
 public class TestWorkSlot {
 
 	private WorkSlot workslot;
-	private TestOrder testorder;
+	private TestStandardVehicleOrder testorder;
 
 	@Before
 	public void setUp() throws Exception {
 		this.workslot = new WorkSlot();
-		testorder = new TestOrder(new GarageHolder("","",""),"");
+		testorder = new TestStandardVehicleOrder(new GarageHolder("","",""),"");
 	}
 
 	@Test

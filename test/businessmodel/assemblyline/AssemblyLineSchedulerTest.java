@@ -41,31 +41,28 @@ public class AssemblyLineSchedulerTest {
 		assertEquals(scheduler.getShifts().get(0).getTimeSlots().size(),8);
 		assertEquals(scheduler.getOrders().size(), 0);
 		assertEquals(scheduler.getDelay(),0);
-
 	}
 
 	@Test
 	public void testAddOrder() {
 
-		generateModels();
-
-		ArrayList<Order> orders = new ArrayList<Order>();
-		for(int i =0 ;i < 20 ; i++){
-			TestOrder ord = new TestOrder(holder, names.get(i%4));
-			orders.add(ord.getOrder());
-			if(scheduler.canAddOrder(ord.getOrder()))
-				scheduler.addOrder(ord.getOrder());
-		}
-
+		generateVehicleModels();
+		addOrders();
+		
 		assertEquals(scheduler.getShifts().get(0).getTimeSlots().size(),7);
 		assertEquals(scheduler.getOrders().size(),12);
 		assertEquals(assemblyLine.getWorkPosts().get(0).getOrder().getUser().getFirstname(),"Sander");
 		
-		completeOrders();
+		completeOrders(20);
+		this.scheduler.changeAlgorithm("first in first out", null);
+//		this.scheduler.changeAlgorithm("specification batch", null);
+		
+		addOrders();
+		completeOrders(70);
 	}
 	
 	@Test(expected=IllegalNumberException.class)
-	public void testMethods(){
+	public void testAdvance(){
 		this.scheduler.advance(-1);		
 	}
 	
@@ -84,7 +81,7 @@ public class AssemblyLineSchedulerTest {
 		this.scheduler.changeAlgorithm("sb", null);
 	}
 	
-	private void generateModels() {
+	private void generateVehicleModels() {
 		holder = new GarageHolder("Sander","","");
 		String name1 = "Car Model A";
 		String name2 = "Car Model B";
@@ -99,7 +96,17 @@ public class AssemblyLineSchedulerTest {
 		names.add(name5);		
 	}
 
-	private void completeOrders() {
+	private void addOrders(){
+		ArrayList<Order> orders = new ArrayList<Order>();
+		for(int i =0 ;i < 20 ; i++){
+			TestStandardVehicleOrder ord = new TestStandardVehicleOrder(holder, names.get(i%4));
+			orders.add(ord.getOrder());
+			if(scheduler.canAddOrder(ord.getOrder()))
+				scheduler.addOrder(ord.getOrder());
+		}
+	}
+
+	private void completeOrders(int time) {
 
 		WorkPost wp1 = assemblyLine.getWorkPosts().get(0);
 
@@ -107,29 +114,32 @@ public class AssemblyLineSchedulerTest {
 		Iterator<AssemblyTask> iter = wp1.getPendingTasks();
 		while(iter.hasNext()){
 			task = iter.next();
-			task.completeAssemblytask(20);
+			task.completeAssemblytask(time);
 		}
 
 		iter = wp1.getPendingTasks();
 		while(iter.hasNext()){
 			task = iter.next();
-			task.completeAssemblytask(20);
+			task.completeAssemblytask(time);
 		}
 
 		WorkPost wp2 = assemblyLine.getWorkPosts().get(1);
 		iter = wp2.getPendingTasks();
 		while(iter.hasNext()){
 			task = iter.next();
-			task.completeAssemblytask(20);
+			task.completeAssemblytask(time);
 		}
 
-		for(int i = 0; i < 20 ; i ++){
+		for(int i = 0; i < time ; i ++){
 			for(WorkPost wp: assemblyLine.getWorkPosts()){
 				Iterator<AssemblyTask> iter3 = wp.getPendingTasks();
 				while (iter3.hasNext()){
 					task = iter3.next();
-					task.completeAssemblytask(20);
+					task.completeAssemblytask(time);
 				}
+			}
+			if(i == 0){
+				assertEquals(scheduler.getDayOrdersCount(),1);
 			}
 		}
 	}

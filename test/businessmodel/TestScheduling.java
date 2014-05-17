@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
-import businessmodel.assemblyline.TestOrder;
+import businessmodel.assemblyline.TestStandardVehicleOrder;
 import businessmodel.assemblyline.TimeSlot;
 import businessmodel.assemblyline.WorkPost;
 import businessmodel.assemblyline.WorkSlot;
@@ -53,7 +53,7 @@ public class TestScheduling {
 		ArrayList<Order> orders = new ArrayList<Order>();		
 		for (int i =0 ; i< 12; i++){
 			int j = ram.nextInt(4-0);
-			TestOrder ord = new TestOrder(holders.get(i), names.get(j));
+			TestStandardVehicleOrder ord = new TestStandardVehicleOrder(holders.get(i), names.get(j));
 			orders.add(ord.getOrder());
 		}
 
