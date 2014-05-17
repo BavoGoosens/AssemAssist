@@ -23,6 +23,7 @@ import businessmodel.order.Order;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
 import businessmodel.user.User;
+import businessmodel.util.TestStandardVehicleOrder;
 
 public class AssemblyLineSchedulerTest {
 

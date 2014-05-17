@@ -13,13 +13,13 @@ import org.junit.Test;
 
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
-import businessmodel.assemblyline.TestStandardVehicleOrder;
 import businessmodel.assemblyline.TimeSlot;
 import businessmodel.assemblyline.WorkPost;
 import businessmodel.assemblyline.WorkSlot;
 import businessmodel.order.Order;
 import businessmodel.user.GarageHolder;
 import businessmodel.user.Mechanic;
+import businessmodel.util.TestStandardVehicleOrder;
 
 
 public class TestScheduling {

@@ -2,6 +2,8 @@ package businessmodel.assemblyline;
 
 import java.util.ArrayList;
 
+import org.hamcrest.DiagnosingMatcher;
+
 import businessmodel.Catalog;
 import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
@@ -148,6 +150,8 @@ public class AssemblyTask {
 	 * @param descriptionOfActions
 	 */
 	private void setDescription(String descriptionOfActions) {
+		if(descriptionOfActions == null)
+			throw new IllegalArgumentException();
 		this.actionDescription = descriptionOfActions;
 	}
 
@@ -184,7 +188,8 @@ public class AssemblyTask {
 	 * 			| category == null
 	 */
 	private void setCategory(VehicleOptionCategory category) throws IllegalArgumentException {
-		if (category == null) throw new IllegalArgumentException("Bad category!");
+		if (category == null) 
+			throw new IllegalArgumentException("Bad category!");
 		this.category = category;
 	}
 

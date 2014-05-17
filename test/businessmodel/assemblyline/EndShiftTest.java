@@ -18,7 +18,6 @@ public class EndShiftTest {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented"); // TODO
 	}
 
 }

@@ -55,9 +55,9 @@ public class AssemblyLineCFactory extends AssemblyLineFactory {
         ArrayList<VehicleModel> responsibleModels = new ArrayList<VehicleModel>();
 
         for (VehicleModel model : super.models){
-            if (model.getName().contains("model A") || model.getName().contains("model B")
-                    || model.getName().contains("model C") || model.getName().contains("model X")
-                    || model.getName().contains("model Y"))
+            if (model.getName().contains("Model A") || model.getName().contains("Model B")
+                    || model.getName().contains("Model C") || model.getName().contains("Model X")
+                    || model.getName().contains("Model Y"))
                 responsibleModels.add(model);
         }
 

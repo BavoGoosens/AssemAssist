@@ -10,6 +10,7 @@ import businessmodel.MainScheduler;
 import businessmodel.OrderManager;
 import businessmodel.order.Order;
 import businessmodel.user.GarageHolder;
+import businessmodel.util.TestStandardVehicleOrder;
 
 public class AssemblyLineTest {
 

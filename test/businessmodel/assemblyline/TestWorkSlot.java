@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.user.GarageHolder;
+import businessmodel.util.TestStandardVehicleOrder;
 
 public class TestWorkSlot {
 
@@ -16,7 +17,7 @@ public class TestWorkSlot {
 	@Before
 	public void setUp() throws Exception {
 		this.workslot = new WorkSlot();
-		testorder = new TestStandardVehicleOrder(new GarageHolder("","",""),"");
+		testorder = new TestStandardVehicleOrder(new GarageHolder("","",""),"Car Model A");
 	}
 
 	@Test

@@ -21,7 +21,8 @@ public class AssemblyLineFactoryTest {
 	@Before
 	public void setUp() throws Exception {
         MainScheduler scheduler = new MainScheduler(new OrderManager());
-		aLine = new AssemblyLineAFactory().createAssemblyLine(scheduler);
+        AssemblyLineAFactory facta = new AssemblyLineAFactory();
+		aLine = facta.createAssemblyLine(scheduler);
 		bLine = new AssemblyLineBFactory().createAssemblyLine(scheduler);
 		cLine = new AssemblyLineCFactory().createAssemblyLine(scheduler);
 	}
@@ -34,8 +35,8 @@ public class AssemblyLineFactoryTest {
 		assertEquals(aLine.getWorkPosts().get(2).getName(), "Accessories Work Post");
 		IteratorConverter<VehicleModel> conv = new IteratorConverter<VehicleModel>();
 		List<VehicleModel> responsibleModels = conv.convert(aLine.getResponsibleModelsIterator());
-		assertEquals(responsibleModels.get(0).getName(), "Vehicle model A");
-		assertEquals(responsibleModels.get(1).getName(), "Vehicle model B");
+		assertEquals(responsibleModels.get(0).getName(), "Car Model A");
+		assertEquals(responsibleModels.get(1).getName(), "Car Model B");
 	}
 	
 	@Test
@@ -46,9 +47,9 @@ public class AssemblyLineFactoryTest {
 		assertEquals(bLine.getWorkPosts().get(2).getName(), "Accessories Work Post");
 		IteratorConverter<VehicleModel> conv = new IteratorConverter<VehicleModel>();
 		List<VehicleModel> responsibleModels = conv.convert(bLine.getResponsibleModelsIterator());
-		assertEquals(responsibleModels.get(0).getName(), "Vehicle model A");
-		assertEquals(responsibleModels.get(1).getName(), "Vehicle model B");
-		assertEquals(responsibleModels.get(2).getName(), "Vehicle model C");
+		assertEquals(responsibleModels.get(0).getName(), "Car Model A");
+		assertEquals(responsibleModels.get(1).getName(), "Car Model B");
+		assertEquals(responsibleModels.get(2).getName(), "Car Model C");
 	}
 	
 	@Test
@@ -61,11 +62,11 @@ public class AssemblyLineFactoryTest {
 		assertEquals(cLine.getWorkPosts().get(4).getName(), "Certification Work Post");
 		IteratorConverter<VehicleModel> conv = new IteratorConverter<VehicleModel>();
 		List<VehicleModel> responsibleModels = conv.convert(cLine.getResponsibleModelsIterator());
-		assertEquals(responsibleModels.get(0).getName(), "Vehicle model A");
-		assertEquals(responsibleModels.get(1).getName(), "Vehicle model B");
-		assertEquals(responsibleModels.get(2).getName(), "Vehicle model C");
-		assertEquals(responsibleModels.get(3).getName(), "Truck model X");
-		assertEquals(responsibleModels.get(4).getName(), "Truck model Y");
+		assertEquals(responsibleModels.get(0).getName(), "Car Model A");
+		assertEquals(responsibleModels.get(1).getName(), "Car Model B");
+		assertEquals(responsibleModels.get(2).getName(), "Car Model C");
+		assertEquals(responsibleModels.get(3).getName(), "Truck Model X");
+		assertEquals(responsibleModels.get(4).getName(), "Truck Model Y");
 	}
 
 }

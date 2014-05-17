@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.user.GarageHolder;
+import businessmodel.util.TestStandardVehicleOrder;
 
 public class TimeSlotTest {
 	
@@ -17,7 +18,7 @@ public class TimeSlotTest {
 	@Before
 	// TODO iets doen met de catch
 	public void setUp() throws Exception {
-		testorder = new TestStandardVehicleOrder(new GarageHolder("","",""),"");
+		testorder = new TestStandardVehicleOrder(new GarageHolder("","",""),"Car Model A");
 		
 		try {this.timeslot = new TimeSlot(-1);}
 		catch (IllegalArgumentException e) {
