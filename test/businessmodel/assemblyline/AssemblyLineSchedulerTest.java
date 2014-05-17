@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.Catalog;
+import businessmodel.MainScheduler;
 import businessmodel.OrderManager;
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.category.*;
@@ -19,103 +20,37 @@ import businessmodel.user.GarageHolder;
 import businessmodel.user.User;
 
 public class AssemblyLineSchedulerTest {
-	/**
-	 * 
-	 * SETUP VOOR 3 ORDERS!
-	 * DE TEST ZELF IS NOG NIET GESCHREVEN!
-	 * 
-	 */
+
+	AssemblyLine assemblyLine;
+	AssemblyLineScheduler scheduler;
+	GarageHolder holder;
+
 	@Before
 	public void setUp() throws Exception {
+		AssemblyLineAFactory line = new AssemblyLineAFactory();
+		assemblyLine = line.createAssemblyLine(new MainScheduler(new OrderManager()));
+		scheduler = assemblyLine.getAssemblyLineScheduler();
+
+		assertEquals(scheduler.getShifts().size(),2);
+		assertEquals(scheduler.getShifts().get(0).getTimeSlots().size(),8);
+		assertEquals(scheduler.getOrders().size(), 0);
+		assertEquals(scheduler.getDelay(),0);
+		assertEquals(scheduler.getNumberOfOrdersToSchedule(),14);
 		
-		VehicleManufacturingCompany vmc = new VehicleManufacturingCompany();
-		Catalog catalog = new Catalog();
-        ArrayList<VehicleModel> models = catalog.getAvailaleModelsClone();
-        GarageHolder michiel = new GarageHolder("Michiel", "Vandendriessche", "michielvdd");
-        OrderManager om = new OrderManager();
-        VehicleModel AModel = null;
-        VehicleModel BModel = null;
-        VehicleModel CModel = null;
-        for (VehicleModel model: models) {
-            if (model.getName().equalsIgnoreCase("Vehicle Model A")) AModel = model;
-            else if (model.getName().equalsIgnoreCase("Vehicle Model B")) BModel = model;
-            else if (model.getName().equalsIgnoreCase("Vehicle Model C")) CModel = model;
-        }
-        Order orderA = extractAOrder(michiel, AModel);
-        Order orderB = extractBOrder(michiel, BModel);
-        Order orderC = extractCOrder(michiel, CModel);
-        vmc.placeOrder(orderA);
-        vmc.placeOrder(orderB);
-        vmc.placeOrder(orderC);
-	}
-	
-	private Order extractAOrder(User user, VehicleModel model) {
-		ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Body()).get(0));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Color()).get(1));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Engine()).get(1));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Gearbox()).get(0));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Seats()).get(0));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Airco()).get(0));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Wheels()).get(0));
-		try {
-			return new StandardVehicleOrder(user, options, model);
-		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
-		} catch (NoClearanceException e) {
-			System.out.println(e.getMessage());
-		} catch (UnsatisfiedRestrictionException e) {
-			System.out.println(e.getMessage());
-		}
-		return null;
-	}
-	
-	private Order extractBOrder(User user, VehicleModel model) {
-		ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Body()).get(0));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Color()).get(1));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Engine()).get(2));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Gearbox()).get(0));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Seats()).get(0));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Airco()).get(0));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Wheels()).get(0));
-		try {
-			return new StandardVehicleOrder(user, options, model);
-		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
-		} catch (NoClearanceException e) {
-			System.out.println(e.getMessage());
-		} catch (UnsatisfiedRestrictionException e) {
-			System.out.println(e.getMessage());
-		}
-		return null;
-	}
-	
-	private Order extractCOrder(User user, VehicleModel model) {
-		ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Body()).get(0));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Color()).get(0));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Engine()).get(1));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Gearbox()).get(0));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Seats()).get(0));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Airco()).get(0));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Wheels()).get(0));
-		options.add(model.getVehicleModelSpecification().getOptionsOfCategory(new Spoiler()).get(0));
-		try {
-			return new StandardVehicleOrder(user, options, model);
-		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
-		} catch (NoClearanceException e) {
-			System.out.println(e.getMessage());
-		} catch (UnsatisfiedRestrictionException e) {
-			System.out.println(e.getMessage());
-		}
-		return null;
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testAddOrder() {
+		ArrayList<Order> orders = new ArrayList<Order>();
+		for(int i =0 ;i < 10 ; i++){
+			TestOrder order = new TestOrder();
+			orders.add(order.getOrder());
+			if(scheduler.canAddOrder())
+				scheduler.addOrder(order.getOrder());
+		}
+		assertEquals(scheduler.getShifts().get(0).getTimeSlots().size(),7);
+		assertEquals(scheduler.getOrders().size(),10);
+		assertEquals(assemblyLine.getWorkPosts().get(0).getOrder().getUser().getFirstname(),"Sander");
+		
 	}
-
 }

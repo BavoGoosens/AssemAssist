@@ -11,12 +11,12 @@ import businessmodel.order.Order;
 
 public class ShiftTest {
 	
-	private OrderTest testorder;
+	private TestOrder testorder;
 	private Shift shift;
 
 	@Before
 	public void setUp() throws Exception {
-		this.testorder = new OrderTest();
+		this.testorder = new TestOrder();
 		EndShift shift1 = new EndShift(8,3);
 		this.shift = new FreeShift(8,3,shift1);
 	}

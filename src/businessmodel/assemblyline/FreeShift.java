@@ -37,8 +37,8 @@ public class FreeShift extends Shift{
 	protected ArrayList<TimeSlot> canAddOrder(Order order){
 		ArrayList<TimeSlot> timeslots= null;	
 		LinkedList<TimeSlot> temp = this.getTimeSlots();
-		temp.add(this.getNextShift().getTimeSlots().get(0));
-		temp.add(this.getNextShift().getTimeSlots().get(1));
+		for(int i = 0 ; i < this.getNumberOfWorkPosts()-1;i++)
+			temp.add(this.getNextShift().getTimeSlots().get(i));
 		for(int i = 0 ; i< temp.size()-2; i++){
 			timeslots = checkTimeSlots(temp.get(i));
 			if (timeslots != null)
@@ -66,7 +66,7 @@ public class FreeShift extends Shift{
 	private ArrayList<TimeSlot> checkTimeSlots(TimeSlot timeslot){
 		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();
 		for(int numberofworkslot = 0; numberofworkslot < this.getNumberOfWorkPosts(); numberofworkslot++){
-			if (timeslot.workSlotOccupied(numberofworkslot))
+			if(timeslot == null | timeslot.workSlotOccupied(numberofworkslot))
 				return null;
 			timeslots.add(timeslot);
 			timeslot = this.getNextTimeSlot(timeslot);

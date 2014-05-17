@@ -10,12 +10,12 @@ import org.junit.Test;
 public class TimeSlotTest {
 	
 	private TimeSlot timeslot;
-	private OrderTest testorder;
+	private TestOrder testorder;
 	
 	@Before
 	// TODO iets doen met de catch
 	public void setUp() throws Exception {
-		testorder = new OrderTest();
+		testorder = new TestOrder();
 		
 		try {this.timeslot = new TimeSlot(-1);}
 		catch (IllegalArgumentException e) {

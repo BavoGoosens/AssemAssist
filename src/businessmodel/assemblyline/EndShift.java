@@ -27,7 +27,7 @@ public class EndShift extends Shift {
 	@Override
 	protected ArrayList<TimeSlot> canAddOrder(Order order){
 		ArrayList<TimeSlot> timeslots;
-		for(int i = 0 ; i< this.getTimeSlots().size()-2;i++){
+		for(int i = 0 ; i< this.getTimeSlots().size()-(this.getNumberOfWorkPosts()-1);i++){
 			TimeSlot slot = this.getTimeSlots().get(i);
 			timeslots = checkTimeSlots(slot);
 			if (timeslots != null)

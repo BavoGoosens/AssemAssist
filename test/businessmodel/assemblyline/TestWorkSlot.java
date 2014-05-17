@@ -9,12 +9,12 @@ import org.junit.Test;
 public class TestWorkSlot {
 
 	private WorkSlot workslot;
-	private OrderTest testorder;
+	private TestOrder testorder;
 
 	@Before
 	public void setUp() throws Exception {
 		this.workslot = new WorkSlot();
-		testorder = new OrderTest();
+		testorder = new TestOrder();
 	}
 
 	@Test

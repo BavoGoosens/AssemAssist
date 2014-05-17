@@ -15,11 +15,11 @@ import businessmodel.category.Seats;
 public class WorkPostTest {
 	
 	private WorkPost workpost;
-	private OrderTest testorder;
+	private TestOrder testorder;
 	
 	@Before
 	public void setUp() throws Exception {
-		testorder = new OrderTest();
+		testorder = new TestOrder();
 		AssemblyLineAFactory factory = new AssemblyLineAFactory();
 		this.workpost = new WorkPost("CarBodyPost", factory.createAssemblyLine(new MainScheduler(new OrderManager())));
 		assertEquals("CarBodyPost", this.workpost.getName());
