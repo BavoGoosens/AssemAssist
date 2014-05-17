@@ -174,6 +174,18 @@ public class VehicleManufacturingCompany implements Model {
             throw new NoClearanceException();
     }
 
+    @Override
+    public String getCurrentAssemblyLineStatus(User user, AssemblyLine selectedAssemblyLine) throws NoClearanceException {
+        // TODO: implement
+        return null;
+    }
+
+    @Override
+    public Iterator<String> getAvailableAssemblyLineStatus(User user, AssemblyLine selectedAssemblyLine) throws NoClearanceException {
+        // TODO: implement
+        return null;
+    }
+
     /**
      * Completes an assembly task with the given time.
      *

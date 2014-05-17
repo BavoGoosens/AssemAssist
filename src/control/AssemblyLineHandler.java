@@ -20,7 +20,7 @@ public class AssemblyLineHandler implements AssemblyLineController{
 	}
 
     @Override
-    public void changeOperationalStatus(User user, AssemblyLine assemblyLine) {
+    public void changeOperationalStatus(User user, AssemblyLine assemblyLine, String status) {
         // TODO: Maken ajaaa
 
     }

@@ -8,6 +8,6 @@ public interface AssemblyLineController{
 	
 	public void finishTask(User user, AssemblyTask task, int time);
 
-    public void changeOperationalStatus(User user, AssemblyLine assemblyLine);
+    public void changeOperationalStatus(User user, AssemblyLine assemblyLine, String status);
 	
 }

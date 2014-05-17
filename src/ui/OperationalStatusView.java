@@ -9,6 +9,8 @@ import control.AssemblyLineController;
 import control.AssemblyLineHandler;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.Scanner;
 
@@ -36,7 +38,31 @@ public class OperationalStatusView extends View {
     }
 
     private void changeState() {
-        
+        try {
+            System.out.println("> This is the current Assembly Line status: ");
+            String current = this.getModel().getCurrentAssemblyLineStatus(this.user, this.selectedAssemblyLine);
+            System.out.println("> " + current);
+            System.out.println("> These are the available statuses: ");
+            Iterator<String> available = this.getModel().getAvailableAssemblyLineStatus(this.user, this.selectedAssemblyLine);
+            List<String> statuses = new IteratorConverter<String>().convert(available);
+            int num = 1;
+            for (String status : statuses)
+                System.out.println("> " + num++ + ") " + status);
+            String response = this.scan.nextLine();
+            Pattern pattern = Pattern.compile("^\\d+$");
+            this.check(response);
+            if (pattern.matcher(response).find()) {
+                int choice = Integer.parseInt(response);
+                if (choice < 1 || choice > statuses.size())
+                    this.error();
+                String keuze = statuses.get(choice - 1);
+                this.controller.changeOperationalStatus(this.user, this.selectedAssemblyLine, keuze);
+            } else {
+                this.error();
+            }
+        } catch (NoClearanceException e){
+            this.quit();
+        }
     }
 
     private void selectAssemblyLine() {
