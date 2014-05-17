@@ -13,6 +13,7 @@ import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 import businessmodel.user.User;
+import businessmodel.util.OrderDateTimeComparator;
 
 /**
  * A class that represents an order manager. This class handles all the orders for a car manufacturing company.
@@ -37,7 +38,7 @@ public class OrderManager implements Subject {
 	 */
 	public OrderManager() throws IllegalArgumentException {
 		this.pendingorders = new LinkedList<Order>();
-		Comparator<Order> comparator = new EndDateOfOrderComparator();
+		Comparator<Order> comparator = new OrderDateTimeComparator();
 		this.completedorders = new PriorityQueue<Order>(20, comparator);
 		this.mainscheduler = new MainScheduler(this);
 		this.observers = new ArrayList<Observer>();
