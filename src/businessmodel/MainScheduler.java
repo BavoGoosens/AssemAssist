@@ -22,14 +22,6 @@ public class MainScheduler {
 		this.generateAssemblyLines();
 	}
 
-	public ArrayList<AssemblyLineScheduler> getAssemblyLineSchedulers() {
-		ArrayList<AssemblyLineScheduler> schedulers = new ArrayList<AssemblyLineScheduler>();
-		for (AssemblyLine assemblyLine: this.getAssemblyLines()) {
-			schedulers.add(assemblyLine.getAssemblyLineScheduler());
-		}
-		return schedulers;
-	}
-
 	public LinkedList<Order> getNewOrders(int size, AssemblyLine assemblyline) {
 		return this.ordermanager.getNbOrders(size, assemblyline);
 	}
@@ -47,39 +39,24 @@ public class MainScheduler {
 		this.ordermanager.placeOrderInFront(order);
 	}
 
-	protected OrderManager getOrderManager() {
-		return ordermanager;
+	public ArrayList<AssemblyLineScheduler> getAssemblyLineSchedulers() {
+		ArrayList<AssemblyLineScheduler> schedulers = new ArrayList<AssemblyLineScheduler>();
+		for (AssemblyLine assemblyLine: this.getAssemblyLines()) {
+			schedulers.add(assemblyLine.getAssemblyLineScheduler());
+		}
+		return schedulers;
 	}
 
 	public String getAlgorithm() {
 		return systemWideAlgo;
 	}
 
-	//TODO moet nog getest worden, ookal hebben meerdere assembly lines dezelfde sets, alleen maar unieke teruggeven voor de UI
-	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions(int num) {
-	
-		ArrayList<ArrayList<VehicleOption>> choices = new ArrayList<ArrayList<VehicleOption>>();
-	
-		for (AssemblyLine line : this.assemblylines){
-	
-			ArrayList<VehicleOption> assOptions = line.getAssemblyLineScheduler().getUnscheduledVehicleOptions(num);
-			for(ArrayList<VehicleOption> opt: choices){
-				int count=0;
-				for (VehicleOption option : assOptions){
-					for(VehicleOption opt2: opt){
-						if (option.toString().equals(opt2.toString()))	count++;
-					}
-				}
-				if (count!=opt.size()) choices.add(assOptions);
-			}
-	
-		}
-	
-		return  choices.iterator();
-	}
-
 	public String currentSystemWideAlgorithmDescription() {
 		return this.systemWideAlgo;
+	}
+
+	protected OrderManager getOrderManager() {
+		return ordermanager;
 	}
 
 	protected AssemblyLine placeOrder(Order order){
@@ -134,5 +111,28 @@ public class MainScheduler {
 
 	private void setAssemblyLines(ArrayList<AssemblyLine> assemblylines) {
 		this.assemblylines = assemblylines;
+	}
+
+	//TODO moet nog getest worden, ookal hebben meerdere assembly lines dezelfde sets, alleen maar unieke teruggeven voor de UI
+	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions(int num) {
+	
+		ArrayList<ArrayList<VehicleOption>> choices = new ArrayList<ArrayList<VehicleOption>>();
+	
+		for (AssemblyLine line : this.assemblylines){
+	
+			ArrayList<VehicleOption> assOptions = line.getAssemblyLineScheduler().getUnscheduledVehicleOptions(num);
+			for(ArrayList<VehicleOption> opt: choices){
+				int count=0;
+				for (VehicleOption option : assOptions){
+					for(VehicleOption opt2: opt){
+						if (option.toString().equals(opt2.toString()))	count++;
+					}
+				}
+				if (count!=opt.size()) choices.add(assOptions);
+			}
+	
+		}
+	
+		return  choices.iterator();
 	}
 }
