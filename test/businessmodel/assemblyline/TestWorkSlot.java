@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import businessmodel.user.GarageHolder;
+
 public class TestWorkSlot {
 
 	private WorkSlot workslot;
@@ -14,7 +16,7 @@ public class TestWorkSlot {
 	@Before
 	public void setUp() throws Exception {
 		this.workslot = new WorkSlot();
-		testorder = new TestOrder();
+		testorder = new TestOrder(new GarageHolder("","",""),"");
 	}
 
 	@Test

@@ -65,18 +65,9 @@ public class AssemblyLineScheduler implements Subject {
 		this.generateShifts();
 		this.updateCurrentTime();
 		int size = this.getNumberOfOrdersToSchedule();
-		for(Order order:this.getAssemblyline().getMainScheduler().getNbOrders(size, this.getAssemblyline())){
+		for(Order order:this.getAssemblyline().getMainScheduler().getNewOrders(size, this.getAssemblyline())){
 			this.addOrder(order);
 		}
-	}
-
-	/**
-	 * Returns true is the AssemblyLine can advance.
-	 * 
-	 * @return true if the AssemblyLine can advance.
-	 */
-	protected boolean canAdvance(){
-		return this.getAssemblyline().canAdvance();
 	}
 
 	/**
@@ -107,12 +98,8 @@ public class AssemblyLineScheduler implements Subject {
 	 * @return true if an order can be added.
 	 */
 	// TODO cannAddOrder moet aan assemblyLine worden opgevraagd. Die method moet dan deze methode opvragen.
-	public boolean canAddOrder(){
-		int count = 0;
-		for(Shift shift: this.getShifts())
-			count += shift.getTimeSlots().size();
-		count = count -2;
-		return this.getOrders().size() < count;
+	public boolean canAddOrder(Order order){
+		return this.getEstimatedCompletionTimeOfNewOrder(order).getHourOfDay() < 22;
 	}
 
 	/**
@@ -231,7 +218,13 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	private void checkNewDay(){
-		if (this.getShifts().size() == 0) {
+		boolean empty = false;
+		for(Shift shift: this.getShifts()){
+			for(TimeSlot slot : shift.getTimeSlots()){
+				for(WorkSlot slot1 : slot.getWorkSlots()){
+					if(slot1.isOccupied())
+						empty = true;}}}
+		if (!empty) {
 			notifyObservers();
 			this.ScheduleDay();
 		}
@@ -327,22 +320,7 @@ public class AssemblyLineScheduler implements Subject {
 	protected int getDelay() {
 		return delay;
 	}
-
-	/**
-	 * Returns the next shift of the given shift.
-	 * 
-	 * @param 	shift
-	 * 			the shift you want the next shift from.
-	 * @return	the next shift
-	 */
-	protected Shift getNextShift(Shift shift){
-		int index = this.getShifts().indexOf(shift);
-		if(index + 1 >= this.getShifts().size() || this.getShifts().size() < 0)
-			return null;
-		else
-			return this.getShifts().get(index+1);
-	}
-
+	
 	/**
 	 * Returns the next order that needs to be scheduled.
 	 * 
@@ -358,18 +336,18 @@ public class AssemblyLineScheduler implements Subject {
 	 * @param order
 	 */
 	private void setEstimatedCompletionDateOfOrder(Order previousorder, Order order){
-		if(previousorder != null) {
-			if(previousorder.getEstimatedDeliveryDate() == null){
-				order.setEstimatedDeliveryDateOfOrder(this.getCurrentTime().plusMinutes(calculateMinutes(order)));
-			}else if(previousorder.getEstimatedDeliveryDate().getHourOfDay() <= 21){
-				order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusMinutes(minutesLastWorkPost(order)));
-			}else {
-				order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusDays(1).withHourOfDay(8).withMinuteOfHour(0));
-				order.getEstimatedDeliveryDate().plusMinutes(calculateMinutes(order));
-			}
-		}else{
+		if(previousorder != null) 
+			order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusMinutes(minutesLastWorkPost(order)));
+		else
 			order.setEstimatedDeliveryDateOfOrder(this.getCurrentTime().plusMinutes(calculateMinutes(order)));
-		}
+	}
+
+	protected DateTime getEstimatedCompletionTimeOfNewOrder(Order order) {
+		if(this.getOrders().size() > 0)
+			return this.getOrders().getLast().getEstimatedDeliveryDate().plusMinutes(
+					this.minutesLastWorkPost(order));
+		else
+			return this.currenttime.plusMinutes(this.calculateMinutes(order));
 	}
 
 	private int calculateMinutes(Order order){
@@ -461,13 +439,5 @@ public class AssemblyLineScheduler implements Subject {
 	public String currentAlgoDescription() {
 		String[] full = this.algortime.getClass().getName().split("\\.");
 		return full[1];
-	}
-
-	protected DateTime getEstimatedCompletionTimeOfNewOrder(Order order) {
-		if(this.getOrders().size() > 0)
-			return this.getOrders().getLast().getEstimatedDeliveryDate().plusMinutes(
-					this.minutesLastWorkPost(order));
-		else
-			return this.currenttime.plusMinutes(this.calculateMinutes(order));
 	}	
 }

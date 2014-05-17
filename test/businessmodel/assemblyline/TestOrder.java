@@ -19,13 +19,14 @@ import businessmodel.user.GarageHolder;
 public class TestOrder {
 
 	private StandardVehicleOrder order;
-	
-	public TestOrder(){
-		makeOrder();
+	GarageHolder holder;
+
+	public TestOrder(GarageHolder holder, String name){
+		this.holder = holder;
+		makeOrder(holder,name);
 	}
-	
-	private void makeOrder(){
-		GarageHolder holder = new GarageHolder("Sander","Geijsen","Test");
+
+	private void makeOrder(GarageHolder holder, String name){
 		ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();
 		VehicleOption option1 = new VehicleOption("Seats",new Seats());
 		VehicleOption option2 = new VehicleOption("Body",new Body());
@@ -39,7 +40,7 @@ public class TestOrder {
 		options.add(option4);
 		options.add(option5);
 		options.add(option6);
-		VehicleModel vehiclemodel = new VehicleModel("Vehicle Model A", new VehicleModelSpecification(options));
+		VehicleModel vehiclemodel = new VehicleModel(name, new VehicleModelSpecification(options));
 		try {
 			order = new StandardVehicleOrder(holder,options, vehiclemodel);
 		} catch (IllegalArgumentException e) {

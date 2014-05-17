@@ -12,8 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.assemblyline.AssemblyLine;
-import businessmodel.TestOrder;
 import businessmodel.assemblyline.AssemblyTask;
+import businessmodel.assemblyline.TestOrder;
 import businessmodel.assemblyline.TimeSlot;
 import businessmodel.assemblyline.WorkPost;
 import businessmodel.assemblyline.WorkSlot;

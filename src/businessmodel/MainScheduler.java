@@ -30,7 +30,7 @@ public class MainScheduler {
 		return schedulers;
 	}
 
-	public LinkedList<Order> getNbOrders(int size, AssemblyLine assemblyline) {
+	public LinkedList<Order> getNewOrders(int size, AssemblyLine assemblyline) {
 		return this.ordermanager.getNbOrders(size, assemblyline);
 	}
 
@@ -85,7 +85,7 @@ public class MainScheduler {
 	protected AssemblyLine placeOrder(Order order){
 		ArrayList<AssemblyLine> possiblelines = new ArrayList<AssemblyLine>();
 		for(AssemblyLine assem : this.getAssemblyLines()){
-			if(assem.getAssemblyLineScheduler().canAddOrder())
+			if(assem.getAssemblyLineScheduler().canAddOrder(order))
 				possiblelines.add(assem);
 		}
 		if(possiblelines.size() == 0)
@@ -93,7 +93,7 @@ public class MainScheduler {
 		AssemblyLine fastestassem = possiblelines.get(0);
 		for(AssemblyLine assem2 : possiblelines){
 			if(assem2.getEstimatedCompletionTimeOfNewOrder(order).isBefore(fastestassem.getEstimatedCompletionTimeOfNewOrder(order)))
-				if(assem2.getAssemblyLineScheduler().canAddOrder())
+				if(assem2.getAssemblyLineScheduler().canAddOrder(order))
 					fastestassem = assem2;
 		}
 		fastestassem.getAssemblyLineScheduler().addOrder(order);

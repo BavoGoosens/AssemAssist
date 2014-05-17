@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import businessmodel.user.GarageHolder;
+
 public class TimeSlotTest {
 	
 	private TimeSlot timeslot;
@@ -15,7 +17,7 @@ public class TimeSlotTest {
 	@Before
 	// TODO iets doen met de catch
 	public void setUp() throws Exception {
-		testorder = new TestOrder();
+		testorder = new TestOrder(new GarageHolder("","",""),"");
 		
 		try {this.timeslot = new TimeSlot(-1);}
 		catch (IllegalArgumentException e) {

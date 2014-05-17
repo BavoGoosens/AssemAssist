@@ -6,10 +6,12 @@ import java.util.ArrayList;
 
 import businessmodel.MainScheduler;
 import businessmodel.OrderManager;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.category.Seats;
+import businessmodel.user.GarageHolder;
 
 
 public class WorkPostTest {
@@ -19,7 +21,7 @@ public class WorkPostTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		testorder = new TestOrder();
+		testorder = new TestOrder(new GarageHolder("","",""),"");
 		AssemblyLineAFactory factory = new AssemblyLineAFactory();
 		this.workpost = new WorkPost("CarBodyPost", factory.createAssemblyLine(new MainScheduler(new OrderManager())));
 		assertEquals("CarBodyPost", this.workpost.getName());

@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.order.Order;
+import businessmodel.user.GarageHolder;
 
 public class ShiftTest {
 	
@@ -16,7 +17,7 @@ public class ShiftTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.testorder = new TestOrder();
+		this.testorder = new TestOrder(new GarageHolder("","",""),"");
 		EndShift shift1 = new EndShift(8,3);
 		this.shift = new FreeShift(8,3,shift1);
 	}
