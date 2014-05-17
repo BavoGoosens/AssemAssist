@@ -1,4 +1,4 @@
-package businessmodel;
+package businessmodel.util;
 
 import java.util.Comparator;
 
