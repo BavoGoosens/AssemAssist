@@ -26,9 +26,8 @@ public class Vehicle {
 	 * @throws	IllegalArgumentException
 	 * @throws 	UnsatisfiedRestrictionException 
 	 */
-	public Vehicle(ArrayList<VehicleOption> options, VehicleModel model) throws IllegalArgumentException {
+	public Vehicle(ArrayList<VehicleOption> options) throws IllegalArgumentException {
 		this.setOptions(options);
-		if (model.getName().contains("Truck")) this.addTruckOptions();
 	}
 
 	/**
@@ -65,7 +64,7 @@ public class Vehicle {
 		this.options = (ArrayList<VehicleOption>) options.clone();
 	}
 	
-	private void addTruckOptions() {
+	public void addTruckOptions() {
 		Protection protection = new Protection();
 		Storage storage = new Storage();
 		Certification certification = new Certification();

@@ -51,6 +51,10 @@ public class VehicleStatistics implements Observer {
         }
 		this.numberOfVehicles = new ArrayList<Tuple<LocalDate, Integer>>();
 	}
+	
+	public ArrayList<Tuple<LocalDate, Integer>> getNumberOfVehicles() {
+		return this.numberOfVehicles;
+	}
 
 	/**
 	 * Returns the average number of vehicles produced.

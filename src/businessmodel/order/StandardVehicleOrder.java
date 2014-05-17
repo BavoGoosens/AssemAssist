@@ -24,10 +24,6 @@ public class StandardVehicleOrder extends Order {
 	 * The car of the order.
 	 */
 	private Vehicle vehicle;
-	/**
-	 * The car model of the order.
-	 */
-	private VehicleModel carModel;
 	
 	/**
 	 * Creates a new standard car order with a given user, a set of options and a car model.
@@ -45,8 +41,9 @@ public class StandardVehicleOrder extends Order {
 	public StandardVehicleOrder(User user, ArrayList<VehicleOption> options, VehicleModel model)
 			throws IllegalArgumentException, NoClearanceException, UnsatisfiedRestrictionException {
 		super(user, model);
-		Vehicle car = new Vehicle(options, model);
+		Vehicle car = new Vehicle(options);
 		model.getVehicleModelSpecification().checkRestrictions(car);
+		if (model.getName().contains("Truck")) car.addTruckOptions();
 		this.setVehicle(car);
 	}
 	
@@ -90,5 +87,10 @@ public class StandardVehicleOrder extends Order {
 	 */
 	public ArrayList<VehicleOption> getOptions() {
 		return this.getVehicle().getOptionsClone();
+	}
+	
+	@Override
+	public String toString() {
+		return "Order: "+this.getVehicle().toString();
 	}
 }
