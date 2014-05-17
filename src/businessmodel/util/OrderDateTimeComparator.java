@@ -12,13 +12,13 @@ import businessmodel.order.Order;
  * @author SWOP team 10 2013-2014
  * 
  */
-public class OrderDateTimeComperator implements Comparator<Order> {
+public class OrderDateTimeComparator implements Comparator<Order> {
 
 	@Override
 	public int compare(Order o, Order oo) {
 		if (o.isCompleted() && oo.isCompleted()){
 			DateTime t1 = o.getCompletionDate();
-			DateTime t2 = o.getCompletionDate();
+			DateTime t2 = oo.getCompletionDate();
 			return t1.compareTo(t2);
 		} else if (o.isCompleted() && !oo.isCompleted()) {
 			return 1;
