@@ -64,10 +64,7 @@ public class AssemblyLineScheduler implements Subject {
 		this.dayOrdersCount = 0;
 		this.generateShifts();
 		this.updateCurrentTime();
-		int size = this.getNumberOfOrdersToSchedule();
-		for(Order order:this.getAssemblyline().getMainScheduler().getNewOrders(size, this.getAssemblyline())){
-			this.addOrder(order);
-		}
+		// TODO OrderManager alles laten Schedule
 	}
 
 	/**
@@ -97,8 +94,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * 
 	 * @return true if an order can be added.
 	 */
-	// TODO cannAddOrder moet aan assemblyLine worden opgevraagd. Die method moet dan deze methode opvragen.
-	public boolean canAddOrder(Order order){
+	protected boolean canAddOrder(Order order){
 		return this.getEstimatedCompletionTimeOfNewOrder(order).getHourOfDay() < 22;
 	}
 
@@ -107,22 +103,12 @@ public class AssemblyLineScheduler implements Subject {
 	 * @param order
 	 */
 	public void addOrder(Order order){
-		getAlgo().scheduleOrder(order);
+		scheduleOrder(order);
 		order.setTimestampOfOrder(this.getCurrentTime());
 		getOrders().add(order);
 		CheckIfAssemblyLineIsEmpty();
 		order.setTimestampOfOrder(this.getCurrentTime());
 		setEstimatedCompletionDateOfOrder(getPreviousOrder(order), order);
-	}
-
-	/**
-	 * returns the amount  of orders that can be scheduled for this day
-	 * 
-	 * @return the number of order that can be scheduled.
-	 */
-	public int getNumberOfOrdersToSchedule() {
-		return this.getShifts().size()*this.getShifts().getFirst().getTimeSlots().size()-
-				(this.getAssemblyline().getNumberOfWorkPosts()-1);
 	}
 
 	/**
@@ -138,7 +124,7 @@ public class AssemblyLineScheduler implements Subject {
 	 */
 	public void changeAlgorithm(String algoname, ArrayList<VehicleOption> options) throws IllegalSchedulingAlgorithmException, IllegalArgumentException{
 		if (algoname == null){
-			throw new NullPointerException("No scheduling algorithm supplied");}
+			throw new IllegalSchedulingAlgorithmException("No scheduling algorithm supplied");}
 		else if (algoname.equalsIgnoreCase("fifo") || algoname.equalsIgnoreCase("first in first out") ){
 			this.algortime = new FIFO(this);}
 		else if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch")){

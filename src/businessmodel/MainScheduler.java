@@ -62,7 +62,7 @@ public class MainScheduler {
 	protected AssemblyLine placeOrder(Order order){
 		ArrayList<AssemblyLine> possiblelines = new ArrayList<AssemblyLine>();
 		for(AssemblyLine assem : this.getAssemblyLines()){
-			if(assem.getAssemblyLineScheduler().canAddOrder(order))
+			if(assem.canAddOrder(order))
 				possiblelines.add(assem);
 		}
 		if(possiblelines.size() == 0)
@@ -70,8 +70,7 @@ public class MainScheduler {
 		AssemblyLine fastestassem = possiblelines.get(0);
 		for(AssemblyLine assem2 : possiblelines){
 			if(assem2.getEstimatedCompletionTimeOfNewOrder(order).isBefore(fastestassem.getEstimatedCompletionTimeOfNewOrder(order)))
-				if(assem2.getAssemblyLineScheduler().canAddOrder(order))
-					fastestassem = assem2;
+				fastestassem = assem2;
 		}
 		fastestassem.getAssemblyLineScheduler().addOrder(order);
 		return fastestassem;
@@ -93,15 +92,15 @@ public class MainScheduler {
 		AssemblyLineAFactory factoryA = new AssemblyLineAFactory();
 		AssemblyLineBFactory factoryB = new AssemblyLineBFactory();
 		AssemblyLineCFactory factoryC = new AssemblyLineCFactory();
-	
+
 		AssemblyLine line1 = factoryA.createAssemblyLine(this);
 		AssemblyLine line2 = factoryB.createAssemblyLine(this);
 		AssemblyLine line3 = factoryC.createAssemblyLine(this);
-	
+
 		assemblylines.add(line1);
 		assemblylines.add(line2);
 		assemblylines.add(line3);
-	
+
 		this.setAssemblyLines(assemblylines);
 	}
 
@@ -115,11 +114,11 @@ public class MainScheduler {
 
 	//TODO moet nog getest worden, ookal hebben meerdere assembly lines dezelfde sets, alleen maar unieke teruggeven voor de UI
 	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions(int num) {
-	
+
 		ArrayList<ArrayList<VehicleOption>> choices = new ArrayList<ArrayList<VehicleOption>>();
-	
+
 		for (AssemblyLine line : this.assemblylines){
-	
+
 			ArrayList<VehicleOption> assOptions = line.getAssemblyLineScheduler().getUnscheduledVehicleOptions(num);
 			for(ArrayList<VehicleOption> opt: choices){
 				int count=0;
@@ -130,9 +129,9 @@ public class MainScheduler {
 				}
 				if (count!=opt.size()) choices.add(assOptions);
 			}
-	
+
 		}
-	
+
 		return  choices.iterator();
 	}
 }

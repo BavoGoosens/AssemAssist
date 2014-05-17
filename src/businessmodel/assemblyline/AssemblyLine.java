@@ -68,6 +68,11 @@ public class AssemblyLine implements Subject{
         this.operational  = new OperationalState(this);
         this.setState(operational);
     }
+    
+    // TODO AssemblyLine state toeveogen.
+    public boolean canAddOrder(Order order){
+    	return this.getAssemblyLineScheduler().canAddOrder(order);
+    }
 
     /**
 	 * Checks whether the assembly line can move forward.

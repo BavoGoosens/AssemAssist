@@ -16,6 +16,7 @@ import businessmodel.OrderManager;
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.category.*;
 import businessmodel.exceptions.IllegalNumberException;
+import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.Order;
@@ -40,7 +41,6 @@ public class AssemblyLineSchedulerTest {
 		assertEquals(scheduler.getShifts().get(0).getTimeSlots().size(),8);
 		assertEquals(scheduler.getOrders().size(), 0);
 		assertEquals(scheduler.getDelay(),0);
-		assertEquals(scheduler.getNumberOfOrdersToSchedule(),14);
 
 	}
 
@@ -62,18 +62,28 @@ public class AssemblyLineSchedulerTest {
 		assertEquals(assemblyLine.getWorkPosts().get(0).getOrder().getUser().getFirstname(),"Sander");
 		
 		completeOrders();
-
-		assertEquals(scheduler.getOrders().size(),0);
-		assertEquals(scheduler.getShifts().size(),2);
-				
 	}
 	
-	@Test
+	@Test(expected=IllegalNumberException.class)
 	public void testMethods(){
-		try {this.scheduler.advance(-1);}
-		catch (IllegalNumberException e) {}
+		this.scheduler.advance(-1);		
+	}
+	
+	@Test(expected=IllegalSchedulingAlgorithmException.class)
+	public void testChangeAlgo1(){
+		this.scheduler.changeAlgorithm("Henk", null);
 	}
 
+	@Test(expected=IllegalSchedulingAlgorithmException.class)
+	public void testChangeAlgo2(){
+		this.scheduler.changeAlgorithm(null, null);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testChangeAlgo3(){
+		this.scheduler.changeAlgorithm("sb", null);
+	}
+	
 	private void generateModels() {
 		holder = new GarageHolder("Sander","","");
 		String name1 = "Car Model A";
