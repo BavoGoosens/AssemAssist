@@ -116,4 +116,7 @@ public abstract class User {
 		return "firstname= " + firstname + ", lastname= " + lastname;
 	}
 
+    public boolean canChangeOperationalStatus() {
+        return false;
+    }
 }

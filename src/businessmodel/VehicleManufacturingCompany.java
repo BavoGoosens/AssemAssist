@@ -216,6 +216,10 @@ public class VehicleManufacturingCompany implements Model {
         this.getOrderManager().placeOrder(order);
     }
 
+    public void changeAssemblyLineStatus(AssemblyLine assemblyLine, String status){
+        // TODO
+    }
+
     /**
      * Returns the users of the car manufacturing company.
      *
