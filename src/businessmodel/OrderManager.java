@@ -54,11 +54,9 @@ public class OrderManager implements Subject {
 		if (order == null)
 			throw new IllegalArgumentException("Bad order!");
 		AssemblyLine line = this.getMainScheduler().placeOrder(order);
-		if(line!= null){
-			order.setEstimatedCompletionDateOfOrder(this.getPreviousOrder(order, line), line);}
-		else{
+		if(line == null)
 			this.getPendingOrders().add(order);
-		}
+		// set Completion Date;
 	}
 
 	/**
@@ -178,25 +176,12 @@ public class OrderManager implements Subject {
 		return (ArrayList<Order>) completedorders;
 	}
 
-	/**
-	 * A method to get the previous order in the list.
-	 * @param 	order
-	 * 			the current order.
-	 * @return	the previous order of the current order.
-	 */
-	// TODO moet nog verplaatst worden.
 	protected Order getPreviousOrder(Order order, AssemblyLine line){
-		if(line.getAssemblyLineScheduler().getOrders().size() > line.getAssemblyLineScheduler().getNumberOfOrdersToSchedule()){
-			int index = this.getPendingOrders().indexOf(order);
-			if(index-1 < 0)
-				return null;
-			else
-				return this.getPendingOrders().get(index-1);}
-		else{
-			if(line.getAssemblyLineScheduler().getOrders().size() <= 1)
-				return null;
-		}
-		return line.getAssemblyLineScheduler().getOrders().get(line.getAssemblyLineScheduler().getOrders().size()-2);
+		int index = this.getPendingOrders().indexOf(order);
+		if(index-1 < 0)
+			return null;
+		else
+			return this.getPendingOrders().get(index-1);
 	}
 
 	/**

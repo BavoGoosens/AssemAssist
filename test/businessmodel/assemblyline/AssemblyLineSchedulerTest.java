@@ -3,6 +3,7 @@ package businessmodel.assemblyline;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,7 +37,7 @@ public class AssemblyLineSchedulerTest {
 		assertEquals(scheduler.getOrders().size(), 0);
 		assertEquals(scheduler.getDelay(),0);
 		assertEquals(scheduler.getNumberOfOrdersToSchedule(),14);
-		
+
 	}
 
 	@Test
@@ -51,6 +52,43 @@ public class AssemblyLineSchedulerTest {
 		assertEquals(scheduler.getShifts().get(0).getTimeSlots().size(),7);
 		assertEquals(scheduler.getOrders().size(),10);
 		assertEquals(assemblyLine.getWorkPosts().get(0).getOrder().getUser().getFirstname(),"Sander");
+
+		completedOrders();
+	}
+
+	private void completedOrders() {
+
+		WorkPost wp1 = assemblyLine.getWorkPosts().get(0);
+
+		AssemblyTask task;
+		Iterator<AssemblyTask> iter = wp1.getPendingTasks();
+		while(iter.hasNext()){
+			task = iter.next();
+			task.completeAssemblytask(20);
+		}
 		
+		iter = wp1.getPendingTasks();
+		while(iter.hasNext()){
+			task = iter.next();
+			task.completeAssemblytask(20);
+		}
+		
+		WorkPost wp2 = assemblyLine.getWorkPosts().get(1);
+		iter = wp2.getPendingTasks();
+		while(iter.hasNext()){
+			task = iter.next();
+			task.completeAssemblytask(20);
+		}
+		
+		for(int i = 0; i < 14 ; i ++){
+			for(WorkPost wp: assemblyLine.getWorkPosts()){
+				Iterator<AssemblyTask> iter3 = wp.getPendingTasks();
+				while (iter3.hasNext()){
+					task = iter3.next();
+					task.completeAssemblytask(20);
+				}
+
+			}
+		}
 	}
 }

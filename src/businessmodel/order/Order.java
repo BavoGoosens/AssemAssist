@@ -258,39 +258,4 @@ public abstract class Order {
 	public String toString() {
 		return "user: " + this.user.toString() + ", delivery date= " + this.estimatedDeliveryDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT); 
 	}	
-
-	/**
-	 * Method to set an estimated completion time for a particular order.
-	 * @param order
-	 */
-	public void setEstimatedCompletionDateOfOrder(Order previousorder,AssemblyLine line){
-		if(previousorder != null) {
-			if(previousorder.getEstimatedDeliveryDate() == null){
-				this.setEstimatedDeliveryDateOfOrder(line.getAssemblyLineScheduler().getCurrentTime().plusMinutes(calculateMinutes(line)));
-			}else if(previousorder.getEstimatedDeliveryDate().getHourOfDay() <= 21){
-				this.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusMinutes(minutesLastWorkPost(line)));
-			}else {
-				this.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusDays(1).withHourOfDay(8).withMinuteOfHour(0));
-				this.getEstimatedDeliveryDate().plusMinutes(calculateMinutes(line));
-			}
-		}else{
-			this.setEstimatedDeliveryDateOfOrder(line.getAssemblyLineScheduler().getCurrentTime().plusMinutes(calculateMinutes(line)));
-		}
-	}
-
-	public int calculateMinutes(AssemblyLine line){
-		if(this.getVehicleModel() == null)
-			return line.getWorkPosts().size()*60;
-		int minutes = 0;
-		for(WorkPost wp : line.getWorkPosts()){
-			minutes += wp.getStandardTimeOfModel(this.getVehicleModel());
-		}
-		return minutes;
-	}
-
-	public int minutesLastWorkPost(AssemblyLine line) {
-		if(this.getVehicleModel() == null)
-			return 60;
-		return line.getWorkPosts().get(line.getWorkPosts().size()-1).getStandardTimeOfModel(this.getVehicleModel());
-	}
 }

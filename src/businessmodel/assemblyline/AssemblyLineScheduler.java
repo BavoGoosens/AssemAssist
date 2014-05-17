@@ -125,6 +125,7 @@ public class AssemblyLineScheduler implements Subject {
 		getOrders().add(order);
 		CheckIfAssemblyLineIsEmpty();
 		order.setTimestampOfOrder(this.getCurrentTime());
+		setEstimatedCompletionDateOfOrder(getPreviousOrder(order), order);
 	}
 
 	/**
@@ -266,6 +267,21 @@ public class AssemblyLineScheduler implements Subject {
 	public int getDayOrdersCount() {
 		return this.dayOrdersCount;
 	}
+	
+	/** 
+	 * A method to get the previous order that had been scheduled.
+	 * 
+	 * @param 	order
+	 * 			the current order.
+	 * @return	the previous order
+	 */
+	protected Order getPreviousOrder(Order order){
+		int index = this.getOrders().indexOf(order);
+		if(index-1 < 0)
+			return null;
+		else
+			return this.getOrders().get(index-1);
+	}
 
 	/**
 	 * Return the AssemblyiLne of this assemblyline.
@@ -303,21 +319,6 @@ public class AssemblyLineScheduler implements Subject {
 		return this.shifts;
 	}
 
-	/** 
-	 * A method to get the previous order that had been scheduled.
-	 * 
-	 * @param 	order
-	 * 			the current order.
-	 * @return	the previous order
-	 */
-	protected Order getPreviousOrder(Order order){
-		int index = this.getOrders().indexOf(order);
-		if(index-1 < 0)
-			return null;
-		else
-			return this.getOrders().get(index-1);
-	}
-
 	/**
 	 * A method that returns the current delay of this day assemblyline.
 	 * 
@@ -350,6 +351,41 @@ public class AssemblyLineScheduler implements Subject {
 	// TODO rekening houden met de singleTaskOrders
 	protected Order getNextOrderToSchedule(){
 		return this.getAssemblyline().getMainScheduler().getPendingOrders().poll();
+	}
+
+	/**
+	 * Method to set an estimated completion time for a particular order.
+	 * @param order
+	 */
+	private void setEstimatedCompletionDateOfOrder(Order previousorder, Order order){
+		if(previousorder != null) {
+			if(previousorder.getEstimatedDeliveryDate() == null){
+				order.setEstimatedDeliveryDateOfOrder(this.getCurrentTime().plusMinutes(calculateMinutes(order)));
+			}else if(previousorder.getEstimatedDeliveryDate().getHourOfDay() <= 21){
+				order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusMinutes(minutesLastWorkPost(order)));
+			}else {
+				order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusDays(1).withHourOfDay(8).withMinuteOfHour(0));
+				order.getEstimatedDeliveryDate().plusMinutes(calculateMinutes(order));
+			}
+		}else{
+			order.setEstimatedDeliveryDateOfOrder(this.getCurrentTime().plusMinutes(calculateMinutes(order)));
+		}
+	}
+
+	private int calculateMinutes(Order order){
+		if(order.getVehicleModel() == null)
+			return this.getAssemblyline().getWorkPosts().size()*60;
+		int minutes = 0;
+		for(WorkPost wp : this.getAssemblyline().getWorkPosts()){
+			minutes += wp.getStandardTimeOfModel(order.getVehicleModel());
+		}
+		return minutes;
+	}
+
+	private int minutesLastWorkPost(Order order) {
+		if(order.getVehicleModel() == null)
+			return 60;
+		return this.getAssemblyline().getWorkPosts().get(this.getAssemblyline().getWorkPosts().size()-1).getStandardTimeOfModel(order.getVehicleModel());
 	}
 
 	//TODO
@@ -430,8 +466,8 @@ public class AssemblyLineScheduler implements Subject {
 	protected DateTime getEstimatedCompletionTimeOfNewOrder(Order order) {
 		if(this.getOrders().size() > 0)
 			return this.getOrders().getLast().getEstimatedDeliveryDate().plusMinutes(
-					order.minutesLastWorkPost(this.getAssemblyline()));
+					this.minutesLastWorkPost(order));
 		else
-			return this.currenttime.plusMinutes(order.calculateMinutes(this.getAssemblyline()));
+			return this.currenttime.plusMinutes(this.calculateMinutes(order));
 	}	
 }

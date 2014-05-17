@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import org.junit.Before;
@@ -69,7 +70,7 @@ public class TestScheduling {
 				for(WorkSlot wp : timeslot.getWorkSlots()){
 					if(wp.getOrder()!= null){
 						System.out.println(wp.getOrder().getUser().getFirstname());
-						System.out.println(wp.getOrder().toString());
+						System.out.println(wp.getOrder().getEstimatedDeliveryDate().toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT));
 
 					}else{
 						System.out.println("No order");

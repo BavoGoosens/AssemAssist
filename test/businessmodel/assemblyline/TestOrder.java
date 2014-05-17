@@ -39,7 +39,7 @@ public class TestOrder {
 		options.add(option4);
 		options.add(option5);
 		options.add(option6);
-		VehicleModel vehiclemodel = new VehicleModel("Test", new VehicleModelSpecification(options));
+		VehicleModel vehiclemodel = new VehicleModel("Vehicle Model A", new VehicleModelSpecification(options));
 		try {
 			order = new StandardVehicleOrder(holder,options, vehiclemodel);
 		} catch (IllegalArgumentException e) {
