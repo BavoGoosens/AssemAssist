@@ -1,4 +1,4 @@
-package businessmodel;
+package businessmodel.statistics;
 
 import java.util.ArrayList;
 

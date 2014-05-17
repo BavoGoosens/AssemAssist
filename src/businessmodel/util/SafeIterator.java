@@ -1,7 +1,6 @@
 package businessmodel.util;
 
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * @author Team 10.
@@ -35,4 +34,5 @@ public class SafeIterator <Type> implements Iterator{
         IteratorConverter<Type> converter = new IteratorConverter<Type>();
         this.list = converter.convert(iter).iterator();
     }
+   
 }

@@ -64,7 +64,7 @@ public class AssemblyLineScheduler implements Subject {
 		this.dayOrdersCount = 0;
 		this.generateShifts();
 		this.updateCurrentTime();
-		// TODO OrderManager alles laten Schedule
+		this.getAssemblyline().getMainScheduler().schedulePendingOrders();
 	}
 
 	/**

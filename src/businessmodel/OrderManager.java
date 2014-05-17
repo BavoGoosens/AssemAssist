@@ -30,6 +30,8 @@ public class OrderManager implements Subject {
 
 	private LinkedList<Order> pendingorders;
 
+	private final int MILIS_ONE_DAY = 86400000;
+
 	/**
 	 * A constructor for the class OrderManager.
 	 *
@@ -50,7 +52,6 @@ public class OrderManager implements Subject {
 	 * @param   order
 	 *          the order that needs to be added.
 	 */
-	// TODO de tweede if moet nog veranderen.
 	protected void placeOrder(Order order) throws IllegalArgumentException {
 		if (order == null)
 			throw new IllegalArgumentException("Bad order!");
@@ -59,20 +60,33 @@ public class OrderManager implements Subject {
 			addOrderToPendingOrders(order);
 	}
 
-	// TODO estimated completion Date moet nog gezet worden.d
-	private void addOrderToPendingOrders(Order order) {
-		this.getPendingOrders().add(order);
-	}
-
 	/**
 	 * A method to place an order in front of the pending orders.
 	 * @param order
 	 */
-	//TODO nakijken of de if werkt.
 	public void placeOrderInFront(Order order) {
 		if(this.getPendingOrders().size()==0)
 			placeOrder(order);
 		this.getPendingOrders().add(order);
+	}
+
+	protected void schedulePendingOrders(){
+		scheduleSingleTaskOrders();
+		for(Order order :this.getPendingOrders()){
+			getPendingOrders().remove(order);
+			this.placeOrder(order);
+		}
+	}
+
+	private void scheduleSingleTaskOrders() {
+		for(Order order : this.getPendingOrders()){
+			if(order.getUserEndDate() != null){
+				if(order.getUserEndDate().isAfter(this.getMainScheduler().getTime().plusMillis(MILIS_ONE_DAY))){
+					getPendingOrders().remove(order);
+					placeOrder(order);
+				}
+			}
+		}
 	}
 
 	/**
@@ -88,42 +102,13 @@ public class OrderManager implements Subject {
 		this.notifyObservers();
 	}
 
-	/**
-	 * This method returns the number of specified pending orders if possible.
-	 *
-	 * @param nb
-	 * 		  The number of orders
-	 *
-	 * @return LinkedList<Order>
-	 * 		   A list with the requested orders.
-	 */
-	// TODO moet nog nagekeken worden & opkuisen
-	public LinkedList<Order> getNbOrders(int nb, AssemblyLine line) {
-		if (nb < 0)
-			throw new IllegalNumberException("Bad number!");
-		LinkedList<Order> res = new LinkedList<Order>();
-		LinkedList<Order> single_task_orders = getSingleTaskOrdersNextDay(line);
-		if(single_task_orders!= null){
-			for(Order order: single_task_orders){
-				res.add(order);
-				getPendingOrders().remove(order);
-			}
-		}
-		for (int i = 0; i < (nb - single_task_orders.size()); i++){
-			Order order = getPendingOrders().poll();
-			if (order != null)
-				res.add(order);
-		}
-		return res;
-	}
-
 	// for testing
 	@SuppressWarnings("unchecked")
 	public LinkedList<Order> getCompletedOrdersClone(){
 		return (LinkedList<Order>) this.getCompletedOrders().clone();
 	}
 
-	public LinkedList<Order> getPendingOrders(){
+	protected LinkedList<Order> getPendingOrders(){
 		return this.pendingorders;
 	}
 
@@ -138,8 +123,10 @@ public class OrderManager implements Subject {
 	 * 			the pending orders of a given user managed by this order manager.
 	 */
 	protected ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
-		if (user == null) throw new IllegalArgumentException("Bad user!");
-		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
+		if (user == null) 
+			throw new IllegalArgumentException("Bad user!");
+		if (!user.canPlaceOrder()) 
+			throw new NoClearanceException(user);
 		ArrayList<Order> pendingorders = new ArrayList<Order>();
 		for(AssemblyLine line: this.getMainScheduler().getAssemblyLines()){
 			pendingorders.addAll(line.getAssemblyLineScheduler().getOrders());
@@ -189,23 +176,9 @@ public class OrderManager implements Subject {
 			return this.getPendingOrders().get(index-1);
 	}
 
-	/**
-	 * Method to return a list of the single task orders scheduled on the next day.
-	 * 
-	 * @return list of the single task orders scheduled on the next day.
-	 */
-	// TODO nakijken! meerdere assemblylines
-	private LinkedList<Order> getSingleTaskOrdersNextDay(AssemblyLine line) {
-		LinkedList<Order> temp = new LinkedList<Order>();
-		for(Order order: this.getPendingOrders()){
-			if(order.getUserEndDate()!= null){
-				if(order.getUserEndDate().getDayOfWeek()-1 == line.getAssemblyLineScheduler().getCurrentTime().getDayOfWeek()){
-					int index = this.getPendingOrders().indexOf(order);
-					temp.add(this.getPendingOrders().get(index));
-				}
-			}
-		}
-		return temp;
+	// TODO estimated completion Date moet nog gezet worden.d
+	private void addOrderToPendingOrders(Order order) {
+		this.getPendingOrders().add(order);
 	}
 
 	@Override

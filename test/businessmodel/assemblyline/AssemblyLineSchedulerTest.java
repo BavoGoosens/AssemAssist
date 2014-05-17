@@ -23,6 +23,7 @@ import businessmodel.order.Order;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
 import businessmodel.user.User;
+import businessmodel.util.SafeIterator;
 import businessmodel.util.TestStandardVehicleOrder;
 
 public class AssemblyLineSchedulerTest {
@@ -131,13 +132,15 @@ public class AssemblyLineSchedulerTest {
 			task.completeAssemblytask(time);
 		}
 
-		for(int i = 0; i < time ; i ++){
+		for(int i = 0; i < 14 ; i ++){
 			for(WorkPost wp: assemblyLine.getWorkPosts()){
 				Iterator<AssemblyTask> iter3 = wp.getPendingTasks();
+				ArrayList<AssemblyTask> tasks = new ArrayList<AssemblyTask>();
 				while (iter3.hasNext()){
-					task = iter3.next();
-					task.completeAssemblytask(time);
+					tasks.add(iter3.next());
 				}
+				for(AssemblyTask task1: tasks)
+					task1.completeAssemblytask(time);
 			}
 			if(i == 0){
 				assertEquals(scheduler.getDayOrdersCount(),1);
