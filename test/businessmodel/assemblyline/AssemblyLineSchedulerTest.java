@@ -15,6 +15,7 @@ import businessmodel.MainScheduler;
 import businessmodel.OrderManager;
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.category.*;
+import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.Order;
@@ -64,7 +65,13 @@ public class AssemblyLineSchedulerTest {
 
 		assertEquals(scheduler.getOrders().size(),0);
 		assertEquals(scheduler.getShifts().size(),2);
-		
+				
+	}
+	
+	@Test
+	public void testMethods(){
+		try {this.scheduler.advance(-1);}
+		catch (IllegalNumberException e) {}
 	}
 
 	private void generateModels() {
