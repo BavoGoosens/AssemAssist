@@ -149,12 +149,14 @@ public class WorkPost {
 	 *
 	 * @return	The tasks that are pending at the work post
 	 */
+	@SuppressWarnings("unchecked")
 	public Iterator<AssemblyTask> getPendingTasks() {
         SafeIterator<AssemblyTask> safe = new SafeIterator<AssemblyTask>();
         safe.convertIterator(this.pendingTasks.iterator());
         return safe;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Iterator<AssemblyTask> getFinishedTasks() {
 		SafeIterator<AssemblyTask> safe = new SafeIterator<AssemblyTask>();
         safe.convertIterator(this.finishedTasks.iterator());

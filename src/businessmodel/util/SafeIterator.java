@@ -5,6 +5,7 @@ import java.util.Iterator;
 /**
  * @author Team 10.
  */
+@SuppressWarnings("rawtypes")
 public class SafeIterator <Type> implements Iterator{
 
     private Iterator<Type> list;

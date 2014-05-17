@@ -3,7 +3,6 @@ package businessmodel.assemblyline;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +42,7 @@ public class WorkPostTest {
 	public void testOrder(){
 		this.workpost.setNewOrder(testorder.getOrder());
 		assertEquals(this.testorder.getOrder().getUser().getFirstname(),this.workpost.getOrder().getUser().getFirstname());
-		Iterator<AssemblyTask> iter = this.workpost.getFinishedTasks();
+		this.workpost.getFinishedTasks();
 		this.workpost.switchOrders(null);
 		assertEquals(this.workpost.getOrder(),null);
 

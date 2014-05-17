@@ -1,4 +1,4 @@
-package businessmodel.scheduler;
+package control;
 
 import static org.junit.Assert.assertEquals;
 

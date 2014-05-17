@@ -37,7 +37,6 @@ public class OrderManagerTest {
 		ordermanager.finishedOrder(order.getOrder());
 		assertEquals(order.getOrder(),ordermanager.getCompletedOrders().getFirst());
 		
-		ArrayList<Order> orders = ordermanager.getPendingOrders(holder);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
