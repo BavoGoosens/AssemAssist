@@ -331,7 +331,7 @@ public class AssemblyLineScheduler implements Subject {
 			return this.currenttime.plusMinutes(this.calculateMinutes(order));
 	}
 
-	private int calculateMinutes(Order order){
+	public int calculateMinutes(Order order){
 		if(order.getVehicleModel() == null)
 			return this.getAssemblyline().getWorkPosts().size()*60;
 		int minutes = 0;

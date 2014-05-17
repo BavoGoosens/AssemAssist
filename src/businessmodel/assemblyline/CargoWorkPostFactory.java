@@ -3,7 +3,8 @@ package businessmodel.assemblyline;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import businessmodel.category.*;
+import businessmodel.category.Protection;
+import businessmodel.category.Storage;
 
 /**
  * Created by michielvandendriessche on 13/05/14.

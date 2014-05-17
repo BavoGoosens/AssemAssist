@@ -1,10 +1,10 @@
 package businessmodel.statistics;
 
+import java.util.ArrayList;
+
 import businessmodel.OrderManager;
 import businessmodel.assemblyline.AssemblyLineScheduler;
 import businessmodel.observer.Subject;
-
-import java.util.ArrayList;
 
 /**
  * Class representing a statistics manager for the system, which holds the statistics objects.

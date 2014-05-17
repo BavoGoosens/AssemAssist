@@ -1,7 +1,5 @@
 package businessmodel.assemblyline;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 public class SchedulingAlgorithmTest {

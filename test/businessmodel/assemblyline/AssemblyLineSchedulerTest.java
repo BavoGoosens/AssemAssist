@@ -1,30 +1,19 @@
 package businessmodel.assemblyline;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Locale;
-import java.util.Random;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.Catalog;
 import businessmodel.MainScheduler;
 import businessmodel.OrderManager;
-import businessmodel.VehicleManufacturingCompany;
-import businessmodel.category.*;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
-import businessmodel.exceptions.NoClearanceException;
-import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.Order;
-import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
-import businessmodel.user.User;
-import businessmodel.util.SafeIterator;
 import businessmodel.util.TestStandardVehicleOrder;
 
 public class AssemblyLineSchedulerTest {
@@ -134,16 +123,12 @@ public class AssemblyLineSchedulerTest {
 		}
 
 		for(int i = 0; i < 14 ; i ++){
-			CopyOnWriteArrayList<WorkPost> workposts = new CopyOnWriteArrayList<WorkPost>(assemblyLine.getWorkPosts());
-			for(WorkPost wp: workposts){
+			for(WorkPost wp: assemblyLine.getWorkPosts()){
 				Iterator<AssemblyTask> iter3 = wp.getPendingTasks();
-				ArrayList<AssemblyTask> tasks = new ArrayList<AssemblyTask>();
 				while (iter3.hasNext()){
-					tasks.add(iter3.next());
+					task = iter3.next();
+					task.completeAssemblytask(time);
 				}
-				CopyOnWriteArrayList<AssemblyTask> tasks2 = new CopyOnWriteArrayList<AssemblyTask>(tasks);
-				for(AssemblyTask task1: tasks2)
-					task1.completeAssemblytask(time);
 			}
 			if(i == 0){
 				assertEquals(scheduler.getDayOrdersCount(),1);

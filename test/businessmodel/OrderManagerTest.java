@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.Order;
-import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
 import businessmodel.user.Manager;
 import businessmodel.util.TestStandardVehicleOrder;

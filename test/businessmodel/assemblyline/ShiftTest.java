@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.order.Order;
 import businessmodel.user.GarageHolder;
 import businessmodel.util.TestStandardVehicleOrder;
 

@@ -6,8 +6,11 @@ import java.util.LinkedList;
 
 import org.joda.time.DateTime;
 
-import businessmodel.assemblyline.*;
 import businessmodel.assemblyline.AssemblyLine;
+import businessmodel.assemblyline.AssemblyLineAFactory;
+import businessmodel.assemblyline.AssemblyLineBFactory;
+import businessmodel.assemblyline.AssemblyLineCFactory;
+import businessmodel.assemblyline.AssemblyLineScheduler;
 import businessmodel.category.VehicleOption;
 import businessmodel.order.Order;
 

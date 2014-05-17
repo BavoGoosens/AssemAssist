@@ -1,9 +1,9 @@
 package businessmodel.assemblyline;
 
 import java.util.ArrayList;
-
-import businessmodel.category.*;
 import java.util.HashMap;
+
+import businessmodel.category.Certification;
 
 /**
  * Created by michielvandendriessche on 13/05/14.

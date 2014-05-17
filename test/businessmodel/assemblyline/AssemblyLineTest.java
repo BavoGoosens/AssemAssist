@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import businessmodel.MainScheduler;
 import businessmodel.OrderManager;
-import businessmodel.order.Order;
 import businessmodel.user.GarageHolder;
 import businessmodel.util.TestStandardVehicleOrder;
 

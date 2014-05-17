@@ -3,11 +3,11 @@ package ui;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import businessmodel.exceptions.NoClearanceException;
 import org.joda.time.LocalDate;
 
 import businessmodel.Model;
 import businessmodel.exceptions.IllegalNumberException;
+import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.Order;
 import businessmodel.statistics.OrderStatistics;
 import businessmodel.statistics.VehicleStatistics;

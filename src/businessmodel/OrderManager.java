@@ -5,9 +5,11 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import org.joda.time.DateTime;
 
 import businessmodel.assemblyline.AssemblyLine;
-import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
@@ -72,14 +74,16 @@ public class OrderManager implements Subject {
 
 	protected void schedulePendingOrders(){
 		scheduleSingleTaskOrders();
-		for(Order order :this.getPendingOrders()){
+		CopyOnWriteArrayList<Order> tempList = new CopyOnWriteArrayList<Order>(this.getPendingOrders());
+		for(Order order : tempList){
 			getPendingOrders().remove(order);
 			this.placeOrder(order);
 		}
 	}
 
 	private void scheduleSingleTaskOrders() {
-		for(Order order : this.getPendingOrders()){
+		CopyOnWriteArrayList<Order> tempList = new CopyOnWriteArrayList<Order>(this.getPendingOrders());
+		for(Order order : tempList){
 			if(order.getUserEndDate() != null){
 				if(order.getUserEndDate().isAfter(this.getMainScheduler().getTime().plusMillis(MILIS_ONE_DAY))){
 					getPendingOrders().remove(order);
@@ -176,9 +180,21 @@ public class OrderManager implements Subject {
 			return this.getPendingOrders().get(index-1);
 	}
 
-	// TODO estimated completion Date moet nog gezet worden.d
 	private void addOrderToPendingOrders(Order order) {
 		this.getPendingOrders().add(order);
+		setEstimatedTimeOfPendingOrder(order);
+	}
+	
+	private void setEstimatedTimeOfPendingOrder(Order order){
+		if(this.getPendingOrders().size() == 0){
+			DateTime date = this.getMainScheduler().getTime().plusDays(1);
+			date.withHourOfDay(8);
+			date.withMinuteOfHour(0);
+			order.setEstimatedDeliveryDateOfOrder(date.plusMinutes(this.getMainScheduler().
+					getAssemblyLineSchedulers().get(0).calculateMinutes(order)));
+			}
+		else
+			order.setEstimatedDeliveryDateOfOrder(this.getPendingOrders().getLast().getEstimatedDeliveryDate().plus(60));
 	}
 
 	@Override

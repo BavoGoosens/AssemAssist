@@ -1,6 +1,6 @@
 package businessmodel.scheduler;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Iterator;
 
@@ -9,7 +9,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import businessmodel.VehicleManufacturingCompany;
-import businessmodel.assemblyline.AssemblyLineScheduler;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.Order;
 import businessmodel.user.User;
