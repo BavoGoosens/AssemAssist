@@ -131,8 +131,6 @@ public class AssemblyLineScheduler implements Subject {
 		else if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch")){
 			if (options == null) 
 				throw new IllegalArgumentException("No such option");
-			if (!this.checkOptionsForSpecificationBatch(options)) 
-				throw new IllegalArgumentException("Too little orders with that option ( less than 3 )");
 			this.algortime = new SpecificationBatch(this,options);}
 		else
 			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");	
@@ -240,7 +238,7 @@ public class AssemblyLineScheduler implements Subject {
 	public int getDayOrdersCount() {
 		return this.dayOrdersCount;
 	}
-	
+
 	/** 
 	 * A method to get the previous order that had been scheduled.
 	 * 
@@ -336,28 +334,8 @@ public class AssemblyLineScheduler implements Subject {
 		return this.getAssemblyline().getWorkPosts().get(this.getAssemblyline().getWorkPosts().size()-1).getStandardTimeOfModel(order.getVehicleModel());
 	}
 
-	//TODO
-	private boolean checkOptionsForSpecificationBatch(ArrayList<VehicleOption> options) {
-		int orderCount = 0;
-		for(Order order: this.getOrders()){
-			int count = 0;
-			for(VehicleOption opt: options){
-				for(VehicleOption opt2: order.getOptions()){
-					if (opt.toString().equals(opt2.toString())) count++;
-				}
-			}
-			if (count == order.getOptions().size()) orderCount++;
-		}
-		if (orderCount < 3)
-			return false;
-		return true;
-	}
 
-	/**
-	 * Method to check if a VehicleOption occurs in more than 3 orders
-	 * @param maxNumber
-	 * @return
-	 */
+
 	//TODO check this shit, moet alle sets teruggeven die in meer dan of gelijk aan 3 orders komen
 	public ArrayList<VehicleOption> getUnscheduledVehicleOptions(int maxNumber){
 
@@ -386,6 +364,7 @@ public class AssemblyLineScheduler implements Subject {
 
 		return new ArrayList<VehicleOption>(result.values());
 	}
+
 
 	@Override
 	public void subscribeObserver(Observer observer) throws IllegalArgumentException {
