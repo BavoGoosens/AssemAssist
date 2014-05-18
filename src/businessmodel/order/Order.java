@@ -259,6 +259,9 @@ public abstract class Order {
 
 	@Override
 	public String toString() {
-		return "AssemblyLine: "+ this.line.toString() + "   delivery date= " + this.estimatedDeliveryDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT); 
-	}	
+        if (this.completed)
+		    return "AssemblyLine: "+ this.line.toString() + " completion date= " + this.completionDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
+        else
+            return "AssemblyLine: "+ this.line.toString() + " estimated delivery date= " + this.estimatedDeliveryDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
+	}
 }

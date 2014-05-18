@@ -34,6 +34,8 @@ public class AssemblyLine implements Subject{
 
 	private AssemblyLineState state;
 
+    private String name;
+
 	/**
 	 * The AssemblyLineScheduler that schedules the orders for this AssemblyLine.
 	 */
@@ -288,6 +290,10 @@ public class AssemblyLine implements Subject{
     
     @Override
     public String toString(){
-    	return "" + this.getWorkPosts().size() + "";
+    	return this.name + " " + this.getWorkPosts().size() + "";
+    }
+
+    protected void setName(String name) {
+        this.name = name;
     }
 }
