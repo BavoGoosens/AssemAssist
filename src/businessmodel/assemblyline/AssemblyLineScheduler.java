@@ -95,7 +95,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * @return true if an order can be added.
 	 */
 	protected boolean canAddOrder(Order order){
-		return this.getEstimatedCompletionTimeOfNewOrder(order).getHourOfDay() < 22;
+		return this.getEstimatedCompletionTimeOfNewOrder(order).isBefore((this.getCurrentTime().withHourOfDay(22)));
 	}
 
 	/**
@@ -109,6 +109,7 @@ public class AssemblyLineScheduler implements Subject {
 		CheckIfAssemblyLineCanAdvance();
 		order.setTimestampOfOrder(this.getCurrentTime());
 		setEstimatedCompletionDateOfOrder(getPreviousOrder(order), order);
+		order.setAssemblyLine(this.getAssemblyline());
 	}
 
 	/**
@@ -154,9 +155,7 @@ public class AssemblyLineScheduler implements Subject {
 	private void updateSchedule(){
 		if(this.getDelay() <= -60){
 			this.getShifts().getLast().addTimeSlot();
-			Order nextorder = this.getNextOrderToSchedule();
-			if(nextorder!= null)
-				this.scheduleOrder(nextorder);
+			this.getAssemblyline().getMainScheduler().schedulePendingOrders();
 			this.updateDelay(60);
 			this.updateSchedule();
 		}
@@ -300,16 +299,6 @@ public class AssemblyLineScheduler implements Subject {
 	 */
 	protected int getDelay() {
 		return delay;
-	}
-	
-	/**
-	 * Returns the next order that needs to be scheduled.
-	 * 
-	 * @return
-	 */
-	// TODO rekening houden met de singleTaskOrders
-	protected Order getNextOrderToSchedule(){
-		return this.getAssemblyline().getMainScheduler().getPendingOrders().poll();
 	}
 
 	/**

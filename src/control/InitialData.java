@@ -111,7 +111,7 @@ public class InitialData {
 			for(int i = 0 ; i < assem.getWorkPosts().size()-1;i++){
 				CompleteWorkPost(assem, i);
 			}
-			for(int i = 0; i < 20 ; i ++){
+			for(int i = 0; i < 40 ; i ++){
 				for(WorkPost wp: assem.getWorkPosts()){
 					Iterator<AssemblyTask> iter3 = vmc.getPendingTasks(this.mechanic, wp);
 					while (iter3.hasNext()){

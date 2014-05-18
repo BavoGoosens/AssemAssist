@@ -285,4 +285,9 @@ public class AssemblyLine implements Subject{
         possible.add(this.getOperationalState().toString());
         return possible.iterator();
     }
+    
+    @Override
+    public String toString(){
+    	return "" + this.getWorkPosts().size() + "";
+    }
 }

@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import org.joda.time.DateTime;
 
+import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
@@ -20,6 +21,8 @@ import businessmodel.user.User;
  */
 public abstract class Order {
 
+	private AssemblyLine line;
+	
 	/**
 	 * The user that placed the order.
 	 */
@@ -136,6 +139,9 @@ public abstract class Order {
 		return estimatedDeliveryDate;
 	}
 
+	public void setAssemblyLine(AssemblyLine line){
+		this.line = line;
+	}
 	/**
 	 * Returns the time the order was placed on the assembly line.
 	 * 
@@ -253,6 +259,6 @@ public abstract class Order {
 
 	@Override
 	public String toString() {
-		return "delivery date= " + this.estimatedDeliveryDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT); 
+		return "AssemblyLine: "+ this.line.toString() + "delivery date= " + this.estimatedDeliveryDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT); 
 	}	
 }
