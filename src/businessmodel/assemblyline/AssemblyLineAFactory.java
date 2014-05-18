@@ -16,6 +16,7 @@ public class AssemblyLineAFactory extends AssemblyLineFactory {
     public AssemblyLine createAssemblyLine(MainScheduler scheduler) {
         AssemblyLine line = new AssemblyLine();
         line.setMainScheduler(scheduler);
+        line.setName("A");
         this.createWorkPosts(line);
         this.createResponsibleModels(line);
         this.createScheduler(line);

@@ -29,6 +29,12 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 		ArrayList<Order> list = new ArrayList<Order>(this.getScheduler().getOrders());
 		for(Order order: list)
 			this.scheduleOrder(order);
+		
+		this.getScheduler().getOrders().clear();
+		for(Order order: orderList){
+			this.getScheduler().setEstimatedCompletionDateOfOrder(this.getScheduler().getPreviousOrder(order),order);
+			this.getScheduler().getOrders().add(order);
+		}
 
 	}
 
@@ -46,7 +52,8 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 				int count = 0;
 				for (VehicleOption option: this.options){
 					for(VehicleOption option2: order.getOptions()){
-						if (option.toString().equals(option2.toString())) count++;
+						if (option.toString().equals(option2.toString())) 
+							count++;
 					}
 				}
 				if (count == this.options.size()){
@@ -64,11 +71,6 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 			orderList.addLast(currentOrder);
 		}
 
-		this.getScheduler().getOrders().clear();
-		for(Order order: orderList){
-			this.getScheduler().getAssemblyline().getMainScheduler().getOrderManager().setEstimatedCompletionDateOfOrder(order, this.getScheduler().getAssemblyline());
-			this.getScheduler().getOrders().add(order);
-		}
 	}
 
 

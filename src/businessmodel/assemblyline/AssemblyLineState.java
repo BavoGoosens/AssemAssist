@@ -2,8 +2,8 @@ package businessmodel.assemblyline;
 
 public interface AssemblyLineState {
 
-	public abstract void AssemblyLineIsBroken();
-	public abstract void AssemblyLineIsOperational();
-	public abstract void AssemblyLineIsMaintenance();
+	public abstract void markAssemblyLineAsBroken();
+	public abstract void markAssemblyLineAsOperational();
+	public abstract void markAssemblyLineAsMaintenance();
 	
 }

@@ -34,6 +34,8 @@ public class AssemblyLine implements Subject{
 
 	private AssemblyLineState state;
 
+    private String name;
+
 	/**
 	 * The AssemblyLineScheduler that schedules the orders for this AssemblyLine.
 	 */
@@ -225,6 +227,18 @@ public class AssemblyLine implements Subject{
 			obs.update(this);
 	}
 
+    public void transitionToMaintenance(){
+        this.state.markAssemblyLineAsMaintenance();
+    }
+
+    public void transitionToBroken(){
+        this.state.markAssemblyLineAsBroken();
+    }
+
+    public void transitionToOperational(){
+        this.state.markAssemblyLineAsOperational();
+    }
+
 	/**
 	 * @return broken state assembly line
 	 */
@@ -250,7 +264,7 @@ public class AssemblyLine implements Subject{
 	 * Method to set the state of an assembly line
 	 * @param state
 	 */
-	public void setState(AssemblyLineState state) {
+	protected void setState(AssemblyLineState state) {
 		this.state = state;
 	}
 
@@ -261,4 +275,25 @@ public class AssemblyLine implements Subject{
 	protected MainScheduler getMainScheduler(){
 		return this.mainscheduler;
 	}
+
+    public String currentState() {
+        return this.state.toString();
+    }
+
+    public Iterator<String> getAllPossibleStates() {
+        ArrayList<String> possible = new ArrayList<>();
+        possible.add(this.getBrokenState().toString());
+        possible.add(this.getMaintenanceState().toString());
+        possible.add(this.getOperationalState().toString());
+        return possible.iterator();
+    }
+    
+    @Override
+    public String toString(){
+    	return this.name + " " + this.getWorkPosts().size() + "";
+    }
+
+    protected void setName(String name) {
+        this.name = name;
+    }
 }

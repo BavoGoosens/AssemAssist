@@ -1,10 +1,5 @@
 package businessmodel;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import org.joda.time.DateTime;
-
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
@@ -15,11 +10,12 @@ import businessmodel.order.Order;
 import businessmodel.statistics.OrderStatistics;
 import businessmodel.statistics.StatisticsManager;
 import businessmodel.statistics.VehicleStatistics;
-import businessmodel.user.CustomShopManager;
-import businessmodel.user.GarageHolder;
-import businessmodel.user.Manager;
-import businessmodel.user.Mechanic;
-import businessmodel.user.User;
+import businessmodel.user.*;
+import businessmodel.util.SafeIterator;
+import org.joda.time.DateTime;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class VehicleManufacturingCompany implements Model {
@@ -27,7 +23,7 @@ public class VehicleManufacturingCompany implements Model {
     /**
      * List of the users.
      */
-    private ArrayList<User> users = new ArrayList<User>();
+    private ArrayList<User> users = new ArrayList<>();
 
     /**
      * The order manager.
@@ -87,10 +83,10 @@ public class VehicleManufacturingCompany implements Model {
 
     @Override
     public Iterator<String> getSchedulingAlgorithms(User user) {
-        ArrayList<String> algos = new ArrayList<String>();
-        algos.add("FIFO");
-        algos.add("SpecificationBatch");
-        return algos.iterator();
+        ArrayList<String> algorithms = new ArrayList<>();
+        algorithms.add("FIFO");
+        algorithms.add("SpecificationBatch");
+        return algorithms.iterator();
     }
 
     @Override
@@ -134,6 +130,11 @@ public class VehicleManufacturingCompany implements Model {
     // TODO: safe maken
     // TODO: taskmanager weg en ophalen uit workposts.
     public Iterator<AssemblyTask> getAvailableTasks(User user) {
+        for (AssemblyLine line : this.getOrderManager().getMainScheduler().getAssemblyLines()) {
+            for (WorkPost post : line.getWorkPosts()) {
+
+            }
+        }
         return null;
     }
 
@@ -151,23 +152,16 @@ public class VehicleManufacturingCompany implements Model {
      * @return The current time of the system.
      */
     public DateTime getSystemTime() {
-        DateTime tijd = null;
-        Iterator<AssemblyLine> iter = this.getOrderManager().getMainScheduler().getAssemblyLines().iterator();
-        while (iter.hasNext()) {
-            DateTime time = iter.next().getAssemblyLineScheduler().getCurrentTime();
-            if (tijd == null | time.isAfter(tijd)) {
-                tijd = time;
-            }
-        }
-        return tijd;
+        return this.getOrderManager().getMainScheduler().getTime();
     }
 
     @Override
-    // TODO: safe maken
     public Iterator<AssemblyLine> getAssemblyLines(User user) throws NoClearanceException {
-        if (user.canViewAssemblyLines())
-            return this.getOrderManager().getMainScheduler().getAssemblyLines().iterator();
-        else
+        if (user.canViewAssemblyLines()){
+            SafeIterator<AssemblyLine> safe = new SafeIterator<>();
+            safe.convertIterator(this.getOrderManager().getMainScheduler().getAssemblyLines().iterator());
+            return safe;
+        }else
             throw new NoClearanceException();
     }
 
@@ -179,16 +173,31 @@ public class VehicleManufacturingCompany implements Model {
             throw new NoClearanceException();
     }
 
+    public void changeAssemblyLineStatus(AssemblyLine assemblyLine, String status) {
+        if (status.equalsIgnoreCase(assemblyLine.getBrokenState().toString()))
+            assemblyLine.transitionToBroken();
+        if (status.equalsIgnoreCase(assemblyLine.getMaintenanceState().toString()))
+            assemblyLine.transitionToMaintenance();
+        if (status.equalsIgnoreCase(assemblyLine.getOperationalState().toString()))
+            assemblyLine.transitionToOperational();
+    }
+
     @Override
     public String getCurrentAssemblyLineStatus(User user, AssemblyLine selectedAssemblyLine) throws NoClearanceException {
-        // TODO: implement
-        return null;
+        if(user.canChangeOperationalStatus()){
+            return selectedAssemblyLine.currentState();
+        } else {
+            throw new NoClearanceException();
+        }
     }
 
     @Override
     public Iterator<String> getAvailableAssemblyLineStatus(User user, AssemblyLine selectedAssemblyLine) throws NoClearanceException {
-        // TODO: implement
-        return null;
+        if (user.canChangeOperationalStatus()){
+            return selectedAssemblyLine.getAllPossibleStates();
+        } else {
+            throw new NoClearanceException();
+        }
     }
 
     /**
@@ -219,10 +228,6 @@ public class VehicleManufacturingCompany implements Model {
      */
     public void placeOrder(Order order) throws IllegalArgumentException {
         this.getOrderManager().placeOrder(order);
-    }
-
-    public void changeAssemblyLineStatus(AssemblyLine assemblyLine, String status){
-        // TODO
     }
 
     /**

@@ -16,18 +16,22 @@ public class OperationalState implements AssemblyLineState {
 	}
 
 	@Override
-	public void AssemblyLineIsBroken() {
+	public void markAssemblyLineAsBroken() {
 		this.assemblyLine.setState(this.assemblyLine.getBrokenState());
 	}
 
 	@Override
-	public void AssemblyLineIsOperational() {
+	public void markAssemblyLineAsOperational() {
 		
 	}
 
 	@Override
-	public void AssemblyLineIsMaintenance() {
+	public void markAssemblyLineAsMaintenance() {
 		this.assemblyLine.setState(this.assemblyLine.getMaintenanceState());	
 	}
 
+    @Override
+    public String toString() {
+        return "Operational";
+    }
 }

@@ -4,25 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
+import businessmodel.category.*;
 import org.joda.time.DateTime;
 
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
-import businessmodel.category.Airco;
-import businessmodel.category.Body;
-import businessmodel.category.Certification;
-import businessmodel.category.Color;
-import businessmodel.category.Engine;
-import businessmodel.category.Gearbox;
-import businessmodel.category.Protection;
-import businessmodel.category.Seats;
-import businessmodel.category.Spoiler;
-import businessmodel.category.Storage;
-import businessmodel.category.VehicleModel;
-import businessmodel.category.VehicleOption;
-import businessmodel.category.Wheels;
+import businessmodel.category.CargoProtection;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.SingleTaskOrder;
@@ -59,13 +48,13 @@ public class InitialData {
 
 	}
 
-	public void initialize(VehicleManufacturingCompany vmc){
+	public void initialize(VehicleManufacturingCompany vmc) throws NoClearanceException{
 
 		this.vmc = vmc;
 		this.garageholder = vmc.login("wow", "");
 		this.mechanic = vmc.login("woww", "");
 		this.customsManager = vmc.login("wowwww", "");	
-		
+
 		this.controllerStandard = new StandardOrderHandler(vmc);
 
 		this.controllerSingleTask = new SingleTaskOrderHandler(vmc);
@@ -78,68 +67,51 @@ public class InitialData {
 
 		Boolean orders = false;
 
-		for(int i=0; i < 10; i++){
+		for(int i=0; i < 20; i++){
 			orders = this.randomOrderGenerator("standard",-1);
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
 		}
-		
+
 		this.processOrders();
 
-//		orders = false;
-//		
-//		for(int i=0; i < 3; i++){
-//			orders = this.randomOrderGenerator("singleTask",-1);
-//			if (!orders)
-//				this.randomOrderGenerator("singleTask", 0);
-//		}
-//
-//		orders = false;
-//		
-//		for(int i=0; i < 3; i++){
-//			orders = this.randomOrderGenerator("standard",-1);
-//			if (!orders)
-//				this.randomOrderGenerator("standard", 0);
-//		}
-//
-//		orders = false;
-//
-//		for(int i=0; i < 3; i++){
-//			orders = this.randomOrderGenerator("standard",-1);
-//			if (!orders)
-//				this.randomOrderGenerator("standard", 0);
-//		}
+		//		orders = false;
+		//		
+		//		for(int i=0; i < 3; i++){
+		//			orders = this.randomOrderGenerator("singleTask",-1);
+		//			if (!orders)
+		//				this.randomOrderGenerator("singleTask", 0);
+		//		}
+		//
+		//		orders = false;
+		//		
+		//		for(int i=0; i < 3; i++){
+		//			orders = this.randomOrderGenerator("standard",-1);
+		//			if (!orders)
+		//				this.randomOrderGenerator("standard", 0);
+		//		}
+		//
+		//		orders = false;
+		//
+		//		for(int i=0; i < 3; i++){
+		//			orders = this.randomOrderGenerator("standard",-1);
+		//			if (!orders)
+		//				this.randomOrderGenerator("standard", 0);
+		//		}
 
 
 	}
 
 	// TODO
-	private void processOrders() {
+	private void processOrders() throws NoClearanceException {
 
-		try{
 		Iterator<AssemblyLine> iter1 = vmc.getAssemblyLines(this.mechanic);
 		while(iter1.hasNext()){
 			AssemblyLine assem = iter1.next();
-
-			WorkPost wp1 = assem.getWorkPosts().get(0);
-			Iterator<AssemblyTask> iter2 = vmc.getPendingTasks(this.mechanic, wp1);
-			while (iter2.hasNext()){
-				AssemblyTask task = iter2.next();
-				vmc.finishTask(task, 20);
+			for(int i = 0 ; i < assem.getWorkPosts().size()-1;i++){
+				CompleteWorkPost(assem, i);
 			}
-			wp1 = assem.getWorkPosts().get(0);
-			iter2 = vmc.getPendingTasks(this.mechanic, wp1);
-			while (iter2.hasNext()){
-				AssemblyTask task = iter2.next();
-				vmc.finishTask(task, 20);
-			}
-			wp1 = assem.getWorkPosts().get(1);
-			iter2 = vmc.getPendingTasks(this.mechanic, wp1);
-			while (iter2.hasNext()){
-				AssemblyTask task = iter2.next();
-				vmc.finishTask(task, 20);
-			}
-			for(int i = 0; i < 14 ; i ++){
+			for(int i = 0; i < 40 ; i ++){
 				for(WorkPost wp: assem.getWorkPosts()){
 					Iterator<AssemblyTask> iter3 = vmc.getPendingTasks(this.mechanic, wp);
 					while (iter3.hasNext()){
@@ -149,8 +121,18 @@ public class InitialData {
 				}
 			}
 		}
-		}catch(NoClearanceException ex){System.out.println(ex.toString());}
 
+	}
+
+	private void CompleteWorkPost(AssemblyLine assem, int i) throws NoClearanceException{
+		for(int j = 0 ; j <= i ; j++){
+			WorkPost wp1 = assem.getWorkPosts().get(j);
+			Iterator<AssemblyTask> iter2 = vmc.getPendingTasks(this.mechanic, wp1);
+			while (iter2.hasNext()){
+				AssemblyTask task = iter2.next();
+				vmc.finishTask(task, 20);
+			}
+		}
 	}
 
 	private boolean randomOrderGenerator(String orders, int model){
@@ -184,9 +166,9 @@ public class InitialData {
 				spoiler.add(option);
 			}else if (option.getCategory().equals(new Wheels())){
 				wheels.add(option);
-			}else if (option.getCategory().equals(new Protection())){
+			}else if (option.getCategory().equals(new CargoProtection())){
 				certification.add(option);
-			}else if (option.getCategory().equals(new Storage())){
+			}else if (option.getCategory().equals(new ToolStorage())){
 				protection.add(option);
 			}else if (option.getCategory().equals(new Certification())){
 				storage.add(option);

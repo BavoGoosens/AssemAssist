@@ -1,6 +1,7 @@
 package businessmodel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -63,26 +64,50 @@ public class MainScheduler {
 		return ordermanager;
 	}
 
+
 	protected AssemblyLine placeOrder(Order order){
 		ArrayList<AssemblyLine> possibleAssemblyLines = getPossibleAssemblyLinesToPlaceOrder(order);
-		AssemblyLine fastestAssemblyLine = possibleAssemblyLines.get(0);
-		for(AssemblyLine assem2 : getPossibleAssemblyLinesToPlaceOrder(order)){
-			if(assem2.getEstimatedCompletionTimeOfNewOrder(order).isBefore(fastestAssemblyLine.getEstimatedCompletionTimeOfNewOrder(order)))
-				fastestAssemblyLine = assem2;
-		}
-		fastestAssemblyLine.getAssemblyLineScheduler().addOrder(order);
-		return fastestAssemblyLine;
+		if(possibleAssemblyLines.size() != 0){
+			AssemblyLine fastestAssemblyLine = possibleAssemblyLines.get(0);
+			for(AssemblyLine assem2 : getPossibleAssemblyLinesToPlaceOrder(order)){
+				if(assem2.getEstimatedCompletionTimeOfNewOrder(order).isBefore(fastestAssemblyLine.getEstimatedCompletionTimeOfNewOrder(order)))
+					fastestAssemblyLine = assem2;
+			}
+			fastestAssemblyLine.getAssemblyLineScheduler().addOrder(order);
+			return fastestAssemblyLine;}
+		else return null;
 	}
-	
+
 	protected ArrayList<AssemblyLine> getAssemblyLines() {
 		return this.assemblylines;
 	}
 
 	protected void changeSystemWideAlgorithm(String algo, ArrayList<VehicleOption> options) {
 		this.systemWideAlgo = algo;
+		if (!this.checkOptionsForSpecificationBatch(options)) 
+			throw new IllegalArgumentException("Too little orders with that option ( less than 3 )");
 		for (AssemblyLine assemblyLine: this.getAssemblyLines()) {
 			assemblyLine.getAssemblyLineScheduler().changeAlgorithm(algo, options);
 		}
+	}
+
+	private boolean checkOptionsForSpecificationBatch(ArrayList<VehicleOption> options) {
+		int orderCount = 0;
+		for(AssemblyLine assem: this.getAssemblyLines()){
+			for(Order order: assem.getAssemblyLineScheduler().getOrders()){
+				int count = 0;
+				for(VehicleOption opt: options){
+					for(VehicleOption opt2: order.getOptions()){
+						if (opt.toString().equals(opt2.toString())) 
+							count++;
+					}
+				}
+				if (count == options.size()) orderCount++;
+			}
+		}
+		if (orderCount < 3)
+			return false;
+		return true;
 	}
 
 	private ArrayList<AssemblyLine> getPossibleAssemblyLinesToPlaceOrder(Order order){

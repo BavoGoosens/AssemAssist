@@ -222,6 +222,7 @@ public class GarageHolderView extends View{
 				this.completed_orders.add(completed.next());	
 			Collections.sort(this.pending_orders, new OrderDateTimeComparator());
 			Collections.sort(this.completed_orders, new OrderDateTimeComparator());
+
 		} catch (NoClearanceException e) {
 			// NOP
 		}
