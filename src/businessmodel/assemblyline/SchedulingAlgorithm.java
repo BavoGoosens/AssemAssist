@@ -15,7 +15,7 @@ public abstract class SchedulingAlgorithm {
 	/**
 	 * The assemblyline of the scheduling algorithm.
 	 */
-	private AssemblyLineScheduler scheduler;
+	private AssemblyLineScheduler AssemblyLineScheduler;
 
 	/**
 	 * Creates a scheduling algorithm with a assemblyline.
@@ -38,7 +38,7 @@ public abstract class SchedulingAlgorithm {
 	 * @return 	The assemblyline of the scheduling algorithm.
 	 */
 	protected AssemblyLineScheduler getScheduler(){
-		return this.scheduler;
+		return this.AssemblyLineScheduler;
 	}
 	
 	/**
@@ -50,6 +50,6 @@ public abstract class SchedulingAlgorithm {
 	private void setScheduler(AssemblyLineScheduler scheduler) throws IllegalArgumentException {
 		if(scheduler == null)
 			throw new IllegalArgumentException("Not a assemblyline");
-		this.scheduler = scheduler;
+		this.AssemblyLineScheduler = scheduler;
 	}
 }

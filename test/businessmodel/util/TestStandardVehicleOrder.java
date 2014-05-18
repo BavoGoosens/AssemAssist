@@ -1,4 +1,4 @@
-package businessmodel.assemblyline;
+package businessmodel.util;
 
 import java.util.ArrayList;
 
@@ -16,12 +16,12 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
 
-public class TestOrder {
+public class TestStandardVehicleOrder {
 
 	private StandardVehicleOrder order;
 	GarageHolder holder;
 
-	public TestOrder(GarageHolder holder, String name){
+	public TestStandardVehicleOrder(GarageHolder holder, String name){
 		this.holder = holder;
 		makeOrder(holder,name);
 	}

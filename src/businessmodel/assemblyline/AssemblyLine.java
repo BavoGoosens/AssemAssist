@@ -24,57 +24,57 @@ public class AssemblyLine implements Subject{
 	/**
 	 * the models this AssemblyLine can handle.
 	 */
-    private List<VehicleModel> responsibleModels;
-    
-    private AssemblyLineState broken;
+	private List<VehicleModel> responsibleModels;
+
+	private AssemblyLineState broken;
 
 	private AssemblyLineState maintenance;
-	
+
 	private AssemblyLineState operational;
 
 	private AssemblyLineState state;
-	
+
 	/**
 	 * The AssemblyLineScheduler that schedules the orders for this AssemblyLine.
 	 */
 	private AssemblyLineScheduler assemblylineScheduler;
-	
+
 	/**
 	 * The MainScheduler that holds this AssemblyLine.
 	 */
 	private MainScheduler mainscheduler;
-	
+
 	/**
 	 * The time that it took to process all the orders that are current set on the WorkPosts.
 	 */
 	private int timeCurrentStatus = 0;
-	
+
 	/**
 	 * The WorkPosts of this AssemblyLine.
 	 */
 	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
-	
+
 	/**
 	 * The subsribers of this AssemblyLine.
 	 */
 	private ArrayList<Observer> subscribers = new ArrayList<Observer>();
-	
+
 	/**
 	 * A Constructor for the class AssemblyLine.
 	 */
-    protected AssemblyLine(){
-        this.broken = new BrokenState(this);
-        this.maintenance  = new MaintenanceState(this);
-        this.operational  = new OperationalState(this);
-        this.setState(operational);
-    }
-    
-    // TODO AssemblyLine state toeveogen.
-    public boolean canAddOrder(Order order){
-    	return this.getAssemblyLineScheduler().canAddOrder(order);
-    }
+	protected AssemblyLine(){
+		this.broken = new BrokenState(this);
+		this.maintenance  = new MaintenanceState(this);
+		this.operational  = new OperationalState(this);
+		this.setState(operational);
+	}
 
-    /**
+	// TODO AssemblyLine state toeveogen.
+	public boolean canAddOrder(Order order){
+		return this.getAssemblyLineScheduler().canAddOrder(order);
+	}
+
+	/**
 	 * Checks whether the assembly line can move forward.
 	 * 
 	 * @return True if the assembly line can move forward.
@@ -125,12 +125,7 @@ public class AssemblyLine implements Subject{
 	 * Notifies the AssemblyLine if a work post is completed, if all work posts are completed the assembly line advances.
 	 */
 	private void notifyScheduler(){
-		boolean completed = true;
-		for(WorkPost wp: this.getWorkPosts()){
-			if(!wp.isCompleted())
-				completed = false;
-		}
-		if(completed)
+		if(canAdvance())
 			this.getAssemblyLineScheduler().advance(this.timeCurrentStatus);
 	}
 
@@ -187,31 +182,27 @@ public class AssemblyLine implements Subject{
 	}
 
 	protected  void setMainScheduler(MainScheduler scheduler){
-	    if (scheduler != null)
-	        this.mainscheduler = scheduler;
-	    else
-	        throw new IllegalArgumentException("There was no MainScheduler supplied");
+		if (scheduler == null)
+			throw new IllegalArgumentException("There was no MainScheduler supplied");
+		this.mainscheduler = scheduler;
 	}
 
 	protected void setAssemblylineScheduler(AssemblyLineScheduler scheduler){
-	    if (scheduler != null)
-	        this.assemblylineScheduler = scheduler;
-	    else
-	        throw new IllegalArgumentException("There was no scheduler supplied");
+		if (scheduler == null)
+			throw new IllegalArgumentException("There was no scheduler supplied");
+		this.assemblylineScheduler = scheduler;
 	}
 
 	protected void setWorkPosts( List<WorkPost> workPosts){
-	    if (workPosts != null)
-	        this.workposts = (ArrayList<WorkPost>) workPosts;
-	    else
-	        throw new IllegalArgumentException("There were no workposts supplied");
+		if (workPosts == null)
+			throw new IllegalArgumentException("There were no workposts supplied");
+		this.workposts = (ArrayList<WorkPost>) workPosts;
 	}
 
 	protected  void setResponsibleModels( List<VehicleModel> models){
-	    if (models != null)
-	        this.responsibleModels = models;
-	    else
-	        throw  new IllegalArgumentException("There were no models supplied");
+		if (models == null)
+			throw  new IllegalArgumentException("There were no models supplied");
+		this.responsibleModels = models;
 	}
 
 	@Override
@@ -254,7 +245,7 @@ public class AssemblyLine implements Subject{
 	public AssemblyLineState getMaintenanceState() {
 		return maintenance;
 	}
-	
+
 	/**
 	 * Method to set the state of an assembly line
 	 * @param state
@@ -262,11 +253,11 @@ public class AssemblyLine implements Subject{
 	public void setState(AssemblyLineState state) {
 		this.state = state;
 	}
-	
+
 	public DateTime getEstimatedCompletionTimeOfNewOrder(Order order) {
 		return this.getAssemblyLineScheduler().getEstimatedCompletionTimeOfNewOrder(order);
 	}
-	
+
 	protected MainScheduler getMainScheduler(){
 		return this.mainscheduler;
 	}

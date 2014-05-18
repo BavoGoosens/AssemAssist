@@ -15,7 +15,6 @@ import businessmodel.category.ModelAFactory;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
-import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
 
 public class OrderTest {

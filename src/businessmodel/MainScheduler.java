@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import businessmodel.assemblyline.*;
+import org.joda.time.DateTime;
+
 import businessmodel.assemblyline.AssemblyLine;
+import businessmodel.assemblyline.AssemblyLineAFactory;
+import businessmodel.assemblyline.AssemblyLineBFactory;
+import businessmodel.assemblyline.AssemblyLineCFactory;
+import businessmodel.assemblyline.AssemblyLineScheduler;
 import businessmodel.category.VehicleOption;
 import businessmodel.order.Order;
 
@@ -22,21 +27,24 @@ public class MainScheduler {
 		this.generateAssemblyLines();
 	}
 
-	public LinkedList<Order> getNewOrders(int size, AssemblyLine assemblyline) {
-		return this.ordermanager.getNbOrders(size, assemblyline);
-	}
-
-	public LinkedList<Order> getPendingOrders() {
-		return this.ordermanager.getPendingOrders();
+	public void schedulePendingOrders() {
+		this.ordermanager.schedulePendingOrders();;
 	}
 
 	public void finishedOrder(Order completedorder) {
 		this.ordermanager.finishedOrder(completedorder);
 	}
 
-	// TODO orders proberen schedulen op andere line.
 	public void placeOrderInFront(Order order) {
 		this.ordermanager.placeOrderInFront(order);
+	}
+
+	public String currentSystemWideAlgorithmDescription() {
+		return this.systemWideAlgo;
+	}
+
+	public LinkedList<Order> getPendingOrders() {
+		return this.ordermanager.getPendingOrders();
 	}
 
 	public ArrayList<AssemblyLineScheduler> getAssemblyLineSchedulers() {
@@ -51,31 +59,21 @@ public class MainScheduler {
 		return systemWideAlgo;
 	}
 
-	public String currentSystemWideAlgorithmDescription() {
-		return this.systemWideAlgo;
-	}
-
 	protected OrderManager getOrderManager() {
 		return ordermanager;
 	}
 
 	protected AssemblyLine placeOrder(Order order){
-		ArrayList<AssemblyLine> possiblelines = new ArrayList<AssemblyLine>();
-		for(AssemblyLine assem : this.getAssemblyLines()){
-			if(assem.canAddOrder(order))
-				possiblelines.add(assem);
+		ArrayList<AssemblyLine> possibleAssemblyLines = getPossibleAssemblyLinesToPlaceOrder(order);
+		AssemblyLine fastestAssemblyLine = possibleAssemblyLines.get(0);
+		for(AssemblyLine assem2 : getPossibleAssemblyLinesToPlaceOrder(order)){
+			if(assem2.getEstimatedCompletionTimeOfNewOrder(order).isBefore(fastestAssemblyLine.getEstimatedCompletionTimeOfNewOrder(order)))
+				fastestAssemblyLine = assem2;
 		}
-		if(possiblelines.size() == 0)
-			return null;
-		AssemblyLine fastestassem = possiblelines.get(0);
-		for(AssemblyLine assem2 : possiblelines){
-			if(assem2.getEstimatedCompletionTimeOfNewOrder(order).isBefore(fastestassem.getEstimatedCompletionTimeOfNewOrder(order)))
-				fastestassem = assem2;
-		}
-		fastestassem.getAssemblyLineScheduler().addOrder(order);
-		return fastestassem;
+		fastestAssemblyLine.getAssemblyLineScheduler().addOrder(order);
+		return fastestAssemblyLine;
 	}
-
+	
 	protected ArrayList<AssemblyLine> getAssemblyLines() {
 		return this.assemblylines;
 	}
@@ -85,6 +83,15 @@ public class MainScheduler {
 		for (AssemblyLine assemblyLine: this.getAssemblyLines()) {
 			assemblyLine.getAssemblyLineScheduler().changeAlgorithm(algo, options);
 		}
+	}
+
+	private ArrayList<AssemblyLine> getPossibleAssemblyLinesToPlaceOrder(Order order){
+		ArrayList<AssemblyLine> possiblelines = new ArrayList<AssemblyLine>();
+		for(AssemblyLine assem : this.getAssemblyLines()){
+			if(assem.canAddOrder(order))
+				possiblelines.add(assem);
+		}
+		return possiblelines;
 	}
 
 	private void generateAssemblyLines() {
@@ -110,6 +117,14 @@ public class MainScheduler {
 
 	private void setAssemblyLines(ArrayList<AssemblyLine> assemblylines) {
 		this.assemblylines = assemblylines;
+	}
+
+	protected DateTime getTime(){
+		DateTime currenttime = this.getAssemblyLines().get(0).getAssemblyLineScheduler().getCurrentTime();
+		for(AssemblyLine line: this.getAssemblyLines()){
+			if(currenttime.isAfter(line.getAssemblyLineScheduler().getCurrentTime()));
+		}
+		return currenttime;
 	}
 
 	//TODO moet nog getest worden, ookal hebben meerdere assembly lines dezelfde sets, alleen maar unieke teruggeven voor de UI

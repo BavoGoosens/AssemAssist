@@ -1,4 +1,4 @@
-package businessmodel.scheduler;
+package businessmodel.assemblyline;
 
 import static org.junit.Assert.fail;
 

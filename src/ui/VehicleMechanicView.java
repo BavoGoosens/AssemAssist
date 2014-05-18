@@ -151,22 +151,26 @@ public class VehicleMechanicView extends View {
 	}
 
 	private void displayActionOverview(AssemblyTask assemblyTask) {
-		System.out.println("This is the sequence of actions you need to perform: ");
-		System.out.println(assemblyTask.getDescription());
-		System.out.println("> Enter the number of minutes it took you to perform all the actions "
-				+ "and hit enter or enter CANCEL to go back to the overview");
-		System.out.print(">> ");
-		String response = this.scan.nextLine();
-		this.check(response);
-		Pattern pattern = Pattern.compile("^\\d+$");
-		if (pattern.matcher(response).find()){
-			int time = Integer.parseInt(response);
-			this.controller.finishTask(this.user, assemblyTask, time);
-			this.performTasks(this.selected_workpost);
-		} else {
-			System.out.println("! You entered something wrong. Please try again");
-			this.displayActionOverview(assemblyTask);
-		}
+        try {
+            System.out.println("This is the sequence of actions you need to perform: ");
+            System.out.println(assemblyTask.getDescription());
+            System.out.println("> Enter the number of minutes it took you to perform all the actions "
+                    + "and hit enter or enter CANCEL to go back to the overview");
+            System.out.print(">> ");
+            String response = this.scan.nextLine();
+            this.check(response);
+            Pattern pattern = Pattern.compile("^\\d+$");
+            if (pattern.matcher(response).find()) {
+                int time = Integer.parseInt(response);
+                this.controller.finishTask(this.user, assemblyTask, time);
+                this.performTasks(this.selected_workpost);
+            } else {
+                System.out.println("! You entered something wrong. Please try again");
+                this.displayActionOverview(assemblyTask);
+            }
+        } catch (NoClearanceException e) {
+            this.quit();
+        }
 	}
 
 	@Override

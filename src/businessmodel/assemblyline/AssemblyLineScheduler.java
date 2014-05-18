@@ -64,7 +64,7 @@ public class AssemblyLineScheduler implements Subject {
 		this.dayOrdersCount = 0;
 		this.generateShifts();
 		this.updateCurrentTime();
-		// TODO OrderManager alles laten Schedule
+		this.getAssemblyline().getMainScheduler().schedulePendingOrders();
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class AssemblyLineScheduler implements Subject {
 		scheduleOrder(order);
 		order.setTimestampOfOrder(this.getCurrentTime());
 		getOrders().add(order);
-		CheckIfAssemblyLineIsEmpty();
+		CheckIfAssemblyLineCanAdvance();
 		order.setTimestampOfOrder(this.getCurrentTime());
 		setEstimatedCompletionDateOfOrder(getPreviousOrder(order), order);
 	}
@@ -137,13 +137,8 @@ public class AssemblyLineScheduler implements Subject {
 			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");	
 	}
 
-	private void CheckIfAssemblyLineIsEmpty() {
-		boolean advance = true;
-		for(WorkPost wp : this.getAssemblyline().getWorkPosts()){
-			if(wp.getOrder() != null)
-				advance = false;
-		}
-		if(advance)
+	private void CheckIfAssemblyLineCanAdvance() {
+		if(this.getAssemblyline().canAdvance())
 			this.updateAssemblylineStatus();		
 	}
 
@@ -336,7 +331,7 @@ public class AssemblyLineScheduler implements Subject {
 			return this.currenttime.plusMinutes(this.calculateMinutes(order));
 	}
 
-	private int calculateMinutes(Order order){
+	public int calculateMinutes(Order order){
 		if(order.getVehicleModel() == null)
 			return this.getAssemblyline().getWorkPosts().size()*60;
 		int minutes = 0;

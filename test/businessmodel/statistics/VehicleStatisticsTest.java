@@ -1,8 +1,6 @@
-package businessmodel;
+package businessmodel.statistics;
 
 import java.util.ArrayList;
-
-import javax.security.auth.Subject;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,12 +10,18 @@ import businessmodel.OrderManager;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
-import businessmodel.category.*;
+import businessmodel.category.Body;
+import businessmodel.category.ModelAFactory;
+import businessmodel.category.ModelBFactory;
+import businessmodel.category.ModelCFactory;
+import businessmodel.category.ModelXFactory;
+import businessmodel.category.ModelYFactory;
+import businessmodel.category.VehicleModel;
+import businessmodel.category.VehicleOption;
+import businessmodel.category.VehicleOptionCategory;
+import businessmodel.category.Wheels;
 import businessmodel.order.StandardVehicleOrder;
-import businessmodel.statistics.StatisticsManager;
-import businessmodel.statistics.VehicleStatistics;
 import businessmodel.user.GarageHolder;
-import static org.junit.Assert.*;
 
 public class VehicleStatisticsTest {
 	

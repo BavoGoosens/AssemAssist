@@ -6,8 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.Catalog;
-import businessmodel.category.VehicleModel;
-import businessmodel.category.VehicleModelSpecification;
 
 public class VehicleModelTest {
 	

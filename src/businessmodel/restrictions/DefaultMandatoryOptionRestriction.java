@@ -2,13 +2,8 @@ package businessmodel.restrictions;
 
 import java.util.ArrayList;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
 import businessmodel.category.Airco;
-import businessmodel.category.Certification;
-import businessmodel.category.Protection;
 import businessmodel.category.Spoiler;
-import businessmodel.category.Storage;
 import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;

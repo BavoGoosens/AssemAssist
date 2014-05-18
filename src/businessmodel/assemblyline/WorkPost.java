@@ -149,12 +149,14 @@ public class WorkPost {
 	 *
 	 * @return	The tasks that are pending at the work post
 	 */
+	@SuppressWarnings("unchecked")
 	public Iterator<AssemblyTask> getPendingTasks() {
         SafeIterator<AssemblyTask> safe = new SafeIterator<AssemblyTask>();
         safe.convertIterator(this.pendingTasks.iterator());
         return safe;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Iterator<AssemblyTask> getFinishedTasks() {
 		SafeIterator<AssemblyTask> safe = new SafeIterator<AssemblyTask>();
         safe.convertIterator(this.finishedTasks.iterator());
@@ -193,14 +195,8 @@ public class WorkPost {
 	}
 
 	protected void notifyAssemblyLine(){
-		boolean completed= true;
-		for(AssemblyTask assemblytask: this.pendingTasks){
-			if(!assemblytask.isCompleted())
-				completed = false;
-		}
-		if(completed){
+		if(isCompleted())
 			this.getAssemblyline().workPostCompleted(this.getTimeOrderInProcess());
-		}
 	}
 
 	protected AssemblyLine getAssemblyline() {
@@ -270,8 +266,7 @@ public class WorkPost {
 	 * 			| tasks == null
 	 */
 	@SuppressWarnings("unchecked")
-	private void setPendingTasks(ArrayList<AssemblyTask> tasks) throws IllegalArgumentException {
-		if (tasks == null) throw new IllegalArgumentException();
+	private void setPendingTasks(ArrayList<AssemblyTask> tasks) {
 		this.pendingTasks = (ArrayList<AssemblyTask>) tasks.clone();
 	}
 

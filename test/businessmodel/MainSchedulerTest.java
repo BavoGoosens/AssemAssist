@@ -1,10 +1,12 @@
-package businessmodel.assemblyline;
+package businessmodel;
+
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class EndShiftTest {
+public class MainSchedulerTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -16,6 +18,7 @@ public class EndShiftTest {
 
 	@Test
 	public void test() {
+		fail("Not yet implemented"); // TODO
 	}
 
 }
