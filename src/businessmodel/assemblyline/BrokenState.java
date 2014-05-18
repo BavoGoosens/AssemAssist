@@ -16,20 +16,24 @@ public class BrokenState implements AssemblyLineState {
 	}
 
 	@Override
-	public void AssemblyLineIsBroken() {
+	public void markAssemblyLineAsBroken() {
 		// wait indefinitely
 	}
 
 	@Override
-	public void AssemblyLineIsOperational() {
+	public void markAssemblyLineAsOperational() {
 		this.assemblyLine.setState(this.assemblyLine.getOperationalState());
 	}
 
 	@Override
-	public void AssemblyLineIsMaintenance() {
+	public void markAssemblyLineAsMaintenance() {
 		this.assemblyLine.setState(this.assemblyLine.getMaintenanceState());
 		//wait four hours
 		
 	}
 
+    @Override
+    public String toString() {
+        return "Broken";
+    }
 }
