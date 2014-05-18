@@ -4,25 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
+import businessmodel.category.*;
 import org.joda.time.DateTime;
 
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
-import businessmodel.category.Airco;
-import businessmodel.category.Body;
-import businessmodel.category.Certification;
-import businessmodel.category.Color;
-import businessmodel.category.Engine;
-import businessmodel.category.Gearbox;
-import businessmodel.category.Protection;
-import businessmodel.category.Seats;
-import businessmodel.category.Spoiler;
-import businessmodel.category.Storage;
-import businessmodel.category.VehicleModel;
-import businessmodel.category.VehicleOption;
-import businessmodel.category.Wheels;
+import businessmodel.category.CargoProtection;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.SingleTaskOrder;
@@ -184,9 +173,9 @@ public class InitialData {
 				spoiler.add(option);
 			}else if (option.getCategory().equals(new Wheels())){
 				wheels.add(option);
-			}else if (option.getCategory().equals(new Protection())){
+			}else if (option.getCategory().equals(new CargoProtection())){
 				certification.add(option);
-			}else if (option.getCategory().equals(new Storage())){
+			}else if (option.getCategory().equals(new ToolStorage())){
 				protection.add(option);
 			}else if (option.getCategory().equals(new Certification())){
 				storage.add(option);

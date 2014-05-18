@@ -1,10 +1,5 @@
 package businessmodel;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import org.joda.time.DateTime;
-
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
@@ -15,11 +10,11 @@ import businessmodel.order.Order;
 import businessmodel.statistics.OrderStatistics;
 import businessmodel.statistics.StatisticsManager;
 import businessmodel.statistics.VehicleStatistics;
-import businessmodel.user.CustomShopManager;
-import businessmodel.user.GarageHolder;
-import businessmodel.user.Manager;
-import businessmodel.user.Mechanic;
-import businessmodel.user.User;
+import businessmodel.user.*;
+import org.joda.time.DateTime;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class VehicleManufacturingCompany implements Model {
@@ -27,7 +22,7 @@ public class VehicleManufacturingCompany implements Model {
     /**
      * List of the users.
      */
-    private ArrayList<User> users = new ArrayList<User>();
+    private ArrayList<User> users = new ArrayList<>();
 
     /**
      * The order manager.
@@ -87,10 +82,10 @@ public class VehicleManufacturingCompany implements Model {
 
     @Override
     public Iterator<String> getSchedulingAlgorithms(User user) {
-        ArrayList<String> algos = new ArrayList<String>();
-        algos.add("FIFO");
-        algos.add("SpecificationBatch");
-        return algos.iterator();
+        ArrayList<String> algorithms = new ArrayList<>();
+        algorithms.add("FIFO");
+        algorithms.add("SpecificationBatch");
+        return algorithms.iterator();
     }
 
     @Override
@@ -134,6 +129,11 @@ public class VehicleManufacturingCompany implements Model {
     // TODO: safe maken
     // TODO: taskmanager weg en ophalen uit workposts.
     public Iterator<AssemblyTask> getAvailableTasks(User user) {
+        for (AssemblyLine line : this.getOrderManager().getMainScheduler().getAssemblyLines()) {
+            for (WorkPost post : line.getWorkPosts()) {
+
+            }
+        }
         return null;
     }
 
@@ -151,15 +151,14 @@ public class VehicleManufacturingCompany implements Model {
      * @return The current time of the system.
      */
     public DateTime getSystemTime() {
-        DateTime tijd = null;
-        Iterator<AssemblyLine> iter = this.getOrderManager().getMainScheduler().getAssemblyLines().iterator();
-        while (iter.hasNext()) {
-            DateTime time = iter.next().getAssemblyLineScheduler().getCurrentTime();
-            if (tijd == null | time.isAfter(tijd)) {
-                tijd = time;
+        DateTime mainTime = null;
+        for (AssemblyLine assemblyLine : this.getOrderManager().getMainScheduler().getAssemblyLines()) {
+            DateTime time = assemblyLine.getAssemblyLineScheduler().getCurrentTime();
+            if (mainTime == null | time.isAfter(mainTime)) {
+                mainTime = time;
             }
         }
-        return tijd;
+        return mainTime;
     }
 
     @Override
@@ -221,7 +220,7 @@ public class VehicleManufacturingCompany implements Model {
         this.getOrderManager().placeOrder(order);
     }
 
-    public void changeAssemblyLineStatus(AssemblyLine assemblyLine, String status){
+    public void changeAssemblyLineStatus(AssemblyLine assemblyLine, String status) {
         // TODO
     }
 

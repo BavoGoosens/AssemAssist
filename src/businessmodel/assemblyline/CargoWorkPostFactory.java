@@ -3,8 +3,8 @@ package businessmodel.assemblyline;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import businessmodel.category.Protection;
-import businessmodel.category.Storage;
+import businessmodel.category.CargoProtection;
+import businessmodel.category.ToolStorage;
 
 /**
  * Created by michielvandendriessche on 13/05/14.
@@ -14,8 +14,8 @@ public class CargoWorkPostFactory extends WorkPostFactory {
     @Override
     protected ArrayList<AssemblyTask> createAssemblyTasks(WorkPost workPost) {
         ArrayList<AssemblyTask> tasks = new ArrayList<AssemblyTask>();
-        tasks.add(new AssemblyTask("Install Tool Storage", "install tool storage into the truck", new Storage(), workPost));
-        tasks.add(new AssemblyTask("Add Cargo Protection", "add cargo protection to the truck", new Protection(), workPost));
+        tasks.add(new AssemblyTask("Install Tool Storage", "install tool storage into the truck", new ToolStorage(), workPost));
+        tasks.add(new AssemblyTask("Add Cargo Protection", "add cargo protection to the truck", new CargoProtection(), workPost));
         return tasks;
     }
 
