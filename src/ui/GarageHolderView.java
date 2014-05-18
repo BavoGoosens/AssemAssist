@@ -15,7 +15,6 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.Order;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.User;
-import businessmodel.util.EndDateOfOrderComparator;
 import businessmodel.util.OrderDateTimeComparator;
 import control.StandardOrderController;
 import control.StandardOrderHandler;
