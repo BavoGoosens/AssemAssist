@@ -66,7 +66,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 
 		this.getScheduler().getOrders().clear();
 		for(Order order: orderList){
-			this.getScheduler().getAssemblyline().getMainScheduler().getOrderManager().setEstimatedCompletionDateOfOrder(order, this.getScheduler().getAssemblyline());
+			this.getScheduler().setEstimatedCompletionDateOfOrder(this.getScheduler().getPreviousOrder(order),order);
 			this.getScheduler().getOrders().add(order);
 		}
 	}

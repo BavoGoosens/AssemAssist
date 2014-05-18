@@ -305,7 +305,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * Method to set an estimated completion time for a particular order.
 	 * @param order
 	 */
-	private void setEstimatedCompletionDateOfOrder(Order previousorder, Order order){
+	protected void setEstimatedCompletionDateOfOrder(Order previousorder, Order order){
 		if(previousorder != null) 
 			order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusMinutes(minutesLastWorkPost(order)));
 		else
