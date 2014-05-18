@@ -11,7 +11,6 @@ import businessmodel.statistics.OrderStatistics;
 import businessmodel.statistics.StatisticsManager;
 import businessmodel.statistics.VehicleStatistics;
 import businessmodel.user.*;
-import businessmodel.util.IteratorConverter;
 import businessmodel.util.SafeIterator;
 import org.joda.time.DateTime;
 
@@ -175,7 +174,12 @@ public class VehicleManufacturingCompany implements Model {
     }
 
     public void changeAssemblyLineStatus(AssemblyLine assemblyLine, String status) {
-        // TODO
+        if (status.equalsIgnoreCase(assemblyLine.getBrokenState().toString()))
+            assemblyLine.transitionToBroken();
+        if (status.equalsIgnoreCase(assemblyLine.getMaintenanceState().toString()))
+            assemblyLine.transitionToMaintenance();
+        if (status.equalsIgnoreCase(assemblyLine.getOperationalState().toString()))
+            assemblyLine.transitionToOperational();
     }
 
     @Override
