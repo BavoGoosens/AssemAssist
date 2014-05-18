@@ -13,7 +13,9 @@ import businessmodel.OrderManager;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
 import businessmodel.order.Order;
+import businessmodel.user.CustomShopManager;
 import businessmodel.user.GarageHolder;
+import businessmodel.util.TestSingleTaskOrder;
 import businessmodel.util.TestStandardVehicleOrder;
 
 public class AssemblyLineSchedulerTest {
@@ -21,6 +23,7 @@ public class AssemblyLineSchedulerTest {
 	AssemblyLine assemblyLine;
 	AssemblyLineScheduler scheduler;
 	GarageHolder holder;
+	CustomShopManager holder2;
 	ArrayList<String> names;
 
 	@Before
@@ -41,9 +44,9 @@ public class AssemblyLineSchedulerTest {
 		generateVehicleModels();
 		addOrders();
 		
-		assertEquals(scheduler.getShifts().get(0).getTimeSlots().size(),7);
+		assertEquals(scheduler.getShifts().get(0).getTimeSlots().size(),5);
 		assertEquals(scheduler.getOrders().size(),12);
-		assertEquals(assemblyLine.getWorkPosts().get(0).getOrder().getUser().getFirstname(),"Sander");
+		assertEquals(assemblyLine.getWorkPosts().get(0).getOrder().getUser().getFirstname(),"Sander2");
 		
 		completeOrders(20);
 		this.scheduler.changeAlgorithm("first in first out", null);
@@ -75,6 +78,7 @@ public class AssemblyLineSchedulerTest {
 	
 	private void generateVehicleModels() {
 		holder = new GarageHolder("Sander","","");
+		holder2 = new CustomShopManager("Sander2","","");
 		String name1 = "Car Model A";
 		String name2 = "Car Model B";
 		String name3 = "Car Model C";
@@ -90,6 +94,13 @@ public class AssemblyLineSchedulerTest {
 
 	private void addOrders(){
 		ArrayList<Order> orders = new ArrayList<Order>();
+		for(int i =0 ;i < 4 ; i++){
+			TestSingleTaskOrder ord = new TestSingleTaskOrder(holder2, names.get(i%4),scheduler.getCurrentTime().plusDays(2));
+			orders.add(ord.getOrder());
+			if(scheduler.canAddOrder(ord.getOrder()))
+				scheduler.addOrder(ord.getOrder());
+		}
+		
 		for(int i =0 ;i < 20 ; i++){
 			TestStandardVehicleOrder ord = new TestStandardVehicleOrder(holder, names.get(i%4));
 			orders.add(ord.getOrder());

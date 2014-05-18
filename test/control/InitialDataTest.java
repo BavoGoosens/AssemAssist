@@ -12,7 +12,6 @@ import businessmodel.VehicleManufacturingCompany;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.Order;
 import businessmodel.user.User;
-import control.InitialData;
 
 public class InitialDataTest {
 
