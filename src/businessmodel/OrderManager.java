@@ -27,7 +27,7 @@ public class OrderManager implements Subject {
 
 	private ArrayList<Observer> observers;
 
-	private PriorityQueue<Order> completedorders;
+	private LinkedList<Order> completedorders;
 
 	private MainScheduler mainscheduler;
 
@@ -43,8 +43,7 @@ public class OrderManager implements Subject {
 	 */
 	public OrderManager() throws IllegalArgumentException {
 		this.pendingorders = new LinkedList<Order>();
-		Comparator<Order> comparator = new OrderDateTimeComparator();
-		this.completedorders = new PriorityQueue<Order>(20, comparator);
+		this.completedorders = new LinkedList<Order>();
 		this.mainscheduler = new MainScheduler(this);
 		this.observers = new ArrayList<Observer>();
 	}
@@ -149,12 +148,7 @@ public class OrderManager implements Subject {
 	 * @return  the completed orders of this order manager.
 	 */
 	protected LinkedList<Order> getCompletedOrders(){
-		LinkedList<Order> temp = new LinkedList<Order>();
-		Iterator<Order> henk =  this.completedorders.iterator();
-		while(henk.hasNext()){
-			temp.add(henk.next());
-		}
-		return temp;
+		return this.completedorders;
 	}
 
 	/**

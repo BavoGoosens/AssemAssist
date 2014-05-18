@@ -8,10 +8,10 @@ public class EndDateOfOrderComparator implements Comparator<Order> {
 
 	@Override
 	public int compare(Order o1, Order o2) {
-		if (o1.getCompletionDate().isBefore(o2.getCompletionDate()))
+		if (o1.getCompletionDate().getMillis() < o2.getCompletionDate().getMillis())
 			// Als order 1 voor Order 2 klaar is hoort die voor order 2 in de lijst te staan => 1
             return 1;
-		else if(o1.getCompletionDate().isAfter(o2.getCompletionDate()))
+		else if(o1.getCompletionDate().getMillis() > o2.getCompletionDate().getMillis())
 			return -1;
 		else 
 			return 0;
