@@ -43,7 +43,7 @@ public class OrderManager implements Subject {
 	 */
 	public OrderManager() throws IllegalArgumentException {
 		this.pendingorders = new LinkedList<Order>();
-		Comparator<Order> comparator = new OrderDateTimeComparator();
+		Comparator<Order> comparator = new EndDateOfOrderComparator();
 		this.completedorders = new PriorityQueue<Order>(20, comparator);
 		this.mainscheduler = new MainScheduler(this);
 		this.observers = new ArrayList<Observer>();
