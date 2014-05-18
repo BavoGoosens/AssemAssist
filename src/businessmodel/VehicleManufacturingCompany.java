@@ -11,6 +11,8 @@ import businessmodel.statistics.OrderStatistics;
 import businessmodel.statistics.StatisticsManager;
 import businessmodel.statistics.VehicleStatistics;
 import businessmodel.user.*;
+import businessmodel.util.IteratorConverter;
+import businessmodel.util.SafeIterator;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
@@ -151,22 +153,16 @@ public class VehicleManufacturingCompany implements Model {
      * @return The current time of the system.
      */
     public DateTime getSystemTime() {
-        DateTime mainTime = null;
-        for (AssemblyLine assemblyLine : this.getOrderManager().getMainScheduler().getAssemblyLines()) {
-            DateTime time = assemblyLine.getAssemblyLineScheduler().getCurrentTime();
-            if (mainTime == null | time.isAfter(mainTime)) {
-                mainTime = time;
-            }
-        }
-        return mainTime;
+        return this.getOrderManager().getMainScheduler().getTime();
     }
 
     @Override
-    // TODO: safe maken
     public Iterator<AssemblyLine> getAssemblyLines(User user) throws NoClearanceException {
-        if (user.canViewAssemblyLines())
-            return this.getOrderManager().getMainScheduler().getAssemblyLines().iterator();
-        else
+        if (user.canViewAssemblyLines()){
+            SafeIterator<AssemblyLine> safe = new SafeIterator<>();
+            safe.convertIterator(this.getOrderManager().getMainScheduler().getAssemblyLines().iterator());
+            return safe;
+        }else
             throw new NoClearanceException();
     }
 
@@ -178,16 +174,26 @@ public class VehicleManufacturingCompany implements Model {
             throw new NoClearanceException();
     }
 
+    public void changeAssemblyLineStatus(AssemblyLine assemblyLine, String status) {
+        // TODO
+    }
+
     @Override
     public String getCurrentAssemblyLineStatus(User user, AssemblyLine selectedAssemblyLine) throws NoClearanceException {
-        // TODO: implement
-        return null;
+        if(user.canChangeOperationalStatus()){
+            return selectedAssemblyLine.currentState();
+        } else {
+            throw new NoClearanceException();
+        }
     }
 
     @Override
     public Iterator<String> getAvailableAssemblyLineStatus(User user, AssemblyLine selectedAssemblyLine) throws NoClearanceException {
-        // TODO: implement
-        return null;
+        if (user.canChangeOperationalStatus()){
+            return selectedAssemblyLine.getAllPossibleStates();
+        } else {
+            throw new NoClearanceException();
+        }
     }
 
     /**
@@ -218,10 +224,6 @@ public class VehicleManufacturingCompany implements Model {
      */
     public void placeOrder(Order order) throws IllegalArgumentException {
         this.getOrderManager().placeOrder(order);
-    }
-
-    public void changeAssemblyLineStatus(AssemblyLine assemblyLine, String status) {
-        // TODO
     }
 
     /**
