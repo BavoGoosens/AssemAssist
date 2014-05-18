@@ -81,8 +81,8 @@ public class BatchAlgorithmTest {
 			
 			options.remove(body);
 			options.remove(engine);
-			engine = new VehicleOption("small engine", new Engine());
-			body = new VehicleOption("small body", new Body());
+			engine = new VehicleOption("medium engine", new Engine());
+			body = new VehicleOption("big body", new Body());
 			options.add(body);
 			options.add(engine);
 
@@ -110,14 +110,17 @@ public class BatchAlgorithmTest {
 			
 			ArrayList<VehicleOption> options1 = new ArrayList<VehicleOption>();
 			options1.add(new VehicleOption("medium engine", new Engine()));
+			options1.add(new VehicleOption("big body", new Body()));
 			vmc.changeSystemWideAlgorithm("sb", options1 );
 			
+			boolean bool = true;
 			try{
 				vmc.changeSystemWideAlgorithm("dsfsf", options1);
 			}catch(IllegalSchedulingAlgorithmException ex){
-				ex.getMessage();
+				bool = false;
 			}
 			
+			assertEquals(false, bool);
 //			for(Order order: orderManager.getScheduler().getOrdersClone())
 //				System.out.println(order.toString());
 			
@@ -134,10 +137,10 @@ public class BatchAlgorithmTest {
 //			System.out.println(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(2).getUser());
 //			System.out.println(listAssem.get(1).getAssemblyLineScheduler().getOrders().get(0).getUser());
 //			System.out.println(listAssem.get(1).getAssemblyLineScheduler().getOrders().get(1).getUser());
-			
+//			
 			assertEquals(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(0), order3);
-			assertEquals(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(1), order5);
-			assertEquals(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(2), order1);
+			assertEquals(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(1), order1);
+			assertEquals(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(2), order5);
 			assertEquals(listAssem.get(1).getAssemblyLineScheduler().getOrders().get(0), order2);
 			assertEquals(listAssem.get(1).getAssemblyLineScheduler().getOrders().get(1), order4);
 			
