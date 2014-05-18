@@ -48,7 +48,7 @@ public class InitialData {
 
 	}
 
-	public void initialize(VehicleManufacturingCompany vmc){
+	public void initialize(VehicleManufacturingCompany vmc) throws NoClearanceException{
 
 		this.vmc = vmc;
 		this.garageholder = vmc.login("wow", "");
@@ -67,7 +67,7 @@ public class InitialData {
 
 		Boolean orders = false;
 
-		for(int i=0; i < 10; i++){
+		for(int i=0; i < 40; i++){
 			orders = this.randomOrderGenerator("standard",-1);
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
@@ -108,7 +108,7 @@ public class InitialData {
 		Iterator<AssemblyLine> iter1 = vmc.getAssemblyLines(this.mechanic);
 		while(iter1.hasNext()){
 			AssemblyLine assem = iter1.next();
-			for(int i = 0 ; i < assem.getWorkPosts().size()-2;i++){
+			for(int i = 0 ; i < assem.getWorkPosts().size()-1;i++){
 				CompleteWorkPost(assem, i);
 			}
 			for(int i = 0; i < 20 ; i ++){

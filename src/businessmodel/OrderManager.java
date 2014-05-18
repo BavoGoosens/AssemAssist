@@ -181,8 +181,8 @@ public class OrderManager implements Subject {
 	}
 
 	private void addOrderToPendingOrders(Order order) {
-		this.getPendingOrders().add(order);
 		setEstimatedTimeOfPendingOrder(order);
+		this.getPendingOrders().add(order);
 	}
 	
 	private void setEstimatedTimeOfPendingOrder(Order order){
