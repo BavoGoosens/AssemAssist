@@ -1,7 +1,10 @@
 package businessmodel.category;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
+import org.joda.time.Period;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,20 +13,34 @@ import businessmodel.Catalog;
 public class VehicleModelTest {
 	
 	private VehicleModel model;
-	private VehicleModelSpecification cms;
+	private VehicleModelSpecification vms;
+	private ArrayList<VehicleOption> options;
+	private Period standardTimeToFinish;
 
 	@Before
 	public void setUp() throws Exception {
-	
-		Catalog catalog = new Catalog();
-		cms = catalog.getAvailaleModelsClone().get(0).getVehicleModelSpecification();
-		model = catalog.getAvailaleModelsClone().get(0);
+		options = new ArrayList<VehicleOption>();
+		options.add(new VehicleOption("sedan", new Body()));
+		options.add(new VehicleOption("manual", new Airco()));
+		options.add(new VehicleOption("winter", new Wheels()));
+		options.add(new VehicleOption("6 speed manual", new Gearbox()));
+		options.add(new VehicleOption("low", new Spoiler()));
+		options.add(new VehicleOption("vinyl grey", new Seats()));
+		options.add(new VehicleOption("black", new Color()));
+		options.add(new VehicleOption("standard", new Engine()));
+		vms = new VehicleModelSpecification(options);
+		String name = "Test model";
+		standardTimeToFinish = new Period();
+		standardTimeToFinish = standardTimeToFinish.withMinutes(30);
+		standardTimeToFinish = standardTimeToFinish.withHours(3);
+		model = new VehicleModel(name, vms, standardTimeToFinish);
 	}
 
 	@Test
 	public void test() {
-		assertEquals("Model A",this.model.getName());
-		assertEquals(this.cms,model.getVehicleModelSpecification());
-		assertEquals(model.toString(),"Vehicle model: Model A");
+		assertEquals("Test model", model.getName());
+		assertEquals(vms, model.getVehicleModelSpecification());
+		assertEquals(standardTimeToFinish, model.getStandardTimeToFinish());
+		assertArrayEquals(options.toArray(), model.getPossibilities().toArray());
 	}
 }

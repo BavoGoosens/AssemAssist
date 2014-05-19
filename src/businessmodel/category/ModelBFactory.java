@@ -80,12 +80,10 @@ public class ModelBFactory extends VehicleModelFactory {
 	protected Gearbox createGearbox() {
 		Gearbox gearbox = new Gearbox();
 		VehicleOption gearbox1 = new VehicleOption("6 speed manual", gearbox);
-		VehicleOption gearbox2 = new VehicleOption("5 speed manual", gearbox);
-		VehicleOption gearbox3 = new VehicleOption("5 speed automatic", gearbox);
+		VehicleOption gearbox2 = new VehicleOption("5 speed automatic", gearbox);
 		try {
 			gearbox.addOption(gearbox1);
 			gearbox.addOption(gearbox2);
-			gearbox.addOption(gearbox3);
 		} catch (IllegalVehicleOptionCategoryException e) {
 			System.out.println(e.getMessage());
 		}
