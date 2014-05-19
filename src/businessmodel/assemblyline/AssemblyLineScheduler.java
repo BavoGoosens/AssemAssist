@@ -196,6 +196,7 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	private void checkNewDay(){
+
 		if (this.getShifts().isEmpty()) {
 			notifyObservers();
 			this.ScheduleDay();

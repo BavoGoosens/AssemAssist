@@ -74,7 +74,17 @@ public class AssemblyLine implements Subject{
 
 	// TODO AssemblyLine state toeveogen.
 	public boolean canAddOrder(Order order){
-		return this.getAssemblyLineScheduler().canAddOrder(order);
+		boolean bool = false;
+		Iterator<VehicleModel> models = this.getResponsibleModelsIterator();
+		while(models.hasNext()){
+			VehicleModel model = models.next();
+			if(order.getVehicleModel().getName() == model.getName())
+				bool = true;
+		} 
+		if(bool)
+			return this.getAssemblyLineScheduler().canAddOrder(order);
+		else
+			return bool;
 	}
 
 	/**

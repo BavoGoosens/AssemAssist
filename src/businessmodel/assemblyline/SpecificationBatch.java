@@ -25,6 +25,8 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	 */
 	public SpecificationBatch(AssemblyLineScheduler scheduler, ArrayList<VehicleOption> options){
 		super(scheduler);
+		if (options == null) throw new IllegalArgumentException();
+		
 		this.setOptions(options);
 		ArrayList<Order> list = new ArrayList<Order>(this.getScheduler().getOrders());
 		for(Order order: list)

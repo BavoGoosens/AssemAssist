@@ -63,8 +63,6 @@ public class WorkSlot{
 	 * 			| order == null
 	 */
 	private void setOrder(Order order) throws IllegalArgumentException{
-		if (order == null)
-			throw new IllegalArgumentException("Not an order");
 		this.order = order;
 	}
 

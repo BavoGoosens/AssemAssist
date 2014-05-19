@@ -57,7 +57,7 @@ public class InitialData {
 		this.customsManager = vmc.login("wowwww", "");	
 
 		this.controllerStandard = new StandardOrderHandler(vmc);
-
+		
 		this.controllerSingleTask = new SingleTaskOrderHandler(vmc);
 		this.iter = vmc.getVehicleModels(this.garageholder);
 		this.available_vehiclemodels = new ArrayList<VehicleModel>();
@@ -73,32 +73,32 @@ public class InitialData {
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
 		}
+		
+//		this.processOrders();
 
-		this.processOrders();
-
-		//		orders = false;
-		//		
-		//		for(int i=0; i < 3; i++){
-		//			orders = this.randomOrderGenerator("singleTask",-1);
-		//			if (!orders)
-		//				this.randomOrderGenerator("singleTask", 0);
-		//		}
-		//
-		//		orders = false;
-		//		
-		//		for(int i=0; i < 3; i++){
-		//			orders = this.randomOrderGenerator("standard",-1);
-		//			if (!orders)
-		//				this.randomOrderGenerator("standard", 0);
-		//		}
-		//
-		//		orders = false;
-		//
-		//		for(int i=0; i < 3; i++){
-		//			orders = this.randomOrderGenerator("standard",-1);
-		//			if (!orders)
-		//				this.randomOrderGenerator("standard", 0);
-		//		}
+//		orders = false;
+//
+//		for(int i=0; i < 3; i++){
+//			orders = this.randomOrderGenerator("singleTask",-1);
+//			if (!orders)
+//				this.randomOrderGenerator("singleTask", 0);
+//		}
+//
+//		orders = false;
+//
+//		for(int i=0; i < 3; i++){
+//			orders = this.randomOrderGenerator("standard",-1);
+//			if (!orders)
+//				this.randomOrderGenerator("standard", 0);
+//		}
+//
+//		orders = false;
+//
+//		for(int i=0; i < 3; i++){
+//			orders = this.randomOrderGenerator("standard",-1);
+//			if (!orders)
+//				this.randomOrderGenerator("standard", 0);
+//		}
 
 
 	}
@@ -136,7 +136,7 @@ public class InitialData {
 				AssemblyTask task = iter2.next();
 				vmc.finishTask(task, 20);
                 looping = true;
-			}
+            }
 		}
 	}
 
