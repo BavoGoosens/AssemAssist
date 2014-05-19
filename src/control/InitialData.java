@@ -67,7 +67,7 @@ public class InitialData {
 
 		Boolean orders = false;
 
-		for(int i=0; i < 20; i++){
+		for(int i=0; i < 5; i++){
 			orders = this.randomOrderGenerator("standard",-1);
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
@@ -130,7 +130,7 @@ public class InitialData {
 			Iterator<AssemblyTask> iter2 = vmc.getPendingTasks(this.mechanic, wp1);
 			while (iter2.hasNext()){
 				AssemblyTask task = iter2.next();
-				vmc.finishTask(task, 20);
+				vmc.finishTask(task, 30);
 			}
 		}
 	}
