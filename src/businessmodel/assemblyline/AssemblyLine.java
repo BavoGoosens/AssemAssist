@@ -307,7 +307,7 @@ public class AssemblyLine implements Subject{
     
     @Override
     public String toString(){
-    	return this.name + " " + this.getWorkPosts().size() + "";
+    	return this.name + " " + this.getWorkPosts().size();
     }
 
     protected void setName(String name) {
