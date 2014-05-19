@@ -126,9 +126,9 @@ public class AssemblyLineScheduler implements Subject {
 	public void changeAlgorithm(String algoname, ArrayList<VehicleOption> options) throws IllegalSchedulingAlgorithmException, IllegalArgumentException{
 		if (algoname == null){
 			throw new IllegalSchedulingAlgorithmException("No scheduling algorithm supplied");}
-		else if (algoname.equalsIgnoreCase("fifo") || algoname.equalsIgnoreCase("first in first out") ){
+		else if (algoname.equalsIgnoreCase("FIFO") || algoname.equalsIgnoreCase("first in first out") ){
 			this.algortime = new FIFO(this);}
-		else if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch")){
+		else if (algoname.equalsIgnoreCase("SpecificationBatch") || algoname.equalsIgnoreCase("specification batch")){
 			if (options == null) 
 				throw new IllegalArgumentException("No such option");
 			this.algortime = new SpecificationBatch(this,options);}
@@ -158,14 +158,23 @@ public class AssemblyLineScheduler implements Subject {
 			this.updateSchedule();
 		}
 		else if (this.getDelay() >= 60){
-			Order order = this.getShifts().getLast().removeLastTimeSlot();
-			if(this.getShifts().getLast().getTimeSlots().size() == 0)
-				this.getShifts().removeLast();
-			if(order!= null)
-				this.getAssemblyline().getMainScheduler().placeOrderInFront(order);
+			removeLastOrderOfSchedule();
 			this.updateDelay(-60);
 			this.updateSchedule();
 		}
+	}
+
+	private void removeLastOrderOfSchedule() {
+		Order order = this.getShifts().getLast().getTimeSlots().getLast().getLastOrderOfLastWorkSLot();
+		int i = 0 ;
+		for(TimeSlot slot: this.getShifts().getLast().getTimeSlots()){
+			slot.getWorkSlots().get(i).addOrder(null);
+		}
+		this.getShifts().getLast().removeLastTimeSlot();
+		if(this.getShifts().getLast().getTimeSlots().size() == 0)
+			this.getShifts().removeLast();
+		if(order!= null)
+			this.getAssemblyline().getMainScheduler().placeOrderInFront(order);
 	}
 
 	private void updateDelay(int delay){
