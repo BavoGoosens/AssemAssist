@@ -1,9 +1,9 @@
 package businessmodel.assemblyline;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 
+import businessmodel.util.IteratorConverter;
 import org.joda.time.DateTime;
 
 import businessmodel.category.VehicleOption;
@@ -126,9 +126,9 @@ public class AssemblyLineScheduler implements Subject {
 	public void changeAlgorithm(String algoname, ArrayList<VehicleOption> options) throws IllegalSchedulingAlgorithmException, IllegalArgumentException{
 		if (algoname == null){
 			throw new IllegalSchedulingAlgorithmException("No scheduling algorithm supplied");}
-		else if (algoname.equalsIgnoreCase("FIFO") || algoname.equalsIgnoreCase("first in first out") ){
+		else if (algoname.equalsIgnoreCase("fifo") || algoname.equalsIgnoreCase("first in first out") ){
 			this.algortime = new FIFO(this);}
-		else if (algoname.equalsIgnoreCase("SpecificationBatch") || algoname.equalsIgnoreCase("specification batch")){
+		else if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch")){
 			if (options == null) 
 				throw new IllegalArgumentException("No such option");
 			this.algortime = new SpecificationBatch(this,options);}
@@ -158,23 +158,14 @@ public class AssemblyLineScheduler implements Subject {
 			this.updateSchedule();
 		}
 		else if (this.getDelay() >= 60){
-			removeLastOrderOfSchedule();
+			Order order = this.getShifts().getLast().removeLastTimeSlot();
+			if(this.getShifts().getLast().getTimeSlots().size() == 0)
+				this.getShifts().removeLast();
+			if(order!= null)
+				this.getAssemblyline().getMainScheduler().placeOrderInFront(order);
 			this.updateDelay(-60);
 			this.updateSchedule();
 		}
-	}
-
-	private void removeLastOrderOfSchedule() {
-		Order order = this.getShifts().getLast().getTimeSlots().getLast().getLastOrderOfLastWorkSLot();
-		int i = 0 ;
-		for(TimeSlot slot: this.getShifts().getLast().getTimeSlots()){
-			slot.getWorkSlots().get(i).addOrder(null);
-		}
-		this.getShifts().getLast().removeLastTimeSlot();
-		if(this.getShifts().getLast().getTimeSlots().size() == 0)
-			this.getShifts().removeLast();
-		if(order!= null)
-			this.getAssemblyline().getMainScheduler().placeOrderInFront(order);
 	}
 
 	private void updateDelay(int delay){
@@ -205,13 +196,8 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	private void checkNewDay(){
-		boolean empty = false;
-		for(Shift shift: this.getShifts()){
-			for(TimeSlot slot : shift.getTimeSlots()){
-				for(WorkSlot slot1 : slot.getWorkSlots()){
-					if(slot1.isOccupied())
-						empty = true;}}}
-		if (!empty) {
+
+		if (this.getShifts().isEmpty()) {
 			notifyObservers();
 			this.ScheduleDay();
 		}
@@ -328,19 +314,23 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	public int calculateMinutes(Order order){
+        IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		if(order.getVehicleModel() == null)
-			return this.getAssemblyline().getWorkPosts().size()*60;
+			return converter.convert(this.getAssemblyline().getWorkPostsIterator()).size()*60;
 		int minutes = 0;
-		for(WorkPost wp : this.getAssemblyline().getWorkPosts()){
+		for(WorkPost wp : converter.convert(this.getAssemblyline().getWorkPostsIterator())){
 			minutes += wp.getStandardTimeOfModel(order.getVehicleModel());
 		}
 		return minutes;
 	}
 
 	private int minutesLastWorkPost(Order order) {
-		if(order.getVehicleModel() == null)
+        IteratorConverter<WorkPost> converter = new IteratorConverter<>();
+        if(order.getVehicleModel() == null)
 			return 60;
-		return this.getAssemblyline().getWorkPosts().get(this.getAssemblyline().getWorkPosts().size()-1).getStandardTimeOfModel(order.getVehicleModel());
+		return converter.convert(this.getAssemblyline().getWorkPostsIterator())
+                .get(converter.convert(this.getAssemblyline().getWorkPostsIterator()).size()-1)
+                .getStandardTimeOfModel(order.getVehicleModel());
 	}
 
 
