@@ -1,6 +1,9 @@
 package businessmodel.assemblyline;
 
-public class MaintenanceState implements AssemblyLineState {
+import businessmodel.observer.Observer;
+import businessmodel.observer.Subject;
+
+public class MaintenanceState implements AssemblyLineState, Observer {
 
 	AssemblyLine assemblyLine;
 	
@@ -10,10 +13,8 @@ public class MaintenanceState implements AssemblyLineState {
 	 * @param assemblyLine
 	 */
 	public MaintenanceState(AssemblyLine assemblyLine){
-
 		if (assemblyLine == null) throw new IllegalStateException("Not a valid assembly line.");
 		this.assemblyLine = assemblyLine;
-
 	}
 	
 	@Override
@@ -34,7 +35,17 @@ public class MaintenanceState implements AssemblyLineState {
 	}
 
     @Override
+    public boolean canPlaceOrder() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return "Maintenance";
+    }
+
+    @Override
+    public void update(Subject subject) {
+
     }
 }

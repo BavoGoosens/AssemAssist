@@ -31,6 +31,11 @@ public class OperationalState implements AssemblyLineState {
 	}
 
     @Override
+    public boolean canPlaceOrder() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return "Operational";
     }

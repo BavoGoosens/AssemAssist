@@ -18,8 +18,10 @@ public class Main {
 	public static void main(String[] args) throws NoClearanceException {
 		
 		VehicleManufacturingCompany vmc = new VehicleManufacturingCompany();
-		new InitialData().initialize(vmc);
-		
+
+        if (args.length == 0)
+            new InitialData().initialize(vmc);
+
 		View view = new LoginView(vmc);
 		view.display();
 		
