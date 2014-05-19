@@ -3,7 +3,7 @@ package businessmodel.assemblyline;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 
-public class MaintenanceState implements AssemblyLineState, Observer {
+public class MaintenanceState implements AssemblyLineState {
 
 	AssemblyLine assemblyLine;
 	
@@ -44,8 +44,4 @@ public class MaintenanceState implements AssemblyLineState, Observer {
         return "Maintenance";
     }
 
-    @Override
-    public void update(Subject subject) {
-
-    }
 }

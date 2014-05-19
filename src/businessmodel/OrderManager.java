@@ -56,8 +56,8 @@ public class OrderManager implements Subject {
 	protected void placeOrder(Order order) throws IllegalArgumentException {
 		if (order == null)
 			throw new IllegalArgumentException("Bad order!");
-		AssemblyLine line = this.getMainScheduler().placeOrder(order);
-		if(line == null)
+		this.getMainScheduler().placeOrder(order);
+		if(order.getEstimatedDeliveryDate() == null)
 			addOrderToPendingOrders(order);
 	}
 
@@ -73,8 +73,9 @@ public class OrderManager implements Subject {
 
 	protected void schedulePendingOrders(){
 		scheduleSingleTaskOrders();
-		CopyOnWriteArrayList<Order> tempList = new CopyOnWriteArrayList<Order>(this.getPendingOrders());
-		for(Order order : tempList){
+		Order[] tempList = this.getPendingOrders().toArray(new Order[this.getPendingOrders().size()]);
+		for(int i = 0 ; i < tempList.length ; i ++){
+            Order order = tempList[i];
 			getPendingOrders().remove(order);
 			this.placeOrder(order);
 		}
@@ -166,13 +167,6 @@ public class OrderManager implements Subject {
 		return (ArrayList<Order>) completedorders;
 	}
 
-	protected Order getPreviousOrder(Order order, AssemblyLine line){
-		int index = this.getPendingOrders().indexOf(order);
-		if(index-1 < 0)
-			return null;
-		else
-			return this.getPendingOrders().get(index-1);
-	}
 
 	private void addOrderToPendingOrders(Order order) {
 		setEstimatedTimeOfPendingOrder(order);
@@ -181,15 +175,28 @@ public class OrderManager implements Subject {
 	
 	private void setEstimatedTimeOfPendingOrder(Order order){
 		if(this.getPendingOrders().size() == 0){
-			DateTime date = this.getMainScheduler().getTime().plusDays(1);
-			date.withHourOfDay(8);
-			date.withMinuteOfHour(0);
-			order.setEstimatedDeliveryDateOfOrder(date.plusMinutes(this.getMainScheduler().
-					getAssemblyLineSchedulers().get(0).calculateMinutes(order)));
-			}
-		else
-			order.setEstimatedDeliveryDateOfOrder(this.getPendingOrders().getLast().getEstimatedDeliveryDate().plus(60));
+            DateTime date = this.getMainScheduler().getTime().plusDays(1);
+            setHenk(order,date);
+        }
+		else {
+            if (this.getPendingOrders().getLast().getEstimatedDeliveryDate().
+                    plus(this.getMainScheduler().getAssemblyLineSchedulers().
+                            get(0).minutesLastWorkPost(order)).getHourOfDay() > 22){
+                DateTime date = this.getPendingOrders().getLast().getEstimatedDeliveryDate().plusDays(1);
+                setHenk(order,date);
+            }
+            else
+                order.setEstimatedDeliveryDateOfOrder(this.getPendingOrders().getLast().getEstimatedDeliveryDate()
+                        .plus(this.getMainScheduler().getAssemblyLineSchedulers().get(0).minutesLastWorkPost(order)));
+        }
 	}
+
+    private void setHenk(Order order, DateTime date){
+        date.withHourOfDay(8);
+        date.withMinuteOfHour(0);
+        order.setEstimatedDeliveryDateOfOrder(date.plusMinutes(this.getMainScheduler().
+                getAssemblyLineSchedulers().get(0).calculateMinutes(order)));
+    }
 
 	@Override
 	public void subscribeObserver(Observer observer) throws IllegalArgumentException {

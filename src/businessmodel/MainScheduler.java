@@ -73,7 +73,7 @@ public class MainScheduler {
 	}
 
 
-	protected AssemblyLine placeOrder(Order order){
+	protected void placeOrder(Order order){
 		ArrayList<AssemblyLine> possibleAssemblyLines = getPossibleAssemblyLinesToPlaceOrder(order);
 		if(possibleAssemblyLines.size() != 0){
 			AssemblyLine fastestAssemblyLine = possibleAssemblyLines.get(0);
@@ -82,9 +82,8 @@ public class MainScheduler {
 					fastestAssemblyLine = assem2;
 			}
 			fastestAssemblyLine.getAssemblyLineScheduler().addOrder(order);
-			return fastestAssemblyLine;}
-		else return null;
-	}
+	    }
+    }
 
 	protected ArrayList<AssemblyLine> getAssemblyLines() {
 		return this.assemblylines;
@@ -166,6 +165,17 @@ public class MainScheduler {
 		}
 		return currenttime;
 	}
+
+    /*
+    // TODO: miss maken ni zeker
+    public void startNewDay(){
+        boolean ready = true;
+        for(AssemblyLineScheduler scheduler: this.getAssemblyLineSchedulers()){
+            if(!scheduler.checkNewDay())
+                ready = false;
+        }
+    }
+    */
 
 	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions() {
 

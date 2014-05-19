@@ -81,12 +81,12 @@ public class AssemblyLineScheduler implements Subject {
 			throw new IllegalNumberException("Bad time!");
 		int delay = time - 60;
 		this.currenttime = this.getCurrentTime().plusMinutes(time);
-		updateAssemblylineStatus();
+        updateAssemblylineStatus();
 		updateCompletedOrders();
 		updateDelay(delay);
 		updateEstimatedTimeOfOrders(delay);
-		updateSchedule();
-		checkNewDay();
+        checkNewDay();
+        updateSchedule();
 	}
 
 	/**
@@ -324,7 +324,7 @@ public class AssemblyLineScheduler implements Subject {
 		return minutes;
 	}
 
-	private int minutesLastWorkPost(Order order) {
+	public int minutesLastWorkPost(Order order) {
         IteratorConverter<WorkPost> converter = new IteratorConverter<>();
         if(order.getVehicleModel() == null)
 			return 60;

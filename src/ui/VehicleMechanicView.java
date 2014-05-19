@@ -147,7 +147,7 @@ public class VehicleMechanicView extends View {
             }
         } catch (NoClearanceException e){
             this.quit();
-        }
+        } 
 	}
 
 	private void displayActionOverview(AssemblyTask assemblyTask) {

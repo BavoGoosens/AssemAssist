@@ -54,10 +54,10 @@ public class InitialData {
 		this.vmc = vmc;
 		this.garageholder = vmc.login("wow", "");
 		this.mechanic = vmc.login("woww", "");
-		this.customsManager = vmc.login("wowwww", "");	
+		this.customsManager = vmc.login("wowwww", "");
 
 		this.controllerStandard = new StandardOrderHandler(vmc);
-		
+
 		this.controllerSingleTask = new SingleTaskOrderHandler(vmc);
 		this.iter = vmc.getVehicleModels(this.garageholder);
 		this.available_vehiclemodels = new ArrayList<VehicleModel>();
@@ -68,12 +68,16 @@ public class InitialData {
 
 		Boolean orders = false;
 
-		for(int i=0; i < 5; i++){
-			orders = this.randomOrderGenerator("standard",-1);
+        ArrayList<Integer> numbers = this.generateOrders();
+		for(int i=0; i < numbers.size(); i++){
+			orders = this.randomOrderGenerator("standard",numbers.get(i));
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
 		}
-//		this.processOrders();
+
+
+		this.processOrders();
+ 
 
 //		orders = false;
 //
@@ -101,6 +105,40 @@ public class InitialData {
 
 
 	}
+
+    private ArrayList<Integer> generateOrders() {
+        ArrayList<Integer> number = new ArrayList<Integer>();
+        number.add(1);
+        number.add(2);
+        number.add(3);
+        number.add(4);
+        number.add(0);
+        number.add(1);
+        number.add(1);
+        number.add(2);
+        number.add(2);
+        number.add(3);
+        number.add(3);
+        number.add(4);
+        number.add(4);
+        number.add(0);
+        number.add(0);
+        number.add(4);
+        number.add(3);
+        number.add(2);
+        number.add(1);
+        number.add(4);
+        number.add(1);
+        number.add(1);
+        number.add(4);
+        number.add(2);
+        number.add(1);
+        number.add(4);
+        number.add(1);
+        number.add(1);
+        number.add(3);
+        return number;
+    }
 
     private boolean looping = true;
 	// TODO
@@ -151,7 +189,7 @@ public class InitialData {
 			vehicleModel = this.available_vehiclemodels.get(model);
 
 		ArrayList <VehicleOption> available = vehicleModel.getPossibilities();
-		airco.clear(); body.clear(); color.clear();engine.clear();gearbox.clear(); seats.clear(); 
+		airco.clear(); body.clear(); color.clear();engine.clear();gearbox.clear(); seats.clear();
 		spoiler.clear();wheels.clear(); this.chosen.clear(); protection.clear(); certification.clear(); storage.clear();
 
 		for(VehicleOption option: available){
