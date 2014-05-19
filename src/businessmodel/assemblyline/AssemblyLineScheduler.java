@@ -126,9 +126,9 @@ public class AssemblyLineScheduler implements Subject {
 	public void changeAlgorithm(String algoname, ArrayList<VehicleOption> options) throws IllegalSchedulingAlgorithmException, IllegalArgumentException{
 		if (algoname == null){
 			throw new IllegalSchedulingAlgorithmException("No scheduling algorithm supplied");}
-		else if (algoname.equalsIgnoreCase("fifo") || algoname.equalsIgnoreCase("first in first out") ){
+		else if (algoname.equalsIgnoreCase("FIFO") || algoname.equalsIgnoreCase("first in first out") ){
 			this.algortime = new FIFO(this);}
-		else if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch")){
+		else if (algoname.equalsIgnoreCase("SpecificationBatch") || algoname.equalsIgnoreCase("specification batch")){
 			if (options == null) 
 				throw new IllegalArgumentException("No such option");
 			this.algortime = new SpecificationBatch(this,options);}

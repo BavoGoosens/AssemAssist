@@ -111,7 +111,8 @@ public class BatchAlgorithmTest {
 			ArrayList<VehicleOption> options1 = new ArrayList<VehicleOption>();
 			options1.add(new VehicleOption("medium engine", new Engine()));
 			options1.add(new VehicleOption("big body", new Body()));
-			vmc.changeSystemWideAlgorithm("sb", options1 );
+			options1.add(new VehicleOption("Airco", new Airco()));
+			vmc.changeSystemWideAlgorithm("SpecificationBatch", options1 );
 			
 			boolean bool = true;
 			try{
