@@ -1,4 +1,4 @@
-package businessmodel.statistics;
+package businessmodel;
 
 import java.util.ArrayList;
 
@@ -21,6 +21,8 @@ import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
 import businessmodel.category.Wheels;
 import businessmodel.order.StandardVehicleOrder;
+import businessmodel.statistics.StatisticsManager;
+import businessmodel.statistics.VehicleStatistics;
 import businessmodel.user.GarageHolder;
 
 public class VehicleStatisticsTest {
@@ -157,14 +159,17 @@ public class VehicleStatisticsTest {
         /**
          * Voer alle taken uit
          */
-        for (AssemblyLine assemblyLine: om.getMainScheduler().getAssemblyLines()) {
-        	for (WorkPost workPost: assemblyLine.getWorkPosts()) {
-        		while(workPost.getPendingTasks().hasNext()) {
-        			AssemblyTask task = workPost.getPendingTasks().next();
-        			task.completeAssemblytask(60);
-        		}
-        	}
-        } 
+        
+        for (int i = 1; i <= 50; i++) {
+	        for (AssemblyLine assemblyLine: om.getMainScheduler().getAssemblyLines()) {
+	        	for (WorkPost workPost: assemblyLine.getWorkPosts()) {
+	        		while(workPost.getPendingTasks().hasNext()) {
+	        			AssemblyTask task = workPost.getPendingTasks().next();
+	        			task.completeAssemblytask(60);
+	        		}
+	        	}
+	        } 
+        }
     }
     
     @Test
