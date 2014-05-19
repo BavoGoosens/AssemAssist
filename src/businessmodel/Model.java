@@ -137,7 +137,7 @@ public interface Model {
 	 * 
 	 * @return The unscheduled car options of the model.
 	 */
-	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions(User user, int num) throws IllegalArgumentException, NoClearanceException;
+	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions(User user) throws IllegalArgumentException, NoClearanceException;
 
 	/**
 	 * Returns the system time.
