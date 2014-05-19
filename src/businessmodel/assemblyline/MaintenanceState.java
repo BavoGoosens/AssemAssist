@@ -3,10 +3,13 @@ package businessmodel.assemblyline;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 
-public class MaintenanceState implements AssemblyLineState {
+import java.util.Iterator;
 
-	AssemblyLine assemblyLine;
-	
+public class MaintenanceState implements AssemblyLineState, Observer {
+
+	private AssemblyLine assemblyLine;
+
+    private boolean isReady;
 	
 	/**
 	 * Constructor for maintenance state of the assembly line
@@ -15,6 +18,7 @@ public class MaintenanceState implements AssemblyLineState {
 	public MaintenanceState(AssemblyLine assemblyLine){
 		if (assemblyLine == null) throw new IllegalStateException("Not a valid assembly line.");
 		this.assemblyLine = assemblyLine;
+        assemblyLine.subscribeObserver(this);
 	}
 	
 	@Override
@@ -36,7 +40,7 @@ public class MaintenanceState implements AssemblyLineState {
 
     @Override
     public boolean canPlaceOrder() {
-        return true;
+            return this.isReady;
     }
 
     @Override
@@ -44,4 +48,19 @@ public class MaintenanceState implements AssemblyLineState {
         return "Maintenance";
     }
 
+    @Override
+    public void update(Subject subject) {
+        Iterator<WorkPost> posts = this.assemblyLine.getWorkPostsIterator();
+        boolean ready = false;
+        while (posts.hasNext()){
+            WorkPost post = posts.next();
+            ready = post.isCompleted();
+        }
+        if (ready){
+            // the assembly line is empty
+            // now shift 4 hours and transition to Operational state
+
+        }
+        // in the other case just wait till the line is empty.
+    }
 }
