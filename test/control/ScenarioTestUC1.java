@@ -195,12 +195,6 @@ public class ScenarioTestUC1 {
 			}
 		}
 		
-		System.out.println("**Chosen options**");
-		for (VehicleOption option: chosen) {
-			System.out.println(option);
-		}
-		System.out.println("");
-		
 		StandardVehicleOrder order = new StandardVehicleOrder(this.garageHolder, chosen, this.models.get(1));
 		this.soc.placeOrder(this.garageHolder, order);
 		chosen.clear();
@@ -213,11 +207,6 @@ public class ScenarioTestUC1 {
 					chosen.add(this.models.get(3).getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
 				}
 			}
-		}
-		
-		System.out.println("**Chosen options**");
-		for (VehicleOption option: chosen) {
-			System.out.println(option);
 		}
 		
 		order = new StandardVehicleOrder(this.garageHolder, chosen, this.models.get(3));

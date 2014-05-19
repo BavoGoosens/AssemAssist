@@ -113,7 +113,7 @@ public abstract class User {
 	 */
 	@Override
 	public String toString() {
-		return "firstname= " + firstname + ", lastname= " + lastname;
+		return firstname + " " + lastname+" ("+username+")";
 	}
 
     public boolean canChangeOperationalStatus() {
