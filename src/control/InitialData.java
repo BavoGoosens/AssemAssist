@@ -11,7 +11,7 @@ import businessmodel.VehicleManufacturingCompany;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
-import businessmodel.category.CargoProtection;
+import businessmodel.category.Protection;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.SingleTaskOrder;
@@ -56,7 +56,7 @@ public class InitialData {
 		this.customsManager = vmc.login("wowwww", "");	
 
 		this.controllerStandard = new StandardOrderHandler(vmc);
-
+		
 		this.controllerSingleTask = new SingleTaskOrderHandler(vmc);
 		this.iter = vmc.getVehicleModels(this.garageholder);
 		this.available_vehiclemodels = new ArrayList<VehicleModel>();
@@ -72,32 +72,32 @@ public class InitialData {
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
 		}
+		
+//		this.processOrders();
 
-		this.processOrders();
-
-		//		orders = false;
-		//		
-		//		for(int i=0; i < 3; i++){
-		//			orders = this.randomOrderGenerator("singleTask",-1);
-		//			if (!orders)
-		//				this.randomOrderGenerator("singleTask", 0);
-		//		}
-		//
-		//		orders = false;
-		//		
-		//		for(int i=0; i < 3; i++){
-		//			orders = this.randomOrderGenerator("standard",-1);
-		//			if (!orders)
-		//				this.randomOrderGenerator("standard", 0);
-		//		}
-		//
-		//		orders = false;
-		//
-		//		for(int i=0; i < 3; i++){
-		//			orders = this.randomOrderGenerator("standard",-1);
-		//			if (!orders)
-		//				this.randomOrderGenerator("standard", 0);
-		//		}
+//		orders = false;
+//
+//		for(int i=0; i < 3; i++){
+//			orders = this.randomOrderGenerator("singleTask",-1);
+//			if (!orders)
+//				this.randomOrderGenerator("singleTask", 0);
+//		}
+//
+//		orders = false;
+//
+//		for(int i=0; i < 3; i++){
+//			orders = this.randomOrderGenerator("standard",-1);
+//			if (!orders)
+//				this.randomOrderGenerator("standard", 0);
+//		}
+//
+//		orders = false;
+//
+//		for(int i=0; i < 3; i++){
+//			orders = this.randomOrderGenerator("standard",-1);
+//			if (!orders)
+//				this.randomOrderGenerator("standard", 0);
+//		}
 
 
 	}
@@ -166,9 +166,9 @@ public class InitialData {
 				spoiler.add(option);
 			}else if (option.getCategory().equals(new Wheels())){
 				wheels.add(option);
-			}else if (option.getCategory().equals(new CargoProtection())){
+			}else if (option.getCategory().equals(new Protection())){
 				certification.add(option);
-			}else if (option.getCategory().equals(new ToolStorage())){
+			}else if (option.getCategory().equals(new Storage())){
 				protection.add(option);
 			}else if (option.getCategory().equals(new Certification())){
 				storage.add(option);

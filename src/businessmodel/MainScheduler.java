@@ -1,9 +1,15 @@
 package businessmodel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.joda.time.DateTime;
 
@@ -23,13 +29,15 @@ public class MainScheduler {
 
 	private String systemWideAlgo;
 
+	private final int nbOrdersSpecificationBatch = 3;
+
 	public MainScheduler(OrderManager ordermanager){
 		this.setOrderManager(ordermanager);
 		this.generateAssemblyLines();
 	}
 
 	public void schedulePendingOrders() {
-		this.ordermanager.schedulePendingOrders();;
+		this.ordermanager.schedulePendingOrders();
 	}
 
 	public void finishedOrder(Order completedorder) {
@@ -82,16 +90,23 @@ public class MainScheduler {
 		return this.assemblylines;
 	}
 
+	//TODO num parameter
 	protected void changeSystemWideAlgorithm(String algo, ArrayList<VehicleOption> options) {
+		
 		this.systemWideAlgo = algo;
-		if (!this.checkOptionsForSpecificationBatch(options)) 
-			throw new IllegalArgumentException("Too little orders with that option ( less than 3 )");
+		
+//		Iterator<ArrayList<VehicleOption>> it = this.getUnscheduledVehicleOptions();
+//		while( it.hasNext()){
+//			System.out.println(it.next());
+//		}
+			
 		for (AssemblyLine assemblyLine: this.getAssemblyLines()) {
 			assemblyLine.getAssemblyLineScheduler().changeAlgorithm(algo, options);
 		}
 	}
 
 	private boolean checkOptionsForSpecificationBatch(ArrayList<VehicleOption> options) {
+
 		int orderCount = 0;
 		for(AssemblyLine assem: this.getAssemblyLines()){
 			for(Order order: assem.getAssemblyLineScheduler().getOrders()){
@@ -105,7 +120,7 @@ public class MainScheduler {
 				if (count == options.size()) orderCount++;
 			}
 		}
-		if (orderCount < 3)
+		if (orderCount < this.nbOrdersSpecificationBatch)
 			return false;
 		return true;
 	}
@@ -152,26 +167,52 @@ public class MainScheduler {
 		return currenttime;
 	}
 
-	//TODO moet nog getest worden, ookal hebben meerdere assembly lines dezelfde sets, alleen maar unieke teruggeven voor de UI
-	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions(int num) {
+	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions() {
 
 		ArrayList<ArrayList<VehicleOption>> choices = new ArrayList<ArrayList<VehicleOption>>();
+		HashSet<VehicleOption> set = new HashSet<VehicleOption>();
 
-		for (AssemblyLine line : this.assemblylines){
+		for (AssemblyLine line : this.getAssemblyLines()){
+			for(Order order: line.getAssemblyLineScheduler().getOrders()){
 
-			ArrayList<VehicleOption> assOptions = line.getAssemblyLineScheduler().getUnscheduledVehicleOptions(num);
-			for(ArrayList<VehicleOption> opt: choices){
-				int count=0;
-				for (VehicleOption option : assOptions){
-					for(VehicleOption opt2: opt){
-						if (option.toString().equals(opt2.toString()))	count++;
+				ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();
+				for(VehicleOption opt: order.getOptions()){
+
+					ArrayList<VehicleOption> temp = new ArrayList<VehicleOption>();
+					temp.add(opt);
+					if (!set.contains(opt)){
+						if (this.checkOptionsForSpecificationBatch(temp)){ 
+							options.add(opt); 
+							set.add(opt);
+						}
+					}else{
+						options.add(opt);
 					}
 				}
-				if (count!=opt.size()) choices.add(assOptions);
-			}
 
+				boolean duplicate = true;
+				for(ArrayList<VehicleOption> opts: choices){
+					if(opts.size() != options.size())
+						break;
+					for(int i=0; i < opts.size(); i++){
+						if(!options.get(i).toString().equals(opts.get(i).toString())) duplicate = false;
+					}
+					if(duplicate)
+						break;
+				}
+
+				if (!duplicate || choices.size() == 0)
+					choices.add(options);
+
+			}
 		}
+
+
+		//		for(ArrayList<VehicleOption> list: choices){
+		//			System.out.println(list.toString());
+		//		}
 
 		return  choices.iterator();
 	}
+
 }

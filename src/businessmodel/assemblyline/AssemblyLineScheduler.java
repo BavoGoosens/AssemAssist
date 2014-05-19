@@ -126,9 +126,9 @@ public class AssemblyLineScheduler implements Subject {
 	public void changeAlgorithm(String algoname, ArrayList<VehicleOption> options) throws IllegalSchedulingAlgorithmException, IllegalArgumentException{
 		if (algoname == null){
 			throw new IllegalSchedulingAlgorithmException("No scheduling algorithm supplied");}
-		else if (algoname.equalsIgnoreCase("fifo") || algoname.equalsIgnoreCase("first in first out") ){
+		else if (algoname.equalsIgnoreCase("FIFO") || algoname.equalsIgnoreCase("first in first out") ){
 			this.algortime = new FIFO(this);}
-		else if (algoname.equalsIgnoreCase("sb") || algoname.equalsIgnoreCase("specification batch")){
+		else if (algoname.equalsIgnoreCase("SpecificationBatch") || algoname.equalsIgnoreCase("specification batch")){
 			if (options == null) 
 				throw new IllegalArgumentException("No such option");
 			this.algortime = new SpecificationBatch(this,options);}
@@ -344,36 +344,34 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 
-
-	//TODO check this shit, moet alle sets teruggeven die in meer dan of gelijk aan 3 orders komen
-	public ArrayList<VehicleOption> getUnscheduledVehicleOptions(int maxNumber){
-
-		HashMap<String, Integer> list = new HashMap<String, Integer>();
-		ArrayList<String> options = new ArrayList<String>();
-		//arraylist vehicleoption
-		HashMap<String, VehicleOption> result = new HashMap<String, VehicleOption>();
-
-		for(Order order: this.getOrders()){
-			for(VehicleOption option: order.getOptions()){
-				if (list.containsKey(option.getName())){
-					int count = list.get(option.getName());
-					list.remove(option.getName());
-					list.put(option.getName(),++count) ;
-				}else {
-					options.add(option.getName());
-					list.put(option.getName(), 1);
-					result.put(option.getName(), option);
-				}
-			}
-		}
-
-		for (String optionName: options)
-			if (list.get(optionName) < 3)
-				result.remove(optionName);
-
-		return new ArrayList<VehicleOption>(result.values());
-	}
-
+//	//TODO check this shit, moet alle sets teruggeven die in meer dan of gelijk aan 3 orders komen
+//	public ArrayList<VehicleOption> getUnscheduledVehicleOptions(int maxNumber){
+//
+//		HashMap<String, Integer> list = new HashMap<String, Integer>();
+//		ArrayList<String> options = new ArrayList<String>();
+//		//arraylist vehicleoption
+//		HashMap<String, VehicleOption> result = new HashMap<String, VehicleOption>();
+//
+//		for(Order order: this.getOrders()){
+//			for(VehicleOption option: order.getOptions()){
+//				if (list.containsKey(option.getName())){
+//					int count = list.get(option.getName());
+//					list.remove(option.getName());
+//					list.put(option.getName(),++count) ;
+//				}else {
+//					options.add(option.getName());
+//					list.put(option.getName(), 1);
+//					result.put(option.getName(), option);
+//				}
+//			}
+//		}
+//
+//		for (String optionName: options)
+//			if (list.get(optionName) < 3)
+//				result.remove(optionName);
+//
+//		return new ArrayList<VehicleOption>(result.values());
+//	}
 
 	@Override
 	public void subscribeObserver(Observer observer) throws IllegalArgumentException {

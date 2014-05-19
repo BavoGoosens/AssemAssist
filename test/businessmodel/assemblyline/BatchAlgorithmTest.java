@@ -131,6 +131,7 @@ public class BatchAlgorithmTest {
 				listAssem.add(assem.next());
 //				System.out.println(assem.next().getAssemblyLineScheduler().getOrders().size());
 			}
+		
 			
 //			System.out.println(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(0).getUser());
 //			System.out.println(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(1).getUser());
@@ -149,6 +150,8 @@ public class BatchAlgorithmTest {
 //			assertEquals(orderManager.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(2),order5);
 //			assertEquals(orderManager.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(3),order1);
 //			assertEquals(orderManager.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(4),order4);
+			
+			
 
 		
 	}

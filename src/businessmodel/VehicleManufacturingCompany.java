@@ -139,9 +139,9 @@ public class VehicleManufacturingCompany implements Model {
     }
 
     @Override
-    public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions(User user, int num) throws NoClearanceException {
+    public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions(User user) throws NoClearanceException {
         if (user.canChangeAlgorithm())
-            return this.getOrderManager().getMainScheduler().getUnscheduledVehicleOptions(num);
+            return this.getOrderManager().getMainScheduler().getUnscheduledVehicleOptions();
         else
             throw new NoClearanceException();
     }

@@ -33,6 +33,11 @@ public class BrokenState implements AssemblyLineState {
 	}
 
     @Override
+    public boolean canPlaceOrder() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "Broken";
     }
