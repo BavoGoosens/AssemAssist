@@ -65,8 +65,8 @@ public class Vehicle {
 	}
 	
 	public void addTruckOptions() {
-		CargoProtection protection = new CargoProtection();
-		ToolStorage storage = new ToolStorage();
+		Protection protection = new Protection();
+		Storage storage = new Storage();
 		Certification certification = new Certification();
 		VehicleOption protection1 = new VehicleOption("cargo protection", protection);
 		VehicleOption storage1 = new VehicleOption("tool storage", storage);

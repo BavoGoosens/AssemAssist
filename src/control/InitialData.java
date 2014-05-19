@@ -11,7 +11,7 @@ import businessmodel.VehicleManufacturingCompany;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
-import businessmodel.category.CargoProtection;
+import businessmodel.category.Protection;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.SingleTaskOrder;
@@ -166,9 +166,9 @@ public class InitialData {
 				spoiler.add(option);
 			}else if (option.getCategory().equals(new Wheels())){
 				wheels.add(option);
-			}else if (option.getCategory().equals(new CargoProtection())){
+			}else if (option.getCategory().equals(new Protection())){
 				certification.add(option);
-			}else if (option.getCategory().equals(new ToolStorage())){
+			}else if (option.getCategory().equals(new Storage())){
 				protection.add(option);
 			}else if (option.getCategory().equals(new Certification())){
 				storage.add(option);

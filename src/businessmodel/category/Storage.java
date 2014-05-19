@@ -2,20 +2,20 @@ package businessmodel.category;
 
 import java.util.UUID;
 
-public class CargoProtection extends VehicleOptionCategory {
-
+public class Storage extends VehicleOptionCategory {
+	
 	/**
 	 * The unique key of the category.
 	 */
 	private final static UUID key = UUID.randomUUID();
-	
-	public CargoProtection() {
+
+	public Storage() {
 		super();
 	}
 
 	@Override
 	public UUID getKey() {
-		return CargoProtection.key;
+		return Storage.key;
 	}
 
 }
