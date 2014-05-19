@@ -23,7 +23,7 @@ import businessmodel.user.GarageHolder;
 import businessmodel.user.Mechanic;
 import businessmodel.util.IteratorConverter;
 
-public class ScenarioTestUC3Test {
+public class ScenarioTestUC3 {
 	
 	private VehicleManufacturingCompany vmc;
 	private AssemblyLineController ac;

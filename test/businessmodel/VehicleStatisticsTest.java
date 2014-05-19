@@ -51,12 +51,6 @@ public class VehicleStatisticsTest {
         orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
         orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
         orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
-        orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
-        orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
-        orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
-        orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
-        orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
-        orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
         
         /**
          * Plaats orders van model B
@@ -68,16 +62,10 @@ public class VehicleStatisticsTest {
         		chosenB.add(modelB.getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
         	}
         }
+ /*       orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
         orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
         orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
-        orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
-        orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
-        orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
-        orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
-        orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
-        orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
-        orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
-        orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
+        orders.add(new StandardVehicleOrder(gh, chosenB, modelB)); */
         
         /**
          * Plaats orders van model C
@@ -89,16 +77,10 @@ public class VehicleStatisticsTest {
         		chosenC.add(modelC.getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
         	}
         }
+/*        orders.add(new StandardVehicleOrder(gh, chosenC, modelC));
         orders.add(new StandardVehicleOrder(gh, chosenC, modelC));
         orders.add(new StandardVehicleOrder(gh, chosenC, modelC));
-        orders.add(new StandardVehicleOrder(gh, chosenC, modelC));
-        orders.add(new StandardVehicleOrder(gh, chosenC, modelC));
-        orders.add(new StandardVehicleOrder(gh, chosenC, modelC));
-        orders.add(new StandardVehicleOrder(gh, chosenC, modelC));
-        orders.add(new StandardVehicleOrder(gh, chosenC, modelC));
-        orders.add(new StandardVehicleOrder(gh, chosenC, modelC));
-        orders.add(new StandardVehicleOrder(gh, chosenC, modelC));
-        orders.add(new StandardVehicleOrder(gh, chosenC, modelC));
+        orders.add(new StandardVehicleOrder(gh, chosenC, modelC)); */
         
         /**
          * Plaats orders van model X
@@ -113,16 +95,10 @@ public class VehicleStatisticsTest {
         		chosenX.add(modelX.getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
         	}
         }
+ /*       orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
         orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
         orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
-        orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
-        orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
-        orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
-        orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
-        orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
-        orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
-        orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
-        orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
+        orders.add(new StandardVehicleOrder(gh, chosenX, modelX)); */
         
         /**
          * Plaats orders van model Y
@@ -137,16 +113,10 @@ public class VehicleStatisticsTest {
         		chosenY.add(modelY.getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
         	}
         }
+ /*       orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
         orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
         orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
-        orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
-        orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
-        orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
-        orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
-        orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
-        orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
-        orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
-        orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
+        orders.add(new StandardVehicleOrder(gh, chosenY, modelY)); */
         
         /**
          * Plaats alle orders
@@ -158,14 +128,14 @@ public class VehicleStatisticsTest {
         /**
          * Voer alle taken uit
          */
-        
         for (int i = 1; i <= 50; i++) {
 	        for (AssemblyLine assemblyLine: om.getMainScheduler().getAssemblyLines()) {
-	        	Iterator<WorkPost> it = assemblyLine.getWorkPostsIterator();
-	        	while(it.hasNext()) {
-	        		WorkPost workPost = it.next();
-	        		while(workPost.getPendingTasks().hasNext()) {
-	        			AssemblyTask task = workPost.getPendingTasks().next();
+	        	Iterator<WorkPost> workPostIterator = assemblyLine.getWorkPostsIterator();
+	        	while (workPostIterator.hasNext()) {
+	        		WorkPost workPost = workPostIterator.next();
+	        		Iterator<AssemblyTask> taskIterator = workPost.getPendingTasks();
+	        		while (taskIterator.hasNext()) {
+	        			AssemblyTask task = taskIterator.next();
 	        			task.completeAssemblytask(60);
 	        		}
 	        	}
