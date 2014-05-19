@@ -15,7 +15,6 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.Order;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.User;
-import businessmodel.util.EndDateOfOrderComparator;
 import businessmodel.util.OrderDateTimeComparator;
 import control.StandardOrderController;
 import control.StandardOrderHandler;
@@ -220,8 +219,10 @@ public class GarageHolderView extends View{
 			while (pending.hasNext())
 				this.pending_orders.add(pending.next());
 			while (completed.hasNext())
-				this.completed_orders.add(completed.next());
-            Collections.sort(this.completed_orders, new OrderDateTimeComparator());
+				this.completed_orders.add(completed.next());	
+			Collections.sort(this.pending_orders, new OrderDateTimeComparator());
+			Collections.sort(this.completed_orders, new OrderDateTimeComparator());
+
 		} catch (NoClearanceException e) {
 			// NOP
 		}

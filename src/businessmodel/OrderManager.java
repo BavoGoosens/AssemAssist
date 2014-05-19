@@ -15,7 +15,6 @@ import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 import businessmodel.user.User;
-import businessmodel.util.EndDateOfOrderComparator;
 import businessmodel.util.OrderDateTimeComparator;
 
 /**
