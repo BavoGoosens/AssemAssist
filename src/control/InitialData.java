@@ -68,13 +68,12 @@ public class InitialData {
 
 		Boolean orders = false;
 
-		for(int i=0; i < 5; i++){
+		for(int i=0; i < 35; i++){
 			orders = this.randomOrderGenerator("standard",-1);
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
 		}
-		
-//		this.processOrders();
+		this.processOrders();
 
 //		orders = false;
 //
@@ -109,6 +108,7 @@ public class InitialData {
         IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		Iterator<AssemblyLine> iter1 = vmc.getAssemblyLines(this.mechanic);
 		while(iter1.hasNext()){
+            looping = true;
 			AssemblyLine assem = iter1.next();
 			while (looping == true ){
 				CompleteWorkPost(assem, converter.convert(assem.getWorkPostsIterator()).size());
