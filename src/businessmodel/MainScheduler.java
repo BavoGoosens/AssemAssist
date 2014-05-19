@@ -94,6 +94,12 @@ public class MainScheduler {
 	protected void changeSystemWideAlgorithm(String algo, ArrayList<VehicleOption> options) {
 		
 		this.systemWideAlgo = algo;
+		
+//		Iterator<ArrayList<VehicleOption>> it = this.getUnscheduledVehicleOptions();
+//		while( it.hasNext()){
+//			System.out.println(it.next());
+//		}
+			
 		for (AssemblyLine assemblyLine: this.getAssemblyLines()) {
 			assemblyLine.getAssemblyLineScheduler().changeAlgorithm(algo, options);
 		}
