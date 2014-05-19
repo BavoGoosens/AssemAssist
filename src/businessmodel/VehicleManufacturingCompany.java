@@ -11,6 +11,7 @@ import businessmodel.statistics.OrderStatistics;
 import businessmodel.statistics.StatisticsManager;
 import businessmodel.statistics.VehicleStatistics;
 import businessmodel.user.*;
+import businessmodel.util.IteratorConverter;
 import businessmodel.util.SafeIterator;
 import org.joda.time.DateTime;
 
@@ -73,7 +74,7 @@ public class VehicleManufacturingCompany implements Model {
 
     @Override
     public Iterator<WorkPost> getWorkPosts(User user, AssemblyLine assemblyLine) {
-        return assemblyLine.getWorkPosts().iterator();
+        return assemblyLine.getWorkPostsIterator();
     }
 
     @Override
@@ -130,8 +131,10 @@ public class VehicleManufacturingCompany implements Model {
     // TODO: safe maken
     // TODO: taskmanager weg en ophalen uit workposts.
     public Iterator<AssemblyTask> getAvailableTasks(User user) {
+        IteratorConverter<WorkPost> converter = new IteratorConverter<>();
+
         for (AssemblyLine line : this.getOrderManager().getMainScheduler().getAssemblyLines()) {
-            for (WorkPost post : line.getWorkPosts()) {
+            for (WorkPost post : converter.convert(line.getWorkPostsIterator())) {
 
             }
         }

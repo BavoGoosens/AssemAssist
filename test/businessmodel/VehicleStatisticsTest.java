@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.Catalog;
-import businessmodel.OrderManager;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
@@ -162,7 +160,7 @@ public class VehicleStatisticsTest {
         
         for (int i = 1; i <= 50; i++) {
 	        for (AssemblyLine assemblyLine: om.getMainScheduler().getAssemblyLines()) {
-	        	for (WorkPost workPost: assemblyLine.getWorkPosts()) {
+	        	for (WorkPost workPost: assemblyLine.getWorkPostsIterator()) {
 	        		while(workPost.getPendingTasks().hasNext()) {
 	        			AssemblyTask task = workPost.getPendingTasks().next();
 	        			task.completeAssemblytask(60);

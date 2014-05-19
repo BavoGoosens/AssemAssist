@@ -46,7 +46,7 @@ public class AssemblyLineSchedulerTest {
 		
 		assertEquals(scheduler.getShifts().get(0).getTimeSlots().size(),5);
 		assertEquals(scheduler.getOrders().size(),12);
-		assertEquals(assemblyLine.getWorkPosts().get(0).getOrder().getUser().getFirstname(),"Sander2");
+		assertEquals(assemblyLine.getWorkPostsIterator().get(0).getOrder().getUser().getFirstname(),"Sander2");
 		
 		completeOrders(20);
 		this.scheduler.changeAlgorithm("first in first out", null);
@@ -111,7 +111,7 @@ public class AssemblyLineSchedulerTest {
 
 	private void completeOrders(int time) {
 
-		WorkPost wp1 = assemblyLine.getWorkPosts().get(0);
+		WorkPost wp1 = assemblyLine.getWorkPostsIterator().get(0);
 
 		AssemblyTask task;
 		Iterator<AssemblyTask> iter = wp1.getPendingTasks();
@@ -126,7 +126,7 @@ public class AssemblyLineSchedulerTest {
 			task.completeAssemblytask(time);
 		}
 
-		WorkPost wp2 = assemblyLine.getWorkPosts().get(1);
+		WorkPost wp2 = assemblyLine.getWorkPostsIterator().get(1);
 		iter = wp2.getPendingTasks();
 		while(iter.hasNext()){
 			task = iter.next();
@@ -134,7 +134,7 @@ public class AssemblyLineSchedulerTest {
 		}
 
 		for(int i = 0; i < 14 ; i ++){
-			for(WorkPost wp: assemblyLine.getWorkPosts()){
+			for(WorkPost wp: assemblyLine.getWorkPostsIterator()){
 				Iterator<AssemblyTask> iter3 = wp.getPendingTasks();
 				while (iter3.hasNext()){
 					task = iter3.next();

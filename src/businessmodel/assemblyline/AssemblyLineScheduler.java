@@ -1,9 +1,9 @@
 package businessmodel.assemblyline;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 
+import businessmodel.util.IteratorConverter;
 import org.joda.time.DateTime;
 
 import businessmodel.category.VehicleOption;
@@ -196,13 +196,7 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	private void checkNewDay(){
-		boolean empty = false;
-		for(Shift shift: this.getShifts()){
-			for(TimeSlot slot : shift.getTimeSlots()){
-				for(WorkSlot slot1 : slot.getWorkSlots()){
-					if(slot1.isOccupied())
-						empty = true;}}}
-		if (!empty) {
+		if (this.getShifts().isEmpty()) {
 			notifyObservers();
 			this.ScheduleDay();
 		}
@@ -319,19 +313,23 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	public int calculateMinutes(Order order){
+        IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		if(order.getVehicleModel() == null)
-			return this.getAssemblyline().getWorkPosts().size()*60;
+			return converter.convert(this.getAssemblyline().getWorkPostsIterator()).size()*60;
 		int minutes = 0;
-		for(WorkPost wp : this.getAssemblyline().getWorkPosts()){
+		for(WorkPost wp : converter.convert(this.getAssemblyline().getWorkPostsIterator())){
 			minutes += wp.getStandardTimeOfModel(order.getVehicleModel());
 		}
 		return minutes;
 	}
 
 	private int minutesLastWorkPost(Order order) {
-		if(order.getVehicleModel() == null)
+        IteratorConverter<WorkPost> converter = new IteratorConverter<>();
+        if(order.getVehicleModel() == null)
 			return 60;
-		return this.getAssemblyline().getWorkPosts().get(this.getAssemblyline().getWorkPosts().size()-1).getStandardTimeOfModel(order.getVehicleModel());
+		return converter.convert(this.getAssemblyline().getWorkPostsIterator())
+                .get(converter.convert(this.getAssemblyline().getWorkPostsIterator()).size()-1)
+                .getStandardTimeOfModel(order.getVehicleModel());
 	}
 
 

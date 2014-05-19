@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 import businessmodel.category.*;
+import businessmodel.util.IteratorConverter;
 import org.joda.time.DateTime;
 
 import businessmodel.VehicleManufacturingCompany;
@@ -67,7 +68,7 @@ public class InitialData {
 
 		Boolean orders = false;
 
-		for(int i=0; i < 20; i++){
+		for(int i=0; i < 5; i++){
 			orders = this.randomOrderGenerator("standard",-1);
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
@@ -102,35 +103,39 @@ public class InitialData {
 
 	}
 
+    private boolean looping = true;
 	// TODO
 	private void processOrders() throws NoClearanceException {
-
+        IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		Iterator<AssemblyLine> iter1 = vmc.getAssemblyLines(this.mechanic);
 		while(iter1.hasNext()){
 			AssemblyLine assem = iter1.next();
-			for(int i = 0 ; i < assem.getWorkPosts().size()-1;i++){
-				CompleteWorkPost(assem, i);
+			while (looping == true ){
+				CompleteWorkPost(assem, converter.convert(assem.getWorkPostsIterator()).size());
 			}
-			for(int i = 0; i < 40 ; i ++){
-				for(WorkPost wp: assem.getWorkPosts()){
+			/*for(int i = 0; i < 40 ; i ++){
+				for(WorkPost wp: assem.getWorkPostsIterator()){
 					Iterator<AssemblyTask> iter3 = vmc.getPendingTasks(this.mechanic, wp);
 					while (iter3.hasNext()){
 						AssemblyTask task = iter3.next();
 						vmc.finishTask(task, 20);
-					}
+					}looping
 				}
-			}
+			}*/
 		}
 
 	}
 
 	private void CompleteWorkPost(AssemblyLine assem, int i) throws NoClearanceException{
-		for(int j = 0 ; j <= i ; j++){
-			WorkPost wp1 = assem.getWorkPosts().get(j);
+		looping = false;
+        for(int j = 0 ; j < i ; j++){
+            IteratorConverter<WorkPost> converter = new IteratorConverter<>();
+			WorkPost wp1 = converter.convert(assem.getWorkPostsIterator()).get(j);
 			Iterator<AssemblyTask> iter2 = vmc.getPendingTasks(this.mechanic, wp1);
 			while (iter2.hasNext()){
 				AssemblyTask task = iter2.next();
 				vmc.finishTask(task, 20);
+                looping = true;
 			}
 		}
 	}

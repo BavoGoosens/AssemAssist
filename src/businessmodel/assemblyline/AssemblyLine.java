@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import businessmodel.util.SafeIterator;
 import org.joda.time.DateTime;
 
 import businessmodel.MainScheduler;
@@ -137,9 +138,15 @@ public class AssemblyLine implements Subject{
 	 * @return	The list of work posts at the assembly line.
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<WorkPost> getWorkPosts() {
-		return (ArrayList<WorkPost>) this.workposts.clone();
+	public Iterator<WorkPost> getWorkPostsIterator() {
+        SafeIterator<WorkPost> safe = new SafeIterator<WorkPost>();
+        safe.convertIterator(this.workposts.iterator());
+		return safe;
 	}
+
+    private ArrayList<WorkPost> getWorkPosts() {
+        return this.workposts;
+    }
 
 	/**
 	 * Returns the AssemblyLineScheduler of this AssemblyLine.
