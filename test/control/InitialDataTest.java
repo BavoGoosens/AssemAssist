@@ -28,7 +28,12 @@ public class InitialDataTest {
 		
 		VehicleManufacturingCompany vmc = new VehicleManufacturingCompany();
 		int nbOrders = 10;
-		new InitialData().initialize(vmc);
+		try {
+			new InitialData().initialize(vmc);
+		} catch (NoClearanceException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		User user = vmc.login("wow", "");
 		int count = 0;
 		try {
@@ -40,7 +45,7 @@ public class InitialDataTest {
 		} catch (IllegalArgumentException | NoClearanceException e) {
 			e.printStackTrace();
 		}
-		assertEquals(1,count);
+		assertEquals(0,count);
 		try {
 			count = 0;
 			Iterator<Order> it = vmc.getCompletedOrders(user);

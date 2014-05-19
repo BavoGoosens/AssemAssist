@@ -29,6 +29,8 @@ public class MainScheduler {
 
 	private String systemWideAlgo;
 
+	private final int nbOrdersSpecificationBatch = 3;
+
 	public MainScheduler(OrderManager ordermanager){
 		this.setOrderManager(ordermanager);
 		this.generateAssemblyLines();
@@ -92,14 +94,12 @@ public class MainScheduler {
 	protected void changeSystemWideAlgorithm(String algo, ArrayList<VehicleOption> options) {
 		
 		this.systemWideAlgo = algo;
-		if (!this.checkOptionsForSpecificationBatch(options, 3)) 
-			throw new IllegalArgumentException("Too little orders with that option ( less than 3 )");
 		for (AssemblyLine assemblyLine: this.getAssemblyLines()) {
 			assemblyLine.getAssemblyLineScheduler().changeAlgorithm(algo, options);
 		}
 	}
 
-	private boolean checkOptionsForSpecificationBatch(ArrayList<VehicleOption> options, int num) {
+	private boolean checkOptionsForSpecificationBatch(ArrayList<VehicleOption> options) {
 
 		int orderCount = 0;
 		for(AssemblyLine assem: this.getAssemblyLines()){
@@ -114,7 +114,7 @@ public class MainScheduler {
 				if (count == options.size()) orderCount++;
 			}
 		}
-		if (orderCount < num)
+		if (orderCount < this.nbOrdersSpecificationBatch)
 			return false;
 		return true;
 	}
@@ -161,7 +161,7 @@ public class MainScheduler {
 		return currenttime;
 	}
 
-	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions(int num) {
+	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions() {
 
 		ArrayList<ArrayList<VehicleOption>> choices = new ArrayList<ArrayList<VehicleOption>>();
 		HashSet<VehicleOption> set = new HashSet<VehicleOption>();
@@ -175,7 +175,7 @@ public class MainScheduler {
 					ArrayList<VehicleOption> temp = new ArrayList<VehicleOption>();
 					temp.add(opt);
 					if (!set.contains(opt)){
-						if (this.checkOptionsForSpecificationBatch(temp, num)){ 
+						if (this.checkOptionsForSpecificationBatch(temp)){ 
 							options.add(opt); 
 							set.add(opt);
 						}
