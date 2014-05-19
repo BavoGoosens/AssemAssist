@@ -53,6 +53,10 @@ public class OrderStatistics implements Observer {
 		subject.subscribeObserver(this);
 	}
 	
+	public ArrayList<Tuple<Order, Integer>> getFinishedOrders() {
+		return this.finishedOrders;
+	}
+	
 	/**
 	 * Returns the average delay of all finished orders.
 	 * 
@@ -85,12 +89,12 @@ public class OrderStatistics implements Observer {
 	public ArrayList<Tuple<Order, Integer>> getLast(int number) throws IllegalNumberException {
 		if (number < 0 || this.finishedOrders.size() > number-1){
 			ArrayList<Tuple<Order, Integer>> result = new ArrayList<Tuple<Order, Integer>>(number);
-			for(int i = this.finishedOrders.size(); i >= this.finishedOrders.size() - number ; i--){
+			for(int i = this.finishedOrders.size()-1; i >= this.finishedOrders.size() - number ; i--){
 				result.add(this.finishedOrders.get(i));
 			}
 			return result;
 		} else 
-			throw new IllegalNumberException("The supplied number of days is to large or too small");
+			throw new IllegalNumberException("The supplied number of days is too large or too small");
 	}
 	
 	/**
