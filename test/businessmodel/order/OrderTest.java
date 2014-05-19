@@ -15,6 +15,7 @@ import businessmodel.category.ModelAFactory;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
+import businessmodel.exceptions.NoClearanceException;
 import businessmodel.user.GarageHolder;
 
 public class OrderTest {
@@ -23,13 +24,12 @@ public class OrderTest {
 	private DateTime date;
 	private ArrayList<VehicleOptionCategory> categories;
 	private Catalog catalog;
-	private OrderManager om;
+	private VehicleManufacturingCompany vmc;
 	@Before
 	public void setUp() throws Exception {
 		
-		VehicleManufacturingCompany cmc = new VehicleManufacturingCompany();
+		vmc = new VehicleManufacturingCompany();
 		
-		om = cmc.getOrderManager();
 		garageholder = new GarageHolder("bouwe", "ceunen", "bouwe");
 		
 
@@ -45,18 +45,21 @@ public class OrderTest {
 			}
 
 		}
-		cmc.placeOrder(new StandardVehicleOrder(garageholder, chosen, modelA));
+		vmc.placeOrder(new StandardVehicleOrder(garageholder, chosen, modelA));
 		
-		date = om.getMainScheduler().getAssemblyLineSchedulers().get(0).getCurrentTime().plusHours(3);
+		date = vmc.getAssemblyLines(garageholder).next().getAssemblyLineScheduler().getCurrentTime().plusHours(3);
 	}
 
 	@Test
 	public void test() {
 
-		assertEquals(om.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(0).getUser(),this.garageholder);
-		assertEquals(om.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(0).getEstimatedDeliveryDate(),this.date);
-		assertEquals(om.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(0).isCompleted(),false);
-
+		try{
+		assertEquals(vmc.getAssemblyLines(vmc.login("wowww", "")).next().getAssemblyLineScheduler().getOrders().get(0).getUser(),this.garageholder);
+		assertEquals(vmc.getAssemblyLines(vmc.login("wowww", "")).next().getAssemblyLineScheduler().getOrders().get(0).getEstimatedDeliveryDate(),this.date);
+		assertEquals(vmc.getAssemblyLines(vmc.login("wowww", "")).next().getAssemblyLineScheduler().getOrders().get(0).isCompleted(),false);
+		}catch(NoClearanceException ex){
+			System.out.println(ex.toString());
+		}
 		
 	}
 
