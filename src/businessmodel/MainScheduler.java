@@ -37,7 +37,7 @@ public class MainScheduler {
 	}
 
 	public void schedulePendingOrders() {
-		this.ordermanager.schedulePendingOrders();;
+		this.ordermanager.schedulePendingOrders();
 	}
 
 	public void finishedOrder(Order completedorder) {
