@@ -1,6 +1,7 @@
 package businessmodel;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -160,7 +161,9 @@ public class VehicleStatisticsTest {
         
         for (int i = 1; i <= 50; i++) {
 	        for (AssemblyLine assemblyLine: om.getMainScheduler().getAssemblyLines()) {
-	        	for (WorkPost workPost: assemblyLine.getWorkPostsIterator()) {
+	        	Iterator<WorkPost> it = assemblyLine.getWorkPostsIterator();
+	        	while(it.hasNext()) {
+	        		WorkPost workPost = it.next();
 	        		while(workPost.getPendingTasks().hasNext()) {
 	        			AssemblyTask task = workPost.getPendingTasks().next();
 	        			task.completeAssemblytask(60);

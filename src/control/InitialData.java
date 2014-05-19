@@ -54,10 +54,10 @@ public class InitialData {
 		this.vmc = vmc;
 		this.garageholder = vmc.login("wow", "");
 		this.mechanic = vmc.login("woww", "");
-		this.customsManager = vmc.login("wowwww", "");	
+		this.customsManager = vmc.login("wowwww", "");
 
 		this.controllerStandard = new StandardOrderHandler(vmc);
-		
+
 		this.controllerSingleTask = new SingleTaskOrderHandler(vmc);
 		this.iter = vmc.getVehicleModels(this.garageholder);
 		this.available_vehiclemodels = new ArrayList<VehicleModel>();
@@ -188,7 +188,7 @@ public class InitialData {
 			vehicleModel = this.available_vehiclemodels.get(model);
 
 		ArrayList <VehicleOption> available = vehicleModel.getPossibilities();
-		airco.clear(); body.clear(); color.clear();engine.clear();gearbox.clear(); seats.clear(); 
+		airco.clear(); body.clear(); color.clear();engine.clear();gearbox.clear(); seats.clear();
 		spoiler.clear();wheels.clear(); this.chosen.clear(); protection.clear(); certification.clear(); storage.clear();
 
 		for(VehicleOption option: available){
