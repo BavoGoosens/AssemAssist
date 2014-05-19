@@ -203,7 +203,7 @@ public class AssemblyLineScheduler implements Subject {
 		}
 	}
 
-	private void setCurrentTime(DateTime currenttime) {
+	protected void setCurrentTime(DateTime currenttime) {
 		this.currenttime =currenttime;
 	}
 
