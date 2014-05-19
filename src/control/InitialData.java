@@ -68,11 +68,14 @@ public class InitialData {
 
 		Boolean orders = false;
 
-		for(int i=0; i < 35; i++){
-			orders = this.randomOrderGenerator("standard",-1);
+        ArrayList<Integer> numbers = this.generateOrders();
+		for(int i=0; i < numbers.size(); i++){
+			orders = this.randomOrderGenerator("standard",numbers.get(i));
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
 		}
+
+
 		this.processOrders();
 
 //		orders = false;
@@ -101,6 +104,40 @@ public class InitialData {
 
 
 	}
+
+    private ArrayList<Integer> generateOrders() {
+        ArrayList<Integer> number = new ArrayList<Integer>();
+        number.add(1);
+        number.add(2);
+        number.add(3);
+        number.add(4);
+        number.add(0);
+        number.add(1);
+        number.add(1);
+        number.add(2);
+        number.add(2);
+        number.add(3);
+        number.add(3);
+        number.add(4);
+        number.add(4);
+        number.add(0);
+        number.add(0);
+        number.add(4);
+        number.add(3);
+        number.add(2);
+        number.add(1);
+        number.add(4);
+        number.add(1);
+        number.add(1);
+        number.add(4);
+        number.add(2);
+        number.add(1);
+        number.add(4);
+        number.add(1);
+        number.add(1);
+        number.add(3);
+        return number;
+    }
 
     private boolean looping = true;
 	// TODO
