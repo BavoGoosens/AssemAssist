@@ -206,7 +206,7 @@ public class OrderManager implements Subject {
 	}
 
 	@Override
-	public void unsubscribeObserver(Observer observer) throws IllegalArgumentException {
+	public void unSubscribeObserver(Observer observer) throws IllegalArgumentException {
 		if (observer == null) throw new IllegalArgumentException("Bad observer!");
 		this.observers.remove(observer);
 	}

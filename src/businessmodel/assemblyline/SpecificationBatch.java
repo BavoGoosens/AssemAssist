@@ -44,7 +44,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 
 		this.getScheduler().generateShifts();
 		ArrayList<Order> similarVehicleOptionsOrder = new ArrayList<Order>();
-		this.getScheduler().ScheduleDay();
+		this.getScheduler().scheduleNewDay();
 		orderList.add(currentOrder);
 
 		if (orderList.size() != 0){

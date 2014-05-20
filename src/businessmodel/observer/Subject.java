@@ -26,7 +26,7 @@ public interface Subject {
 	 * @param 	observer
 	 * 			The observer who no longer wants to be notified.
 	 */
-	public void unsubscribeObserver(Observer observer);
+	public void unSubscribeObserver(Observer observer);
 	
 	/**
 	 * Notifies all the observers.

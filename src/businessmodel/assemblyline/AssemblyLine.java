@@ -234,7 +234,7 @@ public class AssemblyLine implements Subject{
 
 
 	@Override
-	public void unsubscribeObserver(Observer observer) {
+	public void unSubscribeObserver(Observer observer) {
 		if (this.subscribers.contains(observer))
 			this.subscribers.remove(observer);		
 	}
