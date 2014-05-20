@@ -73,17 +73,17 @@ public class InitialData {
 
 		Boolean orders = false;
 
-		ArrayList<Integer> numbers = this.generateOrders();
-		for(int i=0; i < 10; i++){
-			orders = this.randomOrderGenerator("standard", -1, -1);
-			if (!orders)
-				this.randomOrderGenerator("standard", 0, -1);
-		}
-
-
+//		ArrayList<Integer> numbers = this.generateOrders();
+//		for(int i=0; i < numbers.size(); i++){
+//			orders = this.randomOrderGenerator("standard",numbers.get(i), -1);
+//			if (!orders)
+//				this.randomOrderGenerator("standard", 0, -1);
+//		}
+//
+//
 //		this.processOrders();
-
-
+//
+//
 //		orders = false;
 //
 //		for(int i=0; i < 3; i++){
@@ -99,14 +99,14 @@ public class InitialData {
 //			if (!orders)
 //				this.randomOrderGenerator("standard", 0, 3);
 //		}
-//
-//		orders = false;
-//
-//		for(int i=0; i < 3; i++){
-//			orders = this.randomOrderGenerator("standard",-1, 0);
-//			if (!orders)
-//				this.randomOrderGenerator("standard", 0, 0);
-//		}
+
+		orders = false;
+
+		for(int i=0; i < 3; i++){
+			orders = this.randomOrderGenerator("standard",-1, 0);
+			if (!orders)
+				this.randomOrderGenerator("standard", 0, 0);
+		}
 
 
 	}
