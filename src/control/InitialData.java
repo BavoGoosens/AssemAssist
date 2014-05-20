@@ -85,12 +85,12 @@ public class InitialData {
 		this.processOrders();
 
 
-		orders = false;
-		for(int i=0; i < 3; i++){
-			orders = this.randomOrderGenerator("singleTask",-1, -1);
-			if (!orders)
-				this.randomOrderGenerator("singleTask", 0, -1);
-		}
+//		orders = false;
+//		for(int i=0; i < 3; i++){
+//			orders = this.randomOrderGenerator("singleTask",-1, -1);
+//			if (!orders)
+//				this.randomOrderGenerator("singleTask", 0, -1);
+//		}
 
 		this.makeOrdersNotInSameBatch();
 
