@@ -9,6 +9,11 @@ import java.util.List;
  */
 public class IteratorConverter <Type> {
 
+	/**
+	 * 
+	 * @param iterator
+	 * @return
+	 */
     public List<Type> convert(Iterator<Type> iterator){
         ArrayList<Type> lijst = new ArrayList<Type>();
         while (iterator.hasNext())

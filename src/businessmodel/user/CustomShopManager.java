@@ -3,7 +3,7 @@ package businessmodel.user;
 /**
  * A class representing a custom shop manager.
  * 
- * @author SWOP team 10 2013-2014
+ * @author SWOP team 10
  *
  */
 public class CustomShopManager extends User {

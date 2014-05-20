@@ -16,46 +16,18 @@ import businessmodel.user.User;
 /**
  * A class representing an abstract order.
  * 
- * @author SWOP Team 10 2014
+ * @author SWOP Team 10
  *
  */
 public abstract class Order {
 
 	private AssemblyLine line;
-	
-	/**
-	 * The user that placed the order.
-	 */
 	private User user;
-
-	/**
-	 * The estimated delivery date of the order.
-	 */
 	private DateTime estimatedDeliveryDate;
-
-	/**
-	 * The time the order was placed.
-	 */
 	private DateTime timestamp;
-
-	/**
-	 * The time the order was placed on the assembly line.
-	 */
 	private DateTime orderPlacedOnAssemblyLine;
-
-	/**
-	 * The time the order was completed.
-	 */
 	private DateTime completionDate;
-
-	/**
-	 * Indicates whether the order is completed.
-	 */
 	private boolean completed;
-
-	/**
-	 * The car model of the order.
-	 */
 	private VehicleModel carModel;
 
 	/**
@@ -72,6 +44,12 @@ public abstract class Order {
 		setVehicleModel(model);
 	}
 
+	/**
+	 * Get VehicleOptions of the order.
+	 * @return VehicleOptions
+	 */
+	public abstract ArrayList<VehicleOption> getOptions();
+	
 	/**
 	 * Returns the user that placed the order.
 	 * 
@@ -100,7 +78,6 @@ public abstract class Order {
 		this.setEstimatedDeliveryDateOfOrder(this.getEstimatedDeliveryDate().plusMinutes(delay));		
 	}
 
-	public abstract ArrayList<VehicleOption> getOptions();
 
 	/**
 	 * Returns the time the order was placed.
@@ -139,6 +116,10 @@ public abstract class Order {
 		return estimatedDeliveryDate;
 	}
 
+	/**
+	 * Set the AssemblyLine on which this order will be processed.
+	 * @param line
+	 */
 	public void setAssemblyLine(AssemblyLine line){
 		this.line = line;
 	}
@@ -208,22 +189,42 @@ public abstract class Order {
 		this.setEstimatedDeliveryDate(estimatedDeliveryDate);
 	}
 
+	/**
+	 * Set timestamp.
+	 * @param timestamp
+	 */
 	private void setTimestamp(DateTime timestamp){
 		this.timestamp = timestamp;
 	}
 
+	/**
+	 * Set completion date with the given date.
+	 * @param completionDate
+	 * @throws IllegalArgumentException
+	 */
 	private void setCompletionDate(DateTime completionDate) throws IllegalArgumentException{
 		if(completionDate == null) 
 			throw new IllegalArgumentException("Bad completion date!");
 		this.completionDate = completionDate;
 	}
 
+	/**
+	 * Set the estimated delivery date with the given date.
+	 * @param estimatedDeliveryDate
+	 * @throws IllegalArgumentException
+	 */
 	private void setEstimatedDeliveryDate(DateTime estimatedDeliveryDate) throws IllegalArgumentException {
 		if(estimatedDeliveryDate == null) 
 			throw new IllegalArgumentException("Bad estimated delivery date!");
 		this.estimatedDeliveryDate = estimatedDeliveryDate;
 	}
 
+	/**
+	 * Set the user for the order.
+	 * @param user
+	 * @throws IllegalArgumentException
+	 * @throws NoClearanceException
+	 */
 	private void setUser(User user) throws IllegalArgumentException, NoClearanceException {
 		if (user == null) 
 			throw new IllegalArgumentException("Bad user!");
@@ -232,6 +233,11 @@ public abstract class Order {
 		this.user = user;
 	}
 
+	/**
+	 * Set the date of the order when it was placed.
+	 * @param orderPlacedOnAssemblyLine
+	 * @throws IllegalArgumentException
+	 */
 	private void setOrderPlacedOnAssemblyLine(DateTime orderPlacedOnAssemblyLine) throws IllegalArgumentException{
 		if(orderPlacedOnAssemblyLine == null) 
 			throw new IllegalArgumentException("Bad order placed on assembly line date!");
