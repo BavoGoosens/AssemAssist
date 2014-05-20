@@ -10,6 +10,8 @@ public class MaintenanceState implements AssemblyLineState, Observer {
 	private AssemblyLine assemblyLine;
 
     private boolean isReady = false;
+
+    private boolean isActive = false;
 	
 	/**
 	 * Constructor for maintenance state of the assembly line
@@ -45,6 +47,7 @@ public class MaintenanceState implements AssemblyLineState, Observer {
 
     @Override
     public void initialize() {
+        this.isActive = true;
         this.assemblyLine.getAssemblyLineScheduler().tempName(4);
         this.isReady = false;
         this.update(this.assemblyLine);
@@ -57,17 +60,20 @@ public class MaintenanceState implements AssemblyLineState, Observer {
 
     @Override
     public void update(Subject subject) {
-        Iterator<WorkPost> posts = this.assemblyLine.getWorkPostsIterator();
-        boolean ready = false;
-        while (posts.hasNext()){
-            WorkPost post = posts.next();
-            ready = post.isCompleted();
-        }
-        if (ready){
-            // the assembly line is empty
-            // now shift 4 hours and transition to Operational state
-            this.assemblyLine.getAssemblyLineScheduler().increaseCurrentTime(4);
-            this.assemblyLine.setState(this.assemblyLine.getOperationalState());
+        if (this.isActive){
+            Iterator<WorkPost> posts = this.assemblyLine.getWorkPostsIterator();
+            boolean ready = false;
+            while (posts.hasNext()){
+                WorkPost post = posts.next();
+                ready = post.isCompleted();
+            }
+            if (ready){
+                // the assembly line is empty
+                // now shift 4 hours and transition to Operational state
+                this.assemblyLine.getAssemblyLineScheduler().increaseCurrentTime(4);
+                this.isActive = false;
+                this.assemblyLine.setState(this.assemblyLine.getOperationalState());
+            }
         }
         // in the other case just wait till the line is empty.
     }

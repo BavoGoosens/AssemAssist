@@ -53,7 +53,7 @@ public class AssemblyLineScheduler implements Subject {
 				new DateTime().getDayOfMonth(), 8, 0);
 		this.changeAlgorithm("fifo", null);
 		this.setDelay(0);
-		this.generateShifts(0);
+		this.generateShifts();
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class AssemblyLineScheduler implements Subject {
 	 */
 	protected void ScheduleDay(){
 		this.dayOrdersCount = 0;
-		this.generateShifts(0);
+		this.generateShifts();
 		this.updateCurrentTime();
 		this.getAssemblyline().getMainScheduler().schedulePendingOrders();
 	}
@@ -160,13 +160,15 @@ public class AssemblyLineScheduler implements Subject {
 			this.updateSchedule();
 		}
 		else if (this.getDelay() >= 60){
-			Order order = this.getShifts().getLast().removeLastTimeSlot();
-			if(this.getShifts().getLast().getTimeSlots().size() == 0)
-				this.getShifts().removeLast();
-			if(order!= null)
-				this.getAssemblyline().getMainScheduler().placeOrderInFront(order);
-			this.updateDelay(-60);
-			this.updateSchedule();
+			if(this.getShifts().size() != 0){
+				Order order = this.getShifts().getLast().removeLastTimeSlot();
+				if(this.getShifts().getLast().getTimeSlots().size() == 0)
+					this.getShifts().removeLast();
+				if(order!= null)
+					this.getAssemblyline().getMainScheduler().placeOrderInFront(order);
+				this.updateDelay(-60);
+				this.updateSchedule();
+			}
 		}
 	}
 
@@ -215,10 +217,10 @@ public class AssemblyLineScheduler implements Subject {
 		this.getAlgo().scheduleOrder(order);
 	}
 
-	protected void generateShifts(int num){
+	protected void generateShifts(){
 		this.getShifts().clear();
 		Shift endshift = new EndShift(8,this.getAssemblyline().getNumberOfWorkPosts());
-		Shift currrentshift = new FreeShift(8-num,this.getAssemblyline().getNumberOfWorkPosts(), endshift);
+		Shift currrentshift = new FreeShift(8,this.getAssemblyline().getNumberOfWorkPosts(), endshift);
 		this.getShifts().add(currrentshift);
 		this.getShifts().add(endshift);
 	}
@@ -365,7 +367,7 @@ public class AssemblyLineScheduler implements Subject {
 		for(Order order: this.getOrders())
 			this.getAssemblyline().getMainScheduler().placeOrderInFront(order);
 		this.getOrders().clear();
-		if(this.getCurrentTime().getHourOfDay() + hours < 22){
+		if(this.getCurrentTime().getHourOfDay() + hours <= 22 & this.getCurrentTime().getMinuteOfHour() <= 0){
 			this.setDelay(this.getDelay()+hours*60);
 			this.updateSchedule();
 		}
@@ -373,11 +375,11 @@ public class AssemblyLineScheduler implements Subject {
 			this.setDelay(this.getDelay()+ 60*(22-this.getCurrentTime().getHourOfDay()));
 			this.updateSchedule();
 			this.dayOrdersCount = 0;
-			this.generateShifts(22-this.getCurrentTime().getHourOfDay());
+			this.generateShifts();
 			this.updateCurrentTime();
 		}
 	}
-	
+
 	protected void increaseCurrentTime(int hours){
 		this.currenttime = this.getCurrentTime().plusHours(hours);
 		this.getAssemblyline().getMainScheduler().schedulePendingOrders();
