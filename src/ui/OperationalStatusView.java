@@ -48,6 +48,7 @@ public class OperationalStatusView extends View {
             int num = 1;
             for (String status : statuses)
                 System.out.println("> " + num++ + ") " + status);
+            System.out.print(">> ");
             String response = this.scan.nextLine();
             Pattern pattern = Pattern.compile("^\\d+$");
             this.check(response);
@@ -57,6 +58,7 @@ public class OperationalStatusView extends View {
                     this.error();
                 String keuze = statuses.get(choice - 1);
                 this.controller.changeOperationalStatus(this.user, this.selectedAssemblyLine, keuze);
+                System.out.println("> The state was changed to: " + keuze);
             } else {
                 this.error();
             }
