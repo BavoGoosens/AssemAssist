@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import businessmodel.util.IteratorConverter;
+
 import org.joda.time.DateTime;
 
 import businessmodel.category.VehicleOption;
@@ -37,7 +38,7 @@ public class AssemblyLineScheduler implements Subject {
 	private ArrayList<Observer> observers;
 
 	private int dayOrdersCount = 0;
-
+	
 	/**
 	 * A new new AssemblyLineScheduler is created.
 	 * Shifts are created and the standard algorithm is set.
@@ -179,6 +180,8 @@ public class AssemblyLineScheduler implements Subject {
 		this.getAssemblyline().advance(nextorder);
 		if(nextorder != null)
 			nextorder.setPlacedOnAssemblyLineOfOrder(this.getCurrentTime());
+		if(this.getShifts().size() == 0)
+			this.checkNewDay();
 	}
 
 	private void updateEstimatedTimeOfOrders(int delay){

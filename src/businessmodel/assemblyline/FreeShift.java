@@ -39,13 +39,13 @@ public class FreeShift extends Shift{
 		LinkedList<TimeSlot> temp = this.getTimeSlots();
 		for(int i = 0 ; i < this.getNumberOfWorkPosts()-1;i++)
 			temp.add(this.getNextShift().getTimeSlots().get(i));
-		for(int i = 0 ; i< temp.size()-2; i++){
+		for(int i = 0 ; i< temp.size()-(this.getNumberOfWorkPosts()-1); i++){
 			timeslots = checkTimeSlots(temp.get(i));
 			if (timeslots != null)
 				break;
 		}
-		temp.removeLast();
-		temp.removeLast();
+		for(int i = 0 ; i < this.getNumberOfWorkPosts()-1;i++)
+			temp.removeLast();
 		return timeslots;
 	}
 

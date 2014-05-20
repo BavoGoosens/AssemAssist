@@ -69,8 +69,8 @@ public class InitialData {
 		Boolean orders = false;
 
         ArrayList<Integer> numbers = this.generateOrders();
-		for(int i=0; i < numbers.size(); i++){
-			orders = this.randomOrderGenerator("standard",numbers.get(i));
+		for(int i=0; i < 50; i++){
+			orders = this.randomOrderGenerator("standard",-1);
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
 		}
@@ -85,8 +85,8 @@ public class InitialData {
 //			orders = this.randomOrderGenerator("singleTask",-1);
 //			if (!orders)
 //				this.randomOrderGenerator("singleTask", 0);
-//		}
-//
+//	}
+
 //		orders = false;
 //
 //		for(int i=0; i < 3; i++){
