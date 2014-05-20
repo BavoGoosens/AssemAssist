@@ -35,15 +35,6 @@ public class InitialData {
 	private ArrayList<Integer> batchList;
 	private VehicleModel model;
 	private boolean looping = true;
-	private boolean noBatch = false;
-	private String vehicleOptsAirco = "";
-	private String vehicleOptsBody = "";
-	private String vehicleOptsColor = "";
-	private String vehicleOptsEngine = "";
-	private String vehicleOptsGearbox = "";
-	private String vehicleOptsSeats = "";
-	private String vehicleOptsSpoiler = "";
-	private String vehicleOptsWheels = "";
 
 	public InitialData(){
 
@@ -76,7 +67,7 @@ public class InitialData {
 		this.chosen = new ArrayList<VehicleOption>();
 
 		this.batchList = new ArrayList<Integer>();
-		
+
 		while (iter.hasNext())
 			this.available_vehiclemodels.add(this.iter.next());
 
@@ -84,38 +75,38 @@ public class InitialData {
 
 		ArrayList<Integer> numbers = this.generateOrders();
 		for(int i=0; i < numbers.size(); i++){
-			orders = this.randomOrderGenerator("standard",numbers.get(i), 2);
+			orders = this.randomOrderGenerator("standard",numbers.get(i), -1);
 			if (!orders)
-				this.randomOrderGenerator("standard", 0, 2);
+				this.randomOrderGenerator("standard", 0, -1);
 		}
 
-//		this.processOrders();
+		//		this.processOrders();
 
 
-//		orders = false;
+		//		orders = false;
 
-//		for(int i=0; i < 3; i++){
-//			orders = this.randomOrderGenerator("singleTask",-1, -1);
+		//		for(int i=0; i < 3; i++){
+		//			orders = this.randomOrderGenerator("singleTask",-1, -1);
 
-//			if (!orders)
-//				this.randomOrderGenerator("singleTask", 0, -1);
-//		}
-//
-//		orders = false;
-//
-//		for(int i=0; i < 3; i++){
-//			orders = this.randomOrderGenerator("standard",-1, 3);
-//			if (!orders)
-//				this.randomOrderGenerator("standard", 0, 3);
-//		}
-//
-//		orders = false;
-//
-//		for(int i=0; i < 3; i++){
-//			orders = this.randomOrderGenerator("standard",-1, 0);
-//			if (!orders)
-//				this.randomOrderGenerator("standard", 0, 0);
-//		}
+		//			if (!orders)
+		//				this.randomOrderGenerator("singleTask", 0, -1);
+		//		}
+		//
+		//		orders = false;
+		//
+		//		for(int i=0; i < 3; i++){
+		//			orders = this.randomOrderGenerator("standard",-1, 3);
+		//			if (!orders)
+		//				this.randomOrderGenerator("standard", 0, 3);
+		//		}
+		//
+		//		orders = false;
+		//
+		//		for(int i=0; i < 3; i++){
+		//			orders = this.randomOrderGenerator("standard",-1, 0);
+		//			if (!orders)
+		//				this.randomOrderGenerator("standard", 0, 0);
+		//		}
 
 
 	}
@@ -170,25 +161,21 @@ public class InitialData {
 		else
 			vehicleModel = this.available_vehiclemodels.get(model);
 
-		if (batch != 0){
-			this.noBatch = false;
-			if (batch != -1 && this.batchList.size() == 0){
-				for(int i= 0; i < batch;i++){
-					this.batchList.add(i);
-				}
-				this.model = this.available_vehiclemodels.get(rnd.nextInt(3));
-				vehicleModel = this.model;
-			}else if (batch != -1){
-				vehicleModel = this.model;
-			}else{}
-		}else{
-			this.noBatch = true;
-		}
+		if (batch != -1 && this.batchList.size() == 0){
+			for(int i= 0; i < batch;i++){
+				this.batchList.add(i);
+			}
+			this.model = this.available_vehiclemodels.get(rnd.nextInt(3));
+			vehicleModel = this.model;
+		}else if (batch != -1){
+			vehicleModel = this.model;
+		}else{}
+
 
 		ArrayList <VehicleOption> available = vehicleModel.getPossibilities();
 		airco.clear(); body.clear(); color.clear();engine.clear();gearbox.clear(); seats.clear();
 		spoiler.clear();wheels.clear();  protection.clear(); certification.clear(); storage.clear();
-		
+
 		this.chosen.clear();
 
 		for(VehicleOption option: available){
@@ -219,11 +206,11 @@ public class InitialData {
 
 		this.initializeOrders();
 		return this.placeOrder(orders, model, vehicleModel);
-	
+
 	}
 
 	private boolean placeOrder(String orders, int model, VehicleModel vehicleModel) {
-		
+
 		if (orders.equals("standard")){
 			try {
 				StandardVehicleOrder order = new StandardVehicleOrder(this.garageholder, this.chosen, vehicleModel);
@@ -244,56 +231,32 @@ public class InitialData {
 					System.out.println(e.toString());
 			}
 		}else{}
-		
+
 		return false;
 
-		
+
 	}
 
 	private void initializeOrders() {
-		
+
 		int count = 0;
 		int number = 0;
 		if (batchList.contains(count++)) number = 0; else if (this.airco.size() != 0) number = rnd.nextInt(this.airco.size());
-		if (this.airco.size() != 0)
-			if (this.noBatch)
-				if (!this.vehicleOptsAirco.toString().equals(this.airco.get(number).toString())){this.chosen.add(this.airco.get(number)); this.vehicleOptsAirco = this.airco.get(number).toString();}else{this.vehicleOptsAirco = this.airco.get(number).toString(); number=this.airco.size()-(number+1);}
-			this.chosen.add(this.airco.get(number));
+		if (this.airco.size() != 0) this.chosen.add(this.airco.get(number));
 		if (batchList.contains(count++)) number = 0; else if (this.body.size() != 0) number = rnd.nextInt(this.body.size());
-		if (this.body.size() != 0)
-			if (this.noBatch)
-				if (!this.vehicleOptsBody.toString().equals(this.body.get(number).toString())){this.chosen.add(this.body.get(number)); this.vehicleOptsBody = this.body.get(number).toString();}else{this.vehicleOptsBody = this.body.get(number).toString(); number=this.body.size()-(number+1);}
-			this.chosen.add(this.body.get(number));
+		if (this.body.size() != 0) this.chosen.add(this.body.get(number));
 		if (batchList.contains(count++)) number = 0; else if (this.color.size() != 0) number = rnd.nextInt(this.color.size());
-		if (this.color.size() != 0)
-			if (this.noBatch)
-				if (!this.vehicleOptsColor.toString().equals(this.color.get(number).toString())){this.chosen.add(this.color.get(number)); this.vehicleOptsColor = this.color.get(number).toString();}else{this.vehicleOptsColor = this.color.get(number).toString(); number=this.color.size()-(number+1);}
-			this.chosen.add(this.color.get(number));
+		if (this.color.size() != 0) this.chosen.add(this.color.get(number));
 		if (batchList.contains(count++)) number = 0; else if (this.engine.size() != 0) number = rnd.nextInt(this.engine.size());
-		if (this.engine.size() != 0)
-			if (this.noBatch)
-				if (!this.vehicleOptsEngine.toString().equals(this.engine.get(number).toString())){this.chosen.add(this.engine.get(number)); this.vehicleOptsEngine = this.engine.get(number).toString();}else{this.vehicleOptsEngine = this.engine.get(number).toString(); number=this.engine.size()-(number+1);}
-			this.chosen.add(this.engine.get(number));
+		if (this.engine.size() != 0) this.chosen.add(this.engine.get(number));
 		if (batchList.contains(count++)) number = 0; else if (this.gearbox.size() != 0) number = rnd.nextInt(this.gearbox.size());
-		if (this.gearbox.size() != 0)
-			if (this.noBatch)
-				if (!this.vehicleOptsGearbox.toString().equals(this.gearbox.get(number).toString())){this.chosen.add(this.gearbox.get(number)); this.vehicleOptsGearbox = this.gearbox.get(number).toString();}else{this.vehicleOptsGearbox = this.gearbox.get(number).toString(); number=this.gearbox.size()-(number+1);}
-			this.chosen.add(this.gearbox.get(number));
+		if (this.gearbox.size() != 0) this.chosen.add(this.gearbox.get(number));
 		if (batchList.contains(count++)) number = 0; else if (this.seats.size() != 0) number = rnd.nextInt(this.seats.size());
-		if (this.seats.size() != 0)
-			if (this.noBatch)
-				if (!this.vehicleOptsSeats.toString().equals(this.seats.get(number).toString())){this.chosen.add(this.seats.get(number)); this.vehicleOptsSeats = this.seats.get(number).toString();}else{this.vehicleOptsSeats = this.seats.get(number).toString(); number=this.seats.size()-(number+1);}
-			this.chosen.add(this.seats.get(number));
+		if (this.seats.size() != 0) this.chosen.add(this.seats.get(number));
 		if (batchList.contains(count++)) number = 0; else if (this.spoiler.size() != 0) number = rnd.nextInt(this.spoiler.size());
-		if (this.spoiler.size() != 0)
-			if (this.noBatch)
-				if (!this.vehicleOptsSpoiler.toString().equals(this.spoiler.get(number).toString())){this.chosen.add(this.spoiler.get(number)); this.vehicleOptsSpoiler = this.spoiler.get(number).toString();}else{this.vehicleOptsSpoiler = this.spoiler.get(number).toString(); number=this.spoiler.size()-(number+1);}
-			this.chosen.add(this.spoiler.get(number));
+		if (this.spoiler.size() != 0) this.chosen.add(this.spoiler.get(number));
 		if (batchList.contains(count++)) number = 0; else if (this.wheels.size() != 0) number = rnd.nextInt(this.wheels.size());
-		if (this.wheels.size() != 0)
-			if (this.noBatch)
-				if (!this.vehicleOptsWheels.toString().equals(this.wheels.get(number).toString())){this.chosen.add(this.wheels.get(number)); this.vehicleOptsWheels = this.wheels.get(number).toString();}else{this.vehicleOptsWheels = this.wheels.get(number).toString(); number=this.wheels.size()-(number+1);}
-			this.chosen.add(this.wheels.get(number));
+		if (this.wheels.size() != 0) this.chosen.add(this.wheels.get(number));
 
 		if (this.certification.size() != 0)this.chosen.add(this.certification.get(rnd.nextInt(this.certification.size())));
 		if (this.protection.size() != 0)this.chosen.add(this.protection.get(rnd.nextInt(this.protection.size())));
