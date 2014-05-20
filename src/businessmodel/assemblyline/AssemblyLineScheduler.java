@@ -64,6 +64,7 @@ public class AssemblyLineScheduler implements Subject {
 	protected void scheduleNewDay(){
 		this.dayOrdersCount = 0;
 		this.generateShifts();
+		this.setDelay(0);
 		this.updateNewDayDate();
 		this.getAssemblyLine().getMainScheduler().schedulePendingOrders();
 	}
@@ -109,7 +110,6 @@ public class AssemblyLineScheduler implements Subject {
 		order.setTimestampOfOrder(this.getCurrentTime());
 		getOrders().add(order);
 		checkIfAssemblyLineCanAdvance();
-		order.setTimestampOfOrder(this.getCurrentTime());
 		setEstimatedCompletionDateOfOrder(getPreviousOrder(order), order);
 		order.setAssemblyLine(this.getAssemblyLine());
 	}
