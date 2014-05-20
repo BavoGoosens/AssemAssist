@@ -39,6 +39,8 @@ public class AssemblyLineScheduler implements Subject {
 
 	private int dayOrdersCount = 0;
 	
+	private int count = 0;
+	
 	/**
 	 * A new new AssemblyLineScheduler is created.
 	 * Shifts are created and the standard algorithm is set.
@@ -62,6 +64,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * The shift are cleared and new orders are added if possible.
 	 */
 	protected void ScheduleDay(){
+		this.count = 0;
 		this.dayOrdersCount = 0;
 		this.generateShifts();
 		this.updateCurrentTime();
@@ -97,6 +100,7 @@ public class AssemblyLineScheduler implements Subject {
 	 */
 	protected boolean canAddOrder(Order order){
 		return this.getEstimatedCompletionTimeOfNewOrder(order).isBefore((this.getCurrentTime().withHourOfDay(22)));
+
 	}
 
 	/**
