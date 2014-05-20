@@ -72,8 +72,7 @@ public class ScenarioTestUC4 {
 		WorkPost post = posts.get(0);
 		ArrayList<AssemblyTask> pendingTasks = (ArrayList<AssemblyTask>) new IteratorConverter<AssemblyTask>().convert(post.getPendingTasks());
 		ArrayList<AssemblyTask> finishedTasks = (ArrayList<AssemblyTask>) new IteratorConverter<AssemblyTask>().convert(post.getFinishedTasks());
-		assertEquals("Assembly Vehicle Body", pendingTasks.get(0).toString());
-		assertEquals("Paint Vehicle", pendingTasks.get(1).toString());
+		assertEquals(0, pendingTasks.size());
 		assertEquals(0, finishedTasks.size());
 		
 		post = posts.get(1);
@@ -87,6 +86,7 @@ public class ScenarioTestUC4 {
 		finishedTasks = (ArrayList<AssemblyTask>) new IteratorConverter<AssemblyTask>().convert(post.getFinishedTasks());
 		assertEquals(0, pendingTasks.size());
 		assertEquals(0, finishedTasks.size());
+		
 	}
 	
 	@Test
@@ -97,7 +97,8 @@ public class ScenarioTestUC4 {
 		WorkPost post = posts.get(0);
 		ArrayList<AssemblyTask> pendingTasks = (ArrayList<AssemblyTask>) new IteratorConverter<AssemblyTask>().convert(post.getPendingTasks());
 		ArrayList<AssemblyTask> finishedTasks = (ArrayList<AssemblyTask>) new IteratorConverter<AssemblyTask>().convert(post.getFinishedTasks());
-		assertEquals(0, pendingTasks.size());
+		assertEquals("Assembly Vehicle Body", pendingTasks.get(0).toString());
+		assertEquals("Paint Vehicle", pendingTasks.get(1).toString());
 		assertEquals(0, finishedTasks.size());
 		
 		post = posts.get(1);

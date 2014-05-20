@@ -34,6 +34,7 @@ public class MainScheduler {
 	public MainScheduler(OrderManager ordermanager){
 		this.setOrderManager(ordermanager);
 		this.generateAssemblyLines();
+		changeSystemWideAlgorithm("FIFO", null);
 	}
 
 	public void schedulePendingOrders() {
