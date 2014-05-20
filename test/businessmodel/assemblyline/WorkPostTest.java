@@ -31,7 +31,7 @@ public class WorkPostTest {
 	public void testSetResponsibleTasks() {
 
 		ArrayList<AssemblyTask> assemblytasks = new ArrayList<AssemblyTask>();
-		AssemblyTask assem1 = new AssemblyTask("Test","Test", new Seats());
+		AssemblyTask assem1 = new AssemblyTask("Test","Test", new Seats(), false);
 		assemblytasks.add(assem1);
 		assemblytasks.add(assem1);
 		this.workpost.setResponsibleTasks(assemblytasks);
