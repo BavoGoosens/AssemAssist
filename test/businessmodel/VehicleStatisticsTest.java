@@ -149,7 +149,6 @@ public class VehicleStatisticsTest {
         }
         
         processOrders(om);
-
     }
     
     private void processOrders(OrderManager om) throws NoClearanceException {
