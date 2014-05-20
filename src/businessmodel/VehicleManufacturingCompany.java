@@ -137,7 +137,7 @@ public class VehicleManufacturingCompany implements Model {
         for (AssemblyLine line : this.getOrderManager().getMainScheduler().getAssemblyLines()) 
             for (WorkPost post : converter.convert(line.getWorkPostsIterator())) 
             	for( AssemblyTask task : post.getResponsibleTasksClone())
-            		if (task.canBeOrder())
+            		if (task.canBeOrdered())
             			tasks.add(task);
  
         return tasks.iterator();
