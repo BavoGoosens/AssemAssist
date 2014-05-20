@@ -19,14 +19,17 @@ import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
 import businessmodel.category.Wheels;
+import businessmodel.exceptions.NoClearanceException;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.statistics.StatisticsManager;
 import businessmodel.statistics.VehicleStatistics;
 import businessmodel.user.GarageHolder;
+import businessmodel.util.IteratorConverter;
 
 public class VehicleStatisticsTest {
 	
 	VehicleStatistics vehicleStatistics;
+	boolean looping;
 
     @Before
     public void setUp() throws Exception {
@@ -145,23 +148,34 @@ public class VehicleStatisticsTest {
         	om.placeOrder(order);
         }
         
-        /**
-         * Voer alle taken uit
-         */
-        for (int i = 1; i <= 50; i++) {
-	        for (AssemblyLine assemblyLine: om.getMainScheduler().getAssemblyLines()) {
-	        	Iterator<WorkPost> workPostIterator = assemblyLine.getWorkPostsIterator();
-	        	while (workPostIterator.hasNext()) {
-	        		WorkPost workPost = workPostIterator.next();
-	        		Iterator<AssemblyTask> taskIterator = workPost.getPendingTasks();
-	        		while (taskIterator.hasNext()) {
-	        			AssemblyTask task = taskIterator.next();
-	        			task.completeAssemblytask(60);
-	        		}
-	        	}
-	        } 
-        }
+        processOrders(om);
+
     }
+    
+    private void processOrders(OrderManager om) throws NoClearanceException {
+		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
+		for(AssemblyLine iter1: om.getMainScheduler().getAssemblyLines()){
+			looping = true;
+			while (looping == true ){
+				CompleteWorkPost(iter1, converter.convert(iter1.getWorkPostsIterator()).size());
+			}
+		}
+
+	}
+
+	private void CompleteWorkPost(AssemblyLine assem, int i) throws NoClearanceException{
+		looping = false;
+		for(int j = 0 ; j < i ; j++){
+			IteratorConverter<WorkPost> converter = new IteratorConverter<>();
+			WorkPost wp1 = converter.convert(assem.getWorkPostsIterator()).get(j);
+			Iterator<AssemblyTask> iter2 = wp1.getPendingTasks();
+			while (iter2.hasNext()){
+				AssemblyTask task = iter2.next();
+				task.completeAssemblytask(20);
+				looping = true;
+			}
+		}
+	}
     
     @Test
     public void test() {
