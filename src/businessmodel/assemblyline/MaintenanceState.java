@@ -45,6 +45,7 @@ public class MaintenanceState implements AssemblyLineState, Observer {
 
     @Override
     public void initialize() {
+        this.assemblyLine.tempName(4);
         this.isReady = false;
         this.update(this.assemblyLine);
     }
@@ -55,7 +56,6 @@ public class MaintenanceState implements AssemblyLineState, Observer {
     }
 
     @Override
-    // TODO
     public void update(Subject subject) {
         Iterator<WorkPost> posts = this.assemblyLine.getWorkPostsIterator();
         boolean ready = false;
@@ -66,7 +66,8 @@ public class MaintenanceState implements AssemblyLineState, Observer {
         if (ready){
             // the assembly line is empty
             // now shift 4 hours and transition to Operational state
-
+            this.assemblyLine.increaseCurrentTime(4);
+            this.assemblyLine.setState(this.assemblyLine.getOperationalState());
         }
         // in the other case just wait till the line is empty.
     }
