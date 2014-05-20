@@ -15,7 +15,7 @@ import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 
 /**
- * A Class that represents a assemblyline for an AssymblyLine.
+ * A Class that represents a assemblyLine for an AssymblyLine.
  * It makes a schedule for the assemblyLine.
  * When the schedule has been complete a new day schedule is created
  * @author SWOP team 10
@@ -33,7 +33,7 @@ public class AssemblyLineScheduler implements Subject {
 
 	private DateTime currentTime;
 
-	private AssemblyLine assemblyline;
+	private AssemblyLine assemblyLine;
 
 	private ArrayList<Observer> observers;
 
@@ -43,10 +43,10 @@ public class AssemblyLineScheduler implements Subject {
 	 * A new new AssemblyLineScheduler is created.
 	 * Shifts are created and the standard algorithm is set.
 	 */
-	protected AssemblyLineScheduler(AssemblyLine assemblyline){
+	protected AssemblyLineScheduler(AssemblyLine assemblyLine){
 		this.shifts = new LinkedList<Shift>();
 		this.orders = new LinkedList<Order>();
-		this.assemblyline = assemblyline;
+		this.assemblyLine = assemblyLine;
 		this.observers = new ArrayList<Observer>();
 		this.currentTime = new DateTime(new DateTime().getYear(),
 				new DateTime().getMonthOfYear(),
@@ -65,7 +65,7 @@ public class AssemblyLineScheduler implements Subject {
 		this.dayOrdersCount = 0;
 		this.generateShifts();
 		this.updateNewDayDate();
-		this.getAssemblyline().getMainScheduler().schedulePendingOrders();
+		this.getAssemblyLine().getMainScheduler().schedulePendingOrders();
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class AssemblyLineScheduler implements Subject {
 		checkIfAssemblyLineCanAdvance();
 		order.setTimestampOfOrder(this.getCurrentTime());
 		setEstimatedCompletionDateOfOrder(getPreviousOrder(order), order);
-		order.setAssemblyLine(this.getAssemblyline());
+		order.setAssemblyLine(this.getAssemblyLine());
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	private void checkIfAssemblyLineCanAdvance() {
-		if(this.getAssemblyline().canAdvance())
+		if(this.getAssemblyLine().canAdvance())
 			this.updateAssemblyLineStatus();
 	}
 
@@ -147,7 +147,7 @@ public class AssemblyLineScheduler implements Subject {
 		if(this.getOrders().peekFirst()!= null && this.getOrders().peekFirst().isCompleted()){
 			Order completedOrder = this.getOrders().pollFirst();
 			completedOrder.setCompletionDateOfOrder(this.getCurrentTime());
-			this.getAssemblyline().getMainScheduler().finishedOrder(completedOrder);
+			this.getAssemblyLine().getMainScheduler().finishedOrder(completedOrder);
 			this.dayOrdersCount++;
 		}
 	}
@@ -155,7 +155,7 @@ public class AssemblyLineScheduler implements Subject {
 	private void updateSchedule(){
 		if(this.getDelay() <= -60){
 			this.getShifts().getLast().addTimeSlot();
-			this.getAssemblyline().getMainScheduler().schedulePendingOrders();
+			this.getAssemblyLine().getMainScheduler().schedulePendingOrders();
 			this.updateDelay(60);
 			this.updateSchedule();
 		}
@@ -165,7 +165,7 @@ public class AssemblyLineScheduler implements Subject {
 				if(this.getShifts().getLast().getTimeSlots().size() == 0)
 					this.getShifts().removeLast();
 				if(order!= null)
-					this.getAssemblyline().getMainScheduler().placeOrderInFront(order);
+					this.getAssemblyLine().getMainScheduler().placeOrderInFront(order);
 				this.updateDelay(-60);
 				this.updateSchedule();
 			}
@@ -181,7 +181,7 @@ public class AssemblyLineScheduler implements Subject {
 			Order nextorder = this.getShifts().getFirst().getNextOrderForAssemblyLine();
 			if(this.getShifts().getFirst().getTimeSlots().size() == 0)
 				this.getShifts().removeFirst();
-			this.getAssemblyline().advance(nextorder);
+			this.getAssemblyLine().advance(nextorder);
 			if(nextorder != null)
 				nextorder.setPlacedOnAssemblyLineOfOrder(this.getCurrentTime());
 		}
@@ -218,8 +218,8 @@ public class AssemblyLineScheduler implements Subject {
 
 	protected void generateShifts(){
 		this.getShifts().clear();
-		Shift endshift = new EndShift(8,this.getAssemblyline().getNumberOfWorkPosts());
-		Shift currrentshift = new FreeShift(8,this.getAssemblyline().getNumberOfWorkPosts(), endshift);
+		Shift endshift = new EndShift(8,this.getAssemblyLine().getNumberOfWorkPosts());
+		Shift currrentshift = new FreeShift(8,this.getAssemblyLine().getNumberOfWorkPosts(), endshift);
 		this.getShifts().add(currrentshift);
 		this.getShifts().add(endshift);
 	}
@@ -255,12 +255,12 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	/**
-	 * Return the AssemblyiLne of this assemblyline.
+	 * Return the AssemblyiLne of this assemblyLine.
 	 *
-	 * @return the AssemblyLine of this assemblyline.
+	 * @return the AssemblyLine of this assemblyLine.
 	 */
-	public AssemblyLine getAssemblyline() {
-		return assemblyline;
+	public AssemblyLine getAssemblyLine() {
+		return assemblyLine;
 	}
 
 	/**
@@ -273,7 +273,7 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	/**
-	 * Returns the current orders of this assemblyline.
+	 * Returns the current orders of this assemblyLine.
 	 *
 	 * @return
 	 */
@@ -282,16 +282,16 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	/**
-	 * Returns the shifts of this assemblyline.
+	 * Returns the shifts of this assemblyLine.
 	 *
-	 * @return the shift of this assemblyline.
+	 * @return the shift of this assemblyLine.
 	 */
 	public LinkedList<Shift> getShifts() {
 		return this.shifts;
 	}
 
 	/**
-	 * A method that returns the current delay of this day assemblyline.
+	 * A method that returns the current delay of this day assemblyLine.
 	 *
 	 * @return
 	 */
@@ -321,9 +321,9 @@ public class AssemblyLineScheduler implements Subject {
 	public int calculateMinutes(Order order){
 		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		if(order.getVehicleModel() == null)
-			return converter.convert(this.getAssemblyline().getWorkPostsIterator()).size()*60;
+			return converter.convert(this.getAssemblyLine().getWorkPostsIterator()).size()*60;
 		int minutes = 0;
-		for(WorkPost wp : converter.convert(this.getAssemblyline().getWorkPostsIterator())){
+		for(WorkPost wp : converter.convert(this.getAssemblyLine().getWorkPostsIterator())){
 			minutes += wp.getStandardTimeOfModel(order.getVehicleModel());
 		}
 		return minutes;
@@ -333,8 +333,8 @@ public class AssemblyLineScheduler implements Subject {
 		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		if(order.getVehicleModel() == null)
 			return 60;
-		return converter.convert(this.getAssemblyline().getWorkPostsIterator())
-				.get(converter.convert(this.getAssemblyline().getWorkPostsIterator()).size()-1)
+		return converter.convert(this.getAssemblyLine().getWorkPostsIterator())
+				.get(converter.convert(this.getAssemblyLine().getWorkPostsIterator()).size()-1)
 				.getStandardTimeOfModel(order.getVehicleModel());
 	}
 
@@ -368,7 +368,7 @@ public class AssemblyLineScheduler implements Subject {
 
 	protected void tempName(int hours){
 		for(Order order: this.getOrders())
-			this.getAssemblyline().getMainScheduler().placeOrderInFront(order);
+			this.getAssemblyLine().getMainScheduler().placeOrderInFront(order);
 		this.getOrders().clear();
 		if(this.getCurrentTime().getHourOfDay() + hours <= 22 & this.getCurrentTime().getMinuteOfHour() <= 0){
 			this.setDelay(this.getDelay()+hours*60);
@@ -385,6 +385,6 @@ public class AssemblyLineScheduler implements Subject {
 
 	protected void increaseCurrentTime(int hours){
 		this.currentTime = this.getCurrentTime().plusHours(hours);
-		this.getAssemblyline().getMainScheduler().schedulePendingOrders();
+		this.getAssemblyLine().getMainScheduler().schedulePendingOrders();
 	}
 }
