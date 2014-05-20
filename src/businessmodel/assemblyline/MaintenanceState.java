@@ -9,7 +9,7 @@ public class MaintenanceState implements AssemblyLineState, Observer {
 
 	private AssemblyLine assemblyLine;
 
-    private boolean isReady;
+    private boolean isReady = false;
 	
 	/**
 	 * Constructor for maintenance state of the assembly line
@@ -44,6 +44,13 @@ public class MaintenanceState implements AssemblyLineState, Observer {
     }
 
     @Override
+    public void initialize() {
+        this.assemblyLine.tempName(4);
+        this.isReady = false;
+        this.update(this.assemblyLine);
+    }
+
+    @Override
     public String toString() {
         return "Maintenance";
     }
@@ -59,7 +66,8 @@ public class MaintenanceState implements AssemblyLineState, Observer {
         if (ready){
             // the assembly line is empty
             // now shift 4 hours and transition to Operational state
-
+            this.assemblyLine.increaseCurrentTime(4);
+            this.assemblyLine.setState(this.assemblyLine.getOperationalState());
         }
         // in the other case just wait till the line is empty.
     }
