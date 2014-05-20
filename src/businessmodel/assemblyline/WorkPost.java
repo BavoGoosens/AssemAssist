@@ -180,7 +180,7 @@ public class WorkPost {
 		for(AssemblyTask assem : this.getResponsibleTasks()){
 			for(VehicleOption option: carOptions){
 				if(option.getCategory().equals(assem.getCategory()))
-					result.add(new AssemblyTask(assem.getName(),assem.getDescription(),assem.getCategory(),this));
+					result.add(new AssemblyTask(assem.getName(),assem.getDescription(),assem.getCategory(),this,assem.canBeOrdered()));
 			}
 		}
 		return result;
