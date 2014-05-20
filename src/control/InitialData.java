@@ -75,34 +75,31 @@ public class InitialData {
 
 		Boolean orders = false;
 
-		//		ArrayList<Integer> numbers = this.generateOrders();
-		//		for(int i=0; i < numbers.size(); i++){
-		//			orders = this.randomOrderGenerator("standard",numbers.get(i), 1);
-		//			if (!orders)
-		//				this.randomOrderGenerator("standard", 0, 1);
-		//		}
-		//
-		//		this.processOrders();
+		ArrayList<Integer> numbers = this.generateOrders();
+		for(int i=0; i < numbers.size(); i++){
+			orders = this.randomOrderGenerator("standard",numbers.get(i), -1);
+			if (!orders)
+				this.randomOrderGenerator("standard", 0, -1);
+		}
+
+		this.processOrders();
 
 
-		//		orders = false;
+		orders = false;
+		for(int i=0; i < 3; i++){
+			orders = this.randomOrderGenerator("singleTask",-1, -1);
+			if (!orders)
+				this.randomOrderGenerator("singleTask", 0, -1);
+		}
 
-		//		for(int i=0; i < 3; i++){
-		//			orders = this.randomOrderGenerator("singleTask",-1, -1);
-
-		//			if (!orders)
-		//				this.randomOrderGenerator("singleTask", 0, -1);
-		//		}
-		//
-		//		orders = false;
-		//
-		//		for(int i=0; i < 3; i++){
-		//			orders = this.randomOrderGenerator("standard",-1, 3);
-		//			if (!orders)
-		//				this.randomOrderGenerator("standard", 0, 3);
-		//		}
-		//
 		this.makeOrdersNotInSameBatch();
+
+		orders = false;
+		for(int i=0; i < 3; i++){
+			orders = this.randomOrderGenerator("standard",-1, 3);
+			if (!orders)
+				this.randomOrderGenerator("standard", 0, 3);
+		}
 
 
 	}
