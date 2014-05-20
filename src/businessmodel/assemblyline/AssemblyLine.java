@@ -72,15 +72,16 @@ public class AssemblyLine implements Subject{
 		this.setState(operational);
 	}
 
-	// TODO AssemblyLine state toeveogen.
 	public boolean canAddOrder(Order order){
-		boolean bool = false;
+		boolean bool;
 		Iterator<VehicleModel> models = this.getResponsibleModelsIterator();
-		while(models.hasNext()){
+		while (models.hasNext()){
 			VehicleModel model = models.next();
-			if(order.getVehicleModel().getName() == model.getName())
-				bool = true;
-		} 
+			if (order.getVehicleModel().getName() == model.getName())
+			    bool = true;
+		}
+        // is true when the assembly line can accept orders in this state.
+        bool = this.state.canPlaceOrder();
 		if(bool)
 			return this.getAssemblyLineScheduler().canAddOrder(order);
 		else
