@@ -34,6 +34,7 @@ public class InitialData {
 	private User customsManager;
 	private ArrayList<Integer> batchList;
 	private VehicleModel model;
+	private boolean looping = true;
 
 	public InitialData(){
 
@@ -71,18 +72,18 @@ public class InitialData {
 		this.batchList = new ArrayList<Integer>();
 
 		Boolean orders = false;
-//
-//		ArrayList<Integer> numbers = this.generateOrders();
-//		for(int i=0; i < numbers.size(); i++){
-//			orders = this.randomOrderGenerator("standard",numbers.get(i), -1);
-//			if (!orders)
-//				this.randomOrderGenerator("standard", 0, -1);
-//		}
-//
-//
+
+		ArrayList<Integer> numbers = this.generateOrders();
+		for(int i=0; i < 10; i++){
+			orders = this.randomOrderGenerator("standard", -1, -1);
+			if (!orders)
+				this.randomOrderGenerator("standard", 0, -1);
+		}
+
+
 //		this.processOrders();
-//
-//
+
+
 //		orders = false;
 //
 //		for(int i=0; i < 3; i++){
@@ -90,21 +91,21 @@ public class InitialData {
 //			if (!orders)
 //				this.randomOrderGenerator("singleTask", 0, -1);
 //		}
-
-		orders = false;
-
-		for(int i=0; i < 3; i++){
-			orders = this.randomOrderGenerator("standard",-1, 3);
-			if (!orders)
-				this.randomOrderGenerator("standard", 0, 3);
-		}
-
+//
 //		orders = false;
 //
 //		for(int i=0; i < 3; i++){
-//			orders = this.randomOrderGenerator("standard",-1, -1);
+//			orders = this.randomOrderGenerator("standard",-1, 3);
 //			if (!orders)
-//				this.randomOrderGenerator("standard", 0, -1);
+//				this.randomOrderGenerator("standard", 0, 3);
+//		}
+//
+//		orders = false;
+//
+//		for(int i=0; i < 3; i++){
+//			orders = this.randomOrderGenerator("standard",-1, 0);
+//			if (!orders)
+//				this.randomOrderGenerator("standard", 0, 0);
 //		}
 
 
@@ -117,8 +118,6 @@ public class InitialData {
 		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3);
 		return number;
 	}
-
-	private boolean looping = true;
 
 	// TODO
 	private void processOrders() throws NoClearanceException {
@@ -170,15 +169,19 @@ public class InitialData {
 		else
 			vehicleModel = this.available_vehiclemodels.get(model);
 
-		if (batch != -1 && this.batchList.size() == 0){
-			for(int i= 0; i < batch;i++){
-				this.batchList.add(i);
-			}
-			this.model = this.available_vehiclemodels.get(rnd.nextInt(3));
-			vehicleModel = this.model;
-		}else if (batch != -1){
-			vehicleModel = this.model;
-		}else{}
+		if (batch != 0){
+			if (batch != -1 && this.batchList.size() == 0){
+				for(int i= 0; i < batch;i++){
+					this.batchList.add(i);
+				}
+				this.model = this.available_vehiclemodels.get(rnd.nextInt(3));
+				vehicleModel = this.model;
+			}else if (batch != -1){
+				vehicleModel = this.model;
+			}else{}
+		}else{
+
+		}
 
 		ArrayList <VehicleOption> available = vehicleModel.getPossibilities();
 		airco.clear(); body.clear(); color.clear();engine.clear();gearbox.clear(); seats.clear();
