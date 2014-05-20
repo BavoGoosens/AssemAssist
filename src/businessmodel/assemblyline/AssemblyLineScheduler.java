@@ -336,36 +336,6 @@ public class AssemblyLineScheduler implements Subject {
                 .getStandardTimeOfModel(order.getVehicleModel());
 	}
 
-
-//	//TODO check this shit, moet alle sets teruggeven die in meer dan of gelijk aan 3 orders komen
-//	public ArrayList<VehicleOption> getUnscheduledVehicleOptions(int maxNumber){
-//
-//		HashMap<String, Integer> list = new HashMap<String, Integer>();
-//		ArrayList<String> options = new ArrayList<String>();
-//		//arraylist vehicleoption
-//		HashMap<String, VehicleOption> result = new HashMap<String, VehicleOption>();
-//
-//		for(Order order: this.getOrders()){
-//			for(VehicleOption option: order.getOptions()){
-//				if (list.containsKey(option.getName())){
-//					int count = list.get(option.getName());
-//					list.remove(option.getName());
-//					list.put(option.getName(),++count) ;
-//				}else {
-//					options.add(option.getName());
-//					list.put(option.getName(), 1);
-//					result.put(option.getName(), option);
-//				}
-//			}
-//		}
-//
-//		for (String optionName: options)
-//			if (list.get(optionName) < 3)
-//				result.remove(optionName);
-//
-//		return new ArrayList<VehicleOption>(result.values());
-//	}
-
 	@Override
 	public void subscribeObserver(Observer observer) throws IllegalArgumentException {
 		if (observer == null) throw new IllegalArgumentException("Bad observer!");
