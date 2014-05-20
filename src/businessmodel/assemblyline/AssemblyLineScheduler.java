@@ -178,12 +178,12 @@ public class AssemblyLineScheduler implements Subject {
 
 	private void updateAssemblyLineStatus(){
 		if(!this.getShifts().isEmpty()){
-			Order nextorder = this.getShifts().getFirst().getNextOrderForAssemblyLine();
+			Order nextOrder = this.getShifts().getFirst().getNextOrderForAssemblyLine();
 			if(this.getShifts().getFirst().getTimeSlots().size() == 0)
 				this.getShifts().removeFirst();
-			this.getAssemblyLine().advance(nextorder);
-			if(nextorder != null)
-				nextorder.setPlacedOnAssemblyLineOfOrder(this.getCurrentTime());
+			this.getAssemblyLine().advance(nextOrder);
+			if(nextOrder != null)
+				nextOrder.setPlacedOnAssemblyLineOfOrder(this.getCurrentTime());
 		}
 	}
 

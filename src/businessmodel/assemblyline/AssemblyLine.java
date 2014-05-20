@@ -106,16 +106,16 @@ public class AssemblyLine implements Subject{
 	/**
 	 * Advances the assembly line and adds a new order to the assembly line.
 	 * 
-	 * @param 	neworder
+	 * @param 	newOrder
 	 * 			The new order that needs to be added to the assembly line, when moved forward.	
 	 * @throws	IllegalStateException
 	 * 			| If the assembly line cannot be advanced.
 	 * 			| !this.canAdvance()
 	 */
-	protected void advance(Order neworder) throws IllegalStateException {
+	protected void advance(Order newOrder) throws IllegalStateException {
 		if (!this.canAdvance())
 			throw new IllegalStateException("Cannot advance assembly line!");
-		Order temp = neworder;
+		Order temp = newOrder;
 		for(WorkPost wp: this.getWorkPosts()){
 			temp = wp.switchOrders(temp);
 		}
