@@ -177,14 +177,14 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	private void updateAssemblylineStatus(){
-		Order nextorder = this.getShifts().getFirst().getNextOrderForAssemblyLine();
-		if(this.getShifts().getFirst().getTimeSlots().size() == 0)
-			this.getShifts().removeFirst();
-		this.getAssemblyline().advance(nextorder);
-		if(nextorder != null)
-			nextorder.setPlacedOnAssemblyLineOfOrder(this.getCurrentTime());
-		if(this.getShifts().size() == 0)
-			this.checkNewDay();
+		if(!this.getShifts().isEmpty()){
+			Order nextorder = this.getShifts().getFirst().getNextOrderForAssemblyLine();
+			if(this.getShifts().getFirst().getTimeSlots().size() == 0)
+				this.getShifts().removeFirst();
+			this.getAssemblyline().advance(nextorder);
+			if(nextorder != null)
+				nextorder.setPlacedOnAssemblyLineOfOrder(this.getCurrentTime());
+		}
 	}
 
 	private void updateEstimatedTimeOfOrders(int delay){
@@ -202,8 +202,7 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	private void checkNewDay(){
-
-		if (this.getShifts().isEmpty()) {
+		if (this.getShifts().isEmpty() || (this.getCurrentTime().getHourOfDay() > 22 && this.getCurrentTime().getMinuteOfHour() > 0) ) {
 			notifyObservers();
 			this.ScheduleDay();
 		}
