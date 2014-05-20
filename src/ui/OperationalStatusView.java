@@ -1,11 +1,5 @@
 package ui;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
-import java.util.regex.Pattern;
-
 import businessmodel.Model;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.exceptions.NoClearanceException;
@@ -13,6 +7,12 @@ import businessmodel.user.User;
 import businessmodel.util.IteratorConverter;
 import control.AssemblyLineController;
 import control.AssemblyLineHandler;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 
 /**
@@ -25,7 +25,8 @@ public class OperationalStatusView extends View {
     private AssemblyLine selectedAssemblyLine;
 
     private Scanner scan = new Scanner(System.in);
-    public OperationalStatusView(Model cmc, User user){
+
+    public OperationalStatusView(Model cmc, User user) {
         super(cmc);
         setUser(user);
         this.controller = new AssemblyLineHandler(this.getModel());
@@ -63,7 +64,7 @@ public class OperationalStatusView extends View {
             } else {
                 this.error();
             }
-        } catch (NoClearanceException e){
+        } catch (NoClearanceException e) {
             this.quit();
         }
     }
@@ -89,7 +90,7 @@ public class OperationalStatusView extends View {
             } else {
                 this.error();
             }
-        } catch (NoClearanceException e){
+        } catch (NoClearanceException e) {
             this.quit();
         }
     }
