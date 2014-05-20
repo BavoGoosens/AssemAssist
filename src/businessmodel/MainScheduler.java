@@ -142,7 +142,7 @@ public class MainScheduler {
 		AssemblyLine line1 = factoryA.createAssemblyLine(this);
 		AssemblyLine line2 = factoryB.createAssemblyLine(this);
 		AssemblyLine line3 = factoryC.createAssemblyLine(this);
-
+		
 		assemblylines.add(line1);
 		assemblylines.add(line2);
 		assemblylines.add(line3);

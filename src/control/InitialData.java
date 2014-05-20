@@ -66,28 +66,29 @@ public class InitialData {
 		this.available_vehiclemodels = new ArrayList<VehicleModel>();
 		this.chosen = new ArrayList<VehicleOption>();
 
+		this.batchList = new ArrayList<Integer>();
+		
 		while (iter.hasNext())
 			this.available_vehiclemodels.add(this.iter.next());
 
-		this.batchList = new ArrayList<Integer>();
-
 		Boolean orders = false;
 
-//		ArrayList<Integer> numbers = this.generateOrders();
-//		for(int i=0; i < numbers.size(); i++){
-//			orders = this.randomOrderGenerator("standard",numbers.get(i), -1);
-//			if (!orders)
-//				this.randomOrderGenerator("standard", 0, -1);
-//		}
-//
-//
+		ArrayList<Integer> numbers = this.generateOrders();
+		for(int i=0; i < numbers.size(); i++){
+			orders = this.randomOrderGenerator("standard",numbers.get(i), -1);
+			if (!orders)
+				this.randomOrderGenerator("standard", 0, -1);
+		}
+
+
 //		this.processOrders();
-//
-//
+
+
 //		orders = false;
-//
+
 //		for(int i=0; i < 3; i++){
 //			orders = this.randomOrderGenerator("singleTask",-1, -1);
+
 //			if (!orders)
 //				this.randomOrderGenerator("singleTask", 0, -1);
 //		}
@@ -99,14 +100,14 @@ public class InitialData {
 //			if (!orders)
 //				this.randomOrderGenerator("standard", 0, 3);
 //		}
-
-		orders = false;
-
-		for(int i=0; i < 3; i++){
-			orders = this.randomOrderGenerator("standard",-1, 0);
-			if (!orders)
-				this.randomOrderGenerator("standard", 0, 0);
-		}
+//
+//		orders = false;
+//
+//		for(int i=0; i < 3; i++){
+//			orders = this.randomOrderGenerator("standard",-1, 0);
+//			if (!orders)
+//				this.randomOrderGenerator("standard", 0, 0);
+//		}
 
 
 	}
@@ -119,7 +120,6 @@ public class InitialData {
 		return number;
 	}
 
-	// TODO
 	private void processOrders() throws NoClearanceException {
 		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		Iterator<AssemblyLine> iter1 = vmc.getAssemblyLines(this.mechanic);
@@ -129,15 +129,6 @@ public class InitialData {
 			while (looping == true ){
 				CompleteWorkPost(assem, converter.convert(assem.getWorkPostsIterator()).size());
 			}
-			/*for(int i = 0; i < 40 ; i ++){
-				for(WorkPost wp: assem.getWorkPostsIterator()){
-					Iterator<AssemblyTask> iter3 = vmc.getPendingTasks(this.mechanic, wp);
-					while (iter3.hasNext()){
-						AssemblyTask task = iter3.next();
-						vmc.finishTask(task, 20);
-					}looping
-				}
-			}*/
 		}
 
 	}

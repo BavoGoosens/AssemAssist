@@ -34,8 +34,19 @@ public class AssemblyLineSchedulerTest {
 
 		assertEquals(scheduler.getShifts().size(),2);
 		assertEquals(scheduler.getShifts().get(0).getTimeSlots().size(),8);
+		assertEquals(scheduler.getShifts().get(1).getTimeSlots().size(),8);
 		assertEquals(scheduler.getOrders().size(), 0);
 		assertEquals(scheduler.getDelay(),0);
+		
+		AssemblyLineCFactory line2 = new AssemblyLineCFactory();
+		assemblyLine = line2.createAssemblyLine(new MainScheduler(new OrderManager()));
+		
+		assertEquals(scheduler.getShifts().size(),2);
+		assertEquals(scheduler.getShifts().get(0).getTimeSlots().size(),8);
+		assertEquals(scheduler.getShifts().get(1).getTimeSlots().size(),8);
+		assertEquals(scheduler.getOrders().size(), 0);
+		assertEquals(scheduler.getDelay(),0);
+
 	}
 
 	@Test

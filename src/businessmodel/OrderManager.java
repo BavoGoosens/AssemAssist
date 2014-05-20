@@ -192,10 +192,11 @@ public class OrderManager implements Subject {
 	}
 
     private void setHenk(Order order, DateTime date){
-        date.withHourOfDay(8);
-        date.withMinuteOfHour(0);
-        order.setEstimatedDeliveryDateOfOrder(date.plusMinutes(this.getMainScheduler().
-                getAssemblyLineSchedulers().get(0).calculateMinutes(order)));
+        date = date.withHourOfDay(8);
+        date = date.withMinuteOfHour(0);
+        date = date.plusMinutes(this.getMainScheduler().
+                getAssemblyLineSchedulers().get(0).calculateMinutes(order));
+        order.setEstimatedDeliveryDateOfOrder(date);
     }
 
 	@Override

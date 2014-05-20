@@ -35,7 +35,7 @@ public class AssemblyLine implements Subject{
 
 	private AssemblyLineState state;
 
-    private String name;
+    public String name;
 
 	/**
 	 * The AssemblyLineScheduler that schedules the orders for this AssemblyLine.
