@@ -283,7 +283,8 @@ public class AssemblyLine implements Subject{
 	 * @param state
 	 */
 	protected void setState(AssemblyLineState state) {
-		this.state = state;
+	    this.state = state;
+        this.state.initialize();
 	}
 
 	public DateTime getEstimatedCompletionTimeOfNewOrder(Order order) {

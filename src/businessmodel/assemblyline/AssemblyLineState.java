@@ -6,5 +6,6 @@ public interface AssemblyLineState {
 	public abstract void markAssemblyLineAsOperational();
 	public abstract void markAssemblyLineAsMaintenance();
     public abstract boolean canPlaceOrder();
+    public abstract void initialize();
 	
 }

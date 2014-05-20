@@ -9,7 +9,7 @@ public class MaintenanceState implements AssemblyLineState, Observer {
 
 	private AssemblyLine assemblyLine;
 
-    private boolean isReady;
+    private boolean isReady = false;
 	
 	/**
 	 * Constructor for maintenance state of the assembly line
@@ -44,11 +44,18 @@ public class MaintenanceState implements AssemblyLineState, Observer {
     }
 
     @Override
+    public void initialize() {
+        this.isReady = false;
+        this.update(this.assemblyLine);
+    }
+
+    @Override
     public String toString() {
         return "Maintenance";
     }
 
     @Override
+    // TODO
     public void update(Subject subject) {
         Iterator<WorkPost> posts = this.assemblyLine.getWorkPostsIterator();
         boolean ready = false;
