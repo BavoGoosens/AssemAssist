@@ -28,7 +28,8 @@ public class ManagerView extends View {
 			this.changeAlgorithm();
         if (input.equalsIgnoreCase("line"))
             this.changeOperationalStatus();
-		this.error();
+		else
+            this.error();
 	}
 
     private void changeOperationalStatus() {
@@ -50,7 +51,7 @@ public class ManagerView extends View {
 
 	@Override
 	public void error() {
-		System.out.println("! Something went wrong. Please try agian");
+		System.out.println("! Something went wrong. Please try again");
 		this.display();
 	}
 

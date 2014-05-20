@@ -59,6 +59,7 @@ public class OperationalStatusView extends View {
                 String keuze = statuses.get(choice - 1);
                 this.controller.changeOperationalStatus(this.user, this.selectedAssemblyLine, keuze);
                 System.out.println("> The state was changed to: " + keuze);
+                this.display();
             } else {
                 this.error();
             }
@@ -95,21 +96,22 @@ public class OperationalStatusView extends View {
 
     @Override
     public void displayHelp() {
-
+        super.helpOverview();
     }
 
     @Override
     public void cancel() {
-
+        new ManagerView(this.getModel(), this.user).display();
     }
 
     @Override
     public void quit() {
-
+        new LoginView(this.getModel()).display();
     }
 
     @Override
     public void error() {
-
+        System.out.println("! Something went wrong. Please try again");
+        this.display();
     }
 }
