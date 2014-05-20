@@ -180,7 +180,7 @@ public class InitialData {
 				vehicleModel = this.model;
 			}else{}
 		}else{
-
+			
 		}
 
 		ArrayList <VehicleOption> available = vehicleModel.getPossibilities();
