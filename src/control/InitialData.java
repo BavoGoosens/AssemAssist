@@ -8,6 +8,7 @@ import businessmodel.category.*;
 import businessmodel.util.IteratorConverter;
 import org.joda.time.DateTime;
 
+import businessmodel.Catalog;
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
@@ -15,6 +16,7 @@ import businessmodel.assemblyline.WorkPost;
 import businessmodel.category.Protection;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
+import businessmodel.order.Order;
 import businessmodel.order.SingleTaskOrder;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.User;
@@ -73,13 +75,13 @@ public class InitialData {
 
 		Boolean orders = false;
 
-		ArrayList<Integer> numbers = this.generateOrders();
-		for(int i=0; i < numbers.size(); i++){
-			orders = this.randomOrderGenerator("standard",numbers.get(i), -1);
-			if (!orders)
-				this.randomOrderGenerator("standard", 0, -1);
-		}
-
+		//		ArrayList<Integer> numbers = this.generateOrders();
+		//		for(int i=0; i < numbers.size(); i++){
+		//			orders = this.randomOrderGenerator("standard",numbers.get(i), 1);
+		//			if (!orders)
+		//				this.randomOrderGenerator("standard", 0, 1);
+		//		}
+		//
 		//		this.processOrders();
 
 
@@ -100,14 +102,53 @@ public class InitialData {
 		//				this.randomOrderGenerator("standard", 0, 3);
 		//		}
 		//
-		//		orders = false;
-		//
-		//		for(int i=0; i < 3; i++){
-		//			orders = this.randomOrderGenerator("standard",-1, 0);
-		//			if (!orders)
-		//				this.randomOrderGenerator("standard", 0, 0);
-		//		}
+		this.makeOrdersNotInSameBatch();
 
+
+	}
+
+	private void makeOrdersNotInSameBatch() {
+
+		ArrayList<Order> orders = new ArrayList<Order>();
+		ArrayList<VehicleOptionCategory> categories = new Catalog().getAllCategories();
+
+		VehicleModel modelA = new ModelAFactory().createModel();
+		VehicleModel modelB = new ModelBFactory().createModel();
+		VehicleModel modelX = new ModelXFactory().createModel();
+
+		ArrayList<VehicleOption> chosenA = new ArrayList<VehicleOption>();
+		ArrayList<VehicleOption> chosenB = new ArrayList<VehicleOption>();
+		ArrayList<VehicleOption> chosenX = new ArrayList<VehicleOption>();
+
+		for (VehicleOptionCategory category: categories) {
+			if (modelA.getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
+				chosenA.add(modelA.getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
+			}
+			if (modelB.getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
+				if (category.equals(new Spoiler()))
+					chosenB.add(modelB.getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
+				else
+					chosenB.add(modelB.getVehicleModelSpecification().getOptionsOfCategory(category).get(1));
+			}
+			if (modelX.getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
+				if (category.equals(new Wheels()))
+					chosenX.add(modelX.getVehicleModelSpecification().getOptionsOfCategory(category).get(1));
+				else
+					chosenX.add(modelX.getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
+			}
+		}
+
+
+		try{
+			orders.add(new StandardVehicleOrder(garageholder, chosenA, modelA));
+			orders.add(new StandardVehicleOrder(garageholder, chosenB, modelB));
+			orders.add(new StandardVehicleOrder(garageholder, chosenX, modelX));
+			for(Order order: orders)
+				this.controllerStandard.placeOrder(this.garageholder,(StandardVehicleOrder)order);
+
+		}catch (Exception ex){
+			System.out.println(ex.toString());
+		}
 
 	}
 
@@ -161,22 +202,23 @@ public class InitialData {
 		else
 			vehicleModel = this.available_vehiclemodels.get(model);
 
-		if (batch != -1 && this.batchList.size() == 0){
-			for(int i= 0; i < batch;i++){
-				this.batchList.add(i);
-			}
-			this.model = this.available_vehiclemodels.get(rnd.nextInt(3));
-			vehicleModel = this.model;
-		}else if (batch != -1){
-			vehicleModel = this.model;
-		}else{}
+		if (batch != 0){
+			if (batch != -1 && this.batchList.size() == 0){
+				for(int i= 0; i < batch;i++){
+					this.batchList.add(i);
+				}
+				this.model = this.available_vehiclemodels.get(rnd.nextInt(3));
+				vehicleModel = this.model;
+			}else if (batch != -1){
+				vehicleModel = this.model;
+			}else{}
+		}else{
 
+		}
 
 		ArrayList <VehicleOption> available = vehicleModel.getPossibilities();
 		airco.clear(); body.clear(); color.clear();engine.clear();gearbox.clear(); seats.clear();
-		spoiler.clear();wheels.clear();  protection.clear(); certification.clear(); storage.clear();
-
-		this.chosen.clear();
+		spoiler.clear();wheels.clear(); this.chosen.clear(); protection.clear(); certification.clear(); storage.clear();
 
 		for(VehicleOption option: available){
 			if (option.getCategory().equals(new Airco())){
@@ -204,41 +246,6 @@ public class InitialData {
 			}else{}
 		}
 
-		this.initializeOrders();
-		return this.placeOrder(orders, model, vehicleModel);
-
-	}
-
-	private boolean placeOrder(String orders, int model, VehicleModel vehicleModel) {
-
-		if (orders.equals("standard")){
-			try {
-				StandardVehicleOrder order = new StandardVehicleOrder(this.garageholder, this.chosen, vehicleModel);
-				this.controllerStandard.placeOrder(this.garageholder,order);
-				return true;
-			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
-				if (model == 0)
-					System.out.println(e.toString());
-			}
-		}else if (orders.equals("singleTask")){
-			try {
-				DateTime time = new DateTime(new DateTime().getYear(), new DateTime().getMonthOfYear(),new DateTime().getDayOfMonth(), 8, 0);
-				SingleTaskOrder order = new SingleTaskOrder(this.customsManager, this.chosen, time.plusDays(1));
-				this.controllerSingleTask.placeSingleTaskOrder(this.customsManager,order);
-				return true;
-			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
-				if (model == 0)
-					System.out.println(e.toString());
-			}
-		}else{}
-
-		return false;
-
-
-	}
-
-	private void initializeOrders() {
-
 		int count = 0;
 		int number = 0;
 		if (batchList.contains(count++)) number = 0; else if (this.airco.size() != 0) number = rnd.nextInt(this.airco.size());
@@ -262,6 +269,29 @@ public class InitialData {
 		if (this.protection.size() != 0)this.chosen.add(this.protection.get(rnd.nextInt(this.protection.size())));
 		if (this.storage.size() != 0)this.chosen.add(this.storage.get(rnd.nextInt(this.storage.size())));
 
+
+		if (orders.equals("standard")){
+			try {
+				StandardVehicleOrder order = new StandardVehicleOrder(this.garageholder, this.chosen, vehicleModel);
+				this.controllerStandard.placeOrder(this.garageholder,order);
+				return true;
+			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
+				if (model == 0)
+					System.out.println(e.toString());
+			}
+		}else if (orders.equals("singleTask")){
+			try {
+				DateTime time = new DateTime(new DateTime().getYear(), new DateTime().getMonthOfYear(),new DateTime().getDayOfMonth(), 8, 0);
+				SingleTaskOrder order = new SingleTaskOrder(this.customsManager, this.chosen, time.plusDays(1));
+				this.controllerSingleTask.placeSingleTaskOrder(this.customsManager,order);
+				return true;
+			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
+				if (model == 0)
+					System.out.println(e.toString());
+			}
+		}else{}
+
+		return false;
 	}
 
 }
