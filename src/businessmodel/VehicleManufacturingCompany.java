@@ -129,8 +129,6 @@ public class VehicleManufacturingCompany implements Model {
 	}
 
 	@Override
-	// TODO: safe maken
-	// TODO: taskmanager weg en ophalen uit workposts.
 	public Iterator<AssemblyTask> getAvailableTasks(User user) {
 		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		HashMap<AssemblyTask, String> tasks = new HashMap<AssemblyTask, String>();
