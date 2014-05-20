@@ -31,7 +31,7 @@ public class OperationalState implements AssemblyLineState {
 
 	@Override
 	public void markAssemblyLineAsOperational() {
-		
+		// NOP
 	}
 
 	@Override
