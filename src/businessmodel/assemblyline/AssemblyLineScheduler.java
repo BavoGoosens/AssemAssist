@@ -58,7 +58,7 @@ public class AssemblyLineScheduler implements Subject {
 
 	/**
 	 * A method to schedule a new day.
-	 * 
+	 *
 	 * The shift are cleared and new orders are added if possible.
 	 */
 	protected void scheduleNewDay(){
@@ -71,14 +71,14 @@ public class AssemblyLineScheduler implements Subject {
 	/**
 	 * The AssemblyLine is advanced.
 	 * The delay is updated and the estimated time is updated.
-	 * 
+	 *
 	 * @param 	time
 	 * 			the time spent on last AssemblyLine status.
 	 * @throws 	IllegalNumberException
 	 * 			if(time < 0)
 	 */
 	protected void advance(int time) throws IllegalNumberException{
-		if (time < 0) 
+		if (time < 0)
 			throw new IllegalNumberException("Bad time!");
 		int delay = time - 60;
 		this.currentTime = this.getCurrentTime().plusMinutes(time);
@@ -92,7 +92,7 @@ public class AssemblyLineScheduler implements Subject {
 
 	/**
 	 * Returns true if an order can be added to the current day.
-	 * 
+	 *
 	 * @return true if an order can be added.
 	 */
 	protected boolean canAddOrder(Order order){
@@ -101,7 +101,7 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param order
 	 */
 	public void addOrder(Order order){
@@ -116,13 +116,13 @@ public class AssemblyLineScheduler implements Subject {
 
 	/**
 	 * A method to change the current algorithm.
-	 * 
+	 *
 	 * @param 	algoName
 	 * 			the name of the new algorithm.
 	 * @param 	options
-	 * 			
+	 *
 	 * @throws 	IllegalSchedulingAlgorithmException
-	 * 
+	 *
 	 * @throws 	IllegalArgumentException
 	 */
 	public void changeAlgorithm(String algoName, ArrayList<VehicleOption> options) throws IllegalSchedulingAlgorithmException, IllegalArgumentException{
@@ -131,11 +131,11 @@ public class AssemblyLineScheduler implements Subject {
 		else if (algoName.equalsIgnoreCase("FIFO") || algoName.equalsIgnoreCase("first in first out") ){
 			this.algorithm = new FIFO(this);}
 		else if (algoName.equalsIgnoreCase("SpecificationBatch") || algoName.equalsIgnoreCase("specification batch")){
-			if (options == null) 
+			if (options == null)
 				throw new IllegalArgumentException("No such option");
 			this.algorithm = new SpecificationBatch(this,options);}
 		else
-			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");	
+			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");
 	}
 
 	private void checkIfAssemblyLineCanAdvance() {
@@ -177,14 +177,14 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	private void updateAssemblyLineStatus(){
-		Order nextOrder = this.getShifts().getFirst().getNextOrderForAssemblyLine();
-		if(this.getShifts().getFirst().getTimeSlots().size() == 0)
-			this.getShifts().removeFirst();
-		this.getAssemblyline().advance(nextOrder);
-		if(nextOrder != null)
-			nextOrder.setPlacedOnAssemblyLineOfOrder(this.getCurrentTime());
-		if(this.getShifts().size() == 0)
-			this.checkNewDay();
+		if(!this.getShifts().isEmpty()){
+			Order nextorder = this.getShifts().getFirst().getNextOrderForAssemblyLine();
+			if(this.getShifts().getFirst().getTimeSlots().size() == 0)
+				this.getShifts().removeFirst();
+			this.getAssemblyline().advance(nextorder);
+			if(nextorder != null)
+				nextorder.setPlacedOnAssemblyLineOfOrder(this.getCurrentTime());
+		}
 	}
 
 	private void updateEstimatedTimeOfOrders(int delay){
@@ -195,15 +195,14 @@ public class AssemblyLineScheduler implements Subject {
 
 	private void updateNewDayDate() {
 		DateTime currentTime = new DateTime(this.getCurrentTime().getYear(),
-				getCurrentTime().getMonthOfYear(), 
+				getCurrentTime().getMonthOfYear(),
 				getCurrentTime().getDayOfMonth(), 8, 0);
 		currentTime = currentTime.plusDays(1);
 		this.setCurrentTime(currentTime);
 	}
 
 	private void checkNewDay(){
-
-		if (this.getShifts().isEmpty()) {
+		if (this.getShifts().isEmpty() || (this.getCurrentTime().getHourOfDay() > 22 && this.getCurrentTime().getMinuteOfHour() > 0) ) {
 			notifyObservers();
 			this.scheduleNewDay();
 		}
@@ -240,9 +239,9 @@ public class AssemblyLineScheduler implements Subject {
 		return this.dayOrdersCount;
 	}
 
-	/** 
+	/**
 	 * A method to get the previous order that had been scheduled.
-	 * 
+	 *
 	 * @param 	order
 	 * 			the current order.
 	 * @return	the previous order
@@ -257,7 +256,7 @@ public class AssemblyLineScheduler implements Subject {
 
 	/**
 	 * Return the AssemblyiLne of this assemblyline.
-	 * 
+	 *
 	 * @return the AssemblyLine of this assemblyline.
 	 */
 	public AssemblyLine getAssemblyline() {
@@ -266,7 +265,7 @@ public class AssemblyLineScheduler implements Subject {
 
 	/**
 	 * A method to get the current time of this AssemblyLineScheduler.
-	 * 
+	 *
 	 * @return
 	 */
 	public DateTime getCurrentTime(){
@@ -275,7 +274,7 @@ public class AssemblyLineScheduler implements Subject {
 
 	/**
 	 * Returns the current orders of this assemblyline.
-	 * 
+	 *
 	 * @return
 	 */
 	public LinkedList<Order> getOrders() {
@@ -284,7 +283,7 @@ public class AssemblyLineScheduler implements Subject {
 
 	/**
 	 * Returns the shifts of this assemblyline.
-	 * 
+	 *
 	 * @return the shift of this assemblyline.
 	 */
 	public LinkedList<Shift> getShifts() {
@@ -293,7 +292,7 @@ public class AssemblyLineScheduler implements Subject {
 
 	/**
 	 * A method that returns the current delay of this day assemblyline.
-	 * 
+	 *
 	 * @return
 	 */
 	protected int getDelay() {
@@ -305,7 +304,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * @param order
 	 */
 	protected void setEstimatedCompletionDateOfOrder(Order previousorder, Order order){
-		if(previousorder != null) 
+		if(previousorder != null)
 			order.setEstimatedDeliveryDateOfOrder(previousorder.getEstimatedDeliveryDate().plusMinutes(minutesLastWorkPost(order)));
 		else
 			order.setEstimatedDeliveryDateOfOrder(this.getCurrentTime().plusMinutes(calculateMinutes(order)));
@@ -365,7 +364,7 @@ public class AssemblyLineScheduler implements Subject {
 	public String currentAlgoDescription() {
 		String[] full = this.algorithm.getClass().getName().split("\\.");
 		return full[1];
-	}	
+	}
 
 	protected void tempName(int hours){
 		for(Order order: this.getOrders())
