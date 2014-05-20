@@ -75,14 +75,14 @@ public class InitialData {
 
 		Boolean orders = false;
 
-		//		ArrayList<Integer> numbers = this.generateOrders();
-		//		for(int i=0; i < numbers.size(); i++){
-		//			orders = this.randomOrderGenerator("standard",numbers.get(i), 1);
-		//			if (!orders)
-		//				this.randomOrderGenerator("standard", 0, 1);
-		//		}
-		//
-		//		this.processOrders();
+				ArrayList<Integer> numbers = this.generateOrders();
+				for(int i=0; i < numbers.size(); i++){
+					orders = this.randomOrderGenerator("standard",numbers.get(i), -1);
+					if (!orders)
+						this.randomOrderGenerator("standard", 0, 1);
+				}
+		
+				this.processOrders();
 
 
 		//		orders = false;

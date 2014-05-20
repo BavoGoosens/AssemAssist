@@ -25,8 +25,8 @@ public class OrderDateTimeComparator implements Comparator<Order> {
 		} else if (!o.isCompleted() && oo.isCompleted()){
 			return -1;
 		} else {
-			DateTime t1 = o.getTimestamp();
-			DateTime t2 = oo.getTimestamp();
+			DateTime t1 = o.getEstimatedDeliveryDate();
+			DateTime t2 = oo.getEstimatedDeliveryDate();
 			return t1.compareTo(t2);
 		}
 	}
