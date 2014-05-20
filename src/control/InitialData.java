@@ -32,6 +32,8 @@ public class InitialData {
 	private User mechanic;
 	private User garageholder;
 	private User customsManager;
+	private ArrayList<Integer> batchList;
+	private VehicleModel model;
 
 	public InitialData(){
 
@@ -66,87 +68,64 @@ public class InitialData {
 		while (iter.hasNext())
 			this.available_vehiclemodels.add(this.iter.next());
 
-		Boolean orders = false;
+		this.batchList = new ArrayList<Integer>();
 
-        ArrayList<Integer> numbers = this.generateOrders();
-		for(int i=0; i < numbers.size(); i++){
-			orders = this.randomOrderGenerator("standard",numbers.get(i));
+		Boolean orders = false;
+//
+//		ArrayList<Integer> numbers = this.generateOrders();
+//		for(int i=0; i < numbers.size(); i++){
+//			orders = this.randomOrderGenerator("standard",numbers.get(i), -1);
+//			if (!orders)
+//				this.randomOrderGenerator("standard", 0, -1);
+//		}
+//
+//
+//		this.processOrders();
+//
+//
+//		orders = false;
+//
+//		for(int i=0; i < 3; i++){
+//			orders = this.randomOrderGenerator("singleTask",-1, -1);
+//			if (!orders)
+//				this.randomOrderGenerator("singleTask", 0, -1);
+//		}
+
+		orders = false;
+
+		for(int i=0; i < 3; i++){
+			orders = this.randomOrderGenerator("standard",-1, 3);
 			if (!orders)
-				this.randomOrderGenerator("standard", 0);
+				this.randomOrderGenerator("standard", 0, 3);
 		}
 
-
-		this.processOrders();
- 
-
 //		orders = false;
 //
 //		for(int i=0; i < 3; i++){
-//			orders = this.randomOrderGenerator("singleTask",-1);
+//			orders = this.randomOrderGenerator("standard",-1, -1);
 //			if (!orders)
-//				this.randomOrderGenerator("singleTask", 0);
-//		}
-//
-//		orders = false;
-//
-//		for(int i=0; i < 3; i++){
-//			orders = this.randomOrderGenerator("standard",-1);
-//			if (!orders)
-//				this.randomOrderGenerator("standard", 0);
-//		}
-//
-//		orders = false;
-//
-//		for(int i=0; i < 3; i++){
-//			orders = this.randomOrderGenerator("standard",-1);
-//			if (!orders)
-//				this.randomOrderGenerator("standard", 0);
+//				this.randomOrderGenerator("standard", 0, -1);
 //		}
 
 
 	}
 
-    private ArrayList<Integer> generateOrders() {
-        ArrayList<Integer> number = new ArrayList<Integer>();
-        number.add(1);
-        number.add(2);
-        number.add(3);
-        number.add(4);
-        number.add(0);
-        number.add(1);
-        number.add(1);
-        number.add(2);
-        number.add(2);
-        number.add(3);
-        number.add(3);
-        number.add(4);
-        number.add(4);
-        number.add(0);
-        number.add(0);
-        number.add(4);
-        number.add(3);
-        number.add(2);
-        number.add(1);
-        number.add(4);
-        number.add(1);
-        number.add(1);
-        number.add(4);
-        number.add(2);
-        number.add(1);
-        number.add(4);
-        number.add(1);
-        number.add(1);
-        number.add(3);
-        return number;
-    }
+	private ArrayList<Integer> generateOrders() {
+		ArrayList<Integer> number = new ArrayList<Integer>();
+		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
+		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
+		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3);
+		return number;
+	}
 
-    private boolean looping = true;
+	private boolean looping = true;
+
 	// TODO
 	private void processOrders() throws NoClearanceException {
-        IteratorConverter<WorkPost> converter = new IteratorConverter<>();
+		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		Iterator<AssemblyLine> iter1 = vmc.getAssemblyLines(this.mechanic);
 		while(iter1.hasNext()){
-            looping = true;
+			looping = true;
 			AssemblyLine assem = iter1.next();
 			while (looping == true ){
 				CompleteWorkPost(assem, converter.convert(assem.getWorkPostsIterator()).size());
@@ -166,19 +145,22 @@ public class InitialData {
 
 	private void CompleteWorkPost(AssemblyLine assem, int i) throws NoClearanceException{
 		looping = false;
-        for(int j = 0 ; j < i ; j++){
-            IteratorConverter<WorkPost> converter = new IteratorConverter<>();
+		for(int j = 0 ; j < i ; j++){
+			IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 			WorkPost wp1 = converter.convert(assem.getWorkPostsIterator()).get(j);
 			Iterator<AssemblyTask> iter2 = vmc.getPendingTasks(this.mechanic, wp1);
 			while (iter2.hasNext()){
 				AssemblyTask task = iter2.next();
 				vmc.finishTask(task, 20);
-                looping = true;
-            }
+				looping = true;
+			}
 		}
 	}
 
-	private boolean randomOrderGenerator(String orders, int model){
+	// orders (standard or singleTask
+	// model -1 if random, otherwise (0 to 4). 0 for model A, ...
+	// batch -1 if random, otherwise number of the options that must be the same for the number of orders
+	private boolean randomOrderGenerator(String orders, int model, int batch){
 
 		VehicleModel vehicleModel;
 
@@ -187,6 +169,16 @@ public class InitialData {
 			vehicleModel = this.available_vehiclemodels.get(randomNumber);
 		else
 			vehicleModel = this.available_vehiclemodels.get(model);
+
+		if (batch != -1 && this.batchList.size() == 0){
+			for(int i= 0; i < batch;i++){
+				this.batchList.add(i);
+			}
+			this.model = this.available_vehiclemodels.get(rnd.nextInt(3));
+			vehicleModel = this.model;
+		}else if (batch != -1){
+			vehicleModel = this.model;
+		}else{}
 
 		ArrayList <VehicleOption> available = vehicleModel.getPossibilities();
 		airco.clear(); body.clear(); color.clear();engine.clear();gearbox.clear(); seats.clear();
@@ -218,14 +210,25 @@ public class InitialData {
 			}else{}
 		}
 
-		if (this.airco.size() != 0) this.chosen.add(this.airco.get(rnd.nextInt(this.airco.size())));
-		if (this.body.size() != 0)this.chosen.add(this.body.get(rnd.nextInt(this.body.size())));
-		if (this.color.size() != 0)this.chosen.add(this.color.get(rnd.nextInt(this.color.size())));
-		if (this.engine.size() != 0)this.chosen.add(this.engine.get(rnd.nextInt(this.engine.size())));
-		if (this.gearbox.size() != 0)this.chosen.add(this.gearbox.get(rnd.nextInt(this.gearbox.size())));
-		if (this.seats.size() != 0)this.chosen.add(this.seats.get(rnd.nextInt(this.seats.size())));
-		if (this.spoiler.size() != 0)this.chosen.add(this.spoiler.get(rnd.nextInt(this.spoiler.size())));
-		if (this.wheels.size() != 0)this.chosen.add(this.wheels.get(rnd.nextInt(this.wheels.size())));
+		int count = 0;
+		int number = 0;
+		if (batchList.contains(count++)) number = 0; else if (this.airco.size() != 0) number = rnd.nextInt(this.airco.size());
+		if (this.airco.size() != 0) this.chosen.add(this.airco.get(number));
+		if (batchList.contains(count++)) number = 0; else if (this.body.size() != 0) number = rnd.nextInt(this.body.size());
+		if (this.body.size() != 0) this.chosen.add(this.body.get(number));
+		if (batchList.contains(count++)) number = 0; else if (this.color.size() != 0) number = rnd.nextInt(this.color.size());
+		if (this.color.size() != 0) this.chosen.add(this.color.get(number));
+		if (batchList.contains(count++)) number = 0; else if (this.engine.size() != 0) number = rnd.nextInt(this.engine.size());
+		if (this.engine.size() != 0) this.chosen.add(this.engine.get(number));
+		if (batchList.contains(count++)) number = 0; else if (this.gearbox.size() != 0) number = rnd.nextInt(this.gearbox.size());
+		if (this.gearbox.size() != 0) this.chosen.add(this.gearbox.get(number));
+		if (batchList.contains(count++)) number = 0; else if (this.seats.size() != 0) number = rnd.nextInt(this.seats.size());
+		if (this.seats.size() != 0) this.chosen.add(this.seats.get(number));
+		if (batchList.contains(count++)) number = 0; else if (this.spoiler.size() != 0) number = rnd.nextInt(this.spoiler.size());
+		if (this.spoiler.size() != 0) this.chosen.add(this.spoiler.get(number));
+		if (batchList.contains(count++)) number = 0; else if (this.wheels.size() != 0) number = rnd.nextInt(this.wheels.size());
+		if (this.wheels.size() != 0) this.chosen.add(this.wheels.get(number));
+
 		if (this.certification.size() != 0)this.chosen.add(this.certification.get(rnd.nextInt(this.certification.size())));
 		if (this.protection.size() != 0)this.chosen.add(this.protection.get(rnd.nextInt(this.protection.size())));
 		if (this.storage.size() != 0)this.chosen.add(this.storage.get(rnd.nextInt(this.storage.size())));
