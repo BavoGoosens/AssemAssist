@@ -97,7 +97,7 @@ public class ScenarioTestUC2 {
 	}
 	
 	@Test
-	public void testDetailsPendingOrde() throws IllegalArgumentException, NoClearanceException {
+	public void testDetailsPendingOrder() throws IllegalArgumentException, NoClearanceException {
 		StandardVehicleOrder order = 
 				(StandardVehicleOrder) ((ArrayList<Order>) new IteratorConverter<Order>().
 						convert(vmc.getPendingOrders(this.gh))).get(0);
