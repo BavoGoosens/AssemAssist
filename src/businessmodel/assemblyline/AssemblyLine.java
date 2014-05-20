@@ -73,7 +73,7 @@ public class AssemblyLine implements Subject{
 	}
 
 	public boolean canAddOrder(Order order){
-		boolean bool;
+		boolean bool = false;
 		Iterator<VehicleModel> models = this.getResponsibleModelsIterator();
 		while (models.hasNext()){
 			VehicleModel model = models.next();
@@ -81,8 +81,9 @@ public class AssemblyLine implements Subject{
 			    bool = true;
 		}
         // is true when the assembly line can accept orders in this state.
-        bool = this.state.canPlaceOrder();
-		if(bool)
+        if(bool)
+        	bool = this.state.canPlaceOrder();
+        if(bool)
 			return this.getAssemblyLineScheduler().canAddOrder(order);
 		else
 			return bool;
