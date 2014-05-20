@@ -1,17 +1,15 @@
 package businessmodel.assemblyline;
 
-import java.util.Iterator;
 
-import org.joda.time.DateTime;
-
-import businessmodel.exceptions.NoClearanceException;
-import businessmodel.order.Order;
-import businessmodel.util.IteratorConverter;
-
+/**
+ * The Broken state of the AssemblyLine.
+ * 
+ * @author 	SWOP team 10
+ *
+ */
 public class BrokenState implements AssemblyLineState {
 
 	private AssemblyLine assemblyLine;
-	private boolean looping = true;
 
 	/**
 	 * Constructor for broken state of the assembly line

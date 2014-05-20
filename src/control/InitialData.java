@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-import businessmodel.category.*;
-import businessmodel.util.IteratorConverter;
 import org.joda.time.DateTime;
 
 import businessmodel.Catalog;
@@ -13,13 +11,30 @@ import businessmodel.VehicleManufacturingCompany;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
+import businessmodel.category.Airco;
+import businessmodel.category.Body;
+import businessmodel.category.Certification;
+import businessmodel.category.Color;
+import businessmodel.category.Engine;
+import businessmodel.category.Gearbox;
+import businessmodel.category.ModelAFactory;
+import businessmodel.category.ModelBFactory;
+import businessmodel.category.ModelXFactory;
 import businessmodel.category.Protection;
+import businessmodel.category.Seats;
+import businessmodel.category.Spoiler;
+import businessmodel.category.Storage;
+import businessmodel.category.VehicleModel;
+import businessmodel.category.VehicleOption;
+import businessmodel.category.VehicleOptionCategory;
+import businessmodel.category.Wheels;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.Order;
 import businessmodel.order.SingleTaskOrder;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.User;
+import businessmodel.util.IteratorConverter;
 
 public class InitialData {
 

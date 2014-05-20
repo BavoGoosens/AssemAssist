@@ -23,19 +23,7 @@ public class EndShift extends Shift {
 	protected EndShift(int hours,int numberofworkposts) {
 		super(hours,numberofworkposts);
 	}
-	
-	@Override
-	protected ArrayList<TimeSlot> canAddOrder(Order order){
-		ArrayList<TimeSlot> timeslots;
-		for(int i = 0 ; i< this.getTimeSlots().size()-(this.getNumberOfWorkPosts()-1);i++){
-			TimeSlot slot = this.getTimeSlots().get(i);
-			timeslots = checkTimeSlots(slot);
-			if (timeslots != null)
-				return timeslots;
-		}
-		return null;
-	}
-	
+
 	/**
 	 * A method to check if a number of Timeslots are available to handle an order.
 	 * @param 	timeslot
@@ -52,4 +40,18 @@ public class EndShift extends Shift {
 		}
 		return timeslots;
 	}
+	
+	
+	@Override
+	protected ArrayList<TimeSlot> canAddOrder(Order order){
+		ArrayList<TimeSlot> timeslots;
+		for(int i = 0 ; i< this.getTimeSlots().size()-(this.getNumberOfWorkPosts()-1);i++){
+			TimeSlot slot = this.getTimeSlots().get(i);
+			timeslots = checkTimeSlots(slot);
+			if (timeslots != null)
+				return timeslots;
+		}
+		return null;
+	}
+	
 }

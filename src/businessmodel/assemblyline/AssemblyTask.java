@@ -9,36 +9,16 @@ import businessmodel.category.VehicleOptionCategory;
 /**
  * A class representing an assembly task.
  * 
- * @author SWOP team 10 2014
+ * @author SWOP team 10
  *
  */
 public class AssemblyTask {
 
-	/**
-	 * The name of the assembly task.
-	 */
 	private String name;
-	
-	/**
-	 * Description for the actions who have to be performed for completing the assembly task.
-	 */
 	private String actionDescription;
-
-	/**
-	 * Specifies if this assembly task has been completed.
-	 */
 	private boolean completed = false;
-	
-	/**
-	 * The category of the car options that this assembly task manages. 
-	 */
 	private VehicleOptionCategory category;
-	
-	/**
-	 * The workpost of the assembly task
-	 */
 	private WorkPost workpost;
-	
 	private boolean canBeOrdered;
 
 	/**
@@ -110,6 +90,10 @@ public class AssemblyTask {
 		return this.completed;
 	}
 	
+	/**
+	 * Checks whether this AssemblyTask can be ordered.
+	 * @return
+	 */
 	public boolean canBeOrdered() {
 		return this.canBeOrdered;
 	}
@@ -208,6 +192,10 @@ public class AssemblyTask {
 		return workpost;
 	}
 
+	/**
+	 * Set the WorkPost for this task.
+	 * @param workpost
+	 */
 	private void setWorkpost(WorkPost workpost) {
 		this.workpost = workpost;
 	}

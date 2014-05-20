@@ -1,5 +1,14 @@
 package ui;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.joda.time.DateTime;
+
 import businessmodel.Model;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.category.VehicleOption;
@@ -9,14 +18,6 @@ import businessmodel.order.SingleTaskOrder;
 import businessmodel.user.User;
 import control.SingleTaskOrderController;
 import control.SingleTaskOrderHandler;
-import org.joda.time.DateTime;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class CustomShopManagerView extends View {
 

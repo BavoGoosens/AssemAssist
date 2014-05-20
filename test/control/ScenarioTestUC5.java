@@ -1,20 +1,12 @@
 package control;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.Catalog;
-import businessmodel.OrderManager;
 import businessmodel.VehicleManufacturingCompany;
-import businessmodel.assemblyline.AssemblyLine;
-import businessmodel.assemblyline.AssemblyTask;
-import businessmodel.assemblyline.WorkPost;
-import businessmodel.category.Body;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
@@ -23,7 +15,6 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
 import businessmodel.user.Manager;
-import businessmodel.util.IteratorConverter;
 
 public class ScenarioTestUC5 {
 	

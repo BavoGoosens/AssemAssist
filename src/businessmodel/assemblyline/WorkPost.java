@@ -17,41 +17,13 @@ import businessmodel.util.SafeIterator;
  */
 public class WorkPost {
 
-	/**
-	 * The name of the work post
-	 */
 	private String name;
-
-	/**
-	 * The tasks this work post can handle.
-	 */
 	private ArrayList<AssemblyTask> responsibleAssemblyTasks;
-
-	/**
-	 * The tasks that are pending at the work post.
-	 */
 	private ArrayList<AssemblyTask> pendingTasks;
-
-	/**
-	 * the tasks that are finished for this WorkPost.
-	 */
 	private ArrayList<AssemblyTask> finishedTasks;
-
-	/**
-	 * The order the working post is currently handling.
-	 */
 	private Order orderInProcess ;
-
-	/**
-	 * The time was spent working of this workPost for the current order.
-	 */
 	private int timeOrderInProcess;
-
-	/**
-	 * The AssemblyLine that this WorkPost is a part of.
-	 */
 	private AssemblyLine assemblyline;
-	
 	private HashMap<String,Integer> standardtimes;
 
 
@@ -155,7 +127,12 @@ public class WorkPost {
         safe.convertIterator(this.pendingTasks.iterator());
         return safe;
 	}
-
+	
+	/**
+	 * Returns the tasks that are finished at the work post.
+	 *
+	 * @return	The tasks that are finished at the work post
+	 */
 	@SuppressWarnings("unchecked")
 	public Iterator<AssemblyTask> getFinishedTasks() {
 		SafeIterator<AssemblyTask> safe = new SafeIterator<AssemblyTask>();
@@ -227,10 +204,18 @@ public class WorkPost {
 		}
 	}
 
+	/**
+	 * Get
+	 * @return
+	 */
 	private int getTimeOrderInProcess() {
 		return timeOrderInProcess;
 	}
 
+	/**
+	 * Set 
+	 * @param time
+	 */
 	private void setTimeOrderInProcess(int time){
 		this.timeOrderInProcess = time;
 	}
@@ -252,6 +237,10 @@ public class WorkPost {
 		this.name = name;
 	}
 
+	/**
+	 * Set 
+	 * @param order_in_process
+	 */
 	private void setOrder(Order order_in_process) {
 		this.orderInProcess = order_in_process;
 	}

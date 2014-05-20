@@ -7,7 +7,10 @@ import businessmodel.category.Body;
 import businessmodel.category.Color;
 
 /**
- * Created by michielvandendriessche on 12/05/14.
+ * The factory for creating the BodyWorkPost.
+ * 
+ * @author 	SWOP team 10
+ *
  */
 public class BodyWorkPostFactory extends WorkPostFactory {
 

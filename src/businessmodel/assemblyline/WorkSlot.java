@@ -10,14 +10,7 @@ import businessmodel.order.Order;
  */
 public class WorkSlot{
 	
-	/**
-	 * The current order for the work slot.
-	 */
 	private Order order;
-	
-	/**
-	 * A boolean that represents if the work slot is occupied.
-	 */
 	private boolean occupied;
 	
 	/**

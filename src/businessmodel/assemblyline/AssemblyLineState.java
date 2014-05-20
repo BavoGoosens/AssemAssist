@@ -1,5 +1,11 @@
 package businessmodel.assemblyline;
 
+/**
+ * The State of the AssemblyLine.
+ * 
+ * @author Team 10
+ * 
+ */
 public interface AssemblyLineState {
 
 	public abstract void markAssemblyLineAsBroken();

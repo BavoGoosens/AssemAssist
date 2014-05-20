@@ -1,5 +1,11 @@
 package businessmodel;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+
+import org.joda.time.DateTime;
+
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
@@ -10,14 +16,13 @@ import businessmodel.order.Order;
 import businessmodel.statistics.OrderStatistics;
 import businessmodel.statistics.StatisticsManager;
 import businessmodel.statistics.VehicleStatistics;
-import businessmodel.user.*;
+import businessmodel.user.CustomShopManager;
+import businessmodel.user.GarageHolder;
+import businessmodel.user.Manager;
+import businessmodel.user.Mechanic;
+import businessmodel.user.User;
 import businessmodel.util.IteratorConverter;
 import businessmodel.util.SafeIterator;
-import org.joda.time.DateTime;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 
 
 public class VehicleManufacturingCompany implements Model {

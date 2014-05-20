@@ -7,7 +7,10 @@ import businessmodel.category.Protection;
 import businessmodel.category.Storage;
 
 /**
- * Created by michielvandendriessche on 13/05/14.
+ * The factory for creating the CargoWorkPost.
+ * 
+ * @author 	SWOP team 10
+ *
  */
 public class CargoWorkPostFactory extends WorkPostFactory {
 

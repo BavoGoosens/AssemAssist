@@ -7,7 +7,10 @@ import businessmodel.category.Engine;
 import businessmodel.category.Gearbox;
 
 /**
- * Created by michielvandendriessche on 13/05/14.
+ * The factory for creating the DriveTrainWorkPost.
+ * 
+ * @author 	SWOP team 10
+ *
  */
 public class DrivetrainWorkPostFactory extends WorkPostFactory {
 
