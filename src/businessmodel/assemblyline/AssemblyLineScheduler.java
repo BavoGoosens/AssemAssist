@@ -38,7 +38,7 @@ public class AssemblyLineScheduler implements Subject {
 	private ArrayList<Observer> observers;
 
 	private int dayOrdersCount = 0;
-	
+
 	/**
 	 * A new new AssemblyLineScheduler is created.
 	 * Shifts are created and the standard algorithm is set.
@@ -53,7 +53,7 @@ public class AssemblyLineScheduler implements Subject {
 				new DateTime().getDayOfMonth(), 8, 0);
 		this.changeAlgorithm("fifo", null);
 		this.setDelay(0);
-		this.generateShifts();
+		this.generateShifts(0);
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class AssemblyLineScheduler implements Subject {
 	 */
 	protected void ScheduleDay(){
 		this.dayOrdersCount = 0;
-		this.generateShifts();
+		this.generateShifts(0);
 		this.updateCurrentTime();
 		this.getAssemblyline().getMainScheduler().schedulePendingOrders();
 	}
@@ -82,12 +82,12 @@ public class AssemblyLineScheduler implements Subject {
 			throw new IllegalNumberException("Bad time!");
 		int delay = time - 60;
 		this.currenttime = this.getCurrentTime().plusMinutes(time);
-        updateAssemblylineStatus();
+		updateAssemblylineStatus();
 		updateCompletedOrders();
 		updateDelay(delay);
 		updateEstimatedTimeOfOrders(delay);
-        checkNewDay();
-        updateSchedule();
+		checkNewDay();
+		updateSchedule();
 	}
 
 	/**
@@ -97,6 +97,7 @@ public class AssemblyLineScheduler implements Subject {
 	 */
 	protected boolean canAddOrder(Order order){
 		return this.getEstimatedCompletionTimeOfNewOrder(order).isBefore((this.getCurrentTime().withHourOfDay(22)));
+
 	}
 
 	/**
@@ -214,10 +215,10 @@ public class AssemblyLineScheduler implements Subject {
 		this.getAlgo().scheduleOrder(order);
 	}
 
-	protected void generateShifts(){
+	protected void generateShifts(int num){
 		this.getShifts().clear();
 		Shift endshift = new EndShift(8,this.getAssemblyline().getNumberOfWorkPosts());
-		Shift currrentshift = new FreeShift(8,this.getAssemblyline().getNumberOfWorkPosts(), endshift);
+		Shift currrentshift = new FreeShift(8-num,this.getAssemblyline().getNumberOfWorkPosts(), endshift);
 		this.getShifts().add(currrentshift);
 		this.getShifts().add(endshift);
 	}
@@ -317,7 +318,7 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	public int calculateMinutes(Order order){
-        IteratorConverter<WorkPost> converter = new IteratorConverter<>();
+		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		if(order.getVehicleModel() == null)
 			return converter.convert(this.getAssemblyline().getWorkPostsIterator()).size()*60;
 		int minutes = 0;
@@ -328,12 +329,12 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	public int minutesLastWorkPost(Order order) {
-        IteratorConverter<WorkPost> converter = new IteratorConverter<>();
-        if(order.getVehicleModel() == null)
+		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
+		if(order.getVehicleModel() == null)
 			return 60;
 		return converter.convert(this.getAssemblyline().getWorkPostsIterator())
-                .get(converter.convert(this.getAssemblyline().getWorkPostsIterator()).size()-1)
-                .getStandardTimeOfModel(order.getVehicleModel());
+				.get(converter.convert(this.getAssemblyline().getWorkPostsIterator()).size()-1)
+				.getStandardTimeOfModel(order.getVehicleModel());
 	}
 
 	@Override
@@ -359,4 +360,26 @@ public class AssemblyLineScheduler implements Subject {
 		String[] full = this.algortime.getClass().getName().split("\\.");
 		return full[1];
 	}	
+
+	protected void tempName(int hours){
+		for(Order order: this.getOrders())
+			this.getAssemblyline().getMainScheduler().placeOrderInFront(order);
+		this.getOrders().clear();
+		if(this.getCurrentTime().getHourOfDay() + hours < 22){
+			this.setDelay(this.getDelay()+hours*60);
+			this.updateSchedule();
+		}
+		else{
+			this.setDelay(this.getDelay()+ 60*(22-this.getCurrentTime().getHourOfDay()));
+			this.updateSchedule();
+			this.dayOrdersCount = 0;
+			this.generateShifts(22-this.getCurrentTime().getHourOfDay());
+			this.updateCurrentTime();
+		}
+	}
+	
+	protected void increaseCurrentTime(int hours){
+		this.currenttime = this.getCurrentTime().plusHours(hours);
+		this.getAssemblyline().getMainScheduler().schedulePendingOrders();
+	}
 }

@@ -1,10 +1,5 @@
 package ui;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Scanner;
-import java.util.regex.Pattern;
-
 import businessmodel.Model;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
@@ -15,36 +10,41 @@ import businessmodel.util.IteratorConverter;
 import control.AssemblyLineController;
 import control.AssemblyLineHandler;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
 public class VehicleMechanicView extends View {
 
-	private AssemblyLineController controller;
+    private AssemblyLineController controller;
 
-	private Scanner scan = new Scanner(System.in);
+    private Scanner scan = new Scanner(System.in);
 
     private AssemblyLine selectedAssemblyLine;
-	
-	private WorkPost selected_workpost;
 
-	public VehicleMechanicView(Model cmc, User user) {
-		super(cmc);
-		setUser(user);
-		this.controller = new AssemblyLineHandler(this.getModel());
-	}
+    private WorkPost selected_workpost;
 
-    public VehicleMechanicView(Model cmc, User user, AssemblyLine line){
+    public VehicleMechanicView(Model cmc, User user) {
+        super(cmc);
+        setUser(user);
+        this.controller = new AssemblyLineHandler(this.getModel());
+    }
+
+    public VehicleMechanicView(Model cmc, User user, AssemblyLine line) {
         super(cmc);
         setUser(user);
         this.controller = new AssemblyLineHandler(this.getModel());
         this.selectedAssemblyLine = line;
     }
 
-	@Override
-	public void display() {
-        if (this.selectedAssemblyLine == null){
+    @Override
+    public void display() {
+        if (this.selectedAssemblyLine == null) {
             this.selectAssemblyLine();
         }
         this.displayOptions();
-	}
+    }
 
     private void displayOptions() {
         System.out.println("> If you wish to check the assembly line status enter STATUS");
@@ -52,7 +52,7 @@ public class VehicleMechanicView extends View {
         System.out.print(">> ");
         String response = this.scan.nextLine();
         this.check(response);
-        if (response.equalsIgnoreCase("status")){
+        if (response.equalsIgnoreCase("status")) {
             View view = new AssemblyLineStatusView(this.getModel(), this.user, this.selectedAssemblyLine);
             view.display();
         } else if (response.equalsIgnoreCase("perform")) {
@@ -62,7 +62,7 @@ public class VehicleMechanicView extends View {
         }
     }
 
-    private void selectAssemblyLine(){
+    private void selectAssemblyLine() {
         try {
             IteratorConverter<AssemblyLine> converter = new IteratorConverter<AssemblyLine>();
             ArrayList<AssemblyLine> lines = (ArrayList<AssemblyLine>) converter.convert(this.getModel().getAssemblyLines(this.user));
@@ -82,12 +82,12 @@ public class VehicleMechanicView extends View {
             } else {
                 this.error();
             }
-        } catch (NoClearanceException e){
+        } catch (NoClearanceException e) {
             this.quit();
         }
     }
 
-    private void selectWorkPost(){
+    private void selectWorkPost() {
         try {
             ArrayList<WorkPost> posts = new ArrayList<WorkPost>();
             Iterator<WorkPost> temp = this.getModel().getWorkPosts(this.user, this.selectedAssemblyLine);
@@ -111,12 +111,12 @@ public class VehicleMechanicView extends View {
             } else {
                 this.error();
             }
-        } catch (NoClearanceException e){
+        } catch (NoClearanceException e) {
             this.quit();
         }
     }
 
-	private void performTasks(WorkPost wp) {
+    private void performTasks(WorkPost wp) {
         try {
             Iterator<AssemblyTask> taskss = this.getModel().getPendingTasks(this.user, wp);
             ArrayList<AssemblyTask> tasks = new ArrayList<AssemblyTask>();
@@ -145,12 +145,12 @@ public class VehicleMechanicView extends View {
                 System.out.println("! You entered something wrong. Please try again");
                 this.performTasks(wp);
             }
-        } catch (NoClearanceException e){
+        } catch (NoClearanceException e) {
             this.quit();
-        } 
-	}
+        }
+    }
 
-	private void displayActionOverview(AssemblyTask assemblyTask) {
+    private void displayActionOverview(AssemblyTask assemblyTask) {
         try {
             System.out.println("This is the sequence of actions you need to perform: ");
             System.out.println(assemblyTask.getDescription());
@@ -171,30 +171,30 @@ public class VehicleMechanicView extends View {
         } catch (NoClearanceException e) {
             this.quit();
         }
-	}
+    }
 
-	@Override
-	public void displayHelp() {
-		super.helpOverview();
-	}
+    @Override
+    public void displayHelp() {
+        super.helpOverview();
+    }
 
-	@Override
-	public void cancel() {
-		this.selected_workpost = null;
-		this.displayHelp();
-		this.display();
-	}
+    @Override
+    public void cancel() {
+        this.selected_workpost = null;
+        this.displayHelp();
+        this.display();
+    }
 
-	@Override
-	public void quit() {
-		new LoginView(this.getModel()).display();
-	}
+    @Override
+    public void quit() {
+        new LoginView(this.getModel()).display();
+    }
 
-	@Override
-	public void error() {
-		System.out.println("! You entered something wrong. Please try again");
-		this.display();		
-	}
+    @Override
+    public void error() {
+        System.out.println("! You entered something wrong. Please try again");
+        this.display();
+    }
 
 
 }

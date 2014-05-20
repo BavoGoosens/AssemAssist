@@ -21,7 +21,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	 * Creates a specification batch algorithm with a assemblyline and an option to schedule to options from.
 	 * @param 	scheduler
 	 * 			The assemblyline of the algorithm.
-	 * @param 	option
+	 * @param 	options
 	 */
 	public SpecificationBatch(AssemblyLineScheduler scheduler, ArrayList<VehicleOption> options){
 		super(scheduler);
@@ -42,7 +42,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 
 	private void reschedule(Order currentOrder) {
 
-		this.getScheduler().generateShifts();
+		this.getScheduler().generateShifts(0);
 		ArrayList<Order> similarVehicleOptionsOrder = new ArrayList<Order>();
 		this.getScheduler().ScheduleDay();
 		orderList.add(currentOrder);

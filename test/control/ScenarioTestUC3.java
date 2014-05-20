@@ -121,11 +121,11 @@ public class ScenarioTestUC3 {
 				convert(this.vmc.getWorkPosts(this.mechanic, this.lines.get(1)));
 		ArrayList<AssemblyTask> tasks = 
 				(ArrayList<AssemblyTask>) converter.convert(posts.get(0).getPendingTasks());
-		assertEquals(tasks.size(), 0);
+		assertEquals(0, tasks.size());
 		tasks = (ArrayList<AssemblyTask>) converter.convert(posts.get(1).getPendingTasks());
-		assertEquals(tasks.size(), 0);
+		assertEquals(0, tasks.size());
 		tasks = (ArrayList<AssemblyTask>) converter.convert(posts.get(2).getPendingTasks());
-		assertEquals(tasks.size(), 0);
+		assertEquals(0, tasks.size());
 	}
 	
 	@Test
@@ -197,6 +197,7 @@ public class ScenarioTestUC3 {
 		
 		StandardVehicleOrder order = new StandardVehicleOrder(garageHolder, chosen, models.get(1));
 		this.vmc.placeOrder(order);
+		System.out.println(order);
 		chosen.clear();
 		
 		for (VehicleOptionCategory category: categories) {
@@ -211,6 +212,7 @@ public class ScenarioTestUC3 {
 		
 		order = new StandardVehicleOrder(garageHolder, chosen, models.get(3));
 		this.vmc.placeOrder(order);
+		System.out.println(order);
 	}
 
 }
