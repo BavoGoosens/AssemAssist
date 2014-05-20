@@ -42,7 +42,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 
 	private void reschedule(Order currentOrder) {
 
-		this.getScheduler().generateShifts();
+		this.getScheduler().generateShifts(0);
 		ArrayList<Order> similarVehicleOptionsOrder = new ArrayList<Order>();
 		this.getScheduler().ScheduleDay();
 		orderList.add(currentOrder);
