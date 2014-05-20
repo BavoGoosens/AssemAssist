@@ -14,8 +14,8 @@ public class BodyWorkPostFactory extends WorkPostFactory {
 	@Override
 	protected ArrayList<AssemblyTask> createAssemblyTasks(WorkPost workPost) {
 		ArrayList<AssemblyTask> tasks = new ArrayList<AssemblyTask>();
-		tasks.add(new AssemblyTask("Assembly Vehicle Body", "Place the body on the vehicle", new Body(), workPost));
-		tasks.add(new AssemblyTask("Paint Vehicle","Paint the vehicle", new Color(), workPost));
+		tasks.add(new AssemblyTask("Assembly Vehicle Body", "Place the body on the vehicle", new Body(), workPost, false));
+		tasks.add(new AssemblyTask("Paint Vehicle","Paint the vehicle", new Color(), workPost, true));
 		return tasks;
 	}
 

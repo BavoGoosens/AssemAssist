@@ -14,8 +14,8 @@ public class CargoWorkPostFactory extends WorkPostFactory {
     @Override
     protected ArrayList<AssemblyTask> createAssemblyTasks(WorkPost workPost) {
         ArrayList<AssemblyTask> tasks = new ArrayList<AssemblyTask>();
-        tasks.add(new AssemblyTask("Install Tool Storage", "install tool storage into the truck", new Storage(), workPost));
-        tasks.add(new AssemblyTask("Add Cargo Protection", "add cargo protection to the truck", new Protection(), workPost));
+        tasks.add(new AssemblyTask("Install Tool Storage", "install tool storage into the truck", new Storage(), workPost, false));
+        tasks.add(new AssemblyTask("Add Cargo Protection", "add cargo protection to the truck", new Protection(), workPost, false));
         return tasks;
     }
 

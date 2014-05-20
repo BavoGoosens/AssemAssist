@@ -38,6 +38,8 @@ public class AssemblyTask {
 	 * The workpost of the assembly task
 	 */
 	private WorkPost workpost;
+	
+	private boolean canBeOrdered;
 
 	/**
 	 * Creates a new assembly task with a given name, a description of the actions, a category and a work post.
@@ -53,11 +55,12 @@ public class AssemblyTask {
 	 * @throws 	IllegalArgumentException
 	 * 
 	 */
-	protected AssemblyTask(String name, String descriptionOfActions, VehicleOptionCategory category, WorkPost workpost) throws IllegalArgumentException {
+	protected AssemblyTask(String name, String descriptionOfActions, VehicleOptionCategory category, WorkPost workpost, boolean canBeOrdered) throws IllegalArgumentException {
 		this.setWorkpost(workpost);
 		this.setName(name);
 		this.setCategory(category);
 		this.setDescription(descriptionOfActions);
+		this.canBeOrdered = canBeOrdered;
 	}
 	
 	/**
@@ -71,10 +74,11 @@ public class AssemblyTask {
 	 * 			The category for the assembly task.
 	 * @throws 	IllegalArgumentException
 	 */
-	protected AssemblyTask(String name, String descriptionOfActions, VehicleOptionCategory category) throws IllegalArgumentException {
+	protected AssemblyTask(String name, String descriptionOfActions, VehicleOptionCategory category, boolean canBeOrdered) throws IllegalArgumentException {
 		this.setName(name);
 		this.setCategory(category);
 		this.setDescription(descriptionOfActions);
+		this.canBeOrdered = canBeOrdered;
 	}
 	
 	/**
@@ -104,6 +108,10 @@ public class AssemblyTask {
 	 */
 	public boolean isCompleted(){
 		return this.completed;
+	}
+	
+	public boolean canBeOrdered() {
+		return this.canBeOrdered;
 	}
 	
 
