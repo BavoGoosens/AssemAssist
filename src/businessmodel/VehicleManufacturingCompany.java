@@ -132,13 +132,15 @@ public class VehicleManufacturingCompany implements Model {
     // TODO: taskmanager weg en ophalen uit workposts.
     public Iterator<AssemblyTask> getAvailableTasks(User user) {
         IteratorConverter<WorkPost> converter = new IteratorConverter<>();
-
-        for (AssemblyLine line : this.getOrderManager().getMainScheduler().getAssemblyLines()) {
-            for (WorkPost post : converter.convert(line.getWorkPostsIterator())) {
-
-            }
-        }
-        return null;
+        ArrayList<AssemblyTask> tasks = new ArrayList<AssemblyTask>();
+        
+        for (AssemblyLine line : this.getOrderManager().getMainScheduler().getAssemblyLines()) 
+            for (WorkPost post : converter.convert(line.getWorkPostsIterator())) 
+            	for( AssemblyTask task : post.getResponsibleTasksClone())
+            		if (task.canBeOrdered())
+            			tasks.add(task);
+ 
+        return tasks.iterator();
     }
 
     @Override

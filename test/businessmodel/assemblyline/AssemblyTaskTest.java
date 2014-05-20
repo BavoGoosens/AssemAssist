@@ -21,9 +21,9 @@ public class AssemblyTaskTest {
 	@Before
 	public void setUp() throws Exception {
 		AssemblyLineAFactory facta = new AssemblyLineAFactory();
-		task = new AssemblyTask("Test", "Test2", new Seats());
+		task = new AssemblyTask("Test", "Test2", new Seats(), false);
 		task2 = new AssemblyTask("Test", "Test2", new Seats(), new WorkPost("henk",
-				facta.createAssemblyLine(new MainScheduler(new OrderManager()))));
+				facta.createAssemblyLine(new MainScheduler(new OrderManager()))), false);
 	}
 
 	@Test
@@ -46,17 +46,17 @@ public class AssemblyTaskTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetName(){
-		task = new AssemblyTask(null,"",new Seats());
+		task = new AssemblyTask(null,"",new Seats(), false);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetDecription(){
-		task = new AssemblyTask("",null,new Seats());
+		task = new AssemblyTask("",null,new Seats(), false);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetOption(){
-		task = new AssemblyTask("","",null);
+		task = new AssemblyTask("","",null, false);
 	}
 	
 }

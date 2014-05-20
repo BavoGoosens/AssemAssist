@@ -13,7 +13,7 @@ public class CertificationWorkPostFactory extends WorkPostFactory {
     @Override
     protected ArrayList<AssemblyTask> createAssemblyTasks(WorkPost workPost) {
         ArrayList<AssemblyTask> tasks = new ArrayList<AssemblyTask>();
-        tasks.add(new AssemblyTask("Certify Maximum Cargo Load", "add certification for maximum cargo load", new Certification(), workPost));
+        tasks.add(new AssemblyTask("Certify Maximum Cargo Load", "add certification for maximum cargo load", new Certification(), workPost, false));
         return tasks;
     }
 
