@@ -7,9 +7,17 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import businessmodel.Catalog;
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.assemblyline.AssemblyLine;
+import businessmodel.category.Body;
+import businessmodel.category.VehicleModel;
+import businessmodel.category.VehicleOption;
+import businessmodel.category.VehicleOptionCategory;
 import businessmodel.exceptions.NoClearanceException;
+import businessmodel.exceptions.UnsatisfiedRestrictionException;
+import businessmodel.order.StandardVehicleOrder;
+import businessmodel.user.GarageHolder;
 import businessmodel.user.Manager;
 import businessmodel.util.IteratorConverter;
 
@@ -27,6 +35,7 @@ public class ScenarioTestUC7 {
 		this.ac = new AssemblyLineHandler(this.vmc);
 		this.manager = new Manager("Michiel", "Vandendriessche", "MichielVDD");
 		this.lines = (ArrayList<AssemblyLine>) new IteratorConverter<AssemblyLine>().convert(this.vmc.getAssemblyLines(manager));
+		this.placeOrders();
 	}
 
 	@Test
@@ -81,6 +90,42 @@ public class ScenarioTestUC7 {
 		this.ac.changeOperationalStatus(this.manager, this.lines.get(2), "Maintenance");
 		currentState = this.vmc.getCurrentAssemblyLineStatus(this.manager, this.lines.get(2));
 		assertEquals("Maintenance", currentState);
+	}
+	
+	private void placeOrders() throws NoClearanceException, UnsatisfiedRestrictionException {
+		Catalog catalog = new Catalog();
+		ArrayList<VehicleOptionCategory> categories = catalog.getAllCategories();
+		GarageHolder garageHolder = new GarageHolder("Bouwe", "Ceunen", "BouweC");
+		ArrayList<VehicleModel> models = catalog.getAvailaleModelsClone();
+		
+		ArrayList<VehicleOption> chosen = new ArrayList<VehicleOption>();
+		for (VehicleOptionCategory category: categories) {
+			if (models.get(1).getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
+				chosen.add(models.get(1).getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
+			}
+		}
+		
+		StandardVehicleOrder order = new StandardVehicleOrder(garageHolder, chosen, models.get(1));
+		StandardVehicleOrder order2 = new StandardVehicleOrder(garageHolder, chosen, models.get(1));
+		this.vmc.placeOrder(order);
+		this.vmc.placeOrder(order2);
+		chosen.clear();
+		System.out.println(order);
+		System.out.println(order2);
+		
+		for (VehicleOptionCategory category: categories) {
+			if (models.get(3).getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
+				if (category.equals(new Body())) {
+					chosen.add(models.get(3).getVehicleModelSpecification().getOptionsOfCategory(category).get(1));
+				} else {
+					chosen.add(models.get(3).getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
+				}
+			}
+		}
+		
+		order = new StandardVehicleOrder(garageHolder, chosen, models.get(3));
+		this.vmc.placeOrder(order);
+		System.out.println(order);
 	}
 
 }

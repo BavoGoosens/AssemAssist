@@ -1,10 +1,5 @@
 package ui;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
-import org.joda.time.LocalDate;
-
 import businessmodel.Model;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.exceptions.NoClearanceException;
@@ -13,19 +8,23 @@ import businessmodel.statistics.OrderStatistics;
 import businessmodel.statistics.VehicleStatistics;
 import businessmodel.user.User;
 import businessmodel.util.Tuple;
+import org.joda.time.LocalDate;
 
-public class StatisticsView extends View{
+import java.util.ArrayList;
+import java.util.Scanner;
 
-	private Scanner scan = new Scanner(System.in);
+public class StatisticsView extends View {
 
-	public StatisticsView(Model cmc, User user) {
-		super(cmc);
-		setUser(user);
-	}
+    private Scanner scan = new Scanner(System.in);
 
-	@Override
-	public void display() {
-		try {
+    public StatisticsView(Model cmc, User user) {
+        super(cmc);
+        setUser(user);
+    }
+
+    @Override
+    public void display() {
+        try {
             VehicleStatistics vehiclestats = this.getModel().getVehicleStatistics(this.user);
             OrderStatistics orderstats = this.getModel().getOrderStatistics(this.user);
             System.out.println("> Here are the order statistics:");
@@ -56,30 +55,30 @@ public class StatisticsView extends View{
             String response = this.scan.nextLine();
             this.check(response);
             this.error();
-        }catch (NoClearanceException e){
+        } catch (NoClearanceException e) {
             this.quit();
         }
-	}
+    }
 
-	@Override
-	public void displayHelp() {
-		this.helpOverview();
-	}
+    @Override
+    public void displayHelp() {
+        this.helpOverview();
+    }
 
-	@Override
-	public void error() {
-		System.out.println("! You entered something wrong. Please try again");
-		this.display();
-	}
+    @Override
+    public void error() {
+        System.out.println("! You entered something wrong. Please try again");
+        this.display();
+    }
 
-	@Override
-	public void cancel() {
-		new ManagerView(this.getModel(), this.user).display();
-	}
+    @Override
+    public void cancel() {
+        new ManagerView(this.getModel(), this.user).display();
+    }
 
-	@Override
-	public void quit() {
-		new LoginView(this.getModel()).display();
-	}
+    @Override
+    public void quit() {
+        new LoginView(this.getModel()).display();
+    }
 
 }

@@ -1,14 +1,5 @@
 package ui;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.joda.time.DateTime;
-
 import businessmodel.Model;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.category.VehicleOption;
@@ -18,28 +9,36 @@ import businessmodel.order.SingleTaskOrder;
 import businessmodel.user.User;
 import control.SingleTaskOrderController;
 import control.SingleTaskOrderHandler;
+import org.joda.time.DateTime;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CustomShopManagerView extends View {
 
-	private SingleTaskOrderController controller;
+    private SingleTaskOrderController controller;
 
-	private Scanner scan = new Scanner(System.in);
+    private Scanner scan = new Scanner(System.in);
 
-	public CustomShopManagerView(Model model, User user) {
-		super(model);
-		setUser(user);
-		this.controller = new SingleTaskOrderHandler(this.getModel());
-	}
+    public CustomShopManagerView(Model model, User user) {
+        super(model);
+        setUser(user);
+        this.controller = new SingleTaskOrderHandler(this.getModel());
+    }
 
-	@Override
-	public void display() {
+    @Override
+    public void display() {
         try {
-            Iterator<AssemblyTask> availableiter = this.getModel().getAvailableTasks(this.user);
-            ArrayList<AssemblyTask> available = new ArrayList<AssemblyTask>();
+            Iterator<AssemblyTask> availableIterator = this.getModel().getAvailableTasks(this.user);
+            ArrayList<AssemblyTask> available = new ArrayList<>();
             System.out.println("> These are the assembly tasks you can order: ");
             int count = 1;
-            while (availableiter.hasNext()) {
-                AssemblyTask t = availableiter.next();
+            while (availableIterator.hasNext()) {
+                AssemblyTask t = availableIterator.next();
                 System.out.println("> " + count++ + ") " + t);
                 available.add(t);
             }
@@ -75,13 +74,13 @@ public class CustomShopManagerView extends View {
                             opt = options.get(choice - 1);
                         else {
                             System.out.println("! Bad input. Please try again");
-                            continue;
+                            // TODO checken of dat het deleten van de continue iets heeft kapot gemaakt
                         }
                     } else {
                         this.error();
                     }
                 }
-                ArrayList<VehicleOption> res = new ArrayList<VehicleOption>();
+                ArrayList<VehicleOption> res = new ArrayList<>();
                 res.add(opt);
                 try {
                     this.controller.placeSingleTaskOrder(this.user, new SingleTaskOrder(this.user, res, deadline));
@@ -96,55 +95,55 @@ public class CustomShopManagerView extends View {
             } else {
                 this.error();
             }
-        }catch (NoClearanceException e){
+        } catch (NoClearanceException e) {
             this.quit();
         }
-	}
+    }
 
-	private DateTime deadlineDialog(){
-		DateTime deadline = null;
-		DateTime systime = this.getModel().getSystemTime();
-		System.out.println("> The System's is: " + systime.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT));
-		System.out.println("> Make sure your entered deadline lies behind this time or your order may not be handled on time");
-		while (deadline == null){
-			System.out.println("> Enter the deadline in dd/mm/yyyy/ format");
-			System.out.print(">> ");
-			String response = this.scan.nextLine();
-			this.check(response);
-			Pattern pat = Pattern.compile("(\\d+)/(\\d+)/(\\d+)");
-			Matcher mat = pat.matcher(response);
-			if (mat.find()){
-				String[] parts = response.split("/");
-				int day = Integer.parseInt(parts[0]);
-				int month = Integer.parseInt(parts[1]);
-				int year = Integer.parseInt(parts[2]);
-				deadline = new DateTime(year, month, day, 8, 0);
-				break;
-			}
-		}
-		return deadline;
-	}
+    private DateTime deadlineDialog() {
+        DateTime deadline = null;
+        DateTime systemTime = this.getModel().getSystemTime();
+        System.out.println("> The System's is: " + systemTime.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT));
+        System.out.println("> Make sure your entered deadline lies behind this time or your order may not be handled on time");
+        while (deadline == null) {
+            System.out.println("> Enter the deadline in dd/mm/yyyy/ format");
+            System.out.print(">> ");
+            String response = this.scan.nextLine();
+            this.check(response);
+            Pattern pat = Pattern.compile("(\\d+)/(\\d+)/(\\d+)");
+            Matcher mat = pat.matcher(response);
+            if (mat.find()) {
+                String[] parts = response.split("/");
+                int day = Integer.parseInt(parts[0]);
+                int month = Integer.parseInt(parts[1]);
+                int year = Integer.parseInt(parts[2]);
+                deadline = new DateTime(year, month, day, 8, 0);
+                break;
+            }
+        }
+        return deadline;
+    }
 
-	@Override
-	public void displayHelp() {
-		this.helpOverview();
-	}
+    @Override
+    public void displayHelp() {
+        this.helpOverview();
+    }
 
-	@Override
-	public void cancel() {
-		this.displayHelp();
-		this.display();
-	}
+    @Override
+    public void cancel() {
+        this.displayHelp();
+        this.display();
+    }
 
-	@Override
-	public void quit() {
-		new LoginView(getModel()).display();
-	}
+    @Override
+    public void quit() {
+        new LoginView(getModel()).display();
+    }
 
-	@Override
-	public void error() {
-		System.out.println("! Something went wrong. Please try agian");
-		this.display();
-	}
+    @Override
+    public void error() {
+        System.out.println("! Something went wrong. Please try agian");
+        this.display();
+    }
 
 }

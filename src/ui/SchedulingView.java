@@ -1,10 +1,5 @@
 package ui;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Scanner;
-import java.util.regex.Pattern;
-
 import businessmodel.Model;
 import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
@@ -12,21 +7,26 @@ import businessmodel.user.User;
 import control.SchedulingController;
 import control.SchedulingHandler;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
 public class SchedulingView extends View {
 
-	private Scanner scan = new Scanner(System.in);
+    private Scanner scan = new Scanner(System.in);
 
-	private SchedulingController controller;
+    private SchedulingController controller;
 
-	public SchedulingView(Model cmc, User user) {
-		super(cmc);
-		setUser(user);
-		this.controller = new SchedulingHandler(this.getModel());
-	}
+    public SchedulingView(Model cmc, User user) {
+        super(cmc);
+        setUser(user);
+        this.controller = new SchedulingHandler(this.getModel());
+    }
 
-	@Override
-	public void display() {
-		try {
+    @Override
+    public void display() {
+        try {
             Iterator<String> algoss = this.getModel().getSchedulingAlgorithms(user);
             ArrayList<String> algos = new ArrayList<String>();
             while (algoss.hasNext())
@@ -53,7 +53,7 @@ public class SchedulingView extends View {
                 while (optss.hasNext())
                     opts.add(optss.next());
                 if (algo.equals("SpecificationBatch")) {
-                    if (opts.isEmpty()) {
+                    if (opts.get(0).isEmpty()) {
                         System.out.println("! there are not enough orders available");
                         this.display();
                     }
@@ -93,30 +93,30 @@ public class SchedulingView extends View {
             } else {
                 this.error();
             }
-        } catch (NoClearanceException e){
+        } catch (NoClearanceException e) {
             this.quit();
         }
-	}
+    }
 
-	@Override
-	public void displayHelp() {
-		this.helpOverview();
-	}
+    @Override
+    public void displayHelp() {
+        this.helpOverview();
+    }
 
-	@Override
-	public void error() {
-		System.out.println("! You entered something wrong. Please try again");
-		this.display();	
-	}
+    @Override
+    public void error() {
+        System.out.println("! You entered something wrong. Please try again");
+        this.display();
+    }
 
-	@Override
-	public void cancel() {
-		new ManagerView(this.getModel(), this.user).display();		
-	}
+    @Override
+    public void cancel() {
+        new ManagerView(this.getModel(), this.user).display();
+    }
 
-	@Override
-	public void quit() {
-		new LoginView(this.getModel()).display();		
-	}
+    @Override
+    public void quit() {
+        new LoginView(this.getModel()).display();
+    }
 
 }

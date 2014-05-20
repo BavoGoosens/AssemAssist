@@ -1,9 +1,5 @@
 package ui;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Scanner;
-
 import businessmodel.Model;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
@@ -12,6 +8,10 @@ import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.user.User;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Scanner;
 
 public class AssemblyLineStatusView extends View implements Observer {
 
@@ -38,21 +38,21 @@ public class AssemblyLineStatusView extends View implements Observer {
     @Override
     public void display() {
         try {
-            Iterator<WorkPost> postss = this.getModel().getWorkPosts(this.user, this.selectedAssemblyLine);
-            ArrayList<WorkPost> posts = new ArrayList<WorkPost>();
-            while (postss.hasNext())
-                posts.add(postss.next());
+            Iterator<WorkPost> postsIterator = this.getModel().getWorkPosts(this.user, this.selectedAssemblyLine);
+            ArrayList<WorkPost> posts = new ArrayList<>();
+            while (postsIterator.hasNext())
+                posts.add(postsIterator.next());
             System.out.println("> This is the assembly line status: ");
             for (WorkPost wp : posts) {
                 System.out.println("  > " + wp.getName() + "status: ");
-                Iterator<AssemblyTask> pendingiter = this.getModel().getPendingTasks(this.user, wp);
-                ArrayList<AssemblyTask> pending = new ArrayList<AssemblyTask>();
-                while (pendingiter.hasNext())
-                    pending.add(pendingiter.next());
-                Iterator<AssemblyTask> finishediter = this.getModel().getFinishedTasks(this.user, wp);
-                ArrayList<AssemblyTask> finished = new ArrayList<AssemblyTask>();
-                while (finishediter.hasNext())
-                    finished.add(finishediter.next());
+                Iterator<AssemblyTask> pendingIterator = this.getModel().getPendingTasks(this.user, wp);
+                ArrayList<AssemblyTask> pending = new ArrayList<>();
+                while (pendingIterator.hasNext())
+                    pending.add(pendingIterator.next());
+                Iterator<AssemblyTask> finishedIterator = this.getModel().getFinishedTasks(this.user, wp);
+                ArrayList<AssemblyTask> finished = new ArrayList<>();
+                while (finishedIterator.hasNext())
+                    finished.add(finishedIterator.next());
                 System.out.println("    > pending tasks:");
                 for (AssemblyTask task : pending)
                     System.out.println("        > " + task.toString());
