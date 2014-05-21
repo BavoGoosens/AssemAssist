@@ -19,7 +19,9 @@ import businessmodel.category.Engine;
 import businessmodel.category.Gearbox;
 import businessmodel.category.ModelAFactory;
 import businessmodel.category.ModelBFactory;
+import businessmodel.category.ModelCFactory;
 import businessmodel.category.ModelXFactory;
+import businessmodel.category.ModelYFactory;
 import businessmodel.category.Protection;
 import businessmodel.category.Seats;
 import businessmodel.category.Spoiler;
@@ -58,6 +60,11 @@ public class InitialData {
 	private ArrayList<Integer> batchList;
 	private VehicleModel model;
 	private boolean looping = true;
+	private StandardVehicleOrder modelAOrder;
+	private StandardVehicleOrder modelBOrder;
+	private StandardVehicleOrder modelXOrder;
+	private StandardVehicleOrder modelYOrder;
+	private StandardVehicleOrder modelCOrder;
 
 	/**
 	 * Constructor for InitialData. Initialize lists.
@@ -75,6 +82,7 @@ public class InitialData {
 		this.certification = new ArrayList<VehicleOption>();
 		this.protection = new ArrayList<VehicleOption>();
 		this.storage = new ArrayList<VehicleOption>();
+
 
 	}
 
@@ -104,53 +112,77 @@ public class InitialData {
 
 		Boolean orders = false;
 
-		ArrayList<Integer> numbers = this.generateOrders();
-        System.out.println(numbers);
-		for(int i=0; i < numbers.size(); i++){
-			orders = this.randomOrderGenerator("standard",0,  8);
+		this.makeStandardOrders();
+
+		Integer[] numbers = new Integer[]{0,1,1,3,4};
+		for(int i=0; i < numbers.length; i++){
+			orders = this.randomOrderGenerator("standard",numbers[i]);
+
 			if (!orders)
-				this.randomOrderGenerator("standard", 0, 8);
+				this.makeStandardOrder(numbers[i]);
 		}
 
 
-		this.processOrders();
-
-
+		//		this.processOrders();
+		//
+		//
 		//		orders = false;
 		//		for(int i=0; i < 3; i++){
-		//			orders = this.randomOrderGenerator("singleTask",-1, -1);
+		//			orders = this.randomOrderGenerator("singleTask",-1);
 		//			if (!orders)
-		//				this.randomOrderGenerator("singleTask", 0, -1);
+		//				this.randomOrderGenerator("singleTask", 0);
 		//		}
-        /*
+		//
+		//		this.makeOrdersNotInSameBatch();
+		//
+		//		orders = false;
+		//		for(int i=0; i < 3; i++){
+		//			orders = this.randomOrderGenerator("standard",-1);
+		//			if (!orders)
+		//				this.randomOrderGenerator("standard", 0);
+		//		}
 
-		this.makeOrdersNotInSameBatch();
 
-		orders = false;
-		for(int i=0; i < 3; i++){
-			orders = this.randomOrderGenerator("standard",-1, 3);
-			if (!orders)
-				this.randomOrderGenerator("standard", 0, 3);
-		}
-    */
 
 	}
 
+	private void makeStandardOrder(int model) {
+		try{
+			StandardVehicleOrder order = null;
+			if (model == 0){
+				this.controllerStandard.placeOrder(this.garageholder,this.modelAOrder);
+			}else if (model == 1){
+				this.controllerStandard.placeOrder(this.garageholder,this.modelBOrder);
+			}else if (model == 2){
+				this.controllerStandard.placeOrder(this.garageholder,this.modelCOrder);
+			}else if (model == 3){
+				this.controllerStandard.placeOrder(this.garageholder,this.modelXOrder);
+			}else if (model == 4){
+				this.controllerStandard.placeOrder(this.garageholder,this.modelYOrder);
+			}
+
+		} catch (Exception ex){}
+
+	}
 	/**
 	 * Generate 3 orders that are not in the same batch.
 	 */
-	private void makeOrdersNotInSameBatch() {
+	private void makeStandardOrders() {
 
 		ArrayList<Order> orders = new ArrayList<Order>();
 		ArrayList<VehicleOptionCategory> categories = new Catalog().getAllCategories();
 
 		VehicleModel modelA = new ModelAFactory().createModel();
 		VehicleModel modelB = new ModelBFactory().createModel();
+		VehicleModel modelC = new ModelCFactory().createModel();
 		VehicleModel modelX = new ModelXFactory().createModel();
+		VehicleModel modelY = new ModelYFactory().createModel();
 
 		ArrayList<VehicleOption> chosenA = new ArrayList<VehicleOption>();
 		ArrayList<VehicleOption> chosenB = new ArrayList<VehicleOption>();
+		ArrayList<VehicleOption> chosenC = new ArrayList<VehicleOption>();
 		ArrayList<VehicleOption> chosenX = new ArrayList<VehicleOption>();
+		ArrayList<VehicleOption> chosenY = new ArrayList<VehicleOption>();
 
 		for (VehicleOptionCategory category: categories) {
 			if (modelA.getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
@@ -162,39 +194,37 @@ public class InitialData {
 				else
 					chosenB.add(modelB.getVehicleModelSpecification().getOptionsOfCategory(category).get(1));
 			}
+			if (modelC.getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
+				if (category.equals(new Wheels()))
+					chosenC.add(modelC.getVehicleModelSpecification().getOptionsOfCategory(category).get(1));
+				else
+					chosenC.add(modelC.getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
+			}
 			if (modelX.getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
 				if (category.equals(new Wheels()))
 					chosenX.add(modelX.getVehicleModelSpecification().getOptionsOfCategory(category).get(1));
 				else
 					chosenX.add(modelX.getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
 			}
+			if (modelY.getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
+				if (category.equals(new Wheels()))
+					chosenY.add(modelY.getVehicleModelSpecification().getOptionsOfCategory(category).get(1));
+				else
+					chosenY.add(modelY.getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
+			}
+
 		}
 
-
 		try{
-			orders.add(new StandardVehicleOrder(garageholder, chosenA, modelA));
-			orders.add(new StandardVehicleOrder(garageholder, chosenB, modelB));
-			orders.add(new StandardVehicleOrder(garageholder, chosenX, modelX));
-            System.out.println(orders.size());
-			for(Order order: orders)
-				this.controllerStandard.placeOrder(this.garageholder,(StandardVehicleOrder)order);
+			this.modelAOrder = new StandardVehicleOrder(garageholder, chosenA, modelA);
+			this.modelBOrder = new StandardVehicleOrder(garageholder, chosenB, modelB);
+			this.modelCOrder = new StandardVehicleOrder(garageholder, chosenC, modelC);
+			this.modelXOrder = new StandardVehicleOrder(garageholder, chosenX, modelX);
+			this.modelYOrder = new StandardVehicleOrder(garageholder, chosenY, modelY);
 
 		}catch (Exception ex){
 			System.out.println(ex.toString());
 		}
-
-	}
-
-	/**
-	 * Generate random orders.
-	 * @return
-	 */
-	private ArrayList<Integer> generateOrders() {
-		ArrayList<Integer> number = new ArrayList<Integer>();
-		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
-		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
-		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
-		return number;
 	}
 
 	/**
@@ -243,7 +273,7 @@ public class InitialData {
 	 * @param batch
 	 * @return
 	 */
-	private boolean randomOrderGenerator(String orders, int model, int batch){
+	private boolean randomOrderGenerator(String orders, int model){
 
 		VehicleModel vehicleModel;
 
@@ -253,19 +283,6 @@ public class InitialData {
 		else
 			vehicleModel = this.available_vehiclemodels.get(model);
 
-		if (batch != 0){
-			if (batch != -1 && this.batchList.size() == 0){
-				for(int i= 0; i < batch;i++){
-					this.batchList.add(i);
-				}
-				this.model = this.available_vehiclemodels.get(model);
-				vehicleModel = this.model;
-			}else if (batch != -1){
-				vehicleModel = this.model;
-			}else{}
-		}else{
-
-		}
 
 		ArrayList <VehicleOption> available = vehicleModel.getPossibilities();
 		airco.clear(); body.clear(); color.clear();engine.clear();gearbox.clear(); seats.clear();
@@ -329,7 +346,7 @@ public class InitialData {
                 System.out.println(order.getVehicleModel());
 				return true;
 			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
-				//System.out.println(e.toString());
+				return false;
 			}
 		}else if (orders.equals("singleTask")){
 			try {
@@ -339,10 +356,14 @@ public class InitialData {
                 System.out.println(order.getVehicleModel());
                 return true;
 			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
-				//System.out.println(e.toString());
+
+				return false;
 			}
-		}else{}
-		    return false;
+		}else{
+			return false;
+		}
 	}
 
+
 }
+
