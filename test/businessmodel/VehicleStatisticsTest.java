@@ -3,6 +3,7 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,6 +26,7 @@ import businessmodel.statistics.StatisticsManager;
 import businessmodel.statistics.VehicleStatistics;
 import businessmodel.user.GarageHolder;
 import businessmodel.util.IteratorConverter;
+import businessmodel.util.Tuple;
 
 public class VehicleStatisticsTest {
 	
@@ -176,8 +178,9 @@ public class VehicleStatisticsTest {
 		}
 	}
     
-    @Test
+    @SuppressWarnings("unchecked")
+	@Test
     public void test() {
-    	System.out.println(vehicleStatistics.getNumberOfVehicles());
+    	System.out.println(new IteratorConverter<Tuple<LocalDate, Integer>>().convert(vehicleStatistics.getNumberOfVehiclesIterator()));
     }
 }

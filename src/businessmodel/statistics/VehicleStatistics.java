@@ -6,8 +6,10 @@ import java.util.Collections;
 import org.joda.time.LocalDate;
 
 import businessmodel.assemblyline.AssemblyLineScheduler;
+import businessmodel.assemblyline.WorkPost;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
+import businessmodel.util.SafeIterator;
 import businessmodel.util.Tuple;
 import businessmodel.util.VehicleTupleComperator;
 
@@ -34,19 +36,21 @@ public class VehicleStatistics implements Observer {
 	 */
 	public VehicleStatistics(ArrayList<Subject> subjects) throws IllegalArgumentException {
 		if (subjects == null || subjects.size() == 0) throw new IllegalArgumentException("Bad list of subjects!");
-        for (Subject subject: subjects) {
-            if (subject == null || !(subject instanceof AssemblyLineScheduler)) throw new IllegalArgumentException("Bad subject!");
-            subject.subscribeObserver(this);
-        }
+		for (Subject subject: subjects) {
+			if (subject == null || !(subject instanceof AssemblyLineScheduler)) throw new IllegalArgumentException("Bad subject!");
+			subject.subscribeObserver(this);
+		}
 		this.numberOfVehicles = new ArrayList<Tuple<LocalDate, Integer>>();
 	}
-	
+
 	/**
 	 * Get the number of Vehicles.
 	 * @return number of vehicles.
 	 */
-	public ArrayList<Tuple<LocalDate, Integer>> getNumberOfVehicles() {
-		return this.numberOfVehicles;
+	public SafeIterator<Tuple<LocalDate, Integer>> getNumberOfVehiclesIterator() {
+		SafeIterator<Tuple<LocalDate, Integer>> safe = new SafeIterator<Tuple<LocalDate, Integer>>();
+		safe.convertIterator(this.numberOfVehicles.iterator());
+		return safe;
 	}
 
 	/**
@@ -57,7 +61,7 @@ public class VehicleStatistics implements Observer {
 	public int getAverage(){
 		return this.avarage;
 	}
-	
+
 	/**
 	 * Returns the median number of vehicles produced.
 	 * 
