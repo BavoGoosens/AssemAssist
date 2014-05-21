@@ -110,18 +110,27 @@ public class AssemblyLineScheduler implements Subject {
 	}
 
 	/**
-	 *
-	 * @param order
+	 *  This method tries to add the given order to the assembly line
+     *  according to the rules defined by the scheduling algorithm.
+     *
+	 * @param   order
+     *                  The order you want to schedule in.
 	 */
 	public void addOrder(Order order){
+        // try to schedule in the order according to the algorithm.
+        // true if it worked
+        // false otherwise
 		boolean bool = scheduleOrder(order);
 		if(bool){
+            // if the order is scheduled in, add it to the queue.
             getOrders().add(order);
 		    checkIfAssemblyLineCanAdvance();
 		    setEstimatedCompletionDateOfOrder(getPreviousOrder(order), order);
             // TODO op het einde weghalen.
 		    order.setAssemblyLine(this.getAssemblyLine());
         } else {
+            // if it was not possible to schedule the order at this time, add the order
+            // to the pending queue of the order manager.
             this.getAssemblyLine().getMainScheduler().orderCannotBePlaced(order);
         }
 	}

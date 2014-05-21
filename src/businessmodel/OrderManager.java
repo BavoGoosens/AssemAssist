@@ -21,17 +21,17 @@ import businessmodel.user.User;
 public class OrderManager implements Subject {
 
 	private ArrayList<Observer> observers;
-	private LinkedList<Order> completedorders;
+	private LinkedList<Order> completedOrders;
 	private MainScheduler mainscheduler;
-	private LinkedList<Order> pendingorders;
+	private LinkedList<Order> pendingOrders;
 	private final int MILIS_ONE_DAY = 86400000;
 
 	/**
 	 * A constructor for the class OrderManager.
 	 */
 	public OrderManager() throws IllegalArgumentException {
-		this.pendingorders = new LinkedList<Order>();
-		this.completedorders = new LinkedList<Order>();
+		this.pendingOrders = new LinkedList<Order>();
+		this.completedOrders = new LinkedList<Order>();
 		this.mainscheduler = new MainScheduler(this);
 		this.observers = new ArrayList<Observer>();
 	}
@@ -45,10 +45,12 @@ public class OrderManager implements Subject {
 	protected void placeOrder(Order order) throws IllegalArgumentException {
 		if (order == null)
 			throw new IllegalArgumentException("Bad order!");
+        // The time the order was placed
         order.setTimestampOfOrder(this.getMainScheduler().getTime());
+        // try to place the order on one of the assembly lines
         this.getMainScheduler().placeOrder(order);
-		if(order.getEstimatedDeliveryDate() == null)
-			addOrderToPendingOrders(order);
+		//if(order.getEstimatedDeliveryDate() == null)
+		//	addOrderToPendingOrders(order);
 	}
 
 	/**
@@ -101,7 +103,7 @@ public class OrderManager implements Subject {
 	public void finishedOrder(Order finished) throws IllegalArgumentException {
 		if (finished == null)
 			throw new IllegalArgumentException("Bad order!");
-		this.completedorders.add(finished);
+		this.completedOrders.add(finished);
 		this.notifyObservers();
 	}
 
@@ -117,10 +119,10 @@ public class OrderManager implements Subject {
 
 	/**
 	 * Get pending orders.
-	 * @return pendingorders
+	 * @return pendingOrders
 	 */
 	protected LinkedList<Order> getPendingOrders(){
-		return this.pendingorders;
+		return this.pendingOrders;
 	}
 
 	/**
@@ -159,7 +161,7 @@ public class OrderManager implements Subject {
 	 * @return  the completed orders of this order manager.
 	 */
 	protected LinkedList<Order> getCompletedOrders(){
-		return this.completedorders;
+		return this.completedOrders;
 	}
 
 	/**

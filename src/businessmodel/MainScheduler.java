@@ -123,17 +123,23 @@ public class MainScheduler {
 
 
 	/**
-	 * Place the given order.
-	 * @param order
+     * This method tries to schedule the order on one of the assembly line's
+     * pending queues.
+     *
+	 * @param   order
+     *                  The order you want to try to schedule in
 	 */
 	protected void placeOrder(Order order){
+        // Get all the assembly lines that are free to accept an order.
 		ArrayList<AssemblyLine> possibleAssemblyLines = getPossibleAssemblyLinesToPlaceOrder(order);
 		if(possibleAssemblyLines.size() != 0){
+            // determine which of the assembly lines will be the fastest to process the order.
 			AssemblyLine fastestAssemblyLine = possibleAssemblyLines.get(0);
-			for(AssemblyLine assem2 : getPossibleAssemblyLinesToPlaceOrder(order)){
-				if(assem2.getEstimatedCompletionTimeOfNewOrder(order).isBefore(fastestAssemblyLine.getEstimatedCompletionTimeOfNewOrder(order)))
-					fastestAssemblyLine = assem2;
+			for(AssemblyLine assemblyLine : getPossibleAssemblyLinesToPlaceOrder(order)){
+				if(assemblyLine.getEstimatedCompletionTimeOfNewOrder(order).isBefore(fastestAssemblyLine.getEstimatedCompletionTimeOfNewOrder(order)))
+					fastestAssemblyLine = assemblyLine;
 			}
+            // add the order to the assembly line (try)
 			fastestAssemblyLine.getAssemblyLineScheduler().addOrder(order);
 	    }
     }
