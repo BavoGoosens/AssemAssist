@@ -298,8 +298,7 @@ public class InitialData {
 
 		int count = 0;
 		int number = 0;
-		if (batchList.contains(count++)) number = 0; else if (this.airco.size() != 0) number = rnd.nextInt(this.airco.size());
-		if (this.airco.size() != 0) this.chosen.add(this.airco.get(number));
+		
 		if (batchList.contains(count++)) number = 0; else if (this.body.size() != 0) number = rnd.nextInt(this.body.size());
 		if (this.body.size() != 0) this.chosen.add(this.body.get(number));
 		if (batchList.contains(count++)) number = 0; else if (this.color.size() != 0) number = rnd.nextInt(this.color.size());
@@ -310,6 +309,8 @@ public class InitialData {
 		if (this.gearbox.size() != 0) this.chosen.add(this.gearbox.get(number));
 		if (batchList.contains(count++)) number = 0; else if (this.seats.size() != 0) number = rnd.nextInt(this.seats.size());
 		if (this.seats.size() != 0) this.chosen.add(this.seats.get(number));
+		if (batchList.contains(count++)) number = 0; else if (this.airco.size() != 0) number = rnd.nextInt(this.airco.size());
+		if (this.airco.size() != 0) this.chosen.add(this.airco.get(number));
 		if (batchList.contains(count++)) number = 0; else if (this.spoiler.size() != 0) number = rnd.nextInt(this.spoiler.size());
 		if (this.spoiler.size() != 0) this.chosen.add(this.spoiler.get(number));
 		if (batchList.contains(count++)) number = 0; else if (this.wheels.size() != 0) number = rnd.nextInt(this.wheels.size());
