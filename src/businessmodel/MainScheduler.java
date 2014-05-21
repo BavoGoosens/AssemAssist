@@ -230,7 +230,7 @@ public class MainScheduler {
 
 
     // TODO: miss maken ni zeker
-    public void startNewDay(){
+   /* public void startNewDay(){
         boolean ready = true;
         for(AssemblyLineScheduler scheduler: this.getAssemblyLineSchedulers()){
             if(!scheduler.checkNewDay())
@@ -241,7 +241,7 @@ public class MainScheduler {
                 scheduler.scheduleNewDay();
             }
 
-    }
+    }*/
 
 
 	/**
