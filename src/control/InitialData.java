@@ -105,9 +105,9 @@ public class InitialData {
 		Boolean orders = false;
 
 		ArrayList<Integer> numbers = this.generateOrders();
-        System.out.println(numbers);
+        System.out.println(numbers.size());
 		for(int i=0; i < numbers.size(); i++){
-			orders = this.randomOrderGenerator("standard",0,  8);
+			orders = this.randomOrderGenerator("standard",numbers.get(i),  8);
 			if (!orders)
 				this.randomOrderGenerator("standard", 0, 8);
 		}
@@ -194,7 +194,9 @@ public class InitialData {
 		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
 		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
 		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
-		return number;
+        number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+        number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+        return number;
 	}
 
 	/**
@@ -326,7 +328,6 @@ public class InitialData {
 			try {
 				StandardVehicleOrder order = new StandardVehicleOrder(this.garageholder, this.chosen, vehicleModel);
 				this.controllerStandard.placeOrder(this.garageholder,order);
-                System.out.println(order.getVehicleModel());
 				return true;
 			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
 				//System.out.println(e.toString());
@@ -336,7 +337,6 @@ public class InitialData {
 				DateTime time = new DateTime(new DateTime().getYear(), new DateTime().getMonthOfYear(),new DateTime().getDayOfMonth(), 8, 0);
 				SingleTaskOrder order = new SingleTaskOrder(this.customsManager, this.chosen, time.plusDays(1));
 				this.controllerSingleTask.placeSingleTaskOrder(this.customsManager,order);
-                System.out.println(order.getVehicleModel());
                 return true;
 			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
 				//System.out.println(e.toString());

@@ -60,6 +60,12 @@ public abstract class Shift {
 	 */
 	protected Order removeLastTimeSlot(){
 		Order temp = this.getTimeSlots().getLast().getLastOrderOfLastWorkSLot();
+        for(TimeSlot slot : this.timeslots){
+            for(WorkSlot workslot: slot.getWorkSlots()){
+                if(workslot.getOrder() == temp)
+                    workslot.addOrder(null);
+            }
+        }
 		this.getTimeSlots().removeLast();
 		return temp;
 	}

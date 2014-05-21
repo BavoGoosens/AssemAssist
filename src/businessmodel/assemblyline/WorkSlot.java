@@ -29,7 +29,11 @@ public class WorkSlot{
 		this.setOrder(order);
 		this.setOccupied(true);
 	}
-	
+
+    protected void removeOrder(){
+        this.setOrder(null);
+        this.setOccupied(false);
+    }
 	/**
 	 * Checks if the work slot is occupied.
 	 * @return	True if the work slot is occupied.

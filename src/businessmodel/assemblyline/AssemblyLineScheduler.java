@@ -50,7 +50,7 @@ public class AssemblyLineScheduler implements Subject {
 		this.observers = new ArrayList<Observer>();
 		this.currentTime = new DateTime(new DateTime().getYear(),
 				new DateTime().getMonthOfYear(),
-				new DateTime().getDayOfMonth(), 8, 0);
+				new DateTime().getDayOfMonth(), 6, 0);
 		this.changeAlgorithm("fifo", null);
 		this.setDelay(0);
 		this.generateShifts();
@@ -61,7 +61,7 @@ public class AssemblyLineScheduler implements Subject {
 	 *
 	 * The shift are cleared and new orders are added if possible.
 	 */
-	protected void scheduleNewDay(){
+	public void scheduleNewDay(){
 		this.dayOrdersCount = 0;
 		this.generateShifts();
 		this.setDelay(0);
@@ -90,13 +90,23 @@ public class AssemblyLineScheduler implements Subject {
 		updateSchedule();
 	}
 
+    private int getMaximumExpectedTimeOnWorkPosts(){
+        int time = 0;
+        IteratorConverter<WorkPost> converter = new IteratorConverter<WorkPost>();
+        for(WorkPost  wp : converter.convert(getAssemblyLine().getWorkPostsIterator())){
+          if(wp.getOrder() != null && wp.getStandardTimeOfModel(wp.getOrder().getVehicleModel()) > time)
+              time = wp.getStandardTimeOfModel(wp.getOrder().getVehicleModel());
+        }
+        return time;
+    }
 	/**
 	 * Returns true if an order can be added to the current day.
 	 *
 	 * @return true if an order can be added.
 	 */
 	protected boolean canAddOrder(Order order){
-		return this.getEstimatedCompletionTimeOfNewOrder(order).isBefore((this.getCurrentTime().withHourOfDay(22)));
+        DateTime date =  this.getCurrentTime().withHourOfDay(22);
+		return this.getEstimatedCompletionTimeOfNewOrder(order).isBefore(date.withMinuteOfHour(0));
 	}
 
 	/**
@@ -182,31 +192,47 @@ public class AssemblyLineScheduler implements Subject {
 
 	private void updateAssemblyLineStatus(){
         Order nextOrder = null;
-        if(!this.getShifts().isEmpty())
-           nextOrder = this.getShifts().getFirst().getNextOrderForAssemblyLine();
-        if(this.getShifts().getFirst().getTimeSlots().size() == 0)
-			this.getShifts().removeFirst();
+        if(!this.getShifts().isEmpty()){
+              nextOrder = this.getShifts().getFirst().getNextOrderForAssemblyLine();
+              if(this.getShifts().getFirst().getTimeSlots().size() == 0)
+			        this.getShifts().removeFirst();
+        }
 		this.getAssemblyLine().advance(nextOrder);
 		if(nextOrder != null)
 			nextOrder.setPlacedOnAssemblyLineOfOrder(this.getCurrentTime());
 	}
 
 	private void updateEstimatedTimeOfOrders(int delay){
-		for(Order order: this.getOrders()){
-			order.updateEstimatedDate(delay);
-		}
-	}
+        if(!this.getOrders().isEmpty()){
+            Order firstOrder = this.getOrders().getFirst();
+            firstOrder.setEstimatedDeliveryDateOfOrder(this.getCurrentTime().plusMinutes(this.minutesLastWorkPost(firstOrder)));
+            boolean first = true;
+            for (Order order : this.getOrders()) {
+                if (first) {
+                    first = false;
+                } else {
+                    try {
+                        order.setEstimatedDeliveryDateOfOrder(this.getPreviousOrder(order).getEstimatedDeliveryDate()
+                                .plusMinutes(this.minutesLastWorkPost(order)));
+                    } catch (NullPointerException e){
+                        System.out.println(e.getMessage());
+                    }
+                }
+            }
+        }
+    }
 
 	private void updateNewDayDate() {
 		DateTime currentTime = new DateTime(this.getCurrentTime().getYear(),
 				getCurrentTime().getMonthOfYear(),
-				getCurrentTime().getDayOfMonth(), 8, 0);
+				getCurrentTime().getDayOfMonth(), 6, 0);
 		currentTime = currentTime.plusDays(1);
 		this.setCurrentTime(currentTime);
 	}
 
-	private void checkNewDay(){
-		if (this.getShifts().isEmpty() || (this.getCurrentTime().getHourOfDay() > 22 && this.getCurrentTime().getMinuteOfHour() > 0) ) {
+	public void checkNewDay(){
+		if (this.getShifts().isEmpty() || (this.getCurrentTime().getHourOfDay() >= 22 &&
+                this.getCurrentTime().getMinuteOfHour() >= 0) ) {
 			if(this.getAssemblyLine().canAdvance()){
 				notifyObservers();
 				this.scheduleNewDay();

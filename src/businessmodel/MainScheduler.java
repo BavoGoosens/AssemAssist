@@ -228,7 +228,7 @@ public class MainScheduler {
 		return currenttime;
 	}
 
-    /*
+
     // TODO: miss maken ni zeker
     public void startNewDay(){
         boolean ready = true;
@@ -236,8 +236,13 @@ public class MainScheduler {
             if(!scheduler.checkNewDay())
                 ready = false;
         }
+        if(ready){
+            for(AssemblyLineScheduler scheduler: this.getAssemblyLineSchedulers()){
+                scheduler.scheduleNewDay();
+            }
+
     }
-    */
+
 
 	/**
 	 * Get the sets of VehicleOptions that occur in more than the given amount of orders.
