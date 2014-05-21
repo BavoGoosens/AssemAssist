@@ -9,10 +9,16 @@ public class Protection extends VehicleOptionCategory {
 	 */
 	private final static UUID key = UUID.randomUUID();
 	
+	/**
+	 * Creates a new protection category.
+	 */
 	public Protection() {
 		super();
 	}
 
+	/**
+	 * Returns the unique key of the category.
+	 */
 	@Override
 	public UUID getKey() {
 		return Protection.key;

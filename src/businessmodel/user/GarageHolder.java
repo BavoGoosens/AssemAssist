@@ -4,7 +4,7 @@ package businessmodel.user;
 /**
  * A class representing a garage holder.
  * 
- * @author SWOP team 10 2013-2014 
+ * @author SWOP team 10
  *
  */
 public class GarageHolder extends User {

@@ -19,7 +19,7 @@ import businessmodel.user.User;
 /**
  * Interface for a model.
  * 
- * @author SWOP team 10 2013-2014
+ * @author SWOP team 10
  *
  */
 public interface Model {
@@ -145,11 +145,37 @@ public interface Model {
 	 */
 	public DateTime getSystemTime();
 
+	/**
+	 * Get the AssemblyLines with the given User.
+	 * @param user
+	 * @return
+	 * @throws NoClearanceException
+	 */
     public Iterator<AssemblyLine> getAssemblyLines(User user) throws NoClearanceException;
 
+    /**
+     * Get the current system wide algorithm.
+     * @param user
+     * @return
+     * @throws NoClearanceException
+     */
     public String getCurrentSystemWideAlgorithm(User user) throws NoClearanceException;
 
+    /**
+     * Get current sate of the AssemblyLine.
+     * @param user
+     * @param selectedAssemblyLine
+     * @return
+     * @throws NoClearanceException
+     */
     public String getCurrentAssemblyLineStatus(User user, AssemblyLine selectedAssemblyLine) throws NoClearanceException;
 
+    /**
+     * Get the available states of the AssemblyLine.
+     * @param user
+     * @param selectedAssemblyLine
+     * @return
+     * @throws NoClearanceException
+     */
     public Iterator<String> getAvailableAssemblyLineStatus(User user, AssemblyLine selectedAssemblyLine) throws NoClearanceException;
 }

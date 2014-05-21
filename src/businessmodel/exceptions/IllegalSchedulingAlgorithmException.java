@@ -1,5 +1,11 @@
 package businessmodel.exceptions;
 
+/**
+ * IllegalSchedulingAlgorithmException
+ * 
+ * @author SWOP team 10
+ *
+ */
 public class IllegalSchedulingAlgorithmException extends RuntimeException {
 	
 	/**

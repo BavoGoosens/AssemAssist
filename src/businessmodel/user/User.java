@@ -2,7 +2,7 @@ package businessmodel.user;
 /**
  * A class representing a user of the system.
  * 
- * @author SWOP team 10 2013-2014
+ * @author SWOP team 10
  *
  */
 public abstract class User {
@@ -100,23 +100,41 @@ public abstract class User {
 		return false;
 	}
 
-    public boolean canViewStatistics() {return false;}
-
-    public boolean canViewAssemblyLines(){return false;}
-
-    public boolean canChangeAlgorithm() {
-        return false;
+	 /**
+     * Method if the user can view the statistics.
+     * @return
+     */
+    public boolean canViewStatistics() {
+    	return false;
     }
 
     /**
-	 * Returns a string representation of the user.
-	 */
-	@Override
-	public String toString() {
-		return firstname + " " + lastname+" ("+username+")";
-	}
+     * Method if the user can view the AssemblyLines.
+     * @return
+     */
+    public boolean canViewAssemblyLines(){
+    	return false;
+    }
 
+    /**
+     * Method if the user can change the algorithm of the AssemblyLine.
+     * @return
+     */
+    public boolean canChangeAlgorithm() {
+        return false;
+    }
+  
+    /**
+     * Method if the user can change the operational status of the AssemblyLine.
+     * @return
+     */
     public boolean canChangeOperationalStatus() {
         return false;
     }
+
+  	@Override
+  	public String toString() {
+  		return firstname + " " + lastname+" ("+username+")";
+  	}
+
 }

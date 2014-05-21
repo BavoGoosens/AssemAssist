@@ -13,9 +13,6 @@ import businessmodel.order.Order;
  */
 public class FreeShift extends Shift{
 
-	/**
-	 * The next shift.
-	 */
 	private Shift nextShift;
 
 	/**
@@ -33,22 +30,6 @@ public class FreeShift extends Shift{
 		this.setNextShift(nextShift);
 	}
 	
-	@Override
-	protected ArrayList<TimeSlot> canAddOrder(Order order){
-		ArrayList<TimeSlot> timeslots= null;	
-		LinkedList<TimeSlot> temp = this.getTimeSlots();
-		for(int i = 0 ; i < this.getNumberOfWorkPosts()-1;i++)
-			temp.add(this.getNextShift().getTimeSlots().get(i));
-		for(int i = 0 ; i< temp.size()-(this.getNumberOfWorkPosts()-1); i++){
-			timeslots = checkTimeSlots(temp.get(i));
-			if (timeslots != null)
-				break;
-		}
-		for(int i = 0 ; i < this.getNumberOfWorkPosts()-1;i++)
-			temp.removeLast();
-		return timeslots;
-	}
-
 	/**
 	 * A method to get the next shift of the day.
 	 * @return	the next shift of the day
@@ -82,4 +63,21 @@ public class FreeShift extends Shift{
 	private void setNextShift(Shift nextShift) {
 		this.nextShift = nextShift;
 	}
+	
+	@Override
+	protected ArrayList<TimeSlot> canAddOrder(Order order){
+		ArrayList<TimeSlot> timeslots= null;	
+		LinkedList<TimeSlot> temp = this.getTimeSlots();
+		for(int i = 0 ; i < this.getNumberOfWorkPosts()-1;i++)
+			temp.add(this.getNextShift().getTimeSlots().get(i));
+		for(int i = 0 ; i< temp.size()-(this.getNumberOfWorkPosts()-1); i++){
+			timeslots = checkTimeSlots(temp.get(i));
+			if (timeslots != null)
+				break;
+		}
+		for(int i = 0 ; i < this.getNumberOfWorkPosts()-1;i++)
+			temp.removeLast();
+		return timeslots;
+	}
+
 }

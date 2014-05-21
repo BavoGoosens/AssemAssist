@@ -12,19 +12,8 @@ import org.joda.time.Period;
  */
 public class VehicleModel {
 
-	/**
-	 * The name of the car model.
-	 */
 	private String name;
-	
-	/**
-	 * The car model specification of the car model.
-	 */
 	private VehicleModelSpecification cms;
-	
-	/**
-	 * The standard time to finish this car model.
-	 */
 	private Period standardTimeToFinish;
 
 	/**

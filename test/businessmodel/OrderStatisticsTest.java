@@ -6,8 +6,6 @@ import java.util.Iterator;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessmodel.Catalog;
-import businessmodel.OrderManager;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;

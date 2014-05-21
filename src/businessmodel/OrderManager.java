@@ -1,10 +1,7 @@
 package businessmodel;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.PriorityQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.joda.time.DateTime;
@@ -15,7 +12,6 @@ import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 import businessmodel.user.User;
-import businessmodel.util.OrderDateTimeComparator;
 
 /**
  * A class that represents an order manager. This class handles all the orders for a car manufacturing company.
@@ -25,13 +21,9 @@ import businessmodel.util.OrderDateTimeComparator;
 public class OrderManager implements Subject {
 
 	private ArrayList<Observer> observers;
-
 	private LinkedList<Order> completedorders;
-
 	private MainScheduler mainscheduler;
-
 	private LinkedList<Order> pendingorders;
-
 	private final int MILIS_ONE_DAY = 86400000;
 
 	/**
@@ -56,7 +48,8 @@ public class OrderManager implements Subject {
 	protected void placeOrder(Order order) throws IllegalArgumentException {
 		if (order == null)
 			throw new IllegalArgumentException("Bad order!");
-		this.getMainScheduler().placeOrder(order);
+        order.setTimestampOfOrder(this.getMainScheduler().getTime());
+        this.getMainScheduler().placeOrder(order);
 		if(order.getEstimatedDeliveryDate() == null)
 			addOrderToPendingOrders(order);
 	}
@@ -71,6 +64,9 @@ public class OrderManager implements Subject {
 		this.getPendingOrders().add(order);
 	}
 
+	/**
+	 * Scheduler the pending orders.
+	 */
 	protected void schedulePendingOrders(){
 		scheduleSingleTaskOrders();
 		Order[] tempList = this.getPendingOrders().toArray(new Order[this.getPendingOrders().size()]);
@@ -81,6 +77,9 @@ public class OrderManager implements Subject {
 		}
 	}
 
+	/**
+	 * Scheduler the SingleTaskOrders.
+	 */
 	private void scheduleSingleTaskOrders() {
 		CopyOnWriteArrayList<Order> tempList = new CopyOnWriteArrayList<Order>(this.getPendingOrders());
 		for(Order order : tempList){
@@ -107,15 +106,27 @@ public class OrderManager implements Subject {
 	}
 
 	// for testing
+	/**
+	 * Get completed orders.
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public LinkedList<Order> getCompletedOrdersClone(){
 		return (LinkedList<Order>) this.getCompletedOrders().clone();
 	}
 
+	/**
+	 * Get pending orders.
+	 * @return pendingorders
+	 */
 	protected LinkedList<Order> getPendingOrders(){
 		return this.pendingorders;
 	}
 
+	/**
+	 * Get MainScheduler.
+	 * @return
+	 */
 	public MainScheduler getMainScheduler() {
 		return this.mainscheduler;
 	}
@@ -168,11 +179,19 @@ public class OrderManager implements Subject {
 	}
 
 
+	/**
+	 * Add order to the pending orders of the OrderManager.
+	 * @param order
+	 */
 	private void addOrderToPendingOrders(Order order) {
 		setEstimatedTimeOfPendingOrder(order);
 		this.getPendingOrders().add(order);
 	}
 	
+	/**
+	 * Set the estimated delivery date of the given order.
+	 * @param order
+	 */
 	private void setEstimatedTimeOfPendingOrder(Order order){
 		if(this.getPendingOrders().size() == 0){
             DateTime date = this.getMainScheduler().getTime().plusDays(1);
@@ -191,6 +210,11 @@ public class OrderManager implements Subject {
         }
 	}
 
+	/**
+	 * Method to set the henk.
+	 * @param order
+	 * @param date
+	 */
     private void setHenk(Order order, DateTime date){
         date = date.withHourOfDay(8);
         date = date.withMinuteOfHour(0);

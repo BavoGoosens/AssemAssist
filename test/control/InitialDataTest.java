@@ -31,7 +31,6 @@ public class InitialDataTest {
 		try {
 			new InitialData().initialize(vmc);
 		} catch (NoClearanceException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		User user = vmc.login("wow", "");
@@ -54,7 +53,6 @@ public class InitialDataTest {
 				count++;
 			}
 		} catch (IllegalArgumentException | NoClearanceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(10,count);

@@ -6,7 +6,10 @@ import java.util.HashMap;
 import businessmodel.category.Certification;
 
 /**
- * Created by michielvandendriessche on 13/05/14.
+ * The factory for creating the CertificationWorkPost.
+ * 
+ * @author 	SWOP team 10
+ *
  */
 public class CertificationWorkPostFactory extends WorkPostFactory {
 

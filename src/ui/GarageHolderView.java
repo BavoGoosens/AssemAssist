@@ -1,5 +1,12 @@
 package ui;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import businessmodel.Model;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
@@ -11,13 +18,6 @@ import businessmodel.user.User;
 import businessmodel.util.OrderDateTimeComparator;
 import control.StandardOrderController;
 import control.StandardOrderHandler;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class GarageHolderView extends View {
 

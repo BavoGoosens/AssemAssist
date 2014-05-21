@@ -6,11 +6,20 @@ import businessmodel.VehicleManufacturingCompany;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.User;
 
+/**
+ * The handler for the StandardOrder.
+ * 
+ * @author Team 10
+ *
+ */
 public class StandardOrderHandler implements StandardOrderController{
 	
 	private VehicleManufacturingCompany cmc;
 	
-		
+	/**
+	 * Constructor with the given VehicleManufacturingCompany.
+	 * @param model
+	 */
 	public StandardOrderHandler(Model model) {
 		this.cmc = (VehicleManufacturingCompany) model;
 	}

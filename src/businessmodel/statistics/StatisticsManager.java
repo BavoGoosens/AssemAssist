@@ -9,7 +9,7 @@ import businessmodel.observer.Subject;
 /**
  * Class representing a statistics manager for the system, which holds the statistics objects.
  * 
- * @author SWOP team 10 2013-2014
+ * @author SWOP team 10
  *
  */
 public class StatisticsManager {

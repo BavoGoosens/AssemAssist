@@ -1,20 +1,15 @@
 package businessmodel.exceptions;
 
+/**
+ * IllegalNumberException
+ * 
+ * @author SWOP team 10
+ *
+ */
 public class IllegalNumberException extends RuntimeException {
-	
-	/**
-	 * The serial version UID.
-	 */
+
 	private static final long serialVersionUID = 4944557335300879869L;
-	
-	/**
-	 * The number that caused the exception.
-	 */
 	private int number;
-	
-	/**
-	 * Creates a new illegal number exception.
-	 */
 	public IllegalNumberException() {}
 	
 	/**
@@ -59,6 +54,10 @@ public class IllegalNumberException extends RuntimeException {
 		return this.number;
 	}
 
+	/**
+	 * Set the number of the exception.
+	 * @param number
+	 */
 	private void setNumber(int number) {
 		this.number = number;
 	}

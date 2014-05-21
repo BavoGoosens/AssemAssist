@@ -64,6 +64,9 @@ public class Vehicle {
 		this.options = (ArrayList<VehicleOption>) options.clone();
 	}
 	
+	/**
+	 * Add options for a Truck.
+	 */
 	public void addTruckOptions() {
 		Protection protection = new Protection();
 		Storage storage = new Storage();

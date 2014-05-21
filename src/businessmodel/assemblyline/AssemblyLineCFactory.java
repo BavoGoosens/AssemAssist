@@ -6,7 +6,10 @@ import businessmodel.MainScheduler;
 import businessmodel.category.VehicleModel;
 
 /**
- *@author Team 10
+ * This concrete factory can be used to create AssemblyLine 3.
+ *
+ * @author Team 10
+ * 
  */
 public class AssemblyLineCFactory extends AssemblyLineFactory {
     @Override

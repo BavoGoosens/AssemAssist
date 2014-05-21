@@ -7,7 +7,6 @@ import java.util.Iterator;
 
 import org.junit.Test;
 
-import businessmodel.OrderManager;
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;

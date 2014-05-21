@@ -76,10 +76,7 @@ public class VehicleOption {
 		if (name == null || name.equals("")) throw new IllegalArgumentException("Bad name!");
 		this.name = name;
 	}
-	
-	/**
-	 * Returns a string representing the car option.
-	 */
+
 	@Override
 	public String toString() {
 		return this.getCategory().toString()+": "+this.getName();

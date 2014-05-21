@@ -7,7 +7,7 @@ import businessmodel.order.Order;
 /**
  * An abstract class representing a scheduling algorithm.
  * 
- * @author SWOP team 10 2013-2014
+ * @author SWOP team 10
  *
  */
 public abstract class SchedulingAlgorithm {
@@ -27,11 +27,11 @@ public abstract class SchedulingAlgorithm {
 	}
 
 	/**
-	 * Schedules order. 
-	 * @param 	order
-	 * 			The order to be scheduled.
-	 */
-	protected abstract void scheduleOrder(Order order);
+	 * Schedules order.
+     * @param    order
+     * 			The order to be scheduled.
+     */
+	protected abstract boolean scheduleOrder(Order order);
 	
 	/**
 	 * Returns the assemblyline.

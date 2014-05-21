@@ -1,16 +1,15 @@
 package businessmodel.assemblyline;
 
-import java.util.Iterator;
 
-import org.joda.time.DateTime;
-
-import businessmodel.exceptions.NoClearanceException;
-import businessmodel.util.IteratorConverter;
-
+/**
+ * The Operational state of the AssemblyLine.
+ * 
+ * @author 	SWOP team 10
+ *
+ */
 public class OperationalState implements AssemblyLineState {
 
 	private AssemblyLine assemblyLine;
-	private boolean looping = true;
 
 
 	/**

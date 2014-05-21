@@ -6,20 +6,12 @@ import businessmodel.category.VehicleOptionCategory;
  * A class representing an illegal car option category exception.
  * This exception is thrown when a car option is added to a wrong category object.
  * 
- * @author SWOP team 10 2013-2014
+ * @author SWOP team 10
  *
  */
 public class IllegalVehicleOptionCategoryException extends Exception {
 	
-	
-	/**
-	 * Serial Version UID
-	 */
 	private static final long serialVersionUID = 1L;
-	
-	/**
-	 * The category that caused the exception.
-	 */
 	private VehicleOptionCategory category;
 	
 	/**
@@ -68,6 +60,10 @@ public class IllegalVehicleOptionCategoryException extends Exception {
 		return this.category;
 	}
 
+	/**
+	 * Set the category that caused the exception.
+	 * @param category
+	 */
 	private void setCategory(VehicleOptionCategory category) {
 		this.category = category;
 	}

@@ -7,7 +7,7 @@ import org.joda.time.LocalDate;
 /**
  * A class representing a comparator for car tuples.
  * 
- * @author SWOP team 10 2013-2014
+ * @author SWOP team 10
  *
  */
 public class VehicleTupleComperator implements Comparator<Tuple<LocalDate, Integer>> {

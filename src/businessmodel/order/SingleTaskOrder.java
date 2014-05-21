@@ -13,7 +13,7 @@ import businessmodel.user.User;
  * Class representing a single task order.
  * This class extends an abstract order.
  * 
- * @author SWOP team 10 2013-2014
+ * @author SWOP team 10
  *
  */
 public class SingleTaskOrder extends Order {

@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 import businessmodel.category.VehicleOption;
 import businessmodel.order.Order;
+
 /**
  * A class representing a specification batch scheduling algorithm.
  * 
@@ -40,6 +41,10 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 
 	}
 
+	/**
+	 * Reschedule the order according to the SpecificationBatch algorithm.
+	 * @param currentOrder
+	 */
 	private void reschedule(Order currentOrder) {
 
 		this.getScheduler().generateShifts();
@@ -75,9 +80,19 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 
 	}
 
-
+	/**
+	 * Set the options for which the algorithm should order the orders for rescheduling.
+	 * @param options
+	 * @throws IllegalArgumentException
+	 */
+	private void setOptions(ArrayList<VehicleOption> options) throws IllegalArgumentException {
+		if(options == null)
+			throw new IllegalArgumentException("Not valid options");
+		this.options = options;
+	}
+	
 	@Override
-	public void scheduleOrder(Order currentOrder) {
+	public boolean scheduleOrder(Order currentOrder) {
 
 		this.reschedule(currentOrder);
 
@@ -87,17 +102,13 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 				timeslots = sh.canAddOrder(order);
 				if(timeslots!= null){
 					sh.addOrderToSlots(order,timeslots);
-					break;
+					return true;
 				}
 			}
 		}
+        return false;
 	}
 
-	private void setOptions(ArrayList<VehicleOption> options) throws IllegalArgumentException {
-		if(options == null)
-			throw new IllegalArgumentException("Not valid options");
-		this.options = options;
-	}
 
 }
 
