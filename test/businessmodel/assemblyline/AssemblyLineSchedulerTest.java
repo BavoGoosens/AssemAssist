@@ -84,7 +84,7 @@ public class AssemblyLineSchedulerTest {
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testChangeAlgo3(){
-		this.scheduler.changeAlgorithm("sb", null);
+		this.scheduler.changeAlgorithm("SpecificationBatch", null);
 	}
 	
 	private void generateVehicleModels() {
