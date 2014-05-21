@@ -38,7 +38,7 @@ import businessmodel.util.IteratorConverter;
 
 /**
  * The initial data.
- * 
+ *
  * @author Team 10
  *
  */
@@ -123,6 +123,7 @@ public class InitialData {
 		//				this.randomOrderGenerator("singleTask", 0, -1);
 		//		}
         /*
+
 		this.makeOrdersNotInSameBatch();
 
 		orders = false;

@@ -11,7 +11,7 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
  * A class representing a restriction that checks for the mandatory options and 
  * categories for a set of options with an ultra engine.
  * 
- * @author SWOP team 10 2013-2014
+ * @author SWOP team 10 
  *
  */
 public class UltraEngineAircoRestriction extends Restriction {
@@ -31,6 +31,11 @@ public class UltraEngineAircoRestriction extends Restriction {
 		return true;
 	}
 	
+	/**
+	 * Get Engine option.
+	 * @param options
+	 * @return
+	 */
 	private VehicleOption getEngineOption(ArrayList<VehicleOption> options) {
 		for (VehicleOption option: options) {
 			if (option.getCategory().equals(new Engine())) {
@@ -40,6 +45,12 @@ public class UltraEngineAircoRestriction extends Restriction {
 		return null;
 	}
 	
+	/**
+	 * Check Airco restriction.
+	 * @param options
+	 * @return
+	 * @throws UnsatisfiedRestrictionException
+	 */
 	private boolean checkAirco(ArrayList<VehicleOption> options) throws UnsatisfiedRestrictionException {
 		for (VehicleOption option: options) {
 			if (option.getCategory().equals(new Airco())) {

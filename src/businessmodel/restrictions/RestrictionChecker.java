@@ -9,7 +9,7 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
 /**
  * A class representing a checker that can check a set of options against all the restrictions it holds.
  * 
- * @author SWOP team 10 2013-2014
+ * @author SWOP team 10 
  *
  */
 public class RestrictionChecker {
