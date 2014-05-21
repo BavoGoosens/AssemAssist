@@ -7,6 +7,12 @@ import businessmodel.category.VehicleOption;
 import businessmodel.category.Wheels;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 
+/**
+ * A class representing a restriction.
+ * 
+ * @author SWOP team 10 
+ *
+ */
 public class PlatformBodyWheelsRestriction extends Restriction {
 
 	public PlatformBodyWheelsRestriction() {}
@@ -23,6 +29,11 @@ public class PlatformBodyWheelsRestriction extends Restriction {
 		return true;
 	}
 	
+	/**
+	 * Get body Option.
+	 * @param options
+	 * @return
+	 */
 	private VehicleOption getBodyOption(ArrayList<VehicleOption> options) {
 		for (VehicleOption option: options) {
 			if (option.getCategory().equals(new Body())) {
@@ -32,6 +43,12 @@ public class PlatformBodyWheelsRestriction extends Restriction {
 		return null;
 	}
 	
+	/**
+	 * Check wheels restriction.
+	 * @param options
+	 * @return
+	 * @throws UnsatisfiedRestrictionException
+	 */
 	private boolean checkWheels(ArrayList<VehicleOption> options) throws UnsatisfiedRestrictionException {
 		for (VehicleOption option: options) {
 			if (option.getCategory().equals(new Wheels())) {

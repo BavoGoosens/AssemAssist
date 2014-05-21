@@ -38,7 +38,7 @@ import businessmodel.util.IteratorConverter;
 
 /**
  * The initial data.
- * 
+ *
  * @author Team 10
  *
  */
@@ -105,11 +105,13 @@ public class InitialData {
 		Boolean orders = false;
 
 		ArrayList<Integer> numbers = this.generateOrders();
+        System.out.println(numbers);
 		for(int i=0; i < numbers.size(); i++){
-			orders = this.randomOrderGenerator("standard",numbers.get(i), -1);
+			orders = this.randomOrderGenerator("standard",0,  8);
 			if (!orders)
-				this.randomOrderGenerator("standard", 0, -1);
+				this.randomOrderGenerator("standard", 0, 8);
 		}
+
 
 		this.processOrders();
 
@@ -120,6 +122,7 @@ public class InitialData {
 		//			if (!orders)
 		//				this.randomOrderGenerator("singleTask", 0, -1);
 		//		}
+        /*
 
 		this.makeOrdersNotInSameBatch();
 
@@ -129,7 +132,7 @@ public class InitialData {
 			if (!orders)
 				this.randomOrderGenerator("standard", 0, 3);
 		}
-
+    */
 
 	}
 
@@ -172,6 +175,7 @@ public class InitialData {
 			orders.add(new StandardVehicleOrder(garageholder, chosenA, modelA));
 			orders.add(new StandardVehicleOrder(garageholder, chosenB, modelB));
 			orders.add(new StandardVehicleOrder(garageholder, chosenX, modelX));
+            System.out.println(orders.size());
 			for(Order order: orders)
 				this.controllerStandard.placeOrder(this.garageholder,(StandardVehicleOrder)order);
 
@@ -189,9 +193,7 @@ public class InitialData {
 		ArrayList<Integer> number = new ArrayList<Integer>();
 		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
 		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
-		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4); 
-		number.add(1);  number.add(1);	number.add(3); number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4); 
-		number.add(1);  number.add(1);	number.add(3); 
+		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
 		return number;
 	}
 
@@ -256,7 +258,7 @@ public class InitialData {
 				for(int i= 0; i < batch;i++){
 					this.batchList.add(i);
 				}
-				this.model = this.available_vehiclemodels.get(rnd.nextInt(3));
+				this.model = this.available_vehiclemodels.get(model);
 				vehicleModel = this.model;
 			}else if (batch != -1){
 				vehicleModel = this.model;
@@ -324,24 +326,23 @@ public class InitialData {
 			try {
 				StandardVehicleOrder order = new StandardVehicleOrder(this.garageholder, this.chosen, vehicleModel);
 				this.controllerStandard.placeOrder(this.garageholder,order);
+                System.out.println(order.getVehicleModel());
 				return true;
 			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
-				if (model == 0)
-					System.out.println(e.toString());
+				//System.out.println(e.toString());
 			}
 		}else if (orders.equals("singleTask")){
 			try {
 				DateTime time = new DateTime(new DateTime().getYear(), new DateTime().getMonthOfYear(),new DateTime().getDayOfMonth(), 8, 0);
 				SingleTaskOrder order = new SingleTaskOrder(this.customsManager, this.chosen, time.plusDays(1));
 				this.controllerSingleTask.placeSingleTaskOrder(this.customsManager,order);
-				return true;
+                System.out.println(order.getVehicleModel());
+                return true;
 			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
-				if (model == 0)
-					System.out.println(e.toString());
+				//System.out.println(e.toString());
 			}
 		}else{}
-
-		return false;
+		    return false;
 	}
 
 }

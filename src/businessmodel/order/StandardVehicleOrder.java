@@ -91,6 +91,6 @@ public class StandardVehicleOrder extends Order {
 	
 	@Override
 	public String toString() {
-		return super.toString() + " Order: "+this.getVehicle().toString();
+		return super.toString() + " Order: "+ this.getVehicleModel().getName();
 	}
 }
