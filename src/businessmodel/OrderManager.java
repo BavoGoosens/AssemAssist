@@ -63,6 +63,9 @@ public class OrderManager implements Subject {
 		this.getPendingOrders().add(order);
 	}
 
+	/**
+	 * Scheduler the pending orders.
+	 */
 	protected void schedulePendingOrders(){
 		scheduleSingleTaskOrders();
 		Order[] tempList = this.getPendingOrders().toArray(new Order[this.getPendingOrders().size()]);
@@ -73,6 +76,9 @@ public class OrderManager implements Subject {
 		}
 	}
 
+	/**
+	 * Scheduler the SingleTaskOrders.
+	 */
 	private void scheduleSingleTaskOrders() {
 		CopyOnWriteArrayList<Order> tempList = new CopyOnWriteArrayList<Order>(this.getPendingOrders());
 		for(Order order : tempList){
@@ -99,15 +105,27 @@ public class OrderManager implements Subject {
 	}
 
 	// for testing
+	/**
+	 * Get completed orders.
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public LinkedList<Order> getCompletedOrdersClone(){
 		return (LinkedList<Order>) this.getCompletedOrders().clone();
 	}
 
+	/**
+	 * Get pending orders.
+	 * @return pendingorders
+	 */
 	protected LinkedList<Order> getPendingOrders(){
 		return this.pendingorders;
 	}
 
+	/**
+	 * Get MainScheduler.
+	 * @return
+	 */
 	public MainScheduler getMainScheduler() {
 		return this.mainscheduler;
 	}
@@ -160,11 +178,19 @@ public class OrderManager implements Subject {
 	}
 
 
+	/**
+	 * Add order to the pending orders of the OrderManager.
+	 * @param order
+	 */
 	private void addOrderToPendingOrders(Order order) {
 		setEstimatedTimeOfPendingOrder(order);
 		this.getPendingOrders().add(order);
 	}
 	
+	/**
+	 * Set the estimated delivery date of the given order.
+	 * @param order
+	 */
 	private void setEstimatedTimeOfPendingOrder(Order order){
 		if(this.getPendingOrders().size() == 0){
             DateTime date = this.getMainScheduler().getTime().plusDays(1);
@@ -183,6 +209,11 @@ public class OrderManager implements Subject {
         }
 	}
 
+	/**
+	 * Method to set the henk.
+	 * @param order
+	 * @param date
+	 */
     private void setHenk(Order order, DateTime date){
         date = date.withHourOfDay(8);
         date = date.withMinuteOfHour(0);
