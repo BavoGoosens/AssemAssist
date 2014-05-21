@@ -253,14 +253,14 @@ public class MainScheduler {
 
 					ArrayList<VehicleOption> temp = new ArrayList<VehicleOption>();
 					temp.add(opt);
-					if (!set.contains(opt)){
+//					if (!set.contains(opt)){
 						if (this.checkOptionsForSpecificationBatch(temp)){
 							options.add(opt);
 							set.add(opt);
 						}
-					}else{
-						options.add(opt);
-					}
+//					}else{
+//						options.add(opt);
+//					}
 				}
 
 				boolean duplicate = true;
