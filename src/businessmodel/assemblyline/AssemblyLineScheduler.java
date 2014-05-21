@@ -176,6 +176,9 @@ public class AssemblyLineScheduler implements Subject {
 		this.setDelay(this.getDelay()+delay);
 	}
 
+    /**
+     * This method updates the actual assembly line by advancing it.
+     */
 	private void updateAssemblyLineStatus(){
 		if(!this.getShifts().isEmpty()){
 			Order nextOrder = this.getShifts().getFirst().getNextOrderForAssemblyLine();
