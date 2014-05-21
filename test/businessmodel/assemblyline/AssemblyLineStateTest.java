@@ -29,5 +29,7 @@ public class AssemblyLineStateTest {
 		assemblyLine.transitionToMaintenance();
 		assertEquals(assemblyLine.currentState(), "Maintenance");
 	}
+	
+	
 
 }
