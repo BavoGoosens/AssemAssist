@@ -103,32 +103,32 @@ public class InitialData {
 			this.available_vehiclemodels.add(this.iter.next());
 
 		Boolean orders = false;
-
-		ArrayList<Integer> numbers = this.generateOrders();
-		for(int i=0; i < numbers.size(); i++){
-			orders = this.randomOrderGenerator("standard",numbers.get(i), -1);
-			if (!orders)
-				this.randomOrderGenerator("standard", 0, -1);
-		}
-
-		this.processOrders();
-
-
-		//		orders = false;
-		//		for(int i=0; i < 3; i++){
-		//			orders = this.randomOrderGenerator("singleTask",-1, -1);
+		//
+		//		ArrayList<Integer> numbers = this.generateOrders();
+		//		for(int i=0; i < numbers.size(); i++){
+		//			orders = this.randomOrderGenerator("standard",numbers.get(i), 8);
 		//			if (!orders)
-		//				this.randomOrderGenerator("singleTask", 0, -1);
+		//				this.randomOrderGenerator("standard", 0, 8);
 		//		}
 
-		this.makeOrdersNotInSameBatch();
+		//		this.processOrders();
+
 
 		orders = false;
 		for(int i=0; i < 3; i++){
-			orders = this.randomOrderGenerator("standard",-1, 3);
+			orders = this.randomOrderGenerator("singleTask",-1, -1);
 			if (!orders)
-				this.randomOrderGenerator("standard", 0, 3);
+				this.randomOrderGenerator("singleTask", 0, -1);
 		}
+
+//		this.makeOrdersNotInSameBatch();
+//
+//		orders = false;
+//		for(int i=0; i < 3; i++){
+//			orders = this.randomOrderGenerator("standard",-1, 3);
+//			if (!orders)
+//				this.randomOrderGenerator("standard", 0, 3);
+//		}
 
 
 	}
@@ -188,10 +188,10 @@ public class InitialData {
 	private ArrayList<Integer> generateOrders() {
 		ArrayList<Integer> number = new ArrayList<Integer>();
 		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
-		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
-		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4); 
-		number.add(1);  number.add(1);	number.add(3); number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4); 
-		number.add(1);  number.add(1);	number.add(3); 
+		//		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
+		//		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4); 
+		//		number.add(1);  number.add(1);	number.add(3); number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4); 
+		//		number.add(1);  number.add(1);	number.add(3); 
 		return number;
 	}
 
@@ -256,7 +256,7 @@ public class InitialData {
 				for(int i= 0; i < batch;i++){
 					this.batchList.add(i);
 				}
-				this.model = this.available_vehiclemodels.get(rnd.nextInt(3));
+				this.model = this.available_vehiclemodels.get(rnd.nextInt(this.available_vehiclemodels.size()));
 				vehicleModel = this.model;
 			}else if (batch != -1){
 				vehicleModel = this.model;

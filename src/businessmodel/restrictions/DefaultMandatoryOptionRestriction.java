@@ -25,11 +25,20 @@ public class DefaultMandatoryOptionRestriction extends Restriction {
 		this.setCategories(categories);
 	}
 	
+	/**
+	 * Set the given categories.
+	 * @param categories
+	 * @throws IllegalArgumentException
+	 */
 	private void setCategories(ArrayList<VehicleOptionCategory> categories) throws IllegalArgumentException {
 		if (categories == null) throw new IllegalArgumentException("Bad list of categories!");
 		this.categories = categories;
 	}
 	
+	/**
+	 * Get categories.
+	 * @return categories
+	 */
 	private ArrayList<VehicleOptionCategory> getCategories() {
 		return this.categories;
 	}

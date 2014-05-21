@@ -8,7 +8,7 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
 /**
  * A class representing an abstract restriction.
  * 
- * @author SWOP team 10 2013-2014
+ * @author SWOP team 10 
  *
  */
 public abstract class Restriction {

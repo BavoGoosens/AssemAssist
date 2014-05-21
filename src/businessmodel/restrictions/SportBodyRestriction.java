@@ -12,7 +12,7 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
  * A class representing a restriction that checks for the mandatory options and 
  * categories for a set of options with a sport body.
  * 
- * @author SWOP team 10 2013-2014
+ * @author SWOP team 10 
  *
  */
 public class SportBodyRestriction extends Restriction {
@@ -34,6 +34,11 @@ public class SportBodyRestriction extends Restriction {
 		return true;
 	}
 
+	/**
+	 * Get Body option.
+	 * @param options
+	 * @return
+	 */
 	private VehicleOption getBodyOption(ArrayList<VehicleOption> options) {
 		for (VehicleOption option: options) {
 			if (option.getCategory().equals(new Body())) {
@@ -43,6 +48,12 @@ public class SportBodyRestriction extends Restriction {
 		return null;
 	}
 
+	/**
+	 * Check for Spoiler.
+	 * @param options
+	 * @return
+	 * @throws UnsatisfiedRestrictionException
+	 */
 	private boolean checkForSpoiler(ArrayList<VehicleOption> options) throws UnsatisfiedRestrictionException {
 		for (VehicleOption option: options) {
 			if (option.getCategory().equals(new Spoiler())) {
@@ -53,6 +64,12 @@ public class SportBodyRestriction extends Restriction {
 				+ "choose a SPOILER option.");
 	}
 
+	/**
+	 * Check Engine restriction.
+	 * @param options
+	 * @return
+	 * @throws UnsatisfiedRestrictionException
+	 */
 	private boolean checkEngine(ArrayList<VehicleOption> options) throws UnsatisfiedRestrictionException {
 		for (VehicleOption option: options) {
 			if (option.getCategory().equals(new Engine())) {

@@ -8,7 +8,7 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
 /**
  * A class representing a restriction that checks for multiple categories.
  * 
- * @author SWOP team 10 2013-2014
+ * @author SWOP team 10 
  *
  */
 public class MultipleCategoryRestriction extends Restriction {
