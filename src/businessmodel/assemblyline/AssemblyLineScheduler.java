@@ -3,6 +3,8 @@ package businessmodel.assemblyline;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import businessmodel.util.IteratorConverter;
+
 import org.joda.time.DateTime;
 
 import businessmodel.category.VehicleOption;
@@ -11,19 +13,18 @@ import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
-import businessmodel.util.IteratorConverter;
 
 /**
  * A Class that represents a assemblyLine for an AssymblyLine.
  * It makes a schedule for the assemblyLine.
  * When the schedule has been complete a new day schedule is created
- *
  * @author SWOP team 10
  *
  */
 public class AssemblyLineScheduler implements Subject {
 
 	private LinkedList<Shift> shifts;
+
 	private LinkedList<Order> orders;
 
 	private SchedulingAlgorithm algorithm;
@@ -35,6 +36,7 @@ public class AssemblyLineScheduler implements Subject {
 	private AssemblyLine assemblyLine;
 
 	private ArrayList<Observer> observers;
+
 	private int dayOrdersCount = 0;
 
 	/**
@@ -96,7 +98,6 @@ public class AssemblyLineScheduler implements Subject {
 	 */
 	protected boolean canAddOrder(Order order){
 		return this.getEstimatedCompletionTimeOfNewOrder(order).isBefore((this.getCurrentTime().withHourOfDay(22)));
-
 	}
 
 	/**
@@ -141,9 +142,6 @@ public class AssemblyLineScheduler implements Subject {
 			this.updateAssemblyLineStatus();
 	}
 
-	/**
-	 * Update the completed orders.
-	 */
 	private void updateCompletedOrders(){
 		if(this.getOrders().peekFirst()!= null && this.getOrders().peekFirst().isCompleted()){
 			Order completedOrder = this.getOrders().pollFirst();
@@ -153,9 +151,6 @@ public class AssemblyLineScheduler implements Subject {
 		}
 	}
 
-	/**
-	 * Update the schedule.
-	 */
 	private void updateSchedule(){
 		if(this.getDelay() <= -60){
 			this.getShifts().getLast().addTimeSlot();
@@ -176,32 +171,19 @@ public class AssemblyLineScheduler implements Subject {
 		}
 	}
 
-	/**
-	 * Update the delay.
-	 * @param delay
-	 */
 	private void updateDelay(int delay){
 		this.setDelay(this.getDelay()+delay);
 	}
 
-    /**
-     * This method updates the actual assembly line by advancing it.
-     */
 	private void updateAssemblyLineStatus(){
-		if(!this.getShifts().isEmpty()){
-			Order nextOrder = this.getShifts().getFirst().getNextOrderForAssemblyLine();
-			if(this.getShifts().getFirst().getTimeSlots().size() == 0)
-				this.getShifts().removeFirst();
-			this.getAssemblyLine().advance(nextOrder);
-			if(nextOrder != null)
-				nextOrder.setPlacedOnAssemblyLineOfOrder(this.getCurrentTime());
-		}
+		Order nextorder = this.getShifts().getFirst().getNextOrderForAssemblyLine();
+		if(this.getShifts().getFirst().getTimeSlots().size() == 0)
+			this.getShifts().removeFirst();
+		this.getAssemblyLine().advance(nextorder);
+		if(nextorder != null)
+			nextorder.setPlacedOnAssemblyLineOfOrder(this.getCurrentTime());
 	}
 
-	/**
-	 * Update the estimated delivery date of the orders.
-	 * @param delay
-	 */
 	private void updateEstimatedTimeOfOrders(int delay){
 		for(Order order: this.getOrders()){
 			order.updateEstimatedDate(delay);
@@ -216,38 +198,24 @@ public class AssemblyLineScheduler implements Subject {
 		this.setCurrentTime(currentTime);
 	}
 
-	/**
-	 * Check if there's a new day.
-	 */
 	private void checkNewDay(){
-		if (this.getShifts().isEmpty() ||
-                (this.getCurrentTime().getHourOfDay() > 22
-                        && this.getCurrentTime().getMinuteOfHour() > 0) ) {
-            // in principe zou die tweede test niet mogen nodig zijn ?
-			notifyObservers();
-			this.scheduleNewDay();
+		if (this.getShifts().isEmpty() || (this.getCurrentTime().getHourOfDay() > 22 && this.getCurrentTime().getMinuteOfHour() > 0) ) {
+			if(this.getAssemblyLine().canAdvance()){
+				notifyObservers();
+				this.scheduleNewDay();
+			}
 		}
+
 	}
 
-	/**
-	 * Set the current time.
-	 * @param currentTime
-	 */
-	protected void setCurrentTime(DateTime currentTime) {
-		this.currentTime =currentTime;
+	protected void setCurrentTime(DateTime currenttime) {
+		this.currentTime =currenttime;
 	}
 
-	/**
-	 * Scheduler order;
-	 * @param order
-	 */
 	private void scheduleOrder(Order order){
 		this.getAlgo().scheduleOrder(order);
 	}
 
-	/**
-	 * Generate shifts.
-	 */
 	protected void generateShifts(){
 		this.getShifts().clear();
 		Shift endshift = new EndShift(8,this.getAssemblyLine().getNumberOfWorkPosts());
@@ -256,18 +224,10 @@ public class AssemblyLineScheduler implements Subject {
 		this.getShifts().add(endshift);
 	}
 
-	/**
-	 * Get the current algorithm.
-	 * @return current algorithm.
-	 */
 	private SchedulingAlgorithm getAlgo() {
 		return this.algorithm;
 	}
 
-	/**
-	 * Set the delay.
-	 * @param delay
-	 */
 	private void setDelay(int delay) {
 		this.delay = delay;
 	}
@@ -350,11 +310,6 @@ public class AssemblyLineScheduler implements Subject {
 			order.setEstimatedDeliveryDateOfOrder(this.getCurrentTime().plusMinutes(calculateMinutes(order)));
 	}
 
-	/**
-	 * Get the estimated completion time of the given order.
-	 * @param order
-	 * @return
-	 */
 	protected DateTime getEstimatedCompletionTimeOfNewOrder(Order order) {
 		if(this.getOrders().size() > 0)
 			return this.getOrders().getLast().getEstimatedDeliveryDate().plusMinutes(
@@ -363,11 +318,6 @@ public class AssemblyLineScheduler implements Subject {
 			return this.currentTime.plusMinutes(this.calculateMinutes(order));
 	}
 
-	 /**
-     * Calculate the number of mintues the order is going to take.
-	 * @param order
-	 * @return
-	 */
 	public int calculateMinutes(Order order){
 		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		if(order.getVehicleModel() == null)
@@ -379,11 +329,6 @@ public class AssemblyLineScheduler implements Subject {
 		return minutes;
 	}
 
-	/**
-	 *
-	 * @param order
-	 * @return
-	 */
 	public int minutesLastWorkPost(Order order) {
 		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		if(order.getVehicleModel() == null)
@@ -405,10 +350,10 @@ public class AssemblyLineScheduler implements Subject {
 		this.observers.remove(observer);
 	}
 
-    /**
-     * This method notifies all the current observers when a new day is created.
-     * Currently the only observer is VehicleStatistics
-     */
+	/**
+	 * This method notifies all the current observers when a new day is created.
+	 * Currently the only observer is VehicleStatistics
+	 */
 	@Override
 	public void notifyObservers() {
 		for (Observer observer: this.observers) {
@@ -416,19 +361,11 @@ public class AssemblyLineScheduler implements Subject {
 		}
 	}
 
-	/**
-	 * Get the description of the current algorithm.
-	 * @return description
-	 */
-	public String currentAlgorithmDescription() {
+	public String currentAlgoDescription() {
 		String[] full = this.algorithm.getClass().getName().split("\\.");
 		return full[1];
 	}
 
-	/**
-	 *
-	 * @param hours
-	 */
 	protected void tempName(int hours){
 		for(Order order: this.getOrders())
 			this.getAssemblyLine().getMainScheduler().placeOrderInFront(order);
@@ -446,10 +383,6 @@ public class AssemblyLineScheduler implements Subject {
 		}
 	}
 
-	/**
-	 * Increase the current time with the given hours.
-	 * @param hours
-	 */
 	protected void increaseCurrentTime(int hours){
 		this.currentTime = this.getCurrentTime().plusHours(hours);
 		this.getAssemblyLine().getMainScheduler().schedulePendingOrders();

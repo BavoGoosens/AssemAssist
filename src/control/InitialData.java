@@ -114,12 +114,12 @@ public class InitialData {
 		this.processOrders();
 
 
-//		orders = false;
-//		for(int i=0; i < 3; i++){
-//			orders = this.randomOrderGenerator("singleTask",-1, -1);
-//			if (!orders)
-//				this.randomOrderGenerator("singleTask", 0, -1);
-//		}
+		//		orders = false;
+		//		for(int i=0; i < 3; i++){
+		//			orders = this.randomOrderGenerator("singleTask",-1, -1);
+		//			if (!orders)
+		//				this.randomOrderGenerator("singleTask", 0, -1);
+		//		}
 
 		this.makeOrdersNotInSameBatch();
 
@@ -209,7 +209,6 @@ public class InitialData {
 				CompleteWorkPost(assem, converter.convert(assem.getWorkPostsIterator()).size());
 			}
 		}
-
 	}
 
 	/**
@@ -298,7 +297,7 @@ public class InitialData {
 
 		int count = 0;
 		int number = 0;
-		
+
 		if (batchList.contains(count++)) number = 0; else if (this.body.size() != 0) number = rnd.nextInt(this.body.size());
 		if (this.body.size() != 0) this.chosen.add(this.body.get(number));
 		if (batchList.contains(count++)) number = 0; else if (this.color.size() != 0) number = rnd.nextInt(this.color.size());
