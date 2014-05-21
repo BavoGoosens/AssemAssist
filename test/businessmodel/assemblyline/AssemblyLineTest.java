@@ -14,7 +14,7 @@ import businessmodel.util.TestStandardVehicleOrder;
 public class AssemblyLineTest {
 
 	private AssemblyLine assemblyLine;
-	GarageHolder holder;
+	private GarageHolder holder;
 
 	@Before
 	public void setUp() throws Exception {
