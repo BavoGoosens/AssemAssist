@@ -9,7 +9,10 @@ import businessmodel.category.Spoiler;
 import businessmodel.category.Wheels;
 
 /**
- * Created by michielvandendriessche on 13/05/14.
+ * The factory for creating the AccessioresWorkPost.
+ * 
+ * @author 	SWOP team 10
+ *
  */
 public class AccessoriesWorkPostFactory extends WorkPostFactory {
 

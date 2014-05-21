@@ -1,10 +1,7 @@
 package businessmodel;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.PriorityQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.joda.time.DateTime;
@@ -15,7 +12,6 @@ import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 import businessmodel.user.User;
-import businessmodel.util.OrderDateTimeComparator;
 
 /**
  * A class that represents an order manager. This class handles all the orders for a car manufacturing company.
@@ -25,13 +21,9 @@ import businessmodel.util.OrderDateTimeComparator;
 public class OrderManager implements Subject {
 
 	private ArrayList<Observer> observers;
-
 	private LinkedList<Order> completedorders;
-
 	private MainScheduler mainscheduler;
-
 	private LinkedList<Order> pendingorders;
-
 	private final int MILIS_ONE_DAY = 86400000;
 
 	/**

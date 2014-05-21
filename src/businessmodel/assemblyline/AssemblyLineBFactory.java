@@ -6,9 +6,10 @@ import businessmodel.MainScheduler;
 import businessmodel.category.VehicleModel;
 
 /**
- * This concrete factory can be used to create AssemblyLine 3.
+ * This concrete factory can be used to create AssemblyLine 2.
  *
  * @author Team 10
+ * 
  */
 public class AssemblyLineBFactory extends AssemblyLineFactory {
 

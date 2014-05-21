@@ -1,6 +1,12 @@
 package businessmodel.exceptions;
 import businessmodel.user.User;
 
+/**
+ * NoClearanceException
+ * 
+ * @author SWOP team 10
+ *
+ */
 public class NoClearanceException extends Exception {
 	
 	/**

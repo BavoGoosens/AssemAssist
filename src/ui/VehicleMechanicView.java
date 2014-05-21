@@ -1,5 +1,10 @@
 package ui;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
 import businessmodel.Model;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
@@ -9,11 +14,6 @@ import businessmodel.user.User;
 import businessmodel.util.IteratorConverter;
 import control.AssemblyLineController;
 import control.AssemblyLineHandler;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class VehicleMechanicView extends View {
 

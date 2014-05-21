@@ -18,7 +18,7 @@ import businessmodel.util.Tuple;
 /**
  * A class representing the order statistics of the system.
  * 
- * @author SWOP team 10 2013-2014
+ * @author SWOP team 10
  *
  */
 public class OrderStatistics implements Observer {

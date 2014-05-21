@@ -7,7 +7,7 @@ import businessmodel.order.Order;
 /**
  * An abstract class representing a scheduling algorithm.
  * 
- * @author SWOP team 10 2013-2014
+ * @author SWOP team 10
  *
  */
 public abstract class SchedulingAlgorithm {

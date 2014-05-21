@@ -14,24 +14,13 @@ import businessmodel.util.VehicleTupleComperator;
 /**
  * A class representing the car statistics of the system.
  * 
- * @author SWOP team 10 2013-2014
+ * @author SWOP team 10
  *
  */
 public class VehicleStatistics implements Observer {
 
-	/**
-	 * The average number of vehicles produced.
-	 */
 	private int avarage;
-
-	/**
-	 * The median number of vehicles produced.
-	 */
 	private int median;
-
-	/**
-	 * The number of vehicles produced for each day.
-	 */
 	private ArrayList<Tuple<LocalDate, Integer>> numberOfVehicles;
 
 	/**
@@ -52,6 +41,10 @@ public class VehicleStatistics implements Observer {
 		this.numberOfVehicles = new ArrayList<Tuple<LocalDate, Integer>>();
 	}
 	
+	/**
+	 * Get the number of Vehicles.
+	 * @return number of vehicles.
+	 */
 	public ArrayList<Tuple<LocalDate, Integer>> getNumberOfVehicles() {
 		return this.numberOfVehicles;
 	}

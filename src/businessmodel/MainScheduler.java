@@ -1,15 +1,9 @@
 package businessmodel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.joda.time.DateTime;
 
@@ -90,7 +84,6 @@ public class MainScheduler {
 		return this.assemblylines;
 	}
 
-	//TODO num parameter
 	protected void changeSystemWideAlgorithm(String algo, ArrayList<VehicleOption> options) {
 		
 		this.systemWideAlgo = algo;

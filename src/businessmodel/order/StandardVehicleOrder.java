@@ -15,7 +15,7 @@ import businessmodel.user.User;
  * A class representing a standard car order.
  * This class extends an abstract order.
  * 
- * @author SWOP team 10 2013-2014
+ * @author SWOP team 10
  *
  */
 public class StandardVehicleOrder extends Order {

@@ -9,10 +9,16 @@ public class Storage extends VehicleOptionCategory {
 	 */
 	private final static UUID key = UUID.randomUUID();
 
+	/**
+	 * Creates a new storage category.
+	 */
 	public Storage() {
 		super();
 	}
 
+	/**
+	 * Returns the unique key of the category.
+	 */
 	@Override
 	public UUID getKey() {
 		return Storage.key;

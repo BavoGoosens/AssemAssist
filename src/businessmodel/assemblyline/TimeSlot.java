@@ -5,7 +5,8 @@ import java.util.LinkedList;
 import businessmodel.order.Order;
 
 /**
- * A class that represents a TimeSlot. Each TimeSlot has a number of WorkPost's. 
+ * A class that represents a TimeSlot. Each TimeSlot has a number of WorkPosts.
+ * 
  * @author SWOP 2014 team 10
  *
  */

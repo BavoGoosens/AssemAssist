@@ -1,5 +1,9 @@
 package ui;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Scanner;
+
 import businessmodel.Model;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
@@ -8,10 +12,6 @@ import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.user.User;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Scanner;
 
 public class AssemblyLineStatusView extends View implements Observer {
 

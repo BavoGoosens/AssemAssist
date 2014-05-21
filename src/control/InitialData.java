@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-import businessmodel.category.*;
-import businessmodel.util.IteratorConverter;
 import org.joda.time.DateTime;
 
 import businessmodel.Catalog;
@@ -13,14 +11,37 @@ import businessmodel.VehicleManufacturingCompany;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
+import businessmodel.category.Airco;
+import businessmodel.category.Body;
+import businessmodel.category.Certification;
+import businessmodel.category.Color;
+import businessmodel.category.Engine;
+import businessmodel.category.Gearbox;
+import businessmodel.category.ModelAFactory;
+import businessmodel.category.ModelBFactory;
+import businessmodel.category.ModelXFactory;
 import businessmodel.category.Protection;
+import businessmodel.category.Seats;
+import businessmodel.category.Spoiler;
+import businessmodel.category.Storage;
+import businessmodel.category.VehicleModel;
+import businessmodel.category.VehicleOption;
+import businessmodel.category.VehicleOptionCategory;
+import businessmodel.category.Wheels;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.Order;
 import businessmodel.order.SingleTaskOrder;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.User;
+import businessmodel.util.IteratorConverter;
 
+/**
+ * The initial data.
+ * 
+ * @author Team 10
+ *
+ */
 public class InitialData {
 
 	private Random rnd = new Random();
@@ -38,6 +59,9 @@ public class InitialData {
 	private VehicleModel model;
 	private boolean looping = true;
 
+	/**
+	 * Constructor for InitialData. Initialize lists.
+	 */
 	public InitialData(){
 
 		this.airco = new ArrayList<VehicleOption>();
@@ -54,6 +78,11 @@ public class InitialData {
 
 	}
 
+	/**
+	 * Initialize with the given VehicleManufacturingCompany.
+	 * @param vmc
+	 * @throws NoClearanceException
+	 */
 	public void initialize(VehicleManufacturingCompany vmc) throws NoClearanceException{
 
 		this.vmc = vmc;
@@ -104,6 +133,9 @@ public class InitialData {
 
 	}
 
+	/**
+	 * Generate 3 orders that are not in the same batch.
+	 */
 	private void makeOrdersNotInSameBatch() {
 
 		ArrayList<Order> orders = new ArrayList<Order>();
@@ -149,6 +181,10 @@ public class InitialData {
 
 	}
 
+	/**
+	 * Generate random orders.
+	 * @return
+	 */
 	private ArrayList<Integer> generateOrders() {
 		ArrayList<Integer> number = new ArrayList<Integer>();
 		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
@@ -159,6 +195,10 @@ public class InitialData {
 		return number;
 	}
 
+	/**
+	 * Process the orders.
+	 * @throws NoClearanceException
+	 */
 	private void processOrders() throws NoClearanceException {
 		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		Iterator<AssemblyLine> iter1 = vmc.getAssemblyLines(this.mechanic);
@@ -172,6 +212,12 @@ public class InitialData {
 
 	}
 
+	/**
+	 * Complete the WorkPosts from the given AssemblyLine.
+	 * @param assem
+	 * @param i
+	 * @throws NoClearanceException
+	 */
 	private void CompleteWorkPost(AssemblyLine assem, int i) throws NoClearanceException{
 		looping = false;
 		for(int j = 0 ; j < i ; j++){
@@ -189,6 +235,13 @@ public class InitialData {
 	// orders (standard or singleTask
 	// model -1 if random, otherwise (0 to 4). 0 for model A, ...
 	// batch -1 if random, otherwise number of the options that must be the same for the number of orders
+	/**
+	 * Random generator for orders.
+	 * @param orders
+	 * @param model
+	 * @param batch
+	 * @return
+	 */
 	private boolean randomOrderGenerator(String orders, int model, int batch){
 
 		VehicleModel vehicleModel;

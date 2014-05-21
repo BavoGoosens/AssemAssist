@@ -1,16 +1,20 @@
 package businessmodel.assemblyline;
 
+import java.util.Iterator;
+
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 
-import java.util.Iterator;
-
+/**
+ * The Maintenance state of the AssemblyLine.
+ * 
+ * @author 	SWOP team 10
+ *
+ */
 public class MaintenanceState implements AssemblyLineState, Observer {
 
 	private AssemblyLine assemblyLine;
-
     private boolean isReady = false;
-
     private boolean isActive = false;
 	
 	/**

@@ -3,6 +3,8 @@ package businessmodel.util;
 import java.util.Iterator;
 
 /**
+ * Iterator without a remove action.
+ * 
  * @author Team 10.
  */
 @SuppressWarnings("rawtypes")
@@ -31,6 +33,10 @@ public class SafeIterator <Type> implements Iterator{
         throw new UnsupportedOperationException("you can not use this :(");
     }
 
+    /**
+     * Convert the given iterator to a SafeIterator.
+     * @param iter
+     */
     public void convertIterator(Iterator<Type> iter){
         IteratorConverter<Type> converter = new IteratorConverter<Type>();
         this.list = converter.convert(iter).iterator();

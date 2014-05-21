@@ -12,46 +12,18 @@ import businessmodel.util.SafeIterator;
 /**
  * A class representing a work post.
  *
- * @author SWOP Team 10 2014
+ * @author SWOP Team 10
  *
  */
 public class WorkPost {
 
-	/**
-	 * The name of the work post
-	 */
 	private String name;
-
-	/**
-	 * The tasks this work post can handle.
-	 */
 	private ArrayList<AssemblyTask> responsibleAssemblyTasks;
-
-	/**
-	 * The tasks that are pending at the work post.
-	 */
 	private ArrayList<AssemblyTask> pendingTasks;
-
-	/**
-	 * the tasks that are finished for this WorkPost.
-	 */
 	private ArrayList<AssemblyTask> finishedTasks;
-
-	/**
-	 * The order the working post is currently handling.
-	 */
 	private Order orderInProcess ;
-
-	/**
-	 * The time was spent working of this workPost for the current order.
-	 */
 	private int timeOrderInProcess;
-
-	/**
-	 * The AssemblyLine that this WorkPost is a part of.
-	 */
 	private AssemblyLine assemblyline;
-	
 	private HashMap<String,Integer> standardtimes;
 
 
@@ -155,7 +127,12 @@ public class WorkPost {
         safe.convertIterator(this.pendingTasks.iterator());
         return safe;
 	}
-
+	
+	/**
+	 * Returns the tasks that are finished at the work post.
+	 *
+	 * @return	The tasks that are finished at the work post
+	 */
 	@SuppressWarnings("unchecked")
 	public Iterator<AssemblyTask> getFinishedTasks() {
 		SafeIterator<AssemblyTask> safe = new SafeIterator<AssemblyTask>();
@@ -186,6 +163,11 @@ public class WorkPost {
 		return result;
 	}
 
+	/**
+	 * The given AssemblyTask is completed with the given time.
+	 * @param assem
+	 * @param time
+	 */
 	protected void AssemblyTaskCompleted(AssemblyTask assem, int time) {
 		this.pendingTasks.remove(assem);
 		this.finishedTasks.add(assem);
@@ -194,11 +176,18 @@ public class WorkPost {
 		this.notifyAssemblyLine();
 	}
 
+	/**
+	 * Notify the AssemblyLine when this WorkPost is completed.
+	 */
 	protected void notifyAssemblyLine(){
 		if(isCompleted())
 			this.getAssemblyline().workPostCompleted(this.getTimeOrderInProcess());
 	}
 
+	/**
+	 * Get this AssemblyLine.
+	 * @return this AssemblyLine
+	 */
 	protected AssemblyLine getAssemblyline() {
 		return assemblyline;
 	}
@@ -227,10 +216,18 @@ public class WorkPost {
 		}
 	}
 
+	/**
+	 * Get the time from the Order in process.
+	 * @return
+	 */
 	private int getTimeOrderInProcess() {
 		return timeOrderInProcess;
 	}
 
+	/**
+	 * Set the time from the Order in process.
+	 * @param time
+	 */
 	private void setTimeOrderInProcess(int time){
 		this.timeOrderInProcess = time;
 	}
@@ -252,6 +249,10 @@ public class WorkPost {
 		this.name = name;
 	}
 
+	/**
+	 * Set Order in process.
+	 * @param order_in_process
+	 */
 	private void setOrder(Order order_in_process) {
 		this.orderInProcess = order_in_process;
 	}
@@ -272,24 +273,41 @@ public class WorkPost {
 
 	/**
 	 * Returns the list of assembly tasks the work post is responsible for.
-	 *
 	 * @return The list with all the assembly tasks this work post is responsible for.
 	 */
 	private ArrayList<AssemblyTask> getResponsibleTasks() {
 		return this.responsibleAssemblyTasks;
 	}
 
+	/**
+	 * Set the given AssemblyLine for this WorkPost.
+	 * @param assemblyline
+	 */
 	private void setAssemblyline(AssemblyLine assemblyline) {
 		this.assemblyline = assemblyline;
 	}
 	
+	/**
+	 * Get the standard time of the given VehicleModel.
+	 * @param model
+	 * @return
+	 */
 	public int getStandardTimeOfModel(VehicleModel model){
 		return this.getStandardtimes().get(model.getName());
 	}
+	
+	/**
+	 * Get the standard times of this WorkPost.
+	 * @return standardtimes
+	 */
 	private HashMap<String, Integer> getStandardtimes() {
 		return standardtimes;
 	}
 
+	/**
+	 * Set standardtimes.
+	 * @param standardtimes
+	 */
 	protected void setStandardtimes(HashMap<String, Integer> standardtimes) {
 		this.standardtimes = standardtimes;
 	}

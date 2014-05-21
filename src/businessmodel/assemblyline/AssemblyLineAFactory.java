@@ -9,6 +9,7 @@ import businessmodel.category.VehicleModel;
  * This concrete factory can be used to create AssemblyLine 1 and 2 since they are essentially the same.
  *
  * @author Team 10
+ * 
  */
 public class AssemblyLineAFactory extends AssemblyLineFactory {
 

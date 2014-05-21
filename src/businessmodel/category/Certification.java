@@ -9,10 +9,16 @@ public class Certification extends VehicleOptionCategory {
 	 */
 	private final static UUID key = UUID.randomUUID();
 
+	/**
+	 * Creates a new certification category.
+	 */
 	public Certification() {
 		super();
 	}
 
+	/**
+	 * Returns the unique key of the category.
+	 */
 	@Override
 	public UUID getKey() {
 		return Certification.key;
