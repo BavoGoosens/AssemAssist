@@ -84,7 +84,6 @@ public class MainScheduler {
 		return this.assemblylines;
 	}
 
-	//TODO num parameter
 	protected void changeSystemWideAlgorithm(String algo, ArrayList<VehicleOption> options) {
 		
 		this.systemWideAlgo = algo;
