@@ -17,7 +17,7 @@ import businessmodel.category.VehicleOptionCategory;
  * A class representing a catalog of the car manufacturing company.
  * It holds all the models that are available and creates them through a factory.
  * 
- * @author SWOP team 10 2014
+ * @author SWOP team 10
  *
  */
 public class Catalog {

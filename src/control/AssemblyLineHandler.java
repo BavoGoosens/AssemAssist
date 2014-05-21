@@ -7,10 +7,20 @@ import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.user.User;
 
+/**
+ * The handler for the AssemblyLine.
+ * 
+ * @author Team 10
+ *
+ */
 public class AssemblyLineHandler implements AssemblyLineController{
 
 	private VehicleManufacturingCompany cmc;
 
+	/**
+	 * Set the given VehicleManufacturingCompany.
+	 * @param cmc
+	 */
 	public AssemblyLineHandler (Model cmc) {
 		this.cmc = (VehicleManufacturingCompany) cmc;
 	}

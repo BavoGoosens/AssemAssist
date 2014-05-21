@@ -24,7 +24,12 @@ import businessmodel.user.User;
 import businessmodel.util.IteratorConverter;
 import businessmodel.util.SafeIterator;
 
-
+/**
+ * The VehcileManifacturingCompany
+ * 
+ * @author Team 10
+ *
+ */
 public class VehicleManufacturingCompany implements Model {
 
 	/**

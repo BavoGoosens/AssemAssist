@@ -6,6 +6,8 @@ import businessmodel.VehicleManufacturingCompany;
 import businessmodel.exceptions.NoClearanceException;
 
 /**
+ * MAIN
+ * 
  * @author Team 10
  *
  */

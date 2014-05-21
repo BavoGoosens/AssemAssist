@@ -21,13 +21,9 @@ import businessmodel.user.User;
 public class OrderManager implements Subject {
 
 	private ArrayList<Observer> observers;
-
 	private LinkedList<Order> completedorders;
-
 	private MainScheduler mainscheduler;
-
 	private LinkedList<Order> pendingorders;
-
 	private final int MILIS_ONE_DAY = 86400000;
 
 	/**
