@@ -33,7 +33,7 @@ public class AssemblyLine implements Subject{
 	private int timeCurrentStatus = 0;
 	private ArrayList<WorkPost> workPosts = new ArrayList<WorkPost>();
 	private ArrayList<Observer> subscribers = new ArrayList<Observer>();
-    public String name;
+    private String name;
 
 
 	/**

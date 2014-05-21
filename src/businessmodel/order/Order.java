@@ -120,7 +120,7 @@ public abstract class Order {
 	 * Set the AssemblyLine on which this order will be processed.
 	 * @param line
 	 */
-	public void setAssemblyLine(AssemblyLine line){
+	protected void setAssemblyLine(AssemblyLine line){
 		this.line = line;
 	}
 	/**

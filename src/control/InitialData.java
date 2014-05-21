@@ -91,7 +91,7 @@ public class InitialData {
 	 * @param vmc
 	 * @throws NoClearanceException
 	 */
-	public void initialize(VehicleManufacturingCompany vmc) throws NoClearanceException{
+	protected void initialize(VehicleManufacturingCompany vmc) throws NoClearanceException{
 
 		this.vmc = vmc;
 		this.garageholder = vmc.login("wow", "");

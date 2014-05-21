@@ -2,6 +2,8 @@ package businessmodel.util;
 
 import java.util.ArrayList;
 
+import org.junit.Test;
+
 import businessmodel.category.Body;
 import businessmodel.category.Color;
 import businessmodel.category.Engine;
@@ -19,13 +21,18 @@ import businessmodel.user.GarageHolder;
 public class TestStandardVehicleOrder {
 
 	private StandardVehicleOrder order;
-	GarageHolder holder;
+	private GarageHolder holder;
 
 	public TestStandardVehicleOrder(GarageHolder holder, String name){
-		this.holder = holder;
+		this.setHolder(holder);
 		makeOrder(holder,name);
 	}
 
+	private void setHolder(GarageHolder holder) {
+		this.holder = holder;
+	}
+
+	@Test
 	private void makeOrder(GarageHolder holder, String name){
 		ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();
 		VehicleOption option1 = new VehicleOption("Seats",new Seats());

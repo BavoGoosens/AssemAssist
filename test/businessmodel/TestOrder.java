@@ -19,11 +19,15 @@ import businessmodel.user.GarageHolder;
 public class TestOrder {
 
 	private StandardVehicleOrder order;
-	GarageHolder holder;
+	private GarageHolder holder;
 
 	public TestOrder(GarageHolder holder, String name){
-		this.holder = holder;
+		this.setHolder(holder);
 		makeOrder(holder,name);
+	}
+
+	private void setHolder(GarageHolder holder) {
+		this.holder = holder;
 	}
 
 	private void makeOrder(GarageHolder holder, String name){

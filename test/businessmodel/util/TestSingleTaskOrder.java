@@ -14,11 +14,16 @@ import businessmodel.user.CustomShopManager;
 public class TestSingleTaskOrder {
 
 	private SingleTaskOrder order;
-	CustomShopManager holder;
+	private CustomShopManager holder;
 	
 	public TestSingleTaskOrder(CustomShopManager holder, String string, DateTime userenddate) {
-		this.holder = holder;
+		this.setHolder(holder);
 		makeOrder(holder,string, userenddate);
+	}
+
+	private void setHolder(CustomShopManager holder) {
+		this.holder = holder;
+		
 	}
 
 	private void makeOrder(CustomShopManager holder, String name,  DateTime userenddate){
