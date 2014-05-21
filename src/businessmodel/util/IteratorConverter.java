@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * Convert iterator to arrayList.
+ * 
  * @author Team 10
  */
 public class IteratorConverter <Type> {

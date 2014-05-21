@@ -3,6 +3,8 @@ package businessmodel.util;
 import java.util.Iterator;
 
 /**
+ * Iterator without a remove action.
+ * 
  * @author Team 10.
  */
 @SuppressWarnings("rawtypes")
