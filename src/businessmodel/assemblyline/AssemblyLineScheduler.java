@@ -66,7 +66,7 @@ public class AssemblyLineScheduler implements Subject {
 		this.generateShifts();
 		this.setDelay(0);
 		this.updateNewDayDate();
-		this.getAssemblyLine().getMainScheduler().schedulePendingOrders();
+		//this.getAssemblyLine().getMainScheduler().schedulePendingOrders();
 	}
 
 	/**
@@ -244,10 +244,20 @@ public class AssemblyLineScheduler implements Subject {
                 this.getCurrentTime().getMinuteOfHour() >= 0) ) {
 			if(this.getAssemblyLine().canAdvance()){
 				notifyObservers();
-				this.scheduleNewDay();
+				//this.scheduleNewDay();
+                this.getAssemblyLine().getMainScheduler().startNewProductionDay();
 			}
 		}
 	}
+
+    public boolean couldStartNewDay(){
+        boolean canStart;
+        // if there are no more pending orders
+        canStart =  this.orders.isEmpty();
+        // and the assembly line is empty
+        canStart = this.getAssemblyLine().getWorkPostOrders().isEmpty();
+        return canStart;
+    }
 
 	protected void setCurrentTime(DateTime currenttime) {
 		this.currentTime =currenttime;
