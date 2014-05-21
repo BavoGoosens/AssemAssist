@@ -27,11 +27,11 @@ public abstract class SchedulingAlgorithm {
 	}
 
 	/**
-	 * Schedules order. 
-	 * @param 	order
-	 * 			The order to be scheduled.
-	 */
-	protected abstract void scheduleOrder(Order order);
+	 * Schedules order.
+     * @param    order
+     * 			The order to be scheduled.
+     */
+	protected abstract boolean scheduleOrder(Order order);
 	
 	/**
 	 * Returns the assemblyline.
