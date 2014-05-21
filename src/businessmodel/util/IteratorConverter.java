@@ -10,7 +10,7 @@ import java.util.List;
 public class IteratorConverter <Type> {
 
 	/**
-	 * 
+	 * Convert iterator to arrayList.
 	 * @param iterator
 	 * @return
 	 */
