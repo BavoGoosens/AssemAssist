@@ -43,8 +43,7 @@ public class TimeSlot {
 	 * A method to get the WorkSlot's of this TimeSlot.
 	 * @return	this.workslots
 	 */
-	// TODO protected maken
-	public LinkedList<WorkSlot> getWorkSlots(){
+	protected LinkedList<WorkSlot> getWorkSlots(){
 		return this.workslots;
 	}
 

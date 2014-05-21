@@ -3,6 +3,7 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,6 +19,7 @@ import businessmodel.order.StandardVehicleOrder;
 import businessmodel.statistics.OrderStatistics;
 import businessmodel.statistics.StatisticsManager;
 import businessmodel.user.GarageHolder;
+import businessmodel.util.IteratorConverter;
 import businessmodel.util.Tuple;
 
 public class OrderStatisticsTest {
@@ -74,7 +76,7 @@ public class OrderStatisticsTest {
 	
 	@Test
 	public void test() {
-		ArrayList<Tuple<Order, Integer>> orders = statistics.getFinishedOrders();
+		ArrayList<Tuple<Order, Integer>> orders = (ArrayList<Tuple<Order, Integer>>) new IteratorConverter<Tuple<Order, Integer>>().convert(statistics.getFinishedOrdersIterator());
 		for (Tuple<Order, Integer> tuple: orders) {
 			System.out.println("** Order **");
 			System.out.println("Order: "+tuple.getX());

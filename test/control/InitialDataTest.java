@@ -44,18 +44,8 @@ public class InitialDataTest {
 		} catch (IllegalArgumentException | NoClearanceException e) {
 			e.printStackTrace();
 		}
-		assertEquals(0,count);
-		try {
-			count = 0;
-			Iterator<Order> it = vmc.getCompletedOrders(user);
-			while(it.hasNext()){
-				it.next();
-				count++;
-			}
-		} catch (IllegalArgumentException | NoClearanceException e) {
-			e.printStackTrace();
-		}
-		assertEquals(10,count);
+		
+		assertEquals(9,count);
 		
 //		try {
 //			count = 0;

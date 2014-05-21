@@ -35,10 +35,15 @@ public class VehicleMechanicView extends View {
         super(cmc);
         setUser(user);
         this.controller = new AssemblyLineHandler(this.getModel());
-        this.selectedAssemblyLine = line;
+        this.setSelectedAssemblyLine(line);
     }
 
-    @Override
+    private void setSelectedAssemblyLine(AssemblyLine line) {
+		this.selectedAssemblyLine = line;
+		
+	}
+
+	@Override
     public void display() {
         if (this.selectedAssemblyLine == null) {
             this.selectAssemblyLine();

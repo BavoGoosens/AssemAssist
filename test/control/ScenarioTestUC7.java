@@ -110,8 +110,6 @@ public class ScenarioTestUC7 {
 		this.vmc.placeOrder(order);
 		this.vmc.placeOrder(order2);
 		chosen.clear();
-		System.out.println(order);
-		System.out.println(order2);
 		
 		for (VehicleOptionCategory category: categories) {
 			if (models.get(3).getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
@@ -125,7 +123,6 @@ public class ScenarioTestUC7 {
 		
 		order = new StandardVehicleOrder(garageHolder, chosen, models.get(3));
 		this.vmc.placeOrder(order);
-		System.out.println(order);
 	}
 
 }

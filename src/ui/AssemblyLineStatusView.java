@@ -25,13 +25,18 @@ public class AssemblyLineStatusView extends View implements Observer {
 
     public AssemblyLineStatusView(Model cmc, User user, AssemblyLine line) {
         super(cmc);
-        this.selectedAssemblyLine = line;
+        this.setAssemblyLine(line);
         line.subscribeObserver(this);
         setUser(user);
         this.setActive(true);
     }
 
-    private void setActive(boolean b) {
+    private void setAssemblyLine(AssemblyLine line) {
+		this.selectedAssemblyLine = line;
+		
+	}
+
+	private void setActive(boolean b) {
         this.active = b;
     }
 

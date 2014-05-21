@@ -1,7 +1,6 @@
 package businessmodel.assemblyline;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
@@ -30,6 +29,7 @@ public class AssemblyTaskTest {
 	public void test() {
 		assertEquals(task.getDescription(),"Test2");
 		assertEquals(task.getName(),"Test");
+		assertFalse(task.canBeOrdered());
 		assertEquals(task2.getWorkpost().getName(),"henk");
 		
 		task2.completeAssemblytask(20);

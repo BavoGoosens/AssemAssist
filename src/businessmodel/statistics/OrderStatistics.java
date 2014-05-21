@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
+import org.joda.time.LocalDate;
 import org.joda.time.Period;
 
 import businessmodel.OrderManager;
@@ -13,6 +14,7 @@ import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.util.OrderTupleComperator;
+import businessmodel.util.SafeIterator;
 import businessmodel.util.Tuple;
 
 /**
@@ -53,8 +55,10 @@ public class OrderStatistics implements Observer {
 		subject.subscribeObserver(this);
 	}
 	
-	public ArrayList<Tuple<Order, Integer>> getFinishedOrders() {
-		return this.finishedOrders;
+	public SafeIterator<Tuple<Order, Integer>> getFinishedOrdersIterator() {
+		SafeIterator<Tuple<Order, Integer>> safe = new SafeIterator<Tuple<Order, Integer>>();
+		safe.convertIterator(this.finishedOrders.iterator());
+		return safe;
 	}
 	
 	/**
