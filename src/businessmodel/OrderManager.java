@@ -48,7 +48,8 @@ public class OrderManager implements Subject {
 	protected void placeOrder(Order order) throws IllegalArgumentException {
 		if (order == null)
 			throw new IllegalArgumentException("Bad order!");
-		this.getMainScheduler().placeOrder(order);
+        order.setTimestampOfOrder(this.getMainScheduler().getTime());
+        this.getMainScheduler().placeOrder(order);
 		if(order.getEstimatedDeliveryDate() == null)
 			addOrderToPendingOrders(order);
 	}

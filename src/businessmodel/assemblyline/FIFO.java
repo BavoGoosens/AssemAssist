@@ -23,15 +23,16 @@ public class FIFO extends SchedulingAlgorithm {
 	}
 	
 	@Override
-	protected void scheduleOrder(Order order) {
+	protected boolean scheduleOrder(Order order) {
 		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();
 		for (Shift sh: this.getScheduler().getShifts()){
 			timeslots = sh.canAddOrder(order);
 			if(timeslots!= null){
 				sh.addOrderToSlots(order,timeslots);
-				break;
+				return true;
 			}
 		}
+        return false;
 	}
 
 }

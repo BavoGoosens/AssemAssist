@@ -52,7 +52,7 @@ public class MaintenanceState implements AssemblyLineState, Observer {
     @Override
     public void initialize() {
         this.isActive = true;
-        this.assemblyLine.getAssemblyLineScheduler().tempName(4);
+        this.assemblyLine.getAssemblyLineScheduler().flushAssemblyLineScheduler(4);
         this.isReady = false;
         this.update(this.assemblyLine);
     }

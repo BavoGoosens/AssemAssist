@@ -92,7 +92,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	}
 	
 	@Override
-	public void scheduleOrder(Order currentOrder) {
+	public boolean scheduleOrder(Order currentOrder) {
 
 		this.reschedule(currentOrder);
 
@@ -102,10 +102,11 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 				timeslots = sh.canAddOrder(order);
 				if(timeslots!= null){
 					sh.addOrderToSlots(order,timeslots);
-					break;
+					return true;
 				}
 			}
 		}
+        return false;
 	}
 
 
