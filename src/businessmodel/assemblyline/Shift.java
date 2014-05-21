@@ -103,8 +103,7 @@ public abstract class Shift {
 	 * A method to get the TimeSlots of this Shift.
 	 * @return the TimeSlot's of this shift.
 	 */
-	// TODO protected maken
-	public LinkedList<TimeSlot> getTimeSlots() {
+	protected LinkedList<TimeSlot> getTimeSlots() {
 		return timeslots;
 	}
 
