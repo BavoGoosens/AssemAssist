@@ -28,9 +28,6 @@ public class OrderManager implements Subject {
 
 	/**
 	 * A constructor for the class OrderManager.
-	 *
-	 * @param    vehiclemodels
-	 *           the car models that a car manufacturing company offers.
 	 */
 	public OrderManager() throws IllegalArgumentException {
 		this.pendingorders = new LinkedList<Order>();
@@ -61,9 +58,12 @@ public class OrderManager implements Subject {
 	public void placeOrderInFront(Order order) {
 		if(this.getPendingOrders().size()==0)
 			placeOrder(order);
-		this.getPendingOrders().add(order);
+        this.addOrderToPendingOrders(order);
 	}
 
+   protected void orderCannotBePlaced(Order order){
+      this.addOrderToPendingOrders(order);
+   }
 	/**
 	 * Scheduler the pending orders.
 	 */
@@ -142,15 +142,15 @@ public class OrderManager implements Subject {
 			throw new IllegalArgumentException("Bad user!");
 		if (!user.canPlaceOrder()) 
 			throw new NoClearanceException(user);
-		ArrayList<Order> pendingorders = new ArrayList<Order>();
+		ArrayList<Order> pendingOrders = new ArrayList<Order>();
 		for(AssemblyLine line: this.getMainScheduler().getAssemblyLines()){
-			pendingorders.addAll(line.getAssemblyLineScheduler().getOrders());
-			for (Order order: this.getPendingOrders()){
-				if (order.getUser() == user)
-					pendingorders.add(order);
-			}
+			pendingOrders.addAll(line.getAssemblyLineScheduler().getOrders());
 		}
-		return pendingorders;
+        for (Order order: this.getPendingOrders()){
+            if (order.getUser() == user)
+                pendingOrders.add(order);
+        }
+		return pendingOrders;
 	}
 
 	/**
@@ -185,7 +185,8 @@ public class OrderManager implements Subject {
 	 */
 	private void addOrderToPendingOrders(Order order) {
 		setEstimatedTimeOfPendingOrder(order);
-		this.getPendingOrders().add(order);
+		if(!this.getPendingOrders().contains(order))
+            this.getPendingOrders().add(order);
 	}
 	
 	/**
