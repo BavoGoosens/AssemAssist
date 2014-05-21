@@ -67,10 +67,10 @@ public class MainScheduler {
 
 	/**
 	 * Finish given order.
-	 * @param completedorder
+	 * @param completedOrder
 	 */
-	public void finishedOrder(Order completedorder) {
-		this.ordermanager.finishedOrder(completedorder);
+	public void finishedOrder(Order completedOrder) {
+		this.ordermanager.finishedOrder(completedOrder);
 	}
 
 	/**
