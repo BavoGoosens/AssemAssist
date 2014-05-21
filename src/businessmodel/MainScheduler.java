@@ -118,13 +118,14 @@ public class MainScheduler {
 		return true;
 	}
 
+    // returns the lines which are ready to receive a additional order.
 	private ArrayList<AssemblyLine> getPossibleAssemblyLinesToPlaceOrder(Order order){
-		ArrayList<AssemblyLine> possiblelines = new ArrayList<AssemblyLine>();
-		for(AssemblyLine assem : this.getAssemblyLines()){
-			if(assem.canAddOrder(order))
-				possiblelines.add(assem);
+		ArrayList<AssemblyLine> possibleLines = new ArrayList<AssemblyLine>();
+		for(AssemblyLine assemblyLine : this.getAssemblyLines()){
+			if(assemblyLine.canAddOrder(order))
+				possibleLines.add(assemblyLine);
 		}
-		return possiblelines;
+		return possibleLines;
 	}
 
 	private void generateAssemblyLines() {

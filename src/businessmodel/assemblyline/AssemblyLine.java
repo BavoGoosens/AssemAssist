@@ -31,7 +31,7 @@ public class AssemblyLine implements Subject{
 	private AssemblyLineScheduler assemblylineScheduler;
 	private MainScheduler mainscheduler;
 	private int timeCurrentStatus = 0;
-	private ArrayList<WorkPost> workposts = new ArrayList<WorkPost>();
+	private ArrayList<WorkPost> workPosts = new ArrayList<WorkPost>();
 	private ArrayList<Observer> subscribers = new ArrayList<Observer>();
     public String name;
 
@@ -47,17 +47,20 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
-	 * Method to add an order to this AssemblyLine
-	 * @param order
+	 * Method to check whether  an order can be place on this AssemblyLine
+	 *
+     * @param order
 	 * 		  The order that has to be placed
-	 * @return if the order can be placed
+	 *
+     * @return if the order can be placed
 	 */
 	public boolean canAddOrder(Order order){
 		boolean bool = false;
 		Iterator<VehicleModel> models = this.getResponsibleModelsIterator();
 		while (models.hasNext()){
 			VehicleModel model = models.next();
-			if (order.getVehicleModel().getName() == model.getName())
+			if (order.getVehicleModel().getName()
+                    .equalsIgnoreCase(model.getName()))
 			    bool = true;
 		}
         // is true when the assembly line can accept orders in this state.
@@ -131,7 +134,7 @@ public class AssemblyLine implements Subject{
 	@SuppressWarnings("unchecked")
 	public Iterator<WorkPost> getWorkPostsIterator() {
         SafeIterator<WorkPost> safe = new SafeIterator<WorkPost>();
-        safe.convertIterator(this.workposts.iterator());
+        safe.convertIterator(this.workPosts.iterator());
 		return safe;
 	}
 
@@ -140,7 +143,7 @@ public class AssemblyLine implements Subject{
 	 * @return WorkPosts
 	 */
     private ArrayList<WorkPost> getWorkPosts() {
-        return this.workposts;
+        return this.workPosts;
     }
 
 	/**
@@ -222,8 +225,8 @@ public class AssemblyLine implements Subject{
 	 */
 	protected void setWorkPosts( List<WorkPost> workPosts){
 		if (workPosts == null)
-			throw new IllegalArgumentException("There were no workposts supplied");
-		this.workposts = (ArrayList<WorkPost>) workPosts;
+			throw new IllegalArgumentException("There were no workPosts supplied");
+		this.workPosts = (ArrayList<WorkPost>) workPosts;
 	}
 
 	/**

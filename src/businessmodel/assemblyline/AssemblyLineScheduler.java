@@ -220,7 +220,10 @@ public class AssemblyLineScheduler implements Subject {
 	 * Check if there's a new day.
 	 */
 	private void checkNewDay(){
-		if (this.getShifts().isEmpty() || (this.getCurrentTime().getHourOfDay() > 22 && this.getCurrentTime().getMinuteOfHour() > 0) ) {
+		if (this.getShifts().isEmpty() ||
+                (this.getCurrentTime().getHourOfDay() > 22
+                        && this.getCurrentTime().getMinuteOfHour() > 0) ) {
+            // in principe zou die tweede test niet mogen nodig zijn ?
 			notifyObservers();
 			this.scheduleNewDay();
 		}
@@ -228,10 +231,10 @@ public class AssemblyLineScheduler implements Subject {
 
 	/**
 	 * Set the current time.
-	 * @param currenttime
+	 * @param currentTime
 	 */
-	protected void setCurrentTime(DateTime currenttime) {
-		this.currentTime =currenttime;
+	protected void setCurrentTime(DateTime currentTime) {
+		this.currentTime =currentTime;
 	}
 
 	/**
@@ -417,7 +420,7 @@ public class AssemblyLineScheduler implements Subject {
 	 * Get the description of the current algorithm.
 	 * @return description
 	 */
-	public String currentAlgoDescription() {
+	public String currentAlgorithmDescription() {
 		String[] full = this.algorithm.getClass().getName().split("\\.");
 		return full[1];
 	}
