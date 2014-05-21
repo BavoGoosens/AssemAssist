@@ -81,6 +81,9 @@ public class MainScheduler {
 		this.ordermanager.placeOrderInFront(order);
 	}
 
+    public void orderCannotBePlaced(Order order){
+        this.ordermanager.orderCannotBePlaced(order);
+    }
 
 	/**
 	 * Get the pending orders of the system.

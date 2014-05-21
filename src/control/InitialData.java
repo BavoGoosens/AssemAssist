@@ -40,7 +40,7 @@ import businessmodel.util.IteratorConverter;
 
 /**
  * The initial data.
- * 
+ *
  * @author Team 10
  *
  */
@@ -114,12 +114,14 @@ public class InitialData {
 
 		this.makeStandardOrders();
 
-		Integer[] numbers = new Integer[]{0,1,2,3,4};
+		Integer[] numbers = new Integer[]{0,1,1,3,4};
 		for(int i=0; i < numbers.length; i++){
 			orders = this.randomOrderGenerator("standard",numbers[i]);
+
 			if (!orders)
 				this.makeStandardOrder(numbers[i]);
 		}
+
 
 		//		this.processOrders();
 		//
@@ -141,13 +143,6 @@ public class InitialData {
 		//		}
 
 
-	}
-
-	private void makeOrdersNotInSameBatch(){
-
-		this.makeStandardOrder(0);
-		this.makeStandardOrder(3);
-		this.makeStandardOrder(4);
 
 	}
 
@@ -348,6 +343,7 @@ public class InitialData {
 			try {
 				StandardVehicleOrder order = new StandardVehicleOrder(this.garageholder, this.chosen, vehicleModel);
 				this.controllerStandard.placeOrder(this.garageholder,order);
+                System.out.println(order.getVehicleModel());
 				return true;
 			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
 				return false;
@@ -357,8 +353,10 @@ public class InitialData {
 				DateTime time = new DateTime(new DateTime().getYear(), new DateTime().getMonthOfYear(),new DateTime().getDayOfMonth(), 8, 0);
 				SingleTaskOrder order = new SingleTaskOrder(this.customsManager, this.chosen, time.plusDays(1));
 				this.controllerSingleTask.placeSingleTaskOrder(this.customsManager,order);
-				return true;
+                System.out.println(order.getVehicleModel());
+                return true;
 			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
+
 				return false;
 			}
 		}else{
@@ -368,3 +366,4 @@ public class InitialData {
 
 
 }
+
