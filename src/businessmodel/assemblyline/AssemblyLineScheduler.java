@@ -423,13 +423,7 @@ public class AssemblyLineScheduler implements Subject {
      * It readds them to the mainscheduler so they can be rescheduledeer
      */
 	protected void flushAssemblyLineScheduler(){
-        ArrayList<Order> onAssemblyLine = new ArrayList<>();
-        Iterator<WorkPost> postIterator = this.assemblyLine.getWorkPostsIterator();
-        while(postIterator.hasNext()) {
-            Order order = postIterator.next().getOrder();
-            if (order != null)
-                onAssemblyLine.add(order);
-        }
+        ArrayList<Order> onAssemblyLine = this.ordersOnAssemblyLine();
 		for(Order order: this.getOrders()) {
             if (!onAssemblyLine.contains(order))
                 this.getAssemblyLine().getMainScheduler().orderCannotBePlaced(order);
@@ -438,6 +432,17 @@ public class AssemblyLineScheduler implements Subject {
         this.getOrders().addAll(onAssemblyLine);
         this.clearTimeTable(onAssemblyLine);
 	}
+
+    protected ArrayList<Order> ordersOnAssemblyLine() {
+        ArrayList<Order> onAssemblyLine = new ArrayList<>();
+        Iterator<WorkPost> postIterator = this.assemblyLine.getWorkPostsIterator();
+        while(postIterator.hasNext()) {
+            Order order = postIterator.next().getOrder();
+            if (order != null)
+                onAssemblyLine.add(order);
+        }
+        return onAssemblyLine;
+    }
 
     private void clearTimeTable(ArrayList<Order> onAssemblyLine) {
         for( Shift shift : this.getShifts()){
