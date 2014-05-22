@@ -60,13 +60,10 @@ public class InitialData {
 	private ArrayList<Integer> batchList;
 	private VehicleModel model;
 	private boolean looping = true;
-	private StandardVehicleOrder modelAOrder;
-	private StandardVehicleOrder modelBOrder;
-	private StandardVehicleOrder modelXOrder;
-	private StandardVehicleOrder modelYOrder;
-	private StandardVehicleOrder modelCOrder;
-    private int orderCount = 0;
-    private final long DAY_IN_MILIS = 86400000;
+	private int orderCount = 0;
+	private final long DAY_IN_MILIS = 86400000;
+	private ArrayList<VehicleOption> chosenA, chosenB, chosenC, chosenX, chosenY;
+	private VehicleModel modelA, modelB, modelC, modelX, modelY;
 	/**
 	 * Constructor for InitialData. Initialize lists.
 	 */
@@ -113,23 +110,24 @@ public class InitialData {
 
 		Boolean orders = false;
 
-
 		ArrayList<Integer> numbers = this.generateOrders();
-		this.makeStandardOrders();
 
+		this.initialize();
+
+		System.out.println(numbers.size());
 		for(int i=0; i < numbers.size(); i++){
 			orders = this.randomOrderGenerator("standard",numbers.get(i));
-
 			if (!orders)
 				this.makeStandardOrder(numbers.get(i));
 		}
 
-        System.out.println(this.orderCount);
-        // This integer can be changed to the numbers of days you wish to be
-        // completed by the system.
-        int days = 0;
-        for (int i = 0; i < days; i ++)
-		    this.processOrders();
+		System.out.println(this.orderCount);
+
+		// This integer can be changed to the numbers of days you wish to be
+		// completed by the system.
+		//        int days = 0;
+		//        for (int i = 0; i < days; i ++)
+		//		    this.processOrders();
 		//
 		//
 		//		orders = false;
@@ -155,43 +153,51 @@ public class InitialData {
 	private void makeStandardOrder(int model) {
 		try{
 			if (model == 0){
-				this.controllerStandard.placeOrder(this.garageholder,this.modelAOrder);
-                this.orderCount ++;
+				StandardVehicleOrder modelAOrder = new StandardVehicleOrder(this.garageholder, this.chosenA, this.modelA);
+				this.controllerStandard.placeOrder(this.garageholder,modelAOrder);
+				this.orderCount ++;
 			}else if (model == 1){
-				this.controllerStandard.placeOrder(this.garageholder,this.modelBOrder);
-                this.orderCount ++;
+				StandardVehicleOrder modelBOrder = new StandardVehicleOrder(this.garageholder, this.chosenB, this.modelB);
+				this.controllerStandard.placeOrder(this.garageholder,modelBOrder);
+				this.orderCount ++;
 			}else if (model == 2){
-				this.controllerStandard.placeOrder(this.garageholder,this.modelCOrder);
-                this.orderCount ++;
+				StandardVehicleOrder modelCOrder = new StandardVehicleOrder(this.garageholder, this.chosenC, this.modelC);
+				this.controllerStandard.placeOrder(this.garageholder,modelCOrder);
+				this.orderCount ++;
 			}else if (model == 3){
-				this.controllerStandard.placeOrder(this.garageholder,this.modelXOrder);
-                this.orderCount ++;
+				StandardVehicleOrder modelXOrder = new StandardVehicleOrder(this.garageholder, this.chosenX, this.modelX);
+				this.controllerStandard.placeOrder(this.garageholder,modelXOrder);
+				this.orderCount ++;
 			}else if (model == 4){
-				this.controllerStandard.placeOrder(this.garageholder,this.modelYOrder);
-                this.orderCount ++;
+				StandardVehicleOrder modelYOrder = new StandardVehicleOrder(this.garageholder, this.chosenY, this.modelY);
+				this.controllerStandard.placeOrder(this.garageholder,modelYOrder);
+				this.orderCount ++;
 			}
 
-		} catch (Exception ex){}
+		} catch (Exception ex){
+			System.out.println(ex.toString());
+		}
 
 	}
 	/**
 	 * Generate 3 orders that are not in the same batch.
 	 */
-	private void makeStandardOrders() {
+	private void initialize() {
 
+		ArrayList<Order> orders = new ArrayList<Order>();
 		ArrayList<VehicleOptionCategory> categories = new Catalog().getAllCategories();
 
-		VehicleModel modelA = new ModelAFactory().createModel();
-		VehicleModel modelB = new ModelBFactory().createModel();
-		VehicleModel modelC = new ModelCFactory().createModel();
-		VehicleModel modelX = new ModelXFactory().createModel();
-		VehicleModel modelY = new ModelYFactory().createModel();
+		this.modelA = new ModelAFactory().createModel();
+		this.modelB = new ModelBFactory().createModel();
+		this.modelC = new ModelCFactory().createModel();
+		this.modelX = new ModelXFactory().createModel();
+		this.modelY = new ModelYFactory().createModel();
 
-		ArrayList<VehicleOption> chosenA = new ArrayList<VehicleOption>();
-		ArrayList<VehicleOption> chosenB = new ArrayList<VehicleOption>();
-		ArrayList<VehicleOption> chosenC = new ArrayList<VehicleOption>();
-		ArrayList<VehicleOption> chosenX = new ArrayList<VehicleOption>();
-		ArrayList<VehicleOption> chosenY = new ArrayList<VehicleOption>();
+		this.chosenA = new ArrayList<VehicleOption>();
+		this.chosenB = new ArrayList<VehicleOption>();
+		this.chosenC = new ArrayList<VehicleOption>();
+		this.chosenX = new ArrayList<VehicleOption>();
+		this.chosenY = new ArrayList<VehicleOption>();
 
 		for (VehicleOptionCategory category: categories) {
 			if (modelA.getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
@@ -224,16 +230,6 @@ public class InitialData {
 
 		}
 
-		try{
-			this.modelAOrder = new StandardVehicleOrder(garageholder, chosenA, modelA);
-			this.modelBOrder = new StandardVehicleOrder(garageholder, chosenB, modelB);
-			this.modelCOrder = new StandardVehicleOrder(garageholder, chosenC, modelC);
-			this.modelXOrder = new StandardVehicleOrder(garageholder, chosenX, modelX);
-			this.modelYOrder = new StandardVehicleOrder(garageholder, chosenY, modelY);
-
-		}catch (Exception ex){
-			//System.out.println(ex.toString());
-		}
 	}
 
 	/**
@@ -245,16 +241,16 @@ public class InitialData {
 		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
 		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
 		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
-        number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
-        number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
-        number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
-        number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
-        number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
-        number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
-        number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
-        number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
-        number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
-        return number;
+		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
+		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
+		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
+		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
+		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+		return number;
 	}
 
 	/**
@@ -264,17 +260,17 @@ public class InitialData {
 	private void processOrders() throws NoClearanceException {
 		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		Iterator<AssemblyLine> iter1 = vmc.getAssemblyLines(this.mechanic);
-        DateTime beginDateTime = this.vmc.getSystemTime();
+		DateTime beginDateTime = this.vmc.getSystemTime();
 		while(iter1.hasNext()){
 			looping = true;
 			AssemblyLine assem = iter1.next();
-            DateTime assemblyLineDateTime = assem.getAssemblyLineScheduler().getCurrentTime();
-            DateTime result = assemblyLineDateTime.minus(beginDateTime.getMillis());
+			DateTime assemblyLineDateTime = assem.getAssemblyLineScheduler().getCurrentTime();
+			DateTime result = assemblyLineDateTime.minus(beginDateTime.getMillis());
 
 			while (looping == true && result.getMillis() < DAY_IN_MILIS){
-                assemblyLineDateTime = assem.getAssemblyLineScheduler().getCurrentTime();
-                result = assemblyLineDateTime.minus(beginDateTime.getMillis());
-                CompleteWorkPost(assem, converter.convert(assem.getWorkPostsIterator()).size());
+				assemblyLineDateTime = assem.getAssemblyLineScheduler().getCurrentTime();
+				result = assemblyLineDateTime.minus(beginDateTime.getMillis());
+				CompleteWorkPost(assem, converter.convert(assem.getWorkPostsIterator()).size());
 			}
 		}
 	}
@@ -378,7 +374,7 @@ public class InitialData {
 			try {
 				StandardVehicleOrder order = new StandardVehicleOrder(this.garageholder, this.chosen, vehicleModel);
 				this.controllerStandard.placeOrder(this.garageholder,order);
-                this.orderCount ++;
+				this.orderCount ++;
 				return true;
 			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
 				return false;
@@ -388,8 +384,8 @@ public class InitialData {
 				DateTime time = new DateTime(new DateTime().getYear(), new DateTime().getMonthOfYear(),new DateTime().getDayOfMonth(), 8, 0);
 				SingleTaskOrder order = new SingleTaskOrder(this.customsManager, this.chosen, time.plusDays(1));
 				this.controllerSingleTask.placeSingleTaskOrder(this.customsManager,order);
-                this.orderCount ++;
-                return true;
+				this.orderCount ++;
+				return true;
 			} catch (IllegalArgumentException | NoClearanceException | UnsatisfiedRestrictionException e) {
 				return false;
 			}

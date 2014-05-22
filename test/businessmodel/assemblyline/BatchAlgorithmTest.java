@@ -136,12 +136,12 @@ public class BatchAlgorithmTest {
 			}
 		
 			
-//			System.out.println(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(0).getUser());
-//			System.out.println(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(1).getUser());
-//			System.out.println(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(2).getUser());
-//			System.out.println(listAssem.get(1).getAssemblyLineScheduler().getOrders().get(0).getUser());
-//			System.out.println(listAssem.get(1).getAssemblyLineScheduler().getOrders().get(1).getUser());
-//			
+			System.out.println(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(0).getUser());
+			System.out.println(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(1).getUser());
+			System.out.println(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(2).getUser());
+			System.out.println(listAssem.get(1).getAssemblyLineScheduler().getOrders().get(0).getUser());
+			System.out.println(listAssem.get(1).getAssemblyLineScheduler().getOrders().get(1).getUser());
+			
 			assertEquals(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(0), order3);
 			assertEquals(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(1), order1);
 			assertEquals(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(2), order5);
