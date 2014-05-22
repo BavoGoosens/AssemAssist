@@ -37,7 +37,7 @@ public class AssemblyLine implements Subject{
 
 
 	/**
-	 * A Constructor for the class AssemblyLine.
+	 * Creates a new assembly line.
 	 */
 	protected AssemblyLine(){
 		this.broken = new BrokenState(this);
@@ -46,12 +46,13 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
-	 * Method to check whether  an order can be place on this AssemblyLine
+	 * Checks whether an order can be place on this assembly line
 	 *
-     * @param order
-	 * 		  The order that has to be placed
+     * @param 	order
+	 * 		  	The order that has to be placed
 	 *
-     * @return if the order can be placed
+     * @return 	True if the order can be placed
+     * 
 	 */
 	public boolean canAddOrder(Order order){
 		boolean bool = false;
@@ -79,6 +80,7 @@ public class AssemblyLine implements Subject{
 
 	/**
 	 * Checks whether the assembly line can move forward.
+	 * 
 	 * @return True if the assembly line can move forward.
 	 */
 	protected boolean canAdvance() {
@@ -114,10 +116,10 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
-	 * Updates the work post and the AssemblyLine with the current status.
+	 * Updates the time on the current status of the assembly line and notifies the scheduler.
 	 *
 	 * @param 	timeCurrentStatus
-	 * 			The current status.
+	 * 			The time spent on the current status.
 	 */
 	protected void workPostCompleted(int timeCurrentStatus) {
 		if(timeCurrentStatus > this.timeCurrentStatus)
@@ -126,7 +128,7 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
-	 * Notifies the AssemblyLine if a work post is completed, if all work posts are completed the assembly line advances.
+	 * Advances and notifies the assembly line scheduler.
 	 */
 	private void notifyScheduler(){
 		if(canAdvance()) {
@@ -136,7 +138,7 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
-	 * Returns the list of work posts at the assembly line.
+	 * Returns an iterator over the list of work posts at the assembly line.
 	 *
 	 * @return	The list of work posts at the assembly line.
 	 */
@@ -148,24 +150,26 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
-	 * Get the WorkPosts of this AssemblyLine
-	 * @return WorkPosts
+	 * Returns the list of work posts of the assembly line
+	 * @return 	The list of work posts.
 	 */
     private ArrayList<WorkPost> getWorkPosts() {
         return this.workPosts;
     }
 
 	/**
-	 * Returns the AssemblyLineScheduler of this AssemblyLine.
-	 * @return the AssemblyLineScheduler
+	 * Returns the assembly line scheduler of the assembly line.
+	 * 
+	 * @return	The assembly line scheduler
 	 */
 	public AssemblyLineScheduler getAssemblyLineScheduler() {
 		return assemblylineScheduler;
 	}
 
 	/**
-	 * Returns the models for which this AssemblyLine is responsible
-	 * @return responsible models
+	 * Returns the models for which the assembly line is responsible.
+	 * 
+	 * @return The responsible models
 	 */
 	protected Iterator<VehicleModel> getResponsibleModelsIterator() {
 		return this.responsibleModels.iterator();
@@ -181,7 +185,7 @@ public class AssemblyLine implements Subject{
 
 	/**
 	 * A method to get the time spent working on the current status of the AssemblyLine.
-	 * @return
+	 * @return The current status of the assembly line
 	 */
 	protected int getTimeCurrentStatus() {
 		return timeCurrentStatus;
@@ -202,6 +206,7 @@ public class AssemblyLine implements Subject{
 
 	/**
 	 * Set the name of the AssemblyLine.
+	 * 
 	 * @param name
 	 */
     protected void setName(String name) {
