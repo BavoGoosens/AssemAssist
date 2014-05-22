@@ -177,10 +177,14 @@ public class VehicleStatisticsTest {
 			}
 		}
 	}
-    
-    @SuppressWarnings("unchecked")
+
+	@SuppressWarnings("unchecked")
 	@Test
     public void test() {
-    	System.out.println(new IteratorConverter<Tuple<LocalDate, Integer>>().convert(vehicleStatistics.getNumberOfVehiclesIterator()));
+    	for (Tuple<LocalDate, Integer> tuple: 
+    		new IteratorConverter<Tuple<LocalDate, Integer>>().convert(vehicleStatistics.getNumberOfVehiclesIterator())) {
+    		System.out.println(tuple.getX());
+    		System.out.println(tuple.getY());
+    	}
     }
 }
