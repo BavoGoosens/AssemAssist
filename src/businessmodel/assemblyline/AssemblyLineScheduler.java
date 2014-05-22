@@ -160,7 +160,7 @@ public class AssemblyLineScheduler implements Subject {
 			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");
 	}
 
-	private void checkIfAssemblyLineCanAdvance() {
+	protected void checkIfAssemblyLineCanAdvance() {
 		if(this.getAssemblyLine().canAdvance())
 			this.updateAssemblyLineStatus();
 	}

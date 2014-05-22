@@ -2,6 +2,7 @@ package businessmodel.assemblyline;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import businessmodel.category.VehicleOption;
@@ -25,19 +26,17 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	 * @param 	options
 	 */
 	public SpecificationBatch(AssemblyLineScheduler scheduler, ArrayList<VehicleOption> options){
+
 		super(scheduler);
 		if (options == null) throw new IllegalArgumentException();
-		
+
 		this.setOptions(options);
+
 		ArrayList<Order> list = new ArrayList<Order>(this.getScheduler().getOrders());
-		for(Order order: list)
+		for(Order order: list){
 			this.scheduleOrder(order);
-		
-		this.getScheduler().getOrders().clear();
-		for(Order order: orderList){
-			this.getScheduler().setEstimatedCompletionDateOfOrder(this.getScheduler().getPreviousOrder(order),order);
-			this.getScheduler().getOrders().add(order);
 		}
+
 
 	}
 
@@ -45,39 +44,64 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	 * Reschedule the order according to the SpecificationBatch algorithm.
 	 * @param currentOrder
 	 */
-	private void reschedule(Order currentOrder) {
-
-		this.getScheduler().generateShifts();
-		ArrayList<Order> similarVehicleOptionsOrder = new ArrayList<Order>();
-		this.getScheduler().scheduleNewDay();
-		orderList.add(currentOrder);
-
-		if (orderList.size() != 0){
+	private LinkedList<Order> reschedule() {
 
 
-			for(Order order: orderList){
-				int count = 0;
-				for (VehicleOption option: this.options){
-					for(VehicleOption option2: order.getOptions()){
-						if (option.toString().equals(option2.toString())) 
-							count++;
+		ArrayList<Order> list = new ArrayList<Order>(this.getScheduler().ordersOnAssemblyLine());
+		for(Order order: list){
+
+			ArrayList<Order> similarVehicleOptionsOrder = new ArrayList<Order>();
+			this.orderList.add(order);
+
+			if (orderList.size() != 0){
+
+				for(Order rescheduleOrder: orderList){
+					int count = 0;
+					for (VehicleOption option: this.options){
+						for(VehicleOption option2: rescheduleOrder.getOptions()){
+							if (option.toString().equals(option2.toString())) 
+								count++;
+						}
+					}
+					if (count == this.options.size()){
+						similarVehicleOptionsOrder.add(rescheduleOrder);
 					}
 				}
-				if (count == this.options.size()){
-					similarVehicleOptionsOrder.add(order);
-				}
+
+				for(Order ord: similarVehicleOptionsOrder)
+					orderList.remove(ord);
+				Collections.reverse(similarVehicleOptionsOrder);
+				for(Order ord: similarVehicleOptionsOrder)
+					orderList.addFirst(ord);
+
+			}else{
+				orderList.addLast(order);
 			}
-
-			for(Order ord: similarVehicleOptionsOrder)
-				orderList.remove(ord);
-			Collections.reverse(similarVehicleOptionsOrder);
-			for(Order ord: similarVehicleOptionsOrder)
-				orderList.addFirst(ord);
-
-		}else{
-			orderList.addLast(currentOrder);
 		}
 
+		this.flushAssemblyLineScheduler();
+
+		for(Order order: orderList){
+			this.getScheduler().getOrders().add(order);
+			this.getScheduler().checkIfAssemblyLineCanAdvance();
+			this.getScheduler().setEstimatedCompletionDateOfOrder(this.getScheduler().getPreviousOrder(order), order);
+		}
+
+		return orderList;
+
+	}
+
+	private void flushAssemblyLineScheduler() {
+		
+		ArrayList<Order> onAssemblyLine = new ArrayList<>();
+		Iterator<WorkPost> postIterator = this.getScheduler().getAssemblyLine().getWorkPostsIterator();
+		while(postIterator.hasNext())
+			onAssemblyLine.add(postIterator.next().getOrder());
+
+		for(Order order: this.getScheduler().getOrders()) {
+			if (!onAssemblyLine.contains(order))
+				this.getScheduler().getAssemblyLine().getMainScheduler().orderCannotBePlaced(order);
+		}
 	}
 
 	/**
@@ -90,14 +114,15 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 			throw new IllegalArgumentException("Not valid options");
 		this.options = options;
 	}
-	
+
 	@Override
 	public boolean scheduleOrder(Order currentOrder) {
 
-		this.reschedule(currentOrder);
+
+		LinkedList<Order> list = this.reschedule();
 
 		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();
-		for(Order order: orderList){
+		for(Order order: list){
 			for (Shift sh: this.getScheduler().getShifts()){
 				timeslots = sh.canAddOrder(order);
 				if(timeslots!= null){
@@ -106,7 +131,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 				}
 			}
 		}
-        return false;
+		return false;
 	}
 
 

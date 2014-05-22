@@ -53,7 +53,7 @@ public class SchedulingView extends View {
                 while (optss.hasNext())
                     opts.add(optss.next());
                 if (algo.equals("SpecificationBatch")) {
-                    if (opts.get(0).isEmpty()) {
+                    if (opts.isEmpty()) {
                         System.out.println("! there are not enough orders available");
                         this.display();
                     }
