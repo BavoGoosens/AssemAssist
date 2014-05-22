@@ -1,6 +1,7 @@
 package businessmodel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -8,10 +9,8 @@ import org.joda.time.DateTime;
 
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.exceptions.NoClearanceException;
-import businessmodel.observer.Observer;
 import businessmodel.observer.OrderStatisticsObserver;
 import businessmodel.observer.OrderStatisticsSubject;
-import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 import businessmodel.user.User;
 
@@ -48,7 +47,8 @@ public class OrderManager implements OrderStatisticsSubject {
 		if (order == null)
 			throw new IllegalArgumentException("Bad order!");
         // The time the order was placed
-        order.setTimestampOfOrder(this.getMainScheduler().getTime());
+        if(order.getTimestamp() == null)
+            order.setTimestampOfOrder(this.getMainScheduler().getTime());
         // try to place the order on one of the assembly lines
         this.getMainScheduler().placeOrder(order);
 	}
@@ -186,34 +186,39 @@ public class OrderManager implements OrderStatisticsSubject {
 	 * @param order
 	 */
 	private void addOrderToPendingOrders(Order order) {
-		setEstimatedTimeOfPendingOrder(order);
 		if(!this.getPendingOrders().contains(order))
             this.getPendingOrders().add(order);
+        updateEstimatedTimesOfPendingOrders();
 	}
 	
 	/**
 	 * Set the estimated delivery date of the given order.
-	 * @param order
 	 */
-	private void setEstimatedTimeOfPendingOrder(Order order){
-		if(this.getPendingOrders().size() == 0){
-            DateTime date = this.getMainScheduler().getTime().plusDays(1);
-            newDayDate(order, date);
-        }
-		else {
-            DateTime date = this.getPendingOrders().getLast().getEstimatedDeliveryDate().
-                    plusMinutes(this.getMainScheduler().getAssemblyLineSchedulers().
-                            get(0).minutesLastWorkPost(order));
-            if (date.getHourOfDay() >= 22 & date.getMinuteOfHour() >= 0){
-                DateTime date1 = this.getPendingOrders().getLast().getEstimatedDeliveryDate().plusDays(1);
-                newDayDate(order, date1);
+	private void updateEstimatedTimesOfPendingOrders(){
+        HashMap<AssemblyLine, LinkedList<Order>> estimator = new HashMap<>();
+        for (AssemblyLine assemblyLine : this.getMainScheduler().getAssemblyLines())
+            estimator.put(assemblyLine, new LinkedList<Order>());
+        // TODO
+        boolean first = true;
+        LinkedList<Order> history = new LinkedList<>();
+        for (Order order : this.getPendingOrders()) {
+            if (first) {
+                DateTime date = this.getMainScheduler().getTime().plusDays(1);
+                newDayDate(order, date);
+                history.add(order);
+                first = false;
+            } else {
+                DateTime date = history.getLast().getEstimatedDeliveryDate().
+                        plusMinutes(60);
+                if (date.getHourOfDay() >= 22 & date.getMinuteOfHour() >= 0) {
+                    DateTime date1 = history.getLast().getEstimatedDeliveryDate().plusDays(1);
+                    newDayDate(order, date1);
+                } else {
+                    order.setEstimatedDeliveryDateOfOrder(history.getLast().getEstimatedDeliveryDate()
+                            .plusMinutes(60));
+                }
             }
-            else{
-
-                order.setEstimatedDeliveryDateOfOrder(this.getPendingOrders().getLast().getEstimatedDeliveryDate()
-                        .plusMinutes(this.getMainScheduler().getAssemblyLineSchedulers().get(0).minutesLastWorkPost(order)));
-          }
-       }
+        }
 	}
 
 	/**
@@ -224,8 +229,7 @@ public class OrderManager implements OrderStatisticsSubject {
     private void newDayDate(Order order, DateTime date){
         date = date.withHourOfDay(6);
         date = date.withMinuteOfHour(0);
-        date = date.plusMinutes(this.getMainScheduler().
-                getAssemblyLineSchedulers().get(0).calculateMinutes(order));
+        date = date.plusMinutes(180);
         order.setEstimatedDeliveryDateOfOrder(date);
     }
 
