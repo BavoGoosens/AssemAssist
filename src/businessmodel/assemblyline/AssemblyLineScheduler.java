@@ -5,8 +5,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import businessmodel.util.IteratorConverter;
+import businessmodel.util.SafeIterator;
+import businessmodel.util.Tuple;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.Period;
 
 import businessmodel.category.VehicleOption;
@@ -128,8 +131,7 @@ public class AssemblyLineScheduler implements Subject {
             getOrders().add(order);
 		    checkIfAssemblyLineCanAdvance();
 		    setEstimatedCompletionDateOfOrder(getPreviousOrder(order), order);
-            // TODO op het einde weghalen.
-		    order.setAssemblyLine(this.getAssemblyLine());
+           
         } else {
             // if it was not possible to schedule the order at this time, add the order
             // to the pending queue of the order manager.
@@ -337,8 +339,9 @@ public class AssemblyLineScheduler implements Subject {
 	 *
 	 * @return
 	 */
-	public LinkedList<Order> getOrders() {
-		return this.orders;
+    @SuppressWarnings("unchecked")
+    public LinkedList<Order> getOrders() {
+	    return (LinkedList<Order>) this.orders.clone();
 	}
 
 	/**
@@ -346,8 +349,9 @@ public class AssemblyLineScheduler implements Subject {
 	 *
 	 * @return the shift of this assemblyLine.
 	 */
+	@SuppressWarnings("unchecked")
 	public LinkedList<Shift> getShifts() {
-		return this.shifts;
+		return (LinkedList<Shift>) this.shifts.clone();
 	}
 
 	/**

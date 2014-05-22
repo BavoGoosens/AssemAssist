@@ -48,7 +48,7 @@ public abstract class Order {
 	 * @return VehicleOptions
 	 */
 	public abstract ArrayList<VehicleOption> getOptions();
-	
+
 	/**
 	 * Returns the user that placed the order.
 	 * 

@@ -43,7 +43,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 		for(Order order: list)
 			this.scheduleOrder(order);
 
-
+		this.getScheduler().changeAlgorithm("FIFO", null);
 	}
 
 	/**
