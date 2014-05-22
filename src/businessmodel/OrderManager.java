@@ -31,7 +31,7 @@ public class OrderManager implements Subject {
 	 */
 	public OrderManager() throws IllegalArgumentException {
 		this.pendingOrders = new LinkedList<Order>();
-		this.completedOrders = new LinkedList<Order>();
+        this.completedOrders = new LinkedList<Order>();
 		this.mainscheduler = new MainScheduler(this);
 		this.observers = new ArrayList<Observer>();
 	}
@@ -122,7 +122,7 @@ public class OrderManager implements Subject {
 	 * @return pendingOrders
 	 */
 	protected LinkedList<Order> getPendingOrders(){
-		return this.pendingOrders;
+        return this.pendingOrders;
 	}
 
 	/**
@@ -172,12 +172,12 @@ public class OrderManager implements Subject {
 	protected ArrayList<Order> getCompletedOrders(User user) throws IllegalArgumentException, NoClearanceException {
 		if (user == null) throw new IllegalArgumentException("Bad user!");
 		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
-		ArrayList<Order> completedorders = new ArrayList<Order>();
+		ArrayList<Order> completedOrders = new ArrayList<Order>();
 		for (Order order: this.getCompletedOrders()){
 			if (order.getUser() == user)
-				completedorders.add(order);
+				completedOrders.add(order);
 		}
-		return (ArrayList<Order>) completedorders;
+		return (ArrayList<Order>) completedOrders;
 	}
 
 
@@ -208,10 +208,12 @@ public class OrderManager implements Subject {
                 DateTime date1 = this.getPendingOrders().getLast().getEstimatedDeliveryDate().plusDays(1);
                 newDayDate(order, date1);
             }
-            else
+            else{
+
                 order.setEstimatedDeliveryDateOfOrder(this.getPendingOrders().getLast().getEstimatedDeliveryDate()
                         .plusMinutes(this.getMainScheduler().getAssemblyLineSchedulers().get(0).minutesLastWorkPost(order)));
-        }
+          }
+       }
 	}
 
 	/**
