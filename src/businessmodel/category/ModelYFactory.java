@@ -2,8 +2,6 @@ package businessmodel.category;
 
 import java.util.ArrayList;
 
-import org.joda.time.Period;
-
 import businessmodel.exceptions.IllegalVehicleOptionCategoryException;
 
 public class ModelYFactory extends VehicleModelFactory {
@@ -34,7 +32,7 @@ public class ModelYFactory extends VehicleModelFactory {
 			options.add(option);
 		
 		VehicleModelSpecification cms = new VehicleModelSpecification(options);
-		return new VehicleModel(this.getName(), cms, this.getStandardTimeToFinish());
+		return new VehicleModel(this.getName(), cms);
 	}
 
 	@Override
@@ -135,14 +133,6 @@ public class ModelYFactory extends VehicleModelFactory {
 	@Override
 	protected String getName() {
 		return "Truck Model Y";
-	}
-
-	@Override
-	protected Period getStandardTimeToFinish() {
-        Period period = new Period();
-        period = period.withMinutes(30);
-        period = period.withHours(2);
-        return period; // TODO: juiste periode hier zetten
 	}
 
 }

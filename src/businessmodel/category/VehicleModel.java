@@ -2,8 +2,6 @@ package businessmodel.category;
 
 import java.util.ArrayList;
 
-import org.joda.time.Period;
-
 /**
  * A class representing a car model. 
  * 
@@ -14,7 +12,6 @@ public class VehicleModel {
 
 	private String name;
 	private VehicleModelSpecification cms;
-	private Period standardTimeToFinish;
 
 	/**
 	 * Creates a new car model with a given name, car model specification and standard time to finish.
@@ -28,11 +25,10 @@ public class VehicleModel {
 	 * @throws	IllegalArgumentException
 	 * 
 	 */
-	public VehicleModel(String name,VehicleModelSpecification cms, Period standardTimeToFinish) 
+	public VehicleModel(String name,VehicleModelSpecification cms) 
 			throws IllegalArgumentException {
 		this.setVehicleModel(name);
 		this.setVehicleModelSpecification(cms);
-		this.setStandardTimeToFinish(standardTimeToFinish);
 	}
 	
 	/**
@@ -52,15 +48,6 @@ public class VehicleModel {
 	 */
 	public String getName() {
 		return this.name;
-	}
-	
-	/**
-	 * Returns the standard time to finish this car model.
-	 * 
-	 * @return The standard time to finish.
-	 */
-	public Period getStandardTimeToFinish() {
-		return this.standardTimeToFinish;
 	}
 
 	/**
@@ -98,16 +85,6 @@ public class VehicleModel {
 	private void setVehicleModel(String name) throws IllegalArgumentException {
 		if (name == null || name.equals("")) throw new IllegalArgumentException("Bad name for vehiclemodel!");
 		this.name = name;
-	}
-	
-	/**
-	 * Method to set the standard time to finish.
-	 * 
-	 * @param standardTimeToFinish
-	 */
-	private void setStandardTimeToFinish(Period standardTimeToFinish) throws IllegalArgumentException {
-		if (standardTimeToFinish == null) throw new IllegalArgumentException("Bad standard time to finish!");
-		this.standardTimeToFinish = standardTimeToFinish;
 	}
 
 	/**

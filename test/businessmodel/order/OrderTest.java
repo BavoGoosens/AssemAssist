@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.Catalog;
-import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.category.Color;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
@@ -57,7 +56,6 @@ public class OrderTest {
 		assertArrayEquals(this.chosen.toArray(), this.svo.getOptions().toArray());
 		assertEquals(this.gh, this.svo.getUser());
 		assertFalse(this.svo.isCompleted());
-		assertEquals(this.model.getStandardTimeToFinish(), this.svo.getStandardTimeToFinish());
 		DateTime estimatedDeliveryDate = new DateTime(2014, 6, 2, 11, 0);
 		this.svo.setEstimatedDeliveryDateOfOrder(estimatedDeliveryDate);
 		assertEquals(estimatedDeliveryDate, this.svo.getEstimatedDeliveryDate());

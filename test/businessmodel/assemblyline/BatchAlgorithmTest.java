@@ -25,7 +25,6 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.Order;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
-import businessmodel.user.User;
 
 
 public class BatchAlgorithmTest {
@@ -43,8 +42,6 @@ public class BatchAlgorithmTest {
 			options.add(new VehicleOption("Gearbox", new Gearbox()));
 			options.add(new VehicleOption("Wheels", new Wheels()));
 			
-			User user = vmc.login("wow", "");
-			
 			VehicleOption engine = new VehicleOption("small engine", new Engine());
 			VehicleOption body = new VehicleOption("big body", new Body());
 			options.add(body);
@@ -52,7 +49,7 @@ public class BatchAlgorithmTest {
 			
 			Period period = new Period();
 			period.withHours(3);
-			Order order1 = new StandardVehicleOrder(new GarageHolder("1","",""), options, new VehicleModel("Car Model A", new VehicleModelSpecification(options), period));
+			Order order1 = new StandardVehicleOrder(new GarageHolder("1","",""), options, new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
 			vmc.placeOrder(order1);
 			
 			//---------------------------------------------------------------------------------
@@ -64,7 +61,7 @@ public class BatchAlgorithmTest {
 			options.add(body);
 			options.add(engine);
 
-			Order order2 = new StandardVehicleOrder(new GarageHolder("2","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options), period));
+			Order order2 = new StandardVehicleOrder(new GarageHolder("2","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
 			vmc.placeOrder(order2);
 			
 			//---------------------------------------------------------------------------------
@@ -76,7 +73,7 @@ public class BatchAlgorithmTest {
 			options.add(body);
 			options.add(engine);
 
-			Order order3 = new StandardVehicleOrder(new GarageHolder("3","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options), period));
+			Order order3 = new StandardVehicleOrder(new GarageHolder("3","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
 			vmc.placeOrder(order3);
 
 			//---------------------------------------------------------------------------------
@@ -88,7 +85,7 @@ public class BatchAlgorithmTest {
 			options.add(body);
 			options.add(engine);
 
-			Order order4 = new StandardVehicleOrder(new GarageHolder("4","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options), period));
+			Order order4 = new StandardVehicleOrder(new GarageHolder("4","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
 			vmc.placeOrder(order4);
 
 			
@@ -101,7 +98,7 @@ public class BatchAlgorithmTest {
 			options.add(body);
 			options.add(engine);
 
-			Order order5 = new StandardVehicleOrder(new GarageHolder("5","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options), period));
+			Order order5 = new StandardVehicleOrder(new GarageHolder("5","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
 			vmc.placeOrder(order5);
 
 			
