@@ -43,7 +43,6 @@ public class AssemblyLine implements Subject{
 		this.broken = new BrokenState(this);
 		this.maintenance  = new MaintenanceState(this);
 		this.operational  = new OperationalState(this);
-		this.setState(operational);
 	}
 
 	/**
@@ -57,11 +56,17 @@ public class AssemblyLine implements Subject{
 	public boolean canAddOrder(Order order){
 		boolean bool = false;
 		Iterator<VehicleModel> models = this.getResponsibleModelsIterator();
-		while (models.hasNext()){
-			VehicleModel model = models.next();
-			if (order.getVehicleModel().getName()
-                    .equalsIgnoreCase(model.getName()))
-			    bool = true;
+		// als het order geen model heeft is het oké, anders checken of model kan geplaatst worden
+		if (order.getVehicleModel() == null) {
+			bool = true;
+		}
+		else {
+			while (models.hasNext()){
+				VehicleModel model = models.next();
+				if (order.getVehicleModel().getName()
+	                    .equalsIgnoreCase(model.getName()))
+				    bool = true;
+			}
 		}
         // is true when the assembly line can accept orders in this state.
         if(bool)
@@ -124,8 +129,10 @@ public class AssemblyLine implements Subject{
 	 * Notifies the AssemblyLine if a work post is completed, if all work posts are completed the assembly line advances.
 	 */
 	private void notifyScheduler(){
-		if(canAdvance())
-			this.getAssemblyLineScheduler().advance(this.timeCurrentStatus);
+		if(canAdvance()) {
+            this.getAssemblyLineScheduler().advance(this.timeCurrentStatus);
+            notifyObservers();
+        }
 	}
 
 	/**
@@ -312,6 +319,9 @@ public class AssemblyLine implements Subject{
         this.state.initialize();
 	}
 
+   protected AssemblyLineState getCurrentState(){
+       return this.state;
+   }
 	/**
 	 * Get the estimated completion time of the given order.
 	 * @param order

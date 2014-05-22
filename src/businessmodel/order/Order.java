@@ -149,7 +149,7 @@ public abstract class Order {
 	 * 			| timestamp == null
 	 */
 	public void setTimestampOfOrder(DateTime timestamp) throws IllegalArgumentException {
-		if (timestamp == null) new IllegalArgumentException("Bad timestamp");
+		if (timestamp == null) throw new IllegalArgumentException("Bad timestamp");
 		this.setTimestamp(timestamp);
 	}
 

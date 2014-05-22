@@ -49,7 +49,7 @@ public class OperationalState implements AssemblyLineState {
 
     @Override
     public void initialize() {
-        // NOP
+        this.assemblyLine.getMainScheduler().schedulePendingOrders();
     }
 
     @Override

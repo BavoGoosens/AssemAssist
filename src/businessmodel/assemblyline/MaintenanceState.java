@@ -58,7 +58,6 @@ public class MaintenanceState implements AssemblyLineState, Observer {
     public void initialize() {
         this.isActive = true;
         this.assemblyLine.getAssemblyLineScheduler().flushAssemblyLineScheduler();
-        this.isReady = false;
         this.update(this.assemblyLine);
     }
 
@@ -71,10 +70,11 @@ public class MaintenanceState implements AssemblyLineState, Observer {
     public void update(Subject subject) {
         if (this.isActive){
             Iterator<WorkPost> posts = this.assemblyLine.getWorkPostsIterator();
-            boolean ready = false;
+            boolean ready = true;
             while (posts.hasNext()){
                 WorkPost post = posts.next();
-                ready = post.isCompleted();
+                if (post.getOrder() != null)
+                    ready = false;
             }
             if (ready){
                 // the assembly line is empty

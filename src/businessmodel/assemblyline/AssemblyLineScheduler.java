@@ -423,17 +423,37 @@ public class AssemblyLineScheduler implements Subject {
      * It readds them to the mainscheduler so they can be rescheduledeer
      */
 	protected void flushAssemblyLineScheduler(){
-        ArrayList<Order> onAssemblyLine = new ArrayList<>();
-        Iterator<WorkPost> postIterator = this.assemblyLine.getWorkPostsIterator();
-        while(postIterator.hasNext())
-            onAssemblyLine.add(postIterator.next().getOrder());
-
+        ArrayList<Order> onAssemblyLine = this.ordersOnAssemblyLine();
 		for(Order order: this.getOrders()) {
             if (!onAssemblyLine.contains(order))
                 this.getAssemblyLine().getMainScheduler().orderCannotBePlaced(order);
         }
 		this.getOrders().clear();
+        this.getOrders().addAll(onAssemblyLine);
+        this.clearTimeTable(onAssemblyLine);
 	}
+
+    protected ArrayList<Order> ordersOnAssemblyLine() {
+        ArrayList<Order> onAssemblyLine = new ArrayList<>();
+        Iterator<WorkPost> postIterator = this.assemblyLine.getWorkPostsIterator();
+        while(postIterator.hasNext()) {
+            Order order = postIterator.next().getOrder();
+            if (order != null)
+                onAssemblyLine.add(order);
+        }
+        return onAssemblyLine;
+    }
+
+    private void clearTimeTable(ArrayList<Order> onAssemblyLine) {
+        for( Shift shift : this.getShifts()){
+            for(TimeSlot timeSlot : shift.getTimeSlots()){
+                for (WorkSlot workSlot : timeSlot.getWorkSlots()){
+                    if (!onAssemblyLine.contains(workSlot.getOrder()))
+                        workSlot.removeOrder();
+                }
+            }
+        }
+    }
 
     /**
      * This method adds a number of  hours of delay to the current time.
@@ -441,19 +461,8 @@ public class AssemblyLineScheduler implements Subject {
      * @param hours
      */
 	protected void increaseCurrentTime(int hours){
-        if(this.getCurrentTime().getHourOfDay() + hours <= 22 & this.getCurrentTime().getMinuteOfHour() <= 0){
-            this.setDelay(this.getDelay()+hours*60);
-            this.updateSchedule();
-        }
-        else{
-            this.setDelay(this.getDelay()+ 60*(22-this.getCurrentTime().getHourOfDay()));
-            this.updateSchedule();
-            this.dayOrdersCount = 0;
-            this.setDelay(0);
-            this.generateShifts();
-            this.updateNewDayDate();
-        }
-		this.currentTime = this.getCurrentTime().plusHours(hours);
-		this.getAssemblyLine().getMainScheduler().schedulePendingOrders();
+        this.setCurrentTime(this.getCurrentTime().plusHours(hours));
+        this.setDelay(this.getDelay()+hours*60);
+        this.updateSchedule();
 	}
 }
