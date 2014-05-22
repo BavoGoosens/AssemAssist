@@ -419,7 +419,7 @@ public class AssemblyLineScheduler implements Subject {
 		for (Observer observer: this.observers) {
 			observer.update(this);
 		}
-	}
+	} 
 
 	public String currentAlgoDescription() {
 		String[] full = this.algorithm.getClass().getName().split("\\.");

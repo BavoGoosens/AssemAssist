@@ -59,12 +59,6 @@ public class OrderStatistics implements OrderStatisticsObserver {
 		subject.subscribeObserver(this);
 	}
 	
-	public SafeIterator<Tuple<Order, Integer>> getFinishedOrdersIterator() {
-		SafeIterator<Tuple<Order, Integer>> safe = new SafeIterator<Tuple<Order, Integer>>();
-		safe.convertIterator(this.finishedOrders.iterator());
-		return safe;
-	}
-	
 	/**
 	 * Returns the average delay of all finished orders.
 	 * 
