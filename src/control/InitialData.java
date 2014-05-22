@@ -239,17 +239,17 @@ public class InitialData {
 	private ArrayList<Integer> generateOrders() {
 		ArrayList<Integer> number = new ArrayList<Integer>();
 		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
-		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
-		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
-		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
-		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
-		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
-		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
-		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
-		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
-		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
-		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
-		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+//		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
+//		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+//		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
+//		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+//		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
+//		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+//		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+//		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
+//		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+//		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
+//		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
 		return number;
 	}
 

@@ -21,7 +21,6 @@ import businessmodel.user.User;
  */
 public abstract class Order {
 
-	private AssemblyLine line;
 	private User user;
 	private DateTime estimatedDeliveryDate;
 	private DateTime timestamp;
@@ -49,7 +48,7 @@ public abstract class Order {
 	 * @return VehicleOptions
 	 */
 	public abstract ArrayList<VehicleOption> getOptions();
-	
+
 	/**
 	 * Returns the user that placed the order.
 	 * 
@@ -116,13 +115,6 @@ public abstract class Order {
 		return estimatedDeliveryDate;
 	}
 
-	/**
-	 * Set the AssemblyLine on which this order will be processed.
-	 * @param line
-	 */
-	public void setAssemblyLine(AssemblyLine line){
-		this.line = line;
-	}
 	/**
 	 * Returns the time the order was placed on the assembly line.
 	 * 
@@ -265,12 +257,11 @@ public abstract class Order {
 
 	@Override
 	public String toString() {
-        if (line != null) {
-            if (this.completed)
-                return "AssemblyLine: " + this.line.toString() + " completion date= " + this.completionDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
-            else
-                return   "AssemblyLine: " + this.line.toString() + " estimated delivery date= " + this.estimatedDeliveryDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
-        } else
-            return   " Estimated delivery date= " + this.estimatedDeliveryDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
-    }
+
+		if (this.completed)
+			return  "Completion date= " + this.completionDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
+		else
+			return  "Estimated delivery date= " + this.estimatedDeliveryDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
+
+	}
 }

@@ -128,8 +128,7 @@ public class AssemblyLineScheduler implements Subject {
             getOrders().add(order);
 		    checkIfAssemblyLineCanAdvance();
 		    setEstimatedCompletionDateOfOrder(getPreviousOrder(order), order);
-            // TODO op het einde weghalen.
-		    order.setAssemblyLine(this.getAssemblyLine());
+           
         } else {
             // if it was not possible to schedule the order at this time, add the order
             // to the pending queue of the order manager.
