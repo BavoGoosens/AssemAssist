@@ -113,6 +113,10 @@ public class WorkPost {
 	protected Order switchOrders(Order order) {
 		Order temp = this.getOrder();
 		this.setNewOrder(order);
+//		if(this.pendingTasks.size() == 0){
+//			this.setNewOrder(null);
+//			return order;
+//		}
 		return temp;
 	}
 
@@ -123,11 +127,11 @@ public class WorkPost {
 	 */
 	@SuppressWarnings("unchecked")
 	public Iterator<AssemblyTask> getPendingTasks() {
-        SafeIterator<AssemblyTask> safe = new SafeIterator<AssemblyTask>();
-        safe.convertIterator(this.pendingTasks.iterator());
-        return safe;
+		SafeIterator<AssemblyTask> safe = new SafeIterator<AssemblyTask>();
+		safe.convertIterator(this.pendingTasks.iterator());
+		return safe;
 	}
-	
+
 	/**
 	 * Returns the tasks that are finished at the work post.
 	 *
@@ -136,10 +140,10 @@ public class WorkPost {
 	@SuppressWarnings("unchecked")
 	public Iterator<AssemblyTask> getFinishedTasks() {
 		SafeIterator<AssemblyTask> safe = new SafeIterator<AssemblyTask>();
-        safe.convertIterator(this.finishedTasks.iterator());
-        return safe;
+		safe.convertIterator(this.finishedTasks.iterator());
+		return safe;
 	}
-	
+
 	/**
 	 * Returns the list of assembly tasks that this work post can carry out based on
 	 * the given car options.
@@ -286,7 +290,7 @@ public class WorkPost {
 	private void setAssemblyline(AssemblyLine assemblyline) {
 		this.assemblyline = assemblyline;
 	}
-	
+
 	/**
 	 * Get the standard time of the given VehicleModel.
 	 * @param model
@@ -295,7 +299,7 @@ public class WorkPost {
 	public int getStandardTimeOfModel(VehicleModel model){
 		return this.getStandardtimes().get(model.getName());
 	}
-	
+
 	/**
 	 * Get the standard times of this WorkPost.
 	 * @return standardtimes
