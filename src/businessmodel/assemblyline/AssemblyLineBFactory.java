@@ -21,6 +21,7 @@ public class AssemblyLineBFactory extends AssemblyLineFactory {
         this.createWorkPosts(line);
         this.createResponsibleModels(line);
         this.createScheduler(line);
+        line.setState(line.getOperationalState());
         return line;
     }
 

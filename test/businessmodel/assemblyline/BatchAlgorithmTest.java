@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.joda.time.Period;
 import org.junit.Test;
 
 import businessmodel.VehicleManufacturingCompany;
@@ -49,7 +50,9 @@ public class BatchAlgorithmTest {
 			options.add(body);
 			options.add(engine);
 			
-			Order order1 = new StandardVehicleOrder(new GarageHolder("1","",""), options, new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
+			Period period = new Period();
+			period.withHours(3);
+			Order order1 = new StandardVehicleOrder(new GarageHolder("1","",""), options, new VehicleModel("Car Model A", new VehicleModelSpecification(options), period));
 			vmc.placeOrder(order1);
 			
 			//---------------------------------------------------------------------------------
@@ -61,7 +64,7 @@ public class BatchAlgorithmTest {
 			options.add(body);
 			options.add(engine);
 
-			Order order2 = new StandardVehicleOrder(new GarageHolder("2","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
+			Order order2 = new StandardVehicleOrder(new GarageHolder("2","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options), period));
 			vmc.placeOrder(order2);
 			
 			//---------------------------------------------------------------------------------
@@ -73,7 +76,7 @@ public class BatchAlgorithmTest {
 			options.add(body);
 			options.add(engine);
 
-			Order order3 = new StandardVehicleOrder(new GarageHolder("3","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
+			Order order3 = new StandardVehicleOrder(new GarageHolder("3","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options), period));
 			vmc.placeOrder(order3);
 
 			//---------------------------------------------------------------------------------
@@ -85,7 +88,7 @@ public class BatchAlgorithmTest {
 			options.add(body);
 			options.add(engine);
 
-			Order order4 = new StandardVehicleOrder(new GarageHolder("4","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
+			Order order4 = new StandardVehicleOrder(new GarageHolder("4","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options), period));
 			vmc.placeOrder(order4);
 
 			
@@ -98,7 +101,7 @@ public class BatchAlgorithmTest {
 			options.add(body);
 			options.add(engine);
 
-			Order order5 = new StandardVehicleOrder(new GarageHolder("5","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
+			Order order5 = new StandardVehicleOrder(new GarageHolder("5","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options), period));
 			vmc.placeOrder(order5);
 
 			

@@ -69,8 +69,8 @@ public class MainScheduler {
 	 * Finish given order.
 	 * @param completedOrder
 	 */
-	public void finishedOrder(Order completedOrder) {
-		this.ordermanager.finishedOrder(completedOrder);
+	public void finishedOrder(Order completedOrder, int actualDelay) {
+		this.ordermanager.finishedOrder(completedOrder, actualDelay);
 	}
 
 	/**
@@ -81,9 +81,9 @@ public class MainScheduler {
 		this.ordermanager.placeOrderInFront(order);
 	}
 
-    public void orderCannotBePlaced(Order order){
-        this.ordermanager.orderCannotBePlaced(order);
-    }
+	public void orderCannotBePlaced(Order order){
+		this.ordermanager.orderCannotBePlaced(order);
+	}
 
 	/**
 	 * Get the pending orders of the system.
@@ -123,26 +123,26 @@ public class MainScheduler {
 
 
 	/**
-     * This method tries to schedule the order on one of the assembly line's
-     * pending queues.
-     *
+	 * This method tries to schedule the order on one of the assembly line's
+	 * pending queues.
+	 *
 	 * @param   order
-     *                  The order you want to try to schedule in
+	 *                  The order you want to try to schedule in
 	 */
 	protected void placeOrder(Order order){
-        // Get all the assembly lines that are free to accept an order.
+		// Get all the assembly lines that are free to accept an order.
 		ArrayList<AssemblyLine> possibleAssemblyLines = getPossibleAssemblyLinesToPlaceOrder(order);
 		if(possibleAssemblyLines.size() != 0){
-            // determine which of the assembly lines will be the fastest to process the order.
+			// determine which of the assembly lines will be the fastest to process the order.
 			AssemblyLine fastestAssemblyLine = possibleAssemblyLines.get(0);
 			for(AssemblyLine assemblyLine : getPossibleAssemblyLinesToPlaceOrder(order)){
 				if(assemblyLine.getEstimatedCompletionTimeOfNewOrder(order).isBefore(fastestAssemblyLine.getEstimatedCompletionTimeOfNewOrder(order)))
 					fastestAssemblyLine = assemblyLine;
 			}
-            // add the order to the assembly line (try)
+			// add the order to the assembly line (try)
 			fastestAssemblyLine.getAssemblyLineScheduler().addOrder(order);
-	    }
-    }
+		}
+	}
 
 	/**
 	 * Get all the AssemblyLines.
@@ -171,27 +171,27 @@ public class MainScheduler {
 	 * @param options
 	 * @return
 	 */
-	private boolean checkOptionsForSpecificationBatch(ArrayList<VehicleOption> options) {
+	private boolean checkOptionsForSpecificationBatch(ArrayList<VehicleOption> options, AssemblyLine assem) {
 
 		int orderCount = 0;
-		for(AssemblyLine assem: this.getAssemblyLines()){
-			for(Order order: assem.getAssemblyLineScheduler().getOrders()){
-				int count = 0;
-				for(VehicleOption opt: options){
-					for(VehicleOption opt2: order.getOptions()){
-						if (opt.toString().equals(opt2.toString()))
-							count++;
-					}
+
+		for(Order order: assem.getAssemblyLineScheduler().getOrders()){
+			int count = 0;
+			for(VehicleOption opt: options){
+				for(VehicleOption opt2: order.getOptions()){
+					if (opt.toString().equals(opt2.toString()))
+						count++;
 				}
-				if (count == options.size()) orderCount++;
 			}
+			if (count == options.size()) orderCount++;
 		}
+
 		if (orderCount < this.nbOrdersSpecificationBatch)
 			return false;
 		return true;
 	}
 
-    // returns the lines which are ready to receive a additional order.
+	// returns the lines which are ready to receive a additional order.
 	/**
 	 * Get the possible AssemblyLines to place the given order.
 	 * @param order
@@ -242,41 +242,44 @@ public class MainScheduler {
 	public Iterator<ArrayList<VehicleOption>> getUnscheduledVehicleOptions() {
 
 		ArrayList<ArrayList<VehicleOption>> choices = new ArrayList<ArrayList<VehicleOption>>();
-		HashSet<VehicleOption> set = new HashSet<VehicleOption>();
+		ArrayList<ArrayList<VehicleOption>> tempChoices = new ArrayList<ArrayList<VehicleOption>>();
 
 		for (AssemblyLine line : this.getAssemblyLines()){
+
+			tempChoices.clear();
 			for(Order order: line.getAssemblyLineScheduler().getOrders()){
+
 
 				ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();
 				for(VehicleOption opt: order.getOptions()){
 
 					ArrayList<VehicleOption> temp = new ArrayList<VehicleOption>();
 					temp.add(opt);
-//					if (!set.contains(opt)){
-						if (this.checkOptionsForSpecificationBatch(temp)){
-							options.add(opt);
-							set.add(opt);
-						}
-//					}else{
-//						options.add(opt);
-//					}
+					if (this.checkOptionsForSpecificationBatch(temp, line))	options.add(opt);
+
 				}
 
-				boolean duplicate = true;
-				for(ArrayList<VehicleOption> opts: choices){
-					if(opts.size() != options.size())
-						break;
-					for(int i=0; i < opts.size(); i++){
-						if(!options.get(i).toString().equals(opts.get(i).toString())) duplicate = false;
-					}
-					if(duplicate)
-						break;
-				}
+				boolean duplicate = false;
+				for(ArrayList<VehicleOption> opts: tempChoices)
+					for(VehicleOption opt: opts)
+						for(VehicleOption opt2: options)
+							if (opt.equals(opt2))
+								duplicate = true;
 
-				if (!duplicate || choices.size() == 0)
-					choices.add(options);
+
+				if (!duplicate || tempChoices.size() == 0)
+					tempChoices.add(options);
 
 			}
+
+			for(ArrayList<VehicleOption> opt: tempChoices)
+				for(ArrayList<VehicleOption> listOpts: this.getSubsets(opt))
+					if (listOpts.size() >= (opt.size()-2))
+						if (this.checkOptionsForSpecificationBatch(listOpts, line))
+							if (!listOpts.isEmpty())
+								choices.add(listOpts);
+
+
 		}
 
 
@@ -287,19 +290,45 @@ public class MainScheduler {
 		return  choices.iterator();
 	}
 
+	private ArrayList<ArrayList<VehicleOption>> getSubsets(ArrayList<VehicleOption> set) {
 
-    public void startNewProductionDay() {
-        boolean startForReal = false ;
-        for (AssemblyLine assemblyLine : this.getAssemblyLines() ){
-            AssemblyLineScheduler scheduler = assemblyLine.getAssemblyLineScheduler();
-            startForReal = scheduler.couldStartNewDay();
-        }
-        if (startForReal){
-            for (AssemblyLine assemblyLine: this.getAssemblyLines()){
-                AssemblyLineScheduler scheduler = assemblyLine.getAssemblyLineScheduler();
-                scheduler.scheduleNewDay();
-            }
-            this.schedulePendingOrders();
-        }
-    }
+		ArrayList<ArrayList<VehicleOption>> subsetCollection = new ArrayList<ArrayList<VehicleOption>>();
+
+		if (set.size() == 0) {
+			subsetCollection.add(new ArrayList<VehicleOption>());
+		} else {
+			ArrayList<VehicleOption> reducedSet = new ArrayList<VehicleOption>();
+
+			reducedSet.addAll(set);
+
+			VehicleOption first = reducedSet.remove(0);
+			ArrayList<ArrayList<VehicleOption>> subsets = getSubsets(reducedSet);
+			subsetCollection.addAll(subsets);
+
+			subsets = getSubsets(reducedSet);
+
+			for (ArrayList<VehicleOption> subset : subsets) {
+				subset.add(0, first);
+			}
+
+			subsetCollection.addAll(subsets);
+		}
+
+		return subsetCollection;
+	}
+
+	public void startNewProductionDay() {
+		boolean startForReal = false ;
+		for (AssemblyLine assemblyLine : this.getAssemblyLines() ){
+			AssemblyLineScheduler scheduler = assemblyLine.getAssemblyLineScheduler();
+			startForReal = scheduler.couldStartNewDay();
+		}
+		if (startForReal){
+			for (AssemblyLine assemblyLine: this.getAssemblyLines()){
+				AssemblyLineScheduler scheduler = assemblyLine.getAssemblyLineScheduler();
+				scheduler.scheduleNewDay();
+			}
+			this.schedulePendingOrders();
+		}
+	}
 }

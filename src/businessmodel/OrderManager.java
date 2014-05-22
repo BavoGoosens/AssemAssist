@@ -9,6 +9,8 @@ import org.joda.time.DateTime;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.Observer;
+import businessmodel.observer.OrderStatisticsObserver;
+import businessmodel.observer.OrderStatisticsSubject;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 import businessmodel.user.User;
@@ -18,9 +20,9 @@ import businessmodel.user.User;
  *
  * @author SWOP team 10
  */
-public class OrderManager implements Subject {
+public class OrderManager implements OrderStatisticsSubject {
 
-	private ArrayList<Observer> observers;
+	private ArrayList<OrderStatisticsObserver> observers;
 	private LinkedList<Order> completedOrders;
 	private MainScheduler mainscheduler;
 	private LinkedList<Order> pendingOrders;
@@ -33,7 +35,7 @@ public class OrderManager implements Subject {
 		this.pendingOrders = new LinkedList<Order>();
         this.completedOrders = new LinkedList<Order>();
 		this.mainscheduler = new MainScheduler(this);
-		this.observers = new ArrayList<Observer>();
+		this.observers = new ArrayList<OrderStatisticsObserver>();
 	}
 
 	/**
@@ -100,11 +102,11 @@ public class OrderManager implements Subject {
 	 * @param finished
 	 * 		  The Order that needs to be moved.
 	 */
-	public void finishedOrder(Order finished) throws IllegalArgumentException {
+	public void finishedOrder(Order finished, int actualDelay) throws IllegalArgumentException {
 		if (finished == null)
 			throw new IllegalArgumentException("Bad order!");
 		this.completedOrders.add(finished);
-		this.notifyObservers();
+		this.notifyObservers(finished, actualDelay);
 	}
 
 	// for testing
@@ -230,21 +232,20 @@ public class OrderManager implements Subject {
     }
 
 	@Override
-	public void subscribeObserver(Observer observer) throws IllegalArgumentException {
+	public void subscribeObserver(OrderStatisticsObserver observer) throws IllegalArgumentException {
 		if (observer == null) throw new IllegalArgumentException("Bad observer!");
 		this.observers.add(observer);
 	}
 
 	@Override
-	public void unSubscribeObserver(Observer observer) throws IllegalArgumentException {
+	public void unSubscribeObserver(OrderStatisticsObserver observer) throws IllegalArgumentException {
 		if (observer == null) throw new IllegalArgumentException("Bad observer!");
 		this.observers.remove(observer);
 	}
-
-	@Override
-	public void notifyObservers() {
-		for (Observer observer: this.observers) {
-			observer.update(this);
+	
+	public void notifyObservers(Order finished, int actualDelay) {
+		for (OrderStatisticsObserver observer: this.observers) {
+			observer.update(finished, actualDelay);
 		}
 	}
 }

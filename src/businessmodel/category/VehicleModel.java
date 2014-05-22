@@ -36,22 +36,6 @@ public class VehicleModel {
 	}
 	
 	/**
-	 * Creates a new car model with a given name, car model specification.
-	 * 
-	 * @param   name
-	 *          The name for the new car model.
-	 * @param   cms
-	 *          The car model specification for the car new model.
-	 * @throws	IllegalArgumentException
-	 * 
-	 */
-	public VehicleModel(String name, VehicleModelSpecification cms) throws IllegalArgumentException {
-		this.setVehicleModel(name);
-		this.setVehicleModelSpecification(cms);
-		this.setStandardTimeToFinish(new Period(60*3));
-	}
-	
-	/**
 	 * Returns a list of all the possible options of the car model.
 	 * 
 	 * @return	List of all the possible options of the car model.

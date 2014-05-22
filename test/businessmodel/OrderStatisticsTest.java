@@ -1,5 +1,7 @@
 package businessmodel;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -49,9 +51,13 @@ public class OrderStatisticsTest {
         orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
         orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
         
+        
+        
         for (Order order: orders) {
         	om.placeOrder(order);
         }
+        
+        
         
         for (int i = 1; i <= 4; i++) {
 	        for (AssemblyLine assemblyLine: om.getMainScheduler().getAssemblyLines()) {
@@ -67,53 +73,21 @@ public class OrderStatisticsTest {
 	        }
 		}
 	}
-	
-	/**
-	 * MEDIAAN EN GEMIDDELDE WORDEN BIJ JUISTE DELAY JUIST BEREKEND!
-	 * ENKEL CHECKEN OF DELAY GOED BEREKEND WORDT!
-	 * DAARNA ASSERTIONTESTS IMPLEMENTEREN
-	 */
-	
-	@Test
-	public void test() {
-		ArrayList<Tuple<Order, Integer>> orders = (ArrayList<Tuple<Order, Integer>>) new IteratorConverter<Tuple<Order, Integer>>().convert(statistics.getFinishedOrdersIterator());
-		for (Tuple<Order, Integer> tuple: orders) {
-			System.out.println("** Order **");
-			System.out.println("Order: "+tuple.getX());
-			System.out.println("Delay: "+tuple.getY()+ " minutes");
-			System.out.println("** End Order **\n");
-		}
-	}
 
 	@Test
 	public void testLast() {
 		ArrayList<Tuple<Order, Integer>> lastTwo = statistics.getLast(2);
-		// TODO: assertionTest implementeren
-		System.out.println("Last two orders");
-		for (Tuple<Order, Integer> tuple: lastTwo) {
-			System.out.println(tuple.getX());
-			System.out.println(tuple.getY());
-			System.out.println("");
-		}
-		System.out.println("");
+		assertEquals(2, lastTwo.size());
 	}
 	
 	@Test
 	public void testMedian() {
-		// TODO: assertionTest implementeren
-		int median = statistics.getMedian();
-		System.out.println("Median:");
-		System.out.println(median);
-		System.out.println("");
+		assertEquals(250, this.statistics.getMedian());
 	}
 	
 	@Test
 	public void testAverage() {
-		// TODO: assertionTest implementeren
-		int average = statistics.getAverage();
-		System.out.println("Average:");
-		System.out.println(average);
-		System.out.println("");
+		assertEquals(240, this.statistics.getAverage());
 	}
 
 }
