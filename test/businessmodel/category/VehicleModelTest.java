@@ -41,5 +41,13 @@ public class VehicleModelTest {
 		assertEquals(vms, model.getVehicleModelSpecification());
 		assertEquals(standardTimeToFinish, model.getStandardTimeToFinish());
 		assertArrayEquals(options.toArray(), model.getPossibilities().toArray());
+		assertEquals("Vehicle model: Test model", this.model.toString());
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void wrongTest() {
+		new VehicleModel(null, vms, standardTimeToFinish);
+		new VehicleModel("Test", null, standardTimeToFinish);
+		new VehicleModel("", vms, standardTimeToFinish);
 	}
 }
