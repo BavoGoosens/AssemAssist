@@ -235,21 +235,6 @@ public class MainScheduler {
 	}
 
 
-    // TODO: miss maken ni zeker
-   /* public void startNewDay(){
-        boolean ready = true;
-        for(AssemblyLineScheduler scheduler: this.getAssemblyLineSchedulers()){
-            if(!scheduler.checkNewDay())
-                ready = false;
-        }
-        if(ready){
-            for(AssemblyLineScheduler scheduler: this.getAssemblyLineSchedulers()){
-                scheduler.scheduleNewDay();
-            }
-
-    }*/
-
-
 	/**
 	 * Get the sets of VehicleOptions that occur in more than the given amount of orders.
 	 * @return iterator of the sets

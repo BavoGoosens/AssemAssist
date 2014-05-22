@@ -198,18 +198,19 @@ public class OrderManager implements Subject {
 	private void setEstimatedTimeOfPendingOrder(Order order){
 		if(this.getPendingOrders().size() == 0){
             DateTime date = this.getMainScheduler().getTime().plusDays(1);
-            setHenk(order,date);
+            newDayDate(order, date);
         }
 		else {
-            if (this.getPendingOrders().getLast().getEstimatedDeliveryDate().
-                    plus(this.getMainScheduler().getAssemblyLineSchedulers().
-                            get(0).minutesLastWorkPost(order)).getHourOfDay() > 22){
-                DateTime date = this.getPendingOrders().getLast().getEstimatedDeliveryDate().plusDays(1);
-                setHenk(order,date);
+            DateTime date = this.getPendingOrders().getLast().getEstimatedDeliveryDate().
+                    plusMinutes(this.getMainScheduler().getAssemblyLineSchedulers().
+                            get(0).minutesLastWorkPost(order))
+            if (date.getHourOfDay() >= 22 & date.getMinuteOfHour() >= 0){
+                DateTime date1 = this.getPendingOrders().getLast().getEstimatedDeliveryDate().plusDays(1);
+                newDayDate(order, date1);
             }
             else
                 order.setEstimatedDeliveryDateOfOrder(this.getPendingOrders().getLast().getEstimatedDeliveryDate()
-                        .plus(this.getMainScheduler().getAssemblyLineSchedulers().get(0).minutesLastWorkPost(order)));
+                        .plusMinutes(this.getMainScheduler().getAssemblyLineSchedulers().get(0).minutesLastWorkPost(order)));
         }
 	}
 
@@ -218,8 +219,8 @@ public class OrderManager implements Subject {
 	 * @param order
 	 * @param date
 	 */
-    private void setHenk(Order order, DateTime date){
-        date = date.withHourOfDay(8);
+    private void newDayDate(Order order, DateTime date){
+        date = date.withHourOfDay(6);
         date = date.withMinuteOfHour(0);
         date = date.plusMinutes(this.getMainScheduler().
                 getAssemblyLineSchedulers().get(0).calculateMinutes(order));
