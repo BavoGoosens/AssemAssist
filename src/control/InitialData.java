@@ -66,6 +66,7 @@ public class InitialData {
 	private StandardVehicleOrder modelYOrder;
 	private StandardVehicleOrder modelCOrder;
     private int orderCount = 0;
+    private final long DAY_IN_MILIS = 86400000;
 	/**
 	 * Constructor for InitialData. Initialize lists.
 	 */
@@ -132,7 +133,11 @@ public class InitialData {
 		}
 
         System.out.println(this.orderCount);
-		this.processOrders();
+        // This integer can be changed to the numbers of days you wish to be
+        // completed by the system.
+        int days = 1;
+        for (int i = 0; i < days; i ++)
+		    this.processOrders();
 		//
 		//
 		//		orders = false;
@@ -254,6 +259,11 @@ public class InitialData {
         number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
         number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
         number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+        number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+        number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
+        number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+        number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
+        number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
         return number;
 	}
 
@@ -264,11 +274,17 @@ public class InitialData {
 	private void processOrders() throws NoClearanceException {
 		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		Iterator<AssemblyLine> iter1 = vmc.getAssemblyLines(this.mechanic);
+        DateTime beginDateTime = this.vmc.getSystemTime();
 		while(iter1.hasNext()){
 			looping = true;
 			AssemblyLine assem = iter1.next();
-			while (looping == true ){
-				CompleteWorkPost(assem, converter.convert(assem.getWorkPostsIterator()).size());
+            DateTime assemblyLineDateTime = assem.getAssemblyLineScheduler().getCurrentTime();
+            DateTime result = assemblyLineDateTime.minus(beginDateTime.getMillis());
+
+			while (looping == true && result.getMillis() < DAY_IN_MILIS){
+                assemblyLineDateTime = assem.getAssemblyLineScheduler().getCurrentTime();
+                result = assemblyLineDateTime.minus(beginDateTime.getMillis());
+                CompleteWorkPost(assem, converter.convert(assem.getWorkPostsIterator()).size());
 			}
 		}
 	}

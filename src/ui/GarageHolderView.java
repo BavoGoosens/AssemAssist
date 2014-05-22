@@ -1,9 +1,6 @@
 package ui;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,16 +56,18 @@ public class GarageHolderView extends View {
         } else if (pattern.matcher(response).find()) {
             int number = Integer.parseInt(response);
             if (number > size) {
-                if (((number - size) <= this.completed_orders.size()) && ((number - size) < 1)) {
+                if (((number - size) <= this.completed_orders.size()) && ((number - size) >= 1)) {
                     int index = number - size - 1;
                     StandardVehicleOrder or = (StandardVehicleOrder) this.completed_orders.get(index);
                     this.check(or);
                 } else {
                     this.error();
                 }
-            } else {
+            } else if (number > 0) {
                 StandardVehicleOrder or = (StandardVehicleOrder) this.pending_orders.get(number - 1);
                 this.check(or);
+            } else {
+                this.error();
             }
         } else {
             this.error();
@@ -78,13 +77,13 @@ public class GarageHolderView extends View {
     private void check(StandardVehicleOrder or) {
         this.displayHelp();
         System.out.println("> Here are the order details: ");
-        // kan gedetailleerder worden gemaakt
+        // TODO: kan gedetailleerder worden gemaakt.
         if (or.isCompleted()) {
-            System.out.println("> Timestamp of ordering: " + or.getTimestamp());
-            System.out.println("> Timestamp of completion: " + or.getCompletionDate());
+            System.out.println("> Timestamp of ordering: " + or.getTimestamp().toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT));
+            System.out.println("> Timestamp of completion: " + or.getCompletionDate().toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT));
         } else {
-            System.out.println("> Timestamp of ordering: " + or.getTimestamp());
-            System.out.println("> Estimated production time: " + or.getStandardTimeToFinish());
+            System.out.println("> Timestamp of ordering: " + or.getTimestamp().toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT));
+            System.out.println("> Estimated production time: " + or.getStandardTimeToFinish().toString());
         }
         System.out.print(">> ");
         String response = this.scan.nextLine();

@@ -302,4 +302,19 @@ public class MainScheduler {
 		return  choices.iterator();
 	}
 
+
+    public void startNewProductionDay() {
+        boolean startForReal = false ;
+        for (AssemblyLine assemblyLine : this.getAssemblyLines() ){
+            AssemblyLineScheduler scheduler = assemblyLine.getAssemblyLineScheduler();
+            startForReal = scheduler.couldStartNewDay();
+        }
+        if (startForReal){
+            for (AssemblyLine assemblyLine: this.getAssemblyLines()){
+                AssemblyLineScheduler scheduler = assemblyLine.getAssemblyLineScheduler();
+                scheduler.scheduleNewDay();
+            }
+            this.schedulePendingOrders();
+        }
+    }
 }
