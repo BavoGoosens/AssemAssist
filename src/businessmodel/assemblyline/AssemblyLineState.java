@@ -28,6 +28,8 @@ public interface AssemblyLineState {
 	 * @return if the order can be placed
 	 */
     public abstract boolean canPlaceOrder();
+
+    public abstract  boolean canAdvance();
     
     /**
      * Init.
