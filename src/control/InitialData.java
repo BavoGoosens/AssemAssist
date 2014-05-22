@@ -112,8 +112,7 @@ public class InitialData {
 
 		ArrayList<Integer> numbers = this.generateOrders();
 
-		//
-		// this.initialize();
+		this.initialize();
 
 		System.out.println(numbers.size());
 		for(int i=0; i < numbers.size(); i++){
