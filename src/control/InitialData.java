@@ -115,16 +115,8 @@ public class InitialData {
 
 
 		ArrayList<Integer> numbers = this.generateOrders();
-        //System.out.println(numbers.size());
-		/*for(int i=0; i < numbers.size(); i++){
-			orders = this.randomOrderGenerator("standard",numbers.get(i),  8);
-			if (!orders)
-				this.randomOrderGenerator("standard", 0, 8);
-		}
-*/
-		//this.makeStandardOrders();
+		this.makeStandardOrders();
 
-		//Integer[] numbers = new Integer[]{0,1,1,3,4};
 		for(int i=0; i < numbers.size(); i++){
 			orders = this.randomOrderGenerator("standard",numbers.get(i));
 
@@ -162,7 +154,6 @@ public class InitialData {
 
 	private void makeStandardOrder(int model) {
 		try{
-			StandardVehicleOrder order = null;
 			if (model == 0){
 				this.controllerStandard.placeOrder(this.garageholder,this.modelAOrder);
                 this.orderCount ++;
@@ -188,7 +179,6 @@ public class InitialData {
 	 */
 	private void makeStandardOrders() {
 
-		ArrayList<Order> orders = new ArrayList<Order>();
 		ArrayList<VehicleOptionCategory> categories = new Catalog().getAllCategories();
 
 		VehicleModel modelA = new ModelAFactory().createModel();
