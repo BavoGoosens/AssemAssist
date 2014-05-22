@@ -56,7 +56,7 @@ public class AssemblyLineSchedulerTest {
 		addOrders();
 		
 		assertEquals(scheduler.getShifts().get(0).getTimeSlots().size(),5);
-		assertEquals(scheduler.getOrders().size(),12);
+		assertEquals(scheduler.getOrders().size(),14);
 		assertEquals(assemblyLine.getWorkPostsIterator().next().getOrder().getUser().getFirstname(),"Sander2");
 		
 		completeOrders(20);
