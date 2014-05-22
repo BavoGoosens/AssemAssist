@@ -123,13 +123,13 @@ public class InitialData {
 
 		System.out.println(this.orderCount);
 
-		// This integer can be changed to the numbers of days you wish to be
-		// completed by the system.
-		//        int days = 0;
-		//        for (int i = 0; i < days; i ++)
-		//		    this.processOrders();
-		//
-		//
+		//This integer can be changed to the numbers of days you wish to be
+		//completed by the system.
+		        int days = 1;
+		        for (int i = 0; i < days; i ++)
+				    this.processOrders();
+
+
 		//		orders = false;
 		//		for(int i=0; i < 3; i++){
 		//			orders = this.randomOrderGenerator("singleTask",-1);
