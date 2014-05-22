@@ -8,8 +8,12 @@ import org.joda.time.LocalDate;
 import org.joda.time.Period;
 
 import businessmodel.OrderManager;
+import businessmodel.assemblyline.AssemblyLine;
+import businessmodel.assemblyline.AssemblyLineScheduler;
 import businessmodel.exceptions.IllegalNumberException;
 import businessmodel.observer.Observer;
+import businessmodel.observer.OrderStatisticsObserver;
+import businessmodel.observer.OrderStatisticsSubject;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 import businessmodel.order.StandardVehicleOrder;
@@ -23,7 +27,7 @@ import businessmodel.util.Tuple;
  * @author SWOP team 10
  *
  */
-public class OrderStatistics implements Observer {
+public class OrderStatistics implements OrderStatisticsObserver {
 	
 	/**
 	 * The average delay of all the finished orders.
@@ -49,7 +53,7 @@ public class OrderStatistics implements Observer {
 	 * 			| If the subject is equal to 'null' or if the subject isn't an order manager.
 	 * 			| subject == null || !(subject instanceof OrderManager)
 	 */
-	public OrderStatistics(Subject subject) throws IllegalArgumentException {
+	public OrderStatistics(OrderStatisticsSubject subject) throws IllegalArgumentException {
 		if (subject == null || !(subject instanceof OrderManager)) throw new IllegalArgumentException("Bad subject!");
 		this.finishedOrders = new ArrayList<Tuple<Order, Integer>>();
 		subject.subscribeObserver(this);
@@ -143,27 +147,11 @@ public class OrderStatistics implements Observer {
 	 * 			| subject == null || !(subject instanceof OrderManager)
 	 */
 	@Override
-	public void update(Subject subject) throws IllegalArgumentException {
-		if (subject != null && subject instanceof OrderManager) {
-			this.finishedOrders = new ArrayList<Tuple<Order, Integer>>();
-			OrderManager orderManager = (OrderManager) subject;
-			LinkedList<Order> finishedOrders = orderManager.getCompletedOrdersClone();
-			for (Order order: finishedOrders) {
-				if (order instanceof StandardVehicleOrder) {
-					StandardVehicleOrder carOrder = (StandardVehicleOrder) order;
-					Period period = new Period(carOrder.getOrderPlacedOnAssemblyLine(),
-							carOrder.getCompletionDate());
-					Period normalPeriod = carOrder.getStandardTimeToFinish();
-					Period delay = period.minus(normalPeriod);
-					int time = delay.getHours()*60+delay.getMinutes();
-					this.finishedOrders.add(new Tuple<Order, Integer>(order, time));
-				}
-			}
-			this.updateAverage();
-			this.updateMedian();
-		} else {
-			throw new IllegalArgumentException("Bad subject!");
-		}
+	public void update(Order finished, int delay) throws IllegalArgumentException {
+		if (finished == null) throw new IllegalArgumentException("Bad order!");
+		this.finishedOrders.add(new Tuple<Order, Integer>(finished, delay));
+		updateAverage();
+		updateMedian();
 	}
 
 }

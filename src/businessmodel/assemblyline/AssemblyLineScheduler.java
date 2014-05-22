@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import businessmodel.util.IteratorConverter;
 
 import org.joda.time.DateTime;
+import org.joda.time.Period;
 
 import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.IllegalNumberException;
@@ -169,9 +170,16 @@ public class AssemblyLineScheduler implements Subject {
 		if(this.getOrders().peekFirst()!= null && this.getOrders().peekFirst().isCompleted()){
 			Order completedOrder = this.getOrders().pollFirst();
 			completedOrder.setCompletionDateOfOrder(this.getCurrentTime());
-			this.getAssemblyLine().getMainScheduler().finishedOrder(completedOrder);
+			this.getAssemblyLine().getMainScheduler().finishedOrder(completedOrder, this.calculateDelay(completedOrder));
 			this.dayOrdersCount++;
 		}
+	}
+	
+	private int calculateDelay(Order order) {
+		Period period = new Period(order.getOrderPlacedOnAssemblyLine(), order.getCompletionDate());
+		Period standardPeriod = new Period().withMinutes(this.calculateMinutes(order));
+		Period delay = period.minus(standardPeriod);
+		return delay.getDays()*24*60+delay.getHours()*60+delay.getMinutes();
 	}
 
     //TODO

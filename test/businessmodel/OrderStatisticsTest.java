@@ -49,9 +49,13 @@ public class OrderStatisticsTest {
         orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
         orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
         
+        
+        
         for (Order order: orders) {
         	om.placeOrder(order);
         }
+        
+        
         
         for (int i = 1; i <= 4; i++) {
 	        for (AssemblyLine assemblyLine: om.getMainScheduler().getAssemblyLines()) {
