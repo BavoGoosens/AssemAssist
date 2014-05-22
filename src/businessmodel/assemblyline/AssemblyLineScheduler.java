@@ -420,9 +420,8 @@ public class AssemblyLineScheduler implements Subject {
     /**
      * This method removes the pending orders for this assembly line.
      * It readds them to the mainscheduler so they can be rescheduledeer
-     * @param hours
      */
-	protected void flushAssemblyLineScheduler(int hours){
+	protected void flushAssemblyLineScheduler(){
 		for(Order order: this.getOrders())
 			this.getAssemblyLine().getMainScheduler().orderCannotBePlaced(order);
 		this.getOrders().clear();

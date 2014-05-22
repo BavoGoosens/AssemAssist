@@ -50,9 +50,14 @@ public class MaintenanceState implements AssemblyLineState, Observer {
     }
 
     @Override
+    public boolean canAdvance() {
+        return true;
+    }
+
+    @Override
     public void initialize() {
         this.isActive = true;
-        this.assemblyLine.getAssemblyLineScheduler().flushAssemblyLineScheduler(4);
+        this.assemblyLine.getAssemblyLineScheduler().flushAssemblyLineScheduler();
         this.isReady = false;
         this.update(this.assemblyLine);
     }

@@ -29,7 +29,7 @@ public class OperationalState implements AssemblyLineState {
 
 	@Override
 	public void markAssemblyLineAsOperational() {
-		// NOP
+		// NOP already in this state
 	}
 
 	@Override
@@ -39,6 +39,11 @@ public class OperationalState implements AssemblyLineState {
 
     @Override
     public boolean canPlaceOrder() {
+        return true;
+    }
+
+    @Override
+    public boolean canAdvance() {
         return true;
     }
 

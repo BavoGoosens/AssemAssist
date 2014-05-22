@@ -23,8 +23,8 @@ public class BrokenState implements AssemblyLineState {
 
 	@Override
 	public void markAssemblyLineAsBroken() {
-		// wait indefinitely
-	}
+        // NOP already in this state
+    }
 
 	@Override
 	public void markAssemblyLineAsOperational() {
@@ -42,8 +42,15 @@ public class BrokenState implements AssemblyLineState {
 	}
 
     @Override
+    public boolean canAdvance() {
+        return false;
+    }
+
+    @Override
     public void initialize() {
-        // NOP
+        // freeze the assembly line (is done via canAdvance)
+        // and flush the orders in the queue for this line.
+        this.assemblyLine.getAssemblyLineScheduler().flushAssemblyLineScheduler();
     }
 
     @Override

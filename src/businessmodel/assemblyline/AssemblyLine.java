@@ -82,6 +82,7 @@ public class AssemblyLine implements Subject{
 			if (!wp.isCompleted())
 				ready = false;
 		}
+        ready = this.state.canAdvance();
 		return ready;
 	}
 
@@ -201,7 +202,7 @@ public class AssemblyLine implements Subject{
 
     /**
      * Set the MainScheduler.
-     * @param MainScheduler
+     * @param scheduler
      */
 	protected  void setMainScheduler(MainScheduler scheduler){
 		if (scheduler == null)
