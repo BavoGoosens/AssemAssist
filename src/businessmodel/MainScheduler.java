@@ -243,12 +243,12 @@ public class MainScheduler {
 
 		ArrayList<ArrayList<VehicleOption>> choices = new ArrayList<ArrayList<VehicleOption>>();
 		ArrayList<ArrayList<VehicleOption>> tempChoices = new ArrayList<ArrayList<VehicleOption>>();
-
+		ArrayList<Integer> countList = new ArrayList<Integer>();
+		
 		for (AssemblyLine line : this.getAssemblyLines()){
 
 			tempChoices.clear();
 			for(Order order: line.getAssemblyLineScheduler().getOrders()){
-
 
 				ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();
 				for(VehicleOption opt: order.getOptions()){
@@ -272,12 +272,14 @@ public class MainScheduler {
 
 			}
 
+			countList.clear();
 			for(ArrayList<VehicleOption> opt: tempChoices)
 				for(ArrayList<VehicleOption> listOpts: this.getSubsets(opt))
-					if (listOpts.size() >= (opt.size()-2))
-						if (this.checkOptionsForSpecificationBatch(listOpts, line))
-							if (!listOpts.isEmpty())
-								choices.add(listOpts);
+						if (!countList.contains(listOpts.size()) && countList.add(listOpts.size()))
+							if (this.checkOptionsForSpecificationBatch(listOpts, line))
+								if (!listOpts.isEmpty())
+									choices.add(listOpts);
+
 
 
 		}

@@ -20,7 +20,7 @@ import businessmodel.user.Manager;
 import businessmodel.util.IteratorConverter;
 
 public class ScenarioTestUC6 {
-	
+
 	private VehicleManufacturingCompany vmc;
 	private SchedulingController sc;
 	private Manager manager;
@@ -43,7 +43,7 @@ public class ScenarioTestUC6 {
 		assertEquals("SpecificationBatch", algos.get(1));
 		assertEquals("FIFO", currentAlgo);
 	} 
-	
+
 	@Test
 	public void testChooseAlgorithm() throws NoClearanceException {
 		ArrayList<ArrayList<VehicleOption>> optionLists = (ArrayList<ArrayList<VehicleOption>>)
@@ -60,22 +60,22 @@ public class ScenarioTestUC6 {
 		assertEquals("AIRCO: manual", options.get(5).toString());
 		assertEquals("WHEELS: winter", options.get(6).toString());
 		assertEquals("SPOILER: low", options.get(7).toString());
-		
+
 		this.sc.selectAlgorithm(this.manager, "SpecificationBatch", options);
 		String currentAlgo = this.vmc.getCurrentSystemWideAlgorithm(this.manager);
 		assertEquals("SpecificationBatch", currentAlgo);
-		
+
 		this.sc.selectAlgorithm(this.manager, "FIFO", null);
 		currentAlgo = this.vmc.getCurrentSystemWideAlgorithm(this.manager);
 		assertEquals("FIFO", currentAlgo);
 	}
-	
+
 	private void placeOrders() throws NoClearanceException, UnsatisfiedRestrictionException {
 		Catalog catalog = new Catalog();
 		ArrayList<VehicleOptionCategory> categories = catalog.getAllCategories();
 		GarageHolder garageHolder = new GarageHolder("Bouwe", "Ceunen", "BouweC");
 		ArrayList<VehicleModel> models = catalog.getAvailaleModelsClone();
-		
+
 		ArrayList<VehicleOption> chosen = new ArrayList<VehicleOption>();
 		for (VehicleOptionCategory category: categories) {
 			if (models.get(1).getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
@@ -83,9 +83,9 @@ public class ScenarioTestUC6 {
 			}
 		}
 		StandardVehicleOrder order = new StandardVehicleOrder(garageHolder, chosen, models.get(1));
-		this.vmc.placeOrder(order);
-		this.vmc.placeOrder(order);
-		this.vmc.placeOrder(order);
+		for(int i=0; i<8;i++)
+			this.vmc.placeOrder(order);
+
 	}
 
 }
