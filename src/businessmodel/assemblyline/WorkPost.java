@@ -32,8 +32,8 @@ public class WorkPost {
 	 *
 	 * @param 	name
 	 * 			The name of the work post
-	 * @param 	tasks
-	 * 			The tasks this work post is responsible for.
+	 * @param 	assemblyline
+	 * 			TODO.
 	 * @throws 	IllegalArgumentException
 	 */
 	protected WorkPost(String name, AssemblyLine assemblyline) throws IllegalArgumentException {
@@ -173,11 +173,13 @@ public class WorkPost {
 	 * @param time
 	 */
 	protected void AssemblyTaskCompleted(AssemblyTask assem, int time) {
-		this.pendingTasks.remove(assem);
-		this.finishedTasks.add(assem);
-		this.setTimeOrderInProcess(this.getTimeOrderInProcess()+time);
-		this.getAssemblyline().notifyObservers();
-		this.notifyAssemblyLine();
+        if (this.getAssemblyline().getCurrentState().canAdvance()) {
+            this.pendingTasks.remove(assem);
+            this.finishedTasks.add(assem);
+            this.setTimeOrderInProcess(this.getTimeOrderInProcess() + time);
+            this.getAssemblyline().notifyObservers();
+            this.notifyAssemblyLine();
+        }
 	}
 
 	/**
@@ -200,7 +202,8 @@ public class WorkPost {
 	 * This method sets the order the work post is currently working on to
 	 * the given order and refreshes the assembly tasks.
 	 *
-	 * @param   The order that this work post needs to start working on.
+	 * @param   order
+     *                  The order that this work post needs to start working on.
 	 */
 	protected void setNewOrder(Order order) {
 		this.setOrder(order);

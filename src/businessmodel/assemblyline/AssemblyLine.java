@@ -43,7 +43,6 @@ public class AssemblyLine implements Subject{
 		this.broken = new BrokenState(this);
 		this.maintenance  = new MaintenanceState(this);
 		this.operational  = new OperationalState(this);
-		this.setState(operational);
 	}
 
 	/**
@@ -312,6 +311,9 @@ public class AssemblyLine implements Subject{
         this.state.initialize();
 	}
 
+   protected AssemblyLineState getCurrentState(){
+       return this.state;
+   }
 	/**
 	 * Get the estimated completion time of the given order.
 	 * @param order

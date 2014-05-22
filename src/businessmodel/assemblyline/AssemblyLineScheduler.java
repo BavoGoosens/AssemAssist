@@ -425,14 +425,17 @@ public class AssemblyLineScheduler implements Subject {
 	protected void flushAssemblyLineScheduler(){
         ArrayList<Order> onAssemblyLine = new ArrayList<>();
         Iterator<WorkPost> postIterator = this.assemblyLine.getWorkPostsIterator();
-        while(postIterator.hasNext())
-            onAssemblyLine.add(postIterator.next().getOrder());
-
+        while(postIterator.hasNext()) {
+            Order order = postIterator.next().getOrder();
+            if (order != null)
+                onAssemblyLine.add(order);
+        }
 		for(Order order: this.getOrders()) {
             if (!onAssemblyLine.contains(order))
                 this.getAssemblyLine().getMainScheduler().orderCannotBePlaced(order);
         }
 		this.getOrders().clear();
+        this.getOrders().addAll(onAssemblyLine);
 	}
 
     /**
