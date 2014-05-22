@@ -2,7 +2,6 @@ package businessmodel.assemblyline;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 import businessmodel.category.VehicleOption;
@@ -32,10 +31,17 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 
 		this.setOptions(options);
 
+		ArrayList<Order> temp = this.getScheduler().ordersOnAssemblyLine();
 		ArrayList<Order> list = new ArrayList<Order>(this.getScheduler().getOrders());
-		for(Order order: list){
-			this.scheduleOrder(order);
+		
+		for(Order ord: temp){
+			if (list.contains(ord)){
+				list.remove(ord);
+			}
 		}
+		
+		for(Order order: list)
+			this.scheduleOrder(order);
 
 
 	}
@@ -44,15 +50,23 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	 * Reschedule the order according to the SpecificationBatch algorithm.
 	 * @param currentOrder
 	 */
-	private LinkedList<Order> reschedule() {
+	private LinkedList<Order> reschedule(Order currentOrder) {
 
-
-		ArrayList<Order> list = new ArrayList<Order>(this.getScheduler().ordersOnAssemblyLine());
+		ArrayList<Order> temp = this.getScheduler().ordersOnAssemblyLine();
+		ArrayList<Order> list = new ArrayList<Order>(this.getScheduler().getOrders());
+		
+		for(Order ord: temp){
+			if (list.contains(ord)){
+				list.remove(ord);
+			}
+		}
+		
+		this.orderList.add(currentOrder);
+		
 		for(Order order: list){
 
 			ArrayList<Order> similarVehicleOptionsOrder = new ArrayList<Order>();
-			this.orderList.add(order);
-
+		
 			if (orderList.size() != 0){
 
 				for(Order rescheduleOrder: orderList){
@@ -78,30 +92,20 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 				orderList.addLast(order);
 			}
 		}
-
-		this.flushAssemblyLineScheduler();
+		
+		this.getScheduler().getOrders().clear();
+        this.getScheduler().getOrders().addAll(temp);
+        
+		this.getScheduler().clearTimeTable(temp);
 
 		for(Order order: orderList){
 			this.getScheduler().getOrders().add(order);
 			this.getScheduler().checkIfAssemblyLineCanAdvance();
 			this.getScheduler().setEstimatedCompletionDateOfOrder(this.getScheduler().getPreviousOrder(order), order);
 		}
-
+		
 		return orderList;
 
-	}
-
-	private void flushAssemblyLineScheduler() {
-		
-		ArrayList<Order> onAssemblyLine = new ArrayList<>();
-		Iterator<WorkPost> postIterator = this.getScheduler().getAssemblyLine().getWorkPostsIterator();
-		while(postIterator.hasNext())
-			onAssemblyLine.add(postIterator.next().getOrder());
-
-		for(Order order: this.getScheduler().getOrders()) {
-			if (!onAssemblyLine.contains(order))
-				this.getScheduler().getAssemblyLine().getMainScheduler().orderCannotBePlaced(order);
-		}
 	}
 
 	/**
@@ -118,8 +122,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	@Override
 	public boolean scheduleOrder(Order currentOrder) {
 
-
-		LinkedList<Order> list = this.reschedule();
+		LinkedList<Order> list = this.reschedule(currentOrder);
 
 		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();
 		for(Order order: list){

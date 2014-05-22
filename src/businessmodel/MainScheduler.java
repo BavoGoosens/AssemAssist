@@ -243,9 +243,9 @@ public class MainScheduler {
 
 		ArrayList<ArrayList<VehicleOption>> choices = new ArrayList<ArrayList<VehicleOption>>();
 		ArrayList<ArrayList<VehicleOption>> tempChoices = new ArrayList<ArrayList<VehicleOption>>();
-		HashSet<VehicleOption> set = new HashSet<VehicleOption>();
 
 		for (AssemblyLine line : this.getAssemblyLines()){
+
 			tempChoices.clear();
 			for(Order order: line.getAssemblyLineScheduler().getOrders()){
 
@@ -255,37 +255,31 @@ public class MainScheduler {
 
 					ArrayList<VehicleOption> temp = new ArrayList<VehicleOption>();
 					temp.add(opt);
-					//					if (!set.contains(opt)){
-					if (this.checkOptionsForSpecificationBatch(temp, line)){
-						options.add(opt);
-						//						set.add(opt);
-					}
-					//					}else{
-					//						options.add(opt);
-					//					}
+					if (this.checkOptionsForSpecificationBatch(temp, line))	options.add(opt);
+
 				}
 
-				boolean duplicate = true;
-				for(ArrayList<VehicleOption> opts: tempChoices){
-					if(opts.size() != options.size())
-						break;
-					for(int i=0; i < opts.size(); i++){
-						if(!options.get(i).toString().equals(opts.get(i).toString())) duplicate = false;
-					}
-					if(duplicate)
-						break;
-				}
+				boolean duplicate = false;
+				for(ArrayList<VehicleOption> opts: tempChoices)
+					for(VehicleOption opt: opts)
+						for(VehicleOption opt2: options)
+							if (opt.equals(opt2))
+								duplicate = true;
+
 
 				if (!duplicate || tempChoices.size() == 0)
 					tempChoices.add(options);
 
 			}
-			
+
 			for(ArrayList<VehicleOption> opt: tempChoices)
 				for(ArrayList<VehicleOption> listOpts: this.getSubsets(opt))
-					if (this.checkOptionsForSpecificationBatch(listOpts, line))
-						if (!listOpts.isEmpty())
-							choices.add(listOpts);
+					if (listOpts.size() >= (opt.size()-2))
+						if (this.checkOptionsForSpecificationBatch(listOpts, line))
+							if (!listOpts.isEmpty())
+								choices.add(listOpts);
+
+
 		}
 
 

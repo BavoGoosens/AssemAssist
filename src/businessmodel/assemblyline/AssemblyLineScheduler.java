@@ -444,7 +444,7 @@ public class AssemblyLineScheduler implements Subject {
         return onAssemblyLine;
     }
 
-    private void clearTimeTable(ArrayList<Order> onAssemblyLine) {
+    protected void clearTimeTable(ArrayList<Order> onAssemblyLine) {
         for( Shift shift : this.getShifts()){
             for(TimeSlot timeSlot : shift.getTimeSlots()){
                 for (WorkSlot workSlot : timeSlot.getWorkSlots()){
