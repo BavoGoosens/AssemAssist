@@ -1,7 +1,5 @@
 package businessmodel.category;
 
-import org.joda.time.Period;
-
 /**
  * Abstract class representing a car model factory.
  * This factory creates car model objects.
@@ -62,12 +60,5 @@ public abstract class VehicleModelFactory {
 	 * @return	The name of the car model factory.
 	 */
 	protected abstract String getName();
-
-	/**
-	 * Returns the standard time to finish the model.
-	 * 
-	 * @return The standard time to finish the model.
-	 */
-	protected abstract Period getStandardTimeToFinish();
 
 }

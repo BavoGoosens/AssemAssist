@@ -103,7 +103,6 @@ public class ScenarioTestUC2 {
 				(StandardVehicleOrder) ((ArrayList<Order>) new IteratorConverter<Order>().
 						convert(vmc.getPendingOrders(this.gh))).get(0);
 		assertNotNull(order.getTimestamp());
-		assertNotNull(order.getStandardTimeToFinish());
 		// de eigenlijke waarden van deze timestamp en completion date worden getest in een meer gedetailleerde testklasse
 	}
 
