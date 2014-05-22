@@ -124,28 +124,35 @@ public class InitialData {
 		//This integer can be changed to the numbers of days you wish to be
 		//completed by the system.
 		int days = 1;
-        for (int i = 0; i < days; i ++)
-            this.processOrders();
+		for (int i = 0; i < days; i ++)
+			this.processOrders();
 
 
-		//		orders = false;
-		//		for(int i=0; i < 3; i++){
-		//			orders = this.randomOrderGenerator("singleTask",-1);
-		//			if (!orders)
-		//				this.randomOrderGenerator("singleTask", 0);
-		//		}
-		//
-		//		this.makeOrdersNotInSameBatch();
-		//
-		//		orders = false;
-		//		for(int i=0; i < 3; i++){
-		//			orders = this.randomOrderGenerator("standard",-1);
-		//			if (!orders)
-		//				this.randomOrderGenerator("standard", 0);
-		//		}
+		orders = false;
+		for(int i=0; i < 3; i++){
+			orders = this.randomOrderGenerator("singleTask",-1);
+			if (!orders)
+				this.randomOrderGenerator("singleTask", 0);
+		}
+
+		this.makeOrdersNotInSameBatch();
+
+		orders = false;
+		for(int i=0; i < 3; i++){
+			orders = this.randomOrderGenerator("standard",-1);
+			if (!orders)
+				this.randomOrderGenerator("standard", 0);
+		}
 
 
 
+	}
+
+	private void makeOrdersNotInSameBatch() {
+		this.makeStandardOrder(0);
+		this.makeStandardOrder(4);
+		this.makeStandardOrder(1);
+		
 	}
 
 	private void makeStandardOrder(int model) {
@@ -237,17 +244,17 @@ public class InitialData {
 	private ArrayList<Integer> generateOrders() {
 		ArrayList<Integer> number = new ArrayList<Integer>();
 		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
-		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
-		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
-		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
-		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
-		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
-		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
-		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
-		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
-		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
-		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
-		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+//		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
+//		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+//		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
+//		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+//		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
+//		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+//		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+//		number.add(1); number.add(2); number.add(3); number.add(4); number.add(0);	number.add(1);	number.add(1);	number.add(2);	number.add(2); number.add(3); number.add(3);
+//		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
+//		number.add(4); number.add(4); number.add(0); number.add(0);	number.add(4);	number.add(3);	number.add(2);	number.add(1);	number.add(4); number.add(1); number.add(1);
+//		number.add(4); number.add(2); number.add(1); number.add(4); number.add(1);  number.add(1);	number.add(3); 	number.add(4); number.add(2); number.add(1); number.add(4);
 		return number;
 	}
 
