@@ -122,6 +122,7 @@ public class ScenarioTestUC7 {
 		}
 		
 		order = new StandardVehicleOrder(garageHolder, chosen, models.get(3));
+		this.vmc.placeOrder(order);
 	}
 
 }
