@@ -436,7 +436,19 @@ public class AssemblyLineScheduler implements Subject {
         }
 		this.getOrders().clear();
         this.getOrders().addAll(onAssemblyLine);
+        this.clearTimeTable(onAssemblyLine);
 	}
+
+    private void clearTimeTable(ArrayList<Order> onAssemblyLine) {
+        for( Shift shift : this.getShifts()){
+            for(TimeSlot timeSlot : shift.getTimeSlots()){
+                for (WorkSlot workSlot : timeSlot.getWorkSlots()){
+                    if (!onAssemblyLine.contains(workSlot.getOrder()))
+                        workSlot.removeOrder();
+                }
+            }
+        }
+    }
 
     /**
      * This method adds a number of  hours of delay to the current time.
@@ -444,19 +456,8 @@ public class AssemblyLineScheduler implements Subject {
      * @param hours
      */
 	protected void increaseCurrentTime(int hours){
-        if(this.getCurrentTime().getHourOfDay() + hours <= 22 & this.getCurrentTime().getMinuteOfHour() <= 0){
-            this.setDelay(this.getDelay()+hours*60);
-            this.updateSchedule();
-        }
-        else{
-            this.setDelay(this.getDelay()+ 60*(22-this.getCurrentTime().getHourOfDay()));
-            this.updateSchedule();
-            this.dayOrdersCount = 0;
-            this.setDelay(0);
-            this.generateShifts();
-            this.updateNewDayDate();
-        }
-		this.currentTime = this.getCurrentTime().plusHours(hours);
-		this.getAssemblyLine().getMainScheduler().schedulePendingOrders();
+        this.setCurrentTime(this.getCurrentTime().plusHours(hours));
+        this.setDelay(this.getDelay()+hours*60);
+        this.updateSchedule();
 	}
 }

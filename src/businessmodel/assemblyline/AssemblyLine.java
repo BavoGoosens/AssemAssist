@@ -129,8 +129,10 @@ public class AssemblyLine implements Subject{
 	 * Notifies the AssemblyLine if a work post is completed, if all work posts are completed the assembly line advances.
 	 */
 	private void notifyScheduler(){
-		if(canAdvance())
-			this.getAssemblyLineScheduler().advance(this.timeCurrentStatus);
+		if(canAdvance()) {
+            this.getAssemblyLineScheduler().advance(this.timeCurrentStatus);
+            notifyObservers();
+        }
 	}
 
 	/**
