@@ -161,7 +161,7 @@ public class AssemblyLineScheduler implements Subject {
 			throw new IllegalSchedulingAlgorithmException("The scheduling algorithm was not recognised");
 	}
 
-	private void checkIfAssemblyLineCanAdvance() {
+	protected void checkIfAssemblyLineCanAdvance() {
 		if(this.getAssemblyLine().canAdvance())
 			this.updateAssemblyLineStatus();
 	}
@@ -452,7 +452,7 @@ public class AssemblyLineScheduler implements Subject {
         return onAssemblyLine;
     }
 
-    private void clearTimeTable(ArrayList<Order> onAssemblyLine) {
+    protected void clearTimeTable(ArrayList<Order> onAssemblyLine) {
         for( Shift shift : this.getShifts()){
             for(TimeSlot timeSlot : shift.getTimeSlots()){
                 for (WorkSlot workSlot : timeSlot.getWorkSlots()){

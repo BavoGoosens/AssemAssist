@@ -25,19 +25,24 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	 * @param 	options
 	 */
 	public SpecificationBatch(AssemblyLineScheduler scheduler, ArrayList<VehicleOption> options){
+
 		super(scheduler);
 		if (options == null) throw new IllegalArgumentException();
-		
+
 		this.setOptions(options);
+
+		ArrayList<Order> temp = this.getScheduler().ordersOnAssemblyLine();
 		ArrayList<Order> list = new ArrayList<Order>(this.getScheduler().getOrders());
+		
+		for(Order ord: temp){
+			if (list.contains(ord)){
+				list.remove(ord);
+			}
+		}
+		
 		for(Order order: list)
 			this.scheduleOrder(order);
-		
-		this.getScheduler().getOrders().clear();
-		for(Order order: orderList){
-			this.getScheduler().setEstimatedCompletionDateOfOrder(this.getScheduler().getPreviousOrder(order),order);
-			this.getScheduler().getOrders().add(order);
-		}
+
 
 	}
 
@@ -45,38 +50,61 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	 * Reschedule the order according to the SpecificationBatch algorithm.
 	 * @param currentOrder
 	 */
-	private void reschedule(Order currentOrder) {
+	private LinkedList<Order> reschedule(Order currentOrder) {
 
-		this.getScheduler().generateShifts();
-		ArrayList<Order> similarVehicleOptionsOrder = new ArrayList<Order>();
-		this.getScheduler().scheduleNewDay();
-		orderList.add(currentOrder);
+		ArrayList<Order> temp = this.getScheduler().ordersOnAssemblyLine();
+		ArrayList<Order> list = new ArrayList<Order>(this.getScheduler().getOrders());
+		
+		for(Order ord: temp){
+			if (list.contains(ord)){
+				list.remove(ord);
+			}
+		}
+		
+		this.orderList.add(currentOrder);
+		
+		for(Order order: list){
 
-		if (orderList.size() != 0){
+			ArrayList<Order> similarVehicleOptionsOrder = new ArrayList<Order>();
+		
+			if (orderList.size() != 0){
 
-
-			for(Order order: orderList){
-				int count = 0;
-				for (VehicleOption option: this.options){
-					for(VehicleOption option2: order.getOptions()){
-						if (option.toString().equals(option2.toString())) 
-							count++;
+				for(Order rescheduleOrder: orderList){
+					int count = 0;
+					for (VehicleOption option: this.options){
+						for(VehicleOption option2: rescheduleOrder.getOptions()){
+							if (option.toString().equals(option2.toString())) 
+								count++;
+						}
+					}
+					if (count == this.options.size()){
+						similarVehicleOptionsOrder.add(rescheduleOrder);
 					}
 				}
-				if (count == this.options.size()){
-					similarVehicleOptionsOrder.add(order);
-				}
+
+				for(Order ord: similarVehicleOptionsOrder)
+					orderList.remove(ord);
+				Collections.reverse(similarVehicleOptionsOrder);
+				for(Order ord: similarVehicleOptionsOrder)
+					orderList.addFirst(ord);
+
+			}else{
+				orderList.addLast(order);
 			}
-
-			for(Order ord: similarVehicleOptionsOrder)
-				orderList.remove(ord);
-			Collections.reverse(similarVehicleOptionsOrder);
-			for(Order ord: similarVehicleOptionsOrder)
-				orderList.addFirst(ord);
-
-		}else{
-			orderList.addLast(currentOrder);
 		}
+		
+		this.getScheduler().getOrders().clear();
+        this.getScheduler().getOrders().addAll(temp);
+        
+		this.getScheduler().clearTimeTable(temp);
+
+		for(Order order: orderList){
+			this.getScheduler().getOrders().add(order);
+			this.getScheduler().checkIfAssemblyLineCanAdvance();
+			this.getScheduler().setEstimatedCompletionDateOfOrder(this.getScheduler().getPreviousOrder(order), order);
+		}
+		
+		return orderList;
 
 	}
 
@@ -90,14 +118,14 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 			throw new IllegalArgumentException("Not valid options");
 		this.options = options;
 	}
-	
+
 	@Override
 	public boolean scheduleOrder(Order currentOrder) {
 
-		this.reschedule(currentOrder);
+		LinkedList<Order> list = this.reschedule(currentOrder);
 
 		ArrayList<TimeSlot> timeslots = new ArrayList<TimeSlot>();
-		for(Order order: orderList){
+		for(Order order: list){
 			for (Shift sh: this.getScheduler().getShifts()){
 				timeslots = sh.canAddOrder(order);
 				if(timeslots!= null){
@@ -106,7 +134,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 				}
 			}
 		}
-        return false;
+		return false;
 	}
 
 
