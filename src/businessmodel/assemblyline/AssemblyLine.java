@@ -57,11 +57,17 @@ public class AssemblyLine implements Subject{
 	public boolean canAddOrder(Order order){
 		boolean bool = false;
 		Iterator<VehicleModel> models = this.getResponsibleModelsIterator();
-		while (models.hasNext()){
-			VehicleModel model = models.next();
-			if (order.getVehicleModel().getName()
-                    .equalsIgnoreCase(model.getName()))
-			    bool = true;
+		// als het order geen model heeft is het oké, anders checken of model kan geplaatst worden
+		if (order.getVehicleModel() == null) {
+			bool = true;
+		}
+		else {
+			while (models.hasNext()){
+				VehicleModel model = models.next();
+				if (order.getVehicleModel().getName()
+	                    .equalsIgnoreCase(model.getName()))
+				    bool = true;
+			}
 		}
         // is true when the assembly line can accept orders in this state.
         if(bool)
