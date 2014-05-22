@@ -82,7 +82,8 @@ public class AssemblyLine implements Subject{
 			if (!wp.isCompleted())
 				ready = false;
 		}
-        ready = this.state.canAdvance();
+        if (ready)
+            ready = this.state.canAdvance();
 		return ready;
 	}
 
