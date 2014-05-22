@@ -51,8 +51,6 @@ public class OrderManager implements OrderStatisticsSubject {
         order.setTimestampOfOrder(this.getMainScheduler().getTime());
         // try to place the order on one of the assembly lines
         this.getMainScheduler().placeOrder(order);
-		//if(order.getEstimatedDeliveryDate() == null)
-		//	addOrderToPendingOrders(order);
 	}
 
 	/**

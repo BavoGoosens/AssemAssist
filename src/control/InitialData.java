@@ -112,7 +112,8 @@ public class InitialData {
 
 		ArrayList<Integer> numbers = this.generateOrders();
 
-		this.initialize();
+		//
+		// this.initialize();
 
 		System.out.println(numbers.size());
 		for(int i=0; i < numbers.size(); i++){
@@ -121,13 +122,11 @@ public class InitialData {
 				this.makeStandardOrder(numbers.get(i));
 		}
 
-		System.out.println(this.orderCount);
-
 		//This integer can be changed to the numbers of days you wish to be
 		//completed by the system.
-		        int days = 1;
-		        for (int i = 0; i < days; i ++)
-				    this.processOrders();
+		int days = 1;
+        for (int i = 0; i < days; i ++)
+            this.processOrders();
 
 
 		//		orders = false;
