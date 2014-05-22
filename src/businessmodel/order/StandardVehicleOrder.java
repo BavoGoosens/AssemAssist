@@ -57,15 +57,6 @@ public class StandardVehicleOrder extends Order {
 	}
 	
 	/**
-	 * Returns the standard time to finish the order.
-	 * 
-	 * @return The standard time needed to finish the order of the specific model.
-	 */
-	public Period getStandardTimeToFinish() {
-		return this.getVehicleModel().getStandardTimeToFinish();
-	}
-	
-	/**
 	 * Sets the car of the order to the given car.
 	 * 
 	 * @param 	car

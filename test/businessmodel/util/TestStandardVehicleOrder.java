@@ -1,8 +1,6 @@
 package businessmodel.util;
 
 import java.util.ArrayList;
-
-import org.joda.time.Period;
 import org.junit.Test;
 
 import businessmodel.category.Body;
@@ -48,8 +46,7 @@ public class TestStandardVehicleOrder {
 		options.add(option4);
 		options.add(option5);
 		options.add(option6);
-		Period standardTimeToFinish = new Period().withHours(8);
-		VehicleModel vehiclemodel = new VehicleModel(name, new VehicleModelSpecification(options), standardTimeToFinish);
+		VehicleModel vehiclemodel = new VehicleModel(name, new VehicleModelSpecification(options));
 		try {
 			order = new StandardVehicleOrder(holder,options, vehiclemodel);
 		} catch (IllegalArgumentException e) {
