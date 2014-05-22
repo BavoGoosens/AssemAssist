@@ -5,8 +5,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import businessmodel.util.IteratorConverter;
+import businessmodel.util.SafeIterator;
+import businessmodel.util.Tuple;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.Period;
 
 import businessmodel.category.VehicleOption;
@@ -336,8 +339,10 @@ public class AssemblyLineScheduler implements Subject {
 	 *
 	 * @return
 	 */
-	public LinkedList<Order> getOrders() {
-		return this.orders;
+	public SafeIterator<Order> getOrders() {
+		SafeIterator<Order> safe = new SafeIterator<Order>();
+		safe.convertIterator(this.orders.iterator());
+		return safe;
 	}
 
 	/**
@@ -345,8 +350,11 @@ public class AssemblyLineScheduler implements Subject {
 	 *
 	 * @return the shift of this assemblyLine.
 	 */
-	public LinkedList<Shift> getShifts() {
-		return this.shifts;
+	@SuppressWarnings("unchecked")
+	public Iterator<Shift> getShifts() {
+		SafeIterator<Shift> safe = new SafeIterator<Shift>();
+		safe.convertIterator(this.shifts.iterator());
+		return safe;
 	}
 
 	/**
