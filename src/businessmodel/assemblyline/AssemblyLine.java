@@ -49,9 +49,9 @@ public class AssemblyLine implements Subject{
 	 * Checks whether an order can be place on this assembly line
 	 *
      * @param 	order
-	 * 		  	The order that has to be placed
+	 * 		  	The order that has to be placed.
 	 *
-     * @return 	True if the order can be placed
+     * @return 	True if the order can be placed.
      * 
 	 */
 	public boolean canAddOrder(Order order){
@@ -80,7 +80,6 @@ public class AssemblyLine implements Subject{
 
 	/**
 	 * Checks whether the assembly line can move forward.
-	 * 
 	 * @return True if the assembly line can move forward.
 	 */
 	protected boolean canAdvance() {
@@ -128,7 +127,7 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
-	 * Advances and notifies the assembly line scheduler.
+	 * Advances (if possible) and notifies the assembly line scheduler.
 	 */
 	private void notifyScheduler(){
 		if(canAdvance()) {
@@ -139,7 +138,6 @@ public class AssemblyLine implements Subject{
 
 	/**
 	 * Returns an iterator over the list of work posts at the assembly line.
-	 *
 	 * @return	The list of work posts at the assembly line.
 	 */
 	@SuppressWarnings("unchecked")
@@ -159,8 +157,7 @@ public class AssemblyLine implements Subject{
 
 	/**
 	 * Returns the assembly line scheduler of the assembly line.
-	 * 
-	 * @return	The assembly line scheduler
+	 * @return	The assembly line scheduler.
 	 */
 	public AssemblyLineScheduler getAssemblyLineScheduler() {
 		return assemblylineScheduler;
@@ -168,8 +165,7 @@ public class AssemblyLine implements Subject{
 
 	/**
 	 * Returns the models for which the assembly line is responsible.
-	 * 
-	 * @return The responsible models
+	 * @return The responsible models.
 	 */
 	protected Iterator<VehicleModel> getResponsibleModelsIterator() {
 		return this.responsibleModels.iterator();
@@ -184,8 +180,8 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
-	 * A method to get the time spent working on the current status of the AssemblyLine.
-	 * @return The current status of the assembly line
+	 * Returns the time spent working on the current status of the AssemblyLine.
+	 * @return The current status of the assembly line.
 	 */
 	protected int getTimeCurrentStatus() {
 		return timeCurrentStatus;
@@ -193,7 +189,6 @@ public class AssemblyLine implements Subject{
 
 	/**
 	 * Returns all the orders that are on the assembly line.
-	 *
 	 * @return  A list with all the orders that are currently on the assembly line.
 	 */
 	protected LinkedList<Order> getWorkPostOrders(){
@@ -205,17 +200,20 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
-	 * Set the name of the AssemblyLine.
+	 * Sets the name of the assembly line.
 	 * 
-	 * @param name
+	 * @param 	name
+	 * 			The name of the assembly line.
 	 */
     protected void setName(String name) {
         this.name = name;
     }
 
     /**
-     * Set the MainScheduler.
-     * @param scheduler
+     * Sets the main scheduler of the assembly line to the given scheduler.
+     * 
+     * @param 	scheduler
+     * 			The main scheduler of the assembly line.
      */
 	protected  void setMainScheduler(MainScheduler scheduler){
 		if (scheduler == null)
@@ -224,8 +222,10 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
-	 * Set the AssemblyLineScheduler.
-	 * @param scheduler
+	 * Sets the assembly line scheduler of the assembly line to the given scheduler.
+	 * 
+	 * @param 	scheduler
+	 * 			The assembly line scheduler of the assembly line.
 	 */
 	protected void setAssemblylineScheduler(AssemblyLineScheduler scheduler){
 		if (scheduler == null)
@@ -234,20 +234,24 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
-	 * Set WorkPosts of this AssemblyLine.
-	 * @param workPosts
+	 * Sets the work posts of the assembly line to the given work posts.
+	 * 
+	 * @param 	workPosts
+	 * 			The work posts of the assembly line.
 	 */
-	protected void setWorkPosts( List<WorkPost> workPosts){
+	protected void setWorkPosts(List<WorkPost> workPosts){
 		if (workPosts == null)
 			throw new IllegalArgumentException("There were no workPosts supplied");
 		this.workPosts = (ArrayList<WorkPost>) workPosts;
 	}
 
 	/**
-	 * Set the VehicleModels for which this AssemblyLine is responsible.
-	 * @param models
+	 * Sets the vehicle models for which the assembly line is responsible to the given models.
+	 * 
+	 * @param 	models
+	 * 			The models for which the assembly line is responsible.
 	 */
-	protected  void setResponsibleModels( List<VehicleModel> models){
+	protected  void setResponsibleModels(List<VehicleModel> models){
 		if (models == null)
 			throw  new IllegalArgumentException("There were no models supplied");
 		this.responsibleModels = models;
@@ -274,87 +278,99 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
-	 * Transition to the Maintenance State.
+	 * Transition to the maintenance state.
 	 */
     public void transitionToMaintenance(){
         this.state.markAssemblyLineAsMaintenance();
     }
 
 	/**
-	 * Transition to the Broken State.
+	 * Transition to the broken state.
 	 */
     public void transitionToBroken(){
         this.state.markAssemblyLineAsBroken();
     }
 
 	/**
-	 * Transition to the Operational State.
+	 * Transition to the operational state.
 	 */
     public void transitionToOperational(){
         this.state.markAssemblyLineAsOperational();
     }
 
 	/**
-	 * @return broke state AssemblyLine
+	 * Returns the broken state of the assembly line.
+	 * @return 	The broken state of the assembly line.
 	 */
 	public AssemblyLineState getBrokenState() {
 		return this.broken;
 	}
 
 	/**
-	 * @return operational state AssemblyLine
+	 * Returns the operational state of the assembly line.
+	 * @return 	The operational state of the assembly line.
 	 */
 	public AssemblyLineState getOperationalState() {
 		return this.operational;
 	}
 
 	/**
-	 * @return maintenance state AssemblyLine
+	 * Returns the maintenance state of the assembly line.
+	 * @return 	The maintenance state of the assembly line.
 	 */
 	public AssemblyLineState getMaintenanceState() {
 		return maintenance;
 	}
 
 	/**
-	 * Method to set the state of an AssemblyLine.
-	 * @param state
+	 * Sets the state of the assembly line to the given state.
+	 * 
+	 * @param 	state
+	 * 			The state the assembly line needs to be set to.
 	 */
 	protected void setState(AssemblyLineState state) {
 	    this.state = state;
         this.state.initialize();
 	}
-
-   protected AssemblyLineState getCurrentState(){
-       return this.state;
-   }
+	
 	/**
-	 * Get the estimated completion time of the given order.
-	 * @param order
-	 * @return
+	 * Returns the current state of the assembly line.
+	 * @return The current state of the assembly line.
 	 */
-	public DateTime getEstimatedCompletionTimeOfNewOrder(Order order) {
+	protected AssemblyLineState getCurrentState(){
+		return this.state;
+	}
+	/**
+	 * Returns the estimated completion time of the given order.
+	 * 
+	 * @param	order
+	 * 			The order the estimated completion time is requested for.
+	 * @return	The estimated completion time of the given order.
+	 */
+	public DateTime getEstimatedCompletionTimeOfNewOrder(Order order) throws IllegalArgumentException {
+		if (order == null) throw new IllegalArgumentException("Bad order!");
 		return this.getAssemblyLineScheduler().getEstimatedCompletionTimeOfNewOrder(order);
 	}
 
 	/**
-	 * Get MainScheduler.
-	 * @return MainScheduler
+	 * Returns the main scheduler of the assembly line.
+	 * @return	The main scheduler of the assembly line.
 	 */
 	protected MainScheduler getMainScheduler(){
 		return this.mainscheduler;
 	}
 
 	/**
-	 * Get current state of the AssemblyLine.
-	 * @return current state
+	 * Returns a string representation of the current state of the assembly line.
+	 * @return A string representation of the current state of the assembly line.
 	 */
     public String currentState() {
         return this.state.toString();
     }
 
     /**
-     * Get all the possible states of this AssemblyLine.
-     * @return iterator of the possible states
+     * Returns all the possible states of the assembly line.
+     * @return An iterator over all the possible states of the assembly line.
      */
     public Iterator<String> getAllPossibleStates() {
         ArrayList<String> possible = new ArrayList<>();
@@ -364,6 +380,9 @@ public class AssemblyLine implements Subject{
         return possible.iterator();
     }
 
+    /**
+     * Returns a string representation of the assembly line.
+     */
     @Override
     public String toString(){
     	return this.name + " " + this.getWorkPosts().size();
