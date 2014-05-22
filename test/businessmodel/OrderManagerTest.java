@@ -34,7 +34,7 @@ public class OrderManagerTest {
 		ordermanager.placeOrderInFront(order.getOrder());
 		assertEquals(order.getOrder(),ordermanager.getPendingOrders().getFirst());
 		
-		ordermanager.finishedOrder(order.getOrder());
+		ordermanager.finishedOrder(order.getOrder(), 0);
 		assertEquals(order.getOrder(),ordermanager.getCompletedOrders().getFirst());
 		
 	}
@@ -46,7 +46,7 @@ public class OrderManagerTest {
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testFinischedOrder(){
-		ordermanager.finishedOrder(null);
+		ordermanager.finishedOrder(null, 0);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
