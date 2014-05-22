@@ -50,7 +50,6 @@ public class AssemblyLineAFactory extends AssemblyLineFactory {
     }
 
     @Override
-    //TODO: debuggen om te checken of dit juist gebeurt of werken met een techniek.
     protected void createResponsibleModels(AssemblyLine line) {
         ArrayList<VehicleModel> responsibleModels = new ArrayList<VehicleModel>();
 
