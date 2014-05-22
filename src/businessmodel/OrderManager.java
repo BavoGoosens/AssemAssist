@@ -203,7 +203,7 @@ public class OrderManager implements Subject {
 		else {
             DateTime date = this.getPendingOrders().getLast().getEstimatedDeliveryDate().
                     plusMinutes(this.getMainScheduler().getAssemblyLineSchedulers().
-                            get(0).minutesLastWorkPost(order))
+                            get(0).minutesLastWorkPost(order));
             if (date.getHourOfDay() >= 22 & date.getMinuteOfHour() >= 0){
                 DateTime date1 = this.getPendingOrders().getLast().getEstimatedDeliveryDate().plusDays(1);
                 newDayDate(order, date1);

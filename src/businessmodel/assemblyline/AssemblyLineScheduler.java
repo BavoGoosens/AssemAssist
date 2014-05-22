@@ -1,6 +1,7 @@
 package businessmodel.assemblyline;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import businessmodel.util.IteratorConverter;
@@ -422,8 +423,15 @@ public class AssemblyLineScheduler implements Subject {
      * It readds them to the mainscheduler so they can be rescheduledeer
      */
 	protected void flushAssemblyLineScheduler(){
-		for(Order order: this.getOrders())
-			this.getAssemblyLine().getMainScheduler().orderCannotBePlaced(order);
+        ArrayList<Order> onAssemblyLine = new ArrayList<>();
+        Iterator<WorkPost> postIterator = this.assemblyLine.getWorkPostsIterator();
+        while(postIterator.hasNext())
+            onAssemblyLine.add(postIterator.next().getOrder());
+
+		for(Order order: this.getOrders()) {
+            if (!onAssemblyLine.contains(order))
+                this.getAssemblyLine().getMainScheduler().orderCannotBePlaced(order);
+        }
 		this.getOrders().clear();
 	}
 
