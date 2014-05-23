@@ -4,18 +4,21 @@ import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.User;
 
 /**
- * The controller for the StandardOrder.
+ * This controller is used for everything related to StandardOrder.
  * 
  * @author Team 10
- *
  */
 public interface StandardOrderController {
  
 	/**
-	 * Place StandardOrder.
-	 * @param user
-	 * @param or
+	 * This method places the StandardOrder.
+     *
+	 * @param   user
+     *                  The user who wants to place the order.
+     *
+	 * @param   order
+     *                  The order the caller wants to place.
 	 */
-	public void placeOrder(User user, StandardVehicleOrder or);
+	public void placeOrder(User user, StandardVehicleOrder order);
 	
 }

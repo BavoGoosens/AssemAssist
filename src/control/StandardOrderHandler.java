@@ -18,15 +18,17 @@ public class StandardOrderHandler implements StandardOrderController{
 	
 	/**
 	 * Constructor with the given VehicleManufacturingCompany.
-	 * @param model
+     *
+	 * @param   model
+     *                  The model this controller needs to interact with.
 	 */
 	public StandardOrderHandler(Model model) {
 		this.cmc = (VehicleManufacturingCompany) model;
 	}
 
 	@Override
-	public void placeOrder(User user, StandardVehicleOrder or) {
-		this.cmc.placeOrder(or);
+	public void placeOrder(User user, StandardVehicleOrder order) {
+		this.cmc.placeOrder(order);
 	}
 
 }

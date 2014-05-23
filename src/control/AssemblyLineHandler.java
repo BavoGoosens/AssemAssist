@@ -21,7 +21,7 @@ public class AssemblyLineHandler implements AssemblyLineController{
 	 * The constructor for the AssemblyLineHandler.
      *
 	 * @param   model
-     *                  The model this controller needs to interact with.
+     *                  The model this handler needs to interact with.
      *
 	 */
 	public AssemblyLineHandler (Model model) {
