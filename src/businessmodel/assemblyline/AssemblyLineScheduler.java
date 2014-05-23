@@ -257,7 +257,7 @@ public class AssemblyLineScheduler implements Subject {
 		if(this.getOrders().size() == 0 && this.getShifts().get(0).getTimeSlots().size() < 2)
 			if(this.getAssemblyLine().canAdvance()){
                 this.getAssemblyLine().getMainScheduler().startNewProductionDay();
-			}    
+			}
 	}
 
   /**
@@ -269,6 +269,9 @@ public class AssemblyLineScheduler implements Subject {
       return this.orders.isEmpty() && this.getAssemblyLine().getWorkPostOrders().isEmpty();
   }
 
+  /**
+   *A method to set the currentTime.
+   */
 	protected void setCurrentTime(DateTime currenttime) {
 		this.currentTime =currenttime;
 	}
@@ -389,6 +392,9 @@ public class AssemblyLineScheduler implements Subject {
 			return this.currentTime.plusMinutes(this.calculateMinutes(order));
 	}
 
+  /**
+   * A method to calculate the minutes it will take to complete the given Order on this AssemblyLine.
+   */
 	public int calculateMinutes(Order order){
 		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		if(order.getVehicleModel() == null)
@@ -400,6 +406,10 @@ public class AssemblyLineScheduler implements Subject {
 		return minutes;
 	}
 
+  /**
+   * A method to get the minutes it will take to complete the AssemblyTasks
+   *  on the last WorkPost of te given order.
+   */
 	public int minutesLastWorkPost(Order order) {
 		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		if(order.getVehicleModel() == null)
@@ -463,6 +473,9 @@ public class AssemblyLineScheduler implements Subject {
         return onAssemblyLine;
     }
 
+    /**
+     * A method to clear the timetable.
+     */
     protected void clearTimeTable(ArrayList<Order> onAssemblyLine) {
         for( Shift shift : this.getShifts()){
             for(TimeSlot timeSlot : shift.getTimeSlots()){
