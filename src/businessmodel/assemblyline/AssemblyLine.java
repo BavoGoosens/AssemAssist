@@ -55,20 +55,8 @@ public class AssemblyLine implements Subject{
      * 
 	 */
 	public boolean canAddOrder(Order order){
-		boolean bool = false;
-		Iterator<VehicleModel> models = this.getResponsibleModelsIterator();
 		// als het order geen model heeft is het oké, anders checken of model kan geplaatst worden
-		if (order.getVehicleModel() == null) {
-			bool = true;
-		}
-		else {
-			while (models.hasNext()){
-				VehicleModel model = models.next();
-				if (order.getVehicleModel().getName()
-	                    .equalsIgnoreCase(model.getName()))
-				    bool = true;
-			}
-		}
+        boolean bool = couldAcceptModel(order.getVehicleModel());
         // is true when the assembly line can accept orders in this state.
         if(bool)
         	bool = this.state.canPlaceOrder();
@@ -387,4 +375,22 @@ public class AssemblyLine implements Subject{
     public String toString(){
     	return this.name + " " + this.getWorkPosts().size();
     }
+
+    public boolean couldAcceptModel(VehicleModel vehicleModel) {
+        Iterator<VehicleModel> models = this.getResponsibleModelsIterator();
+        if (vehicleModel == null) {
+            return true;
+        }
+        else {
+            while (models.hasNext()){
+                VehicleModel model = models.next();
+                if (vehicleModel.getName()
+                        .equalsIgnoreCase(model.getName()))
+                    return true;
+
+            }
+            return false;
+        }
+    }
+
 }
