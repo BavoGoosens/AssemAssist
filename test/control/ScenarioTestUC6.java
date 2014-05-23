@@ -49,7 +49,7 @@ public class ScenarioTestUC6 {
 		ArrayList<ArrayList<VehicleOption>> optionLists = (ArrayList<ArrayList<VehicleOption>>)
 				new IteratorConverter<ArrayList<VehicleOption>>().
 				convert(this.vmc.getUnscheduledVehicleOptions(this.manager));
-		assertEquals(16, optionLists.size());
+		assertEquals(8, optionLists.size());
 		assertEquals(1, optionLists.get(0).size());
 		ArrayList<VehicleOption> options = optionLists.get(7);
 		assertEquals("BODY: sedan", options.get(0).toString());
