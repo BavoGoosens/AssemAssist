@@ -16,12 +16,12 @@ import businessmodel.category.VehicleOptionCategory;
 /**
  * A class representing a catalog of the car manufacturing company.
  * It holds all the models that are available and creates them through a factory.
- * 
+ *
  * @author SWOP team 10
  *
  */
 public class Catalog {
-	
+
 
 	private ArrayList<VehicleModel> availableModels;
 	private ArrayList<VehicleModelFactory> factories;
@@ -40,10 +40,10 @@ public class Catalog {
         this.factories.add(new ModelYFactory());
 		this.createAllModels();
 	}
-	
+
 	/**
 	 * Returns all the car option categories that are available.
-	 * 
+	 *
 	 * @return	A list of all car option categories that exist within the available car models.
 	 */
 	public ArrayList<VehicleOptionCategory> getAllCategories() {
@@ -61,7 +61,7 @@ public class Catalog {
 
 	/**
 	 * Returns a cloned list of all the models that are available.
-	 * 
+	 *
 	 * @return A cloned list of all available models.
 	 */
 	@SuppressWarnings("unchecked")
@@ -71,7 +71,7 @@ public class Catalog {
 
 	/**
 	 * Method to get all the options of a car option category.
-	 * 
+	 *
 	 * @param cat
 	 * @return
 	 */
@@ -102,7 +102,7 @@ public class Catalog {
 	private ArrayList<VehicleModelFactory> getFactories() {
 		return this.factories;
 	}
-	
+
 	/**
 	 * Returns the available car models.
 	 * @return The available car models in the catalog.

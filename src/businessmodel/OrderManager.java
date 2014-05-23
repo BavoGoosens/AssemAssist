@@ -64,11 +64,15 @@ public class OrderManager implements OrderStatisticsSubject {
         this.addOrderToPendingOrders(order);
 	}
 
+   /**
+    * A method to add the given order to the pendingOrders.
+    */
    protected void orderCannotBePlaced(Order order){
       this.addOrderToPendingOrders(order);
    }
+
 	/**
-	 * Scheduler the pending orders.
+	 * Schedule the pending orders.
 	 */
 	protected void schedulePendingOrders(){
 		scheduleSingleTaskOrders();
@@ -81,7 +85,7 @@ public class OrderManager implements OrderStatisticsSubject {
 	}
 
 	/**
-	 * Scheduler the SingleTaskOrders.
+	 * Schedule the SingleTaskOrders.
 	 */
 	private void scheduleSingleTaskOrders() {
 		CopyOnWriteArrayList<Order> tempList = new CopyOnWriteArrayList<Order>(this.getPendingOrders());
@@ -141,9 +145,9 @@ public class OrderManager implements OrderStatisticsSubject {
 	 * 			the pending orders of a given user managed by this order manager.
 	 */
 	protected ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
-		if (user == null) 
+		if (user == null)
 			throw new IllegalArgumentException("Bad user!");
-		if (!user.canPlaceOrder()) 
+		if (!user.canPlaceOrder())
 			throw new NoClearanceException(user);
 		ArrayList<Order> pendingOrders = new ArrayList<Order>();
 		for(AssemblyLine line: this.getMainScheduler().getAssemblyLines()){
@@ -193,7 +197,7 @@ public class OrderManager implements OrderStatisticsSubject {
             this.getPendingOrders().add(order);
         updateEstimatedTimesOfPendingOrders();
 	}
-	
+
 	/**
 	 * Set the estimated delivery date of the given order.
 	 */
@@ -291,7 +295,7 @@ public class OrderManager implements OrderStatisticsSubject {
 		if (observer == null) throw new IllegalArgumentException("Bad observer!");
 		this.observers.remove(observer);
 	}
-	
+
 	public void notifyObservers(Order finished, int actualDelay) {
 		for (OrderStatisticsObserver observer: this.observers) {
 			observer.update(finished, actualDelay);
