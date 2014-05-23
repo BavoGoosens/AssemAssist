@@ -47,8 +47,7 @@ public class ScenarioTestUC4 {
 		ArrayList<AssemblyTask> pendingTasks = (ArrayList<AssemblyTask>) new IteratorConverter<AssemblyTask>().convert(post.getPendingTasks());
 		ArrayList<AssemblyTask> finishedTasks = (ArrayList<AssemblyTask>) new IteratorConverter<AssemblyTask>().convert(post.getFinishedTasks());
 		assertEquals(0, pendingTasks.size());
-		assertEquals("Assembly Vehicle Body", finishedTasks.get(0).toString());
-		assertEquals("Paint Vehicle", finishedTasks.get(1).toString());
+		assertEquals(0, finishedTasks.size());
 		
 		post = posts.get(1);
 		pendingTasks = (ArrayList<AssemblyTask>) new IteratorConverter<AssemblyTask>().convert(post.getPendingTasks());

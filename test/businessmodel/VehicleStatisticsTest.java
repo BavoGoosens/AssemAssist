@@ -1,5 +1,7 @@
 package businessmodel;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -103,9 +105,8 @@ public class VehicleStatisticsTest {
 
     @Test
 	public void test() {
-		for (Tuple<LocalDate, Integer> tuple: this.vehicleStatistics.getLastDays(1)) {
-			System.out.println(tuple.getX());
-			System.out.println(tuple.getY());
-		}
+		assertEquals(40, vehicleStatistics.getAverage(), 0);
+		assertEquals(40, vehicleStatistics.getMedian(), 0);
+		assertEquals(1, vehicleStatistics.getLastDays(1).size());
 	}
 }
