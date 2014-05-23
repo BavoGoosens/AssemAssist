@@ -37,9 +37,6 @@ public class MainScheduler {
 		changeSystemWideAlgorithm("FIFO", null);
 	}
 
-	/**
-	 * Generate the AssemblyLines.
-	 */
 	private void generateAssemblyLines() {
 		ArrayList<AssemblyLine> assemblylines = new ArrayList<AssemblyLine>();
 		AssemblyLineAFactory factoryA = new AssemblyLineAFactory();
@@ -166,11 +163,6 @@ public class MainScheduler {
 		}
 	}
 
-	/**
-	 * Check if the given options satisfy the restraint of occurrence of the given amount of orders.
-	 * @param options
-	 * @return
-	 */
 	private boolean checkOptionsForSpecificationBatch(ArrayList<VehicleOption> options, AssemblyLine assem) {
 
 		int orderCount = 0;
@@ -192,11 +184,6 @@ public class MainScheduler {
 	}
 
 	// returns the lines which are ready to receive a additional order.
-	/**
-	 * Get the possible AssemblyLines to place the given order.
-	 * @param order
-	 * @return
-	 */
 	private ArrayList<AssemblyLine> getPossibleAssemblyLinesToPlaceOrder(Order order){
 		ArrayList<AssemblyLine> possibleLines = new ArrayList<AssemblyLine>();
 		for(AssemblyLine assemblyLine : this.getAssemblyLines()){
@@ -206,18 +193,10 @@ public class MainScheduler {
 		return possibleLines;
 	}
 
-	/**
-	 * Set the OrderManager.
-	 * @param ordermanager
-	 */
 	private void setOrderManager(OrderManager ordermanager) {
 		this.ordermanager = ordermanager;
 	}
 
-	/**
-	 * Set the AssemblyLines with the given AssemblyLines.
-	 * @param assemblylines
-	 */
 	private void setAssemblyLines(ArrayList<AssemblyLine> assemblylines) {
 		this.assemblylines = assemblylines;
 	}
@@ -249,29 +228,23 @@ public class MainScheduler {
 
 			tempChoices.clear();
 			for(Order order: line.getAssemblyLineScheduler().getOrdersClone()){
-
 				ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();
 				for(VehicleOption opt: order.getOptions()){
-
 					ArrayList<VehicleOption> temp = new ArrayList<VehicleOption>();
 					temp.add(opt);
-					if (this.checkOptionsForSpecificationBatch(temp, line))	options.add(opt);
-
+					if (this.checkOptionsForSpecificationBatch(temp, line))
+           	options.add(opt);
 				}
-
 				boolean duplicate = false;
 				for(ArrayList<VehicleOption> opts: tempChoices)
 					for(VehicleOption opt: opts)
 						for(VehicleOption opt2: options)
 							if (opt.equals(opt2))
 								duplicate = true;
-
-
 				if (!duplicate || tempChoices.size() == 0)
 					tempChoices.add(options);
 
 			}
-
 			countList.clear();
 			for(ArrayList<VehicleOption> opt: tempChoices)
 				for(ArrayList<VehicleOption> listOpts: this.getSubsets(opt))
@@ -280,28 +253,16 @@ public class MainScheduler {
 							if (this.noDuplicateOptions(listOpts, choices))
 								if (!listOpts.isEmpty())
 									choices.add(listOpts);
-
-
-
-
 		}
-
-
-		//		for(ArrayList<VehicleOption> list: choices){
-		//			System.out.println(list.toString());
-		//		}
-
 		return  choices.iterator();
 	}
 
 	private boolean noDuplicateOptions(ArrayList<VehicleOption> listOpts, ArrayList<ArrayList<VehicleOption>> choices) {
-
 		for(ArrayList<VehicleOption> options: choices){
 			int count = 0;
 				for(VehicleOption opt2: listOpts)
 					if (options.contains(opt2))
 						count++;
-			
 			if (count == listOpts.size())
 				return false;
 		}
@@ -309,32 +270,27 @@ public class MainScheduler {
 	}
 
 	private ArrayList<ArrayList<VehicleOption>> getSubsets(ArrayList<VehicleOption> set) {
-
 		ArrayList<ArrayList<VehicleOption>> subsetCollection = new ArrayList<ArrayList<VehicleOption>>();
-
 		if (set.size() == 0) {
 			subsetCollection.add(new ArrayList<VehicleOption>());
 		} else {
 			ArrayList<VehicleOption> reducedSet = new ArrayList<VehicleOption>();
-
 			reducedSet.addAll(set);
-
 			VehicleOption first = reducedSet.remove(0);
 			ArrayList<ArrayList<VehicleOption>> subsets = getSubsets(reducedSet);
 			subsetCollection.addAll(subsets);
-
 			subsets = getSubsets(reducedSet);
-
 			for (ArrayList<VehicleOption> subset : subsets) {
 				subset.add(0, first);
 			}
-
 			subsetCollection.addAll(subsets);
 		}
-
 		return subsetCollection;
 	}
 
+  /**
+   * A method to let all the assemblylines of this MainScheduler start a new day.
+   */
 	public void startNewProductionDay() {
 		boolean startForReal = true ;
 		for (AssemblyLine assemblyLine : this.getAssemblyLines() ){
