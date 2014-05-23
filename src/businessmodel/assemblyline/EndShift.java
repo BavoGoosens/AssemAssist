@@ -6,7 +6,7 @@ import businessmodel.order.Order;
 
 /**
  * Class representing an end shift.
- * 
+ *
  * @author SWOP team 10 2013-2014
  *
  */
@@ -14,7 +14,7 @@ public class EndShift extends Shift {
 
 	/**
 	 * Create an end shift with an amount of hours and work posts.
-	 * 
+	 *
 	 * @param 	hours
 	 * 			The hours of the end shift.
 	 * @param 	numberofworkposts
@@ -40,8 +40,7 @@ public class EndShift extends Shift {
 		}
 		return timeslots;
 	}
-	
-	
+
 	@Override
 	protected ArrayList<TimeSlot> canAddOrder(Order order){
 		ArrayList<TimeSlot> timeslots;
@@ -53,5 +52,5 @@ public class EndShift extends Shift {
 		}
 		return null;
 	}
-	
+
 }

@@ -87,6 +87,7 @@ public class VehicleStatistics implements Observer {
 			return result;
 		} else 
 			throw new IllegalArgumentException("The supplied number of days is to large");
+		
 	}
 
 	/**
@@ -97,7 +98,7 @@ public class VehicleStatistics implements Observer {
 		for (Tuple<LocalDate, Integer> tup : this.numberOfVehicles){
 			count += tup.getY();
 		}		
-		this.avarage = (int) Math.floor(count / (this.numberOfVehicles.size()/3));
+		this.avarage = (int) Math.floor(count / (this.numberOfVehicles.size()));
 	}
 
 	/**

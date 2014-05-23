@@ -6,7 +6,7 @@ import businessmodel.order.Order;
 //Interface for subclasses.
 /**
  * An abstract class representing a scheduling algorithm.
- * 
+ *
  * @author SWOP team 10
  *
  */
@@ -32,18 +32,18 @@ public abstract class SchedulingAlgorithm {
      * 			The order to be scheduled.
      */
 	protected abstract boolean scheduleOrder(Order order);
-	
+
 	/**
-	 * Returns the assemblyline.
+	 * Returns the AssemblyLineScheduler.
 	 * @return 	The assemblyline of the scheduling algorithm.
 	 */
 	protected AssemblyLineScheduler getScheduler(){
 		return this.AssemblyLineScheduler;
 	}
-	
+
 	/**
-	 * Sets the assemblyline.
-	 * 
+	 * Sets the AssemblyLineScheduler.
+	 *
 	 * @param 	scheduler
 	 * @throws	IllegalArgumentException
 	 */

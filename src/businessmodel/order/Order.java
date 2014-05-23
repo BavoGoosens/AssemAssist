@@ -15,7 +15,7 @@ import org.joda.time.Period;
 
 /**
  * A class representing an abstract order.
- * 
+ *
  * @author SWOP Team 10
  *
  */
@@ -31,7 +31,7 @@ public abstract class Order {
     private Period standardTimeToFinish;
 	/**
 	 * Creates a new order with a given user.
-	 * 
+	 *
 	 * @param	user
 	 * 			The user that placed the order.
 	 * @throws 	IllegalArgumentException
@@ -51,7 +51,7 @@ public abstract class Order {
 
 	/**
 	 * Returns the user that placed the order.
-	 * 
+	 *
 	 * @return	The user that placed the order.
 	 */
 	public User getUser() {
@@ -60,7 +60,7 @@ public abstract class Order {
 
 	/**
 	 * Returns whether the order is completed.
-	 * 
+	 *
 	 * @return	True if the order is completed.
 	 */
 	public boolean isCompleted() {
@@ -69,18 +69,18 @@ public abstract class Order {
 
 	/**
 	 * Updates the estimated delivery date to the given date with the given delay.
-	 * 
+	 *
 	 * @param 	delay
 	 * 			The given delay.
 	 */
 	public void updateEstimatedDate(int delay) {
-		this.setEstimatedDeliveryDateOfOrder(this.getEstimatedDeliveryDate().plusMinutes(delay));		
+		this.setEstimatedDeliveryDateOfOrder(this.getEstimatedDeliveryDate().plusMinutes(delay));
 	}
 
 
 	/**
 	 * Returns the time the order was placed.
-	 * 
+	 *
 	 * @return	The time the order was placed.
 	 */
 	public DateTime getTimestamp() {
@@ -89,7 +89,7 @@ public abstract class Order {
 
 	/**
 	 * Returns the completion date of the order.
-	 * 
+	 *
 	 * @return	The completion date of the order.
 	 */
 	public DateTime getCompletionDate() {
@@ -99,7 +99,7 @@ public abstract class Order {
 	/**
 	 * Returns the date the user wants the order to be finished.
 	 * Applies only to Single Task Orders.
-	 * 
+	 *
 	 * @return	The date the user wants the order to be finished.
 	 */
 	public DateTime getUserEndDate() {
@@ -108,7 +108,7 @@ public abstract class Order {
 
 	/**
 	 * Returns the estimated delivery date of the order.
-	 * 
+	 *
 	 * @return	The estimated delivery date of the order.
 	 */
 	public DateTime getEstimatedDeliveryDate() {
@@ -117,7 +117,7 @@ public abstract class Order {
 
 	/**
 	 * Returns the time the order was placed on the assembly line.
-	 * 
+	 *
 	 * @return	The time the order was placed on the assembly line.
 	 */
 	public DateTime getOrderPlacedOnAssemblyLine() {
@@ -133,7 +133,7 @@ public abstract class Order {
 
 	/**
 	 * Sets the time the order was placed to the given time.
-	 * 
+	 *
 	 * @param 	timestamp
 	 * 			The time the order as placed.
 	 * @throws	IllegalArgumentException
@@ -147,7 +147,7 @@ public abstract class Order {
 
 	/**
 	 * Sets the completion date of the order to the given completion date.
-	 * 
+	 *
 	 * @param 	deliverydate
 	 * 			The new delivery date of the order.
 	 * @throws 	IllegalArgumentException
@@ -160,20 +160,20 @@ public abstract class Order {
 
 	/**
 	 * Sets the time the order was placed on the assembly line to the given time.
-	 * 
+	 *
 	 * @param 	placedOnAssemblyLine
 	 * 			The new time the order was placed on the assembly line.
 	 * @throws	IllegalArgumentException
 	 * 			| If placedOnAssemblyLine is equal to 'null'
 	 * 			| placedOnAssemblyLine == null
 	 */
-	public void setPlacedOnAssemblyLineOfOrder(DateTime placedOnAssemblyLine) throws IllegalArgumentException {		
+	public void setPlacedOnAssemblyLineOfOrder(DateTime placedOnAssemblyLine) throws IllegalArgumentException {
 		this.setOrderPlacedOnAssemblyLine(placedOnAssemblyLine);
 	}
 
 	/**
 	 * Sets the estimated delivery date of the order to the given date.
-	 * 
+	 *
 	 * @param 	estimatedDeliveryDate
 	 * 			The new estimated delivery date.
 	 */
@@ -195,7 +195,7 @@ public abstract class Order {
 	 * @throws IllegalArgumentException
 	 */
 	private void setCompletionDate(DateTime completionDate) throws IllegalArgumentException{
-		if(completionDate == null) 
+		if(completionDate == null)
 			throw new IllegalArgumentException("Bad completion date!");
 		this.completionDate = completionDate;
 	}
@@ -206,7 +206,7 @@ public abstract class Order {
 	 * @throws IllegalArgumentException
 	 */
 	private void setEstimatedDeliveryDate(DateTime estimatedDeliveryDate) throws IllegalArgumentException {
-		if(estimatedDeliveryDate == null) 
+		if(estimatedDeliveryDate == null)
 			throw new IllegalArgumentException("Bad estimated delivery date!");
 		this.estimatedDeliveryDate = estimatedDeliveryDate;
 	}
@@ -218,9 +218,9 @@ public abstract class Order {
 	 * @throws NoClearanceException
 	 */
 	private void setUser(User user) throws IllegalArgumentException, NoClearanceException {
-		if (user == null) 
+		if (user == null)
 			throw new IllegalArgumentException("Bad user!");
-		if (!user.canPlaceOrder()) 
+		if (!user.canPlaceOrder())
 			throw new NoClearanceException(user);
 		this.user = user;
 	}
@@ -231,14 +231,14 @@ public abstract class Order {
 	 * @throws IllegalArgumentException
 	 */
 	private void setOrderPlacedOnAssemblyLine(DateTime orderPlacedOnAssemblyLine) throws IllegalArgumentException{
-		if(orderPlacedOnAssemblyLine == null) 
+		if(orderPlacedOnAssemblyLine == null)
 			throw new IllegalArgumentException("Bad order placed on assembly line date!");
-		this.orderPlacedOnAssemblyLine = orderPlacedOnAssemblyLine;		
+		this.orderPlacedOnAssemblyLine = orderPlacedOnAssemblyLine;
 	}
 
 	/**
 	 * Sets the car model of the order to the given car model.
-	 * 
+	 *
 	 * @param 	model
 	 * 			The car model that is ordered.
 	 */
@@ -248,7 +248,7 @@ public abstract class Order {
 
 	/**
 	 * Returns the car model that is ordered.
-	 * 
+	 *
 	 * @return The car model that is ordered.
 	 */
 	public VehicleModel getVehicleModel() {
@@ -263,10 +263,16 @@ public abstract class Order {
             return "Estimated delivery date = " + this.estimatedDeliveryDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
     }
 
+    /**
+     * A method to get the standardTimeToFinish.
+     */
     public void setStandardTimeToFinish(int minutes){
         this.standardTimeToFinish = new Period(minutes * 60000 );
     }
 
+    /**
+     * A method to get the standardTimeToFinish.
+     */
     public Period getStandardTimeToFinish(){
         return this.standardTimeToFinish;
     }

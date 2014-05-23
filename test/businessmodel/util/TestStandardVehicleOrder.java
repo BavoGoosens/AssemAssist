@@ -32,7 +32,7 @@ public class TestStandardVehicleOrder {
 		this.holder = holder;
 	}
 
-	@Test
+	
 	private void makeOrder(GarageHolder holder, String name){
 		ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();
 		VehicleOption option1 = new VehicleOption("Seats",new Seats());
