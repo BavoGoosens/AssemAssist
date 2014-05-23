@@ -3,39 +3,39 @@ package businessmodel.assemblyline;
 
 /**
  * The Operational state of the AssemblyLine.
- * 
- * @author 	SWOP team 10
  *
+ * @author SWOP team 10
  */
 public class OperationalState implements AssemblyLineState {
 
-	private AssemblyLine assemblyLine;
+    private AssemblyLine assemblyLine;
 
 
-	/**
-	 * Constructor for operational state of the assembly line
-	 * @param assemblyLine
-	 */
-	public OperationalState(AssemblyLine assemblyLine){
-		if (assemblyLine == null)
+    /**
+     * Constructor for operational state of the assembly line
+     *
+     * @param assemblyLine
+     */
+    public OperationalState(AssemblyLine assemblyLine) {
+        if (assemblyLine == null)
             throw new IllegalStateException("Not a valid assembly line.");
-		this.assemblyLine = assemblyLine;
-	}
+        this.assemblyLine = assemblyLine;
+    }
 
-	@Override
-	public void markAssemblyLineAsBroken() {
-		this.assemblyLine.setState(this.assemblyLine.getBrokenState());
-	}
+    @Override
+    public void markAssemblyLineAsBroken() {
+        this.assemblyLine.setState(this.assemblyLine.getBrokenState());
+    }
 
-	@Override
-	public void markAssemblyLineAsOperational() {
-		// NOP already in this state
-	}
+    @Override
+    public void markAssemblyLineAsOperational() {
+        // NOP already in this state
+    }
 
-	@Override
-	public void markAssemblyLineAsMaintenance() {
-		this.assemblyLine.setState(this.assemblyLine.getMaintenanceState());
-	}
+    @Override
+    public void markAssemblyLineAsMaintenance() {
+        this.assemblyLine.setState(this.assemblyLine.getMaintenanceState());
+    }
 
     @Override
     public boolean canPlaceOrder() {

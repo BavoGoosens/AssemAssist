@@ -1,15 +1,14 @@
 package businessmodel.assemblyline;
 
-import java.util.ArrayList;
-
 import businessmodel.MainScheduler;
 import businessmodel.category.VehicleModel;
+
+import java.util.ArrayList;
 
 /**
  * This concrete factory can be used to create AssemblyLine 3.
  *
  * @author Team 10
- * 
  */
 public class AssemblyLineCFactory extends AssemblyLineFactory {
     @Override
@@ -59,7 +58,7 @@ public class AssemblyLineCFactory extends AssemblyLineFactory {
     protected void createResponsibleModels(AssemblyLine line) {
         ArrayList<VehicleModel> responsibleModels = new ArrayList<VehicleModel>();
 
-        for (VehicleModel model : super.models){
+        for (VehicleModel model : super.models) {
             if (model.getName().contains("Model A") || model.getName().contains("Model B")
                     || model.getName().contains("Model C") || model.getName().contains("Model X")
                     || model.getName().contains("Model Y"))

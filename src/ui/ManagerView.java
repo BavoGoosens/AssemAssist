@@ -1,9 +1,9 @@
 package ui;
 
-import java.util.Scanner;
-
 import businessmodel.Model;
 import businessmodel.user.User;
+
+import java.util.Scanner;
 
 public class ManagerView extends View {
 

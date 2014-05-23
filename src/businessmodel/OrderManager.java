@@ -1,19 +1,17 @@
 package businessmodel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import org.joda.time.DateTime;
-
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.observer.OrderStatisticsObserver;
 import businessmodel.observer.OrderStatisticsSubject;
 import businessmodel.order.Order;
 import businessmodel.user.User;
-import org.joda.time.Period;
+import org.joda.time.DateTime;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * A class that represents an order manager. This class handles all the orders for a car manufacturing company.
@@ -22,187 +20,191 @@ import org.joda.time.Period;
  */
 public class OrderManager implements OrderStatisticsSubject {
 
-	private ArrayList<OrderStatisticsObserver> observers;
-	private LinkedList<Order> completedOrders;
-	private MainScheduler mainscheduler;
-	private LinkedList<Order> pendingOrders;
-	private final int MILIS_ONE_DAY = 86400000;
+    private final int MILIS_ONE_DAY = 86400000;
+    private ArrayList<OrderStatisticsObserver> observers;
+    private LinkedList<Order> completedOrders;
+    private MainScheduler mainscheduler;
+    private LinkedList<Order> pendingOrders;
 
-	/**
-	 * A constructor for the class OrderManager.
-	 */
-	public OrderManager() throws IllegalArgumentException {
-		this.pendingOrders = new LinkedList<Order>();
+    /**
+     * A constructor for the class OrderManager.
+     */
+    public OrderManager() throws IllegalArgumentException {
+        this.pendingOrders = new LinkedList<Order>();
         this.completedOrders = new LinkedList<Order>();
-		this.mainscheduler = new MainScheduler(this);
-		this.observers = new ArrayList<OrderStatisticsObserver>();
-	}
+        this.mainscheduler = new MainScheduler(this);
+        this.observers = new ArrayList<OrderStatisticsObserver>();
+    }
 
-	/**
-	 * A method to add an order to this order manager.
-	 *
-	 * @param   order
-	 *          the order that needs to be added.
-	 */
-	protected void placeOrder(Order order) throws IllegalArgumentException {
-		if (order == null)
-			throw new IllegalArgumentException("Bad order!");
+    /**
+     * A method to add an order to this order manager.
+     *
+     * @param order the order that needs to be added.
+     */
+    protected void placeOrder(Order order) throws IllegalArgumentException {
+        if (order == null)
+            throw new IllegalArgumentException("Bad order!");
         // The time the order was placed
-        if(order.getTimestamp() == null)
+        if (order.getTimestamp() == null)
             order.setTimestampOfOrder(this.getMainScheduler().getTime());
         // try to place the order on one of the assembly lines
         this.getMainScheduler().placeOrder(order);
-	}
+    }
 
-	/**
-	 * A method to place an order in front of the pending orders.
-	 * @param order
-	 */
-	public void placeOrderInFront(Order order) {
-		if(this.getPendingOrders().size()==0)
-			placeOrder(order);
+    /**
+     * A method to place an order in front of the pending orders.
+     *
+     * @param order
+     */
+    public void placeOrderInFront(Order order) {
+        if (this.getPendingOrders().size() == 0)
+            placeOrder(order);
         this.addOrderToPendingOrders(order);
-	}
+    }
 
-   /**
-    * A method to add the given order to the pendingOrders.
-    */
-   protected void orderCannotBePlaced(Order order){
-      this.addOrderToPendingOrders(order);
-   }
+    /**
+     * A method to add the given order to the pendingOrders.
+     */
+    protected void orderCannotBePlaced(Order order) {
+        this.addOrderToPendingOrders(order);
+    }
 
-	/**
-	 * Schedule the pending orders.
-	 */
-	protected void schedulePendingOrders(){
-		scheduleSingleTaskOrders();
-		Order[] tempList = this.getPendingOrders().toArray(new Order[this.getPendingOrders().size()]);
-		for(int i = 0 ; i < tempList.length ; i ++){
+    /**
+     * Schedule the pending orders.
+     */
+    protected void schedulePendingOrders() {
+        scheduleSingleTaskOrders();
+        Order[] tempList = this.getPendingOrders().toArray(new Order[this.getPendingOrders().size()]);
+        for (int i = 0; i < tempList.length; i++) {
             Order order = tempList[i];
-			getPendingOrders().remove(order);
-			this.placeOrder(order);
-		}
-	}
+            getPendingOrders().remove(order);
+            this.placeOrder(order);
+        }
+    }
 
-	/**
-	 * Schedule the SingleTaskOrders.
-	 */
-	private void scheduleSingleTaskOrders() {
-		CopyOnWriteArrayList<Order> tempList = new CopyOnWriteArrayList<Order>(this.getPendingOrders());
-		for(Order order : tempList){
-			if(order.getUserEndDate() != null){
-				if(order.getUserEndDate().isAfter(this.getMainScheduler().getTime().plusMillis(MILIS_ONE_DAY))){
-					getPendingOrders().remove(order);
-					placeOrder(order);
-				}
-			}
-		}
-	}
+    /**
+     * Schedule the SingleTaskOrders.
+     */
+    private void scheduleSingleTaskOrders() {
+        CopyOnWriteArrayList<Order> tempList = new CopyOnWriteArrayList<Order>(this.getPendingOrders());
+        for (Order order : tempList) {
+            if (order.getUserEndDate() != null) {
+                if (order.getUserEndDate().isAfter(this.getMainScheduler().getTime().plusMillis(MILIS_ONE_DAY))) {
+                    getPendingOrders().remove(order);
+                    placeOrder(order);
+                }
+            }
+        }
+    }
 
-	/**
-	 * A method that moves a finished order from the pending list to the finished list.
-	 *
-	 * @param finished
-	 * 		  The Order that needs to be moved.
-	 */
-	public void finishedOrder(Order finished, int actualDelay) throws IllegalArgumentException {
-		if (finished == null)
-			throw new IllegalArgumentException("Bad order!");
-		this.completedOrders.add(finished);
-		this.notifyObservers(finished, actualDelay);
-	}
+    /**
+     * A method that moves a finished order from the pending list to the finished list.
+     *
+     * @param finished The Order that needs to be moved.
+     */
+    public void finishedOrder(Order finished, int actualDelay) throws IllegalArgumentException {
+        if (finished == null)
+            throw new IllegalArgumentException("Bad order!");
+        this.completedOrders.add(finished);
+        this.notifyObservers(finished, actualDelay);
+    }
 
-	// for testing
-	/**
-	 * Get completed orders.
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	public LinkedList<Order> getCompletedOrdersClone(){
-		return (LinkedList<Order>) this.getCompletedOrders().clone();
-	}
+    // for testing
 
-	/**
-	 * Get pending orders.
-	 * @return pendingOrders
-	 */
-	protected LinkedList<Order> getPendingOrders(){
+    /**
+     * Get completed orders.
+     *
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public LinkedList<Order> getCompletedOrdersClone() {
+        return (LinkedList<Order>) this.getCompletedOrders().clone();
+    }
+
+    /**
+     * Get pending orders.
+     *
+     * @return pendingOrders
+     */
+    protected LinkedList<Order> getPendingOrders() {
         return this.pendingOrders;
-	}
+    }
 
-	/**
-	 * Get MainScheduler.
-	 * @return
-	 */
-	public MainScheduler getMainScheduler() {
-		return this.mainscheduler;
-	}
+    /**
+     * Get MainScheduler.
+     *
+     * @return
+     */
+    public MainScheduler getMainScheduler() {
+        return this.mainscheduler;
+    }
 
-	/**
-	 * A method to get the pending orders of a given user of this order manager.
-	 *
-	 * @return 	ArrayList<Order>
-	 * 			the pending orders of a given user managed by this order manager.
-	 */
-	protected ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
-		if (user == null)
-			throw new IllegalArgumentException("Bad user!");
-		if (!user.canPlaceOrder())
-			throw new NoClearanceException(user);
-		ArrayList<Order> pendingOrders = new ArrayList<Order>();
-		for(AssemblyLine line: this.getMainScheduler().getAssemblyLines()){
-			pendingOrders.addAll(line.getAssemblyLineScheduler().getOrdersClone());
-		}
+    /**
+     * A method to get the pending orders of a given user of this order manager.
+     *
+     * @return ArrayList<Order>
+     * the pending orders of a given user managed by this order manager.
+     */
+    protected ArrayList<Order> getPendingOrders(User user) throws IllegalArgumentException, NoClearanceException {
+        if (user == null)
+            throw new IllegalArgumentException("Bad user!");
+        if (!user.canPlaceOrder())
+            throw new NoClearanceException(user);
+        ArrayList<Order> pendingOrders = new ArrayList<Order>();
+        for (AssemblyLine line : this.getMainScheduler().getAssemblyLines()) {
+            pendingOrders.addAll(line.getAssemblyLineScheduler().getOrdersClone());
+        }
         pendingOrders.addAll(this.getPendingOrders());
         ArrayList<Order> result = new ArrayList<>();
-        for (Order order: pendingOrders){
+        for (Order order : pendingOrders) {
             if (order.getUser() == user)
                 result.add(order);
         }
-		return result;
-	}
+        return result;
+    }
 
-	/**
-	 * A method to get the completed orders of this order manager.
-	 *
-	 * @return  the completed orders of this order manager.
-	 */
-	protected LinkedList<Order> getCompletedOrders(){
-		return this.completedOrders;
-	}
+    /**
+     * A method to get the completed orders of this order manager.
+     *
+     * @return the completed orders of this order manager.
+     */
+    protected LinkedList<Order> getCompletedOrders() {
+        return this.completedOrders;
+    }
 
-	/**
-	 * A method to get the completed orders of a given user of this order manager.
-	 *
-	 * @return  the completed orders of a given user of this order manager.
-	 */
-	protected ArrayList<Order> getCompletedOrders(User user) throws IllegalArgumentException, NoClearanceException {
-		if (user == null) throw new IllegalArgumentException("Bad user!");
-		if (!user.canPlaceOrder()) throw new NoClearanceException(user);
-		ArrayList<Order> completedOrders = new ArrayList<Order>();
-		for (Order order: this.getCompletedOrders()){
-			if (order.getUser() == user)
-				completedOrders.add(order);
-		}
-		return (ArrayList<Order>) completedOrders;
-	}
+    /**
+     * A method to get the completed orders of a given user of this order manager.
+     *
+     * @return the completed orders of a given user of this order manager.
+     */
+    protected ArrayList<Order> getCompletedOrders(User user) throws IllegalArgumentException, NoClearanceException {
+        if (user == null) throw new IllegalArgumentException("Bad user!");
+        if (!user.canPlaceOrder()) throw new NoClearanceException(user);
+        ArrayList<Order> completedOrders = new ArrayList<Order>();
+        for (Order order : this.getCompletedOrders()) {
+            if (order.getUser() == user)
+                completedOrders.add(order);
+        }
+        return (ArrayList<Order>) completedOrders;
+    }
 
 
-	/**
-	 * Add order to the pending orders of the OrderManager.
-	 * @param order
-	 */
-	private void addOrderToPendingOrders(Order order) {
-		if(!this.getPendingOrders().contains(order))
+    /**
+     * Add order to the pending orders of the OrderManager.
+     *
+     * @param order
+     */
+    private void addOrderToPendingOrders(Order order) {
+        if (!this.getPendingOrders().contains(order))
             this.getPendingOrders().add(order);
         updateEstimatedTimesOfPendingOrders();
-	}
+    }
 
-	private void updateEstimatedTimesOfPendingOrders(){
+    private void updateEstimatedTimesOfPendingOrders() {
         HashMap<AssemblyLine, LinkedList<Order>> estimator = new HashMap<>();
         for (AssemblyLine assemblyLine : this.getMainScheduler().getAssemblyLines())
             estimator.put(assemblyLine, new LinkedList<Order>());
-        for ( Order order :this.getPendingOrders()) {
+        for (Order order : this.getPendingOrders()) {
             // bepaal welke assemblyline het snelst gaat
             AssemblyLine line = this.determineBestAssemblyLine(order, estimator);
             LinkedList<Order> goal = estimator.get(line);
@@ -227,20 +229,20 @@ public class OrderManager implements OrderStatisticsSubject {
                 goal.add(order);
             }
         }
-	}
+    }
 
     private AssemblyLine determineBestAssemblyLine(Order order, HashMap<AssemblyLine, LinkedList<Order>> estimator) {
-        AssemblyLine result= null;
+        AssemblyLine result = null;
 
         ArrayList<AssemblyLine> canAcceptModel = new ArrayList<>();
-        for (AssemblyLine assemblyLine : this.getMainScheduler().getAssemblyLines() ){
-                if (assemblyLine.couldAcceptModel(order.getVehicleModel()))
-                    canAcceptModel.add(assemblyLine);
+        for (AssemblyLine assemblyLine : this.getMainScheduler().getAssemblyLines()) {
+            if (assemblyLine.couldAcceptModel(order.getVehicleModel()))
+                canAcceptModel.add(assemblyLine);
         }
 
         AssemblyLine first = canAcceptModel.get(0);
         DateTime fastestDate;
-        if (estimator.get(first).isEmpty()){
+        if (estimator.get(first).isEmpty()) {
             DateTime date = this.getMainScheduler().getTime().plusDays(1);
             newDayDate(order, date, first);
             fastestDate = order.getEstimatedDeliveryDate();
@@ -248,14 +250,14 @@ public class OrderManager implements OrderStatisticsSubject {
             fastestDate = estimator.get(first).getLast().getEstimatedDeliveryDate().plusMinutes(first.getAssemblyLineScheduler().minutesLastWorkPost(order));
         }
         result = first;
-        for(AssemblyLine line : canAcceptModel) {
+        for (AssemblyLine line : canAcceptModel) {
             LinkedList<Order> candidate = estimator.get(line);
             DateTime date;
-            if (candidate.isEmpty()){
+            if (candidate.isEmpty()) {
                 date = this.getMainScheduler().getTime().plusDays(1);
                 newDayDate(order, date, line);
                 date = order.getEstimatedDeliveryDate();
-            }else {
+            } else {
                 date = candidate.getLast().getEstimatedDeliveryDate().plusMinutes(line.getAssemblyLineScheduler().minutesLastWorkPost(order));
             }
             if (date.isBefore(fastestDate)) {
@@ -266,7 +268,7 @@ public class OrderManager implements OrderStatisticsSubject {
         return result;
     }
 
-    private void newDayDate(Order order, DateTime date, AssemblyLine assemblyLine){
+    private void newDayDate(Order order, DateTime date, AssemblyLine assemblyLine) {
         int standard = assemblyLine.getAssemblyLineScheduler().calculateMinutes(order);
         order.setStandardTimeToFinish(standard);
         date = date.withHourOfDay(6);
@@ -275,21 +277,21 @@ public class OrderManager implements OrderStatisticsSubject {
         order.setEstimatedDeliveryDateOfOrder(date);
     }
 
-	@Override
-	public void subscribeObserver(OrderStatisticsObserver observer) throws IllegalArgumentException {
-		if (observer == null) throw new IllegalArgumentException("Bad observer!");
-		this.observers.add(observer);
-	}
+    @Override
+    public void subscribeObserver(OrderStatisticsObserver observer) throws IllegalArgumentException {
+        if (observer == null) throw new IllegalArgumentException("Bad observer!");
+        this.observers.add(observer);
+    }
 
-	@Override
-	public void unSubscribeObserver(OrderStatisticsObserver observer) throws IllegalArgumentException {
-		if (observer == null) throw new IllegalArgumentException("Bad observer!");
-		this.observers.remove(observer);
-	}
+    @Override
+    public void unSubscribeObserver(OrderStatisticsObserver observer) throws IllegalArgumentException {
+        if (observer == null) throw new IllegalArgumentException("Bad observer!");
+        this.observers.remove(observer);
+    }
 
-	public void notifyObservers(Order finished, int actualDelay) {
-		for (OrderStatisticsObserver observer: this.observers) {
-			observer.update(finished, actualDelay);
-		}
-	}
+    public void notifyObservers(Order finished, int actualDelay) {
+        for (OrderStatisticsObserver observer : this.observers) {
+            observer.update(finished, actualDelay);
+        }
+    }
 }

@@ -1,16 +1,16 @@
 package ui;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Scanner;
-import java.util.regex.Pattern;
-
 import businessmodel.Model;
 import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.user.User;
 import control.SchedulingController;
 import control.SchedulingHandler;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class SchedulingView extends View {
 

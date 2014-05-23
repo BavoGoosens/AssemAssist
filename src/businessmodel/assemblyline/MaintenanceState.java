@@ -1,52 +1,52 @@
 package businessmodel.assemblyline;
 
-import java.util.Iterator;
-
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 
+import java.util.Iterator;
+
 /**
  * The Maintenance state of the AssemblyLine.
- * 
- * @author 	SWOP team 10
  *
+ * @author SWOP team 10
  */
 public class MaintenanceState implements AssemblyLineState, Observer {
 
-	private AssemblyLine assemblyLine;
+    private AssemblyLine assemblyLine;
     private boolean isReady = false;
     private boolean isActive = false;
-	
-	/**
-	 * Constructor for maintenance state of the assembly line
-	 * @param assemblyLine
-	 */
-	public MaintenanceState(AssemblyLine assemblyLine){
-		if (assemblyLine == null) throw new IllegalStateException("Not a valid assembly line.");
-		this.assemblyLine = assemblyLine;
+
+    /**
+     * Constructor for maintenance state of the assembly line
+     *
+     * @param assemblyLine
+     */
+    public MaintenanceState(AssemblyLine assemblyLine) {
+        if (assemblyLine == null) throw new IllegalStateException("Not a valid assembly line.");
+        this.assemblyLine = assemblyLine;
         assemblyLine.subscribeObserver(this);
-	}
-	
-	@Override
-	public void markAssemblyLineAsBroken() {
-		this.assemblyLine.setState(this.assemblyLine.getBrokenState());
-		// wait indefinitely
-	}
+    }
 
-	@Override
-	public void markAssemblyLineAsOperational() {
-		this.assemblyLine.setState(this.assemblyLine.getOperationalState());
-	}
+    @Override
+    public void markAssemblyLineAsBroken() {
+        this.assemblyLine.setState(this.assemblyLine.getBrokenState());
+        // wait indefinitely
+    }
 
-	@Override
-	public void markAssemblyLineAsMaintenance() {
-		// wait four hours
-		
-	}
+    @Override
+    public void markAssemblyLineAsOperational() {
+        this.assemblyLine.setState(this.assemblyLine.getOperationalState());
+    }
+
+    @Override
+    public void markAssemblyLineAsMaintenance() {
+        // wait four hours
+
+    }
 
     @Override
     public boolean canPlaceOrder() {
-            return this.isReady;
+        return this.isReady;
     }
 
     @Override
@@ -68,15 +68,15 @@ public class MaintenanceState implements AssemblyLineState, Observer {
 
     @Override
     public void update(Subject subject) {
-        if (this.isActive){
+        if (this.isActive) {
             Iterator<WorkPost> posts = this.assemblyLine.getWorkPostsIterator();
             boolean ready = true;
-            while (posts.hasNext()){
+            while (posts.hasNext()) {
                 WorkPost post = posts.next();
                 if (post.getOrder() != null)
                     ready = false;
             }
-            if (ready){
+            if (ready) {
                 // the assembly line is empty
                 // now shift 4 hours and transition to Operational state
                 this.assemblyLine.getAssemblyLineScheduler().increaseCurrentTime(4);

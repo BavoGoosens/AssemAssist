@@ -1,13 +1,5 @@
 package ui;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import businessmodel.Model;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
@@ -20,6 +12,10 @@ import businessmodel.util.OrderDateTimeComparator;
 import control.StandardOrderController;
 import control.StandardOrderHandler;
 import org.joda.time.format.PeriodFormat;
+
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GarageHolderView extends View {
 
@@ -82,7 +78,6 @@ public class GarageHolderView extends View {
     private void check(StandardVehicleOrder or) {
         this.displayHelp();
         System.out.println("> Here are the order details: ");
-        // TODO: kan gedetailleerder worden gemaakt.
         if (or.isCompleted()) {
             System.out.println("> Timestamp of ordering: " + or.getTimestamp().toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT));
             System.out.println("> Timestamp of completion: " + or.getCompletionDate().toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT));

@@ -23,7 +23,6 @@ public class TimeSlotTest {
 	private StandardVehicleOrder order;
 	
 	@Before
-	// TODO iets doen met de catch
 	public void setUp() throws Exception {
 		Catalog catalog = new Catalog();
 		VehicleModel model = catalog.getAvailaleModelsClone().get(0);

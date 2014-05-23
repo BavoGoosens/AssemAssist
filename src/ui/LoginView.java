@@ -1,13 +1,9 @@
 package ui;
 
-import java.util.Scanner;
-
 import businessmodel.Model;
-import businessmodel.user.CustomShopManager;
-import businessmodel.user.GarageHolder;
-import businessmodel.user.Manager;
-import businessmodel.user.Mechanic;
-import businessmodel.user.User;
+import businessmodel.user.*;
+
+import java.util.Scanner;
 
 public class LoginView extends View {
 
