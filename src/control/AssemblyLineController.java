@@ -15,19 +15,34 @@ public interface AssemblyLineController{
 	
 	/**
 	 * Finish the given AssemblyTask, with the given User, with the given time.
-	 * @param user
-	 * @param task
-	 * @param time
-	 * @throws NoClearanceException
+	 * @param   user
+     *                  The user who wants to finish the task
+     *
+	 * @param   task
+     *                  The task you want to finish
+     *
+	 * @param   time
+     *                  The time it took to finish this order.
+     *
+	 * @throws  NoClearanceException
+     *                  If the user is not allowed to finish this task this exception will be thrown.
 	 */
 	public void finishTask(User user, AssemblyTask task, int time) throws NoClearanceException;
 
 	/**
 	 * Change the state of the AssemblyLine.
-	 * @param user
-	 * @param assemblyLine
-	 * @param status
-	 * @throws NoClearanceException
+     *
+	 * @param   user
+     *                  The user who wants to change the operational status of an assembly line.
+     *
+	 * @param   assemblyLine
+     *                  The assembly line the status needs to be changed of.
+     *
+	 * @param   status
+     *                  The state that needs to be transitioned to.
+     *
+	 * @throws  NoClearanceException
+     *                  If the user is not allowed to change the state this exception this exception is thrown
 	 */
     public void changeOperationalStatus(User user, AssemblyLine assemblyLine, String status) throws NoClearanceException;
 	

@@ -18,11 +18,14 @@ public class AssemblyLineHandler implements AssemblyLineController{
 	private VehicleManufacturingCompany cmc;
 
 	/**
-	 * Set the given VehicleManufacturingCompany.
-	 * @param cmc
+	 * The constructor for the AssemblyLineHandler.
+     *
+	 * @param   model
+     *                  The model this controller needs to interact with.
+     *
 	 */
-	public AssemblyLineHandler (Model cmc) {
-		this.cmc = (VehicleManufacturingCompany) cmc;
+	public AssemblyLineHandler (Model model) {
+		this.cmc = (VehicleManufacturingCompany) model;
 	}
 
 	@Override
