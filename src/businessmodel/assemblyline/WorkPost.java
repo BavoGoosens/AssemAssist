@@ -113,10 +113,6 @@ public class WorkPost {
 	protected Order switchOrders(Order order) {
 		Order temp = this.getOrder();
 		this.setNewOrder(order);
-//		if(this.pendingTasks.size() == 0){
-//			this.setNewOrder(null);
-//			return order;
-//		}
 		return temp;
 	}
 

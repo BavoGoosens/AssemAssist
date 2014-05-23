@@ -114,7 +114,6 @@ public class InitialData {
 
 		this.initialize();
 
-		System.out.println(numbers.size());
 		for(int i=0; i < numbers.size(); i++){
 			orders = this.randomOrderGenerator("standard",numbers.get(i));
 			if (!orders)
@@ -143,7 +142,8 @@ public class InitialData {
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
 		}
-	}
+        System.out.println(orderCount);
+    }
 
 	private void makeOrdersNotInSameBatch() {
 		this.makeStandardOrder(0);
@@ -382,8 +382,8 @@ public class InitialData {
 			}
 		}else if (orders.equals("singleTask")){
 			try {
-				DateTime time = new DateTime(new DateTime().getYear(), new DateTime().getMonthOfYear(),new DateTime().getDayOfMonth(), 8, 0);
-				SingleTaskOrder order = new SingleTaskOrder(this.customsManager, this.chosen, time.plusDays(1));
+				DateTime time = new DateTime(new DateTime().getYear(), new DateTime().getMonthOfYear(),new DateTime().getDayOfMonth(), 6, 0);
+				SingleTaskOrder order = new SingleTaskOrder(this.customsManager, this.chosen, time.plusDays(3));
 				this.controllerSingleTask.placeSingleTaskOrder(this.customsManager,order);
 				this.orderCount ++;
 				return true;

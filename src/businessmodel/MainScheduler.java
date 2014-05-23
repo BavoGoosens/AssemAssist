@@ -141,7 +141,9 @@ public class MainScheduler {
 			}
 			// add the order to the assembly line (try)
 			fastestAssemblyLine.getAssemblyLineScheduler().addOrder(order);
-		}
+		} else{
+            System.out.println("we here");
+        }
 	}
 
 	/**

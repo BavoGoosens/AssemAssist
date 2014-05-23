@@ -1,10 +1,8 @@
 package businessmodel.assemblyline;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
+import businessmodel.util.IteratorConverter;
 import org.joda.time.DateTime;
 
 import businessmodel.MainScheduler;
@@ -31,7 +29,7 @@ public class AssemblyLine implements Subject{
 	private AssemblyLineScheduler assemblylineScheduler;
 	private MainScheduler mainscheduler;
 	private int timeCurrentStatus = 0;
-	private ArrayList<WorkPost> workPosts = new ArrayList<WorkPost>();
+	private LinkedList<WorkPost> workPosts = new LinkedList<>();
 	private ArrayList<Observer> subscribers = new ArrayList<Observer>();
     private String name;
 
@@ -93,16 +91,78 @@ public class AssemblyLine implements Subject{
 	protected void advance(Order newOrder) throws IllegalStateException {
 		if (!this.canAdvance())
 			throw new IllegalStateException("Cannot advance assembly line!");
-		Order temp = newOrder;
-		for(WorkPost wp: this.getWorkPosts()){
-			temp = wp.switchOrders(temp);
-		}
-		if(temp != null)
+        LinkedList<WorkPost> reversed = (LinkedList<WorkPost>) this.getWorkPosts().clone();
+        Collections.reverse(reversed);
+        // get the potentially finished order.
+        Order temp = reversed.getFirst().getOrder();
+        reversed.getFirst().setNewOrder(null);
+        for(int i = 1 ; i < reversed.size() ; i++){
+            // get the Order from the current work post.
+            Order nextOrder = reversed.get(i).getOrder();
+            if(nextOrder != null){
+                reversed.get(i).setNewOrder(null);
+                // if there is a real order try and shift it to the next work post
+                // where it will have pending orders
+                WorkPost workPostForOrder = this.getNextWorkPost(reversed.get(i), reversed, nextOrder);
+                if (workPostForOrder == null )
+                    // this order is completed
+                    nextOrder.setCompleted();
+                 else
+                    workPostForOrder.setNewOrder(nextOrder);
+            }
+        }
+        // set the new order on the first post.
+        reversed.getLast().setNewOrder(newOrder);
+        if(temp != null)
 			temp.setCompleted();
 		this.timeCurrentStatus = 0;
 	}
 
-	/**
+    /**
+     *
+     * @param workPost
+     * @param reversed
+     * @param order
+     * @return
+     */
+    private WorkPost getNextWorkPost(WorkPost workPost, LinkedList<WorkPost> reversed, Order order) {
+        // get the next work post
+        WorkPost nextWorkPost = this.previousWorkPost(workPost, reversed);
+        nextWorkPost.setNewOrder(order);
+        IteratorConverter<AssemblyTask> converter = new IteratorConverter<>();
+        while(converter.convert(nextWorkPost.getPendingTasks()).size() == 0){
+            // there are no pending tasks so try to get the next work post.
+            WorkPost next = this.previousWorkPost(nextWorkPost,reversed);
+            if( next != null && next.getOrder() == null){
+                // there is a next work post and an order can be placed.
+                // so remove the order from the current place
+                nextWorkPost.setNewOrder(null);
+                // put it on the next one
+                next.setNewOrder(order);
+                // update the current workpost
+                nextWorkPost = next;
+            } else if (next != null && next.getOrder() != null){
+                // the next workpost can not accept the order
+                // because there already is an order in process
+                return nextWorkPost;
+            } else {
+                // if eventualy we find no next workpost the order can be finished
+                return null;
+            }
+        }
+        return nextWorkPost;
+    }
+
+    private WorkPost previousWorkPost(WorkPost workPost, LinkedList<WorkPost> reversed) {
+        int index = reversed.indexOf(workPost);
+        if(index-1 < 0)
+            return null;
+        else
+            return reversed.get(index-1);
+    }
+
+
+    /**
 	 * Updates the time on the current status of the assembly line and notifies the scheduler.
 	 *
 	 * @param 	timeCurrentStatus
@@ -139,7 +199,7 @@ public class AssemblyLine implements Subject{
 	 * Returns the list of work posts of the assembly line
 	 * @return 	The list of work posts.
 	 */
-    private ArrayList<WorkPost> getWorkPosts() {
+    private LinkedList<WorkPost> getWorkPosts() {
         return this.workPosts;
     }
 
@@ -230,7 +290,9 @@ public class AssemblyLine implements Subject{
 	protected void setWorkPosts(List<WorkPost> workPosts){
 		if (workPosts == null)
 			throw new IllegalArgumentException("There were no workPosts supplied");
-		this.workPosts = (ArrayList<WorkPost>) workPosts;
+        LinkedList<WorkPost> list = new LinkedList<WorkPost>();
+        list.addAll(workPosts);
+        this.workPosts = list;
 	}
 
 	/**
