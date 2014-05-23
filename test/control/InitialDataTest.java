@@ -28,12 +28,8 @@ public class InitialDataTest {
 		
 		VehicleManufacturingCompany vmc = new VehicleManufacturingCompany();
 		int nbOrders = 10;
-		try {
-			new InitialData().initialize(vmc);
-		} catch (NoClearanceException e1) {
-			e1.printStackTrace();
-		}
-		User user = vmc.login("wow", "");
+        new InitialData().initialize(vmc);
+        User user = vmc.login("wow", "");
 		int count = 0;
 		try {
 			Iterator<Order> it = vmc.getPendingOrders(user);
