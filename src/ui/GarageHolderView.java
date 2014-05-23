@@ -87,7 +87,7 @@ public class GarageHolderView extends View {
             System.out.println("> Timestamp of completion: " + or.getCompletionDate().toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT));
         } else {
             System.out.println("> Timestamp of ordering: " + or.getTimestamp().toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT));
-         //   System.out.println("> Estimated production time: " + or.getStandardTimeToFinish().toString());
+            //System.out.println("> Estimated production time: " + or.getStandardTimeToFinish().toString());
         }
         System.out.print(">> ");
         String response = this.scan.nextLine();
