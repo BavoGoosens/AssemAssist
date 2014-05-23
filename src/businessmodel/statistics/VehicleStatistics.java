@@ -79,9 +79,9 @@ public class VehicleStatistics implements Observer {
 	 * 
 	 */
 	public ArrayList<Tuple<LocalDate, Integer>> getLastDays(int numberOfDays){
-		if (this.numberOfVehicles.size() > numberOfDays*3){
+		if (this.numberOfVehicles.size() > numberOfDays){
 			ArrayList<Tuple<LocalDate, Integer>> result = new ArrayList<Tuple<LocalDate, Integer>>(numberOfDays);
-			for(int i = this.numberOfVehicles.size()-1; i >= this.numberOfVehicles.size() - numberOfDays*3 ; i--){
+			for(int i = this.numberOfVehicles.size()-1; i >= this.numberOfVehicles.size() - numberOfDays ; i--){
 				result.add(this.numberOfVehicles.get(i));
 			}
 			return result;
@@ -127,7 +127,14 @@ public class VehicleStatistics implements Observer {
 			AssemblyLineScheduler scheduler = (AssemblyLineScheduler) subject;
 			LocalDate date = scheduler.getCurrentTime().toLocalDate();
 			int dayOrdersCount = scheduler.getDayOrdersCount();
-			this.numberOfVehicles.add(new Tuple<LocalDate, Integer>(date, dayOrdersCount));
+			boolean bool = false;
+			for (Tuple<LocalDate, Integer> tuple: this.numberOfVehicles) {
+				if (tuple.getX().equals(date)) {
+					bool = true;
+					tuple.setY(tuple.getY()+dayOrdersCount);
+				}
+			}
+			if (!bool) this.numberOfVehicles.add(new Tuple<LocalDate, Integer>(date, dayOrdersCount));
 			this.updateAverage();
 			this.updateMedian();
 		} else {
