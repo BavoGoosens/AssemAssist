@@ -13,6 +13,7 @@ import businessmodel.observer.OrderStatisticsObserver;
 import businessmodel.observer.OrderStatisticsSubject;
 import businessmodel.order.Order;
 import businessmodel.user.User;
+import org.joda.time.Period;
 
 /**
  * A class that represents an order manager. This class handles all the orders for a car manufacturing company.
@@ -218,6 +219,7 @@ public class OrderManager implements OrderStatisticsSubject {
                     DateTime date1 = goal.getLast().getEstimatedDeliveryDate().plusDays(1);
                     newDayDate(order, date1, line);
                 } else {
+                    order.setStandardTimeToFinish(line.getAssemblyLineScheduler().calculateMinutes(order));
                     order.setEstimatedDeliveryDateOfOrder(goal.getLast().getEstimatedDeliveryDate()
                             .plusMinutes(line.getAssemblyLineScheduler().minutesLastWorkPost(order)));
                 }
@@ -270,9 +272,11 @@ public class OrderManager implements OrderStatisticsSubject {
     }
 
     private void newDayDate(Order order, DateTime date, AssemblyLine assemblyLine){
+        int standard = assemblyLine.getAssemblyLineScheduler().calculateMinutes(order);
+        order.setStandardTimeToFinish(standard);
         date = date.withHourOfDay(6);
         date = date.withMinuteOfHour(0);
-        date = date.plusMinutes(assemblyLine.getAssemblyLineScheduler().calculateMinutes(order));
+        date = date.plusMinutes(standard);
         order.setEstimatedDeliveryDateOfOrder(date);
     }
 

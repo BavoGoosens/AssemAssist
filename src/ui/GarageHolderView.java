@@ -19,6 +19,7 @@ import businessmodel.user.User;
 import businessmodel.util.OrderDateTimeComparator;
 import control.StandardOrderController;
 import control.StandardOrderHandler;
+import org.joda.time.format.PeriodFormat;
 
 public class GarageHolderView extends View {
 
@@ -87,7 +88,7 @@ public class GarageHolderView extends View {
             System.out.println("> Timestamp of completion: " + or.getCompletionDate().toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT));
         } else {
             System.out.println("> Timestamp of ordering: " + or.getTimestamp().toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT));
-            //System.out.println("> Estimated production time: " + or.getStandardTimeToFinish().toString());
+            System.out.println("> Estimated production time: " + PeriodFormat.getDefault().print(or.getStandardTimeToFinish()));
         }
         System.out.print(">> ");
         String response = this.scan.nextLine();
