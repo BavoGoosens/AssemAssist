@@ -219,8 +219,10 @@ public class OrderManager implements OrderStatisticsSubject {
                     DateTime date1 = goal.getLast().getEstimatedDeliveryDate().plusDays(1);
                     newDayDate(order, date1, line);
                 } else {
+                    int time = line.getAssemblyLineScheduler().minutesLastWorkPost(order);
+                    order.setStandardTimeToFinish(time);
                     order.setEstimatedDeliveryDateOfOrder(goal.getLast().getEstimatedDeliveryDate()
-                            .plusMinutes(line.getAssemblyLineScheduler().minutesLastWorkPost(order)));
+                            .plusMinutes(time));
                 }
                 goal.add(order);
             }
@@ -271,9 +273,11 @@ public class OrderManager implements OrderStatisticsSubject {
     }
 
     private void newDayDate(Order order, DateTime date, AssemblyLine assemblyLine){
+        int standard = assemblyLine.getAssemblyLineScheduler().calculateMinutes(order);
+        order.setStandardTimeToFinish(standard);
         date = date.withHourOfDay(6);
         date = date.withMinuteOfHour(0);
-        date = date.plusMinutes(assemblyLine.getAssemblyLineScheduler().calculateMinutes(order));
+        date = date.plusMinutes(standard);
         order.setEstimatedDeliveryDateOfOrder(date);
     }
 
