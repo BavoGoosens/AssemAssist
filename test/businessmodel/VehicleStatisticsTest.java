@@ -94,22 +94,18 @@ public class VehicleStatisticsTest {
 			}
 		}
 
-		for (int i = 0; i <= 100; i++) {
+		for (int i = 0; i < 100; i++) {
 			this.om.placeOrder(new StandardVehicleOrder(garageHolder, chosen, models.get(0)));
 		}
-		
-		System.out.println("yolo");
 		
 	}
 	
 
     @Test
 	public void test() {
-		for (Tuple<LocalDate, Integer> tuple: this.vehicleStatistics.getLastDaysClone(2)) {
+		for (Tuple<LocalDate, Integer> tuple: this.vehicleStatistics.getLastDays(1)) {
 			System.out.println(tuple.getX());
 			System.out.println(tuple.getY());
 		}
-		System.out.println(vehicleStatistics.getLastDaysClone(2).size()+" entries in vehicle statistics");
-		System.out.println(om.getCompletedOrders().size()+" orders completed");
 	}
 }

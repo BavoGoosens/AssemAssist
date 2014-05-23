@@ -151,6 +151,7 @@ public class AssemblyLine implements Subject{
                 return nextWorkPost;
             } else {
                 // if eventualy we find no next workpost the order can be finished
+                nextWorkPost.setNewOrder(null);
                 return null;
             }
         }
