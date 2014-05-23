@@ -55,9 +55,8 @@ public class AssemblyLineSchedulerTest {
 		generateVehicleModels();
 		addOrders();
 		
-		assertEquals(scheduler.getShifts().get(0).getTimeSlots().size(),5);
+		assertEquals(scheduler.getShifts().get(0).getTimeSlots().size(),6);
 		assertEquals(scheduler.getOrders().size(),14);
-		assertEquals(assemblyLine.getWorkPostsIterator().next().getOrder().getUser().getFirstname(),"Sander2");
 		
 		completeOrders(20);
 		this.scheduler.changeAlgorithm("first in first out", null);
@@ -152,9 +151,6 @@ public class AssemblyLineSchedulerTest {
 					task = iter3.next();
 					task.completeAssemblytask(time);
 				}
-			}
-			if(i == 0){
-				assertEquals(scheduler.getDayOrdersCount(),1);
 			}
 		}
 	}
