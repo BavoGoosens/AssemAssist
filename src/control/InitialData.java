@@ -143,16 +143,12 @@ public class InitialData {
 			if (!orders)
 				this.randomOrderGenerator("standard", 0);
 		}
-
-
-
 	}
 
 	private void makeOrdersNotInSameBatch() {
 		this.makeStandardOrder(0);
 		this.makeStandardOrder(4);
 		this.makeStandardOrder(1);
-		
 	}
 
 	private void makeStandardOrder(int model) {

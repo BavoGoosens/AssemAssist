@@ -1,17 +1,17 @@
 package businessmodel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import businessmodel.util.Tuple;
 import org.joda.time.DateTime;
 
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.exceptions.NoClearanceException;
-import businessmodel.observer.Observer;
 import businessmodel.observer.OrderStatisticsObserver;
 import businessmodel.observer.OrderStatisticsSubject;
-import businessmodel.observer.Subject;
 import businessmodel.order.Order;
 import businessmodel.user.User;
 
@@ -48,7 +48,8 @@ public class OrderManager implements OrderStatisticsSubject {
 		if (order == null)
 			throw new IllegalArgumentException("Bad order!");
         // The time the order was placed
-        order.setTimestampOfOrder(this.getMainScheduler().getTime());
+        if(order.getTimestamp() == null)
+            order.setTimestampOfOrder(this.getMainScheduler().getTime());
         // try to place the order on one of the assembly lines
         this.getMainScheduler().placeOrder(order);
 	}
@@ -186,46 +187,91 @@ public class OrderManager implements OrderStatisticsSubject {
 	 * @param order
 	 */
 	private void addOrderToPendingOrders(Order order) {
-		setEstimatedTimeOfPendingOrder(order);
 		if(!this.getPendingOrders().contains(order))
             this.getPendingOrders().add(order);
+        updateEstimatedTimesOfPendingOrders();
 	}
 	
 	/**
 	 * Set the estimated delivery date of the given order.
-	 * @param order
 	 */
-	private void setEstimatedTimeOfPendingOrder(Order order){
-		if(this.getPendingOrders().size() == 0){
-            DateTime date = this.getMainScheduler().getTime().plusDays(1);
-            newDayDate(order, date);
-        }
-		else {
-            DateTime date = this.getPendingOrders().getLast().getEstimatedDeliveryDate().
-                    plusMinutes(this.getMainScheduler().getAssemblyLineSchedulers().
-                            get(0).minutesLastWorkPost(order));
-            if (date.getHourOfDay() >= 22 & date.getMinuteOfHour() >= 0){
-                DateTime date1 = this.getPendingOrders().getLast().getEstimatedDeliveryDate().plusDays(1);
-                newDayDate(order, date1);
+	private void updateEstimatedTimesOfPendingOrders(){
+        HashMap<AssemblyLine, LinkedList<Order>> estimator = new HashMap<>();
+        for (AssemblyLine assemblyLine : this.getMainScheduler().getAssemblyLines())
+            estimator.put(assemblyLine, new LinkedList<Order>());
+        for ( Order order :this.getPendingOrders()) {
+            // bepaal welke assemblyline het snelst gaat
+            AssemblyLine line = this.determineBestAssemblyLine(order, estimator);
+            LinkedList<Order> goal = estimator.get(line);
+            // als het het eerste order is begin nieuwe dag op op basis van de datum van de
+            // Mainscheduler plus 1
+            if (goal.isEmpty()) {
+                DateTime date = this.getMainScheduler().getTime().plusDays(1);
+                newDayDate(order, date, line);
+                goal.add(order);
+            } else {
+                // anders neem estimate vorig order en voeg er de verwachte tijd aan toe
+                DateTime date = goal.getLast().getEstimatedDeliveryDate().
+                        plusMinutes(line.getAssemblyLineScheduler().minutesLastWorkPost(order));
+                if (date.getHourOfDay() >= 22 & date.getMinuteOfHour() >= 0) {
+                    DateTime date1 = goal.getLast().getEstimatedDeliveryDate().plusDays(1);
+                    newDayDate(order, date1, line);
+                } else {
+                    order.setEstimatedDeliveryDateOfOrder(goal.getLast().getEstimatedDeliveryDate()
+                            .plusMinutes(line.getAssemblyLineScheduler().minutesLastWorkPost(order)));
+                }
+                goal.add(order);
             }
-            else{
-
-                order.setEstimatedDeliveryDateOfOrder(this.getPendingOrders().getLast().getEstimatedDeliveryDate()
-                        .plusMinutes(this.getMainScheduler().getAssemblyLineSchedulers().get(0).minutesLastWorkPost(order)));
-          }
-       }
+        }
 	}
 
 	/**
 	 * Method to set the henk.
 	 * @param order
-	 * @param date
+	 * @param estimator
 	 */
-    private void newDayDate(Order order, DateTime date){
+
+    private AssemblyLine determineBestAssemblyLine(Order order, HashMap<AssemblyLine, LinkedList<Order>> estimator) {
+        AssemblyLine result= null;
+
+        ArrayList<AssemblyLine> canAcceptModel = new ArrayList<>();
+        for (AssemblyLine assemblyLine : this.getMainScheduler().getAssemblyLines() ){
+                if (assemblyLine.couldAcceptModel(order.getVehicleModel()))
+                    canAcceptModel.add(assemblyLine);
+        }
+
+        AssemblyLine first = canAcceptModel.get(0);
+        DateTime fastestDate;
+        if (estimator.get(first).isEmpty()){
+            DateTime date = this.getMainScheduler().getTime().plusDays(1);
+            newDayDate(order, date, first);
+            fastestDate = order.getEstimatedDeliveryDate();
+        } else {
+            fastestDate = estimator.get(first).getLast().getEstimatedDeliveryDate().plusMinutes(first.getAssemblyLineScheduler().minutesLastWorkPost(order));
+        }
+        result = first;
+        for(AssemblyLine line : canAcceptModel) {
+            LinkedList<Order> candidate = estimator.get(line);
+            DateTime date;
+            if (candidate.isEmpty()){
+                date = this.getMainScheduler().getTime().plusDays(1);
+                newDayDate(order, date, line);
+                date = order.getEstimatedDeliveryDate();
+            }else {
+                date = candidate.getLast().getEstimatedDeliveryDate().plusMinutes(line.getAssemblyLineScheduler().minutesLastWorkPost(order));
+            }
+            if (date.isBefore(fastestDate)) {
+                fastestDate = date;
+                result = line;
+            }
+        }
+        return result;
+    }
+
+    private void newDayDate(Order order, DateTime date, AssemblyLine assemblyLine){
         date = date.withHourOfDay(6);
         date = date.withMinuteOfHour(0);
-        date = date.plusMinutes(this.getMainScheduler().
-                getAssemblyLineSchedulers().get(0).calculateMinutes(order));
+        date = date.plusMinutes(assemblyLine.getAssemblyLineScheduler().calculateMinutes(order));
         order.setEstimatedDeliveryDateOfOrder(date);
     }
 

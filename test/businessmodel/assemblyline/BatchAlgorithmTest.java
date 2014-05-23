@@ -8,6 +8,8 @@ import java.util.Iterator;
 import org.joda.time.Period;
 import org.junit.Test;
 
+import control.StandardOrderHandler;
+
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.category.Airco;
 import businessmodel.category.Body;
@@ -25,139 +27,157 @@ import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.Order;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
+import businessmodel.user.User;
 
 
 public class BatchAlgorithmTest {
 
+	private StandardOrderHandler controllerStandard;
+	private User garageholder;
+
 	@Test
 	public void test() throws IllegalArgumentException, NoClearanceException, UnsatisfiedRestrictionException {
 
-		
-			VehicleManufacturingCompany vmc = new VehicleManufacturingCompany();
 
-			ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();
-			options.add(new VehicleOption("Airco", new Airco()));
-			options.add(new VehicleOption("seats", new Seats()));
-			options.add(new VehicleOption("Color", new Color()));
-			options.add(new VehicleOption("Gearbox", new Gearbox()));
-			options.add(new VehicleOption("Wheels", new Wheels()));
-			
-			VehicleOption engine = new VehicleOption("small engine", new Engine());
-			VehicleOption body = new VehicleOption("big body", new Body());
-			options.add(body);
-			options.add(engine);
-			
-			Period period = new Period();
-			period.withHours(3);
-			Order order1 = new StandardVehicleOrder(new GarageHolder("1","",""), options, new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
-			vmc.placeOrder(order1);
-			
-			//---------------------------------------------------------------------------------
-			
-			options.remove(body);
-			options.remove(engine);
-			engine = new VehicleOption("medium engine", new Engine());
-			body = new VehicleOption("big body", new Body());
-			options.add(body);
-			options.add(engine);
+		VehicleManufacturingCompany vmc = new VehicleManufacturingCompany();
 
-			Order order2 = new StandardVehicleOrder(new GarageHolder("2","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
-			vmc.placeOrder(order2);
-			
-			//---------------------------------------------------------------------------------
-			
-			options.remove(body);
-			options.remove(engine);
-			engine = new VehicleOption("medium engine", new Engine());
-			body = new VehicleOption("big body", new Body());
-			options.add(body);
-			options.add(engine);
+		ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();
+		options.add(new VehicleOption("Airco", new Airco()));
+		options.add(new VehicleOption("seats", new Seats()));
+		options.add(new VehicleOption("Color", new Color()));
+		options.add(new VehicleOption("Gearbox", new Gearbox()));
+		options.add(new VehicleOption("Wheels", new Wheels()));
 
-			Order order3 = new StandardVehicleOrder(new GarageHolder("3","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
-			vmc.placeOrder(order3);
+		this.garageholder = vmc.login("wow", "");
 
-			//---------------------------------------------------------------------------------
-			
-			options.remove(body);
-			options.remove(engine);
-			engine = new VehicleOption("medium engine", new Engine());
-			body = new VehicleOption("big body", new Body());
-			options.add(body);
-			options.add(engine);
+		this.controllerStandard = new StandardOrderHandler(vmc);
 
-			Order order4 = new StandardVehicleOrder(new GarageHolder("4","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
-			vmc.placeOrder(order4);
+		VehicleOption engine = new VehicleOption("medium engine", new Engine());
+		VehicleOption body = new VehicleOption("big body", new Body());
+		options.add(body);
+		options.add(engine);
 
-			
-			//---------------------------------------------------------------------------------
-			
-			options.remove(body);
-			options.remove(engine);
-			engine = new VehicleOption("medium engine", new Engine());
-			body = new VehicleOption("body", new Body());
-			options.add(body);
-			options.add(engine);
+		StandardVehicleOrder order1 = new StandardVehicleOrder(new GarageHolder("1","",""), options, new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
+		this.controllerStandard.placeOrder(this.garageholder,order1);
 
-			Order order5 = new StandardVehicleOrder(new GarageHolder("5","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
-			vmc.placeOrder(order5);
+		//---------------------------------------------------------------------------------
 
-			
-			//----------------------------------------------------------------------------------
-			
-//			for(VehicleOption option : orderManager.getScheduler().getUnscheduledVehicleOptions(3))
-//				System.out.println(option);
-			
-			ArrayList<VehicleOption> options1 = new ArrayList<VehicleOption>();
-			options1.add(new VehicleOption("medium engine", new Engine()));
-			options1.add(new VehicleOption("big body", new Body()));
-			options1.add(new VehicleOption("Airco", new Airco()));
-			vmc.changeSystemWideAlgorithm("SpecificationBatch", options1 );
-			
-			boolean bool = true;
-			try{
-				vmc.changeSystemWideAlgorithm("dsfsf", options1);
-			}catch(IllegalSchedulingAlgorithmException ex){
-				bool = false;
-			}
-			
-			assertEquals(false, bool);
-//			for(Order order: orderManager.getScheduler().getOrdersClone())
-//				System.out.println(order.toString());
-			
-			Iterator<AssemblyLine> assem = vmc.getAssemblyLines(vmc.login("woww",""));
-			ArrayList<AssemblyLine> listAssem = new ArrayList<AssemblyLine>();
-			
-			while(assem.hasNext()){
-				listAssem.add(assem.next());
-//				System.out.println(assem.next().getAssemblyLineScheduler().getOrders().size());
-			}
-		
-			
-			System.out.println(listAssem.get(0).getAssemblyLineScheduler().getOrders().size());
-			System.out.println(listAssem.get(1).getAssemblyLineScheduler().getOrders().size());
-			System.out.println(listAssem.get(2).getAssemblyLineScheduler().getOrders().size());
-			
-			System.out.println(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(0));
-			System.out.println(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(1));
-			System.out.println(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(2));
-			System.out.println(listAssem.get(1).getAssemblyLineScheduler().getOrders().get(0));
-			System.out.println(listAssem.get(1).getAssemblyLineScheduler().getOrders().get(1));
-			
-			assertEquals(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(0), order3);
-			assertEquals(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(1), order1);
-			assertEquals(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(2), order5);
-			assertEquals(listAssem.get(1).getAssemblyLineScheduler().getOrders().get(0), order2);
-			assertEquals(listAssem.get(1).getAssemblyLineScheduler().getOrders().get(1), order4);
-			
-//			assertEquals(listAssem.get(0).getWorkPostOrders(),order2);
-//			assertEquals(orderManager.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(1),order3);
-//			assertEquals(orderManager.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(2),order5);
-//			assertEquals(orderManager.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(3),order1);
-//			assertEquals(orderManager.getMainScheduler().getAssemblyLineSchedulers().get(0).getOrdersClone().get(4),order4);
-			
-			
+		options.remove(body);
+		options.remove(engine);
+		engine = new VehicleOption("medium engine", new Engine());
+		body = new VehicleOption("big body", new Body());
+		options.add(body);
+		options.add(engine);
 
-		
+		StandardVehicleOrder order2 = new StandardVehicleOrder(new GarageHolder("2","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
+		this.controllerStandard.placeOrder(this.garageholder,order2);
+
+		//---------------------------------------------------------------------------------
+
+		options.remove(body);
+		options.remove(engine);
+		engine = new VehicleOption("small engine", new Engine());
+		body = new VehicleOption("big body", new Body());
+		options.add(body);
+		options.add(engine);
+
+		StandardVehicleOrder order3 = new StandardVehicleOrder(new GarageHolder("3","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
+		this.controllerStandard.placeOrder(this.garageholder,order3);
+
+		//---------------------------------------------------------------------------------
+
+		options.remove(body);
+		options.remove(engine);
+		engine = new VehicleOption("medium engine", new Engine());
+		body = new VehicleOption("big body", new Body());
+		options.add(body);
+		options.add(engine);
+
+		StandardVehicleOrder order4 = new StandardVehicleOrder(new GarageHolder("4","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
+		this.controllerStandard.placeOrder(this.garageholder,order4);
+
+
+		//---------------------------------------------------------------------------------
+
+		options.remove(body);
+		options.remove(engine);
+		engine = new VehicleOption("medium engine", new Engine());
+		body = new VehicleOption("big body", new Body());
+		options.add(body);
+		options.add(engine);
+
+		StandardVehicleOrder order5 = new StandardVehicleOrder(new GarageHolder("5","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
+		this.controllerStandard.placeOrder(this.garageholder,order5);
+
+
+		//----------------------------------------------------------------------------------
+
+		options.remove(body);
+		options.remove(engine);
+		engine = new VehicleOption("medium engine", new Engine());
+		body = new VehicleOption("body", new Body());
+		options.add(body);
+		options.add(engine);
+
+		StandardVehicleOrder order6 = new StandardVehicleOrder(new GarageHolder("6","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
+		this.controllerStandard.placeOrder(this.garageholder,order6);
+
+		//----------------------------------------------------------------------------------
+
+		options.remove(body);
+		options.remove(engine);
+		engine = new VehicleOption("medium engine", new Engine());
+		body = new VehicleOption("body", new Body());
+		options.add(body);
+		options.add(engine);
+
+		StandardVehicleOrder order7 = new StandardVehicleOrder(new GarageHolder("7","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
+		this.controllerStandard.placeOrder(this.garageholder,order7);
+
+		//----------------------------------------------------------------------------------
+
+		options.remove(body);
+		options.remove(engine);
+		engine = new VehicleOption("medium engine", new Engine());
+		body = new VehicleOption("big body", new Body());
+		options.add(body);
+		options.add(engine);
+
+		StandardVehicleOrder order8 = new StandardVehicleOrder(new GarageHolder("8","",""), options,new VehicleModel("Car Model A", new VehicleModelSpecification(options)));
+		this.controllerStandard.placeOrder(this.garageholder,order8);
+
+
+		ArrayList<VehicleOption> options1 = new ArrayList<VehicleOption>();
+		options1.add(new VehicleOption("medium engine", new Engine()));
+		options1.add(new VehicleOption("big body", new Body()));
+		vmc.changeSystemWideAlgorithm("SpecificationBatch", options1 );
+
+		boolean bool = true;
+		try{
+			vmc.changeSystemWideAlgorithm("dsfsf", options1);
+		}catch(IllegalSchedulingAlgorithmException ex){
+			bool = false;
+		}
+
+		assertEquals(false, bool);
+
+		Iterator<AssemblyLine> assem = vmc.getAssemblyLines(vmc.login("woww",""));
+		ArrayList<AssemblyLine> listAssem = new ArrayList<AssemblyLine>();
+
+		while(assem.hasNext()){
+			listAssem.add(assem.next());
+		}
+
+
+		assertEquals(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(0), order1);
+		assertEquals(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(1), order5);
+		assertEquals(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(2), order8);
+		assertEquals(listAssem.get(0).getAssemblyLineScheduler().getOrders().get(3), order3);
+		assertEquals(listAssem.get(1).getAssemblyLineScheduler().getOrders().get(0), order2);
+		assertEquals(listAssem.get(1).getAssemblyLineScheduler().getOrders().get(1), order4);
+		assertEquals(listAssem.get(1).getAssemblyLineScheduler().getOrders().get(2), order6);
+		assertEquals(listAssem.get(2).getAssemblyLineScheduler().getOrders().get(0), order7);
+
 	}
 
 }
