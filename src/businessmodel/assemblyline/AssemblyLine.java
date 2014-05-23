@@ -37,7 +37,7 @@ public class AssemblyLine implements Subject{
 	private ArrayList<Observer> subscribers = new ArrayList<Observer>();
     private String name;
 
-    
+
 	/**
 	 * Creates a new assembly line.
 	 */
@@ -48,13 +48,13 @@ public class AssemblyLine implements Subject{
 	}
 
 	/**
-	 * Checks whether an order can be place on this assembly line
+	 * Checks whether an order can be placed on this assembly line.
 	 *
      * @param 	order
 	 * 		  	The order that has to be placed.
 	 *
      * @return 	True if the order can be placed.
-     * 
+     *
 	 */
 	public boolean canAddOrder(Order order){
 		// als het order geen model heeft is het oké, anders checken of model kan geplaatst worden
@@ -70,7 +70,7 @@ public class AssemblyLine implements Subject{
 
 	/**
 	 * Checks whether the assembly line can move forward.
-	 * @return True if the assembly line can move forward.
+	 * @return True if all the WorkPosts are completed and the current state allows it.
 	 */
 	protected boolean canAdvance() {
 		boolean ready = true;
@@ -85,6 +85,7 @@ public class AssemblyLine implements Subject{
 
 	/**
 	 * Advances the assembly line and adds a new order to the assembly line.
+   * An Order skips a WorkPost if it has nog tasks there to perform.
 	 *
 	 * @param 	newOrder
 	 * 			The new order that needs to be added to the assembly line, when moved forward.
@@ -122,13 +123,6 @@ public class AssemblyLine implements Subject{
 		this.timeCurrentStatus = 0;
 	}
 
-    /**
-     *
-     * @param workPost
-     * @param reversed
-     * @param order
-     * @return
-     */
     private WorkPost getNextWorkPost(WorkPost workPost, LinkedList<WorkPost> reversed, Order order) {
         // get the next work post
         WorkPost nextWorkPost = this.previousWorkPost(workPost, reversed);
@@ -254,7 +248,7 @@ public class AssemblyLine implements Subject{
 
 	/**
 	 * Sets the name of the assembly line.
-	 * 
+	 *
 	 * @param 	name
 	 * 			The name of the assembly line.
 	 */
@@ -264,7 +258,7 @@ public class AssemblyLine implements Subject{
 
     /**
      * Sets the main scheduler of the assembly line to the given scheduler.
-     * 
+     *
      * @param 	scheduler
      * 			The main scheduler of the assembly line.
      */
@@ -276,7 +270,7 @@ public class AssemblyLine implements Subject{
 
 	/**
 	 * Sets the assembly line scheduler of the assembly line to the given scheduler.
-	 * 
+	 *
 	 * @param 	scheduler
 	 * 			The assembly line scheduler of the assembly line.
 	 */
@@ -288,7 +282,7 @@ public class AssemblyLine implements Subject{
 
 	/**
 	 * Sets the work posts of the assembly line to the given work posts.
-	 * 
+	 *
 	 * @param 	workPosts
 	 * 			The work posts of the assembly line.
 	 */
@@ -302,7 +296,7 @@ public class AssemblyLine implements Subject{
 
 	/**
 	 * Sets the vehicle models for which the assembly line is responsible to the given models.
-	 * 
+	 *
 	 * @param 	models
 	 * 			The models for which the assembly line is responsible.
 	 */
@@ -379,7 +373,7 @@ public class AssemblyLine implements Subject{
 
 	/**
 	 * Sets the state of the assembly line to the given state.
-	 * 
+	 *
 	 * @param 	state
 	 * 			The state the assembly line needs to be set to.
 	 */
@@ -387,7 +381,7 @@ public class AssemblyLine implements Subject{
 	    this.state = state;
         this.state.initialize();
 	}
-	
+
 	/**
 	 * Returns the current state of the assembly line.
 	 * @return The current state of the assembly line.
@@ -397,7 +391,7 @@ public class AssemblyLine implements Subject{
 	}
 	/**
 	 * Returns the estimated completion time of the given order.
-	 * 
+	 *
 	 * @param	order
 	 * 			The order the estimated completion time is requested for.
 	 * @return	The estimated completion time of the given order.
@@ -443,6 +437,10 @@ public class AssemblyLine implements Subject{
     	return this.name + " " + this.getWorkPosts().size();
     }
 
+    /**
+     * A method to check if this AssemblyLine can process the given VehicleModel. 
+     * @return true if it can handle the given VehicleModel
+     */
     public boolean couldAcceptModel(VehicleModel vehicleModel) {
         Iterator<VehicleModel> models = this.getResponsibleModelsIterator();
         if (vehicleModel == null) {

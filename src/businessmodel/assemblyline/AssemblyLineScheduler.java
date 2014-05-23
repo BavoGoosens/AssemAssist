@@ -16,9 +16,9 @@ import businessmodel.order.Order;
 import businessmodel.util.IteratorConverter;
 
 /**
- * A Class that represents a assemblyLine for an AssymblyLine.
- * It makes a schedule for the assemblyLine.
- * When the schedule has been complete a new day schedule is created
+ * A Class that represents a Scheduler for an AssymblyLine.
+ * It makes a timetable for the assemblyLine where orders can be placed in.
+ *
  * @author SWOP team 10
  *
  */
@@ -41,7 +41,7 @@ public class AssemblyLineScheduler implements Subject {
 	private int dayOrdersCount = 0;
 
 	/**
-	 * A new new AssemblyLineScheduler is created.
+	 * A new AssemblyLineScheduler is created.
 	 * Shifts are created and the standard algorithm is set.
 	 */
 	protected AssemblyLineScheduler(AssemblyLine assemblyLine){
@@ -59,8 +59,8 @@ public class AssemblyLineScheduler implements Subject {
 
 	/**
 	 * A method to schedule a new day.
-	 *
-	 * The shift are cleared and new orders are added if possible.
+	 * The statistics of last day are sent to the observers.
+	 * An empty timetable is created.
 	 */
 	public void scheduleNewDay(){
 		this.notifyObservers();
@@ -103,7 +103,7 @@ public class AssemblyLineScheduler implements Subject {
 	/**
 	 * Returns true if an order can be added to the current day.
 	 *
-	 * @return true if an order can be added.
+	 * @return true if an order can be completed within the current day working hours.
 	 */
 	protected boolean canAddOrder(Order order){
         DateTime date =  this.getCurrentTime().withHourOfDay(22);
@@ -112,10 +112,10 @@ public class AssemblyLineScheduler implements Subject {
 
 	/**
 	 *  This method tries to add the given order to the assembly line
-     *  according to the rules defined by the scheduling algorithm.
-     *
+   *  according to the rules defined by the scheduling algorithm.
+   *
 	 * @param   order
-     *                  The order you want to schedule in.
+   *                  The order you want to schedule in.
 	 */
 	public void addOrder(Order order){
         // try to schedule in the order according to the algorithm.
@@ -127,7 +127,6 @@ public class AssemblyLineScheduler implements Subject {
             getOrders().add(order);
 		    checkIfAssemblyLineCanAdvance();
 		    setEstimatedCompletionDateOfOrder(getPreviousOrder(order), order);
-           
         } else {
             // if it was not possible to schedule the order at this time, add the order
             // to the pending queue of the order manager.
@@ -174,7 +173,7 @@ public class AssemblyLineScheduler implements Subject {
 			this.dayOrdersCount++;
 		}
 	}
-	
+
 	private int calculateDelay(Order order) {
 		Period period = new Period(order.getOrderPlacedOnAssemblyLine(), order.getCompletionDate());
 		Period standardPeriod = new Period().withMinutes(this.calculateMinutes(order));
@@ -182,7 +181,6 @@ public class AssemblyLineScheduler implements Subject {
 		return delay.getDays()*24*60+delay.getHours()*60+delay.getMinutes();
 	}
 
-    //TODO
 	private void updateSchedule(){
         checkNewDay();
 		if(this.getDelay() <= -60){
@@ -259,15 +257,21 @@ public class AssemblyLineScheduler implements Subject {
 		if(this.getOrders().size() == 0 && this.getShifts().get(0).getTimeSlots().size() < 2)
 			if(this.getAssemblyLine().canAdvance()){
                 this.getAssemblyLine().getMainScheduler().startNewProductionDay();
-			}    
+			}
 	}
 
-    public boolean couldStartNewDay() {
-        // if there are no more pending orders
-        // and the assembly line is empty
-        return this.orders.isEmpty() && this.getAssemblyLine().getWorkPostOrders().isEmpty();
-    }
+  /**
+   *A method to check if a new day can be started.
+   */
+  public boolean couldStartNewDay() {
+      // if there are no more pending orders
+      // and the assembly line is empty
+      return this.orders.isEmpty() && this.getAssemblyLine().getWorkPostOrders().isEmpty();
+  }
 
+  /**
+   *A method to set the currentTime.
+   */
 	protected void setCurrentTime(DateTime currenttime) {
 		this.currentTime =currenttime;
 	}
@@ -340,7 +344,7 @@ public class AssemblyLineScheduler implements Subject {
     protected LinkedList<Order> getOrders() {
 	    return this.orders;
 	}
-    
+
 	/**
 	 * Returns the current orders of this assemblyLine.
 	 *
@@ -388,6 +392,9 @@ public class AssemblyLineScheduler implements Subject {
 			return this.currentTime.plusMinutes(this.calculateMinutes(order));
 	}
 
+  /**
+   * A method to calculate the minutes it will take to complete the given Order on this AssemblyLine.
+   */
 	public int calculateMinutes(Order order){
 		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		if(order.getVehicleModel() == null)
@@ -399,6 +406,10 @@ public class AssemblyLineScheduler implements Subject {
 		return minutes;
 	}
 
+  /**
+   * A method to get the minutes it will take to complete the AssemblyTasks
+   *  on the last WorkPost of te given order.
+   */
 	public int minutesLastWorkPost(Order order) {
 		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		if(order.getVehicleModel() == null)
@@ -429,7 +440,7 @@ public class AssemblyLineScheduler implements Subject {
 		for (Observer observer: this.observers) {
 			observer.update(this);
 		}
-	} 
+	}
 
 	public String currentAlgoDescription() {
 		String[] full = this.algorithm.getClass().getName().split("\\.");
@@ -462,6 +473,9 @@ public class AssemblyLineScheduler implements Subject {
         return onAssemblyLine;
     }
 
+    /**
+     * A method to clear the timetable.
+     */
     protected void clearTimeTable(ArrayList<Order> onAssemblyLine) {
         for( Shift shift : this.getShifts()){
             for(TimeSlot timeSlot : shift.getTimeSlots()){
