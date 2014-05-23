@@ -80,14 +80,15 @@ public class VehicleStatistics implements Observer {
 	 * 
 	 */
 	public ArrayList<Tuple<LocalDate, Integer>> getLastDays(int numberOfDays){
-		if (this.numberOfVehicles.size() > numberOfDays){
+		return this.numberOfVehicles;
+/*		if (this.numberOfVehicles.size() > numberOfDays){
 			ArrayList<Tuple<LocalDate, Integer>> result = new ArrayList<Tuple<LocalDate, Integer>>(numberOfDays);
 			for(int i = this.numberOfVehicles.size(); i >= this.numberOfVehicles.size() - numberOfDays ; i--){
 				result.add(this.numberOfVehicles.get(i));
 			}
 			return result;
 		} else 
-			throw new IllegalArgumentException("The supplied number of days is to large");
+			throw new IllegalArgumentException("The supplied number of days is to large");*/
 	}
 
 	/**

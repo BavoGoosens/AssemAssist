@@ -67,11 +67,11 @@ public class AssemblyLineScheduler implements Subject {
 	 * The shift are cleared and new orders are added if possible.
 	 */
 	public void scheduleNewDay(){
+		this.notifyObservers();
 		this.dayOrdersCount = 0;
 		this.generateShifts();
 		this.setDelay(0);
 		this.updateNewDayDate();
-		//this.getAssemblyLine().getMainScheduler().schedulePendingOrders();
 	}
 
 	/**
@@ -254,8 +254,6 @@ public class AssemblyLineScheduler implements Subject {
 		if (this.getShifts().isEmpty() || (this.getCurrentTime().getHourOfDay() >= 22 &&
                 this.getCurrentTime().getMinuteOfHour() >= 0) ) {
 			if(this.getAssemblyLine().canAdvance()){
-				notifyObservers();
-				//this.scheduleNewDay();
                 this.getAssemblyLine().getMainScheduler().startNewProductionDay();
 			}
 		}

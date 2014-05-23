@@ -3,6 +3,7 @@ package businessmodel;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,13 +32,14 @@ import businessmodel.util.Tuple;
 public class VehicleStatisticsTest {
 	
 	VehicleStatistics vehicleStatistics;
+	OrderManager om;
 	boolean looping;
 
     @Before
     public void setUp() throws Exception {
     	ArrayList<StandardVehicleOrder> orders = new ArrayList<StandardVehicleOrder>();
     	GarageHolder gh = new GarageHolder("Michiel", "Vandendriessche", "michielvdd");
-        OrderManager om = new OrderManager();
+        this.om = new OrderManager();
         StatisticsManager statisticsManager = new StatisticsManager(om);
         vehicleStatistics = statisticsManager.getVehicleStatistics();
         ArrayList<VehicleOptionCategory> categories = new Catalog().getAllCategories();
@@ -150,19 +152,29 @@ public class VehicleStatisticsTest {
         	om.placeOrder(order);
         }
         
-        processOrders(om);
+        int days = 10;
+		for (int i = 0; i < days; i ++)
+			this.processOrders(om);
     }
     
     private void processOrders(OrderManager om) throws NoClearanceException {
 		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
-		for(AssemblyLine iter1: om.getMainScheduler().getAssemblyLines()){
+		Iterator<AssemblyLine> iter1 = om.getMainScheduler().getAssemblyLines().iterator();
+		DateTime beginDateTime = om.getMainScheduler().getTime();
+		while(iter1.hasNext()){
 			looping = true;
-			while (looping == true ){
-				CompleteWorkPost(iter1, converter.convert(iter1.getWorkPostsIterator()).size());
+			AssemblyLine assem = iter1.next();
+			DateTime assemblyLineDateTime = assem.getAssemblyLineScheduler().getCurrentTime();
+			DateTime result = assemblyLineDateTime.minus(beginDateTime.getMillis());
+
+			while (looping == true && result.getMillis() < 86400000){
+				assemblyLineDateTime = assem.getAssemblyLineScheduler().getCurrentTime();
+				result = assemblyLineDateTime.minus(beginDateTime.getMillis());
+				CompleteWorkPost(assem, converter.convert(assem.getWorkPostsIterator()).size());
 			}
 		}
-
 	}
+
 
 	private void CompleteWorkPost(AssemblyLine assem, int i) throws NoClearanceException{
 		looping = false;
@@ -178,13 +190,12 @@ public class VehicleStatisticsTest {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	@Test
-    public void test() {
-    	for (Tuple<LocalDate, Integer> tuple: 
-    		new IteratorConverter<Tuple<LocalDate, Integer>>().convert(vehicleStatistics.getNumberOfVehiclesIterator())) {
-    		System.out.println(tuple.getX());
-    		System.out.println(tuple.getY());
-    	}
-    }
+    @Test
+	public void test() {
+		for (Tuple<LocalDate, Integer> tuple: this.vehicleStatistics.getLastDays(2)) {
+			System.out.println(tuple.getX());
+			System.out.println(tuple.getY());
+		}
+		System.out.println(om.getCompletedOrders().size());
+	}
 }
