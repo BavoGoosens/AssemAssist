@@ -48,7 +48,7 @@ public class AssemblyLine implements Subject {
      * @return True if the order can be placed.
      */
     public boolean canAddOrder(Order order) {
-        // als het order geen model heeft is het oké, anders checken of model kan geplaatst worden
+        // als het order geen model heeft is het oke, anders checken of model kan geplaatst worden
         boolean bool = couldAcceptModel(order.getVehicleModel());
         // is true when the assembly line can accept orders in this state.
         if (bool)
