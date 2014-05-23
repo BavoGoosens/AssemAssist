@@ -1,6 +1,8 @@
 package businessmodel.assemblyline;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -18,7 +20,6 @@ import businessmodel.category.VehicleOptionCategory;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
 import businessmodel.util.IteratorConverter;
-import businessmodel.util.TestStandardVehicleOrder;
 
 
 public class WorkPostTest {

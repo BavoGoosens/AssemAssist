@@ -6,7 +6,6 @@ import java.util.Collections;
 import org.joda.time.LocalDate;
 
 import businessmodel.assemblyline.AssemblyLineScheduler;
-import businessmodel.assemblyline.WorkPost;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.util.SafeIterator;
@@ -21,7 +20,7 @@ import businessmodel.util.VehicleTupleComperator;
  */
 public class VehicleStatistics implements Observer {
 
-	private int avarage;
+	private double avarage;
 	private int median;
 	private ArrayList<Tuple<LocalDate, Integer>> numberOfVehicles;
 
@@ -58,7 +57,7 @@ public class VehicleStatistics implements Observer {
 	 * 
 	 * @return The average number of vehicles produced.
 	 */
-	public int getAverage(){
+	public double getAverage(){
 		return this.avarage;
 	}
 
@@ -79,28 +78,26 @@ public class VehicleStatistics implements Observer {
 	 * @return	The number of orders that are finished every day for the last 'numberOfDays' days.
 	 * 
 	 */
-	@SuppressWarnings("unchecked")
-	public ArrayList<Tuple<LocalDate, Integer>> getLastDaysClone(int numberOfDays){
-		return (ArrayList<Tuple<LocalDate, Integer>>) this.numberOfVehicles.clone();
-/*		if (this.numberOfVehicles.size() > numberOfDays){
+	public ArrayList<Tuple<LocalDate, Integer>> getLastDays(int numberOfDays){
+		if (this.numberOfVehicles.size() > numberOfDays){
 			ArrayList<Tuple<LocalDate, Integer>> result = new ArrayList<Tuple<LocalDate, Integer>>(numberOfDays);
-			for(int i = this.numberOfVehicles.size(); i >= this.numberOfVehicles.size() - numberOfDays ; i--){
+			for(int i = this.numberOfVehicles.size()-1; i >= this.numberOfVehicles.size() - numberOfDays ; i--){
 				result.add(this.numberOfVehicles.get(i));
 			}
 			return result;
 		} else 
-			throw new IllegalArgumentException("The supplied number of days is to large");*/
+			throw new IllegalArgumentException("The supplied number of days is to large");
 	}
 
 	/**
 	 * Calculates and updates the average number of vehicles produced per day.
 	 */
 	private void updateAverage(){
-		int count = 0;
+		double count = 0;
 		for (Tuple<LocalDate, Integer> tup : this.numberOfVehicles){
 			count += tup.getY();
 		}		
-		this.avarage = (int) Math.floor(count / this.numberOfVehicles.size());
+		this.avarage = (int) Math.floor(count / (this.numberOfVehicles.size()/3));
 	}
 
 	/**
@@ -130,7 +127,14 @@ public class VehicleStatistics implements Observer {
 			AssemblyLineScheduler scheduler = (AssemblyLineScheduler) subject;
 			LocalDate date = scheduler.getCurrentTime().toLocalDate();
 			int dayOrdersCount = scheduler.getDayOrdersCount();
-			this.numberOfVehicles.add(new Tuple<LocalDate, Integer>(date, dayOrdersCount));
+			boolean bool = false;
+			for (Tuple<LocalDate, Integer> tuple: this.numberOfVehicles) {
+				if (tuple.getX().equals(date)) {
+					bool = true;
+					tuple.setY(tuple.getY()+dayOrdersCount);
+				}
+			}
+			if (!bool) this.numberOfVehicles.add(new Tuple<LocalDate, Integer>(date, dayOrdersCount));
 			this.updateAverage();
 			this.updateMedian();
 		} else {

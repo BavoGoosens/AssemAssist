@@ -1,11 +1,10 @@
 package businessmodel;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +20,6 @@ import businessmodel.order.StandardVehicleOrder;
 import businessmodel.statistics.OrderStatistics;
 import businessmodel.statistics.StatisticsManager;
 import businessmodel.user.GarageHolder;
-import businessmodel.util.IteratorConverter;
 import businessmodel.util.Tuple;
 
 public class OrderStatisticsTest {

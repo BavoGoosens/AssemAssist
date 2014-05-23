@@ -11,16 +11,9 @@ import org.junit.Test;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
 import businessmodel.assemblyline.WorkPost;
-import businessmodel.category.Body;
-import businessmodel.category.ModelAFactory;
-import businessmodel.category.ModelBFactory;
-import businessmodel.category.ModelCFactory;
-import businessmodel.category.ModelXFactory;
-import businessmodel.category.ModelYFactory;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
-import businessmodel.category.Wheels;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.StandardVehicleOrder;
@@ -96,25 +89,23 @@ public class VehicleStatisticsTest {
 		
 		ArrayList<VehicleOption> chosen = new ArrayList<VehicleOption>();
 		for (VehicleOptionCategory category: categories) {
-			if (models.get(1).getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
-				chosen.add(models.get(1).getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
+			if (models.get(0).getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
+				chosen.add(models.get(0).getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
 			}
 		}
-		for (int i = 0; i <= 40; i++) {
-			this.om.placeOrder(new StandardVehicleOrder(garageHolder, chosen, models.get(1)));
+
+		for (int i = 0; i < 100; i++) {
+			this.om.placeOrder(new StandardVehicleOrder(garageHolder, chosen, models.get(0)));
 		}
 		
-		System.out.println("yolo");
-		
 	}
+	
 
     @Test
 	public void test() {
-		for (Tuple<LocalDate, Integer> tuple: this.vehicleStatistics.getLastDaysClone(2)) {
+		for (Tuple<LocalDate, Integer> tuple: this.vehicleStatistics.getLastDays(1)) {
 			System.out.println(tuple.getX());
 			System.out.println(tuple.getY());
 		}
-		System.out.println(vehicleStatistics.getLastDaysClone(2).size()+" entries in vehicle statistics");
-		System.out.println(om.getCompletedOrders().size()+" orders completed");
 	}
 }

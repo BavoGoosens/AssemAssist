@@ -6,12 +6,12 @@ import java.util.Locale;
 
 import org.joda.time.DateTime;
 
-import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.user.User;
+import org.joda.time.Period;
 
 /**
  * A class representing an abstract order.
@@ -28,7 +28,7 @@ public abstract class Order {
 	private DateTime completionDate;
 	private boolean completed;
 	private VehicleModel carModel;
-
+    private Period standardTimeToFinish;
 	/**
 	 * Creates a new order with a given user.
 	 * 
@@ -261,5 +261,13 @@ public abstract class Order {
             return "Completion date = " + this.completionDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
         else
             return "Estimated delivery date = " + this.estimatedDeliveryDate.toString("EEE, dd MMM yyyy HH:mm:ss", Locale.ROOT);
+    }
+
+    public void setStandardTimeToFinish(int minutes){
+        this.standardTimeToFinish = new Period(minutes * 60000 );
+    }
+
+    public Period getStandardTimeToFinish(){
+        return this.standardTimeToFinish;
     }
 }

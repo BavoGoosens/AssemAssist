@@ -4,12 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import businessmodel.util.IteratorConverter;
-import businessmodel.util.SafeIterator;
-import businessmodel.util.Tuple;
-
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.joda.time.Period;
 
 import businessmodel.category.VehicleOption;
@@ -18,6 +13,7 @@ import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
+import businessmodel.util.IteratorConverter;
 
 /**
  * A Class that represents a Scheduler for an AssymblyLine.
@@ -170,17 +166,11 @@ public class AssemblyLineScheduler implements Subject {
 	private void updateCompletedOrders(){
         // TODO: multiple orders can be completed
         // has to be taken into account.
-        boolean stillFinished = this.getOrders().peekFirst().isCompleted();
-		while (this.getOrders().peekFirst() != null && stillFinished){
+		while (this.getOrders().peekFirst() != null && this.getOrders().peekFirst().isCompleted()){
 			Order completedOrder = this.getOrders().pollFirst();
 			completedOrder.setCompletionDateOfOrder(this.getCurrentTime());
 			this.getAssemblyLine().getMainScheduler().finishedOrder(completedOrder, this.calculateDelay(completedOrder));
 			this.dayOrdersCount++;
-            Order nextOrder = this.getOrders().peekFirst();
-            if (nextOrder == null)
-                stillFinished = false;
-            else
-                stillFinished = nextOrder.isCompleted();
 		}
 	}
 
@@ -263,6 +253,11 @@ public class AssemblyLineScheduler implements Subject {
                 this.getAssemblyLine().getMainScheduler().startNewProductionDay();
 			}
 		}
+		if(!this.getShifts().isEmpty())
+		if(this.getOrders().size() == 0 && this.getShifts().get(0).getTimeSlots().size() < 2)
+			if(this.getAssemblyLine().canAdvance()){
+                this.getAssemblyLine().getMainScheduler().startNewProductionDay();
+			}    
 	}
 
   /**

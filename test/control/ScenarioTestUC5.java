@@ -1,6 +1,6 @@
 package control;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.Catalog;
-import businessmodel.OrderManager;
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.assemblyline.AssemblyTask;
@@ -52,7 +51,7 @@ public class ScenarioTestUC5 {
 	
 	@Test
 	public void testVehicleStatsAverage() throws NoClearanceException {
-		int average = this.vmc.getVehicleStatistics(this.manager).getAverage();
+		int average = (int) this.vmc.getVehicleStatistics(this.manager).getAverage();
 		assertEquals(11, average);
 	}
 	

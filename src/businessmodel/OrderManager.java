@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import businessmodel.util.Tuple;
 import org.joda.time.DateTime;
 
 import businessmodel.assemblyline.AssemblyLine;
@@ -14,6 +13,7 @@ import businessmodel.observer.OrderStatisticsObserver;
 import businessmodel.observer.OrderStatisticsSubject;
 import businessmodel.order.Order;
 import businessmodel.user.User;
+import org.joda.time.Period;
 
 /**
  * A class that represents an order manager. This class handles all the orders for a car manufacturing company.
@@ -149,11 +149,13 @@ public class OrderManager implements OrderStatisticsSubject {
 		for(AssemblyLine line: this.getMainScheduler().getAssemblyLines()){
 			pendingOrders.addAll(line.getAssemblyLineScheduler().getOrdersClone());
 		}
-        for (Order order: this.getPendingOrders()){
+        pendingOrders.addAll(this.getPendingOrders());
+        ArrayList<Order> result = new ArrayList<>();
+        for (Order order: pendingOrders){
             if (order.getUser() == user)
-                pendingOrders.add(order);
+                result.add(order);
         }
-		return pendingOrders;
+		return result;
 	}
 
 	/**
@@ -217,6 +219,7 @@ public class OrderManager implements OrderStatisticsSubject {
                     DateTime date1 = goal.getLast().getEstimatedDeliveryDate().plusDays(1);
                     newDayDate(order, date1, line);
                 } else {
+                    order.setStandardTimeToFinish(line.getAssemblyLineScheduler().calculateMinutes(order));
                     order.setEstimatedDeliveryDateOfOrder(goal.getLast().getEstimatedDeliveryDate()
                             .plusMinutes(line.getAssemblyLineScheduler().minutesLastWorkPost(order)));
                 }
@@ -269,9 +272,11 @@ public class OrderManager implements OrderStatisticsSubject {
     }
 
     private void newDayDate(Order order, DateTime date, AssemblyLine assemblyLine){
+        int standard = assemblyLine.getAssemblyLineScheduler().calculateMinutes(order);
+        order.setStandardTimeToFinish(standard);
         date = date.withHourOfDay(6);
         date = date.withMinuteOfHour(0);
-        date = date.plusMinutes(assemblyLine.getAssemblyLineScheduler().calculateMinutes(order));
+        date = date.plusMinutes(standard);
         order.setEstimatedDeliveryDateOfOrder(date);
     }
 

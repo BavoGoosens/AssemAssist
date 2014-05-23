@@ -2,23 +2,13 @@ package businessmodel.statistics;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
-
-import org.joda.time.LocalDate;
-import org.joda.time.Period;
 
 import businessmodel.OrderManager;
-import businessmodel.assemblyline.AssemblyLine;
-import businessmodel.assemblyline.AssemblyLineScheduler;
 import businessmodel.exceptions.IllegalNumberException;
-import businessmodel.observer.Observer;
 import businessmodel.observer.OrderStatisticsObserver;
 import businessmodel.observer.OrderStatisticsSubject;
-import businessmodel.observer.Subject;
 import businessmodel.order.Order;
-import businessmodel.order.StandardVehicleOrder;
 import businessmodel.util.OrderTupleComperator;
-import businessmodel.util.SafeIterator;
 import businessmodel.util.Tuple;
 
 /**
