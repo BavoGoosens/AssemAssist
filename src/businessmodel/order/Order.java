@@ -6,7 +6,6 @@ import java.util.Locale;
 
 import org.joda.time.DateTime;
 
-import businessmodel.assemblyline.AssemblyLine;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;
 import businessmodel.exceptions.NoClearanceException;

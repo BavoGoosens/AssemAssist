@@ -1,8 +1,11 @@
 package businessmodel.assemblyline;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
-import businessmodel.util.IteratorConverter;
 import org.joda.time.DateTime;
 
 import businessmodel.MainScheduler;
@@ -10,6 +13,7 @@ import businessmodel.category.VehicleModel;
 import businessmodel.observer.Observer;
 import businessmodel.observer.Subject;
 import businessmodel.order.Order;
+import businessmodel.util.IteratorConverter;
 import businessmodel.util.SafeIterator;
 
 /**

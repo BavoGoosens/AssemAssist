@@ -45,7 +45,7 @@ public class InitialDataTest {
 			e.printStackTrace();
 		}
 		
-		assertEquals(9,count);
+		assertEquals(6,count);
 		
 //		try {
 //			count = 0;

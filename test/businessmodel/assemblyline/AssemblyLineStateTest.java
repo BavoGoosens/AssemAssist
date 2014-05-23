@@ -9,8 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessmodel.Catalog;
-import businessmodel.MainScheduler;
-import businessmodel.OrderManager;
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.category.Body;
 import businessmodel.category.VehicleModel;
