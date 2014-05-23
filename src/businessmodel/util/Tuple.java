@@ -75,7 +75,7 @@ public class Tuple <X , Y>{
 		this.x = x;
 	}
 
-	private void setY(Y y) {
+	public void setY(Y y) {
 		this.y = y;		
 	}
 }

@@ -49,9 +49,9 @@ public class ScenarioTestUC6 {
 		ArrayList<ArrayList<VehicleOption>> optionLists = (ArrayList<ArrayList<VehicleOption>>)
 				new IteratorConverter<ArrayList<VehicleOption>>().
 				convert(this.vmc.getUnscheduledVehicleOptions(this.manager));
-		assertEquals(1, optionLists.size());
-		assertEquals(8, optionLists.get(0).size());
-		ArrayList<VehicleOption> options = optionLists.get(0);
+		assertEquals(16, optionLists.size());
+		assertEquals(1, optionLists.get(0).size());
+		ArrayList<VehicleOption> options = optionLists.get(7);
 		assertEquals("BODY: sedan", options.get(0).toString());
 		assertEquals("COLOR: red", options.get(1).toString());
 		assertEquals("ENGINE: standard 2l v4", options.get(2).toString());
@@ -82,9 +82,12 @@ public class ScenarioTestUC6 {
 				chosen.add(models.get(1).getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
 			}
 		}
-		StandardVehicleOrder order = new StandardVehicleOrder(garageHolder, chosen, models.get(1));
-		for(int i=0; i<8;i++)
+		for(int i=0; i<8;i++) {
+			StandardVehicleOrder order = new StandardVehicleOrder(garageHolder, chosen, models.get(1));
 			this.vmc.placeOrder(order);
+		}
+		
+		
 
 	}
 
