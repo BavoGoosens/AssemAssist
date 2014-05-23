@@ -22,6 +22,7 @@ import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
 import businessmodel.category.Wheels;
 import businessmodel.exceptions.NoClearanceException;
+import businessmodel.exceptions.UnsatisfiedRestrictionException;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.statistics.StatisticsManager;
 import businessmodel.statistics.VehicleStatistics;
@@ -37,144 +38,28 @@ public class VehicleStatisticsTest {
 
     @Before
     public void setUp() throws Exception {
-    	ArrayList<StandardVehicleOrder> orders = new ArrayList<StandardVehicleOrder>();
     	GarageHolder gh = new GarageHolder("Michiel", "Vandendriessche", "michielvdd");
         this.om = new OrderManager();
         StatisticsManager statisticsManager = new StatisticsManager(om);
         vehicleStatistics = statisticsManager.getVehicleStatistics();
-        ArrayList<VehicleOptionCategory> categories = new Catalog().getAllCategories();
         
-        /**
-         * Plaats orders van model A
-         */
-        VehicleModel modelA = new ModelAFactory().createModel();
-        ArrayList<VehicleOption> chosenA = new ArrayList<VehicleOption>();
-        for (VehicleOptionCategory category: categories) {
-        	if (modelA.getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
-        		chosenA.add(modelA.getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
-        	}
-        }
-        orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
-        orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
-        orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
-        orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
-        orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
-        orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
-        orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
-        orders.add(new StandardVehicleOrder(gh, chosenA, modelA));
-        
-        /**
-         * Plaats orders van model B
-         */
-        VehicleModel modelB = new ModelBFactory().createModel();
-        ArrayList<VehicleOption> chosenB = new ArrayList<VehicleOption>();
-        for (VehicleOptionCategory category: categories) {
-        	if (modelB.getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
-        		chosenB.add(modelB.getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
-        	}
-        }
-        orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
-        orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
-        orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
-        orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
-        orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
-        orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
-        orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
-        orders.add(new StandardVehicleOrder(gh, chosenB, modelB));
-        
-        /**
-         * Plaats orders van model C
-         */
-        VehicleModel modelC = new ModelCFactory().createModel();
-        ArrayList<VehicleOption> chosenC = new ArrayList<VehicleOption>();
-        for (VehicleOptionCategory category: categories) {
-        	if (modelC.getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
-        		chosenC.add(modelC.getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
-        	}
-        }
-        orders.add(new StandardVehicleOrder(gh, chosenC, modelC));
-        orders.add(new StandardVehicleOrder(gh, chosenC, modelC));
-        orders.add(new StandardVehicleOrder(gh, chosenC, modelC));
-        orders.add(new StandardVehicleOrder(gh, chosenC, modelC));
-        orders.add(new StandardVehicleOrder(gh, chosenC, modelC));
-        orders.add(new StandardVehicleOrder(gh, chosenC, modelC));
-        orders.add(new StandardVehicleOrder(gh, chosenC, modelC));
-        orders.add(new StandardVehicleOrder(gh, chosenC, modelC)); 
-        
-        /**
-         * Plaats orders van model X
-         */
-        VehicleModel modelX = new ModelXFactory().createModel();
-        ArrayList<VehicleOption> chosenX = new ArrayList<VehicleOption>();
-        for (VehicleOptionCategory category: categories) {
-        	if (category.equals(new Body())) {
-        		chosenX.add(modelX.getVehicleModelSpecification().getOptionsOfCategory(category).get(1));
-        	}
-        	else if (modelX.getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
-        		chosenX.add(modelX.getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
-        	}
-        }
-        orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
-        orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
-        orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
-        orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
-        orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
-        orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
-        orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
-        orders.add(new StandardVehicleOrder(gh, chosenX, modelX));
-        
-        /**
-         * Plaats orders van model Y
-         */
-        VehicleModel modelY = new ModelYFactory().createModel();
-        ArrayList<VehicleOption> chosenY = new ArrayList<VehicleOption>();
-        for (VehicleOptionCategory category: categories) {
-        	if (category.equals(new Wheels())) {
-        		chosenY.add(modelY.getVehicleModelSpecification().getOptionsOfCategory(category).get(1));
-        	}
-        	else if (modelY.getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
-        		chosenY.add(modelY.getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
-        	}
-        }
-        orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
-        orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
-        orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
-        orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
-        orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
-        orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
-        orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
-        orders.add(new StandardVehicleOrder(gh, chosenY, modelY));
-        
-        /**
-         * Plaats alle orders
-         */
-        for (StandardVehicleOrder order: orders) {
-        	om.placeOrder(order);
-        }
+        this.placeOrders(om);
         
         int days = 10;
 		for (int i = 0; i < days; i ++)
-			this.processOrders(om);
+			this.processOrders();
     }
     
-    private void processOrders(OrderManager om) throws NoClearanceException {
+    private void processOrders() throws NoClearanceException {
 		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
-		Iterator<AssemblyLine> iter1 = om.getMainScheduler().getAssemblyLines().iterator();
-		DateTime beginDateTime = om.getMainScheduler().getTime();
-		while(iter1.hasNext()){
+		for(AssemblyLine iter1: this.om.getMainScheduler().getAssemblyLines()){
 			looping = true;
-			AssemblyLine assem = iter1.next();
-			DateTime assemblyLineDateTime = assem.getAssemblyLineScheduler().getCurrentTime();
-			DateTime result = assemblyLineDateTime.minus(beginDateTime.getMillis());
-
-			while (looping == true && result.getMillis() < 86400000){
-				assemblyLineDateTime = assem.getAssemblyLineScheduler().getCurrentTime();
-				result = assemblyLineDateTime.minus(beginDateTime.getMillis());
-				CompleteWorkPost(assem, converter.convert(assem.getWorkPostsIterator()).size());
+			while (looping == true ){
+				CompleteWorkPost(iter1, converter.convert(iter1.getWorkPostsIterator()).size());
 			}
 		}
-	}
 
+	}
 
 	private void CompleteWorkPost(AssemblyLine assem, int i) throws NoClearanceException{
 		looping = false;
@@ -189,6 +74,24 @@ public class VehicleStatisticsTest {
 			}
 		}
 	}
+	
+	private void placeOrders(OrderManager om) throws IllegalArgumentException, NoClearanceException, UnsatisfiedRestrictionException {
+		Catalog catalog = new Catalog();
+		ArrayList<VehicleOptionCategory> categories = catalog.getAllCategories();
+		GarageHolder garageHolder = new GarageHolder("Bouwe", "Ceunen", "BouweC");
+		ArrayList<VehicleModel> models = catalog.getAvailaleModelsClone();
+		
+		ArrayList<VehicleOption> chosen = new ArrayList<VehicleOption>();
+		for (VehicleOptionCategory category: categories) {
+			if (models.get(1).getVehicleModelSpecification().getOptionsOfCategory(category).size() > 0) {
+				chosen.add(models.get(1).getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
+			}
+		}
+		for (int i = 0; i <= 30; i++) {
+			om.placeOrder(new StandardVehicleOrder(garageHolder, chosen, models.get(1)));
+		}
+		
+	}
 
     @Test
 	public void test() {
@@ -196,6 +99,7 @@ public class VehicleStatisticsTest {
 			System.out.println(tuple.getX());
 			System.out.println(tuple.getY());
 		}
+		System.out.println(vehicleStatistics.getLastDays(2).size());
 		System.out.println(om.getCompletedOrders().size());
 	}
 }
