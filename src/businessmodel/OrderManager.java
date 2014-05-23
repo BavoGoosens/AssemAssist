@@ -149,11 +149,13 @@ public class OrderManager implements OrderStatisticsSubject {
 		for(AssemblyLine line: this.getMainScheduler().getAssemblyLines()){
 			pendingOrders.addAll(line.getAssemblyLineScheduler().getOrdersClone());
 		}
-        for (Order order: this.getPendingOrders()){
+        pendingOrders.addAll(this.getPendingOrders());
+        ArrayList<Order> result = new ArrayList<>();
+        for (Order order: pendingOrders){
             if (order.getUser() == user)
-                pendingOrders.add(order);
+                result.add(order);
         }
-		return pendingOrders;
+		return result;
 	}
 
 	/**

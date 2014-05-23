@@ -114,17 +114,13 @@ public class InitialData {
 
 		this.initialize();
 
-		for(int i=0; i < numbers.size(); i++){
+		for(int i=0 ; i < 31 ; i++){
 			orders = this.randomOrderGenerator("standard",numbers.get(i));
 			if (!orders)
 				this.makeStandardOrder(numbers.get(i));
 		}
 
-		//This integer can be changed to the numbers of days you wish to be
-		//completed by the system.
-		int days = 4;
-		for (int i = 0; i < days; i ++)
-			this.processOrders();
+
 
 
 		orders = false;
@@ -143,6 +139,11 @@ public class InitialData {
 				this.randomOrderGenerator("standard", 0);
 		}
         System.out.println(orderCount);
+        //This integer can be changed to the numbers of days you wish to be
+        //completed by the system.
+        int days = 1;
+        for (int i = 0; i < days; i ++)
+            this.processOrders();
     }
 
 	private void makeOrdersNotInSameBatch() {
