@@ -275,10 +275,12 @@ public class MainScheduler {
 			countList.clear();
 			for(ArrayList<VehicleOption> opt: tempChoices)
 				for(ArrayList<VehicleOption> listOpts: this.getSubsets(opt))
-						if (!countList.contains(listOpts.size()) && countList.add(listOpts.size()))
-							if (this.checkOptionsForSpecificationBatch(listOpts, line))
+					if (!countList.contains(listOpts.size()) && countList.add(listOpts.size()))
+						if (this.checkOptionsForSpecificationBatch(listOpts, line))
+							if (this.noDuplicateOptions(listOpts, choices))
 								if (!listOpts.isEmpty())
 									choices.add(listOpts);
+
 
 
 
@@ -290,6 +292,20 @@ public class MainScheduler {
 		//		}
 
 		return  choices.iterator();
+	}
+
+	private boolean noDuplicateOptions(ArrayList<VehicleOption> listOpts, ArrayList<ArrayList<VehicleOption>> choices) {
+
+		for(ArrayList<VehicleOption> options: choices){
+			int count = 0;
+				for(VehicleOption opt2: listOpts)
+					if (options.contains(opt2))
+						count++;
+			
+			if (count == listOpts.size())
+				return false;
+		}
+		return true;
 	}
 
 	private ArrayList<ArrayList<VehicleOption>> getSubsets(ArrayList<VehicleOption> set) {
