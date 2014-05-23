@@ -39,10 +39,11 @@ import businessmodel.user.User;
 import businessmodel.util.IteratorConverter;
 
 /**
- * The initial data.
+ * This class provides methods to initialize the the system with some
+ * orders at boot time.
+ * See main for more info.
  *
  * @author Team 10
- *
  */
 public class InitialData {
 
@@ -64,11 +65,12 @@ public class InitialData {
 	private final long DAY_IN_MILIS = 86400000;
 	private ArrayList<VehicleOption> chosenA, chosenB, chosenC, chosenX, chosenY;
 	private VehicleModel modelA, modelB, modelC, modelX, modelY;
-	/**
-	 * Constructor for InitialData. Initialize lists.
+
+    /**
+	 * Constructor for InitialData.
+     * Initializes all the lists.
 	 */
 	public InitialData(){
-
 		this.airco = new ArrayList<VehicleOption>();
 		this.body = new ArrayList<VehicleOption>();
 		this.color= new ArrayList<VehicleOption>();
@@ -80,60 +82,62 @@ public class InitialData {
 		this.certification = new ArrayList<VehicleOption>();
 		this.protection = new ArrayList<VehicleOption>();
 		this.storage = new ArrayList<VehicleOption>();
-
-
 	}
 
 	/**
-	 * Initialize with the given VehicleManufacturingCompany.
-	 * @param vmc
-	 * @throws NoClearanceException
+	 *  This method initializes the VehicleManufacturingCompany.
+     *
+	 * @param   vmc
+     *                  The VehicleManufacturingCompany you want to initialize with some orders.
 	 */
-	protected void initialize(VehicleManufacturingCompany vmc) throws NoClearanceException{
+	protected void initialize(VehicleManufacturingCompany vmc) {
+        try {
+            this.vmc = vmc;
+            this.garageholder = vmc.login("wow", "");
+            this.mechanic = vmc.login("woww", "");
+            this.customsManager = vmc.login("wowwww", "");
 
-		this.vmc = vmc;
-		this.garageholder = vmc.login("wow", "");
-		this.mechanic = vmc.login("woww", "");
-		this.customsManager = vmc.login("wowwww", "");
+            this.controllerStandard = new StandardOrderHandler(vmc);
 
-		this.controllerStandard = new StandardOrderHandler(vmc);
+            this.controllerSingleTask = new SingleTaskOrderHandler(vmc);
+            this.iter = vmc.getVehicleModels(this.garageholder);
+            this.available_vehiclemodels = new ArrayList<VehicleModel>();
+            this.chosen = new ArrayList<VehicleOption>();
 
-		this.controllerSingleTask = new SingleTaskOrderHandler(vmc);
-		this.iter = vmc.getVehicleModels(this.garageholder);
-		this.available_vehiclemodels = new ArrayList<VehicleModel>();
-		this.chosen = new ArrayList<VehicleOption>();
+            this.batchList = new ArrayList<Integer>();
 
-		this.batchList = new ArrayList<Integer>();
+            while (iter.hasNext())
+                this.available_vehiclemodels.add(this.iter.next());
 
-		while (iter.hasNext())
-			this.available_vehiclemodels.add(this.iter.next());
+            Boolean orders = false;
 
-		Boolean orders = false;
+            ArrayList<Integer> numbers = this.generateOrders();
 
-		ArrayList<Integer> numbers = this.generateOrders();
+            this.initialize();
 
-		this.initialize();
+            for (int i = 0; i < 31; i++) {
+                orders = this.randomOrderGenerator("standard", numbers.get(i));
+                if (!orders)
+                    this.makeStandardOrder(numbers.get(i));
+            }
 
-		for(int i=0 ; i < 31 ; i++){
-			orders = this.randomOrderGenerator("standard",numbers.get(i));
-			if (!orders)
-				this.makeStandardOrder(numbers.get(i));
-		}
+            for (int i = 0; i < 3; i++) {
+                orders = this.randomOrderGenerator("singleTask", -1);
+                if (!orders)
+                    this.randomOrderGenerator("singleTask", 0);
+            }
 
-		for(int i=0; i < 3; i++){
-			orders = this.randomOrderGenerator("singleTask",-1);
-			if (!orders)
-				this.randomOrderGenerator("singleTask", 0);
-		}
+            this.makeOrdersNotInSameBatch();
+            this.makeOrdersInSameBatch();
 
-		this.makeOrdersNotInSameBatch();
-		this.makeOrdersInSameBatch();
-		
-        //This integer can be changed to the numbers of days you wish to be
-        //completed by the system.
-        int days = 1;
-        for (int i = 0; i < days; i ++)
-            this.processOrders();
+            //This integer can be changed to the numbers of days you wish to be
+            //completed by the system.
+            int days = 1;
+            for (int i = 0; i < days; i++)
+                this.processOrders();
+        } catch (NoClearanceException e){
+            System.out.println("something went wrong");
+        }
     }
 
 	private void makeOrdersInSameBatch() {
@@ -232,7 +236,9 @@ public class InitialData {
 
 	/**
 	 * Generate random orders.
-	 * @return
+     *
+	 * @return  ArrayList<Integer>
+     *                An ArrayList with integers that represent the vehicle models..
 	 */
 	private ArrayList<Integer> generateOrders() {
 		ArrayList<Integer> number = new ArrayList<Integer>();
@@ -251,10 +257,6 @@ public class InitialData {
 		return number;
 	}
 
-	/**
-	 * Process the orders.
-	 * @throws NoClearanceException
-	 */
 	private void processOrders() throws NoClearanceException {
 		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
 		Iterator<AssemblyLine> iter1 = vmc.getAssemblyLines(this.mechanic);
@@ -273,12 +275,6 @@ public class InitialData {
 		}
 	}
 
-	/**
-	 * Complete the WorkPosts from the given AssemblyLine.
-	 * @param assem
-	 * @param i
-	 * @throws NoClearanceException
-	 */
 	private void CompleteWorkPost(AssemblyLine assem, int i) throws NoClearanceException{
 		looping = false;
 		for(int j = 0 ; j < i ; j++){
@@ -293,15 +289,6 @@ public class InitialData {
 		}
 	}
 
-	// orders (standard or singleTask
-	// model -1 if random, otherwise (0 to 4). 0 for model A, ...
-	// batch -1 if random, otherwise number of the options that must be the same for the number of orders
-	/**
-	 * Random generator for orders.
-	 * @param orders
-	 * @param model
-	 * @return
-	 */
 	private boolean randomOrderGenerator(String orders, int model){
 
 		VehicleModel vehicleModel;
