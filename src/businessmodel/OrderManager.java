@@ -198,9 +198,6 @@ public class OrderManager implements OrderStatisticsSubject {
         updateEstimatedTimesOfPendingOrders();
 	}
 
-	/**
-	 * Set the estimated delivery date of the given order.
-	 */
 	private void updateEstimatedTimesOfPendingOrders(){
         HashMap<AssemblyLine, LinkedList<Order>> estimator = new HashMap<>();
         for (AssemblyLine assemblyLine : this.getMainScheduler().getAssemblyLines())
@@ -231,12 +228,6 @@ public class OrderManager implements OrderStatisticsSubject {
             }
         }
 	}
-
-	/**
-	 * Method to set the henk.
-	 * @param order
-	 * @param estimator
-	 */
 
     private AssemblyLine determineBestAssemblyLine(Order order, HashMap<AssemblyLine, LinkedList<Order>> estimator) {
         AssemblyLine result= null;
