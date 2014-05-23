@@ -67,11 +67,11 @@ public class AssemblyLineScheduler implements Subject {
 	 * The shift are cleared and new orders are added if possible.
 	 */
 	public void scheduleNewDay(){
+		this.notifyObservers();
 		this.dayOrdersCount = 0;
 		this.generateShifts();
 		this.setDelay(0);
 		this.updateNewDayDate();
-		//this.getAssemblyLine().getMainScheduler().schedulePendingOrders();
 	}
 
 	/**
@@ -262,20 +262,15 @@ public class AssemblyLineScheduler implements Subject {
 		if (this.getShifts().isEmpty() || (this.getCurrentTime().getHourOfDay() >= 22 &&
                 this.getCurrentTime().getMinuteOfHour() >= 0) ) {
 			if(this.getAssemblyLine().canAdvance()){
-				notifyObservers();
-				//this.scheduleNewDay();
                 this.getAssemblyLine().getMainScheduler().startNewProductionDay();
 			}
 		}
 	}
 
-    public boolean couldStartNewDay(){
-        boolean canStart;
+    public boolean couldStartNewDay() {
         // if there are no more pending orders
-        canStart =  this.orders.isEmpty();
         // and the assembly line is empty
-        canStart = this.getAssemblyLine().getWorkPostOrders().isEmpty();
-        return canStart;
+        return this.orders.isEmpty() && this.getAssemblyLine().getWorkPostOrders().isEmpty();
     }
 
 	protected void setCurrentTime(DateTime currenttime) {
@@ -347,8 +342,18 @@ public class AssemblyLineScheduler implements Subject {
 	 *
 	 * @return
 	 */
-    public LinkedList<Order> getOrders() {
+    protected LinkedList<Order> getOrders() {
 	    return this.orders;
+	}
+    
+	/**
+	 * Returns the current orders of this assemblyLine.
+	 *
+	 * @return
+	 */
+    @SuppressWarnings("unchecked")
+	public LinkedList<Order> getOrdersClone() {
+	    return (LinkedList<Order>) this.orders.clone();
 	}
 
 	/**
@@ -356,7 +361,7 @@ public class AssemblyLineScheduler implements Subject {
 	 *
 	 * @return the shift of this assemblyLine.
 	 */
-	public LinkedList<Shift> getShifts() {
+	protected LinkedList<Shift> getShifts() {
 		return this.shifts;
 	}
 

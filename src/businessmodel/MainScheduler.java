@@ -141,9 +141,8 @@ public class MainScheduler {
 			}
 			// add the order to the assembly line (try)
 			fastestAssemblyLine.getAssemblyLineScheduler().addOrder(order);
-		} else{
-            System.out.println("we here");
-        }
+		} else
+			this.orderCannotBePlaced(order);
 	}
 
 	/**
@@ -177,7 +176,7 @@ public class MainScheduler {
 
 		int orderCount = 0;
 
-		for(Order order: assem.getAssemblyLineScheduler().getOrders()){
+		for(Order order: assem.getAssemblyLineScheduler().getOrdersClone()){
 			int count = 0;
 			for(VehicleOption opt: options){
 				for(VehicleOption opt2: order.getOptions()){
@@ -246,11 +245,11 @@ public class MainScheduler {
 		ArrayList<ArrayList<VehicleOption>> choices = new ArrayList<ArrayList<VehicleOption>>();
 		ArrayList<ArrayList<VehicleOption>> tempChoices = new ArrayList<ArrayList<VehicleOption>>();
 		ArrayList<Integer> countList = new ArrayList<Integer>();
-		
+
 		for (AssemblyLine line : this.getAssemblyLines()){
 
 			tempChoices.clear();
-			for(Order order: line.getAssemblyLineScheduler().getOrders()){
+			for(Order order: line.getAssemblyLineScheduler().getOrdersClone()){
 
 				ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();
 				for(VehicleOption opt: order.getOptions()){
@@ -322,10 +321,11 @@ public class MainScheduler {
 	}
 
 	public void startNewProductionDay() {
-		boolean startForReal = false ;
+		boolean startForReal = true ;
 		for (AssemblyLine assemblyLine : this.getAssemblyLines() ){
 			AssemblyLineScheduler scheduler = assemblyLine.getAssemblyLineScheduler();
 			startForReal = scheduler.couldStartNewDay();
+			if (!startForReal) break;
 		}
 		if (startForReal){
 			for (AssemblyLine assemblyLine: this.getAssemblyLines()){

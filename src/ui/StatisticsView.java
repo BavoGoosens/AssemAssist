@@ -44,7 +44,7 @@ public class StatisticsView extends View {
             System.out.println("> Average number of vehicles finished per day: " + vehiclestats.getAverage());
             System.out.println("> Median number of vehicles finished per day: " + vehiclestats.getAverage());
             try {
-                ArrayList<Tuple<LocalDate, Integer>> lastdays = vehiclestats.getLastDays(2);
+                ArrayList<Tuple<LocalDate, Integer>> lastdays = vehiclestats.getLastDaysClone(2);
                 System.out.println("> The last two production days:");
                 for (Tuple<LocalDate, Integer> day : lastdays)
                     System.out.println("  > Date: " + day.getX() + "\n"

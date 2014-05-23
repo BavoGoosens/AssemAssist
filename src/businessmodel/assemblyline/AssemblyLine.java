@@ -33,11 +33,11 @@ public class AssemblyLine implements Subject{
 	private ArrayList<Observer> subscribers = new ArrayList<Observer>();
     private String name;
 
-
+    
 	/**
 	 * Creates a new assembly line.
 	 */
-	protected AssemblyLine(){
+	protected AssemblyLine() {
 		this.broken = new BrokenState(this);
 		this.maintenance  = new MaintenanceState(this);
 		this.operational  = new OperationalState(this);

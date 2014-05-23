@@ -147,7 +147,7 @@ public class OrderManager implements OrderStatisticsSubject {
 			throw new NoClearanceException(user);
 		ArrayList<Order> pendingOrders = new ArrayList<Order>();
 		for(AssemblyLine line: this.getMainScheduler().getAssemblyLines()){
-			pendingOrders.addAll(line.getAssemblyLineScheduler().getOrders());
+			pendingOrders.addAll(line.getAssemblyLineScheduler().getOrdersClone());
 		}
         for (Order order: this.getPendingOrders()){
             if (order.getUser() == user)
