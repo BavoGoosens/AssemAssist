@@ -84,6 +84,7 @@ public class CustomShopManagerView extends View {
                 try {
                     this.controller.placeSingleTaskOrder(this.user, new SingleTaskOrder(this.user, res, deadline));
                     System.out.println("> Your order has been placed :)");
+                    this.display();
                 } catch (NoClearanceException e) {
                     System.out.println("! " + e.getMessage());
                     this.error();
