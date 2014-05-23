@@ -205,6 +205,7 @@ public class WorkPost {
 		this.setOrder(order);
 		this.timeOrderInProcess = 0;
 		this.pendingTasks.clear();
+        this.finishedTasks.clear();
 		this.refreshAssemblyTasks();
 	}
 
