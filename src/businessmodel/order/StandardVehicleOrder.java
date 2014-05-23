@@ -2,8 +2,6 @@ package businessmodel.order;
 
 import java.util.ArrayList;
 
-import org.joda.time.Period;
-
 import businessmodel.category.Vehicle;
 import businessmodel.category.VehicleModel;
 import businessmodel.category.VehicleOption;

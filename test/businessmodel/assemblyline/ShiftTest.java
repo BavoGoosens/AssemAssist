@@ -1,6 +1,7 @@
 package businessmodel.assemblyline;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
@@ -13,7 +14,6 @@ import businessmodel.category.VehicleOption;
 import businessmodel.category.VehicleOptionCategory;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
-import businessmodel.util.TestStandardVehicleOrder;
 
 public class ShiftTest {
 	

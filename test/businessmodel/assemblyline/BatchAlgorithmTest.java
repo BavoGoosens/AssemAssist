@@ -5,10 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.joda.time.Period;
 import org.junit.Test;
-
-import control.StandardOrderHandler;
 
 import businessmodel.VehicleManufacturingCompany;
 import businessmodel.category.Airco;
@@ -24,10 +21,10 @@ import businessmodel.category.Wheels;
 import businessmodel.exceptions.IllegalSchedulingAlgorithmException;
 import businessmodel.exceptions.NoClearanceException;
 import businessmodel.exceptions.UnsatisfiedRestrictionException;
-import businessmodel.order.Order;
 import businessmodel.order.StandardVehicleOrder;
 import businessmodel.user.GarageHolder;
 import businessmodel.user.User;
+import control.StandardOrderHandler;
 
 
 public class BatchAlgorithmTest {
