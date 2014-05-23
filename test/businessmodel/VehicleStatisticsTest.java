@@ -95,11 +95,11 @@ public class VehicleStatisticsTest {
 
     @Test
 	public void test() {
-		for (Tuple<LocalDate, Integer> tuple: this.vehicleStatistics.getLastDays(2)) {
+		for (Tuple<LocalDate, Integer> tuple: this.vehicleStatistics.getLastDaysClone(2)) {
 			System.out.println(tuple.getX());
 			System.out.println(tuple.getY());
 		}
-		System.out.println(vehicleStatistics.getLastDays(2).size());
+		System.out.println(vehicleStatistics.getLastDaysClone(2).size());
 		System.out.println(om.getCompletedOrders().size());
 	}
 }

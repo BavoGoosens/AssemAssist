@@ -175,7 +175,7 @@ public class MainScheduler {
 
 		int orderCount = 0;
 
-		for(Order order: assem.getAssemblyLineScheduler().getOrders()){
+		for(Order order: assem.getAssemblyLineScheduler().getOrdersClone()){
 			int count = 0;
 			for(VehicleOption opt: options){
 				for(VehicleOption opt2: order.getOptions()){
@@ -248,7 +248,7 @@ public class MainScheduler {
 		for (AssemblyLine line : this.getAssemblyLines()){
 
 			tempChoices.clear();
-			for(Order order: line.getAssemblyLineScheduler().getOrders()){
+			for(Order order: line.getAssemblyLineScheduler().getOrdersClone()){
 
 				ArrayList<VehicleOption> options = new ArrayList<VehicleOption>();
 				for(VehicleOption opt: order.getOptions()){

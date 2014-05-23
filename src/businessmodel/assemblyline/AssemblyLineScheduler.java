@@ -337,8 +337,18 @@ public class AssemblyLineScheduler implements Subject {
 	 *
 	 * @return
 	 */
-    public LinkedList<Order> getOrders() {
+    protected LinkedList<Order> getOrders() {
 	    return this.orders;
+	}
+    
+	/**
+	 * Returns the current orders of this assemblyLine.
+	 *
+	 * @return
+	 */
+    @SuppressWarnings("unchecked")
+	public LinkedList<Order> getOrdersClone() {
+	    return (LinkedList<Order>) this.orders.clone();
 	}
 
 	/**
@@ -346,7 +356,7 @@ public class AssemblyLineScheduler implements Subject {
 	 *
 	 * @return the shift of this assemblyLine.
 	 */
-	public LinkedList<Shift> getShifts() {
+	protected LinkedList<Shift> getShifts() {
 		return this.shifts;
 	}
 

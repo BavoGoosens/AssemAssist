@@ -79,8 +79,9 @@ public class VehicleStatistics implements Observer {
 	 * @return	The number of orders that are finished every day for the last 'numberOfDays' days.
 	 * 
 	 */
-	public ArrayList<Tuple<LocalDate, Integer>> getLastDays(int numberOfDays){
-		return this.numberOfVehicles;
+	@SuppressWarnings("unchecked")
+	public ArrayList<Tuple<LocalDate, Integer>> getLastDaysClone(int numberOfDays){
+		return (ArrayList<Tuple<LocalDate, Integer>>) this.numberOfVehicles.clone();
 /*		if (this.numberOfVehicles.size() > numberOfDays){
 			ArrayList<Tuple<LocalDate, Integer>> result = new ArrayList<Tuple<LocalDate, Integer>>(numberOfDays);
 			for(int i = this.numberOfVehicles.size(); i >= this.numberOfVehicles.size() - numberOfDays ; i--){
