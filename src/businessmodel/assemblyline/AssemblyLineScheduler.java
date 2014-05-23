@@ -259,13 +259,10 @@ public class AssemblyLineScheduler implements Subject {
 		}
 	}
 
-    public boolean couldStartNewDay(){
-        boolean canStart;
+    public boolean couldStartNewDay() {
         // if there are no more pending orders
-        canStart =  this.orders.isEmpty();
         // and the assembly line is empty
-        canStart = this.getAssemblyLine().getWorkPostOrders().isEmpty();
-        return canStart;
+        return this.orders.isEmpty() && this.getAssemblyLine().getWorkPostOrders().isEmpty();
     }
 
 	protected void setCurrentTime(DateTime currenttime) {

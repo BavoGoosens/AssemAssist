@@ -43,24 +43,37 @@ public class VehicleStatisticsTest {
         StatisticsManager statisticsManager = new StatisticsManager(om);
         vehicleStatistics = statisticsManager.getVehicleStatistics();
         
-        this.placeOrders(om);
+        this.placeOrders();
         
-        int days = 10;
+        int days = 15;
 		for (int i = 0; i < days; i ++)
 			this.processOrders();
     }
     
     private void processOrders() throws NoClearanceException {
 		IteratorConverter<WorkPost> converter = new IteratorConverter<>();
-		for(AssemblyLine iter1: this.om.getMainScheduler().getAssemblyLines()){
+		Iterator<AssemblyLine> iter1 = om.getMainScheduler().getAssemblyLines().iterator();
+		DateTime beginDateTime = this.om.getMainScheduler().getTime();
+		while(iter1.hasNext()){
 			looping = true;
-			while (looping == true ){
-				CompleteWorkPost(iter1, converter.convert(iter1.getWorkPostsIterator()).size());
+			AssemblyLine assem = iter1.next();
+			DateTime assemblyLineDateTime = assem.getAssemblyLineScheduler().getCurrentTime();
+			DateTime result = assemblyLineDateTime.minus(beginDateTime.getMillis());
+
+			while (looping == true && result.getMillis() < 86400000){
+				assemblyLineDateTime = assem.getAssemblyLineScheduler().getCurrentTime();
+				result = assemblyLineDateTime.minus(beginDateTime.getMillis());
+				CompleteWorkPost(assem, converter.convert(assem.getWorkPostsIterator()).size());
 			}
 		}
-
 	}
 
+	/**
+	 * Complete the WorkPosts from the given AssemblyLine.
+	 * @param assem
+	 * @param i
+	 * @throws NoClearanceException
+	 */
 	private void CompleteWorkPost(AssemblyLine assem, int i) throws NoClearanceException{
 		looping = false;
 		for(int j = 0 ; j < i ; j++){
@@ -75,7 +88,7 @@ public class VehicleStatisticsTest {
 		}
 	}
 	
-	private void placeOrders(OrderManager om) throws IllegalArgumentException, NoClearanceException, UnsatisfiedRestrictionException {
+	private void placeOrders() throws IllegalArgumentException, NoClearanceException, UnsatisfiedRestrictionException {
 		Catalog catalog = new Catalog();
 		ArrayList<VehicleOptionCategory> categories = catalog.getAllCategories();
 		GarageHolder garageHolder = new GarageHolder("Bouwe", "Ceunen", "BouweC");
@@ -87,9 +100,11 @@ public class VehicleStatisticsTest {
 				chosen.add(models.get(1).getVehicleModelSpecification().getOptionsOfCategory(category).get(0));
 			}
 		}
-		for (int i = 0; i <= 30; i++) {
-			om.placeOrder(new StandardVehicleOrder(garageHolder, chosen, models.get(1)));
+		for (int i = 0; i <= 40; i++) {
+			this.om.placeOrder(new StandardVehicleOrder(garageHolder, chosen, models.get(1)));
 		}
+		
+		System.out.println("yolo");
 		
 	}
 
@@ -99,7 +114,7 @@ public class VehicleStatisticsTest {
 			System.out.println(tuple.getX());
 			System.out.println(tuple.getY());
 		}
-		System.out.println(vehicleStatistics.getLastDaysClone(2).size());
-		System.out.println(om.getCompletedOrders().size());
+		System.out.println(vehicleStatistics.getLastDaysClone(2).size()+" entries in vehicle statistics");
+		System.out.println(om.getCompletedOrders().size()+" orders completed");
 	}
 }

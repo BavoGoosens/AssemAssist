@@ -141,7 +141,8 @@ public class MainScheduler {
 			}
 			// add the order to the assembly line (try)
 			fastestAssemblyLine.getAssemblyLineScheduler().addOrder(order);
-		}
+		} else
+			this.orderCannotBePlaced(order);
 	}
 
 	/**
@@ -320,10 +321,11 @@ public class MainScheduler {
 	}
 
 	public void startNewProductionDay() {
-		boolean startForReal = false ;
+		boolean startForReal = true ;
 		for (AssemblyLine assemblyLine : this.getAssemblyLines() ){
 			AssemblyLineScheduler scheduler = assemblyLine.getAssemblyLineScheduler();
 			startForReal = scheduler.couldStartNewDay();
+			if (!startForReal) break;
 		}
 		if (startForReal){
 			for (AssemblyLine assemblyLine: this.getAssemblyLines()){
